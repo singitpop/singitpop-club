@@ -1,0 +1,45 @@
+.strip {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 0;
+    overflow-x: auto;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    white-space: nowrap;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.items {
+    display: flex;
+    gap: 2rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.title {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.reason {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.8rem;
+}

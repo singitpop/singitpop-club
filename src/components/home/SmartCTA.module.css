@@ -1,0 +1,34 @@
+.section {
+    padding: var(--spacing-md) 0;
+}
+
+.card {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    background: linear-gradient(135deg,
+            rgba(139, 92, 246, 0.1),
+            rgba(10, 10, 14, 0.6));
+}
+
+@media (min-width: 768px) {
+    .card {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+        padding: 3rem 4rem;
+    }
+}
+
+.content h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.content p {
+    color: var(--text-muted);
+    max-width: 500px;
+}

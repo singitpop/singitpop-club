@@ -1,0 +1,184 @@
+.container {
+    width: 100%;
+}
+
+.sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(to right, #fff, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.row:hover,
+.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--border);
+}
+
+.mainInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.playBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.row:hover .playBtn {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.trackTitle {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.duration {
+    color: var(--text-muted);
+    font-family: monospace;
+}
+
+.actionBtn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.actionBtn:hover {
+    color: var(--accent);
+}
+
+.bundleCta {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.2), transparent);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    /* Higher contrast */
+    border-radius: 4px;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.checkbox.checked {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: black;
+}
+
+.checkbox:hover {
+    border-color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mixtapeBar {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    background: rgba(20, 20, 25, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--accent);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 90%;
+    max-width: 600px;
+}
+
+.mixtapeBar.visible {
+    transform: translateX(-50%) translateY(0);
+}
+
+.mixtapeInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.mixtapeCount {
+    font-weight: 700;
+    color: white;
+}
+
+.mixtapeTotal {
+    font-size: 0.9rem;
+    color: var(--accent);
+}
+
+.checkoutBtn {
+    background: var(--accent);
+    color: black;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-left: auto;
+}
+
+.checkoutBtn:hover {
+    background: white;
+}

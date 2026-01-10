@@ -1,0 +1,207 @@
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 3-Column Grid */
+.uploadGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.uploadCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.cardHeader h3 {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Drop Zone */
+.dropZone {
+    flex: 1;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.2s;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    text-align: center;
+}
+
+.dropZone:hover {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.fileInput {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.dropZone p {
+    margin: 1rem 0 0.5rem;
+    font-weight: 600;
+}
+
+.meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* File Preview Logic */
+.filePreview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+}
+
+.previewThumb {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.previewThumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.previewIcon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.fileName {
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    word-break: break-all;
+    max-width: 90%;
+}
+
+.removeBtn {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 20;
+}
+
+.removeBtn:hover {
+    background: rgba(239, 68, 68, 0.4);
+}
+
+/* Footer Button */
+.footerActions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.uploadBtn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.uploadBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+/* Success Screen */
+.successState {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 24px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.assetSummary {
+    margin: 2rem 0;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.assetItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+}
+
+.assetItem:last-child {
+    border-bottom: none;
+}
+
+.assetItem span {
+    color: white;
+}

@@ -1,0 +1,8 @@
+{
+  "name": "New Releasio",
+  "description": "Releasio - Built for Artists Powered by AI. An all-in-one platform to master, announce, and manage your music releases. Autogenerate promo assets, schedule social media, manage smart links, and monitor analytics in one place.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

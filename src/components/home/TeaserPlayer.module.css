@@ -1,0 +1,134 @@
+.playerWrapper {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 0 var(--spacing-sm);
+    pointer-events: none;
+    /* Let clicks pass through outside the player */
+}
+
+.player {
+    pointer-events: auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.trackInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.coverArt {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    border-radius: var(--radius-sm);
+}
+
+.badge {
+    font-size: 0.7rem;
+    background: var(--surface);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.playBtn {
+    background: var(--text-main);
+    color: var(--background);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.playBtn:hover {
+    transform: scale(1.1);
+}
+
+.progressBar {
+    flex: 1;
+    height: 4px;
+    background: var(--surface);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.1s linear;
+}
+
+.time {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    width: 80px;
+    text-align: right;
+}
+
+.cta {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .cta {
+        display: block;
+    }
+}
+
+.memberPrompt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    animation: slideUp 0.3s ease;
+    pointer-events: auto;
+    max-width: 400px;
+    margin: 10px auto 0;
+}
+
+.memberPrompt a {
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

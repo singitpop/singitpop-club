@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Releasio</title>
+    <script>
+      // Immediately-invoked function to set theme on initial load and prevent flashing
+      (function() {
+        try {
+          const preferencesJSON = localStorage.getItem('releasio-preferences');
+          if (preferencesJSON) {
+            const preferences = JSON.parse(preferencesJSON);
+            if (preferences.mode === 'dark') {
+              document.documentElement.classList.add('dark');
+            }
+            if (preferences.theme && preferences.theme !== 'default') {
+              document.documentElement.setAttribute('data-theme', preferences.theme);
+            }
+          } else {
+            // Default to dark mode if no preference is set
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          console.error("Could not load user preferences", e);
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class', // Enable dark mode
+        theme: {
+          extend: {
+            colors: {
+              // Replace hardcoded values with CSS variables for theming
+              'brand-purple': 'var(--color-brand-purple)',
+              'brand-purple-light': 'var(--color-brand-purple-light)',
+              'brand-purple-dark': 'var(--color-brand-purple-dark)',
+              'dark-bg': 'var(--color-bg)',
+              'dark-card': 'var(--color-card)',
+              'dark-border': 'var(--color-border)',
+              'light-text': 'var(--color-text-light)',
+              'medium-text': 'var(--color-text-medium)',
+            },
+          }
+        }
+      }
+    </script>
+  <style>
+    /* CSS Variables for Theming */
+    :root {
+      --color-brand-purple: #8A2BE2;
+      --color-brand-purple-light: #9333ea;
+      --color-brand-purple-dark: #7e22ce;
+
+      /* Light Mode Colors */
+      --color-bg: #F9FAFB;
+      --color-card: #FFFFFF;
+      --color-border: #E5E7EB;
+      --color-text-light: #1F2937;
+      --color-text-medium: #6B7280;
+    }
+
+    .dark {
+      /* Dark Mode Colors */
+      --color-bg: #121212;
+      --color-card: #1E1E1E;
+      --color-border: #2D2D2D;
+      --color-text-light: #E0E0E0;
+      --color-text-medium: #A0A0A0;
+    }
+    
+    /* Theme Palettes */
+    [data-theme="sunset"] {
+        --color-brand-purple: #F97316;
+        --color-brand-purple-light: #FB923C;
+        --color-brand-purple-dark: #EA580C;
+    }
+    [data-theme="ocean"] {
+        --color-brand-purple: #0EA5E9;
+        --color-brand-purple-light: #38BDF8;
+        --color-brand-purple-dark: #0284C7;
+    }
+    [data-theme="forest"] {
+        --color-brand-purple: #22C55E;
+        --color-brand-purple-light: #4ADE80;
+        --color-brand-purple-dark: #16A34A;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .truncate-3-lines {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;  
+      overflow: hidden;
+    }
+    .prose { color: var(--color-text-medium); }
+    .prose strong { color: var(--color-text-light); font-weight: 600; }
+    .prose h3 { font-size: 1.25rem; line-height: 1.75rem; color: var(--color-text-light); font-weight: 700; margin-bottom: 1rem; }
+    .prose h4 { font-size: 1.125rem; line-height: 1.75rem; color: var(--color-text-light); font-weight: 600; margin-bottom: 0.5rem; }
+    .prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem; }
+    .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem; }
+    .prose li { margin-bottom: 0.5rem; }
+    .prose li > ul, .prose li > ol { margin-top: 0.5rem; }
+    .prose a { color: var(--color-brand-purple-light); }
+    .prose a:hover { text-decoration: underline; }
+    .prose code { background-color: var(--color-card); padding: 0.2rem 0.4rem; font-size: 0.875em; border-radius: 0.25rem; }
+    .releasio-gradient {
+      background: linear-gradient(to right, #33c9b4, var(--color-brand-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.3.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-dark-bg">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

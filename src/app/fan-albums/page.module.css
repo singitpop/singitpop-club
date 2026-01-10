@@ -1,0 +1,344 @@
+.page {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
+}
+
+.page {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
+}
+
+/* --- Spotlight Hero --- */
+.spotlight {
+    background: linear-gradient(to right, #1a1a2e, #16213e);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 2rem;
+    /* Reduced margin */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    min-height: 250px;
+    /* Reduced from 350px */
+}
+
+.spotlightContent {
+    flex: 1;
+    padding: 2.5rem;
+    /* Reduced from 4rem */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+}
+
+.spotlightVisual {
+    flex: 1;
+    background: url('/images/merch-visual.png') center/cover no-repeat;
+    /* Fallback or placeholder */
+    mask-image: linear-gradient(to right, transparent, black 20%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    /* Slightly smaller */
+    font-weight: 700;
+    text-transform: uppercase;
+    width: fit-content;
+    margin-bottom: 0.75rem;
+}
+
+.spotlight h1 {
+    font-size: 2.5rem;
+    /* Reduced from 4rem */
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    background: linear-gradient(to right, #fff, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* Added standard property */
+}
+
+.quote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    max-width: 500px;
+}
+
+.listenBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: white;
+    color: black;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    width: fit-content;
+}
+
+.listenBtn:hover {
+    transform: scale(1.05);
+}
+
+/* --- Layout --- */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+@media (min-width: 1200px) {
+    .grid {
+        /* [ Content ] [ Rules (Narrow) ] [ Sidebar (Wide) ] */
+        grid-template-columns: 1fr 200px 320px;
+        gap: 2rem;
+    }
+}
+
+/* --- Filter Bar --- */
+.filterBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.filterBar button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.activeFilter {
+    background: var(--primary) !important;
+    color: white !important;
+    border-color: var(--primary) !important;
+}
+
+.filterBtn {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* --- Uniform Grid (4-Wide - Smaller Boxes) --- */
+.masonry {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 Columns for smaller boxes */
+    gap: 1rem;
+    /* Tighter gap */
+}
+
+@media (max-width: 1200px) {
+    .masonry {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .masonry {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Removed dense flow for symmetry */
+
+.card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+    height: 160px;
+    /* Reduced height */
+}
+
+/* Removed varying size classes .large, .medium, .small */
+
+.cardOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    opacity: 1;
+    /* Always visible */
+    transition: all 0.3s;
+}
+
+.card:hover .cardOverlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.cardInfo h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    font-weight: 700;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.likes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.playFab {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover .playFab {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* --- Sidebars --- */
+.sidebarPrimary,
+.sidebarSecondary {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.sidebarSecondary {
+    /* Challenge + Rules */
+    top: 2rem;
+    /* Ensure aligns with primary */
+}
+
+.challengeCard {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem;
+    color: white;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(121, 40, 202, 0.15);
+}
+
+.challengeCard h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.challengeCard p {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.challengeBtn {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.challengeBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+}
+
+/* Rules Card (New) */
+.rulesCard {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem;
+}
+
+.rulesCard h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.rulesCard ul {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.joinBtn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.6rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.2s;
+}
+
+.joinBtn:hover {
+    transform: scale(1.02);
+}
