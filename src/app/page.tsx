@@ -8,6 +8,20 @@ import RecommendationStrip from '@/components/home/RecommendationStrip';
 export default function Home() {
     return (
         <>
+            <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                background: 'red',
+                color: 'white',
+                zIndex: 9999,
+                padding: '20px',
+                textAlign: 'center',
+                fontWeight: 'bold'
+            }}>
+                VERCEL LIVE DEBUG: IF YOU SEE THIS, IT IS UPDATING.
+            </div>
             <RecommendationStrip />
             <Hero />
             <VisualScroll />
