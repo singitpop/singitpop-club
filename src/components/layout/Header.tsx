@@ -35,6 +35,9 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.container}`}>
+        <Link href="https://singitpop.com" className={styles.navLink} style={{ marginRight: '20px', fontSize: '0.9rem', opacity: 0.7 }}>
+          ← Website
+        </Link>
         <Link href="/" className={styles.logo}>
           SingIt<span className={styles.pop}>Pop</span>
         </Link>
