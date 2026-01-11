@@ -8,17 +8,10 @@ import RecommendationStrip from '@/components/home/RecommendationStrip';
 export default function Home() {
     return (
         <>
-            <>
-                <RecommendationStrip />
-                <Hero />
-                <VisualScroll />
-                <WelcomeMessage />
-                <SmartCTA />
+            <TeaserPlayer />
 
-                <TeaserPlayer />
-
-                {/* Spacer for scroll */}
-                <div style={{ height: '100px' }} />
-            </>
-            );
+            {/* Spacer for scroll */}
+            <div style={{ height: '100px' }} />
+        </>
+    );
 }
