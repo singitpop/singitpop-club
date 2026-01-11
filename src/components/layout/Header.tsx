@@ -9,11 +9,12 @@ import { useAuth } from '@/context/AuthContext';
 import styles from './Header.module.css';
 
 const navItems = [
+  { name: '← Website', href: 'https://singitpop.com' },
   { name: 'Home', href: '/' },
   { name: 'Music', href: '/music' },
   { name: 'Fan Albums', href: '/fan-albums' },
   { name: 'Projects', href: '/projects' },
-  { name: 'For Artists', href: '/releasio' }, // New Link
+  { name: 'For Artists', href: '/releasio' },
   { name: 'My Club', href: '/membership' },
   { name: 'Shop', href: '/shop' },
 ];
@@ -35,9 +36,6 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.container}`}>
-        <Link href="https://singitpop.com" className={styles.navLink} style={{ marginRight: '20px', fontSize: '0.9rem', opacity: 0.7 }}>
-          ← Website
-        </Link>
         <Link href="/" className={styles.logo}>
           SingIt<span className={styles.pop}>Pop</span>
         </Link>
