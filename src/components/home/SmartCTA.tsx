@@ -14,6 +14,7 @@ export default function SmartCTA() {
                 {/* Tier 1: Fan */}
                 <div className={styles.card}>
                     <div className={styles.cardHeader}>
+                        <img src="/images/icon-tier-fan.png" alt="" className={styles.icon} />
                         <h3>Fan</h3>
                         <span className={styles.price}>Free</span>
                     </div>
@@ -25,8 +26,9 @@ export default function SmartCTA() {
                 </div>
 
                 {/* Tier 2: Premium */}
-                <div className={`${styles.card} ${styles.featured}`}>
+                <div className={styles.card}>
                     <div className={styles.cardHeader}>
+                        <img src="/images/icon-tier-premium.png" alt="" className={styles.icon} />
                         <h3>Premium</h3>
                         <span className={styles.price}>£3.99<small>/mo</small></span>
                     </div>
@@ -41,12 +43,13 @@ export default function SmartCTA() {
                 {/* Tier 3: Creator */}
                 <div className={styles.card}>
                     <div className={styles.cardHeader}>
+                        <img src="/images/icon-tier-creator.png" alt="" className={styles.icon} />
                         <h3>Creator</h3>
                         <span className={styles.price}>£9.99<small>/mo</small></span>
                     </div>
                     <ul className={styles.features}>
-                        <li>✅ <strong>Access Releasio AI</strong></li>
-                        <li>✅ Create Your Own Songs</li>
+                        <li>✅ <strong>Lyrics, Image Prompts & Marketing Tools</strong></li>
+                        <li>✅ Releasio AI Assistant</li>
                         <li>✅ Plus all Premium perks</li>
                     </ul>
                     <button className={styles.outlineBtn}>Start Creating 🚀</button>
