@@ -9,7 +9,6 @@ def remove_background(image_path, output_path):
         img = img.convert("RGBA")
         datas = img.getdata()
 
-        new_data = []
         for item in datas:
             # Change all dark/black pixels to transparent
             # (Cyberpunk icons have dark backgrounds)

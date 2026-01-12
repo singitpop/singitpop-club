@@ -8,19 +8,35 @@ export default function AboutPage() {
                     <img src="/images/artist.png" alt="SingIt Pop" className={styles.portrait} />
                 </div>
                 <div className={styles.bio}>
-                    <h1>The Story</h1>
+                    <h1>The Beat vs. The Silence</h1>
+                    <p className={styles.lead}>
+                        SingIt Pop isn’t just a stage name—it’s a promise, a memory, and a race against time.
+                    </p>
+
+                    <h3>The Origin</h3>
                     <p>
-                        From bedroom covers to stadium lights, SingIt Pop has always been about one thing:
-                        <strong> connection</strong>. Every beat is a heartbeat, every lyric a confession.
+                        I started this journey for two reasons. First, I am losing my hearing. With silence creeping in on one side,
+                        I knew I had to make my music now, before the chance faded forever.
                     </p>
                     <p>
-                        "I make music for the dreamers, the dancers, and the midnight drivers.
-                        Welcome to the family."
+                        Second, and most importantly, it is a tribute. My son and I used to drive together, singing at the top
+                        of our lungs in the car. It was our thing. He always called me "Pops." When he passed away, the music stopped for a while.
+                        But I realized the best way to honor him was to keep singing the songs we loved.
+                        <strong> "SingIt Pop" is for him.</strong>
+                    </p>
+
+                    <h3>The Sound</h3>
+                    <p>
+                        Unified by storytelling and emotional authenticity, my work spans pop, country, rock, and progressive textures.
+                        From the grief-stricken notes of <em>I Miss You Son</em> and <em>Forever Yours Joyce</em> to the
+                        expansive soundscapes of <em>Echoes in The Firelight</em>, every track is a chapter.
                     </p>
                     <p>
-                        What started as a digital experiment has grown into a global club of music lovers,
-                        creators, and fans who believe in the power of pop to bring people together.
+                        I don't chase trends. I blend the narrative depth of country, the urgency of rock, and the hooks of pop
+                        to create a sound that evolves with every album.
                     </p>
+
+                    <p className={styles.signoff}>"Keep Singing It, Pops."</p>
                 </div>
             </div>
         </div>
