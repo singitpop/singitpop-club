@@ -4,9 +4,10 @@ import { Sparkles } from 'lucide-react';
 import styles from './RecommendationStrip.module.css';
 
 const recommendations = [
-    { id: 1, title: 'Southern Lights', reason: '🔥 Top Trending', icon: '🎵' },
-    { id: 2, title: 'SingIt Pop Vol. 1', reason: '💿 New Album', icon: '💿' },
-    { id: 3, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '🎧' },
+    { id: 1, title: 'Southern Lights', reason: '🔥 Latest Single', icon: '🎵' },
+    { id: 2, title: 'SingIt Pop Vol. 1', reason: '💿 Latest Album', icon: '💿' },
+    { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '🚀' },
+    { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '🎧' },
 ];
 
 // Duplicate list for seamless loop effect
