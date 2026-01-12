@@ -9,26 +9,35 @@ import styles from './VisualScroll.module.css';
 const items = [
     {
         id: 1,
-        title: "Live from Synthwave Arena",
-        subtitle: "Stream on Spotify & Apple Music",
-        image: "/images/tour-visual.png",
-        action: "modal", // Special action trigger
-        cta: "Choose Platform 🎵"
+        title: "SingIt Pop Vol. 1",
+        subtitle: "Latest Studio Album",
+        image: "/images/welcome-bg.png", // Placeholder for User's Art
+        link: "/music",
+        cta: "Stream Now 🎧"
     },
     {
         id: 2,
-        title: "Night Shift Collection",
-        subtitle: "New Drop Available Now",
-        image: "/images/merch-visual.png",
-        link: "/shop",
-        cta: "Shop The Look"
+        title: "Southern Lights",
+        subtitle: "Latest Single",
+        image: "/images/video-visual.png", // Placeholder
+        link: "/music",
+        cta: "Watch Video 🎥"
     },
     {
-        title: "Visual Album: Ethereal",
-        subtitle: "Experience the journey",
-        image: "/images/video-visual.png",
-        link: "/visuals",
-        cta: "Watch Experience"
+        id: 3,
+        title: "Step into the Light",
+        subtitle: "Live Country Album",
+        image: "/images/album-step-into-light.png", // New Generated Art
+        action: "modal",
+        cta: "Stream Live 🎸"
+    },
+    {
+        id: 4,
+        title: "Official Store",
+        subtitle: "Merch & Vinyl",
+        image: "/images/merch-visual.png",
+        link: "/shop",
+        cta: "Shop The Look 🛍️"
     }
 ];
 
