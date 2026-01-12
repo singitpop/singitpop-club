@@ -4,10 +4,10 @@ import { Sparkles } from 'lucide-react';
 import styles from './RecommendationStrip.module.css';
 
 const recommendations = [
-    { id: 1, title: 'Southern Lights', reason: '🔥 Latest Single', icon: '/images/icons/music-note.png' },
-    { id: 2, title: 'SingIt Pop Vol. 1', reason: '💿 Latest Album', icon: '/images/icons/vinyl.png' },
-    { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending.png' },
-    { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond.png' },
+    { id: 1, title: 'Southern Lights', reason: '🔥 Latest Single', icon: '/images/icons/music-note-clean.png' },
+    { id: 2, title: 'SingIt Pop Vol. 1', reason: '💿 Latest Album', icon: '/images/icons/vinyl-clean.png' },
+    { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
+    { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },
 ];
 
 // Duplicate list for seamless loop effect
@@ -29,8 +29,7 @@ export default function RecommendationStrip() {
                                         width: '100%',
                                         height: '100%',
                                         objectFit: 'contain',
-                                        mixBlendMode: 'screen', /* Removes black bg and makes neon glow */
-                                        filter: 'brightness(1.2)' /* Boost visibility */
+                                        filter: 'drop-shadow(0 0 8px rgba(100, 100, 255, 0.4))'
                                     }}
                                 />
                             </div>
