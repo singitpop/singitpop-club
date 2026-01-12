@@ -9,7 +9,7 @@ export default function Footer() {
                 <div className={styles.top}>
                     <div className={styles.brand}>
                         <h3>SingItPop</h3>
-                        <p>The beat never stops.</p>
+                        <p>Keep Singing It POP</p>
                     </div>
 
                     <div className={styles.links}>
