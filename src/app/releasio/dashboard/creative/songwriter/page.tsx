@@ -73,6 +73,11 @@ export default function SongwriterPage() {
                 </div>
             </header>
 
+            {/* DEBUG BANNER - REMOVE AFTER FIXING */}
+            <div style={{ background: '#333', color: '#0f0', padding: '0.5rem', fontSize: '0.8rem', fontFamily: 'monospace', textAlign: 'center' }}>
+                System Status: {process.env.NEXT_PUBLIC_GEMINI_API_KEY ? "✅ API Key Linked" : "❌ API Key MISSING"} | Build: v4 (Debug)
+            </div>
+
             <div className={styles.chatWindow}>
                 {messages.map((msg) => (
                     <div key={msg.id} className={`${styles.message} ${msg.role === 'user' ? styles.userMsg : styles.aiMsg}`}>
