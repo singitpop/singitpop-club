@@ -102,30 +102,58 @@
     border-color: var(--primary);
 }
 
-.gallery h2 {
+.socialSection {
+    margin-top: 4rem;
     text-align: center;
+}
+
+.socialSection h2 {
     margin-bottom: 2rem;
+    font-size: 2rem;
 }
 
-.grid {
+.socialGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.gridItem {
-    aspect-ratio: 1;
-    background: var(--surface);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-}
-
-.artPlaceholder {
-    width: 100%;
-    height: 100%;
+.socialCard {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: var(--surface-hover);
-    color: var(--text-muted);
+    gap: 0.75rem;
+    padding: 2rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.socialCard:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3);
+}
+
+.socialCard svg,
+.socialCard svg path {
+    color: var(--primary);
+    stroke: var(--primary);
+}
+
+.socialCard span {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .socialGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
