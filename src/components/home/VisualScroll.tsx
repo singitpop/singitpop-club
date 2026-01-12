@@ -12,7 +12,7 @@ const items = [
         title: "Desert Winds & Open Roads",
         subtitle: "Latest Studio Album",
         image: "/images/album-desert-winds.jpg",
-        link: "/music",
+        action: "modal", // Trigger streaming modal
         cta: "Stream Now 🎧"
     },
     {
@@ -20,8 +20,8 @@ const items = [
         title: "Whiskey & Wild Horses",
         subtitle: "Latest Single",
         image: "/images/single-whiskey.jpg",
-        link: "/music",
-        cta: "Watch Video 🎥"
+        action: "modal", // Trigger streaming modal
+        cta: "Stream Now 🎧"
     },
     {
         id: 3,
@@ -29,15 +29,15 @@ const items = [
         subtitle: "Live Country Album",
         image: "/images/album-step-live.jpg",
         action: "modal",
-        cta: "Stream Live 🎸"
+        cta: "Stream Now 🎧" // Updated from Stream Live
     },
     {
         id: 4,
         title: "Official Store",
         subtitle: "Merch & Vinyl",
-        image: "/images/merch-visual.png", // Keeping existing merch placeholder for now
+        image: "/images/merch-visual.png",
         link: "/shop",
-        cta: "Shop The Look 🛍️"
+        cta: "Shop Official Merch ✨" // Updated text and icon
     }
 ];
 
@@ -97,7 +97,7 @@ export default function VisualScroll() {
                         onClick={e => e.stopPropagation()}
                     >
                         <h3>Choose Your Platform 🎧</h3>
-                        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Stream "Live from Synthwave Arena"</p>
+                        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Stream on your favorite service</p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <a href="https://open.spotify.com/artist/7zC7VXVJ021c3y2C6G130a" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#1DB954', borderColor: '#1DB954', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
@@ -107,6 +107,10 @@ export default function VisualScroll() {
                             <a href="https://music.apple.com/gb/artist/singit-pop/1772577862" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#FA243C', borderColor: '#FA243C', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18.334c-2.738 0-4.958-2.22-4.958-4.958S9.262 8.418 12 8.418s4.958 2.22 4.958 4.958-2.22 4.958-4.958 4.958zM8.59 7.025c.571 0 1.034.463 1.034 1.034v8.267c0 .571-.463 1.034-1.034 1.034-.571 0-1.034-.463-1.034-1.034V8.059c0-.571.463-1.034 1.034-1.034zm6.82 0c.571 0 1.034.463 1.034 1.034v8.267c0 .571-.463 1.034-1.034 1.034-.571 0-1.034-.463-1.034-1.034V8.059c0-.571.463-1.034 1.034-1.034z" /></svg>
                                 Apple Music
+                            </a>
+                            {/* Added Amazon Music as requested */}
+                            <a href="https://music.amazon.com/artists/B0DJT2W25L/singit-pop" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#232F3E', borderColor: '#232F3E', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+                                <span style={{ fontWeight: 'bold' }}>Amazon Music 🎵</span>
                             </a>
                         </div>
                         <button
