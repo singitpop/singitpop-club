@@ -1,7 +1,41 @@
+'use client';
+
 import { Mail, Instagram, Twitter, Youtube } from 'lucide-react';
+import { useState } from 'react';
 import styles from './page.module.css';
 
 export default function ContactPage() {
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [statusMessage, setStatusMessage] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('loading');
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setStatus('success');
+                setStatusMessage(data.message);
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                setStatus('error');
+                setStatusMessage(data.error || 'Something went wrong');
+            }
+        } catch (error) {
+            setStatus('error');
+            setStatusMessage('Failed to send message. Please try again.');
+        }
+    };
+
     return (
         <div className={`container ${styles.page}`}>
             <div className={styles.hero}>
@@ -13,13 +47,43 @@ export default function ContactPage() {
 
             <div className={styles.formSection}>
                 <h2>Get in Touch</h2>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.row}>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            required
+                        />
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            required
+                        />
                     </div>
-                    <textarea placeholder="Message" rows={5}></textarea>
-                    <button className="glow-button">Send Message</button>
+                    <textarea
+                        placeholder="Message"
+                        rows={5}
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        required
+                    ></textarea>
+                    <button
+                        type="submit"
+                        className="glow-button"
+                        disabled={status === 'loading'}
+                    >
+                        {status === 'loading' ? 'Sending...' : 'Send Message'}
+                    </button>
+                    {status === 'success' && (
+                        <p className={styles.successMessage}>{statusMessage}</p>
+                    )}
+                    {status === 'error' && (
+                        <p className={styles.errorMessage}>{statusMessage}</p>
+                    )}
                 </form>
             </div>
 
