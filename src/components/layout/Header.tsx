@@ -18,6 +18,7 @@ const navItems = [
   { name: 'For Artists', href: '/releasio' },
   { name: 'My Club', href: '/membership' },
   { name: 'Shop', href: '/shop' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {
