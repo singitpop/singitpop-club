@@ -4,9 +4,9 @@ import { Sparkles } from 'lucide-react';
 import styles from './RecommendationStrip.module.css';
 
 const recommendations = [
-    { id: 1, title: 'Whiskey Slide', reason: 'Because you liked Southern Lights' },
-    { id: 2, title: 'Neon Heart', reason: 'Similar energy' },
-    { id: 3, title: 'Midnight Drive', reason: 'Fan favorite' },
+    { id: 1, title: 'Southern Lights', reason: '🔥 Top Trending', icon: '🎵' },
+    { id: 2, title: 'SingIt Pop Vol. 1', reason: '💿 New Album', icon: '💿' },
+    { id: 3, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '🎧' },
 ];
 
 export default function RecommendationStrip() {
@@ -15,14 +15,17 @@ export default function RecommendationStrip() {
             <div className={`container ${styles.container}`}>
                 <div className={styles.header}>
                     <Sparkles size={18} className={styles.sparkle} />
-                    <span>Suggested for you</span>
+                    <span>Trending Now</span>
                 </div>
 
                 <div className={styles.items}>
                     {recommendations.map((item) => (
                         <div key={item.id} className={styles.item}>
-                            <span className={styles.title}>{item.title}</span>
-                            <span className={styles.reason}>{item.reason}</span>
+                            <span style={{ fontSize: '1.2rem' }}>{item.icon}</span>
+                            <div>
+                                <span className={styles.title} style={{ display: 'block', lineHeight: '1' }}>{item.title}</span>
+                                <span className={styles.reason} style={{ fontSize: '0.75rem', opacity: 0.8 }}>{item.reason}</span>
+                            </div>
                         </div>
                     ))}
                 </div>
