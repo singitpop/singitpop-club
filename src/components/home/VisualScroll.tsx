@@ -9,17 +9,17 @@ import styles from './VisualScroll.module.css';
 const items = [
     {
         id: 1,
-        title: "SingIt Pop Vol. 1",
+        title: "Desert Winds & Open Roads",
         subtitle: "Latest Studio Album",
-        image: "/images/welcome-bg.png", // Placeholder for User's Art
+        image: "/images/album-desert-winds.jpg",
         link: "/music",
         cta: "Stream Now 🎧"
     },
     {
         id: 2,
-        title: "Southern Lights",
+        title: "Whiskey & Wild Horses",
         subtitle: "Latest Single",
-        image: "/images/video-visual.png", // Placeholder
+        image: "/images/single-whiskey.jpg",
         link: "/music",
         cta: "Watch Video 🎥"
     },
@@ -27,7 +27,7 @@ const items = [
         id: 3,
         title: "Step into the Light",
         subtitle: "Live Country Album",
-        image: "/images/album-step-into-light.png", // New Generated Art
+        image: "/images/album-step-live.jpg",
         action: "modal",
         cta: "Stream Live 🎸"
     },
@@ -35,7 +35,7 @@ const items = [
         id: 4,
         title: "Official Store",
         subtitle: "Merch & Vinyl",
-        image: "/images/merch-visual.png",
+        image: "/images/merch-visual.png", // Keeping existing merch placeholder for now
         link: "/shop",
         cta: "Shop The Look 🛍️"
     }
