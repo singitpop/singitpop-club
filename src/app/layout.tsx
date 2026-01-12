@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ChatBot from '@/components/ChatBot';
 import { AuthProvider } from '@/context/AuthContext';
 import { BrandProvider } from '@/context/BrandContext';
 import MobileNav from '@/components/layout/MobileNav';
@@ -29,7 +28,6 @@ export default function RootLayout({
                         </BrandProvider>
                     </main>
                     <Footer />
-                    <ChatBot />
                 </AuthProvider>
             </body>
         </html>

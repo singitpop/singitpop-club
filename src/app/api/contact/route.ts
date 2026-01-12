@@ -42,12 +42,32 @@ export async function POST(request: Request) {
             );
         }
 
-        // Get Microsoft Graph client
+        const emailTo = process.env.MS365_EMAIL_FROM || 'info@singitpop.com';
+
+        // Check if we're in development mode without Azure credentials
+        const isDevelopment = process.env.NODE_ENV === 'development';
+        const hasAzureCredentials = process.env.AZURE_CLIENT_ID &&
+            process.env.AZURE_TENANT_ID &&
+            process.env.AZURE_CLIENT_SECRET;
+
+        if (isDevelopment && !hasAzureCredentials) {
+            // Development mode fallback - just log the message
+            console.log('[Contact Form] DEVELOPMENT MODE - Email simulation');
+            console.log('[Contact Form] From:', email);
+            console.log('[Contact Form] Name:', name);
+            console.log('[Contact Form] Message:', message);
+            console.log('[Contact Form] Would send to:', emailTo);
+
+            return NextResponse.json(
+                { success: true, message: 'Message sent! We\'ll get back to you soon.' },
+                { status: 200 }
+            );
+        }
+
+        // Production mode - use Microsoft Graph
         console.log('[Contact Form] Initializing Microsoft Graph client...');
         const client = await getGraphClient();
         console.log('[Contact Form] Graph client initialized successfully');
-
-        const emailTo = process.env.MS365_EMAIL_FROM || 'info@singitpop.com';
         console.log('[Contact Form] Sending email to:', emailTo);
 
         // Send email via Microsoft Graph
