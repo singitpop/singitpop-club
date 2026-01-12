@@ -41,8 +41,10 @@
 
 @media (max-width: 768px) {
     .card {
-        height: 350px;
-        /* Shorter card for mobile */
+        flex: 0 0 77vw;
+        /* Narrower so next card is clearly visible */
+        height: 320px;
+        /* Shorter for mobile efficiency */
     }
 
     .title {
