@@ -9,18 +9,17 @@ const recommendations = [
     { id: 3, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '🎧' },
 ];
 
+// Duplicate list for seamless loop effect
+const loopItems = [...recommendations, ...recommendations, ...recommendations];
+
 export default function RecommendationStrip() {
     return (
         <section className={styles.strip}>
-            <div className={`container ${styles.container}`}>
-                <div className={styles.header}>
-                    <Sparkles size={18} className={styles.sparkle} />
-                    <span>Trending Now</span>
-                </div>
-
+            <div className={styles.container}>
+                {/* Header removed for ticker style, or we can make it part of the item */}
                 <div className={styles.items}>
-                    {recommendations.map((item) => (
-                        <div key={item.id} className={styles.item}>
+                    {loopItems.map((item, index) => (
+                        <div key={`${item.id}-${index}`} className={styles.item}>
                             <span style={{ fontSize: '1.2rem' }}>{item.icon}</span>
                             <div>
                                 <span className={styles.title} style={{ display: 'block', lineHeight: '1' }}>{item.title}</span>

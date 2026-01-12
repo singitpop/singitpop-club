@@ -2,28 +2,51 @@
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     padding: 0.75rem 0;
-    overflow-x: auto;
+    overflow: hidden;
+    /* Hide scrollbars */
+    position: relative;
 }
 
 .container {
     display: flex;
     align-items: center;
     gap: 2rem;
-    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100vw;
+    /* Full width for ticker */
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    /* Fade edges */
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.9rem;
+    display: none;
+    /* Hide static header in ticker mode, or keep it separate? Let's hide to make full ticker */
 }
 
+/* New Ticker Layout */
 .items {
     display: flex;
-    gap: 2rem;
+    gap: 4rem;
+    /* Spacing between items */
+    animation: marquee 20s linear infinite;
+    padding-left: 100%;
+    /* Start off screen */
+    white-space: nowrap;
+}
+
+/* Pause on hover for readability */
+.items:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 .item {
@@ -31,15 +54,17 @@
     align-items: center;
     gap: 0.75rem;
     font-size: 0.9rem;
+    flex-shrink: 0;
 }
 
 .title {
     color: var(--text-main);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .reason {
-    color: var(--text-muted);
-    font-style: italic;
+    color: var(--primary);
     font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
