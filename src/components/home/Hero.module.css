@@ -205,8 +205,8 @@
 
 @media (max-width: 768px) {
     .centerStage {
-        margin-top: -10vh;
-        /* Pull play button up slightly */
+        margin-top: -15vh;
+        /* Pull play button up MORE to avoid player overlap */
     }
 
     .giantPlayBtn {
@@ -215,8 +215,8 @@
     }
 
     .titleContainer {
-        top: 15%;
-        /* Move back to TOP to match Desktop feel */
+        top: 12%;
+        /* Move title HIGHER up */
         bottom: auto;
         left: 0;
         right: 0;
