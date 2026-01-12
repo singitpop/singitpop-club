@@ -5,7 +5,7 @@ export default function AboutPage() {
         <div className={`container ${styles.page}`}>
             <div className={styles.hero}>
                 <div className={styles.imageWrapper}>
-                    <img src="/images/artist.png" alt="SingIt Pop" className={styles.portrait} />
+                    <img src="/images/singitpop-portrait.jpg" alt="SingIt Pop" className={styles.portrait} />
                 </div>
                 <div className={styles.bio}>
                     <h1>The Beat vs. The Silence</h1>
@@ -15,8 +15,8 @@ export default function AboutPage() {
 
                     <h3>The Origin</h3>
                     <p>
-                        I started this journey for two reasons. First, I am losing my hearing. With silence creeping in on one side,
-                        I knew I had to make my music now, before the chance faded forever.
+                        I'm already deaf in my right ear, with my left ear fading. Music is my therapy, my expression, and my legacy.
+                        I knew I had to create now—before complete silence takes over.
                     </p>
                     <p>
                         Second, and most importantly, it is a tribute. My son and I used to drive together, singing at the top
