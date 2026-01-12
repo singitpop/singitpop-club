@@ -21,8 +21,18 @@ export default function RecommendationStrip() {
                 <div className={styles.items}>
                     {loopItems.map((item, index) => (
                         <div key={`${item.id}-${index}`} className={styles.item}>
-                            <div style={{ width: '40px', height: '40px', position: 'relative', flexShrink: 0 }}>
-                                <img src={item.icon} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.3))' }} />
+                            <div style={{ width: '45px', height: '45px', position: 'relative', flexShrink: 0 }}>
+                                <img
+                                    src={item.icon}
+                                    alt=""
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'contain',
+                                        mixBlendMode: 'screen', /* Removes black bg and makes neon glow */
+                                        filter: 'brightness(1.2)' /* Boost visibility */
+                                    }}
+                                />
                             </div>
                             <div>
                                 <span className={styles.title} style={{ display: 'block', lineHeight: '1' }}>{item.title}</span>
