@@ -205,23 +205,23 @@
 
 @media (max-width: 768px) {
     .centerStage {
-        margin-top: -15vh;
-        /* Pull play button up MORE to avoid player overlap */
+        margin-top: -25vh;
+        /* Aggressive lift to clear Teaser Player */
     }
 
     .giantPlayBtn {
-        width: 90px;
-        height: 90px;
+        width: 80px;
+        /* Smaller button to save space */
+        height: 80px;
     }
 
     .titleContainer {
-        top: 12%;
-        /* Move title HIGHER up */
+        top: 10%;
+        /* Move title very high */
         bottom: auto;
         left: 0;
         right: 0;
         transform: none;
-        /* Remove transform which caused offset */
         border-left: none;
         align-items: center;
         text-align: center;
