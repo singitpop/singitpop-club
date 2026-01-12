@@ -37,7 +37,7 @@ export default function SmartCTA() {
                         <li>✅ Ad-Free Experience</li>
                         <li>✅ Plus all Fan perks</li>
                     </ul>
-                    <button className={styles.glowBtn}>Go Premium 💎</button>
+                    <button className={styles.glowBtn}>Go Premium</button>
                 </div>
 
                 {/* Tier 3: Creator */}
@@ -52,7 +52,7 @@ export default function SmartCTA() {
                         <li>✅ Releasio AI Assistant</li>
                         <li>✅ Plus all Premium perks</li>
                     </ul>
-                    <button className={styles.outlineBtn}>Start Creating 🚀</button>
+                    <button className={styles.outlineBtn}>Start Creating</button>
                 </div>
             </div>
         </section>
