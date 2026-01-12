@@ -95,7 +95,10 @@
 }
 
 .subtitle {
-    color: var(--primary);
+    color: white;
+    /* Changed from purple for better contrast against varied art */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    /* readable on any background */
     text-transform: uppercase;
     font-weight: 600;
     font-size: 0.9rem;
