@@ -39,6 +39,22 @@
     }
 }
 
+@media (max-width: 768px) {
+    .card {
+        height: 350px;
+        /* Shorter card for mobile */
+    }
+
+    .title {
+        font-size: 1.5rem;
+        /* Smaller title */
+    }
+
+    .content {
+        padding: 1.5rem;
+    }
+}
+
 .imageWrapper {
     position: absolute;
     top: 0;

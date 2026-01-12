@@ -204,18 +204,43 @@
 }
 
 @media (max-width: 768px) {
+    .centerStage {
+        margin-top: -10vh;
+        /* Pull play button up slightly */
+    }
+
+    .giantPlayBtn {
+        width: 90px;
+        height: 90px;
+    }
+
     .titleContainer {
-        top: 15%;
-        left: 5%;
+        top: auto;
+        bottom: 25%;
+        /* Move title below play button area or to specific spot */
+        left: 50%;
+        transform: translateX(-50%);
         border-left: none;
-        /* Remove border on mobile if it looks tight */
         align-items: center;
         text-align: center;
-        width: 90%;
-        padding: 0;
+        width: 100%;
+        padding: 0 1rem;
     }
 
     .songTitle {
-        font-size: 3.5rem;
+        font-size: 3rem;
+        /* Still big but manageable */
+        margin-bottom: 0.5rem;
+    }
+
+    .artistName {
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .songTitle {
+        font-size: 2.5rem;
     }
 }
