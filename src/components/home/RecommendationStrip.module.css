@@ -1,10 +1,11 @@
 .strip {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: transparent;
+    border-bottom: none;
     padding: 0.75rem 0;
     overflow: hidden;
     /* Hide scrollbars */
     position: relative;
+    z-index: 20;
 }
 
 .container {
@@ -28,7 +29,7 @@
     display: flex;
     gap: 4rem;
     /* Spacing between items */
-    animation: marquee 20s linear infinite;
+    animation: marquee 40s linear infinite;
     padding-left: 100%;
     /* Start off screen */
     white-space: nowrap;
