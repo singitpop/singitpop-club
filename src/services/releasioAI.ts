@@ -42,7 +42,7 @@ const callLocalLLM = async (prompt: string): Promise<string | null> => {
 // Helper to call Cloud LLM (Google Gemini) via REST fallback
 const callCloudLLM = async (prompt: string): Promise<string | null> => {
     const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-    if (!apiKey) return null;
+    if (!apiKey) return "DEBUG: API Key is MISSING in Environment.";
 
     try {
         console.log("[Releasio AI] Cloud Key Found! ☁️ Calling Gemini...");
@@ -51,11 +51,17 @@ const callCloudLLM = async (prompt: string): Promise<string | null> => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
         });
+        
+        if (!response.ok) {
+            const errData = await response.json();
+            return `DEBUG: API Error ${response.status} - ${errData.error?.message || response.statusText}`;
+        }
+
         const data = await response.json();
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || null;
-    } catch (e) {
+        return data.candidates?.[0]?.content?.parts?.[0]?.text || "DEBUG: No candidates returned.";
+    } catch (e: any) {
         console.error("Cloud AI Error:", e);
-        return null;
+        return `DEBUG: Fetch Exception - ${e.message}`;
     }
 };
 
