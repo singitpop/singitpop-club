@@ -4,10 +4,10 @@ import { Sparkles } from 'lucide-react';
 import styles from './RecommendationStrip.module.css';
 
 const recommendations = [
-    { id: 1, title: 'Southern Lights', reason: '🔥 Latest Single', icon: '🎵' },
-    { id: 2, title: 'SingIt Pop Vol. 1', reason: '💿 Latest Album', icon: '💿' },
-    { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '🚀' },
-    { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '🎧' },
+    { id: 1, title: 'Southern Lights', reason: '🔥 Latest Single', icon: '/images/icons/music-note.png' },
+    { id: 2, title: 'SingIt Pop Vol. 1', reason: '💿 Latest Album', icon: '/images/icons/vinyl.png' },
+    { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending.png' },
+    { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond.png' },
 ];
 
 // Duplicate list for seamless loop effect
@@ -21,7 +21,9 @@ export default function RecommendationStrip() {
                 <div className={styles.items}>
                     {loopItems.map((item, index) => (
                         <div key={`${item.id}-${index}`} className={styles.item}>
-                            <span style={{ fontSize: '1.2rem' }}>{item.icon}</span>
+                            <div style={{ width: '40px', height: '40px', position: 'relative', flexShrink: 0 }}>
+                                <img src={item.icon} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.3))' }} />
+                            </div>
                             <div>
                                 <span className={styles.title} style={{ display: 'block', lineHeight: '1' }}>{item.title}</span>
                                 <span className={styles.reason} style={{ fontSize: '0.75rem', opacity: 0.8 }}>{item.reason}</span>
