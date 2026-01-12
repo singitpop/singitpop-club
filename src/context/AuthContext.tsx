@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         let name = 'Music Fan';
         if (tier === 'INSIDER') name = 'The Insider';
         if (tier === 'VIP') name = 'Pro Member';
-        if (tier === 'LABEL') name = 'Label Manager';
+        if (tier === 'LABEL') name = 'SingIt Pop (Admin)';
 
         const newUser: User = { tier, name };
         setUser(newUser);

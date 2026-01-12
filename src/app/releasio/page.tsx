@@ -84,6 +84,9 @@ export default function ReleasioLanding() {
                     <span>TikTok</span>
                     <span>Apple Music</span>
                 </div>
+                <div style={{ marginTop: '2rem', opacity: 0.5 }}>
+                    <Link href="/releasio/login" style={{ color: 'inherit', fontSize: '0.8rem', textDecoration: 'none' }}>Admin Portal (Simulation)</Link>
+                </div>
             </footer>
         </div>
     );
