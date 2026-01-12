@@ -73,7 +73,7 @@ export async function POST(request: Request) {
         }
 
         // Determine which AI model and prompt to use based on tier
-        const isCreator = userTier === 'Creator';
+        const isCreator = userTier === 'LABEL'; // LABEL tier = Creator/Pro members
         const systemPrompt = isCreator ? RELEASIO_SYSTEM_PROMPT : SUPPORT_SYSTEM_PROMPT;
         const modelName = isCreator ? 'gemini-2.0-flash-exp' : 'gemini-2.0-flash-exp';
 
