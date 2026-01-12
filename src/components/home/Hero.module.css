@@ -218,8 +218,10 @@
         top: auto;
         bottom: 25%;
         /* Move title below play button area or to specific spot */
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
+        right: 0;
+        transform: none;
+        /* Remove transform which caused offset */
         border-left: none;
         align-items: center;
         text-align: center;
