@@ -19,9 +19,8 @@ export default function AboutPage() {
                         I knew I had to create now—before complete silence takes over.
                     </p>
                     <p>
-                        Second, and most importantly, it is a tribute. My son and I used to drive together, singing at the top
-                        of our lungs in the car. It was our thing. He always called me "Pops." When he passed away, the music stopped for a while.
-                        But I realized the best way to honor him was to keep singing the songs we loved.
+                        Second, it's a tribute. My son and I used to drive together, singing at the top
+                        of our lungs in the car. It was our thing. He always called me "Pops."
                         <strong> "SingIt Pop" is for him.</strong>
                     </p>
 
@@ -36,7 +35,7 @@ export default function AboutPage() {
                         to create a sound that evolves with every album.
                     </p>
 
-                    <p className={styles.signoff}>"Keep Singing It, Pops."</p>
+                    <p className={styles.signoff}>"Keep Singing It POP"</p>
                 </div>
             </div>
         </div>
