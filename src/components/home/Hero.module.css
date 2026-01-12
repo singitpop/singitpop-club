@@ -215,9 +215,9 @@
     }
 
     .titleContainer {
-        top: auto;
-        bottom: 25%;
-        /* Move title below play button area or to specific spot */
+        top: 15%;
+        /* Move back to TOP to match Desktop feel */
+        bottom: auto;
         left: 0;
         right: 0;
         transform: none;
