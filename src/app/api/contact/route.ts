@@ -1,4 +1,25 @@
 import { NextResponse } from 'next/server';
+import { Client } from '@microsoft/microsoft-graph-client';
+import { ClientSecretCredential } from '@azure/identity';
+
+async function getGraphClient() {
+    const credential = new ClientSecretCredential(
+        process.env.AZURE_TENANT_ID!,
+        process.env.AZURE_CLIENT_ID!,
+        process.env.AZURE_CLIENT_SECRET!
+    );
+
+    const client = Client.initWithMiddleware({
+        authProvider: {
+            getAccessToken: async () => {
+                const token = await credential.getToken('https://graph.microsoft.com/.default');
+                return token.token;
+            }
+        }
+    });
+
+    return client;
+}
 
 export async function POST(request: Request) {
     try {
@@ -21,34 +42,64 @@ export async function POST(request: Request) {
             );
         }
 
-        // For now, we'll use a simple mailto approach
-        // In production, you would integrate with Resend, SendGrid, or similar
-        const emailBody = `
-Name: ${name}
-Email: ${email}
-Message: ${message}
-        `.trim();
+        // Get Microsoft Graph client
+        console.log('[Contact Form] Initializing Microsoft Graph client...');
+        const client = await getGraphClient();
+        console.log('[Contact Form] Graph client initialized successfully');
 
-        // TODO: Replace with actual email service integration
-        // Example with Resend:
-        // const resend = new Resend(process.env.RESEND_API_KEY);
-        // await resend.emails.send({
-        //     from: 'contact@singitpop.com',
-        //     to: 'info@singitpop.com',
-        //     subject: `Contact Form: ${name}`,
-        //     text: emailBody,
-        // });
+        const emailTo = process.env.MS365_EMAIL_FROM || 'info@singitpop.com';
+        console.log('[Contact Form] Sending email to:', emailTo);
 
-        console.log('Contact form submission:', { name, email, message });
+        // Send email via Microsoft Graph
+        const emailMessage = {
+            message: {
+                subject: `Contact Form: ${name}`,
+                body: {
+                    contentType: 'Text',
+                    content: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+                },
+                toRecipients: [
+                    {
+                        emailAddress: {
+                            address: emailTo
+                        }
+                    }
+                ],
+                from: {
+                    emailAddress: {
+                        address: emailTo
+                    }
+                }
+            },
+            saveToSentItems: true
+        };
+
+        console.log('[Contact Form] Email payload prepared:', {
+            subject: emailMessage.message.subject,
+            to: emailTo,
+            from: emailTo
+        });
+
+        await client
+            .api(`/users/${emailTo}/sendMail`)
+            .post(emailMessage);
+
+        console.log('[Contact Form] Email sent successfully via Microsoft Graph');
 
         return NextResponse.json(
-            { success: true, message: 'Message received! We\'ll get back to you soon.' },
+            { success: true, message: 'Message sent! We\'ll get back to you soon.' },
             { status: 200 }
         );
-    } catch (error) {
-        console.error('Contact form error:', error);
+    } catch (error: any) {
+        console.error('[Contact Form] Error occurred:', {
+            message: error.message,
+            code: error.code,
+            statusCode: error.statusCode,
+            body: error.body,
+            stack: error.stack
+        });
         return NextResponse.json(
-            { error: 'Failed to send message. Please try again.' },
+            { error: 'Failed to send message. Please try again or email us directly at info@singitpop.com' },
             { status: 500 }
         );
     }
