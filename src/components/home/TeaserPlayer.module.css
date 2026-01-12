@@ -132,3 +132,51 @@
         transform: translateY(0);
     }
 }
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .playerWrapper {
+        bottom: 95px;
+        /* Sit above the 80px MobileNav */
+        padding: 0 10px;
+        /* Small outer margin */
+    }
+
+    .player {
+        padding: 0.75rem;
+        gap: 0.75rem;
+        grid-template-columns: auto 1fr auto;
+        /* Keep structure but tighter */
+        background: rgba(20, 20, 20, 0.85);
+        /* Slightly more opaque */
+        backdrop-filter: blur(12px);
+    }
+
+    .coverArt {
+        width: 40px;
+        /* Slightly smaller art */
+        height: 40px;
+    }
+
+    .badge {
+        display: none;
+        /* Hide badge to save space */
+    }
+
+    .playBtn {
+        width: 48px;
+        /* Bigger touch target */
+        height: 48px;
+    }
+
+    .time {
+        display: none;
+        /* Hide time on very small screens? Or keep simpler */
+        font-size: 0.8rem;
+    }
+
+    .cta {
+        display: none !important;
+        /* Force hide CTA */
+    }
+}
