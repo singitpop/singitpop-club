@@ -98,7 +98,7 @@ export default function ChatBot() {
                         <div>
                             <h3>SingIt Pop Assistant</h3>
                             <p className={styles.tierBadge}>
-                                {user?.tier === 'Creator' ? '🎨 Creator AI' : '💬 Support Chat'}
+                                {user?.tier === 'LABEL' ? '🎨 Creator AI' : '💬 Support Chat'}
                             </p>
                         </div>
                         <button onClick={() => setIsOpen(false)} className={styles.closeButton}>
@@ -112,7 +112,7 @@ export default function ChatBot() {
                                 <MessageCircle size={48} />
                                 <h4>Hey there! 👋</h4>
                                 <p>
-                                    {user?.tier === 'Creator'
+                                    {user?.tier === 'LABEL'
                                         ? 'Ask me about songwriting, marketing, or any creative tools!'
                                         : 'Ask me about music, membership, or site navigation!'}
                                 </p>
