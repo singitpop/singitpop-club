@@ -11,6 +11,7 @@ import styles from './Header.module.css';
 const navItems = [
   { name: '← Website', href: 'https://singitpop.com' },
   { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
   { name: 'Music', href: '/music' },
   { name: 'Fan Albums', href: '/fan-albums' },
   { name: 'Projects', href: '/projects' },

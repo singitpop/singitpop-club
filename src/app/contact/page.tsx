@@ -5,25 +5,9 @@ export default function ContactPage() {
     return (
         <div className={`container ${styles.page}`}>
             <div className={styles.hero}>
-                <div className={styles.imageWrapper}>
-                    <img src="/images/artist.png" alt="SingIt Pop" className={styles.portrait} />
-                </div>
-                <div className={styles.bio}>
-                    <h1>The Story</h1>
-                    <p>
-                        From bedroom covers to stadium lights, SingIt Pop has always been about one thing:
-                        <strong> connection</strong>. Every beat is a heartbeat, every lyric a confession.
-                    </p>
-                    <p>
-                        "I make music for the dreamers, the dancers, and the midnight drivers.
-                        Welcome to the family."
-                    </p>
-
-                    <div className={styles.socials}>
-                        <a href="#"><Instagram /></a>
-                        <a href="#"><Twitter /></a>
-                        <a href="#"><Mail /></a>
-                    </div>
+                <div className={styles.header}>
+                    <h1>Get in Touch</h1>
+                    <p>Questions? Collabs? Just want to say hi? Drop a message below.</p>
                 </div>
             </div>
 
