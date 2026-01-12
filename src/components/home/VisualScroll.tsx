@@ -109,7 +109,7 @@ export default function VisualScroll() {
                                 Apple Music
                             </a>
                             {/* Added Amazon Music as requested */}
-                            <a href="https://music.amazon.com/artists/B0DJT2W25L/singit-pop" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#232F3E', borderColor: '#232F3E', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+                            <a href="https://music.amazon.co.uk/artists/B0DJQGWQQ4/singit-pop?marketplaceId=A1F83G8C2ARO7P&musicTerritory=GB&ref=dm_sh_T2Ytj5Mo7nFMiL6ZqKSOsZycT" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#232F3E', borderColor: '#232F3E', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
                                 <span style={{ fontWeight: 'bold' }}>Amazon Music 🎵</span>
                             </a>
                         </div>
