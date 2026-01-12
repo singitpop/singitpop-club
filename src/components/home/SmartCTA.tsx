@@ -48,7 +48,7 @@ export default function SmartCTA() {
                         <span className={styles.price}>£9.99<small>/mo</small></span>
                     </div>
                     <ul className={styles.features}>
-                        <li>✅ <strong>Releasio AI Music Artist Assistant</strong></li>
+                        <li>✅ <strong>Releasio Music Artist AI</strong></li>
                         <li>✅ Lyrics Creator, Image Prompts & Marketing Tools</li>
                         <li>✅ Plus all Premium perks</li>
                     </ul>
