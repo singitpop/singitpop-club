@@ -16,12 +16,6 @@ export default function AboutPage() {
                     <h3>The Origin</h3>
                     <p>
                         I'm already deaf in my right ear, with my left ear fading. Music is my therapy, my expression, and my legacy.
-                        I knew I had to create now—before complete silence takes over.
-                    </p>
-                    <p>
-                        Second, it's a tribute. My son and I used to drive together, singing at the top
-                        of our lungs in the car. It was our thing. He always called me "Pops."
-                        <strong> "SingIt Pop" is for him.</strong>
                     </p>
 
                     <h3>The Sound</h3>
