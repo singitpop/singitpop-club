@@ -77,28 +77,45 @@
 }
 
 .heading {
+    background: var(--primary);
+    margin: 0 auto 2rem;
+    border-radius: 2px;
+}
+
+.heading {
     font-size: 3.5rem;
     font-weight: 900;
     margin-bottom: 1.5rem;
     background: linear-gradient(to right, #fff, #a78bfa);
+    background-clip: text;
+    /* Standard property */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -1px;
 }
 
-.text {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2rem;
-}
+@media (max-width: 768px) {
+    .parallaxSection {
+        width: 100%;
+        left: auto;
+        right: auto;
+        margin-left: 0;
+        margin-right: 0;
+        height: auto;
+        min-height: 400px;
+    }
 
-.divider {
-    width: 60px;
-    height: 4px;
-    background: var(--primary);
-    margin: 0 auto 2rem;
-    border-radius: 2px;
+    .text {
+        font-size: 1rem;
+    }
+
+    .glassCard {
+        padding: 2rem;
+    }
+
+    .heading {
+        font-size: 2rem;
+    }
 }
 
 .signature {
