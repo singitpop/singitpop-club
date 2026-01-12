@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Music, Zap, User, Disc } from 'lucide-react';
+import { Home, Music, Zap, ShoppingBag, Disc } from 'lucide-react';
 import styles from './MobileNav.module.css';
 
 export default function MobileNav() {
@@ -30,8 +30,8 @@ export default function MobileNav() {
             </Link>
 
             <Link href="/shop" className={`${styles.item} ${pathname.startsWith('/shop') ? styles.active : ''}`}>
-                <User size={24} /> // Using User icon for "Club/Shop" for now
-                <span>Club</span>
+                <ShoppingBag size={24} />
+                <span>Shop</span>
             </Link>
         </nav>
     );
