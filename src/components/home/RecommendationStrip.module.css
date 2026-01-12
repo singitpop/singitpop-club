@@ -64,7 +64,8 @@
 }
 
 .reason {
-    color: var(--primary);
+    color: #d8b4fe;
+    /* Brighter Lavender for better visibility */
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
