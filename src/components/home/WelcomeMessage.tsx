@@ -16,7 +16,7 @@ export default function WelcomeMessage() {
                     <div className={styles.divider} />
                     <strong className={styles.signature}>
                         Let's make some noise! <br />
-                        <span style={{ display: 'block', marginTop: '0.5rem' }}>— SingIt Pop</span>
+                        <span style={{ display: 'block', marginTop: '0.5rem' }}>SingIt Pop</span>
                     </strong>
                 </div>
             </div>
