@@ -1,0 +1,210 @@
+{
+  "summary": {
+    "excelAlbums": 50,
+    "folders": 67,
+    "matched": 39,
+    "unmatchedAlbums": 11,
+    "unmatchedFolders": 28
+  },
+  "unmatchedAlbums": [
+    "Night Drive: 80s Beats & Ballads",
+    "Forever Starts Today (Country Music for Weddings)",
+    "Heartstrings & Harmonies",
+    "Popstar Winter Wonderland",
+    "Once Upon a Melody Inspired by Disney Fairy Tales",
+    "Echoes of Us",
+    "Heartland Rhythms",
+    "Wildcards and Whiskey",
+    "October Boots & Fall Roots",
+    "Dance of the Night",
+    "Soft Hearts in Slow Motion"
+  ],
+  "unmatchedFolders": [
+    "A Love That Never Ends",
+    "Always and Forever",
+    "Between the lines of love 2024 - Live",
+    "Canal Drift - A Journey in Twelve Instrumentals",
+    "Country Singles",
+    "Covers",
+    "EDM Album - in progress",
+    "Echos Of Us",
+    "Endless Rhythm",
+    "Forever In Harmony",
+    "Forever Starts Today - Country Album2024 - Live",
+    "Golden Echoes",
+    "Golden Hour in the Valley",
+    "Hallowave Dance of the shadows",
+    "Happily Ever After Dreams",
+    "Heartland Rythms",
+    "Kynren",
+    "Musico-v3-4",
+    "Night Drive - 80s Beats & Ballads 2024 - Live",
+    "October Boots and Fall Roots",
+    "Pop Album",
+    "Pop Star Winter Wonderland 2024 - Live",
+    "Releasio",
+    "Ring Tones",
+    "Rock Album",
+    "Royalties",
+    "Stillness Across Borders",
+    "Wildcards & Whiskey"
+  ],
+  "matched": [
+    {
+      "album": "Waves of Tranquility Deep House Reflections",
+      "folder": "Waves of Tranquility Deep House Reflections"
+    },
+    {
+      "album": "Boots and Beats Country Line Dance Anthems",
+      "folder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+    },
+    {
+      "album": "Highways of the Heart",
+      "folder": "Highways of the Heart"
+    },
+    {
+      "album": "Whispers of the Heart Country Ballads for the Soul",
+      "folder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+    },
+    {
+      "album": "Neon Dreams",
+      "folder": "Neon Dreams"
+    },
+    {
+      "album": "Love In Bloom",
+      "folder": "Love in Bloom"
+    },
+    {
+      "album": "Starlight Frequencies",
+      "folder": "Starlight Frequencies"
+    },
+    {
+      "album": "Heartlines",
+      "folder": "Heartlines"
+    },
+    {
+      "album": "Spring Awakening",
+      "folder": "Spring Awakening"
+    },
+    {
+      "album": "Empire Under lights",
+      "folder": "Empire Under Lights"
+    },
+    {
+      "album": "Ethereal Highlands",
+      "folder": "Ethereal Highlands"
+    },
+    {
+      "album": "Golden Hour",
+      "folder": "Golden Hour"
+    },
+    {
+      "album": "Eternal Summer",
+      "folder": "Eternal Summer"
+    },
+    {
+      "album": "Glass Bloom",
+      "folder": "Glass Bloom"
+    },
+    {
+      "album": "Summer Fever ",
+      "folder": "Summer fever"
+    },
+    {
+      "album": "Limitless",
+      "folder": "Limitless"
+    },
+    {
+      "album": "Line Dancing After Dark",
+      "folder": "Line Dancing After Dark"
+    },
+    {
+      "album": "Endless Glow",
+      "folder": "Endless Glow"
+    },
+    {
+      "album": "Dust and Diamonds ",
+      "folder": "Dust and Diamonds "
+    },
+    {
+      "album": "Midnight Motion",
+      "folder": "Midnight Motion"
+    },
+    {
+      "album": "Southern Lights",
+      "folder": "Southern Lights"
+    },
+    {
+      "album": "September Moves",
+      "folder": "September Moves"
+    },
+    {
+      "album": "Winding Roads",
+      "folder": "Winding Roads"
+    },
+    {
+      "album": "Falling for October",
+      "folder": "Falling for October "
+    },
+    {
+      "album": "The Long Way Home",
+      "folder": "The Long Way Home"
+    },
+    {
+      "album": "Echoes in the Firelight",
+      "folder": "Echoes in the Firelight "
+    },
+    {
+      "album": "Live At Autumn Lights",
+      "folder": "Live at Autumn Lights Festival"
+    },
+    {
+      "album": "November Nights",
+      "folder": "November Nights"
+    },
+    {
+      "album": "Shadows and Fires",
+      "folder": "Shadows and Fires"
+    },
+    {
+      "album": "Electric Sleigh",
+      "folder": "Electric Sleigh"
+    },
+    {
+      "album": "Snowfall and Steel Strings",
+      "folder": "Snowfall and Steel Strings"
+    },
+    {
+      "album": "New Year's Odyssey",
+      "folder": "New Year’s Odyssey"
+    },
+    {
+      "album": "Step Into the Light",
+      "folder": "Live Step Into the Light"
+    },
+    {
+      "album": "Valentine Country",
+      "folder": "Valentine Country"
+    },
+    {
+      "album": "Desert Winds And Open Roads",
+      "folder": "Desert Winds And Open Roads"
+    },
+    {
+      "album": "Echoes of Light",
+      "folder": "Echoes Of Light"
+    },
+    {
+      "album": "Spring Begins Inside You",
+      "folder": "Spring Begins Inside You"
+    },
+    {
+      "album": "Heart of the Sky Drums",
+      "folder": "Heart of the Sky Drums"
+    },
+    {
+      "album": "Through the Glass",
+      "folder": "Through The Glass"
+    }
+  ]
+}

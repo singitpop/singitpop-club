@@ -1,58 +1,120 @@
 "use client";
 
 import { Play, Lock, Share2, Heart, Check, ShoppingBag } from 'lucide-react';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import styles from './SongList.module.css';
-
-const tracks = [
-    { id: 1, title: 'Southern Lights', duration: '3:45', plays: '1.2M', locked: false, price: 0.99, genre: 'Country', audioUrl: '/audio/southern-lights.mp3', highResUrl: '/audio/southern-lights-hires.wav' },
-    { id: 2, title: 'Whiskey Slide', duration: '3:12', plays: '850K', locked: true, price: 0.99, genre: 'Country', audioUrl: '/audio/whiskey-slide.mp3', highResUrl: '/audio/whiskey-slide-hires.wav' },
-    { id: 3, title: 'Neon Heart', duration: '2:58', plays: '2.1M', locked: true, price: 0.99, genre: 'EDM', audioUrl: '/audio/neon-heart.mp3', highResUrl: '/audio/neon-heart-hires.wav' },
-    { id: 4, title: 'Midnight Drive', duration: '4:02', plays: '500K', locked: true, price: 0.99, genre: 'Rock', audioUrl: '/audio/midnight-drive.mp3', highResUrl: '/audio/midnight-drive-hires.wav' },
-    { id: 5, title: 'Electric Soul', duration: '3:30', plays: '300K', locked: true, price: 0.99, genre: 'EDM', audioUrl: '/audio/electric-soul.mp3', highResUrl: '/audio/electric-soul-hires.wav' },
-    { id: 6, title: 'Retrograde', duration: '3:15', plays: '420K', locked: true, price: 0.99, genre: 'Chill', audioUrl: '/audio/retrograde.mp3', highResUrl: '/audio/retrograde-hires.wav' },
-];
+import { Track } from '@/data/albumData';
 
 interface SongListProps {
-    albumTitle: string;
-    selectedGenre: string | null;
+    tracks: Track[];
+    filterMode?: 'all' | 'trending' | 'favorites' | 'latest';
 }
 
-export default function SongList({ albumTitle, selectedGenre }: SongListProps) {
+const MAX_MIXTAPE_TRACKS = 12;
+
+export default function SongList({ tracks, filterMode = 'all' }: SongListProps) {
     const { isPro, isInsider } = useAuth();
+    const [isPlaying, setIsPlaying] = useState(false);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
     const [activeTrack, setActiveTrack] = useState<number | null>(null);
     const [selectedTracks, setSelectedTracks] = useState<number[]>([]);
 
-    const toggleSelection = (id: number) => {
-        setSelectedTracks(prev =>
-            prev.includes(id) ? prev.filter(tid => tid !== id) : [...prev, id]
-        );
+    useEffect(() => {
+        if (activeTrack && audioRef.current) {
+            if (isPlaying) {
+                const playPromise = audioRef.current.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.error("Playback failed:", error);
+                        setIsPlaying(false);
+                    });
+                }
+            } else {
+                audioRef.current.pause();
+            }
+        }
+    }, [isPlaying, activeTrack]);
+
+    const handlePlay = (track: Track) => {
+        if (activeTrack === track.id) {
+            setIsPlaying(!isPlaying);
+        } else {
+            setActiveTrack(track.id);
+            setIsPlaying(true);
+        }
     };
 
+    const toggleSelection = (id: number) => {
+        setSelectedTracks(prev => {
+            if (prev.includes(id)) {
+                return prev.filter(tid => tid !== id);
+            } else {
+                if (prev.length >= MAX_MIXTAPE_TRACKS) {
+                    alert(`Maximum ${MAX_MIXTAPE_TRACKS} tracks allowed per mixtape!`);
+                    return prev;
+                }
+                return [...prev, id];
+            }
+        });
+    };
+
+    // Filter Logic
+    const filteredTracks = tracks.filter(track => {
+        if (filterMode === 'all') return true;
+        if (filterMode === 'trending') return track.title === 'Southern Lights' || track.title === 'Neon Heart'; // Mock logic
+        if (filterMode === 'favorites') return track.plays.includes('M'); // Mock logic: >1M plays
+        if (filterMode === 'latest') return track.title === 'Southern Lights'; // Mock logic
+        return true;
+    });
+
     const totalPrice = (selectedTracks.length * 0.99).toFixed(2);
+
+    // Find the active track data
+    const currentTrackData = tracks.find(t => t.id === activeTrack);
 
     return (
         <div className={styles.container}>
             <h2 className={styles.sectionTitle}>Build Your Mixtape</h2>
+            {/* Hidden Audio Element */}
+            <audio
+                ref={audioRef}
+                src={currentTrackData?.audioUrl}
+                onEnded={() => setIsPlaying(false)}
+                onTimeUpdate={(e) => {
+                    if (!isPro && !isInsider && e.currentTarget.currentTime >= 30) {
+                        e.currentTarget.pause();
+                        setIsPlaying(false);
+                        alert("Preview ended. Join the Club to listen to the full track!");
+                        e.currentTarget.currentTime = 0; // Reset
+                    }
+                }}
+                onError={(e) => console.error("Audio error:", e.currentTarget.error)}
+            />
+
             <p className={styles.subtitle} style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
                 Select tracks to create your custom digital album.
             </p>
 
             <div className={styles.list}>
-                {tracks
-                    .filter(track => !selectedGenre || track.genre === selectedGenre)
-                    .map((track) => {
+                {filteredTracks.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>No tracks found.</div>
+                ) : (
+                    filteredTracks.map((track, index) => {
                         const isSelected = selectedTracks.includes(track.id);
                         const isLocked = track.locked && !isPro;
+                        const isCurrentTrack = activeTrack === track.id;
 
                         return (
                             <div
                                 key={track.id}
-                                className={`${styles.row} ${activeTrack === track.id ? styles.active : ''} ${isLocked ? styles.locked : ''}`}
-                                onClick={() => !isLocked && setActiveTrack(track.id)}
-                                style={{ opacity: isLocked ? 0.6 : 1, cursor: isLocked ? 'not-allowed' : 'pointer' }}
+                                className={`${styles.row} ${isCurrentTrack ? styles.active : ''} ${isLocked ? styles.locked : ''}`}
+                                onClick={() => !isLocked && handlePlay(track)}
+                                style={{
+                                    opacity: isLocked ? 0.6 : 1,
+                                    cursor: isLocked ? 'not-allowed' : 'pointer',
+                                    '--index': index
+                                } as React.CSSProperties}
                             >
                                 <div
                                     className={`${styles.checkbox} ${isSelected ? styles.checked : ''}`}
@@ -63,12 +125,14 @@ export default function SongList({ albumTitle, selectedGenre }: SongListProps) {
 
                                 <div className={styles.mainInfo}>
                                     <button className={styles.playBtn} onClick={(e) => {
+                                        e.stopPropagation();
                                         if (isLocked) {
-                                            e.stopPropagation();
                                             alert("Join the Club to unlock this track!");
+                                        } else {
+                                            handlePlay(track);
                                         }
                                     }}>
-                                        {isLocked ? <Lock size={16} /> : <Play size={16} fill="currentColor" />}
+                                        {isLocked ? <Lock size={16} /> : (isCurrentTrack && isPlaying ? <span style={{ fontSize: '10px' }}>❚❚</span> : <Play size={16} fill="currentColor" />)}
                                     </button>
                                     <div>
                                         <div className={styles.trackTitle}>{track.title}</div>
@@ -88,6 +152,7 @@ export default function SongList({ albumTitle, selectedGenre }: SongListProps) {
                                             className={styles.actionBtn}
                                             title={isPro ? "Download High-Res WAV" : "Download MP3"}
                                             download
+                                            onClick={(e) => e.stopPropagation()} // Prevent row click
                                         >
                                             <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>
                                                 {isPro ? 'WAV' : 'MP3'}
@@ -100,24 +165,50 @@ export default function SongList({ albumTitle, selectedGenre }: SongListProps) {
                                 </div>
                             </div>
                         );
-                    })}
+                    })
+                )}
             </div>
 
             <div className={`${styles.mixtapeBar} ${selectedTracks.length > 0 ? styles.visible : ''}`}>
                 <ShoppingBag size={24} color="var(--accent)" />
                 <div className={styles.mixtapeInfo}>
-                    <span className={styles.mixtapeCount}>{selectedTracks.length} Tracks Selected</span>
+                    <span className={styles.mixtapeCount}>
+                        {selectedTracks.length}/{MAX_MIXTAPE_TRACKS} Tracks Selected
+                    </span>
                     <span className={styles.mixtapeTotal}>Total: £{totalPrice}</span>
                 </div>
-                <button
-                    className={styles.checkoutBtn}
-                    onClick={() => {
-                        // In V1, we redirect to the main shop for bundle purchase
-                        window.location.href = '/shop';
-                    }}
-                >
-                    Checkout (Visit Shop)
-                </button>
+                <div className={styles.purchaseOptions}>
+                    <button
+                        className={styles.optionBtn}
+                        onClick={() => {
+                            if (selectedTracks.length === 0) return;
+                            window.location.href = `/music/checkout?type=cd&tracks=${selectedTracks.join(',')}`;
+                        }}
+                        title="Physical CD - £12.99"
+                    >
+                        💿 CD
+                    </button>
+                    <button
+                        className={styles.optionBtn}
+                        onClick={() => {
+                            if (selectedTracks.length === 0) return;
+                            window.location.href = `/music/checkout?type=vinyl&tracks=${selectedTracks.join(',')}`;
+                        }}
+                        title="Vinyl Record - £24.99"
+                    >
+                        🎵 Vinyl
+                    </button>
+                    <button
+                        className={`${styles.optionBtn} ${styles.primary}`}
+                        onClick={() => {
+                            if (selectedTracks.length === 0) return;
+                            window.location.href = `/music/checkout?type=download&tracks=${selectedTracks.join(',')}`;
+                        }}
+                        title={`Digital Download - £${totalPrice}`}
+                    >
+                        ⬇️ Download
+                    </button>
+                </div>
             </div>
         </div>
     );
