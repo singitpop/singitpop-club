@@ -113,11 +113,14 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-|-$/g, '');
 
-    // Get MP3 files from folder for matching
-    let mp3Files = [];
+    // Get Audio files from folder for matching (MP3 or WAV)
+    let audioFiles = [];
     try {
-        mp3Files = fs.readdirSync(folderPath)
-            .filter(file => file.toLowerCase().endsWith('.mp3'))
+        audioFiles = fs.readdirSync(folderPath)
+            .filter(file => {
+                const ext = file.toLowerCase();
+                return ext.endsWith('.mp3') || ext.endsWith('.wav');
+            })
             .sort();
     } catch (e) {
         console.log(`   ⚠️  Could not read folder: ${matchingFolder}`);
@@ -142,7 +145,7 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
         tracks: [],
         releaseDate: `${year}-01-01`,
         folderPath: matchingFolder,
-        mp3Count: mp3Files.length
+        mp3Count: audioFiles.length
     };
 
     // Add tracks
@@ -154,16 +157,31 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
 
         const trackNum = String(track.trackNumber || index + 1).padStart(2, '0');
 
-        // Use S3 URL structure
+        // Default S3 URL structure (fallback to mp3)
         let filename = `${trackNum}-${trackSlug}.mp3`;
 
         // Try to find matching file in physical folder to get exact filename case
-        if (mp3Files.length > 0) {
-            const matchingFile = mp3Files.find(f =>
-                f.toLowerCase().includes(track.title.toLowerCase()) ||
-                f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
+        if (audioFiles.length > 0) {
+            // Priority: Exact match > Partial match
+            // Priority: MP3 > WAV
+
+            // 1. Try to find exact title match
+            let matchingFile = audioFiles.find(f =>
+                f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
+                f.toLowerCase() === track.title.toLowerCase()
             );
-            if (matchingFile) filename = matchingFile;
+
+            // 2. If not found, try includes
+            if (!matchingFile) {
+                matchingFile = audioFiles.find(f =>
+                    f.toLowerCase().includes(track.title.toLowerCase()) ||
+                    f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
+                );
+            }
+
+            if (matchingFile) {
+                filename = matchingFile;
+            }
         }
 
         albums[albumSlug].tracks.push({
@@ -180,7 +198,7 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
         });
     });
 
-    console.log(`   ✅ ${albumName} (${year}) - ${tracks.length} tracks, ${mp3Files.length} MP3s`);
+    console.log(`   ✅ ${albumName} (${year}) - ${tracks.length} tracks, ${audioFiles.length} Audio Files`);
 }
 
 // Convert to array and sort by year (newest first)
