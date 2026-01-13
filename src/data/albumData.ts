@@ -9,28 +9,31 @@
  */
 
 export interface Track {
-    id: number;
-    title: string;
-    duration: string;
-    plays: string;
-    locked: boolean;
-    price: number;
-    genre: string;
-    audioUrl: string;
-    highResUrl?: string;
+  id: number;
+  title: string;
+  duration: string;
+  plays: string;
+  locked: boolean;
+  price: number;
+  genre: string;
+  audioUrl: string;
+  highResUrl?: string;
+  sourceFolder?: string;
 }
 
 export interface Album {
-    id: string;
-    title: string;
-    year: number;
-    genre: string[];
-    coverArt: string;
-    tracks: Track[];
-    releaseDate: string;
-    description?: string;
-    featured?: boolean;
-    trending?: boolean;
+  id: string;
+  title: string;
+  year: number;
+  genre: string[];
+  coverArt: string;
+  tracks: Track[];
+  releaseDate: string;
+  description?: string;
+  featured?: boolean;
+  trending?: boolean;
+  folderPath?: string;
+  mp3Count?: number;
 }
 
 export const albums: Album[] = [
@@ -6595,37 +6598,37 @@ export const albums: Album[] = [
 
 // Helper functions
 export function getAlbumById(id: string): Album | undefined {
-    return albums.find(album => album.id === id);
+  return albums.find(album => album.id === id);
 }
 
 export function getAlbumsByGenre(genre: string): Album[] {
-    return albums.filter(album => 
-        album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
-    );
+  return albums.filter(album =>
+    album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
+  );
 }
 
 export function getAlbumsByYear(year: number): Album[] {
-    return albums.filter(album => album.year === year);
+  return albums.filter(album => album.year === year);
 }
 
 export function searchAlbums(query: string): Album[] {
-    const lowerQuery = query.toLowerCase();
-    return albums.filter(album =>
-        album.title.toLowerCase().includes(lowerQuery) ||
-        album.tracks.some(track => track.title.toLowerCase().includes(lowerQuery))
-    );
+  const lowerQuery = query.toLowerCase();
+  return albums.filter(album =>
+    album.title.toLowerCase().includes(lowerQuery) ||
+    album.tracks.some(track => track.title.toLowerCase().includes(lowerQuery))
+  );
 }
 
 export function getAllGenres(): string[] {
-    const genres = new Set<string>();
-    albums.forEach(album => {
-        album.genre.forEach(g => genres.add(g));
-    });
-    return Array.from(genres).sort();
+  const genres = new Set<string>();
+  albums.forEach(album => {
+    album.genre.forEach(g => genres.add(g));
+  });
+  return Array.from(genres).sort();
 }
 
 export function getAllYears(): number[] {
-    const years = new Set<number>();
-    albums.forEach(album => years.add(album.year));
-    return Array.from(years).sort((a, b) => b - a);
+  const years = new Set<number>();
+  albums.forEach(album => years.add(album.year));
+  return Array.from(years).sort((a, b) => b - a);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ShoppingBag, Disc, Package, Download, Check } from 'lucide-react';
 import styles from './page.module.css';
@@ -20,7 +20,7 @@ const PRODUCT_TYPES = {
     download: { name: 'Digital Download', price: 0, icon: '⬇️', shipping: false }
 };
 
-export default function MixtapeCheckout() {
+function CheckoutContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const [selectedType, setSelectedType] = useState<'cd' | 'vinyl' | 'download'>('download');
@@ -77,34 +77,32 @@ export default function MixtapeCheckout() {
 
     if (orderPlaced) {
         return (
-            <div className={`container ${styles.page}`}>
-                <div className={styles.success}>
-                    <div className={styles.successIcon}>
-                        <Check size={64} />
-                    </div>
-                    <h1>Order Confirmed!</h1>
-                    <p>Thank you for your purchase. You'll receive a confirmation email shortly.</p>
-                    {needsShipping && (
-                        <p className={styles.shippingNote}>
-                            Your {PRODUCT_TYPES[selectedType].name} will be shipped to:<br />
-                            <strong>{formData.address}, {formData.city}, {formData.postcode}</strong>
-                        </p>
-                    )}
-                    {!needsShipping && (
-                        <p className={styles.downloadNote}>
-                            Download links have been sent to: <strong>{formData.email}</strong>
-                        </p>
-                    )}
-                    <button onClick={() => router.push('/music')} className="primary-button">
-                        Back to Music
-                    </button>
+            <div className={styles.success}>
+                <div className={styles.successIcon}>
+                    <Check size={64} />
                 </div>
+                <h1>Order Confirmed!</h1>
+                <p>Thank you for your purchase. You'll receive a confirmation email shortly.</p>
+                {needsShipping && (
+                    <p className={styles.shippingNote}>
+                        Your {PRODUCT_TYPES[selectedType].name} will be shipped to:<br />
+                        <strong>{formData.address}, {formData.city}, {formData.postcode}</strong>
+                    </p>
+                )}
+                {!needsShipping && (
+                    <p className={styles.downloadNote}>
+                        Download links have been sent to: <strong>{formData.email}</strong>
+                    </p>
+                )}
+                <button onClick={() => router.push('/music')} className="primary-button">
+                    Back to Music
+                </button>
             </div>
         );
     }
 
     return (
-        <div className={`container ${styles.page}`}>
+        <>
             <div className={styles.header}>
                 <ShoppingBag size={48} />
                 <h1>Mixtape Checkout</h1>
@@ -254,6 +252,16 @@ export default function MixtapeCheckout() {
                     </form>
                 </div>
             </div>
+        </>
+    );
+}
+
+export default function MixtapeCheckout() {
+    return (
+        <div className={`container ${styles.page}`}>
+            <Suspense fallback={<div>Loading checkout...</div>}>
+                <CheckoutContent />
+            </Suspense>
         </div>
     );
 }
