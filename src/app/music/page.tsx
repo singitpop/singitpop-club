@@ -21,8 +21,11 @@ export default function MusicPage() {
 
     // derive tracks based on state
     const { tracks, title } = useMemo(() => {
+        console.log(`[MusicPage] Recalculating. Filter: ${filterMode}, AlbumID: ${selectedAlbumId}`);
+
         if (filterMode === 'album' && selectedAlbumId) {
             const album = albums.find(a => a.id === selectedAlbumId);
+            console.log(`[MusicPage] Album Search Result:`, album ? `Found: ${album.title} (${album.tracks.length} tracks)` : 'Not Found');
             return {
                 tracks: album ? album.tracks : [],
                 title: album ? album.title : 'Album not found'
@@ -65,6 +68,7 @@ export default function MusicPage() {
     }, [filterMode, selectedAlbumId]);
 
     const handleSelectAlbum = (id: string) => {
+        console.log(`[MusicPage] handleSelectAlbum called with ID: ${id}`);
         setSelectedAlbumId(id);
         setFilterMode('album');
     };
