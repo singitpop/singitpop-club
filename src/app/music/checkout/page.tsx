@@ -149,7 +149,11 @@ function CheckoutContent() {
 
                     {/* Track List */}
                     <div className={styles.trackList}>
-                        <h3>Your Mixtape ({selectedTrackIds.length}/12 tracks)</h3>
+                        <h3>
+                            {selectedTrackIds.length > 12
+                                ? `Album Selection (${selectedTrackIds.length} tracks)`
+                                : `Your Mixtape (${selectedTrackIds.length}/12 tracks)`}
+                        </h3>
                         {selectedTrackDetails.map(track => (
                             <div key={track.id} className={styles.trackItem}>
                                 <span>{track.title}</span>

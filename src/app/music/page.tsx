@@ -167,11 +167,26 @@ export default function MusicPage() {
             <div className={styles.content}>
                 <div className={styles.main}>
                     <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <h2 style={{ fontSize: '1.8rem', fontWeight: 700 }}>{title}</h2>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <h2 style={{ fontSize: '1.8rem', fontWeight: 700 }}>{title}</h2>
+                            {filterMode === 'album' && (
+                                <span className="badge" style={{ background: 'var(--accent)', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem' }}>
+                                    {tracks.length} Tracks
+                                </span>
+                            )}
+                        </div>
+
                         {filterMode === 'album' && (
-                            <span className="badge" style={{ background: 'var(--accent)', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem' }}>
-                                {tracks.length} Tracks
-                            </span>
+                            <button
+                                className="primary-button"
+                                style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }}
+                                onClick={() => {
+                                    const allTrackIds = tracks.map(t => t.albumId ? `${t.albumId}:${t.id}` : String(t.id));
+                                    window.location.href = `/music/checkout?type=download&tracks=${allTrackIds.join(',')}`;
+                                }}
+                            >
+                                Buy Full Album (£{(tracks.reduce((sum, t) => sum + t.price, 0) * 0.8).toFixed(2)}) {/* 20% off full album */}
+                            </button>
                         )}
                     </div>
                     <SongList
