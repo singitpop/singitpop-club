@@ -165,19 +165,7 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                                     <span className={styles.duration}>{track.duration}</span>
 
                                     {/* Download Logic */}
-                                    {(isInsider || isPro) && (
-                                        <a
-                                            href={(isPro && track.highResUrl) ? track.highResUrl : track.audioUrl}
-                                            className={styles.actionBtn}
-                                            title={isPro ? "Download High-Res WAV" : "Download MP3"}
-                                            download
-                                            onClick={(e) => e.stopPropagation()} // Prevent row click
-                                        >
-                                            <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>
-                                                {isPro ? 'WAV' : 'MP3'}
-                                            </span>
-                                        </a>
-                                    )}
+                                    {/* Download button removed for Subscribers - Stream Only model */}
 
                                     <button className={styles.actionBtn}><Heart size={18} /></button>
                                     <button className={styles.actionBtn}><Share2 size={18} /></button>
