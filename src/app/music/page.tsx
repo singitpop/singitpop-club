@@ -21,11 +21,8 @@ export default function MusicPage() {
 
     // derive tracks based on state
     const { tracks, title } = useMemo(() => {
-        console.log(`[MusicPage] Recalculating. Filter: ${filterMode}, AlbumID: ${selectedAlbumId}`);
-
         if (filterMode === 'album' && selectedAlbumId) {
             const album = albums.find(a => a.id === selectedAlbumId);
-            console.log(`[MusicPage] Album Search Result:`, album ? `Found: ${album.title} (${album.tracks.length} tracks)` : 'Not Found');
             return {
                 tracks: album ? album.tracks : [],
                 title: album ? album.title : 'Album not found'
@@ -202,10 +199,6 @@ export default function MusicPage() {
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* DEBUG OVERLAY - Remove after fixing */}
-            <div style={{ position: 'fixed', bottom: 10, left: 10, background: 'red', color: 'white', padding: '10px', zIndex: 9999, opacity: 0.8, pointerEvents: 'none' }}>
-                DEBUG: Mode={filterMode} | AlbumID={selectedAlbumId} | Tracks={tracks.length} | Title={title}
             </div>
         </div>
     );

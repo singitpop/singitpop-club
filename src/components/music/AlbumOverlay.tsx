@@ -75,8 +75,6 @@ export default function AlbumOverlay({ isOpen, onClose, albums, onSelectAlbum }:
                             key={album.id}
                             className={styles.card}
                             onClick={() => {
-                                // alert(`Debug: Selected ${album.title} (${album.id})`); // PROACTIVE DEBUGGING
-                                console.log('Overlay clicked:', album.id);
                                 onSelectAlbum(album.id, album.title);
                                 onClose();
                             }}
