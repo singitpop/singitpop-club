@@ -19,9 +19,42 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [activeTrack, setActiveTrack] = useState<number | null>(null);
     const [selectedTracks, setSelectedTracks] = useState<number[]>([]);
+    const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
+
+    // Fetch Signed URL when active track changes
+    useEffect(() => {
+        async function fetchSignedUrl() {
+            if (!activeTrack) return;
+            const track = tracks.find(t => t.id === activeTrack);
+            if (!track || !track.audioUrl) return;
+
+            try {
+                const res = await fetch('/api/music/sign', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: track.audioUrl })
+                });
+                const data = await res.json();
+                if (data.signedUrl) {
+                    setCurrentSignedUrl(data.signedUrl);
+                    setIsPlaying(true); // Start playing once signed
+                } else {
+                    console.error("Failed to sign URL:", data.error);
+                }
+            } catch (e) {
+                console.error("Signing request failed", e);
+            }
+        }
+
+        if (activeTrack) {
+            fetchSignedUrl();
+        } else {
+            setCurrentSignedUrl(null);
+        }
+    }, [activeTrack, tracks]);
 
     useEffect(() => {
-        if (activeTrack && audioRef.current) {
+        if (activeTrack && audioRef.current && currentSignedUrl) {
             if (isPlaying) {
                 const playPromise = audioRef.current.play();
                 if (playPromise !== undefined) {
@@ -34,14 +67,15 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
                 audioRef.current.pause();
             }
         }
-    }, [isPlaying, activeTrack]);
+    }, [isPlaying, activeTrack, currentSignedUrl]);
 
     const handlePlay = (track: Track) => {
         if (activeTrack === track.id) {
             setIsPlaying(!isPlaying);
         } else {
+            setIsPlaying(false); // Stop asking for previous track
             setActiveTrack(track.id);
-            setIsPlaying(true);
+            // Effect will trigger fetching signed URL, then set isPlaying to true
         }
     };
 
@@ -79,7 +113,7 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
             {/* Hidden Audio Element */}
             <audio
                 ref={audioRef}
-                src={currentTrackData?.audioUrl}
+                src={currentSignedUrl || undefined}
                 onEnded={() => setIsPlaying(false)}
                 onTimeUpdate={(e) => {
                     if (!isPro && !isInsider && e.currentTarget.currentTime >= 30) {

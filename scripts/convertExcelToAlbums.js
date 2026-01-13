@@ -20,7 +20,7 @@ const path = require('path');
 
 const ALBUMS_SOURCE_DIR = '/Users/garybirrell/Desktop/Singitpop';
 const EXCEL_PATH = '/Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx';
-const S3_BUCKET_URL = 'https://singitpop-music.s3.us-east-1.amazonaws.com';
+const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
 
 console.log('🎵 Starting album data conversion...\n');
 
