@@ -28,7 +28,7 @@ const findTrackById = (compositeId: string): Track | undefined => {
 };
 
 const PRODUCT_TYPES = {
-    download: { name: 'Digital Download (Mixtape)', price: 8.99, icon: '⬇️', shipping: false }
+    download: { name: 'Mixtape Purchase', price: 8.99, icon: '📼', shipping: false }
 };
 
 function CheckoutContent() {

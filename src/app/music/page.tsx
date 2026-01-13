@@ -119,7 +119,7 @@ export default function MusicPage() {
                         backdropFilter: 'blur(10px)'
                     }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <span style={{ fontSize: '1.2rem' }}>💿</span>
+                            <span style={{ fontSize: '1.2rem' }}>📼</span>
                             <div>
                                 <strong>Your Custom Mixtape</strong>
                                 <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
@@ -133,7 +133,7 @@ export default function MusicPage() {
                                 style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
                                 onClick={() => window.location.href = `/music/checkout?type=download&tracks=${selectedTracks.join(',')}`}
                             >
-                                Buy Mixtape (£{mixtapePrice})
+                                Purchase Mixtape (£{mixtapePrice})
                             </button>
                         </div>
                     </div>
@@ -183,7 +183,7 @@ export default function MusicPage() {
                                     window.location.href = `/music/checkout?type=download&tracks=${allTrackIds.join(',')}`;
                                 }}
                             >
-                                Buy Full Album (£{siteContent.musicPage.prices.album.toFixed(2)})
+                                Purchase Full Album (£{siteContent.musicPage.prices.album.toFixed(2)})
                             </button>
                         )}
                     </div>

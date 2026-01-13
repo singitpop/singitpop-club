@@ -28,8 +28,17 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
 
     // Fetch Signed URL when active track changes
     useEffect(() => {
+        let isCancelled = false;
+
         async function fetchSignedUrl() {
-            if (!activeTrackId) return;
+            if (!activeTrackId) {
+                setCurrentSignedUrl(null);
+                return;
+            }
+
+            // Clear previous URL immediately to avoid playing stale audio
+            setCurrentSignedUrl(null);
+
             const track = tracks.find(t => getUniqueId(t) === activeTrackId);
             if (!track || !track.audioUrl) return;
 
@@ -40,22 +49,29 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                     body: JSON.stringify({ url: track.audioUrl })
                 });
                 const data = await res.json();
-                if (data.signedUrl) {
-                    setCurrentSignedUrl(data.signedUrl);
-                    setIsPlaying(true); // Start playing once signed
-                } else {
-                    console.error("Failed to sign URL:", data.error);
+
+                if (!isCancelled) {
+                    if (data.signedUrl) {
+                        setCurrentSignedUrl(data.signedUrl);
+                        setIsPlaying(true); // Start playing once signed
+                    } else {
+                        console.error("Failed to sign URL:", data.error);
+                        setIsPlaying(false);
+                    }
                 }
             } catch (e) {
-                console.error("Signing request failed", e);
+                if (!isCancelled) {
+                    console.error("Signing request failed", e);
+                    setIsPlaying(false);
+                }
             }
         }
 
-        if (activeTrackId) {
-            fetchSignedUrl();
-        } else {
-            setCurrentSignedUrl(null);
-        }
+        fetchSignedUrl();
+
+        return () => {
+            isCancelled = true;
+        };
     }, [activeTrackId, tracks]);
 
     useEffect(() => {
@@ -100,13 +116,15 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                 src={currentSignedUrl || undefined}
                 onEnded={() => setIsPlaying(false)}
                 onTimeUpdate={(e) => {
-                    if (!isPro && !isInsider && e.currentTarget.currentTime >= 30) {
+                    // Enforce 30s preview for EVERYONE (Store-Only model)
+                    if (e.currentTarget.currentTime >= 30) {
                         e.currentTarget.pause();
                         setIsPlaying(false);
-                        alert("Preview ended. Join the Club to listen to the full track!");
-                        e.currentTarget.currentTime = 0; // Reset
+                        console.log("Preview ended.");
+                        e.currentTarget.currentTime = 0;
                     }
                 }}
+
                 onError={(e) => console.error("Audio error:", e.currentTarget.error)}
             />
 
@@ -182,38 +200,18 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                     <span className={styles.mixtapeCount}>
                         {selectedTracks.length}/{MAX_MIXTAPE_TRACKS} Tracks Selected
                     </span>
-                    <span className={styles.mixtapeTotal}>Total: £{totalPrice}</span>
+                    <span className={styles.mixtapeTotal}>Price: £8.99</span>
                 </div>
                 <div className={styles.purchaseOptions}>
-                    <button
-                        className={styles.optionBtn}
-                        onClick={() => {
-                            if (selectedTracks.length === 0) return;
-                            window.location.href = `/music/checkout?type=cd&tracks=${selectedTracks.join(',')}`;
-                        }}
-                        title="Physical CD - £12.99"
-                    >
-                        💿 CD
-                    </button>
-                    <button
-                        className={styles.optionBtn}
-                        onClick={() => {
-                            if (selectedTracks.length === 0) return;
-                            window.location.href = `/music/checkout?type=vinyl&tracks=${selectedTracks.join(',')}`;
-                        }}
-                        title="Vinyl Record - £24.99"
-                    >
-                        🎵 Vinyl
-                    </button>
                     <button
                         className={`${styles.optionBtn} ${styles.primary}`}
                         onClick={() => {
                             if (selectedTracks.length === 0) return;
                             window.location.href = `/music/checkout?type=download&tracks=${selectedTracks.join(',')}`;
                         }}
-                        title={`Digital Download - £${totalPrice}`}
+                        title="Purchase Mixtape - £8.99"
                     >
-                        ⬇️ Download
+                        Purchase Mixtape (£8.99)
                     </button>
                 </div>
             </div>
