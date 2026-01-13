@@ -169,6 +169,14 @@ export default function MusicPage() {
 
             <div className={styles.content}>
                 <div className={styles.main}>
+                    <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <h2 style={{ fontSize: '1.8rem', fontWeight: 700 }}>{title}</h2>
+                        {filterMode === 'album' && (
+                            <span className="badge" style={{ background: 'var(--accent)', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem' }}>
+                                {tracks.length} Tracks
+                            </span>
+                        )}
+                    </div>
                     <SongList
                         tracks={tracks}
                         selectedTracks={selectedTracks}
