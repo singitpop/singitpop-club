@@ -6,40 +6,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import styles from './VisualScroll.module.css';
 
-const items = [
-    {
-        id: 1,
-        title: "Desert Winds & Open Roads",
-        subtitle: "Latest Studio Album",
-        image: "/images/album-desert-winds.jpg",
-        action: "modal", // Trigger streaming modal
-        cta: "Stream Now 🎧"
-    },
-    {
-        id: 2,
-        title: "Whiskey & Wild Horses",
-        subtitle: "Latest Single",
-        image: "/images/single-whiskey.jpg",
-        action: "modal", // Trigger streaming modal
-        cta: "Stream Now 🎧"
-    },
-    {
-        id: 3,
-        title: "Step into the Light",
-        subtitle: "Live Country Album",
-        image: "/images/album-step-live.jpg",
-        action: "modal",
-        cta: "Stream Now 🎧" // Updated from Stream Live
-    },
-    {
-        id: 4,
-        title: "Official Store",
-        subtitle: "Merch & Vinyl",
-        image: "/images/merch-visual.png",
-        link: "/shop",
-        cta: "Shop Official Merch ✨" // Updated text and icon
-    }
-];
+import { siteContent } from '@/config/siteContent';
+
+const items = siteContent.hero.cards;
 
 export default function VisualScroll() {
     const [showModal, setShowModal] = useState(false);
@@ -100,7 +69,7 @@ export default function VisualScroll() {
                         <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Stream on your favorite service</p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <a href="https://open.spotify.com/artist/4RbG3nPMT1J5zrNxzNxHGC?si=q939_iaXSH-9_Qqsm_vW5A" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#1DB954', borderColor: '#1DB954', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+                            <a href="https://open.spotify.com/artist/4RbG3nPMT1J5zrNxzNxHGC" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#1DB954', borderColor: '#1DB954', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" /></svg>
                                 Spotify
                             </a>
@@ -109,7 +78,7 @@ export default function VisualScroll() {
                                 Apple Music
                             </a>
                             {/* Added Amazon Music as requested */}
-                            <a href="https://music.amazon.co.uk/artists/B0DJQGWQQ4/singit-pop?marketplaceId=A1F83G8C2ARO7P&musicTerritory=GB&ref=dm_sh_T2Ytj5Mo7nFMiL6ZqKSOsZycT" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#232F3E', borderColor: '#232F3E', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+                            <a href="https://music.amazon.co.uk/artists/B0DJQGWQQ4" target="_blank" rel="noopener noreferrer" className="primary-button" style={{ background: '#232F3E', borderColor: '#232F3E', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
                                 <span style={{ fontWeight: 'bold' }}>Amazon Music 🎵</span>
                             </a>
                         </div>

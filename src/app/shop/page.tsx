@@ -5,7 +5,6 @@ import { useAuth } from '@/context/AuthContext';
 import styles from './page.module.css';
 
 const products = [
-    { id: 1, name: 'Velvet Frequency (On-Demand Vinyl)', price: 45.00, imageColor: 'linear-gradient(45deg, #7928CA, #FF0080)', proOnly: true, badge: 'ElasticStage 💿' },
     { id: 2, name: 'Midnight Tour Hoodie (Sustainable)', price: 65.00, imageColor: 'linear-gradient(45deg, #111, #333)', proOnly: false, badge: 'POD UK 🇬🇧' },
     { id: 3, name: 'Echoes Lyric Tee', price: 35.00, imageColor: 'linear-gradient(45deg, #fff, #eee)', proOnly: false, badge: 'POD UK 🇬🇧', link: 'https://teemill.com/store/singitpop' },
     { id: 4, name: 'Pro Member Pin Set', price: 15.00, imageColor: 'linear-gradient(45deg, #FFD700, #FDB931)', proOnly: true, badge: 'Exclusive' },

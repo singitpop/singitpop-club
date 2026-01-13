@@ -79,7 +79,7 @@ export default function ProjectsPage() {
                         <div className={styles.postContent}>
                             <span className={styles.date}>Jan 08, 2026</span>
                             <h3>Merch Drop Preview</h3>
-                            <p>Exclusive hoodies and vinyls dropping next week.</p>
+                            <p>Exclusive hoodies dropping next week.</p>
                         </div>
                     </div>
                 </div>

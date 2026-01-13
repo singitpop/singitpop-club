@@ -8,8 +8,10 @@ import Charts from '@/components/music/Charts';
 import styles from './page.module.css';
 import { albums } from '@/data/albumData';
 
+import { siteContent } from '@/config/siteContent';
+
 export default function MusicPage() {
-    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>('latest');
+    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(siteContent.musicPage.latestAlbumId);
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
@@ -30,10 +32,10 @@ export default function MusicPage() {
         }
 
         if (filterMode === 'latest') {
-            const latestAlbums = albums.slice(0, 1); // Get the absolute latest album
+            const latest = albums.find(a => a.id === siteContent.musicPage.latestAlbumId);
             return {
-                tracks: latestAlbums.flatMap(a => a.tracks), // Flatten tracks from the latest album
-                title: 'Latest Release'
+                tracks: latest ? latest.tracks : [],
+                title: latest ? `Latest Release: ${latest.title}` : 'Latest Release'
             };
         }
 
@@ -87,7 +89,8 @@ export default function MusicPage() {
         });
     };
 
-    const mixtapePrice = (selectedTracks.length * 0.99).toFixed(2);
+    // Fixed price for mixtape
+    const mixtapePrice = siteContent.musicPage.prices.mixtape.toFixed(2);
 
     return (
         <div className={`container ${styles.page}`}>
@@ -128,16 +131,9 @@ export default function MusicPage() {
                             <button
                                 className="primary-button"
                                 style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
-                                onClick={() => window.location.href = `/music/checkout?type=vinyl&tracks=${selectedTracks.join(',')}`}
+                                onClick={() => window.location.href = `/music/checkout?type=download&tracks=${selectedTracks.join(',')}`}
                             >
-                                Buy Vinyl (£24.99)
-                            </button>
-                            <button
-                                className="secondary-button"
-                                style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
-                                onClick={() => window.location.href = `/music/checkout?type=cd&tracks=${selectedTracks.join(',')}`}
-                            >
-                                Buy CD (£12.99)
+                                Buy Mixtape (£{mixtapePrice})
                             </button>
                         </div>
                     </div>
@@ -176,7 +172,9 @@ export default function MusicPage() {
                             )}
                         </div>
 
-                        {filterMode === 'album' && (
+
+
+                        {(filterMode === 'album' || filterMode === 'latest') && (
                             <button
                                 className="primary-button"
                                 style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }}
@@ -185,7 +183,7 @@ export default function MusicPage() {
                                     window.location.href = `/music/checkout?type=download&tracks=${allTrackIds.join(',')}`;
                                 }}
                             >
-                                Buy Full Album (£{(tracks.reduce((sum, t) => sum + t.price, 0) * 0.8).toFixed(2)}) {/* 20% off full album */}
+                                Buy Full Album (£{siteContent.musicPage.prices.album.toFixed(2)})
                             </button>
                         )}
                     </div>
@@ -203,9 +201,13 @@ export default function MusicPage() {
                     <div className={`glass-panel ${styles.promo}`}>
                         <h4>Stream Everywhere</h4>
                         <div className={styles.platforms} style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                            <a href="https://open.spotify.com/artist/7zC7VXVJ021c3y2C6G130a" target="_blank" rel="noopener noreferrer" className="secondary-button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: '#1DB954', borderColor: '#1DB954', color: '#FFF' }}>
+                            <a href="https://open.spotify.com/artist/4RbG3nPMT1J5zrNxzNxHGC" target="_blank" rel="noopener noreferrer" className="secondary-button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: '#1DB954', borderColor: '#1DB954', color: '#FFF' }}>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" /></svg>
                                 Spotify
+                            </a>
+                            <a href="https://music.apple.com/gb/artist/singit-pop/1772577862" target="_blank" rel="noopener noreferrer" className="secondary-button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: '#FA243C', borderColor: '#FA243C', color: '#FFF' }}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3.321 13.916c-.029.073-.396 1.341-.396 1.341s-1.042 3.511-3.953 3.511-3.667-2.906-3.667-4.406c0-2.438 1.958-5.354 5.25-5.354 1.76 0 2.875.927 2.875.927-.729-2.229-2.021-3.521-3.833-3.521-2.99 0-4.635 3.031-4.635 6.01 0 3.323 2.505 5.865 5.75 5.865 3.271 0 4.635-2.25 4.635-2.25l-2.026-.123z" /></svg>
+                                Apple Music
                             </a>
                             <a href="https://music.amazon.com/artists/B0DPVVWV4L/singit-pop" target="_blank" rel="noopener noreferrer" className="secondary-button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: '#FF9900', borderColor: '#FF9900', color: '#000' }}>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.25 18.901a10.281 10.281 0 0 0 17.547 0l.844 1.548a12.281 12.281 0 0 1-20.781 0l.844-1.548zm19.5-13.802a10.281 10.281 0 0 0-17.547 0L3.36 3.551a12.281 12.281 0 0 1 20.781 0l-.844 1.548zM14.447 12.001c0 1.347-1.1 2.447-2.447 2.447s-2.447-1.1-2.447-2.447 1.1-2.447 2.447-2.447 2.447 1.1 2.447 2.447z" /></svg>

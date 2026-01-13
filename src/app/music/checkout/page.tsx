@@ -28,15 +28,13 @@ const findTrackById = (compositeId: string): Track | undefined => {
 };
 
 const PRODUCT_TYPES = {
-    cd: { name: 'Physical CD', price: 12.99, icon: '💿', shipping: true },
-    vinyl: { name: 'Vinyl Record', price: 24.99, icon: '🎵', shipping: true },
-    download: { name: 'Digital Download', price: 0, icon: '⬇️', shipping: false }
+    download: { name: 'Digital Download (Mixtape)', price: 8.99, icon: '⬇️', shipping: false }
 };
 
 function CheckoutContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const [selectedType, setSelectedType] = useState<'cd' | 'vinyl' | 'download'>('download');
+    const [selectedType, setSelectedType] = useState<'download'>('download'); // Restricted types
     const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
     const [formData, setFormData] = useState({
         name: '',
@@ -48,14 +46,11 @@ function CheckoutContent() {
     });
     const [orderPlaced, setOrderPlaced] = useState(false);
 
+
     useEffect(() => {
-        const type = searchParams.get('type') as 'cd' | 'vinyl' | 'download';
-        // Parse comma-separated IDs
+        // Force download type
         const trackIds = searchParams.get('tracks')?.split(',').filter(Boolean) || [];
 
-        if (type && PRODUCT_TYPES[type]) {
-            setSelectedType(type);
-        }
         setSelectedTrackIds(trackIds);
     }, [searchParams]);
 
@@ -63,10 +58,12 @@ function CheckoutContent() {
     const selectedTrackDetails = selectedTrackIds
         .map(id => findTrackById(id))
         .filter((t): t is Track => t !== undefined);
-    const tracksPrice = selectedTrackDetails.reduce((sum, t) => sum + t.price, 0);
-    const productPrice = PRODUCT_TYPES[selectedType].price;
-    const totalPrice = selectedType === 'download' ? tracksPrice : productPrice;
-    const needsShipping = PRODUCT_TYPES[selectedType].shipping;
+
+    // Fixed pricing model
+    // const tracksPrice = selectedTrackDetails.reduce((sum, t) => sum + t.price, 0);
+    const productPrice = PRODUCT_TYPES['download'].price;
+    const totalPrice = productPrice; // Flat rate 8.99
+    const needsShipping = false; // Store-only digital
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -135,12 +132,12 @@ function CheckoutContent() {
                             <button
                                 key={key}
                                 className={`${styles.productCard} ${selectedType === key ? styles.active : ''}`}
-                                onClick={() => setSelectedType(key as any)}
+                                onClick={() => setSelectedType(key as 'download')}
                             >
                                 <span className={styles.productIcon}>{product.icon}</span>
                                 <h3>{product.name}</h3>
                                 <p className={styles.productPrice}>
-                                    {product.price === 0 ? `£${tracksPrice.toFixed(2)}` : `£${product.price}`}
+                                    £{product.price.toFixed(2)}
                                 </p>
                                 {product.shipping && <span className={styles.shippingBadge}>+ Shipping</span>}
                             </button>

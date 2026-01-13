@@ -4,10 +4,13 @@ import { useState, useEffect } from 'react';
 import { Play, Pause, Lock } from 'lucide-react';
 import styles from './TeaserPlayer.module.css';
 
+import { siteContent } from '@/config/siteContent';
+
 export default function TeaserPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
-    const duration = 215; // Full track: 3:35
+    const track = siteContent.floatingPlayer;
+    const duration = track.duration;
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -18,15 +21,16 @@ export default function TeaserPlayer() {
                         setIsPlaying(false);
                         return 0; // Loop or stop
                     }
-                    return prev + (100 / duration / 10); // Update every 100ms
+                    return prev + (100 / (duration * 10)); // Fix duration math: duration is seconds, interval is 100ms
                 });
             }, 100);
         }
         return () => clearInterval(interval);
-    }, [isPlaying]);
+    }, [isPlaying, duration]);
 
     const togglePlay = () => {
         setIsPlaying(!isPlaying);
+        // In a real app, this would trigger the actual audio element
     };
 
     return (
@@ -35,8 +39,8 @@ export default function TeaserPlayer() {
                 <div className={styles.trackInfo}>
                     <div className={styles.coverArt} />
                     <div>
-                        <h5>Southern Lights</h5>
-                        <span className={styles.badge} style={{ background: '#ffd700', color: 'black' }}>Full Track 👑</span>
+                        <h5>{track.title}</h5>
+                        <span className={styles.badge} style={{ background: '#ffd700', color: 'black' }}>{track.badge}</span>
                     </div>
                 </div>
 
@@ -53,7 +57,7 @@ export default function TeaserPlayer() {
                     </div>
 
                     <span className={styles.time}>
-                        {Math.floor((progress * duration / 100) / 60)}:{Math.floor((progress * duration / 100) % 60).toString().padStart(2, '0')} / 3:35
+                        {Math.floor((progress * duration / 100) / 60)}:{Math.floor((progress * duration / 100) % 60).toString().padStart(2, '0')} / {Math.floor(duration / 60)}:{Math.floor(duration % 60).toString().padStart(2, '0')}
                     </span>
                 </div>
 
