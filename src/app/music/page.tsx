@@ -203,6 +203,10 @@ export default function MusicPage() {
                     </div>
                 </div>
             </div>
+            {/* DEBUG OVERLAY - Remove after fixing */}
+            <div style={{ position: 'fixed', bottom: 10, left: 10, background: 'red', color: 'white', padding: '10px', zIndex: 9999, opacity: 0.8, pointerEvents: 'none' }}>
+                DEBUG: Mode={filterMode} | AlbumID={selectedAlbumId} | Tracks={tracks.length} | Title={title}
+            </div>
         </div>
     );
 }
