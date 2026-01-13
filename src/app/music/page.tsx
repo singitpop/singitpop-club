@@ -109,6 +109,7 @@ export default function MusicPage() {
 
             <div className={styles.content}>
                 <div className={styles.main}>
+                    <SongList tracks={tracks} />
                 </div>
 
                 {/* Right: Charts/Promo */}
