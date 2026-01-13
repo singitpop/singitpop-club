@@ -14,7 +14,6 @@ export default function MusicPage() {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
     const filterButtons = [
-        { id: 'all', label: 'All Albums', icon: Music },
         { id: 'latest', label: 'Latest Release', icon: Clock },
         { id: 'trending', label: 'Trending', icon: TrendingUp },
         { id: 'favorites', label: 'Fan Favorites', icon: Star }
@@ -31,31 +30,33 @@ export default function MusicPage() {
         }
 
         if (filterMode === 'latest') {
-            const latestAlbum = albums[0];
+            const latestAlbums = albums.slice(0, 1); // Get the absolute latest album
             return {
-                tracks: latestAlbum ? latestAlbum.tracks : [],
-                title: latestAlbum ? `Latest: ${latestAlbum.title}` : 'Latest Release'
+                tracks: latestAlbums.flatMap(a => a.tracks), // Flatten tracks from the latest album
+                title: 'Latest Release'
             };
         }
 
-        if (filterMode === 'all') {
+        if (filterMode === 'all') { // Fallback or if we keep it internally but hide button
             return {
                 tracks: albums.flatMap(a => a.tracks),
                 title: 'All Tracks'
             };
         }
 
-        // Mock logic for trending/favorites since we don't have real stats yet
         if (filterMode === 'trending') {
+            // Mock trending: Take tracks from various albums to simulate "hot now"
+            // For now, let's take the first 2 tracks from the first 5 albums
             return {
-                tracks: albums.flatMap(a => a.tracks).slice(0, 10), // First 10 for now
+                tracks: albums.slice(0, 5).flatMap(a => a.tracks.slice(0, 2)),
                 title: 'Trending Now'
             };
         }
 
         if (filterMode === 'favorites') {
+            // Mock favorites: Take random tracks (e.g., every 3rd track)
             return {
-                tracks: albums.flatMap(a => a.tracks).filter((_, i) => i % 2 === 0).slice(0, 12), // Mock random selection
+                tracks: albums.flatMap(a => a.tracks).filter((_, i) => i % 3 === 0).slice(0, 12),
                 title: 'Fan Favorites'
             };
         }

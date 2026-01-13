@@ -98,15 +98,6 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
         });
     };
 
-    // Filter Logic
-    const filteredTracks = tracks.filter(track => {
-        if (filterMode === 'all') return true;
-        if (filterMode === 'trending') return track.title === 'Southern Lights' || track.title === 'Neon Heart'; // Mock logic
-        if (filterMode === 'favorites') return track.plays.includes('M'); // Mock logic: >1M plays
-        if (filterMode === 'latest') return track.title === 'Southern Lights'; // Mock logic
-        return true;
-    });
-
     const totalPrice = (selectedTracks.length * 0.99).toFixed(2);
 
     return (
@@ -133,10 +124,10 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
             </p>
 
             <div className={styles.list}>
-                {filteredTracks.length === 0 ? (
+                {tracks.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>No tracks found.</div>
                 ) : (
-                    filteredTracks.map((track, index) => {
+                    tracks.map((track, index) => {
                         const uniqueId = getUniqueId(track);
                         const isSelected = selectedTracks.includes(uniqueId);
                         const isLocked = track.locked && !isPro;
