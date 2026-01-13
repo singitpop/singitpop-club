@@ -1,7 +1,7 @@
 /**
  * Album Data
  * Auto-generated from Excel spreadsheet
- * Generated: 2026-01-13T15:00:07.245Z
+ * Generated: 2026-01-13T16:18:08.961Z
  * 
  * Source: /Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx
  * Albums folder: /Users/garybirrell/Desktop/Singitpop
@@ -9,31 +9,32 @@
  */
 
 export interface Track {
-  id: number;
-  title: string;
-  duration: string;
-  plays: string;
-  locked: boolean;
-  price: number;
-  genre: string;
-  audioUrl: string;
-  highResUrl?: string;
-  sourceFolder?: string;
+    id: number;
+    title: string;
+    duration: string;
+    plays: string;
+    locked: boolean;
+    price: number;
+    genre: string;
+    audioUrl: string;
+    highResUrl?: string;
+    albumId?: string;
+    sourceFolder?: string;
 }
 
 export interface Album {
-  id: string;
-  title: string;
-  year: number;
-  genre: string[];
-  coverArt: string;
-  tracks: Track[];
-  releaseDate: string;
-  description?: string;
-  featured?: boolean;
-  trending?: boolean;
-  folderPath?: string;
-  mp3Count?: number;
+    id: string;
+    title: string;
+    year: number;
+    genre: string[];
+    coverArt: string;
+    tracks: Track[];
+    releaseDate: string;
+    description?: string;
+    featured?: boolean;
+    trending?: boolean;
+    folderPath?: string;
+    mp3Count?: number;
 }
 
 export const albums: Album[] = [
@@ -55,7 +56,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Front%20Porch%20Valentine-2.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 2,
@@ -66,7 +68,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Hold%20Me%20Like%20Home.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 3,
@@ -77,7 +80,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Sweet%20Tea%20Kisses.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 4,
@@ -88,7 +92,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Love%20You%20Better%20Than%20Yesterday.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 5,
@@ -99,7 +104,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/05-red-roses-and-them-old-boots.mp3",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 6,
@@ -110,7 +116,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/06-two-heart-one-highway.mp3",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 7,
@@ -121,7 +128,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/07-under-the-valentine-moon.mp3",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 8,
@@ -132,7 +140,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Closer%20Than%20the%20Stars.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 9,
@@ -143,7 +152,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/When%20You%20Call%20Me%20Yours.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 10,
@@ -154,7 +164,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Firelight%20And%20Forever.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 11,
@@ -165,7 +176,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Love%20You%20Like%20Sunday%20Morning.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       },
       {
         "id": 12,
@@ -176,7 +188,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Forever%20Starts%20Tonight.wav",
-        "sourceFolder": "Valentine Country"
+        "sourceFolder": "Valentine Country",
+        "albumId": "valentine-country-2026"
       }
     ],
     "releaseDate": "2026-01-01",
@@ -201,7 +214,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Riding%20Down%20the%20Line.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 2,
@@ -212,7 +226,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Desert%20Winds.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 3,
@@ -223,7 +238,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Long%20Night%20at%20Silver%20Canyon.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 4,
@@ -234,7 +250,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Goodbye%20California.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 5,
@@ -245,7 +262,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/One%20More%20Chance%20to%20Fly.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 6,
@@ -256,7 +274,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Whiskey%20and%20Wild%20Horses.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 7,
@@ -267,7 +286,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Stars%20Over%20Highway%209.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 8,
@@ -278,7 +298,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Hold%20On%20to%20the%20Light.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 9,
@@ -289,7 +310,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Hotel%20Starlight%20Blues.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 10,
@@ -300,7 +322,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Running%20Out%20of%20Tomorrows.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 11,
@@ -311,7 +334,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Empty%20Rooms%20and%20Open%20Skies.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       },
       {
         "id": 12,
@@ -322,7 +346,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/The%20Last%20Sunset%20in%20Santa%20Fe.wav",
-        "sourceFolder": "Desert Winds And Open Roads"
+        "sourceFolder": "Desert Winds And Open Roads",
+        "albumId": "desert-winds-and-open-roads-2026"
       }
     ],
     "releaseDate": "2026-01-01",
@@ -347,7 +372,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/The%20Silent%20Conversation.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 2,
@@ -358,7 +384,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/In%20the%20Stillness%20We%20Speak.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 3,
@@ -369,7 +396,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/The%20Distance%20Between.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 4,
@@ -380,7 +408,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/Voices%20on%20the%20Wind.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 5,
@@ -391,7 +420,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/Signal%20to%20Noise.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 6,
@@ -402,7 +432,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/Falling%20Through%20Time.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 7,
@@ -413,7 +444,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/A%20Wall%20of%20Words.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 8,
@@ -424,7 +456,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/08-reflectionns-in-the-rain.mp3",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 9,
@@ -435,7 +468,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/The%20Divide.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 10,
@@ -446,7 +480,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/Voices%20Return.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 11,
@@ -457,7 +492,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/11-the-light-we-leve-behind.mp3",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 12,
@@ -468,7 +504,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/Whispers%20in%20the%20Sky.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 13,
@@ -479,7 +516,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/Beneath%20the%20Falling%20Sky.wav",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       },
       {
         "id": 14,
@@ -490,7 +528,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/14-the-silent-conversation-reprise.mp3",
-        "sourceFolder": "Echoes Of Light"
+        "sourceFolder": "Echoes Of Light",
+        "albumId": "echoes-of-light-2026"
       }
     ],
     "releaseDate": "2026-01-01",
@@ -515,7 +554,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Slow%20Motion%20Love.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 2,
@@ -526,7 +566,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Hold%20Me%20Closer%20Tonight.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 3,
@@ -537,7 +578,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/You%20Are%20My%20Valentine.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 4,
@@ -548,7 +590,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Unspoken%20Fire.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 5,
@@ -559,7 +602,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/The%20First%20Time%20I%20Saw%20You.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 6,
@@ -570,7 +614,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Moonlit%20Hearts.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 7,
@@ -581,7 +626,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/06-stay-in-your-arms.mp3",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 8,
@@ -592,7 +638,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Roses%20and%20Reverie.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 9,
@@ -603,7 +650,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/08-breathless-when-you-re-near.mp3",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 10,
@@ -614,7 +662,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Falling%20for%20Forever.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 11,
@@ -625,7 +674,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Strings%20of%20You.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       },
       {
         "id": 12,
@@ -636,7 +686,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/A%20Love%20That%20Never%20Ends.wav",
-        "sourceFolder": "A Love That Never Ends"
+        "sourceFolder": "A Love That Never Ends",
+        "albumId": "a-love-that-never-ends-2026"
       }
     ],
     "releaseDate": "2026-01-01",
@@ -661,7 +712,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/01-electric-city.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 2,
@@ -672,7 +724,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/02-under-the-neon-sky.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 3,
@@ -683,7 +736,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/11-infinite-glow.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 4,
@@ -694,7 +748,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/04-midnight-reverie.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 5,
@@ -705,7 +760,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/10-neon-waves.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 6,
@@ -716,7 +772,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/07-violet-horizon.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 7,
@@ -727,7 +784,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/06-chasing-shadows.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 8,
@@ -738,7 +796,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/12-city-of-stars.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 9,
@@ -749,7 +808,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/09-echoes-in-the-alley.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 10,
@@ -760,7 +820,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/03-fire-and-glow.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 11,
@@ -771,7 +832,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/05-pulse-in-the-night.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       },
       {
         "id": 12,
@@ -782,7 +844,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Electronic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/08-static-hearts.mp3",
-        "sourceFolder": "Neon Dreams"
+        "sourceFolder": "Neon Dreams",
+        "albumId": "neon-dreams-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -807,7 +870,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/02-blush.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 2,
@@ -818,7 +882,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/06-dancing-with-you.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 3,
@@ -829,7 +894,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/03-forever-kind-of-love.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 4,
@@ -840,7 +906,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/04-love-in-bloom.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 5,
@@ -851,7 +918,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/07-all-yours.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 6,
@@ -862,7 +930,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/05-candlelight-kisses.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 7,
@@ -873,7 +942,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/10-cupids-encore.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 8,
@@ -884,7 +954,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/01-hearstrings.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 9,
@@ -895,7 +966,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/11-in-your-arms.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 10,
@@ -906,7 +978,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/08-pink-skies-and-you.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       },
       {
         "id": 11,
@@ -917,7 +990,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Romantic",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/09-serenade-me-tonight.mp3",
-        "sourceFolder": "Love in Bloom"
+        "sourceFolder": "Love in Bloom",
+        "albumId": "love-in-bloom-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -942,7 +1016,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/10-dancing-in-the-satrs.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 2,
@@ -953,7 +1028,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/12-beyond-the-horizon.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 3,
@@ -964,7 +1040,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/09-cosmic-vibes.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 4,
@@ -975,7 +1052,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/02-eternal-light.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 5,
@@ -986,7 +1064,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/04-glactic-dreams.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 6,
@@ -997,7 +1076,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/11-gravity-and-light.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 7,
@@ -1008,7 +1088,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/07-light-years-away.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 8,
@@ -1019,7 +1100,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/06-lost-in-orbit.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 9,
@@ -1030,7 +1112,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/01-may-the-fourth-remind-us.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 10,
@@ -1041,7 +1124,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/08-solar-winds.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 11,
@@ -1052,7 +1136,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/03-starlight-frequencies.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       },
       {
         "id": 12,
@@ -1063,7 +1148,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/05-through-the-nebula.mp3",
-        "sourceFolder": "Starlight Frequencies"
+        "sourceFolder": "Starlight Frequencies",
+        "albumId": "starlight-frequencies-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -1088,7 +1174,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/09-echos-of-us.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 2,
@@ -1099,7 +1186,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/02-falling-for-you.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 3,
@@ -1110,7 +1198,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/07-gravity.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 4,
@@ -1121,7 +1210,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/08-hold-on-tight.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 5,
@@ -1132,7 +1222,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/03-breakthrough.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 6,
@@ -1143,7 +1234,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/04-burning-bridges.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 7,
@@ -1154,7 +1246,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/01-first-light.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 8,
@@ -1165,7 +1258,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/11-heartlines.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 9,
@@ -1176,7 +1270,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/10-letting-go.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 10,
@@ -1187,7 +1282,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/05-say-it-again.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 11,
@@ -1198,7 +1294,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/12-starting-again.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       },
       {
         "id": 12,
@@ -1209,7 +1306,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/06-unspoken.mp3",
-        "sourceFolder": "Heartlines"
+        "sourceFolder": "Heartlines",
+        "albumId": "heartlines-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -1234,7 +1332,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/01-a-new-dawn.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 2,
@@ -1245,7 +1344,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/07-baskets-and-blessings.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 3,
@@ -1256,7 +1356,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/10-butterflies-and-dreams.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 4,
@@ -1267,7 +1368,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/09-easter-parade.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 5,
@@ -1278,7 +1380,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/06-fields-of-bloom.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 6,
@@ -1289,7 +1392,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/02-golden-sunrise.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 7,
@@ -1300,7 +1404,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/05-hallelujah-heart.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 8,
@@ -1311,7 +1416,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/12-light-in-the-sky.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 9,
@@ -1322,7 +1428,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/03-rise-up.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 10,
@@ -1333,7 +1440,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/11-spring-awakening.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 11,
@@ -1344,7 +1452,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/04-spring-in-my-step.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       },
       {
         "id": 12,
@@ -1355,7 +1464,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/08-the-promise.mp3",
-        "sourceFolder": "Spring Awakening"
+        "sourceFolder": "Spring Awakening",
+        "albumId": "spring-awakening-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -1380,7 +1490,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/11-broken-city.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 2,
@@ -1391,7 +1502,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/03-city-kings.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 3,
@@ -1402,7 +1514,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/12-concrete-jungle.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 4,
@@ -1413,7 +1526,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/05-fast-lane.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 5,
@@ -1424,7 +1538,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/07-from-the-block.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 6,
@@ -1435,7 +1550,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/04-hustle-and-lights.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 7,
@@ -1446,7 +1562,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/06-locked-loaded.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 8,
@@ -1457,7 +1574,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/01-midnight-visions.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 9,
@@ -1468,7 +1586,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/10-nightfall-hustle.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 10,
@@ -1479,7 +1598,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/02-no-sleep-city.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 11,
@@ -1490,7 +1610,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/08-silent-streets.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       },
       {
         "id": 12,
@@ -1501,7 +1622,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "EDM",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/09-streets-to-skies.mp3",
-        "sourceFolder": "Empire Under Lights"
+        "sourceFolder": "Empire Under Lights",
+        "albumId": "empire-under-lights-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -1526,7 +1648,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/08-aurora-over-aviemore.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 2,
@@ -1537,7 +1660,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/06-ben-nevis-rising.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 3,
@@ -1548,7 +1672,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/02-call-of-the-highlands.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 4,
@@ -1559,7 +1684,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/04-echoes-from-culloden.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 5,
@@ -1570,7 +1696,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/14-farewell-to-the-northern-lights.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 6,
@@ -1581,7 +1708,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/07-glenfinnan-dreams.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 7,
@@ -1592,7 +1720,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/12-last-light-at-loch-lomond.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 8,
@@ -1603,7 +1732,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/11-loch-ness-frequencies.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 9,
@@ -1614,7 +1744,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/10-mist-of-the-kelpies.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 10,
@@ -1625,7 +1756,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/01-over-the-sea-to-skye.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 11,
@@ -1636,7 +1768,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/03-skye-in-the-sky.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 12,
@@ -1647,7 +1780,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/05-stone-circles-and-stardust.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 13,
@@ -1658,7 +1792,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/09-the-pipers-pulse.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       },
       {
         "id": 14,
@@ -1669,7 +1804,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Scottish",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/13-the-spirit-of-alba.mp3",
-        "sourceFolder": "Ethereal Highlands"
+        "sourceFolder": "Ethereal Highlands",
+        "albumId": "ethereal-highlands-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -1694,7 +1830,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/04-after-the-rain.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 2,
@@ -1705,7 +1842,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/01-chasing-sunlight.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 3,
@@ -1716,7 +1854,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/07-endless-summer.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 4,
@@ -1727,7 +1866,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/11-evening-glow.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 5,
@@ -1738,7 +1878,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/10-fleeting-moments.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 6,
@@ -1749,7 +1890,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/12-forever-bright.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 7,
@@ -1760,7 +1902,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/02-golden-glow.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 8,
@@ -1771,7 +1914,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/09-golden-hour.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 9,
@@ -1782,7 +1926,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/08-hearts-in-bloom.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 10,
@@ -1793,7 +1938,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/06-in-your-orbit.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 11,
@@ -1804,7 +1950,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/05-shadows-and-light.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       },
       {
         "id": 12,
@@ -1815,7 +1962,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/03-when-we-were-young.mp3",
-        "sourceFolder": "Golden Hour"
+        "sourceFolder": "Golden Hour",
+        "albumId": "golden-hour-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -1840,7 +1988,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/12-endless-sky.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 2,
@@ -1851,7 +2000,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/11-eternal-summer.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 3,
@@ -1862,7 +2012,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/05-golden-horizon.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 4,
@@ -1873,7 +2024,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/08-gravity.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 5,
@@ -1884,7 +2036,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/09-infinite-love.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 6,
@@ -1895,7 +2048,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/06-into-the-deep.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 7,
@@ -1906,7 +2060,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/04-midnight-waves.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 8,
@@ -1917,7 +2072,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/07-neon-skyline.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 9,
@@ -1928,7 +2084,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/03-neon-tides.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 10,
@@ -1939,7 +2096,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/02-starlit-dreams.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 11,
@@ -1950,7 +2108,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/10-summers-last-dance.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       },
       {
         "id": 12,
@@ -1961,7 +2120,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/01-sunburst-horizon.mp3",
-        "sourceFolder": "Eternal Summer"
+        "sourceFolder": "Eternal Summer",
+        "albumId": "eternal-summer-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -1986,7 +2146,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/12-afterglow-formerly-burnshift-rewritten.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 2,
@@ -1997,7 +2158,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/05-bloom-break-rewritten.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 3,
@@ -2008,7 +2170,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/11-chrome-halo-restructured.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 4,
@@ -2019,7 +2182,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/08-glass-bloom.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 5,
@@ -2030,7 +2194,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/03-glowtrigger.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 6,
@@ -2041,7 +2206,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/10-hypercrush-restructured.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 7,
@@ -2052,7 +2218,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/01-lucid-rush.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 8,
@@ -2063,7 +2230,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/04-mirrorphase.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 9,
@@ -2074,7 +2242,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/07-nightcode.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 10,
@@ -2085,7 +2254,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/02-pulse-armor.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 11,
@@ -2096,7 +2266,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/06-synthetic-mercy-rewritten.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       },
       {
         "id": 12,
@@ -2107,7 +2278,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/09-voltage-bloom-restructured.mp3",
-        "sourceFolder": "Glass Bloom"
+        "sourceFolder": "Glass Bloom",
+        "albumId": "glass-bloom-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -2132,7 +2304,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/02-beach-vibes-only.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 2,
@@ -2143,7 +2316,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/03-cherry-soda-pop.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 3,
@@ -2154,7 +2328,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/12-endless-summer.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 4,
@@ -2165,7 +2340,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/04-glow-up.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 5,
@@ -2176,7 +2352,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/07-golden-hour.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 6,
@@ -2187,7 +2364,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/01-heatwave-high.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 7,
@@ -2198,7 +2376,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/09-ice-cream-crush.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 8,
@@ -2209,7 +2388,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/05-party-on-the-boardwalk.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 9,
@@ -2220,7 +2400,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/08-poolside-groove.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 10,
@@ -2231,7 +2412,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/11-summer-crush-anthem.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 11,
@@ -2242,7 +2424,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/10-tides-and-tramlines.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       },
       {
         "id": 12,
@@ -2253,7 +2436,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/06-tropical-bliss.mp3",
-        "sourceFolder": "Summer fever"
+        "sourceFolder": "Summer fever",
+        "albumId": "summer-fever-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -2278,7 +2462,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/09-born-to-run.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 2,
@@ -2289,7 +2474,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/05-breaking-chains.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 3,
@@ -2300,7 +2486,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/08-chasing-fire.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 4,
@@ -2311,7 +2498,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/03-dare-to-dream.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 5,
@@ -2322,7 +2510,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/04-edge-of-the-world.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 6,
@@ -2333,7 +2522,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/11-forever-bold.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 7,
@@ -2344,7 +2534,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/02-limitless.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 8,
@@ -2355,7 +2546,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/07-rise-up.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 9,
@@ -2366,7 +2558,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/12-skys-the-limit.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 10,
@@ -2377,7 +2570,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/10-stronger-now.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 11,
@@ -2388,7 +2582,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/06-take-the-leap.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       },
       {
         "id": 12,
@@ -2399,7 +2594,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/01-unstoppable.mp3",
-        "sourceFolder": "Limitless"
+        "sourceFolder": "Limitless",
+        "albumId": "limitless-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -2424,7 +2620,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/01-boots-in-the-dust.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 2,
@@ -2435,7 +2632,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/03-cowboy-up-tonight.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 3,
@@ -2446,7 +2644,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/09-dust-and-dreams-single.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 4,
@@ -2457,7 +2656,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/12-last-call-swing.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 5,
@@ -2468,7 +2668,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/02-line-dance-love.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 6,
@@ -2479,7 +2680,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/05-neon-boot-scooting-single.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 7,
@@ -2490,7 +2692,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/07-rodeo-romance.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 8,
@@ -2501,7 +2704,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/08-stomp-your-heart-out.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 9,
@@ -2512,7 +2716,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/04-turn-it-loose.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 10,
@@ -2523,7 +2728,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/11-two-steppin-dreamer.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 11,
@@ -2534,7 +2740,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/10-whiskey-slide-single.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       },
       {
         "id": 12,
@@ -2545,7 +2752,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/06-wide-open-floors.mp3",
-        "sourceFolder": "Line Dancing After Dark"
+        "sourceFolder": "Line Dancing After Dark",
+        "albumId": "line-dancing-after-dark-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -2570,7 +2778,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/05-aces-in-my-boots.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 2,
@@ -2581,7 +2790,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/04-backroad-crown.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 3,
@@ -2592,7 +2802,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/06-burnt-toast-goodbye-notes.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 4,
@@ -2603,7 +2814,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/08-glass-of-thunder.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 5,
@@ -2614,7 +2826,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/10-jokers-lovers.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 6,
@@ -2625,7 +2838,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/09-kiss-me-like-a-lie.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 7,
@@ -2636,7 +2850,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/11-last-call-first-love.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 8,
@@ -2647,7 +2862,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/01-queen-of-hearts.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 9,
@@ -2658,7 +2874,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/02-shot-of-me.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 10,
@@ -2669,7 +2886,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/03-southern-summer-sin.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 11,
@@ -2680,7 +2898,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/07-two-step-devil.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       },
       {
         "id": 12,
@@ -2691,7 +2910,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/12-wildcards-whiskey.mp3",
-        "sourceFolder": "Wildcards and Whiskey"
+        "sourceFolder": "Wildcards and Whiskey",
+        "albumId": "wildcards-and-whiskey-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -2716,7 +2936,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/11-echos-of-the-night.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 2,
@@ -2727,7 +2948,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/09-evening-serernade.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 3,
@@ -2738,7 +2960,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/12-fading-glow.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 4,
@@ -2749,7 +2972,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/01-falling-light.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 5,
@@ -2760,7 +2984,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/06-golden-light.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 6,
@@ -2771,7 +2996,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/05-silent-breeze.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 7,
@@ -2782,7 +3008,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/10-silent-gold.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 8,
@@ -2793,7 +3020,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/07-soft-shadows.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 9,
@@ -2804,7 +3032,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/08-timeless-glow.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 10,
@@ -2815,7 +3044,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/04-twilight-glow.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 11,
@@ -2826,7 +3056,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/03-velvet-skies.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       },
       {
         "id": 12,
@@ -2837,7 +3068,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/02-whispered-nights.mp3",
-        "sourceFolder": "Endless Glow"
+        "sourceFolder": "Endless Glow",
+        "albumId": "endless-glow-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -2862,7 +3094,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/09-built-from-the-ground.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 2,
@@ -2873,7 +3106,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/03-diamonds-in-the-dust.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 3,
@@ -2884,7 +3118,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/12-dust-and-diamonds.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 4,
@@ -2895,7 +3130,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/08-dust-on-my-boots.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 5,
@@ -2906,7 +3142,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/06-fields-of-fortune.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 6,
@@ -2917,7 +3154,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/04-hard-road-to-heaven.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 7,
@@ -2928,7 +3166,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/05-iron-and-ember.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 8,
@@ -2939,7 +3178,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/01-rough-hands-bright-dreeams.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 9,
@@ -2950,7 +3190,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/02-shine-in-the-struggle.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 10,
@@ -2961,7 +3202,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/10-the-grind-keeps-turning.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 11,
@@ -2972,7 +3214,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/07-the-spark-beneath-the-stone.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       },
       {
         "id": 12,
@@ -2983,7 +3226,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/11-through-the-ashes.mp3",
-        "sourceFolder": "Dust and Diamonds "
+        "sourceFolder": "Dust and Diamonds ",
+        "albumId": "dust-and-diamonds-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -3009,7 +3253,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/05-body-language.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 2,
@@ -3020,7 +3265,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/08-come-down-slow.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 3,
@@ -3031,7 +3277,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/04-electric-heart.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 4,
@@ -3042,7 +3289,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/12-final-shine.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 5,
@@ -3053,7 +3301,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/11-flashback.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 6,
@@ -3064,7 +3313,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/03-glitter-chrome.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 7,
@@ -3075,7 +3325,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/06-heatwave-lover.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 8,
@@ -3086,7 +3337,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/02-lose-control.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 9,
@@ -3097,7 +3349,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/01-mirrorball-queen.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 10,
@@ -3108,7 +3361,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/10-moonlight-replay.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 11,
@@ -3119,7 +3373,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/09-runway-heat.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       },
       {
         "id": 12,
@@ -3130,7 +3385,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disco",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/07-sweet-surrender.mp3",
-        "sourceFolder": "Midnight Motion"
+        "sourceFolder": "Midnight Motion",
+        "albumId": "midnight-motion-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -3155,7 +3411,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/07-backroads-and-blue-jeans.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 2,
@@ -3166,7 +3423,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/03-backyard-revival.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 3,
@@ -3177,7 +3435,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/06-carolina-kisses.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 4,
@@ -3188,7 +3447,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/10-front-porch-glow.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 5,
@@ -3199,7 +3459,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/04-honey-on-my-heart.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 6,
@@ -3210,7 +3471,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/11-lightning-bugs-and-mason-jars.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 7,
@@ -3221,7 +3483,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/05-saturday-nights-down-south.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 8,
@@ -3232,7 +3495,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/01-southern-lights.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 9,
@@ -3243,7 +3507,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/12-southern-lights-finale.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 10,
@@ -3254,7 +3519,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/09-southern-stars.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 11,
@@ -3265,7 +3531,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/08-sweet-tea-serenade.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       },
       {
         "id": 12,
@@ -3276,7 +3543,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/02-under-the-magnolia-moon.mp3",
-        "sourceFolder": "Southern Lights"
+        "sourceFolder": "Southern Lights",
+        "albumId": "southern-lights-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -3301,7 +3569,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Autumn%20Crush.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 2,
@@ -3312,7 +3581,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Back%20to%20Midnight.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 3,
@@ -3323,7 +3593,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Back%20to%20the%20Beat.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 4,
@@ -3334,7 +3605,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Cider%20%26%20Vinyl.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 5,
@@ -3345,7 +3617,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Echo%20Park%20After%20Dark.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 6,
@@ -3356,7 +3629,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Falling%20Neon.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 7,
@@ -3367,7 +3641,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Golden%20Hour%20Pulse.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 8,
@@ -3378,7 +3653,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Last%20Warm%20Breeze.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 9,
@@ -3389,7 +3665,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Leaves%20in%20Stereo.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 10,
@@ -3400,7 +3677,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/September%20Moves.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 11,
@@ -3411,7 +3689,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/Sweater%20Weather%20Love.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       },
       {
         "id": 12,
@@ -3422,7 +3701,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/The%20Last%20Dance%20Floor.wav",
-        "sourceFolder": "September Moves"
+        "sourceFolder": "September Moves",
+        "albumId": "september-moves-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -3447,7 +3727,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Crossroads%20Calling.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 2,
@@ -3458,7 +3739,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Echoes%20of%20Yesterday.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 3,
@@ -3469,7 +3751,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Miles%20Behind%20Miles%20Ahead.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 4,
@@ -3480,7 +3763,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Open%20Horizons.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 5,
@@ -3491,7 +3775,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Rivers%20Run%20Deep.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 6,
@@ -3502,7 +3787,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Signs%20Along%20the%20Way.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 7,
@@ -3513,7 +3799,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/10-the-compass-in-my-soal.mp3",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 8,
@@ -3524,7 +3811,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/The%20Journey%20Within.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 9,
@@ -3535,7 +3823,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/The%20Road%20We%20Make.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 10,
@@ -3546,7 +3835,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Turning%20Leaves.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 11,
@@ -3557,7 +3847,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/12-winding-road-finale.mp3",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       },
       {
         "id": 12,
@@ -3568,7 +3859,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Winding%20Roads.wav",
-        "sourceFolder": "Winding Roads"
+        "sourceFolder": "Winding Roads",
+        "albumId": "winding-roads-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -3593,7 +3885,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/11-amber-letters.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 2,
@@ -3604,7 +3897,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/10-before-the-frost.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 3,
@@ -3615,7 +3909,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/03-cinnamon-days.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 4,
@@ -3626,7 +3921,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/07-crackling-leaves.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 5,
@@ -3637,7 +3933,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/08-echoes-in-the-fog.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 6,
@@ -3648,7 +3945,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/12-evergreen-promise.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 7,
@@ -3659,7 +3957,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/01-falling-for-october.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 8,
@@ -3670,7 +3969,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/09-ghosts-of-the-grove.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 9,
@@ -3681,7 +3981,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/05-lantern-glow.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 10,
@@ -3692,7 +3993,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/02-maple-sky.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 11,
@@ -3703,7 +4005,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/04-september-fades.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       },
       {
         "id": 12,
@@ -3714,7 +4017,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/06-sweater-weather-blues.mp3",
-        "sourceFolder": "Falling for October "
+        "sourceFolder": "Falling for October ",
+        "albumId": "falling-for-october-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -3739,7 +4043,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Apple%20Cider%20Slow%20Spin.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 2,
@@ -3750,7 +4055,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Bonfires%20and%20Leather%20Jackets.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 3,
@@ -3761,7 +4067,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Corn%20Maze%20Kisses.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 4,
@@ -3772,7 +4079,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Falling%20for%20Fall.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 5,
@@ -3783,7 +4091,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Flannel%20Rhythm.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 6,
@@ -3794,7 +4103,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Golden%20Leaves%20and%20Boot%20Heels.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 7,
@@ -3805,7 +4115,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Hayride%20Heartbeat.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 8,
@@ -3816,7 +4127,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/October%20Skies%20and%20Sweet%20Goodbyes.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 9,
@@ -3827,7 +4139,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Pumpkin%20Spice%20and%20Moonlight.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 10,
@@ -3838,7 +4151,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Rake%20the%20Leaves%20and%20Dance.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 11,
@@ -3849,7 +4163,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Shadows%20on%20the%20Porch%20Swing.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       },
       {
         "id": 12,
@@ -3860,7 +4175,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/Tailgate%20Tonight.wav",
-        "sourceFolder": "October Boots and Fall Roots"
+        "sourceFolder": "October Boots and Fall Roots",
+        "albumId": "october-boots-and-fall-roots-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -3885,7 +4201,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Before%20the%20Storm-clarify.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 2,
@@ -3896,7 +4213,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Carry%20Me%20Slow.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 3,
@@ -3907,7 +4225,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fading%20Through%20You.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 4,
@@ -3918,7 +4237,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fall%20Apart%20Gracefully.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 5,
@@ -3929,7 +4249,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/If%20I%20Break.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 6,
@@ -3940,7 +4261,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Letters%20Never%20Sent.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 7,
@@ -3951,7 +4273,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sleepwalking%20Hearts.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 8,
@@ -3962,7 +4285,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Something%20Left%20to%20Say.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 9,
@@ -3973,7 +4297,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Steady%20and%20True.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 10,
@@ -3984,7 +4309,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sunday%20Rain.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 11,
@@ -3995,7 +4321,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/The%20Long%20Way%20Home.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       },
       {
         "id": 12,
@@ -4006,7 +4333,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/When%20We%20Were%20Wild.wav",
-        "sourceFolder": "The Long Way Home"
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -4031,7 +4359,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Trick%20or%20Beat-2.wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 2,
@@ -4042,7 +4371,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Blood%20Moon%20Rising%20(1).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 3,
@@ -4053,7 +4383,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Cursed%20Mirror-2.wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 4,
@@ -4064,7 +4395,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/04-bootprints-in-the-fall.mp3",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 5,
@@ -4075,7 +4407,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Midnight%20Mark%20(1).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 6,
@@ -4086,7 +4419,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/06-room-13.mp3",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 7,
@@ -4097,7 +4431,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Witching%20Hour%20(2).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 8,
@@ -4108,7 +4443,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Shadow%20Pulse%20(1).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 9,
@@ -4119,7 +4455,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Graveyard%20Bounce%20(1).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 10,
@@ -4130,7 +4467,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/In%20the%20Fog%20(1).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 11,
@@ -4141,7 +4479,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Midnight%20Masquerade%20(2).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 12,
@@ -4152,7 +4491,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Final%20Spell%20(1).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 13,
@@ -4163,7 +4503,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/13-blood-moon-rising-dance-edit.mp3",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 14,
@@ -4174,7 +4515,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Midnight%20Masquerade%20Dance%20Edit%20(1).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       },
       {
         "id": 15,
@@ -4185,7 +4527,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Halloween",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Final%20Spell%20Dance%20Edit%20(1).wav",
-        "sourceFolder": "Hallowave Dance of the shadows"
+        "sourceFolder": "Hallowave Dance of the shadows",
+        "albumId": "hallowave-dance-of-the-shadows-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -4210,7 +4553,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Echoes%20of%20Forever%20(Remastered)-clarity.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 2,
@@ -4221,7 +4565,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Midnight%20Promise-new%20clarity.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 3,
@@ -4232,7 +4577,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Fire%20in%20the%20Shadows%20(Remastered)-tape.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 4,
@@ -4243,7 +4589,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Whispers%20in%20the%20Dark-clarity.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 5,
@@ -4254,7 +4601,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Edge%20of%20a%20Broken%20Dream%20(Cover)%20(Remastered)-tape.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 6,
@@ -4265,7 +4613,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Holding%20On%20to%20Yesterday%20(Cover)%20(Remastered)-2.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 7,
@@ -4276,7 +4625,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Storms%20of%20Desire%20(Cover)%20(Remastered)-2-new%20clarity.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 8,
@@ -4287,7 +4637,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Linger%20in%20the%20Light%20(Cover)%20(Remastered)-clarity.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 9,
@@ -4298,7 +4649,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Runaway%20Flame-clarity.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 10,
@@ -4309,7 +4661,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Through%20the%20Mystery%20(Cover)-clarity.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 11,
@@ -4320,7 +4673,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Rise%20Again%20Tonight-tape.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       },
       {
         "id": 12,
@@ -4331,7 +4685,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Rock",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Love%20Will%20Find%20Us%20Here%20(Cover)%20clarity.wav",
-        "sourceFolder": "Echoes in the Firelight "
+        "sourceFolder": "Echoes in the Firelight ",
+        "albumId": "echoes-in-the-firelight-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -4356,7 +4711,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Autumn%20Lights%20Finale.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 2,
@@ -4367,7 +4723,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Bootprints%20in%20the%20Fall%20-2.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 3,
@@ -4378,7 +4735,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Cold%20Hands%20Warm%20Heart-2.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 4,
@@ -4389,7 +4747,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Firelight%20in%20November.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 5,
@@ -4400,7 +4759,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Frost%20on%20the%20Porch%20-%20universal%20.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 6,
@@ -4411,7 +4771,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Hayride%20Highways.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 7,
@@ -4422,7 +4783,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Lanterns%20in%20the%20Fog.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 8,
@@ -4433,7 +4795,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Midnight%20Barn%20Dance.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 9,
@@ -4444,7 +4807,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/November%20Raincoat%20.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 10,
@@ -4455,7 +4819,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/November%20Shuffle.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 11,
@@ -4466,7 +4831,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Two%20Step%20in%20November.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       },
       {
         "id": 12,
@@ -4477,7 +4843,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Whiskey%20%26%20Walnut%20Pie.wav",
-        "sourceFolder": "Live at Autumn Lights Festival"
+        "sourceFolder": "Live at Autumn Lights Festival",
+        "albumId": "live-at-autumn-lights-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -4502,7 +4869,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/01-november-nights.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 2,
@@ -4513,7 +4881,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/02-city-after-rain.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 3,
@@ -4524,7 +4893,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/03-hollow-lights.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 4,
@@ -4535,7 +4905,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/04-glass-horizon.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 5,
@@ -4546,7 +4917,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/05-autumn-skin.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 6,
@@ -4557,7 +4929,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/06-winter-touch.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 7,
@@ -4568,7 +4941,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/07-last-leaves.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 8,
@@ -4579,7 +4953,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/08-midnight-ember.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 9,
@@ -4590,7 +4965,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/09-the-streetlamp-song.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 10,
@@ -4601,7 +4977,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/10-frostline.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 11,
@@ -4612,7 +4989,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/11-between-the-fog.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       },
       {
         "id": 12,
@@ -4623,7 +5001,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "R&B",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/12-the-last-november.mp3",
-        "sourceFolder": "November Nights"
+        "sourceFolder": "November Nights",
+        "albumId": "november-nights-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -4648,7 +5027,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Ashes%20on%20the%20Wind%20(Remastered%20x2)-clarity.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 2,
@@ -4659,7 +5039,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Bones%20of%20the%20Year.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 3,
@@ -4670,7 +5051,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Carve%20the%20Sky%20(Remastered)-2.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 4,
@@ -4681,7 +5063,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Cinders%20and%20Memory.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 5,
@@ -4692,7 +5075,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Driftwood%20Hearts.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 6,
@@ -4703,7 +5087,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Echoes%20Beneath%20the%20Snow.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 7,
@@ -4714,7 +5099,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/15-hollow-lights.mp3",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 8,
@@ -4725,7 +5111,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/First%20Frost.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 9,
@@ -4736,7 +5123,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Lanterns%20in%20the%20Mist.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 10,
@@ -4747,7 +5135,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/November%20Fires%20(Remastered%20x2)-clarity.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 11,
@@ -4758,7 +5147,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Flicker%20Through%20the%20Cold%20(Remastered%20x2)-2%20clarity.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 12,
@@ -4769,7 +5159,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Silent%20Harvest.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 13,
@@ -4780,7 +5171,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/The%20Last%20Ember.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 14,
@@ -4791,7 +5183,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/When%20the%20Smoke%20Clears.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       },
       {
         "id": 15,
@@ -4802,7 +5195,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Folk",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Dawn%20of%20Reverie.wav",
-        "sourceFolder": "Shadows and Fires"
+        "sourceFolder": "Shadows and Fires",
+        "albumId": "shadows-and-fires-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -4827,7 +5221,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Candy%20Cane%20Crush-clarify.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 2,
@@ -4838,7 +5233,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Final%20Sparkle-clarify.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 3,
@@ -4849,7 +5245,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Frostbyte%20Love-clarify.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 4,
@@ -4860,7 +5257,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Glitter%20and%20Ice-clarify.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 5,
@@ -4871,7 +5269,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Heart%20on%20Ice.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 6,
@@ -4882,7 +5281,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Midnight%20Sleigh%20Ride.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 7,
@@ -4893,7 +5293,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Mistletoe%20Mirage-clarify.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 8,
@@ -4904,7 +5305,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/01-neon-slowfall.mp3",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 9,
@@ -4915,7 +5317,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/North%20Pole%20Frequency-clarify.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 10,
@@ -4926,7 +5329,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Sleigh%20My%20Name-clarify.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 11,
@@ -4937,7 +5341,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/10-sleighbells-and-synths.mp3",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       },
       {
         "id": 12,
@@ -4948,7 +5353,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Starlight%20Carol-clarify.wav",
-        "sourceFolder": "Electric Sleigh"
+        "sourceFolder": "Electric Sleigh",
+        "albumId": "electric-sleigh-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -4973,7 +5379,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Caroling%20at%20the%20Feed%20Store.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 2,
@@ -4984,7 +5391,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Christmas%20Tree%20Farm%20Days.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 3,
@@ -4995,7 +5403,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Coal%20for%20Christmas.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 4,
@@ -5006,7 +5415,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Hot%20Cocoa%20and%20Honky%20Tonk.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 5,
@@ -5017,7 +5427,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Jingle%20Bell%20Rodeo.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 6,
@@ -5028,7 +5439,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Letters%20in%20the%20Snow.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 7,
@@ -5039,7 +5451,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Merry%20in%20the%20Mountains.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 8,
@@ -5050,7 +5463,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Midnight%20Mass%20in%20Nashville.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 9,
@@ -5061,7 +5475,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/New%20Years%20Eve%20in%20the%20Barn.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 10,
@@ -5072,7 +5487,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Snowflakes%20on%20the%20Front%20Porch.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 11,
@@ -5083,7 +5499,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/Stockings%20and%20Saddle%20Boots.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       },
       {
         "id": 12,
@@ -5094,7 +5511,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Christmas",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/The%20Lights%20on%20Route%209.wav",
-        "sourceFolder": "Snowfall and Steel Strings"
+        "sourceFolder": "Snowfall and Steel Strings",
+        "albumId": "snowfall-and-steel-strings-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -5119,7 +5537,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/COUNTDOWN%20TO%20MIDNIGHT.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 2,
@@ -5130,7 +5549,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/CITY%20OF%20VEINS-3.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 3,
@@ -5141,7 +5561,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/NEW%20YEAR%2C%20NEW%20ME.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 4,
@@ -5152,7 +5573,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/AFTER%20THE%20FIREWORKS.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 5,
@@ -5163,7 +5585,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/ELECTRIC%20HEARTBEAT.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 6,
@@ -5174,7 +5597,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/MIDNIGHT%20CONFESSIONS-2-2.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 7,
@@ -5185,7 +5609,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/RELOAD%20THE%20NIGHT.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 8,
@@ -5196,7 +5621,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/EUPHORIA%20LET%20GO-2.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 9,
@@ -5207,7 +5633,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/PARADISE%20AGAIN.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 10,
@@ -5218,7 +5645,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/GLASS%20SKIES.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 11,
@@ -5229,7 +5657,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/RISE%20TOGETHER-2.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       },
       {
         "id": 12,
@@ -5240,7 +5669,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "New Year",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/FIRST%20SUNRISE-3%20copy.wav",
-        "sourceFolder": "New Year’s Odyssey"
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-year-s-odyssey-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -5265,7 +5695,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Golden%20Hour%20in%20the%20Valley.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 2,
@@ -5276,7 +5707,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Whisper%20of%20the%20Pines-2-2.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 3,
@@ -5287,7 +5719,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Starlight%20Serenade%20old.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 4,
@@ -5298,7 +5731,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Painted%20Skies.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 5,
@@ -5309,7 +5743,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Shine%20All%20Night.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 6,
@@ -5320,7 +5755,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Fields%20of%20Forever.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 7,
@@ -5331,7 +5767,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/The%20Valley%20Sings.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 8,
@@ -5342,7 +5779,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Valley%20of%20Dreams.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 9,
@@ -5353,7 +5791,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/09-heaven-in-the-hills.mp3",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 10,
@@ -5364,7 +5803,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Harvest%20Moon%20Glow.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 11,
@@ -5375,7 +5815,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/11-horizons-embrace.mp3",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       },
       {
         "id": 12,
@@ -5386,7 +5827,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Golden%20Hour%20Finale.wav",
-        "sourceFolder": "Live Step Into the Light"
+        "sourceFolder": "Live Step Into the Light",
+        "albumId": "step-into-the-light-2025"
       }
     ],
     "releaseDate": "2025-01-01",
@@ -5411,7 +5853,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/04-a-real-boys-heart.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 2,
@@ -5422,7 +5865,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/06-awaken-my-heart.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 3,
@@ -5433,7 +5877,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/07-beneath-the-stars.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 4,
@@ -5444,7 +5889,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/05-in-this-perfect-night.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 5,
@@ -5455,7 +5901,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/02-soar.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 6,
@@ -5466,7 +5913,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/12-the-call-of-the-sea.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 7,
@@ -5477,7 +5925,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/03-the-heart-of-the-wild.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 8,
@@ -5488,7 +5937,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/08-together-we-rise.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 9,
@@ -5499,7 +5949,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/10-under-the-moolight-sea.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 10,
@@ -5510,7 +5961,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/09-voices-of-the-trees.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       },
       {
         "id": 11,
@@ -5521,7 +5973,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Disney",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/11-whistle-while-we-dream.mp3",
-        "sourceFolder": "Happily Ever After Dreams"
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024"
       }
     ],
     "releaseDate": "2024-01-01",
@@ -5546,7 +5999,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/11-breeze-of-the-waves.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 2,
@@ -5557,7 +6011,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/09-calm-of-the-tide.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 3,
@@ -5568,7 +6023,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/14-ebb-and-flow.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 4,
@@ -5579,7 +6035,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/07-endless-sun.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 5,
@@ -5590,7 +6047,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/05-island-breeze.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 6,
@@ -5601,7 +6059,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/02-island-dreams.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 7,
@@ -5612,7 +6071,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/04-lost-in-the-grove.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 8,
@@ -5623,7 +6083,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/08-midnight-drift.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 9,
@@ -5634,7 +6095,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/10-sunset-cruise.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 10,
@@ -5645,7 +6107,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/13-sunset-serenity.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 11,
@@ -5656,7 +6119,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/03-sway-with-the-tide.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 12,
@@ -5667,7 +6131,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/12-under-midnights-spell.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 13,
@@ -5678,7 +6143,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/06-waves-of-summer.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       },
       {
         "id": 14,
@@ -5689,7 +6155,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Trance",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/01-waves-of-tranquility.mp3",
-        "sourceFolder": "Waves of Tranquility Deep House Reflections"
+        "sourceFolder": "Waves of Tranquility Deep House Reflections",
+        "albumId": "waves-of-tranquility-deep-house-reflections-2024"
       }
     ],
     "releaseDate": "2024-01-01",
@@ -5714,7 +6181,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/10-my-sweet-joyce.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 2,
@@ -5725,7 +6193,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/02-boots-on-the-dance-floor.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 3,
@@ -5736,7 +6205,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/04-chasing-the-sunset.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 4,
@@ -5747,7 +6217,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/05-dancin-in-the-moonlight.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 5,
@@ -5758,7 +6229,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/11-good-times-roll.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 6,
@@ -5769,7 +6241,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/08-jean-s-got-the-boots.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 7,
@@ -5780,7 +6253,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/12-jukebox-jumpin.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 8,
@@ -5791,7 +6265,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/07-kickin-up-dust.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 9,
@@ -5802,7 +6277,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/03-kickin-up-some-fun.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 10,
@@ -5813,7 +6289,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/09-last-call-at-joe-s.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 11,
@@ -5824,7 +6301,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/01-line-dance-fever.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       },
       {
         "id": 12,
@@ -5835,7 +6313,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems-2024--live/06-texas-state-of-mind.mp3",
-        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live"
+        "sourceFolder": "Boots and Beats Country Line Dance Anthems 2024 - Live",
+        "albumId": "boots-and-beats-country-line-dance-anthems-2024"
       }
     ],
     "releaseDate": "2024-01-01",
@@ -5860,7 +6339,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/05-chasing-the-wind.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 2,
@@ -5871,7 +6351,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/10-echos-of-yesterday.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 3,
@@ -5882,7 +6363,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/02-fading-in-your-love.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 4,
@@ -5893,7 +6375,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/14-long-way-back-to-you.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 5,
@@ -5904,7 +6387,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/03-no-turning-back.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 6,
@@ -5915,7 +6399,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/07-roll-with-the-thunder.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 7,
@@ -5926,7 +6411,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/04-run-wild.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 8,
@@ -5937,7 +6423,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/08-shadow-of-a-dream.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 9,
@@ -5948,7 +6435,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/13-still-holding-on.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 10,
@@ -5959,7 +6447,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/11-waiting-for-your-heart.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 11,
@@ -5970,7 +6459,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/12-waiting-on-a-heartbeat.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 12,
@@ -5981,7 +6471,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/01-where-we-used-to-be.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 13,
@@ -5992,7 +6483,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/09-whispers-in-the-night.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       },
       {
         "id": 14,
@@ -6003,7 +6495,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/06-wild-open-road.mp3",
-        "sourceFolder": "Highways of the Heart"
+        "sourceFolder": "Highways of the Heart",
+        "albumId": "highways-of-the-heart-2024"
       }
     ],
     "releaseDate": "2024-01-01",
@@ -6028,7 +6521,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/06-endless-as-the-sky.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 2,
@@ -6039,7 +6533,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/12-every-day-i-miss-you.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 3,
@@ -6050,7 +6545,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/09-forever-yours-joyce.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 4,
@@ -6061,7 +6557,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/03-mamas-heart.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 5,
@@ -6072,7 +6569,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/11-my-brave-boy.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 6,
@@ -6083,7 +6581,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/07-our-forever-starts-today-new.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 7,
@@ -6094,7 +6593,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/04-roots-run-deep.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 8,
@@ -6105,7 +6605,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/01-time-to-let-go.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 9,
@@ -6116,7 +6617,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/08-two-hearts-one-road.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 10,
@@ -6127,7 +6629,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/10-until-the-last-goodbye.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 11,
@@ -6138,7 +6641,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/05-when-you-walked-in.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       },
       {
         "id": 12,
@@ -6149,7 +6653,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul-2024--live/02-where-the-heart-is.mp3",
-        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live"
+        "sourceFolder": "Whispers of the Heart Country Ballads for the Soul 2024 - Live",
+        "albumId": "whispers-of-the-heart-country-ballads-for-the-soul-2024"
       }
     ],
     "releaseDate": "2024-01-01",
@@ -6174,7 +6679,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/Still%20Winter%20in%20My%20Chest.wav",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 2,
@@ -6185,7 +6691,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/02-distant-sky-soft-light.mp3",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 3,
@@ -6196,7 +6703,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/Petals%20in%20the%20Air.wav",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 4,
@@ -6207,7 +6715,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/04-awake-awake.mp3",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 5,
@@ -6218,7 +6727,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/05-where-the-colours-come-from.mp3",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 6,
@@ -6229,7 +6739,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/The%20Garden%20We%20Forgot.wav",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 7,
@@ -6240,7 +6751,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/Brighter%20Than%20the%20Breaking.wav",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 8,
@@ -6251,7 +6763,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/08-march-comes-carrying-light.mp3",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 9,
@@ -6262,7 +6775,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/09-what-we-plant-in-ourselves.mp3",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 10,
@@ -6273,7 +6787,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/10-bloom-my-heart-again.mp3",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 11,
@@ -6284,7 +6799,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/The%20Shape%20of%20Joy%20Returning.wav",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       },
       {
         "id": 12,
@@ -6295,7 +6811,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Pop",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/12-spring-begins-in-you-finale.mp3",
-        "sourceFolder": "Spring Begins Inside You"
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-1905"
       }
     ],
     "releaseDate": "1905-01-01",
@@ -6320,7 +6837,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Celestial%20Tears.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 2,
@@ -6331,7 +6849,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/The%20Calling.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 3,
@@ -6342,7 +6861,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Echoes%20of%20the%20Earthfire.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 4,
@@ -6353,7 +6873,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Temple%20of%20Light.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 5,
@@ -6364,7 +6885,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Whispering%20Sands.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 6,
@@ -6375,7 +6897,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Voices%20of%20the%20Moon.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 7,
@@ -6386,7 +6909,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Path%20of%20the%20Heart.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 8,
@@ -6397,7 +6921,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Divine%20Geometry.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 9,
@@ -6408,7 +6933,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Beyond%20the%20Veil%20of%20Light.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 10,
@@ -6419,7 +6945,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/10-spiritwalker.mp3",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 11,
@@ -6430,7 +6957,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Echoes%20of%20Atlantis.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       },
       {
         "id": 12,
@@ -6441,7 +6969,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Worldbeat",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/Return%20to%20Silence.wav",
-        "sourceFolder": "Heart of the Sky Drums"
+        "sourceFolder": "Heart of the Sky Drums",
+        "albumId": "heart-of-the-sky-drums-1905"
       }
     ],
     "releaseDate": "1905-01-01",
@@ -6466,7 +6995,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Paper%20Town%20Hearts.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 2,
@@ -6477,7 +7007,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Through%20the%20Glass%20(Remastered)-2.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 3,
@@ -6488,7 +7019,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Front%20Porch%20Light.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 4,
@@ -6499,7 +7031,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Slow%20River%20Moon.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 5,
@@ -6510,7 +7043,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Every%20Little%20Grace.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 6,
@@ -6521,7 +7055,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Empty%20Station%20Lights.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 7,
@@ -6532,7 +7067,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Lantern%20in%20the%20Rain%20(Remastered).wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 8,
@@ -6543,7 +7079,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Where%20the%20Light%20Comes%20In%20(Remastered).wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 9,
@@ -6554,7 +7091,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Tennessee%20Lines.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 10,
@@ -6565,7 +7103,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/After%20the%20Fire.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 11,
@@ -6576,7 +7115,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Where%20We%20Begin%20Again.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       },
       {
         "id": 12,
@@ -6587,7 +7127,8 @@ export const albums: Album[] = [
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Miles%20from%20Yesterday.wav",
-        "sourceFolder": "Through The Glass"
+        "sourceFolder": "Through The Glass",
+        "albumId": "through-the-glass-1905"
       }
     ],
     "releaseDate": "1905-01-01",
@@ -6598,37 +7139,37 @@ export const albums: Album[] = [
 
 // Helper functions
 export function getAlbumById(id: string): Album | undefined {
-  return albums.find(album => album.id === id);
+    return albums.find(album => album.id === id);
 }
 
 export function getAlbumsByGenre(genre: string): Album[] {
-  return albums.filter(album =>
-    album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
-  );
+    return albums.filter(album => 
+        album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
+    );
 }
 
 export function getAlbumsByYear(year: number): Album[] {
-  return albums.filter(album => album.year === year);
+    return albums.filter(album => album.year === year);
 }
 
 export function searchAlbums(query: string): Album[] {
-  const lowerQuery = query.toLowerCase();
-  return albums.filter(album =>
-    album.title.toLowerCase().includes(lowerQuery) ||
-    album.tracks.some(track => track.title.toLowerCase().includes(lowerQuery))
-  );
+    const lowerQuery = query.toLowerCase();
+    return albums.filter(album =>
+        album.title.toLowerCase().includes(lowerQuery) ||
+        album.tracks.some(track => track.title.toLowerCase().includes(lowerQuery))
+    );
 }
 
 export function getAllGenres(): string[] {
-  const genres = new Set<string>();
-  albums.forEach(album => {
-    album.genre.forEach(g => genres.add(g));
-  });
-  return Array.from(genres).sort();
+    const genres = new Set<string>();
+    albums.forEach(album => {
+        album.genre.forEach(g => genres.add(g));
+    });
+    return Array.from(genres).sort();
 }
 
 export function getAllYears(): number[] {
-  const years = new Set<number>();
-  albums.forEach(album => years.add(album.year));
-  return Array.from(years).sort((a, b) => b - a);
+    const years = new Set<number>();
+    albums.forEach(album => years.add(album.year));
+    return Array.from(years).sort((a, b) => b - a);
 }

@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { Music, TrendingUp, Star, Clock } from 'lucide-react';
+import { Music, TrendingUp, Star, Clock, Grid } from 'lucide-react';
 import SongList from '@/components/music/SongList';
-import AlbumBrowser from '@/components/music/AlbumBrowser';
+import AlbumOverlay from '@/components/music/AlbumOverlay';
 import Charts from '@/components/music/Charts';
 import styles from './page.module.css';
 import { albums } from '@/data/albumData';
 
 export default function MusicPage() {
-    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>('latest'); // Default to latest logic
+    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>('latest');
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
     const filterButtons = [
         { id: 'all', label: 'All Albums', icon: Music },
@@ -59,65 +60,50 @@ export default function MusicPage() {
             };
         }
 
-        return { tracks: [], title: 'Music' };
-    }, [selectedAlbumId, filterMode]);
+        return { tracks: [], title: '' };
+    }, [filterMode, selectedAlbumId]);
 
+    const handleSelectAlbum = (id: string) => {
+        setSelectedAlbumId(id);
+        setFilterMode('album');
+    };
 
     return (
         <div className={`container ${styles.page}`}>
-            <div className={styles.header}>
-                <h1>Discography</h1>
-                <p>Build your ultimate mixtape - up to 12 tracks. Available as CD, Vinyl, or Digital Download.</p>
+            <AlbumOverlay
+                isOpen={isOverlayOpen}
+                onClose={() => setIsOverlayOpen(false)}
+                albums={albums}
+                onSelectAlbum={handleSelectAlbum}
+            />
 
-                {/* Filter Mode Buttons */}
-                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginTop: '1.5rem', flexWrap: 'wrap' }}>
-                    {filterButtons.map(filter => {
-                        const IconComponent = filter.icon;
-                        const isActive = filterMode === filter.id;
-                        return (
+            <div className={styles.header}>
+                <h1>SingIt Pop Music</h1>
+                <p>Stream authentic mixtapes, explore the discography, and unlock exclusive content.</p>
+
+                <div className={styles.controls}>
+                    <div className={styles.filterBar}>
+                        {filterButtons.map(btn => (
                             <button
-                                key={filter.id}
-                                onClick={() => {
-                                    setFilterMode(filter.id as any);
-                                    setSelectedAlbumId(null);
-                                }}
-                                className={isActive ? 'primary-button' : 'secondary-button'}
-                                style={{
-                                    fontSize: '0.95rem',
-                                    padding: '0.65rem 1.25rem',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem'
-                                }}
+                                key={btn.id}
+                                className={filterMode === btn.id ? styles.activeFilter : ''}
+                                onClick={() => setFilterMode(btn.id as any)}
                             >
-                                <IconComponent size={18} />
-                                {filter.label}
+                                <btn.icon size={16} />
+                                {btn.label}
                             </button>
-                        );
-                    })}
+                        ))}
+                    </div>
+
+                    <button className={styles.browseBtn} onClick={() => setIsOverlayOpen(true)}>
+                        <Grid size={18} />
+                        Browse Discography
+                    </button>
                 </div>
             </div>
 
-            <div className={styles.grid}>
-                {/* Left: Album Navigation */}
-                <div className={styles.sidebarLeft}>
-                    <AlbumBrowser
-                        albums={albums}
-                        activeAlbumId={selectedAlbumId || ''}
-                        onSelectAlbum={(id) => {
-                            setSelectedAlbumId(id);
-                            setFilterMode('album');
-                        }}
-                    />
-                </div>
-
-                {/* Center: Track List */}
+            <div className={styles.content}>
                 <div className={styles.main}>
-                    <h3 style={{ marginBottom: '1rem', color: 'var(--primary)' }}>{title}</h3>
-                    <SongList
-                        tracks={tracks}
-                        filterMode={filterMode === 'album' ? 'all' : filterMode as any}
-                    />
                 </div>
 
                 {/* Right: Charts/Promo */}

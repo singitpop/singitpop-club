@@ -13,19 +13,23 @@ interface SongListProps {
 
 const MAX_MIXTAPE_TRACKS = 12;
 
+
+// Helper to generate unique ID
+const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}:${track.id}` : String(track.id);
+
 export default function SongList({ tracks, filterMode = 'all' }: SongListProps) {
     const { isPro, isInsider } = useAuth();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const [activeTrack, setActiveTrack] = useState<number | null>(null);
-    const [selectedTracks, setSelectedTracks] = useState<number[]>([]);
+    const [activeTrackId, setActiveTrackId] = useState<string | null>(null); // changed to string
+    const [selectedTracks, setSelectedTracks] = useState<string[]>([]); // changed to string[]
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
 
     // Fetch Signed URL when active track changes
     useEffect(() => {
         async function fetchSignedUrl() {
-            if (!activeTrack) return;
-            const track = tracks.find(t => t.id === activeTrack);
+            if (!activeTrackId) return;
+            const track = tracks.find(t => getUniqueId(t) === activeTrackId);
             if (!track || !track.audioUrl) return;
 
             try {
@@ -46,15 +50,15 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
             }
         }
 
-        if (activeTrack) {
+        if (activeTrackId) {
             fetchSignedUrl();
         } else {
             setCurrentSignedUrl(null);
         }
-    }, [activeTrack, tracks]);
+    }, [activeTrackId, tracks]);
 
     useEffect(() => {
-        if (activeTrack && audioRef.current && currentSignedUrl) {
+        if (activeTrackId && audioRef.current && currentSignedUrl) {
             if (isPlaying) {
                 const playPromise = audioRef.current.play();
                 if (playPromise !== undefined) {
@@ -67,28 +71,29 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
                 audioRef.current.pause();
             }
         }
-    }, [isPlaying, activeTrack, currentSignedUrl]);
+    }, [isPlaying, activeTrackId, currentSignedUrl]);
 
     const handlePlay = (track: Track) => {
-        if (activeTrack === track.id) {
+        const uniqueId = getUniqueId(track);
+        if (activeTrackId === uniqueId) {
             setIsPlaying(!isPlaying);
         } else {
             setIsPlaying(false); // Stop asking for previous track
-            setActiveTrack(track.id);
+            setActiveTrackId(uniqueId);
             // Effect will trigger fetching signed URL, then set isPlaying to true
         }
     };
 
-    const toggleSelection = (id: number) => {
+    const toggleSelection = (uniqueId: string) => {
         setSelectedTracks(prev => {
-            if (prev.includes(id)) {
-                return prev.filter(tid => tid !== id);
+            if (prev.includes(uniqueId)) {
+                return prev.filter(tid => tid !== uniqueId);
             } else {
                 if (prev.length >= MAX_MIXTAPE_TRACKS) {
                     alert(`Maximum ${MAX_MIXTAPE_TRACKS} tracks allowed per mixtape!`);
                     return prev;
                 }
-                return [...prev, id];
+                return [...prev, uniqueId];
             }
         });
     };
@@ -103,9 +108,6 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
     });
 
     const totalPrice = (selectedTracks.length * 0.99).toFixed(2);
-
-    // Find the active track data
-    const currentTrackData = tracks.find(t => t.id === activeTrack);
 
     return (
         <div className={styles.container}>
@@ -135,13 +137,14 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
                     <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>No tracks found.</div>
                 ) : (
                     filteredTracks.map((track, index) => {
-                        const isSelected = selectedTracks.includes(track.id);
+                        const uniqueId = getUniqueId(track);
+                        const isSelected = selectedTracks.includes(uniqueId);
                         const isLocked = track.locked && !isPro;
-                        const isCurrentTrack = activeTrack === track.id;
+                        const isCurrentTrack = activeTrackId === uniqueId;
 
                         return (
                             <div
-                                key={track.id}
+                                key={uniqueId}
                                 className={`${styles.row} ${isCurrentTrack ? styles.active : ''} ${isLocked ? styles.locked : ''}`}
                                 onClick={() => !isLocked && handlePlay(track)}
                                 style={{
@@ -152,7 +155,7 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
                             >
                                 <div
                                     className={`${styles.checkbox} ${isSelected ? styles.checked : ''}`}
-                                    onClick={(e) => { e.stopPropagation(); toggleSelection(track.id); }}
+                                    onClick={(e) => { e.stopPropagation(); toggleSelection(uniqueId); }}
                                 >
                                     {isSelected && <Check size={14} strokeWidth={4} />}
                                 </div>
@@ -247,3 +250,4 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
         </div>
     );
 }
+

@@ -5,14 +5,27 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { ShoppingBag, Disc, Package, Download, Check } from 'lucide-react';
 import styles from './page.module.css';
 
-const tracks = [
-    { id: 1, title: 'Southern Lights', duration: '3:45', price: 0.99 },
-    { id: 2, title: 'Whiskey Slide', duration: '3:12', price: 0.99 },
-    { id: 3, title: 'Neon Heart', duration: '2:58', price: 0.99 },
-    { id: 4, title: 'Midnight Drive', duration: '4:02', price: 0.99 },
-    { id: 5, title: 'Electric Soul', duration: '3:30', price: 0.99 },
-    { id: 6, title: 'Retrograde', duration: '3:15', price: 0.99 },
-];
+import { albums, Track } from '@/data/albumData';
+
+// Helper to find track by composite ID (albumId:trackId)
+const findTrackById = (compositeId: string): Track | undefined => {
+    // Handle composite ID "albumId:trackId"
+    if (compositeId.includes(':')) {
+        const [albumId, trackIdStr] = compositeId.split(':');
+        const album = albums.find(a => a.id === albumId);
+        if (album) {
+            return album.tracks.find(t => String(t.id) === trackIdStr);
+        }
+    }
+    // Fallback for legacy numeric IDs (if any links exist) - try to find first match
+    else {
+        for (const album of albums) {
+            const track = album.tracks.find(t => String(t.id) === compositeId);
+            if (track) return track;
+        }
+    }
+    return undefined;
+};
 
 const PRODUCT_TYPES = {
     cd: { name: 'Physical CD', price: 12.99, icon: '💿', shipping: true },
@@ -24,7 +37,7 @@ function CheckoutContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const [selectedType, setSelectedType] = useState<'cd' | 'vinyl' | 'download'>('download');
-    const [selectedTracks, setSelectedTracks] = useState<number[]>([]);
+    const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -37,15 +50,19 @@ function CheckoutContent() {
 
     useEffect(() => {
         const type = searchParams.get('type') as 'cd' | 'vinyl' | 'download';
-        const trackIds = searchParams.get('tracks')?.split(',').map(Number) || [];
+        // Parse comma-separated IDs
+        const trackIds = searchParams.get('tracks')?.split(',').filter(Boolean) || [];
 
         if (type && PRODUCT_TYPES[type]) {
             setSelectedType(type);
         }
-        setSelectedTracks(trackIds);
+        setSelectedTrackIds(trackIds);
     }, [searchParams]);
 
-    const selectedTrackDetails = tracks.filter(t => selectedTracks.includes(t.id));
+    // Resolve track objects from IDs
+    const selectedTrackDetails = selectedTrackIds
+        .map(id => findTrackById(id))
+        .filter((t): t is Track => t !== undefined);
     const tracksPrice = selectedTrackDetails.reduce((sum, t) => sum + t.price, 0);
     const productPrice = PRODUCT_TYPES[selectedType].price;
     const totalPrice = selectedType === 'download' ? tracksPrice : productPrice;
@@ -67,7 +84,7 @@ function CheckoutContent() {
         // Here you would integrate with payment processor (Stripe, PayPal, etc.)
         console.log('Order submitted:', {
             type: selectedType,
-            tracks: selectedTracks,
+            tracks: selectedTrackIds,
             formData,
             total: totalPrice
         });
@@ -132,7 +149,7 @@ function CheckoutContent() {
 
                     {/* Track List */}
                     <div className={styles.trackList}>
-                        <h3>Your Mixtape ({selectedTracks.length}/12 tracks)</h3>
+                        <h3>Your Mixtape ({selectedTrackIds.length}/12 tracks)</h3>
                         {selectedTrackDetails.map(track => (
                             <div key={track.id} className={styles.trackItem}>
                                 <span>{track.title}</span>

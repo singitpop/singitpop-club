@@ -194,7 +194,8 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
             genre: track.genre,
             // S3 URL: https://singitpop-music.s3.us-east-1.amazonaws.com/albums/[folder-slug]/[filename]
             audioUrl: `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(filename)}`,
-            sourceFolder: matchingFolder
+            sourceFolder: matchingFolder,
+            albumId: albumSlug
         });
     });
 
@@ -227,6 +228,8 @@ export interface Track {
     genre: string;
     audioUrl: string;
     highResUrl?: string;
+    albumId?: string;
+    sourceFolder?: string;
 }
 
 export interface Album {
@@ -240,6 +243,8 @@ export interface Album {
     description?: string;
     featured?: boolean;
     trending?: boolean;
+    folderPath?: string;
+    mp3Count?: number;
 }
 
 export const albums: Album[] = ${JSON.stringify(albumsArray, null, 2)};
