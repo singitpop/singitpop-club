@@ -73,6 +73,25 @@ export default function MusicPage() {
         setFilterMode('album');
     };
 
+    const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
+    const MAX_MIXTAPE_TRACKS = 12;
+
+    const handleToggleSelection = (uniqueId: string) => {
+        setSelectedTracks(prev => {
+            if (prev.includes(uniqueId)) {
+                return prev.filter(tid => tid !== uniqueId);
+            } else {
+                if (prev.length >= MAX_MIXTAPE_TRACKS) {
+                    alert(`Maximum ${MAX_MIXTAPE_TRACKS} tracks allowed per mixtape!`);
+                    return prev;
+                }
+                return [...prev, uniqueId];
+            }
+        });
+    };
+
+    const mixtapePrice = (selectedTracks.length * 0.99).toFixed(2);
+
     return (
         <div className={`container ${styles.page}`}>
             <AlbumOverlay
@@ -85,6 +104,47 @@ export default function MusicPage() {
             <div className={styles.header}>
                 <h1>SingIt Pop Music</h1>
                 <p>Stream authentic mixtapes, explore the discography, and unlock exclusive content.</p>
+
+                {/* Top Mixtape CTA */}
+                {selectedTracks.length > 0 && (
+                    <div style={{
+                        marginTop: '1rem',
+                        padding: '1rem',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        backdropFilter: 'blur(10px)'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <span style={{ fontSize: '1.2rem' }}>💿</span>
+                            <div>
+                                <strong>Your Custom Mixtape</strong>
+                                <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
+                                    {selectedTracks.length} / {MAX_MIXTAPE_TRACKS} tracks selected (£{mixtapePrice})
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button
+                                className="primary-button"
+                                style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
+                                onClick={() => window.location.href = `/music/checkout?type=vinyl&tracks=${selectedTracks.join(',')}`}
+                            >
+                                Buy Vinyl (£24.99)
+                            </button>
+                            <button
+                                className="secondary-button"
+                                style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
+                                onClick={() => window.location.href = `/music/checkout?type=cd&tracks=${selectedTracks.join(',')}`}
+                            >
+                                Buy CD (£12.99)
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 <div className={styles.controls}>
                     <div className={styles.filterBar}>
@@ -109,7 +169,11 @@ export default function MusicPage() {
 
             <div className={styles.content}>
                 <div className={styles.main}>
-                    <SongList tracks={tracks} />
+                    <SongList
+                        tracks={tracks}
+                        selectedTracks={selectedTracks}
+                        onToggleSelection={handleToggleSelection}
+                    />
                 </div>
 
                 {/* Right: Charts/Promo */}

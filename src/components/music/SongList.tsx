@@ -9,20 +9,21 @@ import { Track } from '@/data/albumData';
 interface SongListProps {
     tracks: Track[];
     filterMode?: 'all' | 'trending' | 'favorites' | 'latest';
+    selectedTracks: string[];
+    onToggleSelection: (id: string) => void;
 }
 
 const MAX_MIXTAPE_TRACKS = 12;
 
-
 // Helper to generate unique ID
 const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}:${track.id}` : String(track.id);
 
-export default function SongList({ tracks, filterMode = 'all' }: SongListProps) {
+export default function SongList({ tracks, filterMode = 'all', selectedTracks, onToggleSelection }: SongListProps) {
     const { isPro, isInsider } = useAuth();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const [activeTrackId, setActiveTrackId] = useState<string | null>(null); // changed to string
-    const [selectedTracks, setSelectedTracks] = useState<string[]>([]); // changed to string[]
+    const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
+    // selectedTracks removed from local state
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
 
     // Fetch Signed URL when active track changes
@@ -85,17 +86,7 @@ export default function SongList({ tracks, filterMode = 'all' }: SongListProps) 
     };
 
     const toggleSelection = (uniqueId: string) => {
-        setSelectedTracks(prev => {
-            if (prev.includes(uniqueId)) {
-                return prev.filter(tid => tid !== uniqueId);
-            } else {
-                if (prev.length >= MAX_MIXTAPE_TRACKS) {
-                    alert(`Maximum ${MAX_MIXTAPE_TRACKS} tracks allowed per mixtape!`);
-                    return prev;
-                }
-                return [...prev, uniqueId];
-            }
-        });
+        onToggleSelection(uniqueId);
     };
 
     const totalPrice = (selectedTracks.length * 0.99).toFixed(2);
