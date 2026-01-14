@@ -55,7 +55,7 @@ export default function ScannerTool() {
             if (isPlaying) {
                 audioRef.current.pause();
             } else {
-                audioRef.current.play();
+                audioRef.current.play().catch(e => console.error("Scanner playback error:", e));
             }
             setIsPlaying(!isPlaying);
         }
