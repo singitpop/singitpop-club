@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { ShoppingBag, Disc, Package, Download, Check } from 'lucide-react';
+import { ShoppingBag, Disc, Package, Download, Check, Loader2 } from 'lucide-react';
 import styles from './page.module.css';
 
 import { albums, Track } from '@/data/albumData';
@@ -28,7 +28,12 @@ const findTrackById = (compositeId: string): Track | undefined => {
 };
 
 const PRODUCT_TYPES = {
-    download: { name: 'Mixtape Purchase', price: 8.99, icon: '📼', shipping: false }
+    download: {
+        name: 'Mixtape Purchase',
+        price: 8.99,
+        icon: <img src="/images/icons/mixtape-gradient.png" alt="Mixtape" width={180} height={118} style={{ objectFit: 'contain' }} />,
+        shipping: false
+    }
 };
 
 function CheckoutContent() {
@@ -45,13 +50,26 @@ function CheckoutContent() {
         country: 'United Kingdom'
     });
     const [orderPlaced, setOrderPlaced] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
         // Force download type
         const trackIds = searchParams.get('tracks')?.split(',').filter(Boolean) || [];
-
         setSelectedTrackIds(trackIds);
+
+        // Handle Stripe Return
+        if (searchParams.get('success')) {
+            setOrderPlaced(true);
+            const returnedEmail = searchParams.get('customer_email');
+            if (returnedEmail) {
+                setFormData(prev => ({ ...prev, email: returnedEmail }));
+            }
+        }
+        if (searchParams.get('canceled')) {
+            // Optional: Show a message
+            console.log("Order canceled");
+        }
     }, [searchParams]);
 
     // Resolve track objects from IDs
@@ -65,28 +83,33 @@ function CheckoutContent() {
     const totalPrice = productPrice; // Flat rate 8.99
     const needsShipping = false; // Store-only digital
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
 
-        if (needsShipping && (!formData.name || !formData.email || !formData.address)) {
-            alert('Please fill in all required fields');
-            return;
+        try {
+            const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    tracks: selectedTrackIds,
+                    email: formData.email
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.url) {
+                window.location.href = data.url; // Redirect to Stripe
+            } else {
+                alert('Checkout failed: ' + (data.error || 'Unknown error'));
+                setIsLoading(false);
+            }
+        } catch (err) {
+            console.error(err);
+            alert('An error occurred. Please try again.');
+            setIsLoading(false);
         }
-
-        if (!needsShipping && !formData.email) {
-            alert('Please provide your email address');
-            return;
-        }
-
-        // Here you would integrate with payment processor (Stripe, PayPal, etc.)
-        console.log('Order submitted:', {
-            type: selectedType,
-            tracks: selectedTrackIds,
-            formData,
-            total: totalPrice
-        });
-
-        setOrderPlaced(true);
     };
 
     if (orderPlaced) {
@@ -115,6 +138,15 @@ function CheckoutContent() {
         );
     }
 
+    if (isLoading) {
+        return (
+            <div className={styles.success} style={{ justifyContent: 'center', height: '60vh' }}>
+                <Loader2 size={48} className="spin" />
+                <h2>Redirecting to Stripe...</h2>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className={styles.header}>
@@ -126,22 +158,15 @@ function CheckoutContent() {
             <div className={styles.grid}>
                 {/* Left: Product Selection */}
                 <div className={styles.productSelection}>
-                    <h2>Choose Format</h2>
-                    <div className={styles.productOptions}>
-                        {Object.entries(PRODUCT_TYPES).map(([key, product]) => (
-                            <button
-                                key={key}
-                                className={`${styles.productCard} ${selectedType === key ? styles.active : ''}`}
-                                onClick={() => setSelectedType(key as 'download')}
-                            >
-                                <span className={styles.productIcon}>{product.icon}</span>
-                                <h3>{product.name}</h3>
-                                <p className={styles.productPrice}>
-                                    £{product.price.toFixed(2)}
-                                </p>
-                                {product.shipping && <span className={styles.shippingBadge}>+ Shipping</span>}
-                            </button>
-                        ))}
+                    {/* <h2>Choose Format</h2> - Removed as per request */}
+                    <div className={styles.productSummary}>
+                        <div className={styles.productCard} style={{ cursor: 'default', borderColor: 'var(--primary-color)' }}>
+                            <span className={styles.productIcon}>{PRODUCT_TYPES.download.icon}</span>
+                            <h3>{PRODUCT_TYPES.download.name}</h3>
+                            <p className={styles.productPrice}>
+                                £{PRODUCT_TYPES.download.price.toFixed(2)}
+                            </p>
+                        </div>
                     </div>
 
                     {/* Track List */}
