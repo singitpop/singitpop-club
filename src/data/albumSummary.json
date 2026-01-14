@@ -1,16 +1,540 @@
 {
-  "generated": "2026-01-14T08:42:07.708Z",
-  "totalAlbums": 1,
-  "totalTracks": 6,
+  "generated": "2026-01-14T13:13:59.684Z",
+  "totalAlbums": 47,
+  "totalTracks": 572,
   "genres": [
+    "Christmas",
     "Country",
+    "Disco",
+    "Disney",
+    "EDM",
+    "Electronic",
+    "Folk",
+    "Halloween",
+    "New Year",
     "Pop",
-    "Rock"
+    "R&B",
+    "Rock",
+    "Romantic",
+    "Scottish",
+    "Trance",
+    "Worldbeat"
   ],
   "years": [
+    2026,
+    2025,
+    2024,
     1905
   ],
   "albums": [
+    {
+      "id": "valentine-country-2026",
+      "title": "Valentine Country",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Valentine Country",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/"
+    },
+    {
+      "id": "desert-winds-and-open-roads-2026",
+      "title": "Desert Winds And Open Roads",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Desert Winds And Open Roads",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/"
+    },
+    {
+      "id": "echoes-of-light-2026",
+      "title": "Echoes of Light",
+      "year": 2026,
+      "trackCount": 14,
+      "genres": [
+        "Rock"
+      ],
+      "folderPath": "Echoes Of Light",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/"
+    },
+    {
+      "id": "a-love-that-never-ends-2026",
+      "title": "A Love That Never Ends",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "A Love That Never Ends",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/"
+    },
+    {
+      "id": "neon-dreams-2025",
+      "title": "Neon Dreams",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Electronic"
+      ],
+      "folderPath": "Neon Dreams",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/"
+    },
+    {
+      "id": "love-in-bloom-2025",
+      "title": "Love In Bloom",
+      "year": 2025,
+      "trackCount": 11,
+      "genres": [
+        "Romantic"
+      ],
+      "folderPath": "Love in Bloom",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/"
+    },
+    {
+      "id": "starlight-frequencies-2025",
+      "title": "Starlight Frequencies",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Starlight Frequencies",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/"
+    },
+    {
+      "id": "heartlines-2025",
+      "title": "Heartlines",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Heartlines",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartlines/"
+    },
+    {
+      "id": "spring-awakening-2025",
+      "title": "Spring Awakening",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Spring Awakening",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-awakening/"
+    },
+    {
+      "id": "empire-under-lights-2025",
+      "title": "Empire Under lights",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "EDM"
+      ],
+      "folderPath": "Empire Under Lights",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/"
+    },
+    {
+      "id": "ethereal-highlands-2025",
+      "title": "Ethereal Highlands",
+      "year": 2025,
+      "trackCount": 14,
+      "genres": [
+        "Scottish"
+      ],
+      "folderPath": "Ethereal Highlands",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/"
+    },
+    {
+      "id": "golden-hour-2025",
+      "title": "Golden Hour",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Golden Hour",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour/"
+    },
+    {
+      "id": "eternal-summer-2025",
+      "title": "Eternal Summer",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Eternal Summer",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/"
+    },
+    {
+      "id": "glass-bloom-2025",
+      "title": "Glass Bloom",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Glass Bloom",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/"
+    },
+    {
+      "id": "summer-fever-2025",
+      "title": "Summer Fever ",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Summer fever",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/"
+    },
+    {
+      "id": "limitless-2025",
+      "title": "Limitless",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Rock"
+      ],
+      "folderPath": "Limitless",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/"
+    },
+    {
+      "id": "line-dancing-after-dark-2025",
+      "title": "Line Dancing After Dark",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Line Dancing After Dark",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/"
+    },
+    {
+      "id": "wildcards-and-whiskey-2025",
+      "title": "Wildcards and Whiskey",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Wildcards and Whiskey",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/"
+    },
+    {
+      "id": "endless-glow-2025",
+      "title": "Endless Glow",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Endless Glow",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/"
+    },
+    {
+      "id": "dust-and-diamonds-2025",
+      "title": "Dust and Diamonds ",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Dust and Diamonds ",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/"
+    },
+    {
+      "id": "midnight-motion-2025",
+      "title": "Midnight Motion",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country",
+        "Disco"
+      ],
+      "folderPath": "Midnight Motion",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/"
+    },
+    {
+      "id": "southern-lights-2025",
+      "title": "Southern Lights",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Southern Lights",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/"
+    },
+    {
+      "id": "september-moves-2025",
+      "title": "September Moves",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "September Moves",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-moves/"
+    },
+    {
+      "id": "winding-roads-2025",
+      "title": "Winding Roads",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Winding Roads",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/"
+    },
+    {
+      "id": "falling-for-october-2025",
+      "title": "Falling for October",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Folk"
+      ],
+      "folderPath": "Falling for October ",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/falling-for-october-/"
+    },
+    {
+      "id": "october-boots-and-fall-roots-2025",
+      "title": "October Boots and Fall Roots",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "October Boots and Fall Roots",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/october-boots-and-fall-roots/"
+    },
+    {
+      "id": "the-long-way-home-2025",
+      "title": "The Long Way Home",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Rock"
+      ],
+      "folderPath": "The Long Way Home",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/"
+    },
+    {
+      "id": "hallowave-dance-of-the-shadows-2025",
+      "title": "Hallowave Dance of the shadows",
+      "year": 2025,
+      "trackCount": 15,
+      "genres": [
+        "Halloween"
+      ],
+      "folderPath": "Hallowave Dance of the shadows",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/"
+    },
+    {
+      "id": "echoes-in-the-firelight-2025",
+      "title": "Echoes in the Firelight",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Rock"
+      ],
+      "folderPath": "Echoes in the Firelight ",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/"
+    },
+    {
+      "id": "live-at-autumn-lights-2025",
+      "title": "Live At Autumn Lights",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Live at Autumn Lights Festival",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/"
+    },
+    {
+      "id": "november-nights-2025",
+      "title": "November Nights",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "R&B"
+      ],
+      "folderPath": "November Nights",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/november-nights/"
+    },
+    {
+      "id": "shadows-and-fires-2025",
+      "title": "Shadows and Fires",
+      "year": 2025,
+      "trackCount": 15,
+      "genres": [
+        "Folk"
+      ],
+      "folderPath": "Shadows and Fires",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/"
+    },
+    {
+      "id": "electric-sleigh-2025",
+      "title": "Electric Sleigh",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Christmas"
+      ],
+      "folderPath": "Electric Sleigh",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/"
+    },
+    {
+      "id": "snowfall-and-steel-strings-2025",
+      "title": "Snowfall and Steel Strings",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Christmas"
+      ],
+      "folderPath": "Snowfall and Steel Strings",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/"
+    },
+    {
+      "id": "new-year-s-odyssey-2025",
+      "title": "New Year's Odyssey",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "New Year"
+      ],
+      "folderPath": "New Year’s Odyssey",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/"
+    },
+    {
+      "id": "step-into-the-light-2025",
+      "title": "Step Into the Light",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Live Step Into the Light",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/"
+    },
+    {
+      "id": "night-drive-80s-beats-ballads-2024",
+      "title": "Night Drive: 80s Beats & Ballads",
+      "year": 2024,
+      "trackCount": 14,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Night Drive - 80s Beats & Ballads",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/night-drive--80s-beats--ballads/"
+    },
+    {
+      "id": "popstar-winter-wonderland-2024",
+      "title": "Popstar Winter Wonderland",
+      "year": 2024,
+      "trackCount": 12,
+      "genres": [
+        "Christmas",
+        "Country"
+      ],
+      "folderPath": "Pop Star Winter Wonderland",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/"
+    },
+    {
+      "id": "happily-ever-after-dreams-2024",
+      "title": "Happily Ever After Dreams",
+      "year": 2024,
+      "trackCount": 11,
+      "genres": [
+        "Disney"
+      ],
+      "folderPath": "Happily Ever After Dreams",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/"
+    },
+    {
+      "id": "waves-of-tranquility-deep-house-reflections-2024",
+      "title": "Waves of Tranquility Deep House Reflections",
+      "year": 2024,
+      "trackCount": 14,
+      "genres": [
+        "Trance"
+      ],
+      "folderPath": "Waves of Tranquility Deep House Reflections",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/"
+    },
+    {
+      "id": "boots-and-beats-country-line-dance-anthems-2024",
+      "title": "Boots and Beats Country Line Dance Anthems",
+      "year": 2024,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Boots and Beats Country Line Dance Anthems",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems/"
+    },
+    {
+      "id": "highways-of-the-heart-2024",
+      "title": "Highways of the Heart",
+      "year": 2024,
+      "trackCount": 14,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Highways of the Heart",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/"
+    },
+    {
+      "id": "whispers-of-the-heart-country-ballads-for-the-soul-2024",
+      "title": "Whispers of the Heart Country Ballads for the Soul",
+      "year": 2024,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Whispers of the Heart Country Ballads for the Soul",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul/"
+    },
+    {
+      "id": "spring-begins-inside-you-1905",
+      "title": "Spring Begins Inside You",
+      "year": 1905,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Spring Begins Inside You",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/"
+    },
+    {
+      "id": "heart-of-the-sky-drums-1905",
+      "title": "Heart of the Sky Drums",
+      "year": 1905,
+      "trackCount": 12,
+      "genres": [
+        "Worldbeat"
+      ],
+      "folderPath": "Heart of the Sky Drums",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/"
+    },
+    {
+      "id": "through-the-glass-1905",
+      "title": "Through the Glass",
+      "year": 1905,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Through The Glass",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/"
+    },
     {
       "id": "singles-1905",
       "title": "Singles",
@@ -21,8 +545,8 @@
         "Rock",
         "Pop"
       ],
-      "folderPath": "Country Singles",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/country-singles/"
+      "folderPath": "Singles",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/"
     }
   ]
 }
