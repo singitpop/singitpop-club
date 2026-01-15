@@ -47,8 +47,8 @@ export const siteContent = {
     musicPage: {
         latestAlbumId: LATEST_RELEASES.ALBUM_ID,
         prices: {
-            album: 8.99,
-            mixtape: 8.99
+            album: 1.00,
+            mixtape: 1.00
         }
     }
 };
