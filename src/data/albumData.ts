@@ -1,7 +1,7 @@
 /**
  * Album Data
  * Auto-generated from Excel spreadsheet
- * Generated: 2026-01-14T13:13:59.682Z
+ * Generated: 2026-01-15T10:05:51.235Z
  * 
  * Source: /Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx
  * Albums folder: /Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE
@@ -55,7 +55,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Front%20Porch%20Valentine-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/01-front-porch-valentine.mp3",
         "sourceFolder": "Valentine Country",
         "albumId": "valentine-country-2026"
       },
@@ -194,7 +194,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2026-01-01",
     "folderPath": "Valentine Country",
-    "mp3Count": 12
+    "mp3Count": 11
   },
   {
     "id": "desert-winds-and-open-roads-2026",
@@ -285,7 +285,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Stars%20Over%20Highway%209.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/07-stars-over-highway-9.mp3",
         "sourceFolder": "Desert Winds And Open Roads",
         "albumId": "desert-winds-and-open-roads-2026"
       },
@@ -352,7 +352,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2026-01-01",
     "folderPath": "Desert Winds And Open Roads",
-    "mp3Count": 24
+    "mp3Count": 11
   },
   {
     "id": "echoes-of-light-2026",
@@ -534,7 +534,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2026-01-01",
     "folderPath": "Echoes Of Light",
-    "mp3Count": 28
+    "mp3Count": 26
   },
   {
     "id": "a-love-that-never-ends-2026",
@@ -4181,7 +4181,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-01-01",
     "folderPath": "October Boots and Fall Roots",
-    "mp3Count": 14
+    "mp3Count": 12
   },
   {
     "id": "the-long-way-home-2025",
@@ -4358,7 +4358,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Trick%20or%20Beat-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/01-trick-or-beat.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4370,7 +4370,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Blood%20Moon%20Rising%20(1).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/02-blood-moon-rising.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4382,7 +4382,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Cursed%20Mirror-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/03-cursed-mirror.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4406,7 +4406,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Midnight%20Mark%20(1).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/05-midnight-mark.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4430,7 +4430,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Witching%20Hour%20(2).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/07-witching-hour.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4442,7 +4442,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Shadow%20Pulse%20(1).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/08-shadow-pulse.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4454,7 +4454,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Graveyard%20Bounce%20(1).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/09-graveyard-bounce.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4466,7 +4466,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/In%20the%20Fog%20(1).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/10-in-the-fog.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4478,7 +4478,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Midnight%20Masquerade%20(2).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/11-midnight-masquerade.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4490,7 +4490,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Final%20Spell%20(1).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/12-final-spell.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4514,7 +4514,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Midnight%20Masquerade%20Dance%20Edit%20(1).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/14-midnight-masquerade-dance-edit.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       },
@@ -4526,14 +4526,14 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Halloween",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/Final%20Spell%20Dance%20Edit%20(1).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/15-final-spell-dance-edit.mp3",
         "sourceFolder": "Hallowave Dance of the shadows",
         "albumId": "hallowave-dance-of-the-shadows-2025"
       }
     ],
     "releaseDate": "2025-01-01",
     "folderPath": "Hallowave Dance of the shadows",
-    "mp3Count": 15
+    "mp3Count": 1
   },
   {
     "id": "echoes-in-the-firelight-2025",
@@ -4612,7 +4612,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Rock",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Holding%20On%20to%20Yesterday%20(Cover)%20(Remastered)-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/06-holding-on-to-yesterday.mp3",
         "sourceFolder": "Echoes in the Firelight ",
         "albumId": "echoes-in-the-firelight-2025"
       },
@@ -4691,7 +4691,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-01-01",
     "folderPath": "Echoes in the Firelight ",
-    "mp3Count": 13
+    "mp3Count": 12
   },
   {
     "id": "live-at-autumn-lights-2025",
@@ -4722,7 +4722,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Bootprints%20in%20the%20Fall%20-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Bootprints%20in%20the%20Fall%20-universal.wav",
         "sourceFolder": "Live at Autumn Lights Festival",
         "albumId": "live-at-autumn-lights-2025"
       },
@@ -4734,7 +4734,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Cold%20Hands%20Warm%20Heart-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-at-autumn-lights-festival/Cold%20Hands%20Warm%20Heart-universal.wav",
         "sourceFolder": "Live at Autumn Lights Festival",
         "albumId": "live-at-autumn-lights-2025"
       },
@@ -4849,7 +4849,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-01-01",
     "folderPath": "Live at Autumn Lights Festival",
-    "mp3Count": 26
+    "mp3Count": 23
   },
   {
     "id": "november-nights-2025",
@@ -5050,7 +5050,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Folk",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Carve%20the%20Sky%20(Remastered)-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Carve%20the%20Sky%20(Remastered)-clarity.wav",
         "sourceFolder": "Shadows and Fires",
         "albumId": "shadows-and-fires-2025"
       },
@@ -5201,7 +5201,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-01-01",
     "folderPath": "Shadows and Fires",
-    "mp3Count": 29
+    "mp3Count": 27
   },
   {
     "id": "electric-sleigh-2025",
@@ -5510,14 +5510,14 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Christmas",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/The%20Lights%20on%20Route%209.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/snowfall-and-steel-strings/06-the-lights-on-route-9.mp3",
         "sourceFolder": "Snowfall and Steel Strings",
         "albumId": "snowfall-and-steel-strings-2025"
       }
     ],
     "releaseDate": "2025-01-01",
     "folderPath": "Snowfall and Steel Strings",
-    "mp3Count": 12
+    "mp3Count": 11
   },
   {
     "id": "new-year-s-odyssey-2025",
@@ -5548,7 +5548,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "New Year",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/CITY%20OF%20VEINS-3.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/CITY%20OF%20VEINS.wav",
         "sourceFolder": "New Year’s Odyssey",
         "albumId": "new-year-s-odyssey-2025"
       },
@@ -5596,7 +5596,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "New Year",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/MIDNIGHT%20CONFESSIONS-2-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/06-midnight-confessions.mp3",
         "sourceFolder": "New Year’s Odyssey",
         "albumId": "new-year-s-odyssey-2025"
       },
@@ -5620,7 +5620,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "New Year",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/EUPHORIA%20LET%20GO-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/EUPHORIA%20LET%20GO.wav",
         "sourceFolder": "New Year’s Odyssey",
         "albumId": "new-year-s-odyssey-2025"
       },
@@ -5656,7 +5656,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "New Year",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/RISE%20TOGETHER-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/RISE%20TOGETHER.wav",
         "sourceFolder": "New Year’s Odyssey",
         "albumId": "new-year-s-odyssey-2025"
       },
@@ -5675,7 +5675,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-01-01",
     "folderPath": "New Year’s Odyssey",
-    "mp3Count": 30
+    "mp3Count": 13
   },
   {
     "id": "step-into-the-light-2025",
@@ -5706,7 +5706,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Whisper%20of%20the%20Pines-2-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/02-whisper-of-the-pines.mp3",
         "sourceFolder": "Live Step Into the Light",
         "albumId": "step-into-the-light-2025"
       },
@@ -5833,7 +5833,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-01-01",
     "folderPath": "Live Step Into the Light",
-    "mp3Count": 28
+    "mp3Count": 14
   },
   {
     "id": "night-drive-80s-beats-ballads-2024",
@@ -7347,7 +7347,7 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Through%20the%20Glass%20(Remastered)-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/Through%20the%20Glass%20(Remastered).wav",
         "sourceFolder": "Through The Glass",
         "albumId": "through-the-glass-1905"
       },
@@ -7474,7 +7474,7 @@ export const albums: Album[] = [
     ],
     "releaseDate": "1905-01-01",
     "folderPath": "Through The Glass",
-    "mp3Count": 36
+    "mp3Count": 34
   },
   {
     "id": "singles-1905",

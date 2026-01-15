@@ -116,10 +116,23 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
     // Get Audio files from folder for matching (MP3 or WAV)
     let audioFiles = [];
     try {
-        audioFiles = fs.readdirSync(folderPath)
+        const allFiles = fs.readdirSync(folderPath);
+
+        // Filter and clean files
+        audioFiles = allFiles
             .filter(file => {
                 const ext = file.toLowerCase();
-                return ext.endsWith('.mp3') || ext.endsWith('.wav');
+                if (!ext.endsWith('.mp3') && !ext.endsWith('.wav')) return false;
+
+                // Exclude version numbers like "song-2.wav", "song 2.wav", "song(1).wav"
+                // Regex checks for hyphen/space followed by digits at the end of name
+                const baseName = path.parse(file).name;
+                const hasVersionNumber = /[- ]\d+$/.test(baseName) || /\(\d+\)$/.test(baseName);
+
+                // User explicitly requested to ignore numbered files (older versions)
+                if (hasVersionNumber) return false;
+
+                return true;
             })
             .sort();
     } catch (e) {
