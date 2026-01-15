@@ -7,7 +7,7 @@ export default function AboutPage() {
                 <div className={styles.imageWrapper}>
                     <img src="/images/singitpop-portrait.jpg" alt="SingIt Pop" className={styles.portrait} />
                 </div>
-                <div className={styles.bio}>
+                <div className={`glass-panel ${styles.bio}`}>
                     <h1>The Beat vs. The Silence</h1>
                     <p className={styles.lead}>
                         SingIt Pop isn’t just a stage name—it’s a promise, a memory, and a race against time.
