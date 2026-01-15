@@ -33,10 +33,14 @@ export async function generateSignedUrl(s3Url: string, expiresInSeconds: number 
         // Decode the key (it was likely encoded in the DB)
         key = decodeURIComponent(key);
 
+        // Sanitize filename for headers (replace spaces/special chars to prevent mobile download errors)
+        const filename = key.split('/').pop() || "download.mp3";
+        const safeFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
+
         const command = new GetObjectCommand({
             Bucket: bucket,
             Key: key,
-            ResponseContentDisposition: `attachment; filename="${key.split('/').pop()}"`, // Force download with original filename
+            ResponseContentDisposition: `attachment; filename="${safeFilename}"`, // Safer filename for mobile
         });
 
         // 604800 seconds = 7 days
