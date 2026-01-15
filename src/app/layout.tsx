@@ -11,30 +11,26 @@ export const metadata: Metadata = {
     description: 'The official home of SingIt Pop. Listen to music, join the fan club, and get exclusive merch.',
 };
 
-import { ClerkProvider } from '@clerk/nextjs';
-
 export default function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     return (
-        <ClerkProvider>
-            <html lang="en" suppressHydrationWarning>
-                <body suppressHydrationWarning={true}>
-                    <AuthProvider>
-                        <Header />
-                        <main style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
-                            <BrandProvider>
-                                {children}
-                                <MobileNav />
-                            </BrandProvider>
-                        </main>
-                        <Footer />
-                    </AuthProvider>
-                </body>
-            </html>
-        </ClerkProvider>
+        <html lang="en" suppressHydrationWarning>
+            <body suppressHydrationWarning={true}>
+                <AuthProvider>
+                    <Header />
+                    <main style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
+                        <BrandProvider>
+                            {children}
+                            <MobileNav />
+                        </BrandProvider>
+                    </main>
+                    <Footer />
+                </AuthProvider>
+            </body>
+        </html>
     );
 }
 
