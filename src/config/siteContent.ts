@@ -1,19 +1,21 @@
+import { LATEST_RELEASES } from './latestReleases';
+
 export const siteContent = {
     hero: {
         cards: [
             {
                 id: 1,
-                title: "Desert Winds And Open Roads",
-                subtitle: "Latest Studio Album",
-                image: "/images/album-desert-winds.jpg",
+                title: LATEST_RELEASES.ALBUM_CARD.TITLE,
+                subtitle: LATEST_RELEASES.ALBUM_CARD.SUBTITLE,
+                image: LATEST_RELEASES.ALBUM_CARD.COVER_ART,
                 action: "modal",
                 cta: "Stream Now 🎧"
             },
             {
                 id: 2,
-                title: "Desert Winds",
+                title: LATEST_RELEASES.SINGLE.TITLE, // Used for auto-add lookup "desert winds"
                 subtitle: "Latest Single",
-                image: "/images/single-desert-winds.jpg", // Specific Single Cover
+                image: LATEST_RELEASES.SINGLE.COVER_ART,
                 action: "modal",
                 cta: "Stream Now 🎧"
             },
@@ -36,14 +38,14 @@ export const siteContent = {
         ]
     },
     floatingPlayer: {
-        title: "Desert Winds",
-        artist: "SingIt Pop",
-        fileUrl: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Desert%20Winds.mp3",
-        duration: 210, // 3:30
-        badge: "Latest Single 🤠"
+        title: LATEST_RELEASES.SINGLE.TITLE,
+        artist: LATEST_RELEASES.SINGLE.ARTIST,
+        fileUrl: LATEST_RELEASES.SINGLE.AUDIO_URL,
+        duration: LATEST_RELEASES.SINGLE.DURATION,
+        badge: LATEST_RELEASES.SINGLE.BADGE
     },
     musicPage: {
-        latestAlbumId: "valentine-country-2026",
+        latestAlbumId: LATEST_RELEASES.ALBUM_ID,
         prices: {
             album: 1.00,
             mixtape: 1.00
