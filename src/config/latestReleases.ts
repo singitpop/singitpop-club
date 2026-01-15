@@ -22,8 +22,8 @@ export const LATEST_RELEASES = {
     // Premier Video Configuration (The big video on the homepage)
     // This is INDEPENDENT of the latest single. You can change this whenever you drop a new video/vlog.
     HERO_VIDEO: {
-        HERO_TITLE: "Desert Winds", // The Big Text on the screen
-        BUTTON_TEXT: "Watch Video", // The text under the play button
-        VIDEO_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", // Paste the FULL YouTube link here
+        HERO_TITLE: "Electric Heartbeat", // The Big Text on the screen
+        BUTTON_TEXT: "Watch Premiere",
+        VIDEO_URL: "https://www.youtube.com/watch?v=_1gyoaU7lro&list=RDMM_1gyoaU7lro&start_radio=1",
     }
 };
