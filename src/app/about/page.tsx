@@ -20,7 +20,7 @@ export default function AboutPage() {
 
                     <h3>The Sound</h3>
                     <p>
-                        Unified by storytelling and emotional authenticity, my work spans pop, country, rock, and progressive textures.
+                        Unified by storytelling and emotional authenticity, my work spans pop, country, rock, Electronic/EDM, and progressive textures.
                         From the heartfelt tribute of <em>I Miss You Son</em> to the love dedication <em>Forever Yours Joyce</em> and the
                         expansive soundscapes of <em>Echoes in The Firelight</em>, every track is a chapter.
                     </p>

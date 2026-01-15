@@ -3,8 +3,10 @@
 import { Sparkles } from 'lucide-react';
 import styles from './RecommendationStrip.module.css';
 
+import { LATEST_RELEASES } from '@/config/latestReleases';
+
 const recommendations = [
-    { id: 1, title: 'Southern Lights', reason: '🔥 Latest Single', icon: '/images/icons/music-note-clean.png' },
+    { id: 1, title: LATEST_RELEASES.SINGLE.TITLE, reason: '🔥 Latest Single', icon: '/images/icons/music-note-clean.png' },
     { id: 2, title: 'SingIt Pop Vol. 1', reason: '🎵 Latest Album', icon: '/images/icons/music-note-clean.png' },
     { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
     { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },

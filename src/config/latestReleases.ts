@@ -17,5 +17,12 @@ export const LATEST_RELEASES = {
         TITLE: "Desert Winds And Open Roads",
         SUBTITLE: "Latest Studio Album",
         COVER_ART: "/images/album-desert-winds.jpg"
+    },
+
+    // Premier Video Configuration
+    VIDEO: {
+        TITLE: "Desert Winds (Official Music Video)",
+        YOUTUBE_ID: "dQw4w9WgXcQ", // Placeholder - User will update this
+        IS_YOUTUBE: true
     }
 };

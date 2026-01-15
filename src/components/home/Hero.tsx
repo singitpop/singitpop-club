@@ -1,10 +1,12 @@
-"use client";
-
-import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Play, X } from 'lucide-react';
 import styles from './Hero.module.css';
+import { LATEST_RELEASES } from '@/config/latestReleases';
 
 export default function Hero() {
+    const [showVideo, setShowVideo] = useState(false);
+
     return (
         <section className={styles.heroImmersive}>
             <div className={styles.videoBackground}>
@@ -21,6 +23,7 @@ export default function Hero() {
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
+                    onClick={() => setShowVideo(true)}
                 >
                     <Play size={48} fill="currentColor" />
                     <div className={styles.pulseRing} />
@@ -36,8 +39,34 @@ export default function Hero() {
                 transition={{ delay: 1, duration: 0.8 }}
             >
                 <span className={styles.artistName}>SingIt Pop</span>
-                <h1 className={styles.songTitle}>Southern Lights</h1>
+                <h1 className={styles.songTitle}>{LATEST_RELEASES.VIDEO.TITLE}</h1>
             </motion.div>
+
+            {/* Video Modal */}
+            <AnimatePresence>
+                {showVideo && (
+                    <motion.div
+                        className={styles.videoModal}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setShowVideo(false)}
+                    >
+                        <div className={styles.videoWrapper}>
+                            <button className={styles.closeBtn} onClick={() => setShowVideo(false)}>
+                                <X size={32} />
+                            </button>
+                            <iframe
+                                src={`https://www.youtube.com/embed/${LATEST_RELEASES.VIDEO.YOUTUBE_ID}?autoplay=1`}
+                                title="YouTube video player"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }
