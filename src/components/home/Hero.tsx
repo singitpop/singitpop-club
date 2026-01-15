@@ -7,6 +7,15 @@ import { LATEST_RELEASES } from '@/config/latestReleases';
 export default function Hero() {
     const [showVideo, setShowVideo] = useState(false);
 
+    // Simple helper to extract ID from various YouTube URL formats
+    const getYouTubeId = (url: string) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
+    const videoId = getYouTubeId(LATEST_RELEASES.HERO_VIDEO.VIDEO_URL);
+
     return (
         <section className={styles.heroImmersive}>
             <div className={styles.videoBackground}>
@@ -28,7 +37,7 @@ export default function Hero() {
                     <Play size={48} fill="currentColor" />
                     <div className={styles.pulseRing} />
                 </motion.button>
-                <span className={styles.watchText}>Watch Premiere</span>
+                <span className={styles.watchText}>{LATEST_RELEASES.HERO_VIDEO.BUTTON_TEXT}</span>
             </div>
 
             {/* Title Section - Top Left */}
@@ -39,12 +48,12 @@ export default function Hero() {
                 transition={{ delay: 1, duration: 0.8 }}
             >
                 <span className={styles.artistName}>SingIt Pop</span>
-                <h1 className={styles.songTitle}>{LATEST_RELEASES.VIDEO.HERO_TITLE}</h1>
+                <h1 className={styles.songTitle}>{LATEST_RELEASES.HERO_VIDEO.HERO_TITLE}</h1>
             </motion.div>
 
             {/* Video Modal */}
             <AnimatePresence>
-                {showVideo && (
+                {showVideo && videoId && (
                     <motion.div
                         className={styles.videoModal}
                         initial={{ opacity: 0 }}
@@ -57,7 +66,7 @@ export default function Hero() {
                                 <X size={32} />
                             </button>
                             <iframe
-                                src={`https://www.youtube.com/embed/${LATEST_RELEASES.VIDEO.YOUTUBE_ID}?autoplay=1`}
+                                src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
                                 title="YouTube video player"
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

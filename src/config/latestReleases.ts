@@ -19,11 +19,11 @@ export const LATEST_RELEASES = {
         COVER_ART: "/images/album-desert-winds.jpg"
     },
 
-    // Premier Video Configuration
-    VIDEO: {
-        HERO_TITLE: "Desert Winds", // Short title for the Big Text
-        TITLE: "Desert Winds (Official Music Video)",
-        YOUTUBE_ID: "dQw4w9WgXcQ", // Placeholder - User will update this
-        IS_YOUTUBE: true
+    // Premier Video Configuration (The big video on the homepage)
+    // This is INDEPENDENT of the latest single. You can change this whenever you drop a new video/vlog.
+    HERO_VIDEO: {
+        HERO_TITLE: "Desert Winds", // The Big Text on the screen
+        BUTTON_TEXT: "Watch Video", // The text under the play button
+        VIDEO_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", // Paste the FULL YouTube link here
     }
 };
