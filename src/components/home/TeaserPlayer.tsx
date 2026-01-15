@@ -9,28 +9,43 @@ import { siteContent } from '@/config/siteContent';
 export default function TeaserPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [signedUrl, setSignedUrl] = useState<string | null>(null);
     const track = siteContent.floatingPlayer;
     const duration = track.duration;
 
     useEffect(() => {
-        let interval: NodeJS.Timeout;
-        if (isPlaying) {
-            interval = setInterval(() => {
-                setProgress((prev) => {
-                    if (prev >= 100) {
-                        setIsPlaying(false);
-                        return 0; // Loop or stop
-                    }
-                    return prev + (100 / (duration * 10)); // Fix duration math: duration is seconds, interval is 100ms
+        // Fetch secure signed URL for the track
+        const fetchUrl = async () => {
+            try {
+                const res = await fetch('/api/music/sign', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: track.fileUrl })
                 });
-            }, 100);
-        }
-        return () => clearInterval(interval);
-    }, [isPlaying, duration]);
+                const data = await res.json();
+                if (data.signedUrl) {
+                    setSignedUrl(data.signedUrl);
+                }
+            } catch (error) {
+                console.error("Failed to sign hero track:", error);
+            }
+        };
+        fetchUrl();
+    }, [track.fileUrl]);
+
+    // Real audio progress is handled by onTimeUpdate directly on the audio element
+    // Removed fake interval logic
 
     const togglePlay = () => {
+        const audio = document.getElementById('hero-audio') as HTMLAudioElement;
+        if (!audio || !signedUrl) return;
+
+        if (isPlaying) {
+            audio.pause();
+        } else {
+            audio.play().catch(e => console.error("Playback failed:", e));
+        }
         setIsPlaying(!isPlaying);
-        // In a real app, this would trigger the actual audio element
     };
 
     return (
@@ -62,12 +77,17 @@ export default function TeaserPlayer() {
                 </div>
 
                 <div className={styles.cta}>
-                    <button className="glow-button sm">
-                        Download MP3 ⬇️
+                    <button className="glow-button sm" onClick={() => window.location.href = '/music'}>
+                        Add to Mixtape 📼
                     </button>
                 </div>
             </div>
-            {/* No Member Prompt needed for Pro */}
+            <audio id="hero-audio" src={signedUrl || ''} onEnded={() => setIsPlaying(false)} onTimeUpdate={(e) => {
+                const audio = e.currentTarget;
+                if (audio.duration) {
+                    setProgress((audio.currentTime / audio.duration) * 100);
+                }
+            }} />
         </div>
     );
 }

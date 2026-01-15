@@ -116,20 +116,43 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
     // Get Audio files from folder for matching (MP3 or WAV)
     let audioFiles = [];
     try {
-        const allFiles = fs.readdirSync(folderPath);
+        // Recursive function to find all audio files
+        function getAudioFiles(dirPath) {
+            let results = [];
+            let list = [];
+            try {
+                list = fs.readdirSync(dirPath);
+            } catch (e) {
+                return [];
+            }
 
-        // Filter and clean files
-        audioFiles = allFiles
+            list.forEach(file => {
+                const filePath = path.join(dirPath, file);
+                const stat = fs.statSync(filePath);
+                if (stat && stat.isDirectory()) {
+                    results = results.concat(getAudioFiles(filePath));
+                } else {
+                    if (file.toLowerCase().endsWith('.wav') || file.toLowerCase().endsWith('.mp3')) {
+                        results.push(filePath); // Store full path for now
+                    }
+                }
+            });
+            return results;
+        }
+
+        const fullAlbumPath = path.join(ALBUMS_SOURCE_DIR, matchingFolder);
+        const allFilePaths = getAudioFiles(fullAlbumPath);
+
+        // Map to filenames for matching logic, but now we know they exist
+        audioFiles = allFilePaths
+            .map(filePath => path.basename(filePath))
             .filter(file => {
                 const ext = file.toLowerCase();
-                if (!ext.endsWith('.mp3') && !ext.endsWith('.wav')) return false;
 
                 // Exclude version numbers like "song-2.wav", "song 2.wav", "song(1).wav"
-                // Regex checks for hyphen/space followed by digits at the end of name
                 const baseName = path.parse(file).name;
                 const hasVersionNumber = /[- ]\d+$/.test(baseName) || /\(\d+\)$/.test(baseName);
 
-                // User explicitly requested to ignore numbered files (older versions)
                 if (hasVersionNumber) return false;
 
                 return true;

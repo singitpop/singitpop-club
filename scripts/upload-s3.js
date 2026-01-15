@@ -49,18 +49,41 @@ async function scanAndUpload(dir) {
 
             console.log(`\n📂 Processing Album: ${dirname} -> ${slug}`);
 
-            const files = fs.readdirSync(albumPath);
-            for (const file of files) {
-                if (file.endsWith('.wav') || file.endsWith('.mp3')) { // Upload wav and mp3
-                    // Exclude wav if we only want mp3? The previous script excluded wav.
-                    // But user wants "Secure digital downloads" which usually includes Hi-Res (WAV).
-                    // The plan mentions "Download High-Res WAV". So I should upload WAVs too.
+            // Recursive function to find all audio files
+            function getAudioFiles(dirPath) {
+                let results = [];
+                const list = fs.readdirSync(dirPath);
+                list.forEach(file => {
+                    const filePath = path.join(dirPath, file);
+                    const stat = fs.statSync(filePath);
+                    if (stat && stat.isDirectory()) {
+                        results = results.concat(getAudioFiles(filePath));
+                    } else {
+                        if (file.endsWith('.wav') || file.endsWith('.mp3')) {
+                            results.push(filePath);
+                        }
+                    }
+                });
+                return results;
+            }
 
-                    const filePath = path.join(albumPath, file);
-                    const key = `albums/${slug}/${file}`;
-                    console.log(`   Uploading ${file}...`);
-                    await uploadFile(filePath, key);
+            const audioFiles = getAudioFiles(albumPath);
+
+            for (const filePath of audioFiles) {
+                const filename = path.basename(filePath);
+
+                // Exclude version duplicates if needed (optional, but good for hygiene)
+                // Regex checks for hyphen/space followed by digits at the end of name
+                const baseName = path.parse(filename).name;
+                const hasVersionNumber = /[- ]\d+$/.test(baseName) || /\(\d+\)$/.test(baseName);
+                if (hasVersionNumber) {
+                    console.log(`   ⚠️  Skipping duplicate/version: ${filename}`);
+                    continue;
                 }
+
+                const key = `albums/${slug}/${filename}`;
+                console.log(`   Uploading ${filename}...`);
+                await uploadFile(filePath, key);
             }
         }
     }

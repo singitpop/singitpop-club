@@ -3,17 +3,17 @@ export const siteContent = {
         cards: [
             {
                 id: 1,
-                title: "Valentine Country",
+                title: "Desert Winds And Open Roads",
                 subtitle: "Latest Studio Album",
-                image: "/images/album-valentine-country.jpg", // Placeholder - user can update
+                image: "/images/album-desert-winds.jpg",
                 action: "modal",
                 cta: "Stream Now 🎧"
             },
             {
                 id: 2,
-                title: "Front Porch Valentine",
+                title: "Desert Winds",
                 subtitle: "Latest Single",
-                image: "/images/single-front-porch.jpg", // Placeholder
+                image: "/images/album-desert-winds.jpg", // Use album art for single
                 action: "modal",
                 cta: "Stream Now 🎧"
             },
@@ -36,9 +36,9 @@ export const siteContent = {
         ]
     },
     floatingPlayer: {
-        title: "Front Porch Valentine",
+        title: "Desert Winds",
         artist: "SingIt Pop",
-        fileUrl: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Front%20Porch%20Valentine-2.wav",
+        fileUrl: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Desert%20Winds.mp3",
         duration: 210, // 3:30
         badge: "Latest Single 🤠"
     },
