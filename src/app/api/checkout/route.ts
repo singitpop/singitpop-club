@@ -17,6 +17,9 @@ export async function POST(req: Request) {
         // In production, you would calculate this based on track prices
         const unitAmount = 100; // 100 pence = £1.00
 
+        // Helper for Base URL with fallback
+        const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://club.singitpop.com' : 'http://localhost:3000');
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
@@ -34,8 +37,8 @@ export async function POST(req: Request) {
                 },
             ],
             mode: 'payment',
-            success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/music/checkout?success=true&customer_email=${encodeURIComponent(email)}`,
-            cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/music/checkout?canceled=true`,
+            success_url: `${BASE_URL}/music/checkout?success=true&customer_email=${encodeURIComponent(email)}`,
+            cancel_url: `${BASE_URL}/music/checkout?canceled=true`,
             customer_email: email, // Pre-fill email if provided
             metadata: {
                 trackIds: tracks.join(','),
