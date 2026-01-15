@@ -21,6 +21,7 @@ export const LATEST_RELEASES = {
 
     // Premier Video Configuration
     VIDEO: {
+        HERO_TITLE: "Desert Winds", // Short title for the Big Text
         TITLE: "Desert Winds (Official Music Video)",
         YOUTUBE_ID: "dQw4w9WgXcQ", // Placeholder - User will update this
         IS_YOUTUBE: true

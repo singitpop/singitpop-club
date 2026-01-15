@@ -39,7 +39,7 @@ export default function Hero() {
                 transition={{ delay: 1, duration: 0.8 }}
             >
                 <span className={styles.artistName}>SingIt Pop</span>
-                <h1 className={styles.songTitle}>{LATEST_RELEASES.VIDEO.TITLE}</h1>
+                <h1 className={styles.songTitle}>{LATEST_RELEASES.VIDEO.HERO_TITLE}</h1>
             </motion.div>
 
             {/* Video Modal */}
