@@ -36,6 +36,7 @@ export async function generateSignedUrl(s3Url: string, expiresInSeconds: number 
         const command = new GetObjectCommand({
             Bucket: bucket,
             Key: key,
+            ResponseContentDisposition: `attachment; filename="${key.split('/').pop()}"`, // Force download with original filename
         });
 
         // 604800 seconds = 7 days

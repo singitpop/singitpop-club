@@ -13,9 +13,8 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'No tracks selected' }, { status: 400 });
         }
 
-        // HARDCODED TEST PRICE: £1.00
-        // In production, you would calculate this based on track prices
-        const unitAmount = 100; // 100 pence = £1.00
+        // Production Price: £8.99 for Mixtape
+        const unitAmount = 899; // 899 pence = £8.99
 
         // Helper for Base URL with fallback
         const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://club.singitpop.com' : 'http://localhost:3000');
