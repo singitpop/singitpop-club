@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -6,43 +8,89 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import styles from './Header.module.css';
 
-// ... (navItems remain same)
+const navItems = [
+  { name: '← Website', href: 'https://singitpop.com' },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Music', href: '/music' },
+  { name: 'Fan Albums', href: '/fan-albums' },
+  { name: 'Projects', href: '/projects' },
+  // { name: 'For Artists', href: '/releasio' }, // Hidden for now
+  { name: 'My Club', href: '/membership' },
+  { name: 'Shop', href: '/shop' },
+  { name: 'Contact', href: '/contact' },
+];
 
-// ... (component start)
-<div className={styles.actions}>
-  <Link href="/membership" className="glow-button" style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
-    Join the Club
-  </Link>
+export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { user } = useAuth(); // Keeping this for future use if needed, or to avoid breaking imports
+  const pathname = usePathname();
 
-  <button
-    className={styles.mobileToggle}
-    onClick={() => setIsOpen(!isOpen)}
-  >
-    {isOpen ? <X /> : <Menu />}
-  </button>
-</div>
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-{/* Mobile Nav Overlay */ }
-{
-  isOpen && (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={styles.mobileMenu}
-    >
-      {navItems.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={styles.mobileLink}
-          onClick={() => setIsOpen(false)}
-        >
-          {item.name}
+  return (
+    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
+      <div className={`container ${styles.container}`}>
+        <Link href="/" className={styles.logo}>
+          SingIt<span className={styles.pop}>Pop</span>
         </Link>
-      ))}
-    </motion.div>
-  )
-}
-    </header >
+
+        {/* Desktop Nav */}
+        <nav className={styles.desktopNav}>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`${styles.navLink} ${pathname === item.href ? styles.active : ''}`}
+            >
+              {item.name}
+              {pathname === item.href && (
+                <motion.div layoutId="underline" className={styles.underline} />
+              )}
+            </Link>
+          ))}
+        </nav>
+
+        <div className={styles.actions}>
+          <Link href="/membership" className="glow-button" style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
+            Join the Club
+          </Link>
+
+          <button
+            className={styles.mobileToggle}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X /> : <Menu />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Nav Overlay */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={styles.mobileMenu}
+        >
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={styles.mobileLink}
+              onClick={() => setIsOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </motion.div>
+      )}
+    </header>
   );
 }
