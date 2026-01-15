@@ -13,7 +13,7 @@ export const siteContent = {
                 id: 2,
                 title: "Desert Winds",
                 subtitle: "Latest Single",
-                image: "/images/album-desert-winds.jpg", // Use album art for single
+                image: "/images/single-desert-winds.jpg", // Specific Single Cover
                 action: "modal",
                 cta: "Stream Now 🎧"
             },
