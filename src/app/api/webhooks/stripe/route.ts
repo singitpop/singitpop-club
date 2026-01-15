@@ -3,6 +3,7 @@ import { headers } from 'next/headers';
 import Stripe from 'stripe';
 import { sendMixtapeEmail } from '@/lib/email';
 import { albums } from '@/data/albumData';
+import { generateSignedUrl } from '@/lib/s3';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: '2025-01-27.acacia' as any,
@@ -85,12 +86,27 @@ export async function POST(req: Request) {
                     }
                 }
 
-                // 2. Send Email
-                if (downloadLinks.length > 0) {
+                // 2. Sign the URLs (Secure Downloads)
+                // We resolve all promises in parallel
+                const signedLinks = await Promise.all(downloadLinks.map(async (link) => {
+                    try {
+                        const signedUrl = await generateSignedUrl(link.url);
+                        return {
+                            ...link,
+                            url: signedUrl
+                        };
+                    } catch (e) {
+                        console.error("Failed to sign URL:", link.url);
+                        return link; // Fallback to original
+                    }
+                }));
+
+                // 3. Send Email
+                if (signedLinks.length > 0) {
                     const emailResult = await sendMixtapeEmail(
                         customerEmail,
                         session.customer_details?.name || 'Music Fan',
-                        downloadLinks
+                        signedLinks
                     );
 
                     if (!emailResult || !emailResult.success) {

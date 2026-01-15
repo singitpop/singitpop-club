@@ -1,47 +1,49 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-const S3_BUCKET = process.env.AWS_S3_BUCKET || "singitpop-music";
-const AWS_REGION = "eu-north-1";
-
-// Initialize S3 Client
-// Ensure credentials are in .env.local
 const s3Client = new S3Client({
-    region: AWS_REGION,
+    region: process.env.AWS_REGION || "eu-north-1",
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
     },
 });
 
-/**
- * Generates a presigned URL for streaming/downloading a file
- * @param key The S3 key (path) of the file
- * @param expiresInSeconds Duration in seconds for URL validity (default: 3600 = 1 hour)
- * @param isDownload If true, sets Content-Disposition to attachment to force download
- */
-export async function getSignedFileUrl(key: string, expiresInSeconds = 3600, isDownload = false): Promise<string> {
+export async function generateSignedUrl(s3Url: string, expiresInSeconds: number = 604800): Promise<string> {
     try {
+        // Parse Bucket and Key from URL
+        // Expected format: https://[bucket].s3.[region].amazonaws.com/[key]
+        // OR: https://s3.[region].amazonaws.com/[bucket]/[key]
+
+        const url = new URL(s3Url);
+        let bucket = "";
+        let key = "";
+
+        if (url.hostname.startsWith("s3.")) {
+            // Path style: /bucket/key
+            const parts = url.pathname.split('/').filter(Boolean);
+            bucket = parts[0];
+            key = parts.slice(1).join('/');
+        } else {
+            // Virtual-hosted style: bucket.s3.region.amazonaws.com
+            bucket = url.hostname.split('.')[0];
+            key = url.pathname.substring(1); // Remove leading slash
+        }
+
+        // Decode the key (it was likely encoded in the DB)
+        key = decodeURIComponent(key);
+
         const command = new GetObjectCommand({
-            Bucket: S3_BUCKET,
+            Bucket: bucket,
             Key: key,
-            ResponseContentDisposition: isDownload ? 'attachment' : undefined,
         });
 
-        // Generate signed URL
-        const url = await getSignedUrl(s3Client, command, { expiresIn: expiresInSeconds });
-        return url;
-    } catch (error) {
-        console.error("Error generating signed URL for key:", key, error);
-        return "";
-    }
-}
+        // 604800 seconds = 7 days
+        const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: expiresInSeconds });
+        return signedUrl;
 
-/**
- * Helper to construct the full S3 key for a song
- * @param albumSlug - clean folder name of the album
- * @param fileName - file name including extension
- */
-export function getMusicKey(albumSlug: string, fileName: string): string {
-    return `albums/${albumSlug}/${fileName}`;
+    } catch (err) {
+        console.error("Error generating signed URL:", err);
+        return s3Url; // Fallback to original URL if signing fails
+    }
 }
