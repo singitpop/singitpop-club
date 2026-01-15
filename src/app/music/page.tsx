@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Music, TrendingUp, Star, Clock, Grid } from 'lucide-react';
 import SongList from '@/components/music/SongList';
 import AlbumOverlay from '@/components/music/AlbumOverlay';
@@ -10,10 +11,41 @@ import { albums } from '@/data/albumData';
 
 import { siteContent } from '@/config/siteContent';
 
-export default function MusicPage() {
+function MusicContent() {
+    const searchParams = useSearchParams();
+    const router = useRouter();
     const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(siteContent.musicPage.latestAlbumId);
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
+
+    // Auto-Add Track Logic
+    useEffect(() => {
+        const trackTitleToAdd = searchParams.get('addTrack');
+        if (trackTitleToAdd) {
+            // Find the track
+            const allTracks = albums.flatMap(a => a.tracks);
+            const foundTrack = allTracks.find(t => t.title.toLowerCase() === trackTitleToAdd.toLowerCase());
+
+            if (foundTrack) {
+                const uniqueId = foundTrack.albumId ? `${foundTrack.albumId}:${foundTrack.id}` : String(foundTrack.id);
+                setSelectedTracks(prev => {
+                    if (!prev.includes(uniqueId)) {
+                        if (prev.length >= 12) {
+                            alert("Mixtape is full!");
+                            return prev;
+                        }
+                        return [...prev, uniqueId];
+                    }
+                    return prev;
+                });
+                // Clear param
+                const newParams = new URLSearchParams(searchParams.toString());
+                newParams.delete('addTrack');
+                router.replace(`/music?${newParams.toString()}`, { scroll: false });
+            }
+        }
+    }, [searchParams, router]);
 
     const filterButtons = [
         { id: 'latest', label: 'Latest Release', icon: Clock },
@@ -39,7 +71,7 @@ export default function MusicPage() {
             };
         }
 
-        if (filterMode === 'all') { // Fallback or if we keep it internally but hide button
+        if (filterMode === 'all') {
             return {
                 tracks: albums.flatMap(a => a.tracks),
                 title: 'All Tracks'
@@ -47,8 +79,6 @@ export default function MusicPage() {
         }
 
         if (filterMode === 'trending') {
-            // Mock trending: Take tracks from various albums to simulate "hot now"
-            // For now, let's take the first 2 tracks from the first 5 albums
             return {
                 tracks: albums.slice(0, 5).flatMap(a => a.tracks.slice(0, 2)),
                 title: 'Trending Now'
@@ -56,7 +86,6 @@ export default function MusicPage() {
         }
 
         if (filterMode === 'favorites') {
-            // Mock favorites: Take random tracks (e.g., every 3rd track)
             return {
                 tracks: albums.flatMap(a => a.tracks).filter((_, i) => i % 3 === 0).slice(0, 12),
                 title: 'Fan Favorites'
@@ -72,7 +101,6 @@ export default function MusicPage() {
         setFilterMode('album');
     };
 
-    const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
     const MAX_MIXTAPE_TRACKS = 12;
 
     const handleToggleSelection = (uniqueId: string) => {
@@ -219,8 +247,16 @@ export default function MusicPage() {
             </div>
             {/* VERSION STAMP - Forces content change and verifies deployment */}
             <div style={{ textAlign: 'center', padding: '20px', color: '#666', fontSize: '0.8rem' }}>
-                System Version: v2026.01.13-1748 (Build: Checked)
+                System Version: v2026.01.15-AutoAddFix (Build: Checked)
             </div>
         </div>
     );
+}
+
+export default function MusicPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <MusicContent />
+        </Suspense>
+    )
 }

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import styles from './Header.module.css';
 
 const navItems = [
@@ -59,14 +60,19 @@ export default function Header() {
         </nav>
 
         <div className={styles.actions}>
-          <Link href="/membership" className="glow-button" style={{
-            background: user?.tier === 'VIP' ? 'linear-gradient(45deg, #FFD700, #FDB931)' : 'var(--primary)',
-            color: user?.tier === 'VIP' ? 'black' : 'white',
-            border: 'none',
-            fontSize: '0.9rem'
-          }}>
-            {user?.tier === 'VIP' ? 'Pro Member 👑' : user?.tier === 'FAN' ? 'The Insider' : 'Join the Club'}
-          </Link>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="glow-button" style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
+                Sign In
+              </button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/membership" style={{ marginRight: '1rem', color: 'var(--text-secondary)' }}>
+              My Club
+            </Link>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
 
           <button
             className={styles.mobileToggle}
@@ -75,27 +81,26 @@ export default function Header() {
             {isOpen ? <X /> : <Menu />}
           </button>
         </div>
-      </div>
 
-      {/* Mobile Nav Overlay */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className={styles.mobileMenu}
-        >
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={styles.mobileLink}
-              onClick={() => setIsOpen(false)}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </motion.div>
-      )}
+        {/* Mobile Nav Overlay */}
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={styles.mobileMenu}
+          >
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={styles.mobileLink}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </motion.div>
+        )}
     </header>
   );
 }

@@ -77,7 +77,7 @@ export default function TeaserPlayer() {
                 </div>
 
                 <div className={styles.cta}>
-                    <button className="glow-button sm" onClick={() => window.location.href = '/music'}>
+                    <button className="glow-button sm" onClick={() => window.location.href = `/music?addTrack=${encodeURIComponent(track.title)}`}>
                         Add to Mixtape 📼
                     </button>
                 </div>
