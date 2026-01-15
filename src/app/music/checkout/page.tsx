@@ -27,10 +27,12 @@ const findTrackById = (compositeId: string): Track | undefined => {
     return undefined;
 };
 
+import { siteContent } from '@/config/siteContent';
+
 const PRODUCT_TYPES = {
     download: {
         name: 'Mixtape Purchase',
-        price: 8.99,
+        price: siteContent.musicPage.prices.mixtape,
         icon: <img src="/images/icons/mixtape-gradient.png" alt="Mixtape" width={180} height={118} style={{ objectFit: 'contain' }} />,
         shipping: false
     }
