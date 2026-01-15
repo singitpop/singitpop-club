@@ -81,26 +81,27 @@ export default function Header() {
             {isOpen ? <X /> : <Menu />}
           </button>
         </div>
+      </div>
 
-        {/* Mobile Nav Overlay */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={styles.mobileMenu}
-          >
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={styles.mobileLink}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </motion.div>
-        )}
+      {/* Mobile Nav Overlay */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={styles.mobileMenu}
+        >
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={styles.mobileLink}
+              onClick={() => setIsOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </motion.div>
+      )}
     </header>
   );
 }
