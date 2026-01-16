@@ -5,7 +5,7 @@ export default function AboutPage() {
         <div className={`container ${styles.page}`}>
             <div className={styles.hero}>
                 <div className={styles.imageWrapper}>
-                    <img src="/images/singitpop-portrait.jpg" alt="SingIt Pop" className={styles.portrait} />
+                    <img src="/images/gary-neon.png" alt="SingIt Pop" className={styles.portrait} />
                 </div>
                 <div className={`glass-panel ${styles.bio}`}>
                     <h1>The Beat vs. The Silence</h1>
