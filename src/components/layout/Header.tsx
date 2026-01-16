@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import styles from './Header.module.css';
 
 const navItems = [
@@ -16,7 +16,7 @@ const navItems = [
   { name: 'Fan Albums', href: '/fan-albums' },
   { name: 'Projects', href: '/projects' },
   // { name: 'For Artists', href: '/releasio' }, // Hidden for now
-  { name: 'My Club', href: '/membership' },
+  { name: 'My Club', href: '/club' },
   { name: 'Shop', href: '/shop' },
   { name: 'Contact', href: '/contact' },
 ];
@@ -24,7 +24,6 @@ const navItems = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { user } = useAuth(); // Keeping this for future use if needed, or to avoid breaking imports
   const pathname = usePathname();
 
   useEffect(() => {
@@ -59,9 +58,19 @@ export default function Header() {
         </nav>
 
         <div className={styles.actions}>
-          <Link href="/membership" className="glow-button" style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
-            Join the Club
-          </Link>
+          <SignedOut>
+            <Link href="/sign-in" className="glow-button" style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
+              Join the Club
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/club" className="glow-button" style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
+              My Dashboard
+            </Link>
+            <div style={{ marginLeft: '1rem' }}>
+              <UserButton afterSignOutUrl="/" />
+            </div>
+          </SignedIn>
 
           <button
             className={styles.mobileToggle}

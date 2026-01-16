@@ -82,7 +82,7 @@ export default function TeaserPlayer() {
                     </button>
                 </div>
             </div>
-            <audio id="hero-audio" src={signedUrl || ''} onEnded={() => setIsPlaying(false)} onTimeUpdate={(e) => {
+            <audio id="hero-audio" src={signedUrl || undefined} onEnded={() => setIsPlaying(false)} onTimeUpdate={(e) => {
                 const audio = e.currentTarget;
                 if (audio.duration) {
                     setProgress((audio.currentTime / audio.duration) * 100);
