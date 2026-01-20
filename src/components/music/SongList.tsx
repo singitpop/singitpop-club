@@ -89,6 +89,26 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
         }
     }, [isPlaying, activeTrackId, currentSignedUrl]);
 
+    const handleTimeUpdate = () => {
+        if (!audioRef.current || !activeTrackId) return;
+
+        const track = tracks.find(t => getUniqueId(t) === activeTrackId);
+        if (!track) return;
+
+        // Check permissions again to be safe
+        // Singles are free for everyone. Album tracks are premium.
+        const isPremiumContent = !track.isSingle;
+        const isFullAccess = isPro || isInsider || !isPremiumContent;
+
+        // If not full access, enforce 30s limit
+        if (!isFullAccess && audioRef.current.currentTime >= 30) {
+            audioRef.current.pause();
+            setIsPlaying(false);
+            audioRef.current.currentTime = 0;
+            alert("Preview ended! Join the Club to unlock full streaming.");
+        }
+    };
+
     const handlePlay = (track: Track) => {
         const uniqueId = getUniqueId(track);
         if (activeTrackId === uniqueId) {
@@ -116,12 +136,17 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
 
                         // Time-Based Gating Logic
                         const album = track.albumId ? getAlbumById(track.albumId) : undefined;
-                        const releaseDate = album?.releaseDate ? new Date(album.releaseDate) : new Date(); // Default to available
+                        const releaseDate = album?.releaseDate ? new Date(album.releaseDate) : new Date();
                         const isPreRelease = releaseDate > new Date();
 
-                        // Lock Logic
+                        // Access Logic
                         let isLocked = false;
+                        let isPreview = false;
                         let lockMessage = "";
+
+                        // Define what constitutes a "Premioum" track
+                        // If it's NOT a single, it's premium content
+                        const isPremiumContent = !track.isSingle;
 
                         if (isPreRelease) {
                             // Pre-Release: ONLY VIPs can listen
@@ -130,10 +155,10 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                                 lockMessage = "Early Access! Upgrade to VIP to listen before the official release.";
                             }
                         } else {
-                            // Standard Release: Insiders can listen (if track is normally locked)
-                            if (track.locked && !isInsider) {
-                                isLocked = true;
-                                lockMessage = "Join the Club to unlock full streaming!";
+                            // Standard Release
+                            if (isPremiumContent && !isInsider && !isPro) {
+                                // Premium content is limited to 30s for free users
+                                isPreview = true;
                             }
                         }
 
@@ -166,12 +191,14 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                                             handlePlay(track);
                                         }
                                     }}>
-                                        {isLocked ? <Lock size={16} /> : (isCurrentTrack && isPlaying ? <span style={{ fontSize: '10px' }}>❚❚</span> : <Play size={16} fill="currentColor" />)}
+                                        {isLocked ? <Lock size={16} /> :
+                                            (isCurrentTrack && isPlaying ? <span style={{ fontSize: '10px' }}>❚❚</span> : <Play size={16} fill="currentColor" />)}
                                     </button>
                                     <div>
                                         <div className={styles.trackTitle}>
                                             {track.title}
                                             {isPreRelease && <span className={styles.badge} style={{ marginLeft: '8px', fontSize: '0.6rem', background: 'var(--accent)', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>EARLY ACCESS</span>}
+                                            {isPreview && <span className={styles.badge} style={{ marginLeft: '8px', fontSize: '0.6rem', background: '#666', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>PREVIEW</span>}
                                         </div>
                                         <div className={styles.meta}>
                                             £{track.price} • {track.plays} plays
@@ -180,7 +207,9 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                                 </div>
 
                                 <div className={styles.actions}>
-                                    <span className={styles.duration}>{track.duration}</span>
+                                    <span className={styles.duration}>
+                                        {isPreview ? "30s Preview" : track.duration}
+                                    </span>
 
                                     {/* Download Logic */}
                                     {isInsider && (
@@ -232,6 +261,7 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                 onEnded={() => setIsPlaying(false)}
                 onPause={() => setIsPlaying(false)}
                 onPlay={() => setIsPlaying(true)}
+                onTimeUpdate={handleTimeUpdate}
                 preload="none"
             />
         </div>
