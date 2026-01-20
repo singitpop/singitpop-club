@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useUser } from '@clerk/nextjs';
 
 type UserTier = 'GUEST' | 'FAN' | 'INSIDER' | 'VIP' | 'LABEL';
 
@@ -22,16 +23,35 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
+    const { user: clerkUser, isLoaded } = useUser();
 
+    // 1. Sync with Clerk (Production/Live)
     useEffect(() => {
-        // Load user from local storage on mount
-        const storedUser = localStorage.getItem('singit_user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
+        if (isLoaded && clerkUser) {
+            const metadata = clerkUser.publicMetadata;
+            // Check for 'tier' or 'role' in metadata
+            const tier = (metadata.tier as UserTier) || (metadata.role === 'admin' ? 'LABEL' : 'FAN');
+
+            setUser({
+                tier: tier,
+                name: clerkUser.fullName || clerkUser.firstName || 'Member'
+            });
         }
-    }, []);
+    }, [isLoaded, clerkUser]);
+
+    // 2. Fallback to LocalStorage (Dev/Manual Override) behavior
+    // We only load from localStorage if Clerk is NOT active (or user logged out of Clerk)
+    useEffect(() => {
+        if (isLoaded && !clerkUser) {
+            const storedUser = localStorage.getItem('singit_user');
+            if (storedUser) {
+                setUser(JSON.parse(storedUser));
+            }
+        }
+    }, [isLoaded, clerkUser]);
 
     const login = (tier: UserTier) => {
+        // Manual login override (mostly for local dev testing)
         let name = 'Music Fan';
         if (tier === 'INSIDER') name = 'The Insider';
         if (tier === 'VIP') name = 'Pro Member';

@@ -1,10 +1,10 @@
 "use client";
 
-import { Play, Lock, Share2, Heart, Check, ShoppingBag } from 'lucide-react';
+import { Play, Lock, Share2, Heart, Check, ShoppingBag, Download } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import styles from './SongList.module.css';
-import { Track } from '@/data/albumData';
+import { Track, getAlbumById } from '@/data/albumData';
 
 interface SongListProps {
     tracks: Track[];
@@ -109,28 +109,7 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.sectionTitle}>Build Your Mixtape</h2>
-            {/* Hidden Audio Element */}
-            <audio
-                ref={audioRef}
-                src={currentSignedUrl || undefined}
-                onEnded={() => setIsPlaying(false)}
-                onTimeUpdate={(e) => {
-                    // Enforce 30s preview for EVERYONE (Store-Only model)
-                    if (e.currentTarget.currentTime >= 30) {
-                        e.currentTarget.pause();
-                        setIsPlaying(false);
-                        console.log("Preview ended.");
-                        e.currentTarget.currentTime = 0;
-                    }
-                }}
-
-                onError={(e) => console.error("Audio error:", e.currentTarget.error)}
-            />
-
-            <p className={styles.subtitle} style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
-                Select tracks to create your custom digital album.
-            </p>
+            {/* ... (existing header) */}
 
             <div className={styles.list}>
                 {tracks.length === 0 ? (
@@ -139,7 +118,30 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                     tracks.map((track, index) => {
                         const uniqueId = getUniqueId(track);
                         const isSelected = selectedTracks.includes(uniqueId);
-                        const isLocked = track.locked && !isPro;
+
+                        // Time-Based Gating Logic
+                        const album = track.albumId ? getAlbumById(track.albumId) : undefined;
+                        const releaseDate = album?.releaseDate ? new Date(album.releaseDate) : new Date(); // Default to available
+                        const isPreRelease = releaseDate > new Date();
+
+                        // Lock Logic
+                        let isLocked = false;
+                        let lockMessage = "";
+
+                        if (isPreRelease) {
+                            // Pre-Release: ONLY VIPs can listen
+                            if (!isPro) {
+                                isLocked = true;
+                                lockMessage = "Early Access! Upgrade to VIP to listen before the official release.";
+                            }
+                        } else {
+                            // Standard Release: Insiders can listen (if track is normally locked)
+                            if (track.locked && !isInsider) {
+                                isLocked = true;
+                                lockMessage = "Join the Club to unlock full streaming!";
+                            }
+                        }
+
                         const isCurrentTrack = activeTrackId === uniqueId;
 
                         return (
@@ -164,7 +166,7 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                                     <button className={styles.playBtn} onClick={(e) => {
                                         e.stopPropagation();
                                         if (isLocked) {
-                                            alert("Join the Club to unlock this track!");
+                                            alert(lockMessage);
                                         } else {
                                             handlePlay(track);
                                         }
@@ -172,18 +174,33 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                                         {isLocked ? <Lock size={16} /> : (isCurrentTrack && isPlaying ? <span style={{ fontSize: '10px' }}>❚❚</span> : <Play size={16} fill="currentColor" />)}
                                     </button>
                                     <div>
-                                        <div className={styles.trackTitle}>{track.title}</div>
+                                        <div className={styles.trackTitle}>
+                                            {track.title}
+                                            {isPreRelease && <span className={styles.badge} style={{ marginLeft: '8px', fontSize: '0.6rem', background: 'var(--accent)', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>EARLY ACCESS</span>}
+                                        </div>
                                         <div className={styles.meta}>
                                             £{track.price} • {track.plays} plays
                                         </div>
                                     </div>
                                 </div>
 
+                                {/* ... (rest of row) */}
+
+
                                 <div className={styles.actions}>
                                     <span className={styles.duration}>{track.duration}</span>
 
                                     {/* Download Logic */}
-                                    {/* Download button removed for Subscribers - Stream Only model */}
+                                    {isInsider && (
+                                        <button className={styles.actionBtn} title="Download MP3 (Insider)">
+                                            <Download size={18} />
+                                        </button>
+                                    )}
+                                    {isPro && track.highResUrl && (
+                                        <button className={styles.actionBtn} title="Download WAV (VIP)">
+                                            <Download size={18} color="cyan" style={{ filter: 'drop-shadow(0 0 5px cyan)' }} />
+                                        </button>
+                                    )}
 
                                     <button className={styles.actionBtn}><Heart size={18} /></button>
                                     <button className={styles.actionBtn}><Share2 size={18} /></button>

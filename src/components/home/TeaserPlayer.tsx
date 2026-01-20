@@ -2,16 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import { Play, Pause, Lock } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
 import styles from './TeaserPlayer.module.css';
 
 import { siteContent } from '@/config/siteContent';
 
 export default function TeaserPlayer() {
+    const { isSignedIn } = useUser();
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const [signedUrl, setSignedUrl] = useState<string | null>(null);
+    const [limitReached, setLimitReached] = useState(false);
+
     const track = siteContent.floatingPlayer;
-    const duration = track.duration;
+    const duration = track.duration; // note: this seems to be in seconds in config usually, but let's trust existing code uses it correctly or it's just for display? 
+    // Wait, the existing code calculates time: Math.floor((progress * duration / 100) / 60)
+    // If 'duration' is just a number (e.g. 210 seconds), this works.
 
     useEffect(() => {
         // Fetch secure signed URL for the track
@@ -33,19 +39,43 @@ export default function TeaserPlayer() {
         fetchUrl();
     }, [track.fileUrl]);
 
-    // Real audio progress is handled by onTimeUpdate directly on the audio element
-    // Removed fake interval logic
-
     const togglePlay = () => {
         const audio = document.getElementById('hero-audio') as HTMLAudioElement;
         if (!audio || !signedUrl) return;
 
+        if (limitReached && !isSignedIn) {
+            window.location.href = '/club'; // Redirect or just show prompt?
+            return;
+        }
+
         if (isPlaying) {
             audio.pause();
         } else {
+            // Check if we are already at the limit
+            if (!isSignedIn && audio.currentTime >= 30) {
+                setLimitReached(true);
+                return;
+            }
             audio.play().catch(e => console.error("Playback failed:", e));
         }
         setIsPlaying(!isPlaying);
+    };
+
+    const handleTimeUpdate = (e: React.SyntheticEvent<HTMLAudioElement>) => {
+        const audio = e.currentTarget;
+        if (audio.duration) {
+            // Check for 30s limit
+            if (!isSignedIn && audio.currentTime >= 30) {
+                audio.pause();
+                setIsPlaying(false);
+                setLimitReached(true);
+                // Optionally clamp time
+                // audio.currentTime = 30; // Creates specific behavior, maybe keep it at 30
+            } else {
+                setLimitReached(false);
+            }
+            setProgress((audio.currentTime / audio.duration) * 100);
+        }
     };
 
     return (
@@ -61,13 +91,16 @@ export default function TeaserPlayer() {
 
                 <div className={styles.controls}>
                     <button onClick={togglePlay} className={styles.playBtn}>
-                        {isPlaying ? <Pause fill="currentColor" /> : <Play fill="currentColor" />}
+                        {limitReached && !isSignedIn ? <Lock size={16} fill="currentColor" /> : (isPlaying ? <Pause fill="currentColor" /> : <Play fill="currentColor" />)}
                     </button>
 
                     <div className={styles.progressBar}>
                         <div
                             className={styles.progressFill}
-                            style={{ width: `${progress}%` }}
+                            style={{
+                                width: `${progress}%`,
+                                background: limitReached ? '#ef4444' : 'var(--primary)'
+                            }}
                         />
                     </div>
 
@@ -82,12 +115,21 @@ export default function TeaserPlayer() {
                     </button>
                 </div>
             </div>
-            <audio id="hero-audio" src={signedUrl || undefined} onEnded={() => setIsPlaying(false)} onTimeUpdate={(e) => {
-                const audio = e.currentTarget;
-                if (audio.duration) {
-                    setProgress((audio.currentTime / audio.duration) * 100);
-                }
-            }} />
+
+            {!isSignedIn && limitReached && (
+                <div className={styles.memberPrompt}>
+                    <span>🔒 Preview ended.</span>
+                    <a href="/club">Join the Club</a>
+                    <span>to listen to the full track!</span>
+                </div>
+            )}
+
+            <audio
+                id="hero-audio"
+                src={signedUrl || undefined}
+                onEnded={() => setIsPlaying(false)}
+                onTimeUpdate={handleTimeUpdate}
+            />
         </div>
     );
 }

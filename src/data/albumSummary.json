@@ -1,5 +1,5 @@
 {
-  "generated": "2026-01-15T13:07:19.302Z",
+  "generated": "2026-01-20T13:12:27.181Z",
   "totalAlbums": 47,
   "totalTracks": 572,
   "genres": [
@@ -70,6 +70,39 @@
       ],
       "folderPath": "A Love That Never Ends",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/"
+    },
+    {
+      "id": "spring-begins-inside-you-2026",
+      "title": "Spring Begins Inside You",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Spring Begins Inside You",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/"
+    },
+    {
+      "id": "heart-of-the-sky-drums-2026",
+      "title": "Heart of the Sky Drums",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Worldbeat"
+      ],
+      "folderPath": "Heart of the Sky Drums",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/"
+    },
+    {
+      "id": "through-the-glass-2026",
+      "title": "Through the Glass",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Through The Glass",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/"
     },
     {
       "id": "neon-dreams-2025",
@@ -501,39 +534,6 @@
       ],
       "folderPath": "Whispers of the Heart Country Ballads for the Soul",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul/"
-    },
-    {
-      "id": "spring-begins-inside-you-1905",
-      "title": "Spring Begins Inside You",
-      "year": 1905,
-      "trackCount": 12,
-      "genres": [
-        "Pop"
-      ],
-      "folderPath": "Spring Begins Inside You",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/"
-    },
-    {
-      "id": "heart-of-the-sky-drums-1905",
-      "title": "Heart of the Sky Drums",
-      "year": 1905,
-      "trackCount": 12,
-      "genres": [
-        "Worldbeat"
-      ],
-      "folderPath": "Heart of the Sky Drums",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/"
-    },
-    {
-      "id": "through-the-glass-1905",
-      "title": "Through the Glass",
-      "year": 1905,
-      "trackCount": 12,
-      "genres": [
-        "Country"
-      ],
-      "folderPath": "Through The Glass",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/"
     },
     {
       "id": "singles-1905",

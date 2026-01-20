@@ -15,14 +15,14 @@ const tiers = [
     {
         name: "The Insider",
         price: "£3.99/mo",
-        features: ["Unlock ALL Tracks 🔓", "Early Access to Demos ⏳", "Download Standard MP3s 🎧", "Insider Profile Badge 🛡️"],
+        features: ["Unlock ALL Tracks 🔓", "Stream Full Albums 💿", "MP3 Downloads 🎧", "Insider Profile Badge 🛡️"],
         highlight: true,
         action: "Upgrade"
     },
     {
         name: "The VIP",
         price: "£8.99/mo",
-        features: ["Full Access to Releasio OS 🎹", "20% Shop Discount 🏷️", "High-Res WAV Downloads 💎", "Priority on Custom Songs ⚡"],
+        features: ["Everything in Insider ✨", "Lossless WAV Downloads 💎", "20% Shop Discount 🏷️", "Exclusive Demos 🎹"],
         highlight: false,
         action: "Upgrade"
     }
@@ -40,8 +40,8 @@ export default function MembershipPage() {
     return (
         <div className={`container ${styles.page}`}>
             <div className={styles.header}>
-                <h1>The Co-Creation Lab 🧪</h1>
-                <p>Don't just listen. Join the team and shape the next hit.</p>
+                <h1>Identify Your Status 🆔</h1>
+                <p>Support the music and unlock exclusive access.</p>
             </div>
 
             <div className={styles.grid}>

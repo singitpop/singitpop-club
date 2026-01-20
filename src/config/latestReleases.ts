@@ -22,8 +22,8 @@ export const LATEST_RELEASES = {
     // Premier Video Configuration (The big video on the homepage)
     // This is INDEPENDENT of the latest single. You can change this whenever you drop a new video/vlog.
     HERO_VIDEO: {
-        HERO_TITLE: "Electric Heartbeat", // The Big Text on the screen
+        HERO_TITLE: "PARADISE AGAIN", // The Big Text on the screen
         BUTTON_TEXT: "Watch Premiere",
-        VIDEO_URL: "https://www.youtube.com/watch?v=_1gyoaU7lro&list=RDMM_1gyoaU7lro&start_radio=1",
+        VIDEO_URL: "https://www.youtube.com/watch?v=s5GwnVX3-dY&list=RDMMs5GwnVX3-dY&start_radio=1",
     }
 };

@@ -62,6 +62,7 @@ for (let i = 1; i < data.length; i++) {
     const albumName = row[6];  // Column G: Album Title
     const trackNumber = row[5]; // Column F: Track No
     const releaseDate = row[8]; // Column I: Release Date (Excel date number)
+    const releaseType = row[10] ? String(row[10]).trim().toLowerCase() : ''; // Column K: Latest Status
 
     // Skip empty rows
     if (!trackTitle || !albumName) continue;
@@ -84,7 +85,8 @@ for (let i = 1; i < data.length; i++) {
         title: trackTitle,
         genre: genre || 'Pop',
         trackNumber: trackNumber || tracksByAlbum[albumName].length + 1,
-        year: year
+        year: year,
+        releaseType: releaseType
     });
 }
 
@@ -171,6 +173,15 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
     // Get genres from tracks
     const genres = [...new Set(tracks.map(t => t.genre))];
 
+    // Determine Album Type (Studio, Live, or Standard)
+    // If ANY track is marked Studio/Live, the whole album gets that tag
+    let albumType = 'standard';
+    const hasStudioTag = tracks.some(t => t.releaseType && t.releaseType.includes('studio'));
+    const hasLiveTag = tracks.some(t => t.releaseType && t.releaseType.includes('live'));
+
+    if (hasStudioTag) albumType = 'studio';
+    else if (hasLiveTag) albumType = 'live';
+
     // Initialize album
     albums[albumSlug] = {
         id: albumSlug,
@@ -181,7 +192,8 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
         tracks: [],
         releaseDate: `${year}-01-01`,
         folderPath: matchingFolder,
-        mp3Count: audioFiles.length
+        mp3Count: audioFiles.length,
+        type: albumType // New field
     };
 
     // Add tracks
@@ -193,45 +205,55 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
 
         const trackNum = String(track.trackNumber || index + 1).padStart(2, '0');
 
-        // Default S3 URL structure (fallback to mp3)
-        let filename = `${trackNum}-${trackSlug}.mp3`;
+        // Default filenames
+        let mp3Filename = `${trackNum}-${trackSlug}.mp3`;
+        let wavFilename = `${trackNum}-${trackSlug}.wav`;
+        let foundMp3 = false;
+        let foundWav = false;
 
-        // Try to find matching file in physical folder to get exact filename case
+        // Try to find matching files in physical folder
         if (audioFiles.length > 0) {
-            // Priority: Exact match > Partial match
-            // Priority: MP3 > WAV
-
-            // 1. Try to find exact title match
-            let matchingFile = audioFiles.find(f =>
-                f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
-                f.toLowerCase() === track.title.toLowerCase()
-            );
-
-            // 2. If not found, try includes
-            if (!matchingFile) {
-                matchingFile = audioFiles.find(f =>
+            // Find MP3
+            const mp3Match = audioFiles.find(f =>
+                f.toLowerCase().endsWith('.mp3') && (
+                    f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
                     f.toLowerCase().includes(track.title.toLowerCase()) ||
                     f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
-                );
-            }
+                )
+            );
 
-            if (matchingFile) {
-                filename = matchingFile;
+            // Find WAV
+            const wavMatch = audioFiles.find(f =>
+                f.toLowerCase().endsWith('.wav') && (
+                    f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
+                    f.toLowerCase().includes(track.title.toLowerCase()) ||
+                    f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
+                )
+            );
+
+            if (mp3Match) {
+                mp3Filename = mp3Match;
+                foundMp3 = true;
+            }
+            if (wavMatch) {
+                wavFilename = wavMatch;
+                foundWav = true;
             }
         }
 
         albums[albumSlug].tracks.push({
             id: index + 1,
             title: track.title,
-            duration: '3:30', // Default, update if you have duration data
+            duration: '3:30',
             plays: '0',
-            locked: false,
+            locked: false, // Lock logic handled by client component based on tier
             price: 0.99,
             genre: track.genre,
-            // S3 URL: https://singitpop-music.s3.us-east-1.amazonaws.com/albums/[folder-slug]/[filename]
-            audioUrl: `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(filename)}`,
+            // WAV for VIPs only (if exists)
+            highResUrl: foundWav ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(wavFilename)}` : undefined,
             sourceFolder: matchingFolder,
-            albumId: albumSlug
+            albumId: albumSlug,
+            isSingle: !!(track.releaseType && track.releaseType.includes('single')) // Force boolean
         });
     });
 
@@ -262,10 +284,11 @@ export interface Track {
     locked: boolean;
     price: number;
     genre: string;
-    audioUrl: string;
     highResUrl?: string;
+    audioUrl?: string;
     albumId?: string;
     sourceFolder?: string;
+    isSingle?: boolean;
 }
 
 export interface Album {
@@ -281,6 +304,7 @@ export interface Album {
     trending?: boolean;
     folderPath?: string;
     mp3Count?: number;
+    type?: 'studio' | 'live' | 'standard';
 }
 
 export const albums: Album[] = ${JSON.stringify(albumsArray, null, 2)};
@@ -320,6 +344,26 @@ export function getAllYears(): number[] {
     const years = new Set<number>();
     albums.forEach(album => years.add(album.year));
     return Array.from(years).sort((a, b) => b - a);
+}
+
+// Latest Release Helpers
+export function getLatestStudioAlbum(): Album | undefined {
+    // Filter for type 'studio', fallback to 'standard' if none found
+    // Sort by year descending, then by releaseDate if available
+    const studioAlbums = albums.filter(a => a.type === 'studio');
+    return studioAlbums.length > 0 ? studioAlbums[0] : albums[0];
+}
+
+export function getLatestSingle(): Track | undefined {
+    // Find the latest album that contains a single
+    // Then find the specific track marked as single
+    for (const album of albums) {
+        const singleTrack = album.tracks.find(t => t.isSingle);
+        if (singleTrack) {
+            return singleTrack;
+        }
+    }
+    return undefined;
 }
 `;
 

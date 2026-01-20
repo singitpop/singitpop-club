@@ -38,13 +38,13 @@ export default async function ClubPage() {
                 {/* Exclusive 2 */}
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition group">
                     <div className="h-40 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl mb-4 flex items-center justify-center">
-                        <span className="text-4xl">📸</span>
+                        <span className="text-4xl">🎵</span>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">Backstage Pass</h3>
-                    <p className="text-gray-400 text-sm mb-4">Photos from the latest studio sessions.</p>
-                    <button className="px-4 py-2 bg-white text-black rounded-full text-sm font-bold opacity-50 cursor-not-allowed">
-                        Coming Soon
-                    </button>
+                    <h3 className="text-xl font-bold mb-2">Full Music Library</h3>
+                    <p className="text-gray-400 text-sm mb-4">Stream all tracks, including locked releases.</p>
+                    <Link href="/music" className="px-4 py-2 border border-white/30 rounded-full text-sm hover:bg-white hover:text-black transition inline-block">
+                        Listen Now
+                    </Link>
                 </div>
 
                 {/* Managing Account */}

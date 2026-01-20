@@ -7,14 +7,17 @@ import SongList from '@/components/music/SongList';
 import AlbumOverlay from '@/components/music/AlbumOverlay';
 import Charts from '@/components/music/Charts';
 import styles from './page.module.css';
-import { albums } from '@/data/albumData';
+import { albums, getLatestStudioAlbum, getLatestSingle } from '@/data/albumData';
 
 import { siteContent } from '@/config/siteContent';
 
 function MusicContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(siteContent.musicPage.latestAlbumId);
+    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(() => {
+        const latest = getLatestStudioAlbum();
+        return latest ? latest.id : siteContent.musicPage.latestAlbumId;
+    });
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
@@ -64,10 +67,16 @@ function MusicContent() {
         }
 
         if (filterMode === 'latest') {
-            const latest = albums.find(a => a.id === siteContent.musicPage.latestAlbumId);
+            const latestAlbum = getLatestStudioAlbum();
+            const latestSingle = getLatestSingle();
+
+            // Allow user to see both if available, or prioritize album
+            // For this view, we'll combine them or show the album
+            // If we want a specific "Latest Single" view, we can add that
+
             return {
-                tracks: latest ? latest.tracks : [],
-                title: latest ? `Latest Release: ${latest.title}` : 'Latest Release'
+                tracks: latestAlbum ? latestAlbum.tracks : [],
+                title: latestAlbum ? `Latest Release: ${latestAlbum.title}` : 'Latest Release'
             };
         }
 

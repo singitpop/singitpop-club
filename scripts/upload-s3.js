@@ -1,11 +1,11 @@
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand, ListObjectsV2Command } = require("@aws-sdk/client-s3");
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config({ path: '.env.local' });
 
 const S3_BUCKET = process.env.AWS_S3_BUCKET || "singitpop-music";
 const AWS_REGION = "eu-north-1";
-const SOURCE_DIR = "/Users/garybirrell/Desktop/Singitpop";
+const SOURCE_DIR = "/Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE";
 
 const s3Client = new S3Client({
     region: AWS_REGION,
@@ -30,6 +30,21 @@ async function uploadFile(filePath, key) {
     }
 }
 
+async function getExistingFiles(prefix) {
+    try {
+        const command = new ListObjectsV2Command({
+            Bucket: S3_BUCKET,
+            Prefix: prefix
+        });
+        const response = await s3Client.send(command);
+        // Returns a Set of full keys that exist
+        return new Set(response.Contents?.map(c => c.Key) || []);
+    } catch (e) {
+        console.error("Error checking S3:", e);
+        return new Set();
+    }
+}
+
 async function scanAndUpload(dir) {
     if (!fs.existsSync(dir)) {
         console.error(`Directory not found: ${dir}`);
@@ -48,6 +63,10 @@ async function scanAndUpload(dir) {
             const albumPath = path.join(dir, dirname);
 
             console.log(`\n📂 Processing Album: ${dirname} -> ${slug}`);
+
+            // Check what's already on S3 for this album
+            const s3Prefix = `albums/${slug}/`;
+            const existingKeys = await getExistingFiles(s3Prefix);
 
             // Recursive function to find all audio files
             function getAudioFiles(dirPath) {
@@ -72,16 +91,21 @@ async function scanAndUpload(dir) {
             for (const filePath of audioFiles) {
                 const filename = path.basename(filePath);
 
-                // Exclude version duplicates if needed (optional, but good for hygiene)
-                // Regex checks for hyphen/space followed by digits at the end of name
+                // Exclude version duplicates
                 const baseName = path.parse(filename).name;
                 const hasVersionNumber = /[- ]\d+$/.test(baseName) || /\(\d+\)$/.test(baseName);
                 if (hasVersionNumber) {
-                    console.log(`   ⚠️  Skipping duplicate/version: ${filename}`);
+                    // console.log(`   ⚠️  Skipping duplicate/version: ${filename}`);
                     continue;
                 }
 
                 const key = `albums/${slug}/${filename}`;
+
+                if (existingKeys.has(key)) {
+                    // console.log(`   ⏭️  Skipping existing: ${filename}`);
+                    continue;
+                }
+
                 console.log(`   Uploading ${filename}...`);
                 await uploadFile(filePath, key);
             }
