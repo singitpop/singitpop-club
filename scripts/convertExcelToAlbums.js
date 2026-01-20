@@ -251,6 +251,8 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
             genre: track.genre,
             // WAV for VIPs only (if exists)
             highResUrl: foundWav ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(wavFilename)}` : undefined,
+            // MP3 for everyone else (streaming)
+            audioUrl: foundMp3 ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(mp3Filename)}` : undefined,
             sourceFolder: matchingFolder,
             albumId: albumSlug,
             isSingle: !!(track.releaseType && track.releaseType.includes('single')) // Force boolean
