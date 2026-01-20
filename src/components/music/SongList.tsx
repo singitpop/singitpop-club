@@ -23,7 +23,6 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
-    // selectedTracks removed from local state
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
 
     // Fetch Signed URL when active track changes
@@ -105,12 +104,8 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
         onToggleSelection(uniqueId);
     };
 
-    const totalPrice = (selectedTracks.length * 0.99).toFixed(2);
-
     return (
         <div className={styles.container}>
-            {/* ... (existing header) */}
-
             <div className={styles.list}>
                 {tracks.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>No tracks found.</div>
@@ -184,9 +179,6 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                                     </div>
                                 </div>
 
-                                {/* ... (rest of row) */}
-
-
                                 <div className={styles.actions}>
                                     <span className={styles.duration}>{track.duration}</span>
 
@@ -232,7 +224,16 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                     </button>
                 </div>
             </div>
+
+            {/* Hidden Audio Element */}
+            <audio
+                ref={audioRef}
+                src={currentSignedUrl || undefined}
+                onEnded={() => setIsPlaying(false)}
+                onPause={() => setIsPlaying(false)}
+                onPlay={() => setIsPlaying(true)}
+                preload="none"
+            />
         </div>
     );
 }
-

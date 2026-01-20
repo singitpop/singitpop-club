@@ -4,7 +4,9 @@ import { getSignedFileUrl } from '@/lib/s3';
 
 export async function POST(req: NextRequest) {
     try {
-        const { url } = await req.json();
+        const body = await req.json();
+        console.log("📝 Signing Request Body:", body);
+        const { url } = body;
 
         if (!url) {
             return NextResponse.json({ error: 'URL is required' }, { status: 400 });
@@ -18,8 +20,11 @@ export async function POST(req: NextRequest) {
         // Pathname starts with /, so slice(1) to remove it
         // BUT wait, if key has spaces, they are %20 in URL. getKey should be decoded.
         const key = decodeURIComponent(urlObj.pathname.slice(1));
+        console.log("🔑 Derived Key:", key);
 
         const signedUrl = await getSignedFileUrl(key, 3600); // 1 hour expiry
+        console.log("📝 Generated Signed URL:", signedUrl ? "Yes (Length: " + signedUrl.length + ")" : "NULL");
+
 
         return NextResponse.json({ signedUrl });
 
