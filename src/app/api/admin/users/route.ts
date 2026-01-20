@@ -6,7 +6,8 @@ import { clerkClient } from '@clerk/nextjs/server';
 
 export async function GET() {
     try {
-        const users = await clerkClient.users.getUserList({
+        const client = await clerkClient();
+        const users = await client.users.getUserList({
             limit: 100,
         });
 
@@ -29,9 +30,10 @@ export async function GET() {
 export async function POST(req: Request) {
     try {
         const { userId, action, tier } = await req.json();
+        const client = await clerkClient();
 
         if (action === 'set_tier') {
-            await clerkClient.users.updateUserMetadata(userId, {
+            await client.users.updateUserMetadata(userId, {
                 publicMetadata: {
                     tier: tier
                 }
@@ -40,7 +42,7 @@ export async function POST(req: Request) {
         }
 
         if (action === 'ban') {
-            await clerkClient.users.banUser(userId);
+            await client.users.banUser(userId);
             return NextResponse.json({ success: true, banned: true });
         }
 
