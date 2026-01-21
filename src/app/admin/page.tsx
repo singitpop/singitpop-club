@@ -86,7 +86,7 @@ export default function AdminPage() {
     );
 
     return (
-        <div className="container min-h-screen pt-24 pb-12">
+        <div className="container min-h-screen pt-4 pb-12">
             <h1 className="text-3xl font-bold mb-8">Admin Console 🛡️</h1>
 
             <div className="mb-6 flex gap-4">
