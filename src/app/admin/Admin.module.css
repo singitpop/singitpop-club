@@ -101,6 +101,27 @@
     transform: translateY(-2px);
 }
 
+.analyticsBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.analyticsBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+}
+
 .loading {
     padding: var(--spacing-lg);
     text-align: center;

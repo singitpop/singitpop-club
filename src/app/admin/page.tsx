@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { Shield, Search, RefreshCw, Eye, Ban } from 'lucide-react';
+import Link from 'next/link';
+import { Shield, Search, RefreshCw, Eye, Ban, BarChart3 } from 'lucide-react';
 import styles from './Admin.module.css';
 
 interface UserData {
@@ -110,8 +111,14 @@ export default function AdminPage() {
                     <Shield className={styles.icon} />
                     <h1>Admin Console</h1>
                 </div>
-                <div className={styles.userCount}>
-                    Total Users: <span>{users.length}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <Link href="/admin/analytics" className={styles.analyticsBtn}>
+                        <BarChart3 size={18} />
+                        Analytics
+                    </Link>
+                    <div className={styles.userCount}>
+                        Total Users: <span>{users.length}</span>
+                    </div>
                 </div>
             </div>
 
