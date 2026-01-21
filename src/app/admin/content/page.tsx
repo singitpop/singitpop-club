@@ -327,7 +327,7 @@ export default function ContentPage() {
                     <input
                         type="text"
                         placeholder="e.g. https://youtu.be/..."
-                        value={currentLatestVideoId}
+                        value={currentLatestVideoId || ''}
                         onChange={(e) => setCurrentLatestVideoId(e.target.value)}
                         className={styles.input}
                     />
