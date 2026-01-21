@@ -24,17 +24,33 @@ export default function AdminPage() {
     const [users, setUsers] = useState<UserData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState("");
+    const [filterTier, setFilterTier] = useState("ALL");
+    const [sortOrder, setSortOrder] = useState("lastSignInAt");
+    const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
     useEffect(() => {
         if (isLabel) {
             fetchUsers();
         }
-    }, [isLabel]);
+    }, [isLabel, filterTier, sortOrder]); // Re-fetch when filters change
+
+    // Debounce search
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (isLabel) fetchUsers();
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [search]);
 
     async function fetchUsers() {
         setIsLoading(true);
         try {
-            const res = await fetch('/api/admin/users');
+            const params = new URLSearchParams();
+            if (search) params.set('query', search);
+            if (filterTier !== 'ALL') params.set('tier', filterTier);
+            params.set('sort', sortOrder);
+
+            const res = await fetch(`/api/admin/users?${params.toString()}`);
             if (res.ok) {
                 const data = await res.json();
                 setUsers(data);
@@ -44,6 +60,28 @@ export default function AdminPage() {
         } finally {
             setIsLoading(false);
         }
+    }
+
+    function toggleSelectAll() {
+        if (selectedUsers.length === users.length) {
+            setSelectedUsers([]);
+        } else {
+            setSelectedUsers(users.map(u => u.id));
+        }
+    }
+
+    function toggleSelectUser(id: string) {
+        if (selectedUsers.includes(id)) {
+            setSelectedUsers(prev => prev.filter(uid => uid !== id));
+        } else {
+            setSelectedUsers(prev => [...prev, id]);
+        }
+    }
+
+    async function handleBulkAction(action: string) {
+        if (!confirm(`Apply ${action} to ${selectedUsers.length} users?`)) return;
+        // Placeholder for bulk API implementation
+        alert("Bulk action API implementation coming in next step!");
     }
 
     async function updateUserTier(userId: string, newTier: string) {
@@ -127,20 +165,57 @@ export default function AdminPage() {
             </div>
 
             <div className={styles.controls}>
-                <div className={styles.searchWrapper}>
-                    <Search className={styles.searchIcon} size={18} />
-                    <input
-                        type="text"
-                        placeholder="Search users..."
-                        className={styles.searchInput}
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+                <div className={styles.filterControls}>
+                    <div className={styles.searchWrapper}>
+                        <Search className={styles.searchIcon} size={18} />
+                        <input
+                            type="text"
+                            placeholder="Search users..."
+                            className={styles.searchInput}
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
+
+                    <select
+                        className={styles.select}
+                        value={filterTier}
+                        onChange={(e) => setFilterTier(e.target.value)}
+                    >
+                        <option value="ALL">All Tiers</option>
+                        <option value="FAN">Fan</option>
+                        <option value="INSIDER">Insider</option>
+                        <option value="VIP">VIP</option>
+                    </select>
+
+                    <select
+                        className={styles.select}
+                        value={sortOrder}
+                        onChange={(e) => setSortOrder(e.target.value)}
+                    >
+                        <option value="lastSignInAt">Last Active</option>
+                        <option value="createdAt">Newest</option>
+                        <option value="firstName">Name (A-Z)</option>
+                    </select>
                 </div>
+
                 <button onClick={fetchUsers} className={styles.refreshBtn}>
-                    <RefreshCw size={18} /> Refresh
+                    <RefreshCw size={18} />
                 </button>
             </div>
+
+            {selectedUsers.length > 0 && (
+                <div className={styles.bulkActions}>
+                    <span style={{ fontWeight: 600 }}>{selectedUsers.length} users selected</span>
+                    <div style={{ flex: 1 }} />
+                    <button onClick={() => handleBulkAction('vip_upgrade')} className={styles.actionBtn}>
+                        Set as VIP
+                    </button>
+                    <button onClick={() => handleBulkAction('ban')} className={`${styles.actionBtn} ${styles.banBtn}`}>
+                        Ban Selected
+                    </button>
+                </div>
+            )}
 
             {isLoading ? (
                 <div className={styles.loading}>Loading user database...</div>
