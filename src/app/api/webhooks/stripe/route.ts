@@ -7,7 +7,7 @@ const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
 export async function POST(req: NextRequest) {
     const body = await req.text();
-    const signature = headers().get('Stripe-Signature') as string;
+    const signature = (await headers()).get('Stripe-Signature') as string;
 
     let event;
 
