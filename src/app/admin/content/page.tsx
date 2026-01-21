@@ -35,6 +35,7 @@ export default function ContentPage() {
     const [singles, setSingles] = useState<Single[]>([]);
     const [currentLatestSingleUid, setCurrentLatestSingleUid] = useState<string | null>(null);
     const [currentLatestSingleIdRef, setCurrentLatestSingleIdRef] = useState<number | null>(null); // Fallback for ID matching
+    const [currentLatestVideoId, setCurrentLatestVideoId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -61,6 +62,7 @@ export default function ContentPage() {
             setLatestAlbums(latestData);
             setVIPAlbums(vipData);
             setSingles(singlesData.singles);
+            setCurrentLatestVideoId(singlesData.currentLatestVideoId);
 
             // Match current ID to UID if possible
             if (singlesData.currentLatestSingleId) {
