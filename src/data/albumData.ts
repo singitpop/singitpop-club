@@ -1,7 +1,7 @@
 /**
  * Album Data
  * Auto-generated from Excel spreadsheet
- * Generated: 2026-01-21T15:23:39.007Z
+ * Generated: 2026-01-21T15:26:20.148Z
  * 
  * Source: /Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx
  * Albums folder: /Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE
@@ -214,7 +214,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2026-01-01",
+    "releaseDate": "2026-01-30",
     "folderPath": "Valentine Country",
     "mp3Count": 36,
     "type": "standard"
@@ -397,7 +397,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2026-01-01",
+    "releaseDate": "2026-01-16",
     "folderPath": "Desert Winds And Open Roads",
     "mp3Count": 55,
     "type": "studio"
@@ -606,7 +606,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2026-01-01",
+    "releaseDate": "2026-01-23",
     "folderPath": "Echoes Of Light",
     "mp3Count": 54,
     "type": "standard"
@@ -785,7 +785,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2026-01-01",
+    "releaseDate": "2026-01-30",
     "folderPath": "A Love That Never Ends",
     "mp3Count": 38,
     "type": "standard"
@@ -958,7 +958,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2026-01-01",
+    "releaseDate": "2026-03-06",
     "folderPath": "Spring Begins Inside You",
     "mp3Count": 37,
     "type": "standard"
@@ -1139,7 +1139,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2026-01-01",
+    "releaseDate": "2026-03-20",
     "folderPath": "Heart of the Sky Drums",
     "mp3Count": 67,
     "type": "standard"
@@ -1322,7 +1322,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2026-01-01",
+    "releaseDate": "2026-04-04",
     "folderPath": "Through The Glass",
     "mp3Count": 69,
     "type": "standard"
@@ -1505,7 +1505,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-01-13",
     "folderPath": "Neon Dreams",
     "mp3Count": 24,
     "type": "standard"
@@ -1672,7 +1672,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-02-01",
     "folderPath": "Love in Bloom",
     "mp3Count": 28,
     "type": "standard"
@@ -1851,7 +1851,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-02-13",
     "folderPath": "Starlight Frequencies",
     "mp3Count": 30,
     "type": "standard"
@@ -2034,7 +2034,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-03-01",
     "folderPath": "Heartlines",
     "mp3Count": 31,
     "type": "standard"
@@ -2217,7 +2217,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-04-01",
     "folderPath": "Spring Awakening",
     "mp3Count": 26,
     "type": "standard"
@@ -2398,7 +2398,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-04-16",
     "folderPath": "Empire Under Lights",
     "mp3Count": 28,
     "type": "standard"
@@ -2607,7 +2607,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-04-28",
     "folderPath": "Ethereal Highlands",
     "mp3Count": 28,
     "type": "standard"
@@ -2790,7 +2790,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-06-01",
     "folderPath": "Golden Hour",
     "mp3Count": 28,
     "type": "standard"
@@ -2973,7 +2973,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-06-22",
     "folderPath": "Eternal Summer",
     "mp3Count": 24,
     "type": "standard"
@@ -3154,7 +3154,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-06-23",
     "folderPath": "Glass Bloom",
     "mp3Count": 24,
     "type": "standard"
@@ -3335,7 +3335,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-07-01",
     "folderPath": "Summer fever",
     "mp3Count": 24,
     "type": "standard"
@@ -3518,7 +3518,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-07-01",
     "folderPath": "Limitless",
     "mp3Count": 24,
     "type": "standard"
@@ -3695,7 +3695,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-07-14",
     "folderPath": "Line Dancing After Dark",
     "mp3Count": 36,
     "type": "standard"
@@ -3872,7 +3872,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-07-21",
     "folderPath": "Wildcards and Whiskey",
     "mp3Count": 26,
     "type": "standard"
@@ -4051,7 +4051,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-08-01",
     "folderPath": "Endless Glow",
     "mp3Count": 45,
     "type": "standard"
@@ -4232,7 +4232,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-08-14",
     "folderPath": "Dust and Diamonds ",
     "mp3Count": 24,
     "type": "standard"
@@ -4414,7 +4414,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-08-21",
     "folderPath": "Midnight Motion",
     "mp3Count": 24,
     "type": "standard"
@@ -4597,7 +4597,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-08-28",
     "folderPath": "Southern Lights",
     "mp3Count": 24,
     "type": "standard"
@@ -4780,7 +4780,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-09-01",
     "folderPath": "September Moves",
     "mp3Count": 36,
     "type": "standard"
@@ -4959,7 +4959,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-09-21",
     "folderPath": "Winding Roads",
     "mp3Count": 68,
     "type": "standard"
@@ -5142,7 +5142,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-10-01",
     "folderPath": "Falling for October ",
     "mp3Count": 37,
     "type": "standard"
@@ -5325,7 +5325,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-10-08",
     "folderPath": "October Boots and Fall Roots",
     "mp3Count": 46,
     "type": "standard"
@@ -5508,7 +5508,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-10-15",
     "folderPath": "The Long Way Home",
     "mp3Count": 39,
     "type": "standard"
@@ -5729,7 +5729,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-10-05",
     "folderPath": "Hallowave Dance of the shadows",
     "mp3Count": 32,
     "type": "standard"
@@ -5912,7 +5912,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-10-22",
     "folderPath": "Echoes in the Firelight ",
     "mp3Count": 36,
     "type": "standard"
@@ -6095,7 +6095,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-11-01",
     "folderPath": "Live at Autumn Lights Festival",
     "mp3Count": 69,
     "type": "standard"
@@ -6278,7 +6278,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-11-01",
     "folderPath": "November Nights",
     "mp3Count": 26,
     "type": "standard"
@@ -6501,7 +6501,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-11-08",
     "folderPath": "Shadows and Fires",
     "mp3Count": 55,
     "type": "standard"
@@ -6680,7 +6680,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-11-16",
     "folderPath": "Electric Sleigh",
     "mp3Count": 43,
     "type": "standard"
@@ -6861,7 +6861,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-11-28",
     "folderPath": "Snowfall and Steel Strings",
     "mp3Count": 33,
     "type": "standard"
@@ -7044,7 +7044,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-12-01",
     "folderPath": "New Year’s Odyssey",
     "mp3Count": 39,
     "type": "standard"
@@ -7225,7 +7225,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2025-01-01",
+    "releaseDate": "2025-12-08",
     "folderPath": "Live Step Into the Light",
     "mp3Count": 40,
     "type": "live"
@@ -7436,7 +7436,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2024-01-01",
+    "releaseDate": "2024-11-11",
     "folderPath": "Night Drive - 80s Beats & Ballads",
     "mp3Count": 28,
     "type": "standard"
@@ -7618,7 +7618,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2024-01-01",
+    "releaseDate": "2024-11-19",
     "folderPath": "Pop Star Winter Wonderland",
     "mp3Count": 26,
     "type": "standard"
@@ -7785,7 +7785,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2024-01-01",
+    "releaseDate": "2024-11-27",
     "folderPath": "Happily Ever After Dreams",
     "mp3Count": 24,
     "type": "standard"
@@ -7981,7 +7981,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2024-01-01",
+    "releaseDate": "2024-11-29",
     "folderPath": "Waves of Tranquility Deep House Reflections",
     "mp3Count": 16,
     "type": "standard"
@@ -8154,7 +8154,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2024-01-01",
+    "releaseDate": "2024-11-29",
     "folderPath": "Boots and Beats Country Line Dance Anthems",
     "mp3Count": 24,
     "type": "standard"
@@ -8361,7 +8361,7 @@ export const albums: Album[] = [
         "isSingle": false
       }
     ],
-    "releaseDate": "2024-01-01",
+    "releaseDate": "2024-12-06",
     "folderPath": "Highways of the Heart",
     "mp3Count": 28,
     "type": "standard"
@@ -8531,7 +8531,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2024-01-01",
+    "releaseDate": "2024-12-08",
     "folderPath": "Whispers of the Heart Country Ballads for the Soul",
     "mp3Count": 13,
     "type": "standard"
@@ -8629,7 +8629,7 @@ export const albums: Album[] = [
         "isSingle": true
       }
     ],
-    "releaseDate": "2024-01-01",
+    "releaseDate": "2024-12-01",
     "folderPath": "Singles",
     "mp3Count": 13,
     "type": "standard"

@@ -68,13 +68,41 @@ for (let i = 1; i < data.length; i++) {
     // Skip empty rows
     if (!trackTitle || !albumName) continue;
 
-    // Convert Excel date to year
+    // Convert Excel date to full date string (YYYY-MM-DD)
     let year = new Date().getFullYear();
-    if (releaseDate && typeof releaseDate === 'number') {
-        // Excel dates are days since 1900-01-01
-        const excelEpoch = new Date(1900, 0, 1);
-        const date = new Date(excelEpoch.getTime() + (releaseDate - 2) * 24 * 60 * 60 * 1000);
-        year = date.getFullYear();
+    let fullDateStr = `${year}-01-01`; // Default
+
+    if (releaseDate) {
+        let date;
+        if (typeof releaseDate === 'number') {
+            // Excel dates are days since 1900-01-01
+            const excelEpoch = new Date(1900, 0, 1);
+            date = new Date(excelEpoch.getTime() + (releaseDate - 2) * 24 * 60 * 60 * 1000);
+        } else if (typeof releaseDate === 'string') {
+            // Check for UK date format DD/MM/YYYY
+            if (releaseDate.includes('/')) {
+                const parts = releaseDate.split('/');
+                if (parts.length === 3) {
+                    // Assume DD/MM/YYYY
+                    const day = parseInt(parts[0], 10);
+                    const month = parseInt(parts[1], 10) - 1; // Months are 0-indexed in JS
+                    const yearVal = parseInt(parts[2], 10);
+                    date = new Date(yearVal, month, day);
+                }
+            }
+
+            if (!date || isNaN(date.getTime())) {
+                // Try standard parsing
+                date = new Date(releaseDate);
+            }
+        }
+
+        if (date && !isNaN(date.getTime())) {
+            year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            fullDateStr = `${year}-${month}-${day}`;
+        }
     }
 
     // Store track info by album name
@@ -87,6 +115,7 @@ for (let i = 1; i < data.length; i++) {
         genre: genre || 'Pop',
         trackNumber: trackNumber || tracksByAlbum[albumName].length + 1,
         year: year,
+        releaseDate: fullDateStr, // Store full date
         singleType: singleType,
         latestMarker: latestMarker
     });
@@ -110,6 +139,7 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
 
     const folderPath = path.join(ALBUMS_SOURCE_DIR, matchingFolder);
     const year = tracks[0]?.year || new Date().getFullYear();
+    const releaseDate = tracks[0]?.releaseDate || `${year}-01-01`; // Use full date from first track
 
     // Create album slug
     const albumSlug = `${albumName}-${year}`
@@ -192,7 +222,7 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
         genre: genres,
         coverArt: `/albums/artwork/${albumSlug}.jpg`,
         tracks: [],
-        releaseDate: `${year}-01-01`,
+        releaseDate: releaseDate, // Use full date
         folderPath: matchingFolder,
         mp3Count: audioFiles.length,
         type: albumType // New field
