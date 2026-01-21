@@ -1,9 +1,3 @@
-import { UserProfile } from "@clerk/nextjs";
-import Link from "next/link";
-import { ArrowLeft, CreditCard } from "lucide-react";
-import styles from "./Account.module.css";
-import { dark } from "@clerk/themes";
-
 "use client";
 
 import { UserProfile } from "@clerk/nextjs";

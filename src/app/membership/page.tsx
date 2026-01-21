@@ -3,6 +3,8 @@
 import { Check, Star, Shield, Zap } from 'lucide-react';
 import styles from './page.module.css';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const tiers = [
     {
@@ -27,11 +29,6 @@ const tiers = [
         action: "Upgrade"
     }
 ];
-
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-
-// ... existing imports ...
 
 export default function MembershipPage() {
     const { login, user, isPro } = useAuth();
