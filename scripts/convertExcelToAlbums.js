@@ -124,13 +124,27 @@ for (let i = 1; i < data.length; i++) {
 console.log('🔍 Matching albums with folders and MP3 files...\n');
 
 // Match albums with folders
+const folderMappings = {
+    "Aplril Comes Soft": "April Comes Soft", // Typo in Excel
+    "Heartland Rhythms": "Heartland Rythms", // Typo in folder
+    "Echoes of Us": "Echos Of Us", // Typo in folder
+    "Forever Starts Today (Country Music for Weddings)": "Forever Starts Today - Country Album", // Different formatting
+    "Night Drive: 80s Beats & Ballads": "Night Drive - 80s Beats & Ballads", // Different separator
+    "Popstar Winter Wonderland": "Pop Star Winter Wonderland", // Spacing difference
+    "Summer Fever": "Summer fever" // Case difference (though search is case-insensitive, explicit mapping is safe)
+};
+
 for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
-    // Find matching folder (case-insensitive, flexible matching)
-    const matchingFolder = albumFolders.find(folder =>
-        folder.toLowerCase().includes(albumName.toLowerCase()) ||
-        albumName.toLowerCase().includes(folder.toLowerCase()) ||
-        folder.toLowerCase().replace(/[^a-z0-9]/g, '') === albumName.toLowerCase().replace(/[^a-z0-9]/g, '')
-    );
+    // Find matching folder (case-insensitive, flexible matching) or use manual mapping
+    let matchingFolder = folderMappings[albumName];
+
+    if (!matchingFolder) {
+        matchingFolder = albumFolders.find(folder =>
+            folder.toLowerCase().includes(albumName.toLowerCase()) ||
+            albumName.toLowerCase().includes(folder.toLowerCase()) ||
+            folder.toLowerCase().replace(/[^a-z0-9]/g, '') === albumName.toLowerCase().replace(/[^a-z0-9]/g, '')
+        );
+    }
 
     if (!matchingFolder) {
         console.log(`   ⚠️  No folder found for album: "${albumName}"`);
