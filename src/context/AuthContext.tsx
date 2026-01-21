@@ -42,9 +42,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 2. Fallback to LocalStorage (Dev/Manual Override) behavior
     // We only load from localStorage if Clerk is NOT active (or user logged out of Clerk)
     useEffect(() => {
-        if (isLoaded && !clerkUser) {
+        // ONLY IN DEVELOPMENT: Fallback to LocalStorage for testing without Clerk
+        if (process.env.NODE_ENV === 'development' && isLoaded && !clerkUser) {
             const storedUser = localStorage.getItem('singit_user');
             if (storedUser) {
+                console.log("DEV: Restoring user from localStorage:", storedUser);
                 setUser(JSON.parse(storedUser));
             }
         }
