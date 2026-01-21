@@ -8675,10 +8675,21 @@ export function getAllYears(): number[] {
 
 // Latest Release Helpers
 export function getLatestStudioAlbum(): Album | undefined {
-  // Filter for type 'studio', fallback to 'standard' if none found
-  // Sort by year descending, then by releaseDate if available
-  const studioAlbums = albums.filter(a => a.type === 'studio');
-  return studioAlbums.length > 0 ? studioAlbums[0] : albums[0];
+  const today = new Date();
+  const studioAlbums = albums
+    .filter(a => a.type === 'studio' && new Date(a.releaseDate) <= today)
+    .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+
+  return studioAlbums[0];
+}
+
+export function getLatestLiveAlbum(): Album | undefined {
+  const today = new Date();
+  const liveAlbums = albums
+    .filter(a => a.title.toLowerCase().includes('live') && new Date(a.releaseDate) <= today)
+    .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+
+  return liveAlbums[0];
 }
 
 export function getLatestSingle(): Track | undefined {
@@ -8691,4 +8702,31 @@ export function getLatestSingle(): Track | undefined {
     }
   }
   return undefined;
+}
+
+// Get VIP-only albums (future release dates)
+export function getVIPOnlyAlbums(): Album[] {
+  const today = new Date();
+  return albums.filter(a => new Date(a.releaseDate) > today);
+}
+
+// Get all singles (first track of albums marked as singles)
+export function getAllSingles(): Track[] {
+  return albums
+    .map(a => a.tracks.find(t => t.isSingle))
+    .filter(Boolean) as Track[];
+}
+
+// Check if an album should be accessible to a given tier
+export function isAlbumAccessible(album: Album, userTier: 'GUEST' | 'FAN' | 'INSIDER' | 'VIP' | 'LABEL'): boolean {
+  const today = new Date();
+  const releaseDate = new Date(album.releaseDate);
+
+  // VIP and LABEL can access everything
+  if (userTier === 'VIP' || userTier === 'LABEL') {
+    return true;
+  }
+
+  // Others can only access released albums
+  return releaseDate <= today;
 }
