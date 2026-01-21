@@ -4,6 +4,24 @@
     padding-bottom: var(--spacing-lg);
 }
 
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 1rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    border-radius: var(--radius-sm);
+}
+
+.backLink:hover {
+    color: var(--primary);
+    background: rgba(139, 92, 246, 0.1);
+}
+
 .header {
     margin-bottom: var(--spacing-md);
 }

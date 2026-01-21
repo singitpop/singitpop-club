@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import Link from 'next/link';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { TrendingUp, Users, DollarSign, Activity } from 'lucide-react';
+import { TrendingUp, Users, DollarSign, Activity, ArrowLeft } from 'lucide-react';
 import styles from './Analytics.module.css';
 
 interface UserGrowthData {
@@ -86,6 +87,11 @@ export default function AnalyticsPage() {
 
     return (
         <div className={`container ${styles.page}`}>
+            <Link href="/admin" className={styles.backLink}>
+                <ArrowLeft size={16} />
+                Back to Admin Console
+            </Link>
+
             <div className={styles.header}>
                 <h1>Analytics Dashboard</h1>
                 <p className={styles.subtitle}>Real-time insights into your community</p>
