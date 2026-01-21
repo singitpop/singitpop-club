@@ -19,13 +19,26 @@ function readMetadata() {
     return { latestSingleId: null };
 }
 
+const DEBUG_LOG_PATH = path.join(process.cwd(), 'debug.log');
+
+function logToDebug(message: string) {
+    const timestamp = new Date().toISOString();
+    const line = `[${timestamp}] ${message}\n`;
+    console.log(message);
+    try {
+        fs.appendFileSync(DEBUG_LOG_PATH, line);
+    } catch (e) {
+        // ignore
+    }
+}
+
 // Helper to write metadata
 function writeMetadata(metadata: any) {
     try {
         fs.writeFileSync(METADATA_PATH, JSON.stringify(metadata, null, 2), 'utf-8');
         return true;
     } catch (error) {
-        console.error('Error writing metadata:', error);
+        logToDebug('Error writing metadata: ' + error);
         return false;
     }
 }
