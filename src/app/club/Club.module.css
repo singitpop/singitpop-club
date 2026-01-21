@@ -1,20 +1,21 @@
 /* Club Dashboard Styles */
 .page {
     min-height: 100vh;
-    padding-top: var(--header-height);
+    padding-top: 4rem;
     background: radial-gradient(circle at 50% 0%, #1a1a2e 0%, var(--background) 70%);
 }
 
 .header {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
     text-align: center;
     position: relative;
+    padding-top: 2rem;
 }
 
 .title {
     font-size: 3.5rem;
     font-weight: 800;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     background: linear-gradient(135deg, #fff 0%, var(--primary-glow) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -32,7 +33,7 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    gap: 1.5rem;
     padding-bottom: 4rem;
 }
 
