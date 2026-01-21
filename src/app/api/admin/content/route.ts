@@ -59,6 +59,10 @@ export async function GET(req: NextRequest) {
             if (metadata.latestSingleUid) {
                 latestSingle = allSingles.find((s: any) => s.uid === metadata.latestSingleUid);
                 console.log(`🔍 Lookup UID [${metadata.latestSingleUid}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
+
+                if (!latestSingle) {
+                    console.log('Available UIDs in search list:', allSingles.map((s: any) => s.uid));
+                }
             } else if (metadata.latestSingleId) {
                 // Legacy fallback
                 latestSingle = allSingles.find((s: any) => s.id === metadata.latestSingleId);
