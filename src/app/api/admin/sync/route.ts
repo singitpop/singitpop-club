@@ -6,6 +6,13 @@ const execPromise = util.promisify(exec);
 
 export async function POST() {
     try {
+        if (process.env.NODE_ENV === 'production') {
+            return NextResponse.json({
+                error: 'Configuration Error',
+                details: 'Content Sync is only available in local development mode. In production, content is read directly from the codebase (albumData.ts) which is updated via git push.'
+            }, { status: 403 });
+        }
+
         console.log('🔄 Triggering content sync...');
 
         // Run the conversion script
