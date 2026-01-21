@@ -11,6 +11,7 @@ interface SongListProps {
     filterMode?: 'all' | 'trending' | 'favorites' | 'latest';
     selectedTracks: string[];
     onToggleSelection: (id: string) => void;
+    latestSingleUid?: string | null; // UID of the free single
 }
 
 const MAX_MIXTAPE_TRACKS = 12;
@@ -18,7 +19,7 @@ const MAX_MIXTAPE_TRACKS = 12;
 // Helper to generate unique ID
 const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}:${track.id}` : String(track.id);
 
-export default function SongList({ tracks, filterMode = 'all', selectedTracks, onToggleSelection }: SongListProps) {
+export default function SongList({ tracks, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid }: SongListProps) {
     const { isPro, isInsider } = useAuth();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -145,9 +146,10 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                         let isPreview = false;
                         let lockMessage = "";
 
-                        // Define what constitutes a "Premioum" track
-                        // If it's NOT a single, it's premium content
-                        const isPremiumContent = !track.isSingle;
+                        // Define what constitutes a "Premium" track
+                        // Only the LATEST single is free. All others are premium.
+                        const isLatestSingle = uniqueId === latestSingleUid;
+                        const isPremiumContent = !isLatestSingle;
 
                         if (isPreRelease) {
                             // Pre-Release: ONLY VIPs can listen

@@ -18,6 +18,24 @@ function MusicContent() {
         const latest = getLatestStudioAlbum();
         return latest ? latest.id : siteContent.musicPage.latestAlbumId;
     });
+    const [latestSingleUid, setLatestSingleUid] = useState<string | null>(null);
+
+    // Fetch dynamic metadata (Latest Single)
+    useEffect(() => {
+        fetch('/api/content/latest')
+            .then(res => res.json())
+            .then(data => {
+                if (data.latestSingleUid) {
+                    setLatestSingleUid(data.latestSingleUid);
+                } else if (data.latestSingleId) {
+                    // Fallback to find UID via ID?
+                    // music page doesn't have easy lookup, but SongList passes UID
+                    // ideally we just use UID.
+                }
+            })
+            .catch(err => console.error("Failed to fetch metadata", err));
+    }, []);
+
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
