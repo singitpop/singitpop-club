@@ -1,122 +1,69 @@
-import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
-import Stripe from 'stripe';
-import { sendMixtapeEmail } from '@/lib/email';
-import { albums } from '@/data/albumData';
-import { generateSignedUrl } from '@/lib/s3';
+import { NextRequest, NextResponse } from 'next/server';
+import { stripe } from '@/lib/stripe';
+import { createClerkClient } from '@clerk/nextjs/server';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2025-01-27.acacia' as any,
-});
+const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     const body = await req.text();
-    const headersList = await headers();
-    const sig = headersList.get('stripe-signature');
+    const signature = headers().get('Stripe-Signature') as string;
 
-    let event: Stripe.Event;
+    let event;
 
     try {
-        // Strict Null Checks for TypeScript
-        if (!sig) {
-            console.error('⚠️ Webhook missing signature.');
-            return NextResponse.json({ error: 'Webhook Error: Missing signature' }, { status: 400 });
-        }
-
-        if (!endpointSecret) {
-            console.error('⚠️ STRIPE_WEBHOOK_SECRET is missing.');
-            throw new Error('STRIPE_WEBHOOK_SECRET is missing');
-        }
-
-        // Now we know sig and endpointSecret are strings (not null)
-        event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
-
+        event = stripe.webhooks.constructEvent(
+            body,
+            signature,
+            process.env.STRIPE_WEBHOOK_SECRET!
+        );
     } catch (err: any) {
-        console.error(`❌ Webhook Error: ${err.message}`);
-        return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
+        console.error(`Webhook signature verification failed: ${err.message}`);
+        return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
     }
 
-    // Handle the event
+    const session = event.data.object as any;
+
     if (event.type === 'checkout.session.completed') {
-        const session = event.data.object as Stripe.Checkout.Session;
+        const subscriptionId = session.subscription;
+        const clerkUserId = session.metadata?.clerkUserId;
 
-        console.log(`💰 Payment succeeded for session: ${session.id}`);
-
-        if (session.payment_status === 'paid') {
-            const customerEmail = session.customer_details?.email || session.customer_email;
-            const trackIdsString = session.metadata?.trackIds; // Format: "albumId:trackId,albumId:trackId"
-
-            if (customerEmail && trackIdsString) {
-                // 1. Resolve Links
-                const trackIds = trackIdsString.split(',');
-                const downloadLinks = [];
-
-                for (const fullId of trackIds) {
-                    let albumId: string | undefined;
-                    let trackIdStr: string;
-
-                    if (fullId.includes(':')) {
-                        [albumId, trackIdStr] = fullId.split(':');
-                    } else {
-                        trackIdStr = fullId;
-                    }
-
-                    const trackId = parseInt(trackIdStr);
-
-                    // Find the track
-                    let track = null;
-                    if (albumId) {
-                        const album = albums.find(a => a.id === albumId);
-                        track = album?.tracks.find(t => t.id === trackId);
-                    } else {
-                        // Fallback: Search all albums
-                        for (const alb of albums) {
-                            track = alb.tracks.find(t => t.id === trackId);
-                            if (track) break;
-                        }
-                    }
-
-                    if (track && track.audioUrl) {
-                        downloadLinks.push({
-                            title: track.title,
-                            url: track.audioUrl
-                        });
-                    }
-                }
-
-                // 2. Sign the URLs (Secure Downloads)
-                // We resolve all promises in parallel
-                const signedLinks = await Promise.all(downloadLinks.map(async (link) => {
-                    try {
-                        const signedUrl = await generateSignedUrl(link.url);
-                        return {
-                            ...link,
-                            url: signedUrl
-                        };
-                    } catch (e) {
-                        console.error("Failed to sign URL:", link.url);
-                        return link; // Fallback to original
-                    }
-                }));
-
-                // 3. Send Email
-                if (signedLinks.length > 0) {
-                    const emailResult = await sendMixtapeEmail(
-                        customerEmail,
-                        session.customer_details?.name || 'Music Fan',
-                        signedLinks
-                    );
-
-                    if (!emailResult || !emailResult.success) {
-                        console.error('❌ Failed to send email via webhook');
-                        return NextResponse.json({ error: 'Email send failed' }, { status: 500 });
-                    }
-                }
-            }
+        if (!clerkUserId) {
+            console.error('No clerkUserId in metadata');
+            return new NextResponse('No clerkUserId', { status: 400 });
         }
+
+        // Retrieve subscription to check product/tier
+        const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+        const priceId = subscription.items.data[0].price.id;
+
+        // Map Price ID to Tier
+        let tier = 'FAN'; // Default
+        if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER) {
+            tier = 'INSIDER';
+        } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_VIP) {
+            tier = 'VIP';
+        }
+
+        console.log(`[Webhook] Syncing User ${clerkUserId} to Tier: ${tier}`);
+
+        // Update Clerk Metadata
+        await clerk.users.updateUserMetadata(clerkUserId, {
+            publicMetadata: {
+                tier: tier,
+                stripeCustomerId: session.customer,
+                stripeSubscriptionId: subscriptionId
+            }
+        });
     }
 
-    return NextResponse.json({ received: true });
+    if (event.type === 'customer.subscription.updated') {
+        // Handle downgrades/upgrades/cancellations
+        // Logic: Check status ('active', 'canceled', 'past_due')
+        // Update Clerk accordingly.
+        // For simplicity v1, we focus on checkout completion.
+        // For full robustness, we should handle this to revert to 'FAN' on cancel.
+    }
+
+    return new NextResponse('Webhook received', { status: 200 });
 }

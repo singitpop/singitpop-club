@@ -28,13 +28,51 @@ const tiers = [
     }
 ];
 
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+// ... existing imports ...
+
 export default function MembershipPage() {
     const { login, user, isPro } = useAuth();
+    const router = useRouter();
+    const [loadingTier, setLoadingTier] = useState<string | null>(null);
+
+    const handleCheckout = async (priceId: string, tierName: string) => {
+        if (!user) return router.push('/sign-in');
+        setLoadingTier(tierName);
+
+        try {
+            const res = await fetch('/api/checkout', {
+                method: 'POST',
+                body: JSON.stringify({ priceId })
+            });
+            const data = await res.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                console.error("No URL returned");
+                setLoadingTier(null);
+            }
+        } catch (err) {
+            console.error(err);
+            setLoadingTier(null);
+            alert("Checkout failed. Please try again.");
+        }
+    }
 
     const handleJoin = (tierName: string) => {
-        if (tierName === "The Fan") login('FAN');
-        if (tierName === "The Insider") login('INSIDER');
-        if (tierName === "The VIP") login('VIP');
+        if (tierName === "The Fan") {
+            router.push('/club');
+            return;
+        }
+
+        if (tierName === "The Insider") {
+            handleCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER!, tierName);
+        }
+        if (tierName === "The VIP") {
+            handleCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_VIP!, tierName);
+        }
     };
 
     return (
@@ -51,6 +89,8 @@ export default function MembershipPage() {
                         (user?.tier === 'VIP' && tier.name === 'The VIP') ||
                         (user?.tier === 'INSIDER' && tier.name === 'The Insider');
 
+                    const isLoading = loadingTier === tier.name;
+
                     return (
                         <div key={tier.name} className={`${styles.card} ${tier.highlight ? styles.highlight : ''}`} style={{ borderColor: isCurrent ? 'var(--primary)' : undefined }}>
                             {isCurrent && <div className={styles.currentBadge}>CURRENT PLAN</div>}
@@ -62,10 +102,12 @@ export default function MembershipPage() {
                                 ))}
                             </ul>
                             <button
-                                onClick={() => handleJoin(tier.name)}
+                                onClick={() => !isCurrent && handleJoin(tier.name)}
+                                disabled={isCurrent || isLoading}
                                 className={tier.highlight || tier.name === 'The VIP' ? 'glow-button' : styles.outlineBtn}
+                                style={{ opacity: (isCurrent || isLoading) ? 0.7 : 1, cursor: (isCurrent || isLoading) ? 'default' : 'pointer' }}
                             >
-                                {isCurrent ? 'Active' : tier.action}
+                                {isLoading ? 'Processing...' : isCurrent ? 'Active' : tier.action}
                             </button>
                         </div>
                     );

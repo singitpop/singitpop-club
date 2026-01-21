@@ -1,53 +1,64 @@
-import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { NextRequest, NextResponse } from 'next/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
+import { stripe } from '@/lib/stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    // apiVersion: '2025-01-27.acacia', // Rely on default or package version
-});
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
-        const { tracks, email } = await req.json();
+        const { userId } = await auth();
+        const user = await currentUser();
 
-        if (!tracks || tracks.length === 0) {
-            return NextResponse.json({ error: 'No tracks selected' }, { status: 400 });
+        if (!userId || !user) {
+            return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        // PRODUCTION PRICE: £8.99
-        const unitAmount = 899; // 899 pence = £8.99
+        const { priceId } = await req.json();
 
-        // Helper for Base URL with fallback
-        const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://club.singitpop.com' : 'http://localhost:3000');
+        if (!priceId) {
+            return new NextResponse("Price ID required", { status: 400 });
+        }
 
+        // 1. Check if user already has a Stripe Customer ID stored in Clerk publicMetadata
+        let stripeCustomerId = user.publicMetadata.stripeCustomerId as string;
+
+        if (!stripeCustomerId) {
+            // 2. Create a new Customer in Stripe if checks fail
+            const customer = await stripe.customers.create({
+                email: user.emailAddresses[0].emailAddress,
+                metadata: {
+                    clerkUserId: userId
+                }
+            });
+            stripeCustomerId = customer.id;
+
+            // 2b. We should sync this back to Clerk, but we can relies on the webhook for resilience 
+            // OR do it here to be faster. Let's rely on webhook for the "Source of Truth" 
+            // but for this session, we pass the customer ID.
+        }
+
+        // 3. Create Checkout Session
         const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
+            customer: stripeCustomerId,
+            mode: 'subscription',
+            payment_method_types: ['card'], // 'link' is often auto-enabled
             line_items: [
                 {
-                    price_data: {
-                        currency: 'gbp',
-                        product_data: {
-                            name: 'SingIt Pop - Custom Mixtape',
-                            description: `${tracks.length} tracks selected`,
-                            images: ['https://club.singitpop.com/images/icons/music-note-clean.png'], // Update with real image if available
-                        },
-                        unit_amount: unitAmount,
-                    },
+                    price: priceId,
                     quantity: 1,
                 },
             ],
-            mode: 'payment',
-            success_url: `${BASE_URL}/music/checkout?success=true&customer_email=${encodeURIComponent(email)}`,
-            cancel_url: `${BASE_URL}/music/checkout?canceled=true`,
-            customer_email: email, // Pre-fill email if provided
             metadata: {
-                trackIds: tracks.join(','),
-                type: 'mixtape_purchase'
-            }
+                clerkUserId: userId,
+            },
+            success_url: `${process.env.NEXT_PUBLIC_APP_URL}/club?success=true`,
+            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/membership?canceled=true`,
+            billing_address_collection: 'auto',
+            allow_promotion_codes: true,
         });
 
-        return NextResponse.json({ sessionId: session.id, url: session.url });
-    } catch (err: any) {
-        console.error('Stripe Error:', err);
-        return NextResponse.json({ error: err.message }, { status: 500 });
+        return NextResponse.json({ url: session.url });
+
+    } catch (error) {
+        console.error("[CHECKOUT_ERROR]", error);
+        return new NextResponse("Internal Error", { status: 500 });
     }
 }

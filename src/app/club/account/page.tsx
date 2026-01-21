@@ -4,7 +4,37 @@ import { ArrowLeft, CreditCard } from "lucide-react";
 import styles from "./Account.module.css";
 import { dark } from "@clerk/themes";
 
+"use client";
+
+import { UserProfile } from "@clerk/nextjs";
+import Link from "next/link";
+import { ArrowLeft, CreditCard, Loader2 } from "lucide-react";
+import styles from "./Account.module.css";
+import { dark } from "@clerk/themes";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function AccountPage() {
+    const [isLoadingPortal, setIsLoadingPortal] = useState(false);
+    const router = useRouter();
+
+    const handlePortal = async () => {
+        setIsLoadingPortal(true);
+        try {
+            const res = await fetch('/api/portal', { method: 'POST' });
+            if (res.ok) {
+                const data = await res.json();
+                window.location.href = data.url;
+            } else {
+                alert("Could not access billing portal. You might not have a subscription yet.");
+                setIsLoadingPortal(false);
+            }
+        } catch (err) {
+            console.error(err);
+            setIsLoadingPortal(false);
+        }
+    }
+
     return (
         <div className={`container ${styles.page}`}>
             <Link href="/club" className={styles.backLink}>
@@ -22,18 +52,15 @@ export default function AccountPage() {
                     To upgrade to <strong>VIP</strong> or downgrade to <strong>Fan</strong>, please use the secure Billing Portal.
                 </p>
 
-                {/* 
-                    Ideally, this URL comes from an ENV variable or generic Stripe portal.
-                    For now, using the same placeholder the user had, but styled properly.
-                */}
-                <Link
-                    href="https://billing.stripe.com/p/login/test_..."
-                    target="_blank"
+                <button
+                    onClick={handlePortal}
+                    disabled={isLoadingPortal}
                     className={styles.stripeBtn}
+                    style={{ border: 'none', cursor: 'pointer', opacity: isLoadingPortal ? 0.7 : 1 }}
                 >
-                    <CreditCard size={18} />
-                    Open Billing Portal
-                </Link>
+                    {isLoadingPortal ? <Loader2 className="animate-spin" size={18} /> : <CreditCard size={18} />}
+                    {isLoadingPortal ? 'Loading Portal...' : 'Open Billing Portal'}
+                </button>
             </div>
 
             {/* Clerk User Profile (Security, Email, Delete Account) */}
