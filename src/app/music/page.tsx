@@ -246,6 +246,7 @@ function MusicContent() {
                         tracks={tracks}
                         selectedTracks={selectedTracks}
                         onToggleSelection={handleToggleSelection}
+                        latestSingleUid={latestSingleUid}
                     />
                 </div>
 

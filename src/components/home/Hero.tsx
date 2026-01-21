@@ -1,13 +1,48 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 import styles from './Hero.module.css';
 import { LATEST_RELEASES } from '@/config/latestReleases';
+import { albums } from '@/data/albumData';
 
 export default function Hero() {
     const [showVideo, setShowVideo] = useState(false);
+    const [heroData, setHeroData] = useState(LATEST_RELEASES.HERO_VIDEO);
+    const [bgImage, setBgImage] = useState('/images/hero-desert.jpg');
+
+    useEffect(() => {
+        fetch('/api/content/latest')
+            .then(res => res.json())
+            .then(data => {
+                if (data.latestVideoId) {
+                    setHeroData(prev => ({
+                        ...prev,
+                        VIDEO_URL: `https://www.youtube.com/watch?v=${data.latestVideoId}`
+                    }));
+                }
+
+                if (data.latestSingleUid) {
+                    // Find cover art and title
+                    for (const album of albums) {
+                        const track = album.tracks.find(t =>
+                            (t.albumId ? `${t.albumId}:${t.id}` : String(t.id)) === data.latestSingleUid
+                        );
+                        if (track) {
+                            setHeroData(prev => ({
+                                ...prev,
+                                HERO_TITLE: track.title,
+                                BUTTON_TEXT: "WATCH VIDEO"
+                            }));
+                            if (album.coverArt) setBgImage(album.coverArt);
+                            break;
+                        }
+                    }
+                }
+            })
+            .catch(err => console.error("Failed to fetch hero data", err));
+    }, []);
 
     // Simple helper to extract ID from various YouTube URL formats
     const getYouTubeId = (url: string) => {
@@ -16,13 +51,13 @@ export default function Hero() {
         return (match && match[2].length === 11) ? match[2] : null;
     };
 
-    const videoId = getYouTubeId(LATEST_RELEASES.HERO_VIDEO.VIDEO_URL);
+    const videoId = getYouTubeId(heroData.VIDEO_URL);
 
     return (
         <section className={styles.heroImmersive}>
             <div className={styles.videoBackground}>
                 {/* Simulating video with the atmospheric image and slow zoom */}
-                <div className={styles.zoomImage} />
+                <div className={styles.zoomImage} style={{ backgroundImage: `url(${bgImage})` }} />
                 <div className={styles.overlay} />
             </div>
 
@@ -39,7 +74,7 @@ export default function Hero() {
                     <Play size={48} fill="currentColor" />
                     <div className={styles.pulseRing} />
                 </motion.button>
-                <span className={styles.watchText}>{LATEST_RELEASES.HERO_VIDEO.BUTTON_TEXT}</span>
+                <span className={styles.watchText}>{heroData.BUTTON_TEXT}</span>
             </div>
 
             {/* Title Section - Top Left */}
@@ -50,7 +85,7 @@ export default function Hero() {
                 transition={{ delay: 1, duration: 0.8 }}
             >
                 <span className={styles.artistName}>SingIt Pop</span>
-                <h1 className={styles.songTitle}>{LATEST_RELEASES.HERO_VIDEO.HERO_TITLE}</h1>
+                <h1 className={styles.songTitle}>{heroData.HERO_TITLE}</h1>
             </motion.div>
 
             {/* Video Modal */}
