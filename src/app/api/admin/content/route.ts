@@ -73,6 +73,11 @@ export async function GET(req: NextRequest) {
                 latestSingle = allSingles.find((s: any) => s.uid === metadata.latestSingleUid);
                 logToDebug(`🔍 Lookup UID [${metadata.latestSingleUid}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
 
+                if (!latestSingle && metadata.latestSingleTitle) {
+                    latestSingle = allSingles.find((s: any) => s.title === metadata.latestSingleTitle);
+                    logToDebug(`🔍 Lookup Title [${metadata.latestSingleTitle}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
+                }
+
                 if (!latestSingle) {
                     const available = allSingles.map((s: any) => s.uid);
                     logToDebug(`Available UIDs in search list: ${JSON.stringify(available)}`);
