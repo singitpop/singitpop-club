@@ -79,15 +79,24 @@ export async function GET(req: NextRequest) {
 
         if (action === 'singles') {
             // Get all singles for admin selection
-            const singles = getAllSingles();
+            const singlesWithDates = albums
+                .filter(a => a.tracks.some(t => t.isSingle))
+                .map(a => {
+                    const singleTrack = a.tracks.find(t => t.isSingle);
+                    return {
+                        id: singleTrack!.id,
+                        title: singleTrack!.title,
+                        albumId: a.id,
+                        albumTitle: a.title,
+                        releaseDate: a.releaseDate
+                    };
+                })
+                .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()); // Newest first
+
             const metadata = readMetadata();
 
             return NextResponse.json({
-                singles: singles.map(s => ({
-                    id: s.id,
-                    title: s.title,
-                    albumId: s.albumId
-                })),
+                singles: singlesWithDates,
                 currentLatestSingleId: metadata.latestSingleId
             });
         }

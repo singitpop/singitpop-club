@@ -23,6 +23,8 @@ interface Single {
     id: number;
     title: string;
     albumId: string;
+    albumTitle: string;
+    releaseDate: string;
 }
 
 export default function ContentPage() {
@@ -186,7 +188,9 @@ export default function ContentPage() {
                             >
                                 <div className={styles.singleInfo}>
                                     <div className={styles.singleTitle}>{single.title}</div>
-                                    <div className={styles.singleAlbum}>Album ID: {single.albumId}</div>
+                                    <div className={styles.singleAlbum}>
+                                        {single.albumTitle} • {new Date(single.releaseDate).toLocaleDateString()}
+                                    </div>
                                 </div>
                                 <button
                                     onClick={() => setLatestSingle(single.id)}
