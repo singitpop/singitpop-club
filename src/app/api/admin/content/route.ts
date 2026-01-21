@@ -131,12 +131,7 @@ export async function GET(req: NextRequest) {
             const currentMonth = today.getMonth();
 
             const singlesWithDates = albums
-                .filter(a => {
-                    const releaseDate = new Date(a.releaseDate);
-                    return a.tracks.some(t => t.isSingle) &&
-                        releaseDate.getFullYear() === currentYear &&
-                        releaseDate.getMonth() === currentMonth;
-                })
+                .filter(a => a.tracks.some(t => t.isSingle))
                 .flatMap(a => {
                     // Get ALL singles from this album, not just the first one
                     return a.tracks

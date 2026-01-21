@@ -49,7 +49,7 @@ function MusicContent() {
             const foundTrack = allTracks.find(t => t.title.toLowerCase() === trackTitleToAdd.toLowerCase());
 
             if (foundTrack) {
-                const uniqueId = foundTrack.albumId ? `${foundTrack.albumId}:${foundTrack.id}` : String(foundTrack.id);
+                const uniqueId = foundTrack.albumId ? `${foundTrack.albumId}-${foundTrack.id}` : String(foundTrack.id);
                 setSelectedTracks(prev => {
                     if (!prev.includes(uniqueId)) {
                         if (prev.length >= 12) {
@@ -79,42 +79,39 @@ function MusicContent() {
         if (filterMode === 'album' && selectedAlbumId) {
             const album = albums.find(a => a.id === selectedAlbumId);
             return {
-                tracks: album ? album.tracks : [],
+                tracks: album ? album.tracks.map(t => ({ ...t, albumId: album.id })) : [],
                 title: album ? album.title : 'Album not found'
             };
         }
 
         if (filterMode === 'latest') {
             const latestAlbum = getLatestStudioAlbum();
-            const latestSingle = getLatestSingle();
-
-            // Allow user to see both if available, or prioritize album
-            // For this view, we'll combine them or show the album
-            // If we want a specific "Latest Single" view, we can add that
 
             return {
-                tracks: latestAlbum ? latestAlbum.tracks : [],
+                tracks: latestAlbum ? latestAlbum.tracks.map(t => ({ ...t, albumId: latestAlbum.id })) : [],
                 title: latestAlbum ? `Latest Release: ${latestAlbum.title}` : 'Latest Release'
             };
         }
 
         if (filterMode === 'all') {
             return {
-                tracks: albums.flatMap(a => a.tracks),
+                tracks: albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id }))),
                 title: 'All Tracks'
             };
         }
 
         if (filterMode === 'trending') {
+            // Flatten first, then slice
+            const trendingTracks = albums.slice(0, 5).flatMap(a => a.tracks.slice(0, 2).map(t => ({ ...t, albumId: a.id })));
             return {
-                tracks: albums.slice(0, 5).flatMap(a => a.tracks.slice(0, 2)),
+                tracks: trendingTracks,
                 title: 'Trending Now'
             };
         }
 
         if (filterMode === 'favorites') {
             return {
-                tracks: albums.flatMap(a => a.tracks).filter((_, i) => i % 3 === 0).slice(0, 12),
+                tracks: albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id }))).filter((_, i) => i % 3 === 0).slice(0, 12),
                 title: 'Fan Favorites'
             };
         }
@@ -234,7 +231,7 @@ function MusicContent() {
                                 className="primary-button"
                                 style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }}
                                 onClick={() => {
-                                    const allTrackIds = tracks.map(t => t.albumId ? `${t.albumId}:${t.id}` : String(t.id));
+                                    const allTrackIds = tracks.map(t => t.albumId ? `${t.albumId}-${t.id}` : String(t.id));
                                     window.location.href = `/music/checkout?type=download&tracks=${allTrackIds.join(',')}`;
                                 }}
                             >
