@@ -279,34 +279,24 @@ export default function ContentPage() {
                         </div>
                     </div>
 
-                    <div className={styles.singleList}>
-                        {singles.map(single => {
-                            // Check if this single is the currently selected one
-                            // We might only have the numeric ID from the backend initially, so check both or match loosely
-                            // But best relies on UID if we save it. For now, rely on ID match if UID is not set
-                            const isActive = single.uid === currentLatestSingleUid || (!currentLatestSingleUid && single.id === currentLatestSingleIdRef);
-
-                            return (
-                                <div
-                                    key={single.uid}
-                                    className={`${styles.singleItem} ${isActive ? styles.singleActive : ''}`}
-                                >
-                                    <div className={styles.singleInfo}>
-                                        <div className={styles.singleTitle}>{single.title}</div>
-                                        <div className={styles.singleAlbum}>
-                                            {single.albumTitle} • {new Date(single.releaseDate).toLocaleDateString()}
-                                        </div>
-                                    </div>
-                                    <button
-                                        onClick={() => setLatestSingle(single.uid)}
-                                        className={styles.selectBtn}
-                                        disabled={isActive}
-                                    >
-                                        {isActive ? 'Current' : 'Select'}
-                                    </button>
-                                </div>
-                            );
-                        })}
+                    <div className={styles.inputGroup} style={{ flexDirection: 'column', gap: '0.5rem' }}>
+                        <select
+                            className={styles.select}
+                            value={currentLatestSingleUid || ""}
+                            onChange={(e) => {
+                                if (e.target.value) setLatestSingle(e.target.value);
+                            }}
+                        >
+                            <option value="" disabled>Choose a single...</option>
+                            {singles.map(single => (
+                                <option key={single.uid} value={single.uid}>
+                                    {single.title} ({new Date(single.releaseDate).toLocaleDateString()})
+                                </option>
+                            ))}
+                        </select>
+                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                            Selecting a new single will instantly update the Home Page Hero and unlock full playback for free users.
+                        </p>
                     </div>
                 </div>
             </div>
