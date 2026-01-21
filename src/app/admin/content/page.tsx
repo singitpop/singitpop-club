@@ -34,6 +34,7 @@ export default function ContentPage() {
     const [vipAlbums, setVIPAlbums] = useState<VIPAlbum[]>([]);
     const [singles, setSingles] = useState<Single[]>([]);
     const [currentLatestSingleUid, setCurrentLatestSingleUid] = useState<string | null>(null);
+    const [currentLatestSingleIdRef, setCurrentLatestSingleIdRef] = useState<number | null>(null); // Fallback for ID matching
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -192,26 +193,33 @@ export default function ContentPage() {
                     </div>
 
                     <div className={styles.singleList}>
-                        {singles.map(single => (
-                            <div
-                                key={single.id}
-                                className={`${styles.singleItem} ${single.id === currentLatestSingleId ? styles.singleActive : ''}`}
-                            >
-                                <div className={styles.singleInfo}>
-                                    <div className={styles.singleTitle}>{single.title}</div>
-                                    <div className={styles.singleAlbum}>
-                                        {single.albumTitle} • {new Date(single.releaseDate).toLocaleDateString()}
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => setLatestSingle(single.id)}
-                                    className={styles.selectBtn}
-                                    disabled={single.id === currentLatestSingleId}
+                        {singles.map(single => {
+                            // Check if this single is the currently selected one
+                            // We might only have the numeric ID from the backend initially, so check both or match loosely
+                            // But best relies on UID if we save it. For now, rely on ID match if UID is not set
+                            const isActive = single.uid === currentLatestSingleUid || (!currentLatestSingleUid && single.id === currentLatestSingleIdRef);
+
+                            return (
+                                <div
+                                    key={single.uid}
+                                    className={`${styles.singleItem} ${isActive ? styles.singleActive : ''}`}
                                 >
-                                    {single.id === currentLatestSingleId ? 'Current' : 'Select'}
-                                </button>
-                            </div>
-                        ))}
+                                    <div className={styles.singleInfo}>
+                                        <div className={styles.singleTitle}>{single.title}</div>
+                                        <div className={styles.singleAlbum}>
+                                            {single.albumTitle} • {new Date(single.releaseDate).toLocaleDateString()}
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setLatestSingle(single.uid)}
+                                        className={styles.selectBtn}
+                                        disabled={isActive}
+                                    >
+                                        {isActive ? 'Current' : 'Select'}
+                                    </button>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
