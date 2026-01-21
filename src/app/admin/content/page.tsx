@@ -28,14 +28,7 @@ interface Single {
     releaseDate: string;
 }
 
-function extractVideoId(url: string | null) {
-    if (!url) return null;
-    if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
-    if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
-    // Basic 11-char ID check
-    if (url.length === 11) return url;
-    return null;
-}
+
 
 function extractVideoId(url: string | null) {
     if (!url) return null;
@@ -98,58 +91,7 @@ export default function ContentPage() {
         }
     }
 
-    async function setLatestVideo(videoId: string) {
-        if (!videoId) return;
-        try {
-            const res = await fetch('/api/admin/content', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'set_latest_video',
-                    data: { videoId }
-                })
-            });
 
-            if (res.ok) {
-                alert(`✅ Video updated!`);
-                fetchData();
-            }
-        } catch (error) {
-            console.error(error);
-            alert('Failed to update video');
-        }
-    }
-
-    async function saveLatestVideo() {
-        const videoId = extractVideoId(currentLatestVideoId);
-        if (!videoId) {
-            alert("Invalid YouTube URL or ID");
-            return;
-        }
-
-        setIsLoading(true);
-        try {
-            const res = await fetch('/api/admin/content', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'set_latest_video',
-                    data: { videoId }
-                })
-            });
-
-            if (res.ok) {
-                alert("✅ Video updated successfully!");
-                fetchData();
-            } else {
-                alert("❌ Failed to update video");
-            }
-        } catch (e) {
-            alert("Error saving video");
-        } finally {
-            setIsLoading(false);
-        }
-    }
 
     async function saveLatestVideo() {
         const videoId = extractVideoId(currentLatestVideoId);
