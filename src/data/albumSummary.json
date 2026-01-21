@@ -1,10 +1,11 @@
 {
-  "generated": "2026-01-21T15:26:20.152Z",
-  "totalAlbums": 47,
-  "totalTracks": 572,
+  "generated": "2026-01-21T16:03:27.291Z",
+  "totalAlbums": 51,
+  "totalTracks": 621,
   "genres": [
     "Christmas",
     "Country",
+    "Dance Pop",
     "Disco",
     "Disney",
     "EDM",
@@ -104,6 +105,17 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/"
     },
     {
+      "id": "april-comes-soft-2026",
+      "title": "April Comes Soft",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Dance Pop"
+      ],
+      "folderPath": "April Comes Soft",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/"
+    },
+    {
       "id": "neon-dreams-2025",
       "title": "Neon Dreams",
       "year": 2025,
@@ -179,6 +191,28 @@
       ],
       "folderPath": "Ethereal Highlands",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/"
+    },
+    {
+      "id": "echoes-of-us-2025",
+      "title": "Echoes of Us",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Pop"
+      ],
+      "folderPath": "Echos Of Us",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/"
+    },
+    {
+      "id": "heartland-rhythms-2025",
+      "title": "Heartland Rhythms",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Heartland Rythms",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/"
     },
     {
       "id": "golden-hour-2025",
@@ -466,6 +500,18 @@
       ],
       "folderPath": "Night Drive - 80s Beats & Ballads",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/night-drive--80s-beats--ballads/"
+    },
+    {
+      "id": "forever-starts-today-country-music-for-weddings-2024",
+      "title": "Forever Starts Today (Country Music for Weddings)",
+      "year": 2024,
+      "trackCount": 13,
+      "genres": [
+        "Country",
+        "Christmas"
+      ],
+      "folderPath": "Forever Starts Today - Country Album",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/forever-starts-today--country-album/"
     },
     {
       "id": "popstar-winter-wonderland-2024",

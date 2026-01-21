@@ -131,7 +131,8 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({
                 singles: singlesWithDates,
                 currentLatestSingleId: metadata.latestSingleId,
-                currentLatestSingleUid: metadata.latestSingleUid // Return the precise UID
+                currentLatestSingleUid: metadata.latestSingleUid, // Return the precise UID
+                currentLatestVideoId: metadata.latestVideoId
             });
         }
 
@@ -182,6 +183,24 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({
                 success: true,
                 message: 'Latest single updated successfully'
+            });
+        }
+
+        if (action === 'set_latest_video') {
+            const { videoId } = data;
+
+            const metadata = readMetadata();
+            metadata.latestVideoId = videoId;
+
+            const success = writeMetadata(metadata);
+
+            if (!success) {
+                return NextResponse.json({ error: 'Failed to save metadata' }, { status: 500 });
+            }
+
+            return NextResponse.json({
+                success: true,
+                message: 'Latest video updated successfully'
             });
         }
 
