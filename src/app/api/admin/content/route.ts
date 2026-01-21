@@ -50,13 +50,22 @@ export async function GET(req: NextRequest) {
 
             // Get latest single from metadata or first single
             const allSingles = albums
-                .filter(a => a.tracks.some(t => t.isSingle))
-                .map(a => a.tracks.find(t => t.isSingle))
-                .filter(Boolean);
+                .flatMap(a => a.tracks
+                    .filter(t => t.isSingle)
+                    .map(t => ({ ...t, albumId: a.id, uid: `${a.id}-${t.id}` }))
+                );
 
-            const latestSingle = metadata.latestSingleId
-                ? allSingles.find((s: any) => s.id === metadata.latestSingleId)
-                : allSingles[0];
+            let latestSingle;
+            if (metadata.latestSingleUid) {
+                latestSingle = allSingles.find((s: any) => s.uid === metadata.latestSingleUid);
+            } else if (metadata.latestSingleId) {
+                // Legacy fallback
+                latestSingle = allSingles.find((s: any) => s.id === metadata.latestSingleId);
+            }
+
+            if (!latestSingle && allSingles.length > 0) {
+                latestSingle = allSingles[0];
+            }
 
             return NextResponse.json({
                 latestStudio: latestStudio ? {
@@ -121,7 +130,8 @@ export async function GET(req: NextRequest) {
 
             return NextResponse.json({
                 singles: singlesWithDates,
-                currentLatestSingleId: metadata.latestSingleId
+                currentLatestSingleId: metadata.latestSingleId,
+                currentLatestSingleUid: metadata.latestSingleUid // Return the precise UID
             });
         }
 
@@ -155,11 +165,13 @@ export async function POST(req: NextRequest) {
         const { action, data } = await req.json();
 
         if (action === 'set_latest_single') {
-            const { singleId } = data;
+            const { singleId, singleUid } = data;
 
             // Update metadata with new latest single
+            // Store UID or AlbumID + TrackID to be unique
             const metadata = readMetadata();
             metadata.latestSingleId = singleId;
+            metadata.latestSingleUid = singleUid; // Store the unique ID
 
             const success = writeMetadata(metadata);
 
