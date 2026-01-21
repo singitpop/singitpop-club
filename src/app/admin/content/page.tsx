@@ -356,67 +356,66 @@ export default function ContentPage() {
                     </div>
                 )}
             </div>
-        </div>
 
-            {/* VIP Early Access Albums */ }
-    <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-            <Crown size={20} />
-            VIP Early Access (Automatic)
-        </h2>
-        <p className={styles.sectionDesc}>
-            Albums with future release dates are automatically VIP-only until their release date.
-        </p>
+            {/* VIP Early Access Albums */}
+            <div className={styles.section}>
+                <h2 className={styles.sectionTitle}>
+                    <Crown size={20} />
+                    VIP Early Access (Automatic)
+                </h2>
+                <p className={styles.sectionDesc}>
+                    Albums with future release dates are automatically VIP-only until their release date.
+                </p>
 
-        {vipAlbums.length > 0 ? (
-            <div className={styles.vipGrid}>
-                {vipAlbums.map(album => {
-                    const daysUntil = Math.ceil((new Date(album.releaseDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-                    return (
-                        <div key={album.id} className={styles.vipCard}>
-                            <div className={styles.vipBadge}>VIP ONLY</div>
-                            <div className={styles.vipTitle}>{album.title}</div>
-                            <div className={styles.vipType}>{album.type}</div>
-                            <div className={styles.vipRelease}>
-                                <Calendar size={14} />
-                                Releases in {daysUntil} days
-                            </div>
-                            <div className={styles.vipDate}>
-                                {new Date(album.releaseDate).toLocaleDateString()}
-                            </div>
-                        </div>
-                    );
-                })}
+                {vipAlbums.length > 0 ? (
+                    <div className={styles.vipGrid}>
+                        {vipAlbums.map(album => {
+                            const daysUntil = Math.ceil((new Date(album.releaseDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+                            return (
+                                <div key={album.id} className={styles.vipCard}>
+                                    <div className={styles.vipBadge}>VIP ONLY</div>
+                                    <div className={styles.vipTitle}>{album.title}</div>
+                                    <div className={styles.vipType}>{album.type}</div>
+                                    <div className={styles.vipRelease}>
+                                        <Calendar size={14} />
+                                        Releases in {daysUntil} days
+                                    </div>
+                                    <div className={styles.vipDate}>
+                                        {new Date(album.releaseDate).toLocaleDateString()}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className={styles.vipEmpty}>No upcoming VIP releases</div>
+                )}
             </div>
-        ) : (
-            <div className={styles.vipEmpty}>No upcoming VIP releases</div>
-        )}
-    </div>
-    {/* Debug Log Viewer */ }
-    <div className={styles.section} style={{ marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-        <h3 style={{ fontSize: '1rem', color: '#888', marginBottom: '1rem', cursor: 'pointer' }} onClick={() => {
-            fetch('/api/admin/content?action=logs')
-                .then(res => res.json())
-                .then(data => {
-                    const el = document.getElementById('debug-logs');
-                    if (el && data.logs) el.innerHTML = data.logs.join('<br/>');
-                });
-        }}>
-            Server Debug Logs (Click to Refresh)
-        </h3>
-        <div id="debug-logs" style={{
-            background: '#000',
-            padding: '1rem',
-            borderRadius: '8px',
-            fontFamily: 'monospace',
-            fontSize: '0.8rem',
-            color: '#0f0',
-            maxHeight: '200px',
-            overflowY: 'auto'
-        }}>
-            Loading logs...
-        </div>
-    </div>
+            {/* Debug Log Viewer */}
+            <div className={styles.section} style={{ marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                <h3 style={{ fontSize: '1rem', color: '#888', marginBottom: '1rem', cursor: 'pointer' }} onClick={() => {
+                    fetch('/api/admin/content?action=logs')
+                        .then(res => res.json())
+                        .then(data => {
+                            const el = document.getElementById('debug-logs');
+                            if (el && data.logs) el.innerHTML = data.logs.join('<br/>');
+                        });
+                }}>
+                    Server Debug Logs (Click to Refresh)
+                </h3>
+                <div id="debug-logs" style={{
+                    background: '#000',
+                    padding: '1rem',
+                    borderRadius: '8px',
+                    fontFamily: 'monospace',
+                    fontSize: '0.8rem',
+                    color: '#0f0',
+                    maxHeight: '200px',
+                    overflowY: 'auto'
+                }}>
+                    Loading logs...
+                </div>
+            </div>
         </div >
     );
 }
