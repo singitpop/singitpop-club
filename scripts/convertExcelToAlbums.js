@@ -59,10 +59,11 @@ for (let i = 1; i < data.length; i++) {
 
     const trackTitle = row[0]; // Column A: Song Title
     const genre = row[1];      // Column B: Genre
+    const singleType = row[3] ? String(row[3]).trim().toLowerCase() : ''; // Column D: Single marker (all singles)
     const albumName = row[6];  // Column G: Album Title
     const trackNumber = row[5]; // Column F: Track No
     const releaseDate = row[8]; // Column I: Release Date (Excel date number)
-    const releaseType = row[10] ? String(row[10]).trim().toLowerCase() : ''; // Column K: Latest Status
+    const latestMarker = row[10] ? String(row[10]).trim().toLowerCase() : ''; // Column K: Latest single marker
 
     // Skip empty rows
     if (!trackTitle || !albumName) continue;
@@ -86,7 +87,8 @@ for (let i = 1; i < data.length; i++) {
         genre: genre || 'Pop',
         trackNumber: trackNumber || tracksByAlbum[albumName].length + 1,
         year: year,
-        releaseType: releaseType
+        singleType: singleType,
+        latestMarker: latestMarker
     });
 }
 
@@ -174,10 +176,10 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
     const genres = [...new Set(tracks.map(t => t.genre))];
 
     // Determine Album Type (Studio, Live, or Standard)
-    // If ANY track is marked Studio/Live, the whole album gets that tag
+    // If ANY track is marked Studio/Live in Column K, the whole album gets that tag
     let albumType = 'standard';
-    const hasStudioTag = tracks.some(t => t.releaseType && t.releaseType.includes('studio'));
-    const hasLiveTag = tracks.some(t => t.releaseType && t.releaseType.includes('live'));
+    const hasStudioTag = tracks.some(t => t.latestMarker && t.latestMarker.includes('studio'));
+    const hasLiveTag = tracks.some(t => t.latestMarker && t.latestMarker.includes('live'));
 
     if (hasStudioTag) albumType = 'studio';
     else if (hasLiveTag) albumType = 'live';
@@ -255,7 +257,7 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
             audioUrl: foundMp3 ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(mp3Filename)}` : undefined,
             sourceFolder: matchingFolder,
             albumId: albumSlug,
-            isSingle: !!(track.releaseType && track.releaseType.includes('single')) // Force boolean
+            isSingle: !!(track.singleType && track.singleType.includes('single')) // Column D marks all singles
         });
     });
 
