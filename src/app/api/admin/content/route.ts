@@ -58,13 +58,16 @@ export async function GET(req: NextRequest) {
             let latestSingle;
             if (metadata.latestSingleUid) {
                 latestSingle = allSingles.find((s: any) => s.uid === metadata.latestSingleUid);
+                console.log(`🔍 Lookup UID [${metadata.latestSingleUid}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
             } else if (metadata.latestSingleId) {
                 // Legacy fallback
                 latestSingle = allSingles.find((s: any) => s.id === metadata.latestSingleId);
+                console.log(`🔍 Lookup ID [${metadata.latestSingleId}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
             }
 
             if (!latestSingle && allSingles.length > 0) {
                 latestSingle = allSingles[0];
+                console.log('⚠️ Fallback to:', latestSingle.title, '(UID:', latestSingle.uid, ')');
             }
 
             return NextResponse.json({
