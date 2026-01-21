@@ -301,108 +301,100 @@ export default function ContentPage() {
                     Update the featured video on the homepage. Paste the full URL or Video ID.
                 </p>
 
-                <div className={styles.videoManager}>
-                    <div className={styles.videoInputGroup}>
-                        <input
-                            type="text"
-                            placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                            className={styles.videoInput}
-                            id="videoInput"
-                        />
-                        <button
-                            className={styles.saveBtn}
-                            onClick={() => {
-                                const input = document.getElementById('videoInput') as HTMLInputElement;
-                                const val = input.value;
-                                let id = val;
-                                // Basic ID extraction
-                                if (val.includes('v=')) id = val.split('v=')[1].split('&')[0];
-                                if (val.includes('youtu.be/')) id = val.split('youtu.be/')[1].split('?')[0];
-
-                                setLatestVideo(id);
-                            }}
-                        >
-                            Save Video
-                        </button>
-                    </div>
-
-                    {currentLatestVideoId && (
-                        <div className={styles.videoPreview}>
-                            <p className={styles.previewLabel}>Current Video Preview:</p>
-                            <iframe
-                                width="100%"
-                                height="315"
-                                src={`https://www.youtube.com/embed/${currentLatestVideoId}`}
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                style={{ borderRadius: '12px', marginTop: '10px' }}
-                            ></iframe>
-                        </div>
-                    )}
+                <div className={styles.inputGroup}>
+                    <input
+                        type="text"
+                        placeholder="e.g. https://youtu.be/..."
+                        value={currentLatestVideoId}
+                        onChange={(e) => setCurrentLatestVideoId(e.target.value)}
+                        className={styles.input}
+                    />
+                    <button
+                        className={styles.selectBtn}
+                        onClick={saveLatestVideo}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Saving...' : 'Save Video'}
+                    </button>
                 </div>
-            </div>
 
-            {/* VIP Early Access Albums */}
-            <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>
-                    <Crown size={20} />
-                    VIP Early Access (Automatic)
-                </h2>
-                <p className={styles.sectionDesc}>
-                    Albums with future release dates are automatically VIP-only until their release date.
-                </p>
-
-                {vipAlbums.length > 0 ? (
-                    <div className={styles.vipGrid}>
-                        {vipAlbums.map(album => {
-                            const daysUntil = Math.ceil((new Date(album.releaseDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-                            return (
-                                <div key={album.id} className={styles.vipCard}>
-                                    <div className={styles.vipBadge}>VIP ONLY</div>
-                                    <div className={styles.vipTitle}>{album.title}</div>
-                                    <div className={styles.vipType}>{album.type}</div>
-                                    <div className={styles.vipRelease}>
-                                        <Calendar size={14} />
-                                        Releases in {daysUntil} days
-                                    </div>
-                                    <div className={styles.vipDate}>
-                                        {new Date(album.releaseDate).toLocaleDateString()}
-                                    </div>
-                                </div>
-                            );
-                        })}
+                {currentLatestVideoId && (
+                    <div className={styles.videoPreview}>
+                        <p className={styles.previewLabel}>Current Video Preview:</p>
+                        <iframe
+                            width="100%"
+                            height="315"
+                            src={`https://www.youtube.com/embed/${currentLatestVideoId}`}
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            style={{ borderRadius: '12px', marginTop: '10px' }}
+                        ></iframe>
                     </div>
-                ) : (
-                    <div className={styles.vipEmpty}>No upcoming VIP releases</div>
                 )}
             </div>
-            {/* Debug Log Viewer */}
-            <div className={styles.section} style={{ marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                <h3 style={{ fontSize: '1rem', color: '#888', marginBottom: '1rem', cursor: 'pointer' }} onClick={() => {
-                    fetch('/api/admin/content?action=logs')
-                        .then(res => res.json())
-                        .then(data => {
-                            const el = document.getElementById('debug-logs');
-                            if (el && data.logs) el.innerHTML = data.logs.join('<br/>');
-                        });
-                }}>
-                    Server Debug Logs (Click to Refresh)
-                </h3>
-                <div id="debug-logs" style={{
-                    background: '#000',
-                    padding: '1rem',
-                    borderRadius: '8px',
-                    fontFamily: 'monospace',
-                    fontSize: '0.8rem',
-                    color: '#0f0',
-                    maxHeight: '200px',
-                    overflowY: 'auto'
-                }}>
-                    Loading logs...
-                </div>
-            </div>
         </div>
+
+            {/* VIP Early Access Albums */ }
+    <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>
+            <Crown size={20} />
+            VIP Early Access (Automatic)
+        </h2>
+        <p className={styles.sectionDesc}>
+            Albums with future release dates are automatically VIP-only until their release date.
+        </p>
+
+        {vipAlbums.length > 0 ? (
+            <div className={styles.vipGrid}>
+                {vipAlbums.map(album => {
+                    const daysUntil = Math.ceil((new Date(album.releaseDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+                    return (
+                        <div key={album.id} className={styles.vipCard}>
+                            <div className={styles.vipBadge}>VIP ONLY</div>
+                            <div className={styles.vipTitle}>{album.title}</div>
+                            <div className={styles.vipType}>{album.type}</div>
+                            <div className={styles.vipRelease}>
+                                <Calendar size={14} />
+                                Releases in {daysUntil} days
+                            </div>
+                            <div className={styles.vipDate}>
+                                {new Date(album.releaseDate).toLocaleDateString()}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        ) : (
+            <div className={styles.vipEmpty}>No upcoming VIP releases</div>
+        )}
+    </div>
+    {/* Debug Log Viewer */ }
+    <div className={styles.section} style={{ marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+        <h3 style={{ fontSize: '1rem', color: '#888', marginBottom: '1rem', cursor: 'pointer' }} onClick={() => {
+            fetch('/api/admin/content?action=logs')
+                .then(res => res.json())
+                .then(data => {
+                    const el = document.getElementById('debug-logs');
+                    if (el && data.logs) el.innerHTML = data.logs.join('<br/>');
+                });
+        }}>
+            Server Debug Logs (Click to Refresh)
+        </h3>
+        <div id="debug-logs" style={{
+            background: '#000',
+            padding: '1rem',
+            borderRadius: '8px',
+            fontFamily: 'monospace',
+            fontSize: '0.8rem',
+            color: '#0f0',
+            maxHeight: '200px',
+            overflowY: 'auto'
+        }}>
+            Loading logs...
+        </div>
+    </div>
+        </div >
     );
 }

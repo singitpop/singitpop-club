@@ -197,14 +197,15 @@ export async function POST(req: NextRequest) {
         }
 
         if (action === 'set_latest_single') {
-            const { singleId, singleUid } = data;
-            logToDebug(`💾 Saving Latest Single: ID=${singleId}, UID=${singleUid}`);
+            const { singleId, singleUid, singleTitle } = data;
+            logToDebug(`💾 Saving Latest Single: ID=${singleId}, UID=${singleUid}, Title=${singleTitle}`);
 
             // Update metadata with new latest single
             // Store UID or AlbumID + TrackID to be unique
             const metadata = readMetadata();
             metadata.latestSingleId = singleId;
-            metadata.latestSingleUid = singleUid; // Store the unique ID
+            metadata.latestSingleUid = singleUid;
+            metadata.latestSingleTitle = singleTitle; // Store title for fallback
 
             const success = writeMetadata(metadata);
 
