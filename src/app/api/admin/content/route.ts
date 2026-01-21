@@ -3,23 +3,40 @@ import { albums } from '@/data/albumData';
 import fs from 'fs';
 import path from 'path';
 
-// Helper to update albumData.ts file
-async function updateAlbumData(albumId: string, updates: any) {
-    const albumDataPath = path.join(process.cwd(), 'src/data/albumData.ts');
-    let content = fs.readFileSync(albumDataPath, 'utf-8');
+// Path to store album metadata overrides
+const METADATA_PATH = path.join(process.cwd(), 'src/data/albumMetadata.json');
 
-    // Find the album object in the file
-    const albumIndex = albums.findIndex(a => a.id === albumId);
-    if (albumIndex === -1) {
-        throw new Error('Album not found');
+// Helper to read metadata overrides
+function readMetadata() {
+    try {
+        if (fs.existsSync(METADATA_PATH)) {
+            const data = fs.readFileSync(METADATA_PATH, 'utf-8');
+            return JSON.parse(data);
+        }
+    } catch (error) {
+        console.error('Error reading metadata:', error);
     }
+    return {};
+}
 
-    // Update the in-memory album object
-    const updatedAlbum = { ...albums[albumIndex], ...updates };
+// Helper to write metadata overrides
+function writeMetadata(metadata: any) {
+    try {
+        fs.writeFileSync(METADATA_PATH, JSON.stringify(metadata, null, 2), 'utf-8');
+        return true;
+    } catch (error) {
+        console.error('Error writing metadata:', error);
+        return false;
+    }
+}
 
-    // For now, we'll just return success
-    // In production, you'd want to properly update the file or use a database
-    return updatedAlbum;
+// Helper to merge album data with metadata overrides
+function getAlbumsWithMetadata() {
+    const metadata = readMetadata();
+    return albums.map(album => ({
+        ...album,
+        ...(metadata[album.id] || {})
+    }));
 }
 
 export async function GET(req: NextRequest) {
@@ -27,14 +44,14 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const filter = searchParams.get('filter');
 
-        let filteredAlbums = albums;
+        let filteredAlbums = getAlbumsWithMetadata();
 
         if (filter === 'studio') {
-            filteredAlbums = albums.filter(a => a.type === 'studio');
+            filteredAlbums = filteredAlbums.filter(a => a.type === 'studio');
         } else if (filter === 'live') {
-            filteredAlbums = albums.filter(a => a.type === 'live');
+            filteredAlbums = filteredAlbums.filter(a => a.type === 'live');
         } else if (filter === 'featured') {
-            filteredAlbums = albums.filter(a => a.featured);
+            filteredAlbums = filteredAlbums.filter(a => a.featured);
         }
 
         // Return simplified album data for admin table
@@ -63,22 +80,25 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: 'Missing albumId or updates' }, { status: 400 });
         }
 
-        // Validate updates
-        const allowedFields = ['featured', 'releaseDate', 'type'];
-        const filteredUpdates = Object.keys(updates)
-            .filter(key => allowedFields.includes(key))
-            .reduce((obj, key) => {
-                obj[key] = updates[key];
-                return obj;
-            }, {} as any);
+        // Read current metadata
+        const metadata = readMetadata();
 
-        // Update the album
-        const updatedAlbum = await updateAlbumData(albumId, filteredUpdates);
+        // Update metadata for this album
+        metadata[albumId] = {
+            ...(metadata[albumId] || {}),
+            ...updates
+        };
+
+        // Write back to file
+        const success = writeMetadata(metadata);
+
+        if (!success) {
+            return NextResponse.json({ error: 'Failed to save metadata' }, { status: 500 });
+        }
 
         return NextResponse.json({
             success: true,
-            album: updatedAlbum,
-            message: 'Album updated successfully (Note: Changes are in-memory only. For persistence, implement database or file write logic.)'
+            message: 'Album metadata updated successfully'
         });
     } catch (error: any) {
         console.error('Content update error:', error);
@@ -94,13 +114,36 @@ export async function POST(req: NextRequest) {
             case 'set_latest': {
                 const { albumId, category } = data;
 
-                // Clear all featured flags for this category
-                // Then set the specified album as featured
-                // This is a simplified version - in production you'd update the file/database
+                // Read current metadata
+                const metadata = readMetadata();
+
+                // Clear featured flag for all albums of this type
+                Object.keys(metadata).forEach(id => {
+                    const album = albums.find(a => a.id === id);
+                    if (album?.type === category) {
+                        metadata[id] = {
+                            ...(metadata[id] || {}),
+                            featured: false
+                        };
+                    }
+                });
+
+                // Set the specified album as featured
+                metadata[albumId] = {
+                    ...(metadata[albumId] || {}),
+                    featured: true
+                };
+
+                // Write back to file
+                const success = writeMetadata(metadata);
+
+                if (!success) {
+                    return NextResponse.json({ error: 'Failed to save metadata' }, { status: 500 });
+                }
 
                 return NextResponse.json({
                     success: true,
-                    message: `Set ${albumId} as latest ${category} (Note: Implement persistence logic)`
+                    message: `Set as latest ${category} album`
                 });
             }
 

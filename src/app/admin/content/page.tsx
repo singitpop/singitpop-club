@@ -58,8 +58,9 @@ export default function ContentPage() {
             });
 
             if (res.ok) {
-                alert(`✅ Set as Latest ${category.toUpperCase()}!`);
-                fetchAlbums();
+                const album = albums.find(a => a.id === albumId);
+                alert(`✅ "${album?.title}" is now the Latest ${category.toUpperCase()}!`);
+                fetchAlbums(); // Reload from API to get persisted data
             }
         } catch (error) {
             console.error(error);
@@ -80,7 +81,7 @@ export default function ContentPage() {
 
             if (res.ok) {
                 alert('✅ Release date updated!');
-                fetchAlbums();
+                fetchAlbums(); // Reload from API
             }
         } catch (error) {
             console.error(error);
@@ -100,7 +101,7 @@ export default function ContentPage() {
             });
 
             if (res.ok) {
-                fetchAlbums();
+                fetchAlbums(); // Reload from API to get persisted data
             }
         } catch (error) {
             console.error(error);
