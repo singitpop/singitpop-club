@@ -185,9 +185,23 @@ export async function POST(req: NextRequest) {
     try {
         const { action, data } = await req.json();
 
+        if (action === 'logs') {
+            try {
+                if (fs.existsSync(DEBUG_LOG_PATH)) {
+                    const logs = fs.readFileSync(DEBUG_LOG_PATH, 'utf-8');
+                    // Return last 20 lines
+                    const lines = logs.split('\n').filter(Boolean).slice(-20);
+                    return NextResponse.json({ logs: lines });
+                }
+                return NextResponse.json({ logs: [] });
+            } catch (e) {
+                return NextResponse.json({ logs: ['Error reading log file'] });
+            }
+        }
+
         if (action === 'set_latest_single') {
             const { singleId, singleUid } = data;
-            console.log(`💾 Saving Latest Single: ID=${singleId}, UID=${singleUid}`);
+            logToDebug(`💾 Saving Latest Single: ID=${singleId}, UID=${singleUid}`);
 
             // Update metadata with new latest single
             // Store UID or AlbumID + TrackID to be unique
