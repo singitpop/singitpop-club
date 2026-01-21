@@ -78,9 +78,18 @@ export async function GET(req: NextRequest) {
         }
 
         if (action === 'singles') {
-            // Get all singles for admin selection
+            // Get all singles for admin selection (current month only)
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const currentMonth = today.getMonth();
+
             const singlesWithDates = albums
-                .filter(a => a.tracks.some(t => t.isSingle))
+                .filter(a => {
+                    const releaseDate = new Date(a.releaseDate);
+                    return a.tracks.some(t => t.isSingle) &&
+                        releaseDate.getFullYear() === currentYear &&
+                        releaseDate.getMonth() === currentMonth;
+                })
                 .map(a => {
                     const singleTrack = a.tracks.find(t => t.isSingle);
                     return {
