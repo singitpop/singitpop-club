@@ -1,62 +1,81 @@
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
+import styles from "./Club.module.css";
 
 export default async function ClubPage() {
     const user = await currentUser();
 
     return (
-        <div className="min-h-screen bg-black text-white pt-24 px-6 md:px-12">
+        <div className={`container ${styles.page}`}>
             {/* Header */}
-            <div className="flex justify-between items-center mb-12 border-b border-white/10 pb-6">
-                <div>
-                    <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                        The Club
-                    </h1>
-                    <p className="text-gray-400 mt-2">Welcome back, {user?.firstName || "Member"}!</p>
+            <div className={styles.header}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '1rem' }}>
+                    <UserButton afterSignOutUrl="/" appearance={{
+                        elements: {
+                            avatarBox: { width: 40, height: 40, border: '2px solid var(--primary)' }
+                        }
+                    }} />
                 </div>
-                <div>
-                    <UserButton afterSignOutUrl="/" />
-                </div>
+
+                <h1 className={styles.title}>The Club</h1>
+                <p className={styles.subtitle}>
+                    Welcome back, {user?.firstName || "Member"}! <br />
+                    Access your exclusive content and manage your membership.
+                </p>
             </div>
 
             {/* Content Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className={styles.grid}>
 
-                {/* Exclusive 1 */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition group">
-                    <div className="h-40 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl mb-4 flex items-center justify-center">
-                        <span className="text-4xl">💎</span>
+                {/* Exclusive 1: VIP Demos */}
+                <div className={styles.card}>
+                    <div className={styles.iconWrapper}>
+                        <span style={{ fontSize: '2.5rem' }}>💎</span>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">VIP Demos</h3>
-                    <p className="text-gray-400 text-sm mb-4">Unreleased tracks and acoustic sketches.</p>
-                    <button className="px-4 py-2 bg-white text-black rounded-full text-sm font-bold opacity-50 cursor-not-allowed">
+                    <h3 className={styles.cardTitle}>VIP Demos</h3>
+                    <p className={styles.cardText}>
+                        Unreleased tracks, acoustic sketches, and studio diaries.
+                        <strong> (VIP Tier Only)</strong>
+                    </p>
+                    <button className={`${styles.actionBtn} ${styles.disabled}`} title="Coming Soon">
                         Coming Soon
                     </button>
                 </div>
 
-                {/* Exclusive 2 */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition group">
-                    <div className="h-40 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl mb-4 flex items-center justify-center">
-                        <span className="text-4xl">🎵</span>
+                {/* Exclusive 2: Full Library */}
+                <div className={styles.card}>
+                    <div className={styles.iconWrapper}>
+                        <span style={{ fontSize: '2.5rem' }}>🎵</span>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">Full Music Library</h3>
-                    <p className="text-gray-400 text-sm mb-4">Stream all tracks, including locked releases.</p>
-                    <Link href="/music" className="px-4 py-2 border border-white/30 rounded-full text-sm hover:bg-white hover:text-black transition inline-block">
+                    <h3 className={styles.cardTitle}>Full Music Library</h3>
+                    <p className={styles.cardText}>
+                        Stream the entire discography without limits.
+                        Includes exclusive extended cuts.
+                    </p>
+                    <Link href="/music" className={`${styles.actionBtn} ${styles.actionBtnPrimary}`}>
                         Listen Now
                     </Link>
                 </div>
 
                 {/* Managing Account */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition">
-                    <div className="h-40 bg-gray-800 rounded-xl mb-4 flex items-center justify-center">
-                        <span className="text-4xl">⚙️</span>
+                <div className={styles.card}>
+                    <div className={styles.iconWrapper}>
+                        <span style={{ fontSize: '2.5rem' }}>⚙️</span>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">Account Settings</h3>
-                    <p className="text-gray-400 text-sm mb-4">Manage your subscription and profile.</p>
-                    <Link href="https://billing.stripe.com/p/login/test_..." className="px-4 py-2 border border-white/30 rounded-full text-sm hover:bg-white hover:text-black transition">
+                    <h3 className={styles.cardTitle}>Account Settings</h3>
+                    <p className={styles.cardText}>
+                        Manage your subscription, update payment methods, or view billing history.
+                    </p>
+                    {/* Using external Stripe link or placeholder */}
+                    <a
+                        href="https://billing.stripe.com/p/login/test_..."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${styles.actionBtn} ${styles.actionBtnSecondary}`}
+                    >
                         Manage Billing
-                    </Link>
+                    </a>
                 </div>
 
             </div>
