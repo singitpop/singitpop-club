@@ -1,0 +1,106 @@
+/* Account Page Styles */
+.page {
+    min-height: 100vh;
+    padding-top: var(--header-height);
+    background: radial-gradient(circle at 50% 0%, #1a1a2e 0%, var(--background) 70%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 4rem;
+}
+
+.backLink {
+    align-self: flex-start;
+    margin-bottom: 2rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.backLink:hover {
+    color: var(--text-main);
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, #fff 0%, var(--primary-glow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+}
+
+.membershipCard {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+    /* Center text for CTA */
+    text-align: center;
+}
+
+/* Gradient Top for Membership Card */
+.membershipCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.cardText {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stripeBtn {
+    background: #635bff;
+    /* Stripe Blurple */
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
+}
+
+.stripeBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 91, 255, 0.6);
+    filter: brightness(1.1);
+}
+
+.clerkWrapper {
+    width: 100%;
+    max-width: 800px;
+}

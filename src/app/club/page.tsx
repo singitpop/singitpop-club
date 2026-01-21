@@ -67,15 +67,13 @@ export default async function ClubPage() {
                     <p className={styles.cardText}>
                         Manage your subscription, update payment methods, or view billing history.
                     </p>
-                    {/* Using external Stripe link or placeholder */}
-                    <a
-                        href="https://billing.stripe.com/p/login/test_..."
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    {/* Internal Account Page */}
+                    <Link
+                        href="/club/account"
                         className={`${styles.actionBtn} ${styles.actionBtnSecondary}`}
                     >
-                        Manage Billing
-                    </a>
+                        Manage Account
+                    </Link>
                 </div>
 
             </div>
