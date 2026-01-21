@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { albums, getLatestStudioAlbum, getLatestLiveAlbum, getVIPOnlyAlbums, getAllSingles } from '@/data/albumData';
+import { albums, getLatestStudioAlbum } from '@/data/albumData';
 import fs from 'fs';
 import path from 'path';
 
@@ -38,14 +38,25 @@ export async function GET(req: NextRequest) {
         if (action === 'latest') {
             // Get automatically selected latest albums
             const latestStudio = getLatestStudioAlbum();
-            const latestLive = getLatestLiveAlbum();
-            const metadata = readMetadata();
-            const singles = getAllSingles();
 
-            // Get latest single (manual override or first single)
+            // Calculate latest live album inline
+            const today = new Date();
+            const liveAlbums = albums
+                .filter(a => a.title.toLowerCase().includes('live') && new Date(a.releaseDate) <= today)
+                .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+            const latestLive = liveAlbums[0];
+
+            const metadata = readMetadata();
+
+            // Get latest single from metadata or first single
+            const allSingles = albums
+                .filter(a => a.tracks.some(t => t.isSingle))
+                .map(a => a.tracks.find(t => t.isSingle))
+                .filter(Boolean);
+
             const latestSingle = metadata.latestSingleId
-                ? singles.find(s => s.id === metadata.latestSingleId)
-                : singles[0];
+                ? allSingles.find((s: any) => s.id === metadata.latestSingleId)
+                : allSingles[0];
 
             return NextResponse.json({
                 latestStudio: latestStudio ? {
@@ -59,16 +70,17 @@ export async function GET(req: NextRequest) {
                     releaseDate: latestLive.releaseDate
                 } : null,
                 latestSingle: latestSingle ? {
-                    id: latestSingle.id,
-                    title: latestSingle.title,
-                    albumId: latestSingle.albumId
+                    id: (latestSingle as any).id,
+                    title: (latestSingle as any).title,
+                    albumId: (latestSingle as any).albumId
                 } : null
             });
         }
 
         if (action === 'vip') {
-            // Get VIP-only albums (future releases)
-            const vipAlbums = getVIPOnlyAlbums();
+            // Get VIP-only albums (future releases) - calculate inline
+            const today = new Date();
+            const vipAlbums = albums.filter((a: any) => new Date(a.releaseDate) > today);
             return NextResponse.json(vipAlbums.map(a => ({
                 id: a.id,
                 title: a.title,
