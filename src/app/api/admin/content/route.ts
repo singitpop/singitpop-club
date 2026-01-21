@@ -102,52 +102,51 @@ export async function GET(req: NextRequest) {
                         releaseDate.getFullYear() === currentYear &&
                         releaseDate.getMonth() === currentMonth;
                 })
-        })
                 .flatMap(a => {
-            // Get ALL singles from this album, not just the first one
-            return a.tracks
-                .filter(t => t.isSingle)
-                .map(singleTrack => ({
-                    id: singleTrack.id,
-                    title: singleTrack.title,
-                    albumId: a.id,
-                    albumTitle: a.title,
-                    releaseDate: a.releaseDate
-                }));
-        })
-            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()); // Newest first
+                    // Get ALL singles from this album, not just the first one
+                    return a.tracks
+                        .filter(t => t.isSingle)
+                        .map(singleTrack => ({
+                            id: singleTrack.id,
+                            title: singleTrack.title,
+                            albumId: a.id,
+                            albumTitle: a.title,
+                            releaseDate: a.releaseDate
+                        }));
+                })
+                .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()); // Newest first
 
-        const metadata = readMetadata();
+            const metadata = readMetadata();
 
-        return NextResponse.json({
-            singles: singlesWithDates,
-            currentLatestSingleId: metadata.latestSingleId
-        });
-    }
+            return NextResponse.json({
+                singles: singlesWithDates,
+                currentLatestSingleId: metadata.latestSingleId
+            });
+        }
 
         // Default: return all albums with computed metadata
         const today = new Date();
-    const albumList = albums.map(album => {
-        const releaseDate = new Date(album.releaseDate);
-        const isVIPOnly = releaseDate > today;
+        const albumList = albums.map(album => {
+            const releaseDate = new Date(album.releaseDate);
+            const isVIPOnly = releaseDate > today;
 
-        return {
-            id: album.id,
-            title: album.title,
-            year: album.year,
-            type: album.type || 'standard',
-            releaseDate: album.releaseDate,
-            trackCount: album.tracks.length,
-            isVIPOnly,
-            daysUntilRelease: isVIPOnly ? Math.ceil((releaseDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)) : 0
-        };
-    });
+            return {
+                id: album.id,
+                title: album.title,
+                year: album.year,
+                type: album.type || 'standard',
+                releaseDate: album.releaseDate,
+                trackCount: album.tracks.length,
+                isVIPOnly,
+                daysUntilRelease: isVIPOnly ? Math.ceil((releaseDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)) : 0
+            };
+        });
 
-    return NextResponse.json(albumList);
-} catch (error: any) {
-    console.error('Content API error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-}
+        return NextResponse.json(albumList);
+    } catch (error: any) {
+        console.error('Content API error:', error);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 }
 
 export async function POST(req: NextRequest) {
