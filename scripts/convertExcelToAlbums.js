@@ -60,7 +60,11 @@ for (let i = 1; i < data.length; i++) {
     const trackTitle = row[0]; // Column A: Song Title
     const genre = row[1];      // Column B: Genre
     const singleType = row[3] ? String(row[3]).trim().toLowerCase() : ''; // Column D: Single marker (all singles)
-    const albumName = row[6];  // Column G: Album Title
+    let albumName = row[6];  // Column G: Album Title
+
+    // Fix known typos in Excel
+    if (albumName === 'Aplril Comes Soft') albumName = 'April Comes Soft';
+
     const trackNumber = row[5]; // Column F: Track No
     const releaseDate = row[8]; // Column I: Release Date (Excel date number)
     const latestMarker = row[10] ? String(row[10]).trim().toLowerCase() : ''; // Column K: Latest single marker

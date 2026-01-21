@@ -1,7 +1,7 @@
 /**
  * Album Data
  * Auto-generated from Excel spreadsheet
- * Generated: 2026-01-21T16:02:06.904Z
+ * Generated: 2026-01-21T16:03:27.284Z
  * 
  * Source: /Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx
  * Albums folder: /Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE
@@ -1328,13 +1328,13 @@ export const albums: Album[] = [
     "type": "standard"
   },
   {
-    "id": "aplril-comes-soft-2026",
-    "title": "Aplril Comes Soft",
+    "id": "april-comes-soft-2026",
+    "title": "April Comes Soft",
     "year": 2026,
     "genre": [
       "Dance Pop"
     ],
-    "coverArt": "/albums/artwork/aplril-comes-soft-2026.jpg",
+    "coverArt": "/albums/artwork/april-comes-soft-2026.jpg",
     "tracks": [
       {
         "id": 1,
@@ -1347,7 +1347,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/April%20Comes%20Soft.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/April%20Comes%20Soft.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": true
       },
       {
@@ -1361,7 +1361,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/When%20the%20Night%20Opens.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/When%20the%20Night%20Opens.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": false
       },
       {
@@ -1375,7 +1375,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Closer%20to%20the%20Floor.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Closer%20to%20the%20Floor.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": true
       },
       {
@@ -1389,7 +1389,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Midnight%20Pressure.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Midnight%20Pressure.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": false
       },
       {
@@ -1403,7 +1403,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Open%20Wide.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Open%20Wide.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": true
       },
       {
@@ -1417,7 +1417,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Suspended.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Suspended.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": false
       },
       {
@@ -1431,7 +1431,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Second%20Wind.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Second%20Wind.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": false
       },
       {
@@ -1445,7 +1445,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Quiet%20Between%20Us.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Quiet%20Between%20Us.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": false
       },
       {
@@ -1459,7 +1459,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Almost%20There.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Almost%20There.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": false
       },
       {
@@ -1473,7 +1473,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Nothing%20Holding%20Me.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Nothing%20Holding%20Me.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": false
       },
       {
@@ -1487,7 +1487,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Let%20It%20Settle.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Let%20It%20Settle.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": true
       },
       {
@@ -1501,7 +1501,7 @@ export const albums: Album[] = [
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Morning%20Still.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/april-comes-soft/Morning%20Still.mp3",
         "sourceFolder": "April Comes Soft",
-        "albumId": "aplril-comes-soft-2026",
+        "albumId": "april-comes-soft-2026",
         "isSingle": false
       }
     ],
