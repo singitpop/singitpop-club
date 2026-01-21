@@ -4,7 +4,7 @@ import { Play, Lock, Share2, Heart, Check, ShoppingBag, Download } from 'lucide-
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import styles from './SongList.module.css';
-import { Track, getAlbumById } from '@/data/albumData';
+import { Track, getAlbumById, albums } from '@/data/albumData';
 
 interface SongListProps {
     tracks: Track[];
@@ -137,7 +137,13 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                         const isSelected = selectedTracks.includes(uniqueId);
 
                         // Time-Based Gating Logic
-                        const album = track.albumId ? getAlbumById(track.albumId) : undefined;
+                        // Robust Album Lookup
+                        let album = track.albumId ? getAlbumById(track.albumId) : undefined;
+                        if (!album) {
+                            // Fallback: Find album containing this track
+                            album = albums.find(a => a.tracks.some(t => t.id === track.id));
+                        }
+
                         const releaseDate = album?.releaseDate ? new Date(album.releaseDate) : new Date();
                         const isPreRelease = releaseDate > new Date();
 
@@ -151,14 +157,14 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                         const isLatestSingle = uniqueId === latestSingleUid;
                         const isPremiumContent = !isLatestSingle;
 
-                        if (isPreRelease) {
-                            // Pre-Release: ONLY VIPs can listen
+                        if (isPreRelease && !isLatestSingle) {
+                            // Pre-Release: ONLY VIPs can listen (Exception: The designated Latest Single)
                             if (!isPro) {
                                 isLocked = true;
                                 lockMessage = "Early Access! Upgrade to VIP to listen before the official release.";
                             }
                         } else {
-                            // Standard Release
+                            // Standard Release (or Latest Single from Pre-Release album)
                             if (isPremiumContent && !isInsider && !isPro) {
                                 // Premium content is limited to 30s for free users
                                 isPreview = true;
