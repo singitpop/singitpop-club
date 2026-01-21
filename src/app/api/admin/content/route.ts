@@ -19,17 +19,17 @@ function readMetadata() {
     return { latestSingleId: null };
 }
 
-const DEBUG_LOG_PATH = path.join(process.cwd(), 'debug.log');
+// Use global variable for logging to avoid filesystem issues
+const globalLogs = (global as any).debugLogs || [];
+(global as any).debugLogs = globalLogs;
 
 function logToDebug(message: string) {
     const timestamp = new Date().toISOString();
-    const line = `[${timestamp}] ${message}\n`;
-    console.log(message);
-    try {
-        fs.appendFileSync(DEBUG_LOG_PATH, line);
-    } catch (e) {
-        // ignore
-    }
+    const line = `[${timestamp}] ${message}`;
+    console.log(message); // Retain terminal output
+    globalLogs.push(line);
+    // Keep only last 50 logs
+    if (globalLogs.length > 50) globalLogs.shift();
 }
 
 // Helper to write metadata
@@ -187,17 +187,8 @@ export async function POST(req: NextRequest) {
         const { action, data } = await req.json();
 
         if (action === 'logs') {
-            try {
-                if (fs.existsSync(DEBUG_LOG_PATH)) {
-                    const logs = fs.readFileSync(DEBUG_LOG_PATH, 'utf-8');
-                    // Return last 20 lines
-                    const lines = logs.split('\n').filter(Boolean).slice(-20);
-                    return NextResponse.json({ logs: lines });
-                }
-                return NextResponse.json({ logs: [] });
-            } catch (e) {
-                return NextResponse.json({ logs: ['Error reading log file'] });
-            }
+            const logs = (global as any).debugLogs || [];
+            return NextResponse.json({ logs: logs.slice().reverse() }); // Newest first
         }
 
         if (action === 'set_latest_single') {
