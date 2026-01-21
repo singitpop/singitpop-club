@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
-import { ArrowLeft, Star, Calendar, Music, Sparkles, Crown } from 'lucide-react';
+import { ArrowLeft, Star, Calendar, Music, Sparkles, Crown, RefreshCw } from 'lucide-react';
 import styles from './Content.module.css';
 
 interface LatestAlbums {
