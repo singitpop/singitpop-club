@@ -15,6 +15,7 @@ interface TierData {
     name: string;
     value: number;
     color: string;
+    [key: string]: any; // Allow additional properties for recharts
 }
 
 interface RevenueData {
