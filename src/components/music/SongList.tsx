@@ -24,6 +24,7 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
+    const [showPreviewModal, setShowPreviewModal] = useState(false);
 
     // Fetch Signed URL when active track changes
     useEffect(() => {
@@ -105,7 +106,7 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
             audioRef.current.pause();
             setIsPlaying(false);
             audioRef.current.currentTime = 0;
-            alert("Preview ended! Join the Club to unlock full streaming.");
+            setShowPreviewModal(true);
         }
     };
 
@@ -264,6 +265,26 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                 onTimeUpdate={handleTimeUpdate}
                 preload="none"
             />
+            {/* Preview Modal */}
+            {showPreviewModal && (
+                <div className={styles.modalOverlay} onClick={() => setShowPreviewModal(false)}>
+                    <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                        <h3 className={styles.modalTitle}>Preview Ended 🎵</h3>
+                        <p className={styles.modalText}>
+                            You've hit the 30-second preview limit.<br />
+                            Join the Club to unlock full streaming!
+                        </p>
+                        <div className={styles.modalActions}>
+                            <a href="/club" className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}>
+                                Join the Club
+                            </a>
+                            <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowPreviewModal(false)}>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
