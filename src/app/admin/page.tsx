@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, Search, RefreshCw, Eye, Ban, BarChart3 } from 'lucide-react';
+import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2 } from 'lucide-react';
 import styles from './Admin.module.css';
 
 interface UserData {
@@ -115,6 +115,10 @@ export default function AdminPage() {
                     <Link href="/admin/analytics" className={styles.analyticsBtn}>
                         <BarChart3 size={18} />
                         Analytics
+                    </Link>
+                    <Link href="/admin/content" className={styles.contentBtn}>
+                        <Music2 size={18} />
+                        Content
                     </Link>
                     <div className={styles.userCount}>
                         Total Users: <span>{users.length}</span>
