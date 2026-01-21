@@ -1,7 +1,7 @@
 /**
  * Album Data
  * Auto-generated from Excel spreadsheet
- * Generated: 2026-01-21T15:05:14.576Z
+ * Generated: 2026-01-21T15:23:39.007Z
  * 
  * Source: /Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx
  * Albums folder: /Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE
@@ -1325,104 +1325,6 @@ export const albums: Album[] = [
     "releaseDate": "2026-01-01",
     "folderPath": "Through The Glass",
     "mp3Count": 69,
-    "type": "standard"
-  },
-  {
-    "id": "singles-2026",
-    "title": "Singles",
-    "year": 2026,
-    "genre": [
-      "Country",
-      "Rock",
-      "Pop"
-    ],
-    "coverArt": "/albums/artwork/singles-2026.jpg",
-    "tracks": [
-      {
-        "id": 1,
-        "title": "Boundless Love",
-        "duration": "3:30",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Country",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Boundless%20Love.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Boundless%20Love.mp3",
-        "sourceFolder": "Singles",
-        "albumId": "singles-2026",
-        "isSingle": true
-      },
-      {
-        "id": 2,
-        "title": "distant sky",
-        "duration": "3:30",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Country",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Distant%20Sky.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Distant%20Sky.mp3",
-        "sourceFolder": "Singles",
-        "albumId": "singles-2026",
-        "isSingle": true
-      },
-      {
-        "id": 3,
-        "title": "Pedal to the metal",
-        "duration": "3:30",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Rock",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Pedal%20to%20the%20metal.wav",
-        "sourceFolder": "Singles",
-        "albumId": "singles-2026",
-        "isSingle": true
-      },
-      {
-        "id": 4,
-        "title": "waiting for a girl like you",
-        "duration": "3:30",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Rock",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Waiting%20for%20a%20Girl%20Like%20You.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Waiting%20for%20a%20Girl%20Like%20You.mp3",
-        "sourceFolder": "Singles",
-        "albumId": "singles-2026",
-        "isSingle": true
-      },
-      {
-        "id": 5,
-        "title": "say it again",
-        "duration": "3:30",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Country",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Say%20It%20Again.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Say%20It%20Again.mp3",
-        "sourceFolder": "Singles",
-        "albumId": "singles-2026",
-        "isSingle": true
-      },
-      {
-        "id": 6,
-        "title": "bridge over troubled water",
-        "duration": "3:30",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Pop",
-        "sourceFolder": "Singles",
-        "albumId": "singles-2026",
-        "isSingle": true
-      }
-    ],
-    "releaseDate": "2026-01-01",
-    "folderPath": "Singles",
-    "mp3Count": 13,
     "type": "standard"
   },
   {
@@ -8631,6 +8533,104 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2024-01-01",
     "folderPath": "Whispers of the Heart Country Ballads for the Soul",
+    "mp3Count": 13,
+    "type": "standard"
+  },
+  {
+    "id": "singles-2024",
+    "title": "Singles",
+    "year": 2024,
+    "genre": [
+      "Country",
+      "Rock",
+      "Pop"
+    ],
+    "coverArt": "/albums/artwork/singles-2024.jpg",
+    "tracks": [
+      {
+        "id": 1,
+        "title": "Boundless Love",
+        "duration": "3:30",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Boundless%20Love.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Boundless%20Love.mp3",
+        "sourceFolder": "Singles",
+        "albumId": "singles-2024",
+        "isSingle": true
+      },
+      {
+        "id": 2,
+        "title": "distant sky",
+        "duration": "3:30",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Distant%20Sky.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Distant%20Sky.mp3",
+        "sourceFolder": "Singles",
+        "albumId": "singles-2024",
+        "isSingle": true
+      },
+      {
+        "id": 3,
+        "title": "Pedal to the metal",
+        "duration": "3:30",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Rock",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Pedal%20to%20the%20metal.wav",
+        "sourceFolder": "Singles",
+        "albumId": "singles-2024",
+        "isSingle": true
+      },
+      {
+        "id": 4,
+        "title": "waiting for a girl like you",
+        "duration": "3:30",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Rock",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Waiting%20for%20a%20Girl%20Like%20You.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Waiting%20for%20a%20Girl%20Like%20You.mp3",
+        "sourceFolder": "Singles",
+        "albumId": "singles-2024",
+        "isSingle": true
+      },
+      {
+        "id": 5,
+        "title": "say it again",
+        "duration": "3:30",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Say%20It%20Again.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/Say%20It%20Again.mp3",
+        "sourceFolder": "Singles",
+        "albumId": "singles-2024",
+        "isSingle": true
+      },
+      {
+        "id": 6,
+        "title": "bridge over troubled water",
+        "duration": "3:30",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Pop",
+        "sourceFolder": "Singles",
+        "albumId": "singles-2024",
+        "isSingle": true
+      }
+    ],
+    "releaseDate": "2024-01-01",
+    "folderPath": "Singles",
     "mp3Count": 13,
     "type": "standard"
   }
