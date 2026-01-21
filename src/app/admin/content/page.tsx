@@ -378,6 +378,31 @@ export default function ContentPage() {
                     <div className={styles.vipEmpty}>No upcoming VIP releases</div>
                 )}
             </div>
+            {/* Debug Log Viewer */}
+            <div className={styles.section} style={{ marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                <h3 style={{ fontSize: '1rem', color: '#888', marginBottom: '1rem', cursor: 'pointer' }} onClick={() => {
+                    fetch('/api/admin/content?action=logs')
+                        .then(res => res.json())
+                        .then(data => {
+                            const el = document.getElementById('debug-logs');
+                            if (el && data.logs) el.innerHTML = data.logs.join('<br/>');
+                        });
+                }}>
+                    Server Debug Logs (Click to Refresh)
+                </h3>
+                <div id="debug-logs" style={{
+                    background: '#000',
+                    padding: '1rem',
+                    borderRadius: '8px',
+                    fontFamily: 'monospace',
+                    fontSize: '0.8rem',
+                    color: '#0f0',
+                    maxHeight: '200px',
+                    overflowY: 'auto'
+                }}>
+                    Loading logs...
+                </div>
+            </div>
         </div>
     );
 }
