@@ -28,6 +28,15 @@ interface Single {
     releaseDate: string;
 }
 
+function extractVideoId(url: string | null) {
+    if (!url) return null;
+    if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
+    if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
+    // Basic 11-char ID check
+    if (url.length === 11) return url;
+    return null;
+}
+
 export default function ContentPage() {
     const { isLabel } = useAuth();
     const [latestAlbums, setLatestAlbums] = useState<LatestAlbums | null>(null);
@@ -103,6 +112,37 @@ export default function ContentPage() {
         }
     }
 
+    async function saveLatestVideo() {
+        const videoId = extractVideoId(currentLatestVideoId);
+        if (!videoId) {
+            alert("Invalid YouTube URL or ID");
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const res = await fetch('/api/admin/content', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'set_latest_video',
+                    data: { videoId }
+                })
+            });
+
+            if (res.ok) {
+                alert("✅ Video updated successfully!");
+                fetchData();
+            } else {
+                alert("❌ Failed to update video");
+            }
+        } catch (e) {
+            alert("Error saving video");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     async function setLatestSingle(uid: string) {
         const single = singles.find(s => s.uid === uid);
         if (!confirm(`Set "${single?.title}" as the Latest Single?\n\nThe previous single will revert to 30s preview for Fans.`)) return;
@@ -114,8 +154,9 @@ export default function ContentPage() {
                 body: JSON.stringify({
                     action: 'set_latest_single',
                     data: {
-                        singleId: single?.id, // Sent back as ID for now unless we update storage
-                        singleUid: uid
+                        singleId: single?.id,
+                        singleUid: uid,
+                        singleTitle: single?.title // Title Fallback for robustness
                     }
                 })
             });
