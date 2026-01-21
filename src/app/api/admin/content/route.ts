@@ -71,20 +71,21 @@ export async function GET(req: NextRequest) {
             let latestSingle;
             if (metadata.latestSingleUid) {
                 latestSingle = allSingles.find((s: any) => s.uid === metadata.latestSingleUid);
-                console.log(`🔍 Lookup UID [${metadata.latestSingleUid}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
+                logToDebug(`🔍 Lookup UID [${metadata.latestSingleUid}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
 
                 if (!latestSingle) {
-                    console.log('Available UIDs in search list:', allSingles.map((s: any) => s.uid));
+                    const available = allSingles.map((s: any) => s.uid);
+                    logToDebug(`Available UIDs in search list: ${JSON.stringify(available)}`);
                 }
             } else if (metadata.latestSingleId) {
                 // Legacy fallback
                 latestSingle = allSingles.find((s: any) => s.id === metadata.latestSingleId);
-                console.log(`🔍 Lookup ID [${metadata.latestSingleId}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
+                logToDebug(`🔍 Lookup ID [${metadata.latestSingleId}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
             }
 
             if (!latestSingle && allSingles.length > 0) {
                 latestSingle = allSingles[0];
-                console.log('⚠️ Fallback to:', latestSingle.title, '(UID:', latestSingle.uid, ')');
+                logToDebug(`⚠️ Fallback to: ${latestSingle.title} (UID: ${latestSingle.uid})`);
             }
 
             return NextResponse.json({
