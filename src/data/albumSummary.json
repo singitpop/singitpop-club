@@ -1,5 +1,5 @@
 {
-  "generated": "2026-01-21T15:05:14.582Z",
+  "generated": "2026-01-21T15:26:20.152Z",
   "totalAlbums": 47,
   "totalTracks": 572,
   "genres": [
@@ -102,19 +102,6 @@
       ],
       "folderPath": "Through The Glass",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/through-the-glass/"
-    },
-    {
-      "id": "singles-2026",
-      "title": "Singles",
-      "year": 2026,
-      "trackCount": 6,
-      "genres": [
-        "Country",
-        "Rock",
-        "Pop"
-      ],
-      "folderPath": "Singles",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/"
     },
     {
       "id": "neon-dreams-2025",
@@ -546,6 +533,19 @@
       ],
       "folderPath": "Whispers of the Heart Country Ballads for the Soul",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/whispers-of-the-heart-country-ballads-for-the-soul/"
+    },
+    {
+      "id": "singles-2024",
+      "title": "Singles",
+      "year": 2024,
+      "trackCount": 6,
+      "genres": [
+        "Country",
+        "Rock",
+        "Pop"
+      ],
+      "folderPath": "Singles",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/"
     }
   ]
 }

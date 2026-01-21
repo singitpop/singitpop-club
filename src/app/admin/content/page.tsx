@@ -21,6 +21,7 @@ interface VIPAlbum {
 
 interface Single {
     id: number;
+    uid: string; // Unique ID (albumId-trackId)
     title: string;
     albumId: string;
     albumTitle: string;
@@ -32,7 +33,7 @@ export default function ContentPage() {
     const [latestAlbums, setLatestAlbums] = useState<LatestAlbums | null>(null);
     const [vipAlbums, setVIPAlbums] = useState<VIPAlbum[]>([]);
     const [singles, setSingles] = useState<Single[]>([]);
-    const [currentLatestSingleId, setCurrentLatestSingleId] = useState<number | null>(null);
+    const [currentLatestSingleUid, setCurrentLatestSingleUid] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -59,7 +60,14 @@ export default function ContentPage() {
             setLatestAlbums(latestData);
             setVIPAlbums(vipData);
             setSingles(singlesData.singles);
-            setCurrentLatestSingleId(singlesData.currentLatestSingleId);
+
+            // Match current ID to UID if possible
+            if (singlesData.currentLatestSingleId) {
+                // We only have the ID stored, we need to find which single it belongs to (approximate)
+                // Ideally we should store UID, but for now let's find the first match or migrate
+                // The backend should return the current UID if it can
+                setCurrentLatestSingleUid(singlesData.currentLatestSingleUid || null);
+            }
         } catch (error) {
             console.error('Failed to fetch data:', error);
         } finally {
@@ -67,8 +75,8 @@ export default function ContentPage() {
         }
     }
 
-    async function setLatestSingle(singleId: number) {
-        const single = singles.find(s => s.id === singleId);
+    async function setLatestSingle(uid: string) {
+        const single = singles.find(s => s.uid === uid);
         if (!confirm(`Set "${single?.title}" as the Latest Single?\n\nThe previous single will revert to 30s preview for Fans.`)) return;
 
         try {
@@ -77,7 +85,10 @@ export default function ContentPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     action: 'set_latest_single',
-                    data: { singleId }
+                    data: {
+                        singleId: single?.id, // Sent back as ID for now unless we update storage
+                        singleUid: uid
+                    }
                 })
             });
 

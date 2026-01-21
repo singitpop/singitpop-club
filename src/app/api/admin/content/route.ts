@@ -108,6 +108,7 @@ export async function GET(req: NextRequest) {
                         .filter(t => t.isSingle)
                         .map(singleTrack => ({
                             id: singleTrack.id,
+                            uid: `${a.id}-${singleTrack.id}`, // Unique ID for selection
                             title: singleTrack.title,
                             albumId: a.id,
                             albumTitle: a.title,
