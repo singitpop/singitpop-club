@@ -64,10 +64,13 @@ export default function ContentPage() {
 
             // Match current ID to UID if possible
             if (singlesData.currentLatestSingleId) {
-                // We only have the ID stored, we need to find which single it belongs to (approximate)
-                // Ideally we should store UID, but for now let's find the first match or migrate
-                // The backend should return the current UID if it can
-                setCurrentLatestSingleUid(singlesData.currentLatestSingleUid || null);
+                setCurrentLatestSingleIdRef(singlesData.currentLatestSingleId); // Store numeric ID for fallback
+
+                // Try to find the UID if we can find a matching single
+                const matchingSingle = singlesData.singles.find((s: Single) => s.id === singlesData.currentLatestSingleId);
+                if (matchingSingle) {
+                    setCurrentLatestSingleUid(matchingSingle.uid);
+                }
             }
         } catch (error) {
             console.error('Failed to fetch data:', error);
