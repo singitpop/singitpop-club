@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { albums } from '@/data/albumData';
+import { albums, getLatestStudioAlbum, getLatestLiveAlbum, getVIPOnlyAlbums, getAllSingles } from '@/data/albumData';
 import fs from 'fs';
 import path from 'path';
 
-// Path to store album metadata overrides
+// Path to store admin overrides (only for Latest Single selection)
 const METADATA_PATH = path.join(process.cwd(), 'src/data/albumMetadata.json');
 
-// Helper to read metadata overrides
+// Helper to read metadata
 function readMetadata() {
     try {
         if (fs.existsSync(METADATA_PATH)) {
@@ -16,10 +16,10 @@ function readMetadata() {
     } catch (error) {
         console.error('Error reading metadata:', error);
     }
-    return {};
+    return { latestSingleId: null };
 }
 
-// Helper to write metadata overrides
+// Helper to write metadata
 function writeMetadata(metadata: any) {
     try {
         fs.writeFileSync(METADATA_PATH, JSON.stringify(metadata, null, 2), 'utf-8');
@@ -30,40 +30,85 @@ function writeMetadata(metadata: any) {
     }
 }
 
-// Helper to merge album data with metadata overrides
-function getAlbumsWithMetadata() {
-    const metadata = readMetadata();
-    return albums.map(album => ({
-        ...album,
-        ...(metadata[album.id] || {})
-    }));
-}
-
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
-        const filter = searchParams.get('filter');
+        const action = searchParams.get('action');
 
-        let filteredAlbums = getAlbumsWithMetadata();
+        if (action === 'latest') {
+            // Get automatically selected latest albums
+            const latestStudio = getLatestStudioAlbum();
+            const latestLive = getLatestLiveAlbum();
+            const metadata = readMetadata();
+            const singles = getAllSingles();
 
-        if (filter === 'studio') {
-            filteredAlbums = filteredAlbums.filter(a => a.type === 'studio');
-        } else if (filter === 'live') {
-            filteredAlbums = filteredAlbums.filter(a => a.type === 'live');
-        } else if (filter === 'featured') {
-            filteredAlbums = filteredAlbums.filter(a => a.featured);
+            // Get latest single (manual override or first single)
+            const latestSingle = metadata.latestSingleId
+                ? singles.find(s => s.id === metadata.latestSingleId)
+                : singles[0];
+
+            return NextResponse.json({
+                latestStudio: latestStudio ? {
+                    id: latestStudio.id,
+                    title: latestStudio.title,
+                    releaseDate: latestStudio.releaseDate
+                } : null,
+                latestLive: latestLive ? {
+                    id: latestLive.id,
+                    title: latestLive.title,
+                    releaseDate: latestLive.releaseDate
+                } : null,
+                latestSingle: latestSingle ? {
+                    id: latestSingle.id,
+                    title: latestSingle.title,
+                    albumId: latestSingle.albumId
+                } : null
+            });
         }
 
-        // Return simplified album data for admin table
-        const albumList = filteredAlbums.map(album => ({
-            id: album.id,
-            title: album.title,
-            year: album.year,
-            type: album.type || 'standard',
-            releaseDate: album.releaseDate,
-            featured: album.featured || false,
-            trackCount: album.tracks.length,
-        }));
+        if (action === 'vip') {
+            // Get VIP-only albums (future releases)
+            const vipAlbums = getVIPOnlyAlbums();
+            return NextResponse.json(vipAlbums.map(a => ({
+                id: a.id,
+                title: a.title,
+                releaseDate: a.releaseDate,
+                type: a.type
+            })));
+        }
+
+        if (action === 'singles') {
+            // Get all singles for admin selection
+            const singles = getAllSingles();
+            const metadata = readMetadata();
+
+            return NextResponse.json({
+                singles: singles.map(s => ({
+                    id: s.id,
+                    title: s.title,
+                    albumId: s.albumId
+                })),
+                currentLatestSingleId: metadata.latestSingleId
+            });
+        }
+
+        // Default: return all albums with computed metadata
+        const today = new Date();
+        const albumList = albums.map(album => {
+            const releaseDate = new Date(album.releaseDate);
+            const isVIPOnly = releaseDate > today;
+
+            return {
+                id: album.id,
+                title: album.title,
+                year: album.year,
+                type: album.type || 'standard',
+                releaseDate: album.releaseDate,
+                trackCount: album.tracks.length,
+                isVIPOnly,
+                daysUntilRelease: isVIPOnly ? Math.ceil((releaseDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)) : 0
+            };
+        });
 
         return NextResponse.json(albumList);
     } catch (error: any) {
@@ -72,100 +117,30 @@ export async function GET(req: NextRequest) {
     }
 }
 
-export async function PUT(req: NextRequest) {
-    try {
-        const { albumId, updates } = await req.json();
-
-        if (!albumId || !updates) {
-            return NextResponse.json({ error: 'Missing albumId or updates' }, { status: 400 });
-        }
-
-        // Read current metadata
-        const metadata = readMetadata();
-
-        // Update metadata for this album
-        metadata[albumId] = {
-            ...(metadata[albumId] || {}),
-            ...updates
-        };
-
-        // Write back to file
-        const success = writeMetadata(metadata);
-
-        if (!success) {
-            return NextResponse.json({ error: 'Failed to save metadata' }, { status: 500 });
-        }
-
-        return NextResponse.json({
-            success: true,
-            message: 'Album metadata updated successfully'
-        });
-    } catch (error: any) {
-        console.error('Content update error:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-}
-
 export async function POST(req: NextRequest) {
     try {
         const { action, data } = await req.json();
 
-        switch (action) {
-            case 'set_latest': {
-                const { albumId, category } = data;
+        if (action === 'set_latest_single') {
+            const { singleId } = data;
 
-                // Read current metadata
-                const metadata = readMetadata();
+            // Update metadata with new latest single
+            const metadata = readMetadata();
+            metadata.latestSingleId = singleId;
 
-                // Clear featured flag for all albums of this type
-                Object.keys(metadata).forEach(id => {
-                    const album = albums.find(a => a.id === id);
-                    if (album?.type === category) {
-                        metadata[id] = {
-                            ...(metadata[id] || {}),
-                            featured: false
-                        };
-                    }
-                });
+            const success = writeMetadata(metadata);
 
-                // Set the specified album as featured
-                metadata[albumId] = {
-                    ...(metadata[albumId] || {}),
-                    featured: true
-                };
-
-                // Write back to file
-                const success = writeMetadata(metadata);
-
-                if (!success) {
-                    return NextResponse.json({ error: 'Failed to save metadata' }, { status: 500 });
-                }
-
-                return NextResponse.json({
-                    success: true,
-                    message: `Set as latest ${category} album`
-                });
+            if (!success) {
+                return NextResponse.json({ error: 'Failed to save metadata' }, { status: 500 });
             }
 
-            case 'upload': {
-                // Placeholder for music upload functionality
-                return NextResponse.json({
-                    success: false,
-                    message: 'Upload functionality not yet implemented'
-                });
-            }
-
-            case 'announce': {
-                // Placeholder for announcement functionality
-                return NextResponse.json({
-                    success: false,
-                    message: 'Announcement functionality not yet implemented'
-                });
-            }
-
-            default:
-                return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
+            return NextResponse.json({
+                success: true,
+                message: 'Latest single updated successfully'
+            });
         }
+
+        return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     } catch (error: any) {
         console.error('Content action error:', error);
         return NextResponse.json({ error: error.message }, { status: 500 });

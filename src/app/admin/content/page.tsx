@@ -3,108 +3,89 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
-import { ArrowLeft, Star, Calendar, Music, Sparkles } from 'lucide-react';
+import { ArrowLeft, Star, Calendar, Music, Sparkles, Crown } from 'lucide-react';
 import styles from './Content.module.css';
 
-interface Album {
+interface LatestAlbums {
+    latestStudio: { id: string; title: string; releaseDate: string } | null;
+    latestLive: { id: string; title: string; releaseDate: string } | null;
+    latestSingle: { id: string; title: string; albumId: string } | null;
+}
+
+interface VIPAlbum {
     id: string;
     title: string;
-    year: number;
-    type: 'studio' | 'live' | 'standard';
     releaseDate: string;
-    featured: boolean;
-    trackCount: number;
+    type: string;
+}
+
+interface Single {
+    id: number;
+    title: string;
+    albumId: string;
 }
 
 export default function ContentPage() {
     const { isLabel } = useAuth();
-    const [albums, setAlbums] = useState<Album[]>([]);
+    const [latestAlbums, setLatestAlbums] = useState<LatestAlbums | null>(null);
+    const [vipAlbums, setVIPAlbums] = useState<VIPAlbum[]>([]);
+    const [singles, setSingles] = useState<Single[]>([]);
+    const [currentLatestSingleId, setCurrentLatestSingleId] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [filter, setFilter] = useState<string>('all');
 
     useEffect(() => {
         if (isLabel) {
-            fetchAlbums();
+            fetchData();
         }
-    }, [isLabel, filter]);
+    }, [isLabel]);
 
-    async function fetchAlbums() {
+    async function fetchData() {
         setIsLoading(true);
         try {
-            const filterParam = filter !== 'all' ? `?filter=${filter}` : '';
-            const res = await fetch(`/api/admin/content${filterParam}`);
-            if (res.ok) {
-                const data = await res.json();
-                setAlbums(data);
-            }
+            const [latestRes, vipRes, singlesRes] = await Promise.all([
+                fetch('/api/admin/content?action=latest'),
+                fetch('/api/admin/content?action=vip'),
+                fetch('/api/admin/content?action=singles')
+            ]);
+
+            const [latestData, vipData, singlesData] = await Promise.all([
+                latestRes.json(),
+                vipRes.json(),
+                singlesRes.json()
+            ]);
+
+            setLatestAlbums(latestData);
+            setVIPAlbums(vipData);
+            setSingles(singlesData.singles);
+            setCurrentLatestSingleId(singlesData.currentLatestSingleId);
         } catch (error) {
-            console.error('Failed to fetch albums:', error);
+            console.error('Failed to fetch data:', error);
         } finally {
             setIsLoading(false);
         }
     }
 
-    async function setLatestAlbum(albumId: string, category: 'studio' | 'live' | 'single') {
-        if (!confirm(`Set this as the Latest ${category.toUpperCase()} album?`)) return;
+    async function setLatestSingle(singleId: number) {
+        const single = singles.find(s => s.id === singleId);
+        if (!confirm(`Set "${single?.title}" as the Latest Single?\n\nThe previous single will revert to 30s preview for Fans.`)) return;
 
         try {
             const res = await fetch('/api/admin/content', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    action: 'set_latest',
-                    data: { albumId, category }
+                    action: 'set_latest_single',
+                    data: { singleId }
                 })
             });
 
             if (res.ok) {
-                const album = albums.find(a => a.id === albumId);
-                alert(`✅ "${album?.title}" is now the Latest ${category.toUpperCase()}!`);
-                fetchAlbums(); // Reload from API to get persisted data
+                alert(`✅ "${single?.title}" is now the Latest Single!`);
+                fetchData();
             }
         } catch (error) {
             console.error(error);
-            alert('Failed to update album');
-        }
-    }
-
-    async function updateReleaseDate(albumId: string, newDate: string) {
-        try {
-            const res = await fetch('/api/admin/content', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    albumId,
-                    updates: { releaseDate: newDate }
-                })
-            });
-
-            if (res.ok) {
-                alert('✅ Release date updated!');
-                fetchAlbums(); // Reload from API
-            }
-        } catch (error) {
-            console.error(error);
-            alert('Failed to update release date');
-        }
-    }
-
-    async function toggleFeatured(albumId: string, currentStatus: boolean) {
-        try {
-            const res = await fetch('/api/admin/content', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    albumId,
-                    updates: { featured: !currentStatus }
-                })
-            });
-
-            if (res.ok) {
-                fetchAlbums(); // Reload from API to get persisted data
-            }
-        } catch (error) {
-            console.error(error);
+            alert('Failed to update latest single');
         }
     }
 
@@ -121,7 +102,7 @@ export default function ContentPage() {
         return (
             <div className={styles.loading}>
                 <div className={styles.spinner}></div>
-                <p>Loading albums...</p>
+                <p>Loading content data...</p>
             </div>
         );
     }
@@ -135,105 +116,124 @@ export default function ContentPage() {
 
             <div className={styles.header}>
                 <h1>Content Management</h1>
-                <p className={styles.subtitle}>Manage album releases and VIP early access</p>
+                <p className={styles.subtitle}>Automated album selection based on release dates</p>
             </div>
 
-            {/* Filters */}
-            <div className={styles.filters}>
-                <button
-                    className={filter === 'all' ? styles.filterActive : styles.filterBtn}
-                    onClick={() => setFilter('all')}
-                >
-                    All Albums ({albums.length})
-                </button>
-                <button
-                    className={filter === 'studio' ? styles.filterActive : styles.filterBtn}
-                    onClick={() => setFilter('studio')}
-                >
-                    Studio
-                </button>
-                <button
-                    className={filter === 'live' ? styles.filterActive : styles.filterBtn}
-                    onClick={() => setFilter('live')}
-                >
-                    Live
-                </button>
-                <button
-                    className={filter === 'featured' ? styles.filterActive : styles.filterBtn}
-                    onClick={() => setFilter('featured')}
-                >
-                    Featured
-                </button>
+            {/* Automatic Latest Albums */}
+            <div className={styles.section}>
+                <h2 className={styles.sectionTitle}>
+                    <Music size={20} />
+                    Latest Albums (Automatic)
+                </h2>
+                <p className={styles.sectionDesc}>
+                    These are automatically selected based on release dates. No manual action needed.
+                </p>
+
+                <div className={styles.latestGrid}>
+                    <div className={styles.latestCard}>
+                        <div className={styles.latestLabel}>Latest Studio Album</div>
+                        {latestAlbums?.latestStudio ? (
+                            <>
+                                <div className={styles.latestTitle}>{latestAlbums.latestStudio.title}</div>
+                                <div className={styles.latestDate}>
+                                    Released: {new Date(latestAlbums.latestStudio.releaseDate).toLocaleDateString()}
+                                </div>
+                            </>
+                        ) : (
+                            <div className={styles.latestEmpty}>No studio albums found</div>
+                        )}
+                    </div>
+
+                    <div className={styles.latestCard}>
+                        <div className={styles.latestLabel}>Latest Live Album</div>
+                        {latestAlbums?.latestLive ? (
+                            <>
+                                <div className={styles.latestTitle}>{latestAlbums.latestLive.title}</div>
+                                <div className={styles.latestDate}>
+                                    Released: {new Date(latestAlbums.latestLive.releaseDate).toLocaleDateString()}
+                                </div>
+                            </>
+                        ) : (
+                            <div className={styles.latestEmpty}>No live albums found</div>
+                        )}
+                    </div>
+                </div>
             </div>
 
-            {/* Album Table */}
-            <div className={styles.tableWrapper}>
-                <table className={styles.table}>
-                    <thead>
-                        <tr>
-                            <th>Album</th>
-                            <th>Type</th>
-                            <th>Release Date</th>
-                            <th>Tracks</th>
-                            <th>Featured</th>
-                            <th>Quick Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {albums.map(album => (
-                            <tr key={album.id}>
-                                <td>
-                                    <div className={styles.albumTitle}>{album.title}</div>
-                                    <div className={styles.albumYear}>{album.year}</div>
-                                </td>
-                                <td>
-                                    <span className={`${styles.typeBadge} ${styles[`type${album.type}`]}`}>
-                                        {album.type}
-                                    </span>
-                                </td>
-                                <td>
-                                    <input
-                                        type="date"
-                                        value={album.releaseDate}
-                                        onChange={(e) => updateReleaseDate(album.id, e.target.value)}
-                                        className={styles.dateInput}
-                                    />
-                                </td>
-                                <td>{album.trackCount}</td>
-                                <td>
-                                    <button
-                                        onClick={() => toggleFeatured(album.id, album.featured)}
-                                        className={album.featured ? styles.featuredActive : styles.featuredBtn}
-                                    >
-                                        <Star size={16} fill={album.featured ? 'currentColor' : 'none'} />
-                                    </button>
-                                </td>
-                                <td>
-                                    <div className={styles.actions}>
-                                        {album.type === 'studio' && (
-                                            <button
-                                                onClick={() => setLatestAlbum(album.id, 'studio')}
-                                                className={styles.actionBtn}
-                                                title="Set as Latest Studio"
-                                            >
-                                                <Music size={16} /> Studio
-                                            </button>
-                                        )}
-                                        {album.type === 'live' && (
-                                            <button
-                                                onClick={() => setLatestAlbum(album.id, 'live')}
-                                                className={styles.actionBtn}
-                                                title="Set as Latest Live"
-                                            >
-                                                <Sparkles size={16} /> Live
-                                            </button>
-                                        )}
-                                    </div>
-                                </td>
-                            </tr>
+            {/* Latest Single (Manual Selection) */}
+            <div className={styles.section}>
+                <h2 className={styles.sectionTitle}>
+                    <Star size={20} />
+                    Latest Single (Manual Selection)
+                </h2>
+                <p className={styles.sectionDesc}>
+                    Select which single gets full playback for all users. Changes weekly.
+                </p>
+
+                <div className={styles.singleSelector}>
+                    <div className={styles.currentSingle}>
+                        <div className={styles.currentLabel}>Current Latest Single:</div>
+                        <div className={styles.currentTitle}>
+                            {latestAlbums?.latestSingle?.title || 'None selected'}
+                        </div>
+                    </div>
+
+                    <div className={styles.singleList}>
+                        {singles.map(single => (
+                            <div
+                                key={single.id}
+                                className={`${styles.singleItem} ${single.id === currentLatestSingleId ? styles.singleActive : ''}`}
+                            >
+                                <div className={styles.singleInfo}>
+                                    <div className={styles.singleTitle}>{single.title}</div>
+                                    <div className={styles.singleAlbum}>Album ID: {single.albumId}</div>
+                                </div>
+                                <button
+                                    onClick={() => setLatestSingle(single.id)}
+                                    className={styles.selectBtn}
+                                    disabled={single.id === currentLatestSingleId}
+                                >
+                                    {single.id === currentLatestSingleId ? 'Current' : 'Select'}
+                                </button>
+                            </div>
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+                </div>
+            </div>
+
+            {/* VIP Early Access Albums */}
+            <div className={styles.section}>
+                <h2 className={styles.sectionTitle}>
+                    <Crown size={20} />
+                    VIP Early Access (Automatic)
+                </h2>
+                <p className={styles.sectionDesc}>
+                    Albums with future release dates are automatically VIP-only until their release date.
+                </p>
+
+                {vipAlbums.length > 0 ? (
+                    <div className={styles.vipGrid}>
+                        {vipAlbums.map(album => {
+                            const daysUntil = Math.ceil((new Date(album.releaseDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+                            return (
+                                <div key={album.id} className={styles.vipCard}>
+                                    <div className={styles.vipBadge}>VIP ONLY</div>
+                                    <div className={styles.vipTitle}>{album.title}</div>
+                                    <div className={styles.vipType}>{album.type}</div>
+                                    <div className={styles.vipRelease}>
+                                        <Calendar size={14} />
+                                        Releases in {daysUntil} days
+                                    </div>
+                                    <div className={styles.vipDate}>
+                                        {new Date(album.releaseDate).toLocaleDateString()}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className={styles.vipEmpty}>No upcoming VIP releases</div>
+                )}
             </div>
         </div>
     );
