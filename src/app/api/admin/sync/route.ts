@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
 
         let s3Response;
         try {
-            s3Response = await s3Client.send(getCommand);
+            s3Response = await (s3Client as any).send(getCommand);
         } catch (e: any) {
             console.error('Failed to fetch Excel:', e);
             if (e.name === 'NoSuchKey') {
@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
             CacheControl: 'max-age=60'
         });
 
-        await s3Client.send(uploadCommand);
+        await (s3Client as any).send(uploadCommand);
 
         return NextResponse.json({
             success: true,

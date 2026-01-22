@@ -1,17 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAlbums, getLatestStudioAlbum } from '@/lib/data';
-import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { getAlbums } from '@/lib/data';
+import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { s3Client } from '@/lib/s3'; // Use shared client
 
 const BUCKET_NAME = process.env.AWS_S3_BUCKET || "singitpop-music";
 const METADATA_KEY = "admin/albumMetadata.json";
-
-const s3Client = new S3Client({
-    region: process.env.AWS_REGION || 'eu-north-1',
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
-    },
-});
 
 // Helper to read metadata from S3
 async function readMetadata() {
@@ -20,17 +13,17 @@ async function readMetadata() {
             Bucket: BUCKET_NAME,
             Key: METADATA_KEY,
         });
-        const response = await s3Client.send(command);
+        const response = await (s3Client as any).send(command);
         if (response.Body) {
             const str = await response.Body.transformToString();
             return JSON.parse(str);
         }
     } catch (error) {
-        // Log warning but don't crash - file might not exist yet on first run
-        // console.warn('S3 Metadata read error (might not exist yet):', error);
+        // Log warning but don't crash
     }
     return { latestSingleId: null };
 }
+
 
 // Use global variable for logging to avoid filesystem issues
 const globalLogs = (global as any).debugLogs || [];
@@ -55,7 +48,7 @@ async function writeMetadata(metadata: any) {
             ContentType: "application/json",
             CacheControl: "no-cache" // Important for admin updates
         });
-        await s3Client.send(command);
+        await (s3Client as any).send(command);
         return true;
     } catch (error) {
         logToDebug('Error writing metadata to S3: ' + error);

@@ -20,7 +20,7 @@ export async function GET() {
             Bucket: S3_BUCKET,
             Prefix: "albums/",
         });
-        const s3Response = await s3Client.send(command);
+        const s3Response = await (s3Client as any).send(command);
 
         if (!s3Response.Contents) {
             return NextResponse.json({ tracks: [] });
@@ -28,8 +28,8 @@ export async function GET() {
 
         // Filter and map S3 objects to tracks
         const tracks = await Promise.all(s3Response.Contents
-            .filter(item => item.Key && (item.Key.endsWith('.mp3') || item.Key.endsWith('.wav')))
-            .map(async (item, index) => {
+            .filter((item: any) => item.Key && (item.Key.endsWith('.mp3') || item.Key.endsWith('.wav')))
+            .map(async (item: any, index: number) => {
                 const key = item.Key!;
                 const filename = key.split('/').pop()!;
                 const title = filename.replace(/\.(mp3|wav)$/, '');

@@ -1,25 +1,7 @@
 import { NextResponse } from 'next/server';
-import { Client } from '@microsoft/microsoft-graph-client';
-import { ClientSecretCredential } from '@azure/identity';
+import { Resend } from 'resend';
 
-async function getGraphClient() {
-    const credential = new ClientSecretCredential(
-        process.env.AZURE_TENANT_ID!,
-        process.env.AZURE_CLIENT_ID!,
-        process.env.AZURE_CLIENT_SECRET!
-    );
-
-    const client = Client.initWithMiddleware({
-        authProvider: {
-            getAccessToken: async () => {
-                const token = await credential.getToken('https://graph.microsoft.com/.default');
-                return token.token;
-            }
-        }
-    });
-
-    return client;
-}
+const resend = new Resend(process.env.RESEND_API_KEY || 're_123456789'); // Valid key required in env
 
 export async function POST(request: Request) {
     try {
@@ -33,94 +15,33 @@ export async function POST(request: Request) {
             );
         }
 
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return NextResponse.json(
-                { error: 'Invalid email address' },
-                { status: 400 }
-            );
+        const emailTo = process.env.CONTACT_EMAIL || 'info@singitpop.com';
+
+        // Development simulation
+        if (process.env.NODE_ENV === 'development' && !process.env.RESEND_API_KEY) {
+            console.log('[Dev Contact] Email:', email, 'Message:', message);
+            return NextResponse.json({ success: true, message: 'Message sent! (Simulated)' });
         }
 
-        const emailTo = process.env.MS365_EMAIL_FROM || 'info@singitpop.com';
-
-        // Check if we're in development mode without Azure credentials
-        const isDevelopment = process.env.NODE_ENV === 'development';
-        const hasAzureCredentials = process.env.AZURE_CLIENT_ID &&
-            process.env.AZURE_TENANT_ID &&
-            process.env.AZURE_CLIENT_SECRET;
-
-        if (isDevelopment && !hasAzureCredentials) {
-            // Development mode fallback - just log the message
-            console.log('[Contact Form] DEVELOPMENT MODE - Email simulation');
-            console.log('[Contact Form] From:', email);
-            console.log('[Contact Form] Name:', name);
-            console.log('[Contact Form] Message:', message);
-            console.log('[Contact Form] Would send to:', emailTo);
-
-            return NextResponse.json(
-                { success: true, message: 'Message sent! We\'ll get back to you soon.' },
-                { status: 200 }
-            );
+        try {
+            await resend.emails.send({
+                from: 'SingItPop Contact <onboarding@resend.dev>', // Update with verified domain in Prod
+                to: emailTo,
+                subject: `New Contact from ${name}`,
+                html: `
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Message:</strong></p>
+                    <p>${message.replace(/\n/g, '<br>')}</p>
+                `
+            });
+            return NextResponse.json({ success: true, message: 'Message sent successfully!' });
+        } catch (error) {
+            console.error('Resend Error:', error);
+            return NextResponse.json({ error: 'Failed to send message via provider.' }, { status: 500 });
         }
 
-        // Production mode - use Microsoft Graph
-        console.log('[Contact Form] Initializing Microsoft Graph client...');
-        const client = await getGraphClient();
-        console.log('[Contact Form] Graph client initialized successfully');
-        console.log('[Contact Form] Sending email to:', emailTo);
-
-        // Send email via Microsoft Graph
-        const emailMessage = {
-            message: {
-                subject: `Contact Form: ${name}`,
-                body: {
-                    contentType: 'Text',
-                    content: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-                },
-                toRecipients: [
-                    {
-                        emailAddress: {
-                            address: emailTo
-                        }
-                    }
-                ],
-                from: {
-                    emailAddress: {
-                        address: emailTo
-                    }
-                }
-            },
-            saveToSentItems: true
-        };
-
-        console.log('[Contact Form] Email payload prepared:', {
-            subject: emailMessage.message.subject,
-            to: emailTo,
-            from: emailTo
-        });
-
-        await client
-            .api(`/users/${emailTo}/sendMail`)
-            .post(emailMessage);
-
-        console.log('[Contact Form] Email sent successfully via Microsoft Graph');
-
-        return NextResponse.json(
-            { success: true, message: 'Message sent! We\'ll get back to you soon.' },
-            { status: 200 }
-        );
-    } catch (error: any) {
-        console.error('[Contact Form] Error occurred:', {
-            message: error.message,
-            code: error.code,
-            statusCode: error.statusCode,
-            body: error.body,
-            stack: error.stack
-        });
-        return NextResponse.json(
-            { error: 'Failed to send message. Please try again or email us directly at info@singitpop.com' },
-            { status: 500 }
-        );
+    } catch (error) {
+        return NextResponse.json({ error: 'Server error' }, { status: 500 });
     }
 }

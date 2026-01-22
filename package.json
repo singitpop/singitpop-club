@@ -11,15 +11,13 @@
     "update-video": "node scripts/update-video.js"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.967.0",
+    "@aws-sdk/client-s3": "^3.972.0",
     "@aws-sdk/client-sts": "^3.967.0",
-    "@aws-sdk/s3-request-presigner": "^3.969.0",
-    "@aws-sdk/signature-v4-multi-region": "^3.972.0",
-    "@azure/identity": "^4.13.0",
+    "@aws-sdk/s3-request-presigner": "^3.972.0",
     "@clerk/nextjs": "^6.36.7",
     "@clerk/themes": "^2.4.48",
     "@google/generative-ai": "^0.24.1",
-    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "@smithy/middleware-endpoint": "^4.4.10",
     "@stripe/stripe-js": "^8.6.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

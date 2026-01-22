@@ -1,17 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getAlbums } from '@/lib/data';
-import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
+import { GetObjectCommand } from '@aws-sdk/client-s3';
+import { s3Client, getSignedFileUrl } from '@/lib/s3';
 
 const BUCKET_NAME = 'singitpop-music';
 const METADATA_KEY = 'admin/albumMetadata.json';
-
-const s3Client = new S3Client({
-    region: process.env.AWS_REGION || 'eu-north-1',
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
-    },
-});
 
 async function readMetadata() {
     try {
@@ -19,7 +12,7 @@ async function readMetadata() {
             Bucket: BUCKET_NAME,
             Key: METADATA_KEY,
         });
-        const response = await s3Client.send(command);
+        const response = await (s3Client as any).send(command);
         if (response.Body) {
             const str = await response.Body.transformToString();
             return JSON.parse(str);
@@ -70,9 +63,10 @@ export async function GET() {
                 }
 
                 if (folderName) {
-                    const encodedFolder = encodeURIComponent(folderName);
-                    const encodedTitle = encodeURIComponent(track.title).replace(/'/g, '%27');
-                    latestSingleTrackCover = `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/${encodedFolder}/${encodedTitle}/cover.png`;
+                    // Key construction: albums/{folder}/{title}/cover.png
+                    const key = `albums/${folderName}/${track.title}/cover.png`;
+                    console.log('Generating signed URL for Single Cover:', key);
+                    latestSingleTrackCover = await getSignedFileUrl(key, 3600); // 1 hour expiry
                 }
             }
         }
@@ -94,9 +88,9 @@ export async function GET() {
                 }
 
                 if (folderName) {
-                    const encodedFolder = encodeURIComponent(folderName);
-                    const encodedTitle = encodeURIComponent(matchingTrack.title).replace(/'/g, '%27');
-                    backgroundCoverArt = `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/${encodedFolder}/${encodedTitle}/cover.png`;
+                    const key = `albums/${folderName}/${matchingTrack.title}/cover.png`;
+                    console.log('Generating signed URL for Hero Background:', key);
+                    backgroundCoverArt = await getSignedFileUrl(key, 3600);
                 }
             }
         }
