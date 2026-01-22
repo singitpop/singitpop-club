@@ -1,10 +1,9 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
 import * as XLSX from 'xlsx';
 import { Readable } from 'stream';
 
-// Initial check for environment variables to avoid runtime crash on import effectively, 
-// though Next.js env vars are usually safe.
 const s3Client = new S3Client({
     region: process.env.AWS_REGION || 'eu-north-1',
     credentials: {
@@ -14,7 +13,6 @@ const s3Client = new S3Client({
 });
 
 const BUCKET_NAME = 'singitpop-music';
-const EXCEL_FILE_KEY = 'metadata/SingIt Pop Music Tracker.xlsx';
 const ALBUMS_JSON_KEY = 'data/albums.json';
 
 // Helper to stream S3 body to buffer
@@ -41,109 +39,153 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Missing AWS Credentials' }, { status: 500 });
         }
 
-        // 1. Find Excel File in metadata/
-        console.log('Searching for Excel file in metadata/...');
-        const listCommand = new ListObjectsV2Command({
-            Bucket: BUCKET_NAME,
-            Prefix: 'metadata/'
-        });
-        const listResponse = await (s3Client as any).send(listCommand);
+        // 1. Find Excel File (Check multiple locations)
+        console.log('Searching for Excel file...');
+        let excelKey: string | null = null;
 
-        const excelFile = listResponse.Contents?.find((file: any) =>
-            file.Key && (file.Key.endsWith('.xlsx') || file.Key.endsWith('.xlsl') || file.Key.endsWith('.xls'))
-        );
+        const prefixes = ['metadata/', 'albums/covers/'];
+        for (const prefix of prefixes) {
+            const listCmd = new ListObjectsV2Command({ Bucket: BUCKET_NAME, Prefix: prefix });
+            const listRes = await (s3Client as any).send(listCmd);
+            const found = listRes.Contents?.find((c: any) => c.Key && c.Key.match(/\.xlsx?$|\.xlsl$/i));
+            if (found) {
+                excelKey = found.Key;
+                break;
+            }
+        }
 
-        if (!excelFile || !excelFile.Key) {
+        if (!excelKey) {
             return NextResponse.json({ error: 'Excel file not found. Please upload your tracker (e.g., "SingIt Pop Music Tracker.xlsx") to the "metadata/" folder.' }, { status: 404 });
         }
 
-        console.log('Found Excel file:', excelFile.Key);
-        const getCommand = new GetObjectCommand({
-            Bucket: BUCKET_NAME,
-            Key: excelFile.Key
-        });
+        console.log('Using Excel file:', excelKey);
+        const getCommand = new GetObjectCommand({ Bucket: BUCKET_NAME, Key: excelKey });
+        const s3Response = await (s3Client as any).send(getCommand);
 
-        let s3Response;
-        try {
-            s3Response = await (s3Client as any).send(getCommand);
-        } catch (e: any) {
-            console.error('Failed to fetch Excel:', e);
-            throw e;
-        }
-
-        if (!s3Response.Body) {
-            return NextResponse.json({ error: 'Empty Excel file.' }, { status: 500 });
-        }
+        if (!s3Response.Body) return NextResponse.json({ error: 'Empty Excel file.' }, { status: 500 });
 
         // 2. Parse Excel
         const buffer = await streamToBuffer(s3Response.Body as Readable);
         const rawRows = parseExcel(buffer);
-        console.log(`Parsed ${rawRows.length} rows from Excel.`);
+        console.log(`Parsed ${rawRows.length} rows.`);
 
-        // 3. Transform to Album/Track Structure
+        // 3. List All S3 Album Folders (for fuzzy matching)
+        const listFoldersCmd = new ListObjectsV2Command({ Bucket: BUCKET_NAME, Prefix: 'albums/', Delimiter: '/' });
+        const listFoldersRes = await (s3Client as any).send(listFoldersCmd);
+        const s3Folders = listFoldersRes.CommonPrefixes?.map((p: any) => p.Prefix) || [];
+
+        // 4. Group Rows by Album
         const albumsMap = new Map<string, any>();
         let trackIdCounter = 1;
 
-        // Iterate rows
-        // Expected Columns based on user's file: "Album", "Title", "Genre", "Year", "Folder Name"
-        // We iterate and group by Album
-        for (const row of rawRows as any[]) {
-            const albumTitle = row['Album'];
-            if (!albumTitle) continue; // Skip empty rows
+        const rowsByAlbum = new Map<string, any[]>();
+        rawRows.forEach((row: any) => {
+            const title = row['Album Title'] || row['Album']; // Fallback
+            if (!title) return;
+            if (!rowsByAlbum.has(title)) rowsByAlbum.set(title, []);
+            rowsByAlbum.get(title)!.push(row);
+        });
 
-            const albumSlug = albumTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + (row['Year'] || '2025');
+        // Processing
+        for (const [albumTitle, rows] of rowsByAlbum.entries()) {
+            console.log(`Processing Album: ${albumTitle}`);
 
-            if (!albumsMap.has(albumSlug)) {
-                const folderName = row['Folder Name'] || albumTitle; // Fallback
-                const coverArtUrl = `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/${encodeURIComponent(folderName)}/cover.jpg`; // Default cover assumption?
-                // Wait, user had logic to check if cover exists? 
-                // For now, let's stick to the standard structure.
+            // A. Find S3 Folder
+            // Slugify title: "Boots & Fall Roots" -> "boots-and-fall-roots"
+            const slug = albumTitle.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-                albumsMap.set(albumSlug, {
-                    id: albumSlug,
-                    title: albumTitle,
-                    year: row['Year'] || 2025,
-                    genre: row['Genre'] ? [row['Genre']] : ['Pop'],
-                    coverArt: coverArtUrl, // We might need to verify this or default.
-                    // Actually, old code used local path /albums/artwork/... 
-                    // New system should use S3.
-                    tracks: [],
-                    releaseDate: row['Release Date'] || '2026-01-01',
-                    folderPath: folderName,
-                    type: 'studio'
-                });
+            // Find folder containing this slug
+            const matchedFolderPrefix = s3Folders.find((prefix: string) => prefix.toLowerCase().includes(slug));
+
+            if (!matchedFolderPrefix) {
+                console.warn(`   ⚠️ No S3 folder found for album "${albumTitle}" (Slug: ${slug})`);
+                continue;
+            }
+            console.log(`   ✅ Matched S3 Folder: ${matchedFolderPrefix}`);
+
+            // B. List Files in this Folder
+            const listFilesCmd = new ListObjectsV2Command({ Bucket: BUCKET_NAME, Prefix: matchedFolderPrefix });
+            const listFilesRes = await (s3Client as any).send(listFilesCmd);
+            const files = listFilesRes.Contents || [];
+
+            // C. Find Cover Image
+            const coverFile = files.find((f: any) => {
+                const name = f.Key.split('/').pop().toLowerCase();
+                return name.startsWith('cover.') || name.startsWith('front.') || name.startsWith('folder.');
+            });
+            const coverUrl = coverFile ? `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${coverFile.Key}` : null;
+
+            // D. Extract Year from Release Date
+            const releaseDateVal = rows[0]['Release Date'];
+            let year = '2025';
+            if (releaseDateVal) {
+                // If it's a string date "yyyy-mm-dd" or similar
+                const d = new Date(releaseDateVal);
+                if (!isNaN(d.getTime())) {
+                    year = d.getFullYear().toString();
+                } else if (typeof releaseDateVal === 'string') {
+                    // Try primitive parsing if local convention
+                    const parts = releaseDateVal.split(/[-/]/);
+                    if (parts.length === 3 && parts[2].length === 4) year = parts[2]; // dd-mm-yyyy or mm-dd-yyyy
+                }
             }
 
-            const album = albumsMap.get(albumSlug);
-            const trackTitle = row['Title'] || 'Unknown Track';
-            const folderName = album.folderPath;
-
-            // Construct S3 URLs
-            const encodedFolder = encodeURIComponent(folderName);
-            const encodedTitle = encodeURIComponent(trackTitle).replace(/'/g, '%27');
-
-            const track = {
-                id: trackIdCounter++,
-                title: trackTitle,
-                duration: row['Time'] || '3:30',
-                plays: '0',
-                locked: false,
-                price: 0.99,
-                genre: row['Genre'] || 'Pop',
-                highResUrl: `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/${encodedFolder}/${encodedTitle}.wav`,
-                audioUrl: `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/${encodedFolder}/${encodedTitle}.mp3`,
-                sourceFolder: folderName,
-                albumId: albumSlug,
-                isSingle: !!row['Single'] || (row['Genre'] && row['Genre'].toLowerCase().includes('single'))
+            // E. Build Album Object
+            const albumId = slug;
+            const albumObj = {
+                id: albumId,
+                title: albumTitle,
+                year: year,
+                genre: rows[0]['Genre'] ? [rows[0]['Genre']] : ['Pop'],
+                coverArt: coverUrl || `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/covers/default.jpg`,
+                tracks: [] as any[],
+                releaseDate: releaseDateVal || `${year}-01-01`,
+                folderPath: matchedFolderPrefix.split('/')[1],
+                type: 'studio'
             };
 
-            album.tracks.push(track);
+            // F. Process Tracks
+            for (const row of rows) {
+                const songTitle = row['Song Title'] || row['Title'];
+                if (!songTitle) continue;
+
+                // Find audio files
+                // Look for file that contains the song title (fuzzy match)
+                // Normalize: "Golden Leaves..." -> "golden leaves"
+                const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const targetName = normalize(songTitle);
+
+                const mp3File = files.find((f: any) => f.Key.endsWith('.mp3') && normalize(f.Key).includes(targetName));
+                const wavFile = files.find((f: any) => f.Key.endsWith('.wav') && normalize(f.Key).includes(targetName));
+
+                const track = {
+                    id: trackIdCounter++,
+                    title: songTitle,
+                    duration: row['Time'] || '3:30',
+                    plays: '0',
+                    price: 0.99,
+                    audioUrl: mp3File ? `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${mp3File.Key}` : null,
+                    highResUrl: wavFile ? `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${wavFile.Key}` : null,
+                    sourceFolder: albumObj.folderPath,
+                    albumId: albumId,
+                    isSingle: (row['Album/Single'] === 'Single') || (row['Genre'] && row['Genre'].toLowerCase().includes('single'))
+                };
+
+                // Only add if we found at least one file? Or simpler to just list it so they know it's missing?
+                // Let's add it regardless so they see the track exists in DB even if file is missing (easier to debug)
+
+                albumObj.tracks.push(track);
+            }
+
+            if (albumObj.tracks.length > 0) {
+                albumsMap.set(albumId, albumObj);
+            }
         }
 
         const albums = Array.from(albumsMap.values());
 
-        // 5. Upload JSON to S3
-        console.log(`Generated ${albums.length} albums. Uploading to S3...`);
+        // 5. Upload JSON
+        console.log(`Generated ${albums.length} albums. Uploading...`);
         const jsonBuffer = Buffer.from(JSON.stringify(albums, null, 2));
 
         const uploadCommand = new PutObjectCommand({
@@ -158,8 +200,8 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             success: true,
-            message: `Synced ${albums.length} albums with total ${trackIdCounter - 1} tracks.`,
-            albumsCount: albums.length
+            message: `Synced ${albums.length} albums and ${trackIdCounter - 1} tracks.`,
+            details: `Using Excel: ${excelKey}`
         });
 
     } catch (error: any) {
