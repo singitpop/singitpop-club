@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
 import { ArrowLeft, Star, Calendar, Music, Sparkles, Crown, RefreshCw } from 'lucide-react';
 import { useNotification } from '@/hooks/useNotification';
+import Notification from '@/components/ui/Notification';
 import styles from './Content.module.css';
 
 interface LatestAlbums {
@@ -41,7 +42,7 @@ function extractVideoId(url: string | null) {
 
 export default function ContentPage() {
     const { isLabel } = useAuth();
-    const { showNotification, NotificationContainer } = useNotification();
+    const { showNotification, removeNotification, notifications } = useNotification();
     const [latestAlbums, setLatestAlbums] = useState<LatestAlbums | null>(null);
     const [vipAlbums, setVIPAlbums] = useState<VIPAlbum[]>([]);
     const [singles, setSingles] = useState<Single[]>([]);
@@ -184,7 +185,14 @@ export default function ContentPage() {
 
     return (
         <>
-            <NotificationContainer />
+            {notifications.map(notif => (
+                <Notification
+                    key={notif.id}
+                    message={notif.message}
+                    type={notif.type}
+                    onClose={() => removeNotification(notif.id)}
+                />
+            ))}
             <div className={`container ${styles.page}`}>
                 <Link href="/admin" className={styles.backLink}>
                     <ArrowLeft size={16} />

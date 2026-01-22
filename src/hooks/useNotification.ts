@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback } from 'react';
-import Notification from '@/components/ui/Notification';
 
 interface NotificationState {
     message: string;
@@ -21,21 +20,9 @@ export function useNotification() {
         setNotifications(prev => prev.filter(n => n.id !== id));
     }, []);
 
-    const NotificationContainer = () => (
-        <>
-            {notifications.map(notif => (
-                <Notification
-                    key={notif.id}
-                    message={notif.message}
-                    type={notif.type}
-                    onClose={() => removeNotification(notif.id)}
-                />
-            ))}
-        </>
-    );
-
     return {
         showNotification,
-        NotificationContainer
+        removeNotification,
+        notifications
     };
 }
