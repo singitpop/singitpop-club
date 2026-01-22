@@ -90,15 +90,25 @@ export async function POST(request: NextRequest) {
         for (const [albumTitle, rows] of rowsByAlbum.entries()) {
             console.log(`Processing Album: ${albumTitle}`);
 
-            // A. Find S3 Folder
-            // Slugify title: "Boots & Fall Roots" -> "boots-and-fall-roots"
-            const slug = albumTitle.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            // A. Find S3 Folder (Exact Match by Name)
+            // normalized: "Boots & Fall Roots" -> "boots & fall roots" (keep spaces)
+            const normalizedTitle = albumTitle.toString().toLowerCase().trim();
 
-            // Find folder containing this slug
-            const matchedFolderPrefix = s3Folders.find((prefix: string) => prefix.toLowerCase().includes(slug));
+            let matchedFolderPrefix = s3Folders.find((prefix: string) => {
+                // prefix is "albums/Boots & Fall Roots/"
+                // folderName is "boots & fall roots"
+                const folderName = prefix.split('/')[1]?.toLowerCase().trim();
+                return folderName === normalizedTitle;
+            });
+
+            // Fallback: Slug Match
+            if (!matchedFolderPrefix) {
+                const slug = normalizedTitle.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                matchedFolderPrefix = s3Folders.find((prefix: string) => prefix.toLowerCase().includes(slug));
+            }
 
             if (!matchedFolderPrefix) {
-                console.warn(`   ⚠️ No S3 folder found for album "${albumTitle}" (Slug: ${slug})`);
+                console.warn(`   ⚠️ No S3 folder found for album "${albumTitle}"`);
                 continue;
             }
             console.log(`   ✅ Matched S3 Folder: ${matchedFolderPrefix}`);
@@ -108,10 +118,11 @@ export async function POST(request: NextRequest) {
             const listFilesRes = await (s3Client as any).send(listFilesCmd);
             const files = listFilesRes.Contents || [];
 
-            // C. Find Cover Image
+            // C. Find Cover Image (Specific: cover.png or cover.jpg or from excel)
+            // User said: "every album has a cover.png"
             const coverFile = files.find((f: any) => {
                 const name = f.Key.split('/').pop().toLowerCase();
-                return name.startsWith('cover.') || name.startsWith('front.') || name.startsWith('folder.');
+                return name === 'cover.png' || name === 'cover.jpg';
             });
             const coverUrl = coverFile ? `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${coverFile.Key}` : null;
 
@@ -119,19 +130,19 @@ export async function POST(request: NextRequest) {
             const releaseDateVal = rows[0]['Release Date'];
             let year = '2025';
             if (releaseDateVal) {
-                // If it's a string date "yyyy-mm-dd" or similar
                 const d = new Date(releaseDateVal);
                 if (!isNaN(d.getTime())) {
                     year = d.getFullYear().toString();
                 } else if (typeof releaseDateVal === 'string') {
-                    // Try primitive parsing if local convention
                     const parts = releaseDateVal.split(/[-/]/);
-                    if (parts.length === 3 && parts[2].length === 4) year = parts[2]; // dd-mm-yyyy or mm-dd-yyyy
+                    if (parts.length === 3 && parts[2].length === 4) year = parts[2];
                 }
             }
 
             // E. Build Album Object
-            const albumId = slug;
+            // Slug for ID
+            const albumId = albumTitle.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
             const albumObj = {
                 id: albumId,
                 title: albumTitle,
@@ -155,8 +166,22 @@ export async function POST(request: NextRequest) {
                 const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
                 const targetName = normalize(songTitle);
 
-                const mp3File = files.find((f: any) => f.Key.endsWith('.mp3') && normalize(f.Key).includes(targetName));
-                const wavFile = files.find((f: any) => f.Key.endsWith('.wav') && normalize(f.Key).includes(targetName));
+                // User User stated structure: AlbumFolder -> Song Subfolder -> File
+                // We search for file keys that include the normalized song title
+                // This covers `Album/Track/Track.mp3` or even `Album/Track.mp3`
+                const mp3File = files.find((f: any) => {
+                    const key = f.Key.toLowerCase();
+                    return key.endsWith('.mp3') && normalize(key).includes(targetName);
+                });
+
+                const wavFile = files.find((f: any) => {
+                    const key = f.Key.toLowerCase();
+                    return key.endsWith('.wav') && normalize(key).includes(targetName);
+                });
+
+                // Determine if Single
+                // User said: "singles are marked as Single in the Album/Single column"
+                const isSingle = (row['Album/Single'] === 'Single') || (row['Genre'] && row['Genre'].toLowerCase().includes('single'));
 
                 const track = {
                     id: trackIdCounter++,
@@ -168,11 +193,8 @@ export async function POST(request: NextRequest) {
                     highResUrl: wavFile ? `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${wavFile.Key}` : null,
                     sourceFolder: albumObj.folderPath,
                     albumId: albumId,
-                    isSingle: (row['Album/Single'] === 'Single') || (row['Genre'] && row['Genre'].toLowerCase().includes('single'))
+                    isSingle: isSingle
                 };
-
-                // Only add if we found at least one file? Or simpler to just list it so they know it's missing?
-                // Let's add it regardless so they see the track exists in DB even if file is missing (easier to debug)
 
                 albumObj.tracks.push(track);
             }
