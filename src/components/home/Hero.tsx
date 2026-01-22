@@ -36,9 +36,15 @@ export default function Hero() {
                 // Use the latest single's cover art for background
                 if (data.latestSingleCoverArt) {
                     setBgImage(data.latestSingleCoverArt);
+                } else {
+                    // Fallback to default hero image
+                    setBgImage('/images/hero-desert.jpg');
                 }
             })
-            .catch(err => console.error("Failed to fetch hero data", err));
+            .catch(err => {
+                console.error("Failed to fetch hero data", err);
+                setBgImage('/images/hero-desert.jpg'); // Fallback on error
+            });
     }, []);
 
     // Simple helper to extract ID from various YouTube URL formats
