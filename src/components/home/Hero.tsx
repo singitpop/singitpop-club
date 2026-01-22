@@ -23,22 +23,16 @@ export default function Hero() {
                     }));
                 }
 
-                if (data.latestSingleUid) {
-                    // Find cover art and title
-                    for (const album of albums) {
-                        const track = album.tracks.find(t =>
-                            (t.albumId ? `${t.albumId}:${t.id}` : String(t.id)) === data.latestSingleUid
-                        );
-                        if (track) {
-                            setHeroData(prev => ({
-                                ...prev,
-                                HERO_TITLE: track.title,
-                                BUTTON_TEXT: "WATCH VIDEO"
-                            }));
-                            if (album.coverArt) setBgImage(album.coverArt);
-                            break;
-                        }
-                    }
+                if (data.latestSingleTitle) {
+                    setHeroData(prev => ({
+                        ...prev,
+                        HERO_TITLE: data.latestSingleTitle,
+                        BUTTON_TEXT: "WATCH VIDEO"
+                    }));
+                }
+
+                if (data.latestSingleCoverArt) {
+                    setBgImage(data.latestSingleCoverArt);
                 }
             })
             .catch(err => console.error("Failed to fetch hero data", err));
