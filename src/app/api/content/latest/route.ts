@@ -55,7 +55,9 @@ export async function GET() {
         }
 
         // Find background image by matching video title to track name
+        // Use track-specific folder: /images/tracks/{track-title-slug}/cover.jpg
         let backgroundCoverArt = latestSingle?.album?.coverArt || null;
+        let latestSingleTrackCover = latestSingle?.album?.coverArt || null;
 
         if (metadata.latestVideoTitle) {
             // Try to find a track that matches the video title
@@ -70,10 +72,18 @@ export async function GET() {
                 });
 
                 if (matchingTrack) {
-                    backgroundCoverArt = album.coverArt;
+                    // Create slug from track title for folder name
+                    const trackSlug = matchingTrack.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                    backgroundCoverArt = `/images/tracks/${trackSlug}/cover.jpg`;
                     break;
                 }
             }
+        }
+
+        // Get latest single's track-specific cover art
+        if (latestSingle) {
+            const trackSlug = latestSingle.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            latestSingleTrackCover = `/images/tracks/${trackSlug}/cover.jpg`;
         }
 
         return NextResponse.json({
@@ -81,6 +91,7 @@ export async function GET() {
             latestSingleTitle: latestSingle?.title || null,
             latestSingleAlbumId: latestSingle?.albumId || null,
             latestSingleCoverArt: backgroundCoverArt,
+            latestSingleTrackCover: latestSingleTrackCover,
             latestVideoId: metadata.latestVideoId || null,
             latestVideoTitle: metadata.latestVideoTitle || null
         });
