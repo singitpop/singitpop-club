@@ -171,6 +171,11 @@ export async function GET(req: NextRequest) {
             });
         }
 
+        if (action === 'logs') {
+            const logs = (global as any).debugLogs || [];
+            return NextResponse.json({ logs: logs.slice().reverse() }); // Newest first
+        }
+
         // Default: return all albums with computed metadata
         const today = new Date();
         const albumList = albums.map(album => {
