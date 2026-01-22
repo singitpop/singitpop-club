@@ -33,8 +33,10 @@ export default function Hero() {
                     }));
                 }
 
-                // Use the latest single's cover art for background
-                if (data.latestSingleCoverArt) {
+                // Prioritize video-specific cover (backgroundCoverArt), then single cover
+                if (data.backgroundCoverArt) {
+                    setBgImage(data.backgroundCoverArt);
+                } else if (data.latestSingleCoverArt) {
                     setBgImage(data.latestSingleCoverArt);
                 } else {
                     // Fallback to default hero image
