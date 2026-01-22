@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
         console.log('Searching for Excel file...');
         let excelKey: string | null = null;
 
-        const prefixes = ['metadata/', 'albums/covers/'];
+        const prefixes = ['metadata/', 'albums/covers/', 'admin/'];
         for (const prefix of prefixes) {
             const listCmd = new ListObjectsV2Command({ Bucket: BUCKET_NAME, Prefix: prefix });
             const listRes = await (s3Client as any).send(listCmd);
