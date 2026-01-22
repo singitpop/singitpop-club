@@ -211,10 +211,10 @@ export default function ContentPage() {
                                 const res = await fetch('/api/admin/sync', { method: 'POST' });
                                 const data = await res.json();
                                 if (res.ok) {
-                                    showNotification(data.message + "\n\n" + (data.details?.slice(0, 100) + "..."), "success");
+                                    showNotification(data.message + (data.details ? "\n\n" + (data.details.slice(0, 100) + "...") : ""), "success");
                                     window.location.reload();
                                 } else {
-                                    showNotification("Sync Failed: " + data.details, "error");
+                                    showNotification("Sync Failed: " + (data.error || data.details || "Unknown error"), "error");
                                 }
                             } catch (e) {
                                 showNotification("Sync Request Failed", "error");
