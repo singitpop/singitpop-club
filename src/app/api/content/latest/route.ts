@@ -7,60 +7,78 @@ const BUCKET_NAME = 'singitpop-music';
 const METADATA_KEY = 'admin/albumMetadata.json';
 
 // Helper: Find the first best image key match in a folder
+// Helper: Find the first best image key match in a folder
 async function findImageKey(folderName: string, trackTitle?: string): Promise<string | null> {
     try {
-        const prefixesToCheck = [];
+        // We list the Album Root to find both the Album Cover matches AND nested Track folders (case-insensitive)
+        const albumPrefix = `albums/${folderName}/`;
+        const command = new ListObjectsV2Command({
+            Bucket: BUCKET_NAME,
+            Prefix: albumPrefix,
+        });
 
-        // 1. Specific Track Folder
+        const response = await (s3Client as any).send(command);
+        const contents = response.Contents || [];
+
+        // 1. Try Specific Track Image (Nested or Flat logic)
         if (trackTitle) {
-            prefixesToCheck.push(`albums/${folderName}/${trackTitle}/`);
-        }
+            const normalizedTrack = trackTitle.toLowerCase().trim();
 
-        // 2. Album specific folder (as fallback for track)
-        // Note: This matches "albums/folder/cover.png"
-        prefixesToCheck.push(`albums/${folderName}/`);
-
-        for (const prefix of prefixesToCheck) {
-            const command = new ListObjectsV2Command({
-                Bucket: BUCKET_NAME,
-                Prefix: prefix,
-                MaxKeys: 20 // We only need a few to check
-            });
-
-            const response = await (s3Client as any).send(command);
-            const contents = response.Contents || [];
-
-            // Prioritize "cover.*" or "Cover.*" inside the prefix
-            // But exclude sub-sub-folders if we are looking at album root
-
-            // Strategy: Search for "cover" or "Cover" or "front"
-            const imageExtensions = ['.png', '.jpg', '.jpeg', '.webp'];
-
-            // First pass: Exact standard names
-            const exactMatch = contents.find((c: any) => {
+            // Strategy A: Look for image in a subfolder matching track title
+            // e.g. "albums/my-album/My Track/cover.png" where "My Track" ~ "my track"
+            const trackFolderImage = contents.find((c: any) => {
                 const key = c.Key || '';
-                const filename = key.split('/').pop() || '';
-                if (!imageExtensions.some(ext => filename.endsWith(ext))) return false;
+                const lowerKey = key.toLowerCase();
 
-                // If it's a specific track prefix scan, any image here is likely the cover
-                if (trackTitle && prefix.includes(trackTitle)) return true;
+                // Must be inside the album folder
+                if (!lowerKey.startsWith(albumPrefix.toLowerCase())) return false;
 
-                // If it's album folder, looks for cover/front
-                const lower = filename.toLowerCase();
-                return lower.startsWith('cover.') || lower.startsWith('front.') || lower.startsWith('folder.');
+                // Must contain track title as a segment or distinct part
+                // We check if the key includes "/track title/" 
+                if (lowerKey.includes(`/${normalizedTrack}/`)) {
+                    return key.match(/\.(png|jpg|jpeg|webp)$/i);
+                }
+                return false;
             });
 
-            if (exactMatch) return exactMatch.Key || null;
-
-            // Second pass: Any image in that folder (if track specific)
-            if (trackTitle && prefix.includes(trackTitle)) {
-                const anyImage = contents.find((c: any) => {
-                    const key = c.Key || '';
-                    return imageExtensions.some(ext => key.toLowerCase().endsWith(ext));
-                });
-                if (anyImage) return anyImage.Key || null;
-            }
+            if (trackFolderImage) return trackFolderImage.Key;
         }
+
+        // 2. Fallback: Album Cover (cover.png, front.jpg, etc in root of album folder)
+        const albumCover = contents.find((c: any) => {
+            const key = c.Key || '';
+            // Must be direct child? Or just checking name? 
+            // Better to rely on standard names to avoid picking random track art as album art
+            const filename = key.split('/').pop()?.toLowerCase() || '';
+            const isImage = filename.endsWith('.png') || filename.endsWith('.jpg') || filename.endsWith('.jpeg') || filename.endsWith('.webp');
+
+            // Should be "cover" or "front" or "folder"
+            const isStandardName = filename.startsWith('cover.') || filename.startsWith('front.') || filename.startsWith('folder.');
+
+            // Strict check: It should NOT be in a sub-sub folder if possible, but S3 listing is flat.
+            // We verify the path depth. 
+            // albumPrefix = "albums/foo/" (2 segments)
+            // key = "albums/foo/cover.png" (3 segments)
+            // key = "albums/foo/track/file.mp3" (4 segments)
+            const depth = key.split('/').length;
+            const expectedDepth = albumPrefix.split('/').length;
+
+            // Allow exact depth (file in album folder)
+            return isImage && isStandardName && (depth === expectedDepth);
+        });
+
+        if (albumCover) return albumCover.Key;
+
+        // 3. Last Resort: Any image in Album Root?
+        // Might be risky if user has "Back.jpg" or "Liner.jpg", but better than black.
+        const anyRootImage = contents.find((c: any) => {
+            const key = c.Key || '';
+            const depth = key.split('/').length;
+            const expectedDepth = albumPrefix.split('/').length;
+            return key.match(/\.(png|jpg|jpeg|webp)$/i) && (depth === expectedDepth);
+        });
+
+        if (anyRootImage) return anyRootImage.Key;
 
     } catch (error) {
         console.warn('Error finding image key:', error);
