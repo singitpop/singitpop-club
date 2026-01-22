@@ -154,10 +154,21 @@ export async function GET(req: NextRequest) {
                 })
                 .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()); // Newest first
 
+            // Filter: Show only last 2 months + all future releases
+            const today = new Date();
+            const twoMonthsAgo = new Date();
+            twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+
+            const filteredSingles = singlesWithDates.filter(single => {
+                const releaseDate = new Date(single.releaseDate);
+                // Include if: future release OR within last 2 months
+                return releaseDate > today || releaseDate >= twoMonthsAgo;
+            });
+
             const metadata = await readMetadata();
 
             return NextResponse.json({
-                singles: singlesWithDates,
+                singles: filteredSingles,
                 currentLatestSingleId: metadata.latestSingleId,
                 currentLatestSingleUid: metadata.latestSingleUid, // Return the precise UID
                 currentLatestVideoId: metadata.latestVideoId,

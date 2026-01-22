@@ -167,18 +167,68 @@ export async function POST(request: NextRequest) {
                 const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
                 const targetName = normalize(songTitle);
 
-                // User User stated structure: AlbumFolder -> Song Subfolder -> File
+                // Helper to check if filename ends with 'u' or numbers 1-4 before extension
+                // e.g., "Song Titleu.mp3" or "Song Title-2.wav" should be excluded
+                // BUT "Strings of You.wav" should be INCLUDED (legitimate ending)
+                const isValidFile = (key: string): boolean => {
+                    const fileName = key.split('/').pop() || '';
+                    const nameWithoutExt = fileName.replace(/\.(mp3|wav)$/i, '');
+
+                    // Check for '-2', '-3', '-4', etc. (backup files)
+                    if (/[-\s](1|2|3|4)$/.test(nameWithoutExt)) {
+                        return false;
+                    }
+
+                    // Check for standalone 'u' suffix (not part of "You")
+                    // "Horsesu" ends with 'u' -> exclude
+                    // "of You" ends with "You" -> include
+                    const lastThreeChars = nameWithoutExt.slice(-3).toLowerCase();
+                    if (lastThreeChars === 'you') {
+                        return true; // Legitimate "You" ending
+                    }
+
+                    const lastChar = nameWithoutExt.slice(-1).toLowerCase();
+                    if (lastChar === 'u') {
+                        return false; // Standalone 'u' suffix
+                    }
+
+                    return true;
+                };
+
+                // User stated structure: AlbumFolder -> Song Subfolder -> File
                 // We search for file keys that include the normalized song title
                 // This covers `Album/Track/Track.mp3` or even `Album/Track.mp3`
                 const mp3File = files.find((f: any) => {
                     const key = f.Key.toLowerCase();
-                    return key.endsWith('.mp3') && normalize(key).includes(targetName);
+                    return key.endsWith('.mp3') && normalize(key).includes(targetName) && isValidFile(f.Key);
                 });
 
                 const wavFile = files.find((f: any) => {
                     const key = f.Key.toLowerCase();
-                    return key.endsWith('.wav') && normalize(key).includes(targetName);
+                    return key.endsWith('.wav') && normalize(key).includes(targetName) && isValidFile(f.Key);
                 });
+
+                // Find track-specific cover art
+                // Look for: albums/{Album}/{Track}/cover.png
+                let trackCoverUrl: string | null = null;
+                const trackCover = files.find((f: any) => {
+                    const key = f.Key.toLowerCase();
+                    const keyParts = key.split('/');
+                    // Check if file is in a subfolder matching the track title
+                    if (keyParts.length >= 4) {
+                        const subfolderName = keyParts[2]; // albums/Album/[Subfolder]/file
+                        const fileName = keyParts[keyParts.length - 1];
+                        const isCoverFile = fileName.startsWith('cover.') &&
+                            (fileName.endsWith('.png') || fileName.endsWith('.jpg') ||
+                                fileName.endsWith('.jpeg') || fileName.endsWith('.webp'));
+                        return normalize(subfolderName).includes(targetName) && isCoverFile;
+                    }
+                    return false;
+                });
+
+                if (trackCover) {
+                    trackCoverUrl = `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${trackCover.Key}`;
+                }
 
                 // Determine if Single
                 // User said: "singles are marked as Single in the Album/Single column"
@@ -192,6 +242,7 @@ export async function POST(request: NextRequest) {
                     price: 0.99,
                     audioUrl: mp3File ? `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${mp3File.Key}` : null,
                     highResUrl: wavFile ? `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${wavFile.Key}` : null,
+                    coverArt: trackCoverUrl, // Add track-specific cover art
                     sourceFolder: albumObj.folderPath,
                     albumId: albumId,
                     isSingle: isSingle
