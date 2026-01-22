@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react';
 import { Play, Pause, Lock } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 import styles from './TeaserPlayer.module.css';
-
-import { siteContent } from '@/config/siteContent';
+import { albums } from '@/data/albumData';
 
 export default function TeaserPlayer() {
     const { isSignedIn } = useUser();
@@ -13,13 +12,37 @@ export default function TeaserPlayer() {
     const [progress, setProgress] = useState(0);
     const [signedUrl, setSignedUrl] = useState<string | null>(null);
     const [limitReached, setLimitReached] = useState(false);
+    const [track, setTrack] = useState<any>(null);
 
-    const track = siteContent.floatingPlayer;
-    const duration = track.duration; // note: this seems to be in seconds in config usually, but let's trust existing code uses it correctly or it's just for display? 
-    // Wait, the existing code calculates time: Math.floor((progress * duration / 100) / 60)
-    // If 'duration' is just a number (e.g. 210 seconds), this works.
+    // Fetch latest single from API
+    useEffect(() => {
+        fetch('/api/content/latest')
+            .then(res => res.json())
+            .then(data => {
+                if (data.latestSingleUid) {
+                    // Find the track in albums
+                    for (const album of albums) {
+                        const foundTrack = album.tracks.find(t =>
+                            `${album.id}-${t.id}` === data.latestSingleUid
+                        );
+                        if (foundTrack) {
+                            setTrack({
+                                title: foundTrack.title,
+                                fileUrl: foundTrack.audioUrl,
+                                duration: 210, // Default 3:30
+                                badge: 'LATEST SINGLE 🔥'
+                            });
+                            break;
+                        }
+                    }
+                }
+            })
+            .catch(err => console.error("Failed to fetch latest single", err));
+    }, []);
 
     useEffect(() => {
+        if (!track?.fileUrl) return;
+
         // Fetch secure signed URL for the track
         const fetchUrl = async () => {
             try {
@@ -37,7 +60,7 @@ export default function TeaserPlayer() {
             }
         };
         fetchUrl();
-    }, [track.fileUrl]);
+    }, [track?.fileUrl]);
 
     const togglePlay = () => {
         const audio = document.getElementById('hero-audio') as HTMLAudioElement;
@@ -105,7 +128,7 @@ export default function TeaserPlayer() {
                     </div>
 
                     <span className={styles.time}>
-                        {Math.floor((progress * duration / 100) / 60)}:{Math.floor((progress * duration / 100) % 60).toString().padStart(2, '0')} / {Math.floor(duration / 60)}:{Math.floor(duration % 60).toString().padStart(2, '0')}
+                        {Math.floor((progress * (track?.duration || 210) / 100) / 60)}:{Math.floor((progress * (track?.duration || 210) / 100) % 60).toString().padStart(2, '0')} / {Math.floor((track?.duration || 210) / 60)}:{Math.floor((track?.duration || 210) % 60).toString().padStart(2, '0')}
                     </span>
                 </div>
 

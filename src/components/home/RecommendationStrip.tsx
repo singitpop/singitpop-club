@@ -1,21 +1,35 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 import styles from './RecommendationStrip.module.css';
 
 import { LATEST_RELEASES } from '@/config/latestReleases';
 
-const recommendations = [
-    { id: 1, title: LATEST_RELEASES.SINGLE.TITLE, reason: '🔥 Latest Single', icon: '/images/icons/music-note-clean.png' },
-    { id: 2, title: LATEST_RELEASES.ALBUM_CARD.TITLE, reason: '🎵 Latest Album', icon: '/images/icons/music-note-clean.png' },
-    { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
-    { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },
-];
-
-// Duplicate list for seamless loop effect
-const loopItems = [...recommendations, ...recommendations, ...recommendations];
-
 export default function RecommendationStrip() {
+    const [latestSingleTitle, setLatestSingleTitle] = useState(LATEST_RELEASES.SINGLE.TITLE);
+
+    useEffect(() => {
+        fetch('/api/content/latest')
+            .then(res => res.json())
+            .then(data => {
+                if (data.latestSingleTitle) {
+                    setLatestSingleTitle(data.latestSingleTitle);
+                }
+            })
+            .catch(err => console.error("Failed to fetch latest single", err));
+    }, []);
+
+    const recommendations = [
+        { id: 1, title: latestSingleTitle, reason: '🔥 Latest Single', icon: '/images/icons/music-note-clean.png' },
+        { id: 2, title: LATEST_RELEASES.ALBUM_CARD.TITLE, reason: '🎵 Latest Album', icon: '/images/icons/music-note-clean.png' },
+        { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
+        { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },
+    ];
+
+    // Duplicate list for seamless loop effect
+    const loopItems = [...recommendations, ...recommendations, ...recommendations];
+
     return (
         <section className={styles.strip}>
             <div className={styles.container}>
