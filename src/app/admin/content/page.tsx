@@ -46,6 +46,7 @@ export default function ContentPage() {
     const [currentLatestSingleUid, setCurrentLatestSingleUid] = useState<string | null>(null);
     const [currentLatestSingleIdRef, setCurrentLatestSingleIdRef] = useState<number | null>(null); // Fallback for ID matching
     const [currentLatestVideoId, setCurrentLatestVideoId] = useState<string | null>(null);
+    const [currentLatestVideoTitle, setCurrentLatestVideoTitle] = useState<string>("");
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -73,6 +74,7 @@ export default function ContentPage() {
             setVIPAlbums(vipData);
             setSingles(singlesData.singles);
             setCurrentLatestVideoId(singlesData.currentLatestVideoId);
+            setCurrentLatestVideoTitle(singlesData.currentLatestVideoTitle || "");
 
             // Match current ID to UID if possible
             if (singlesData.currentLatestSingleId) {
@@ -100,6 +102,11 @@ export default function ContentPage() {
             return;
         }
 
+        if (!currentLatestVideoTitle.trim()) {
+            alert("Please enter a video title");
+            return;
+        }
+
         setIsLoading(true);
         try {
             const res = await fetch('/api/admin/content', {
@@ -107,7 +114,10 @@ export default function ContentPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     action: 'set_latest_video',
-                    data: { videoId }
+                    data: {
+                        videoId,
+                        videoTitle: currentLatestVideoTitle
+                    }
                 })
             });
 
@@ -310,24 +320,35 @@ export default function ContentPage() {
                     </div>
                 </h2>
                 <p className={styles.sectionDesc}>
-                    Update the featured video on the homepage. Paste the full URL or Video ID.
+                    Update the featured video on the homepage. Paste the full URL or Video ID, and enter the video title.
                 </p>
 
-                <div className={styles.inputGroup}>
+                <div className={styles.inputGroup} style={{ flexDirection: 'column', gap: '1rem' }}>
                     <input
                         type="text"
-                        placeholder="e.g. https://youtu.be/..."
-                        value={currentLatestVideoId || ''}
-                        onChange={(e) => setCurrentLatestVideoId(e.target.value)}
+                        placeholder="Video Title (e.g. Riding Down The Line - Official Music Video)"
+                        value={currentLatestVideoTitle}
+                        onChange={(e) => setCurrentLatestVideoTitle(e.target.value)}
                         className={styles.input}
+                        style={{ width: '100%' }}
                     />
-                    <button
-                        className={styles.selectBtn}
-                        onClick={saveLatestVideo}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? 'Saving...' : 'Save Video'}
-                    </button>
+                    <div style={{ display: 'flex', gap: '0.5rem', width: '100%' }}>
+                        <input
+                            type="text"
+                            placeholder="e.g. https://youtu.be/..."
+                            value={currentLatestVideoId || ''}
+                            onChange={(e) => setCurrentLatestVideoId(e.target.value)}
+                            className={styles.input}
+                            style={{ flex: 1 }}
+                        />
+                        <button
+                            className={styles.selectBtn}
+                            onClick={saveLatestVideo}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Saving...' : 'Save Video'}
+                        </button>
+                    </div>
                 </div>
 
                 {currentLatestVideoId && (

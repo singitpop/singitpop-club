@@ -167,7 +167,8 @@ export async function GET(req: NextRequest) {
                 singles: singlesWithDates,
                 currentLatestSingleId: metadata.latestSingleId,
                 currentLatestSingleUid: metadata.latestSingleUid, // Return the precise UID
-                currentLatestVideoId: metadata.latestVideoId
+                currentLatestVideoId: metadata.latestVideoId,
+                currentLatestVideoTitle: metadata.latestVideoTitle
             });
         }
 
@@ -234,10 +235,11 @@ export async function POST(req: NextRequest) {
         }
 
         if (action === 'set_latest_video') {
-            const { videoId } = data;
+            const { videoId, videoTitle } = data;
 
             const metadata = await readMetadata();
             metadata.latestVideoId = videoId;
+            metadata.latestVideoTitle = videoTitle;
 
             const success = await writeMetadata(metadata);
 

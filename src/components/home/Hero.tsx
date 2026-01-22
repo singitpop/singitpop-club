@@ -23,14 +23,17 @@ export default function Hero() {
                     }));
                 }
 
-                if (data.latestSingleTitle) {
+                // Use custom video title if available, otherwise fall back to single title
+                const titleToUse = data.latestVideoTitle || data.latestSingleTitle;
+                if (titleToUse) {
                     setHeroData(prev => ({
                         ...prev,
-                        HERO_TITLE: data.latestSingleTitle,
+                        HERO_TITLE: titleToUse,
                         BUTTON_TEXT: "WATCH VIDEO"
                     }));
                 }
 
+                // Use the latest single's cover art for background
                 if (data.latestSingleCoverArt) {
                     setBgImage(data.latestSingleCoverArt);
                 }

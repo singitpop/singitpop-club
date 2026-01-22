@@ -59,7 +59,8 @@ export async function GET() {
             latestSingleTitle: latestSingle?.title || null,
             latestSingleAlbumId: latestSingle?.albumId || null,
             latestSingleCoverArt: latestSingle?.album?.coverArt || null,
-            latestVideoId: metadata.latestVideoId || null
+            latestVideoId: metadata.latestVideoId || null,
+            latestVideoTitle: metadata.latestVideoTitle || null
         });
     } catch (error: any) {
         console.error('Latest content API error:', error);
