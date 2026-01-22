@@ -1,12 +1,18 @@
 import { NextResponse } from 'next/server';
-import { albums } from '@/data/albumData';
-import { s3Client } from '@/lib/s3';
-import { GetObjectCommand } from '@aws-sdk/client-s3';
+import { getAlbums } from '@/lib/data';
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 
-const BUCKET_NAME = process.env.AWS_S3_BUCKET || "singitpop-music";
-const METADATA_KEY = "admin/albumMetadata.json";
+const BUCKET_NAME = 'singitpop-music';
+const METADATA_KEY = 'admin/albumMetadata.json';
 
-// Helper to read metadata from S3
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION || 'eu-north-1',
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+    },
+});
+
 async function readMetadata() {
     try {
         const command = new GetObjectCommand({
@@ -19,102 +25,103 @@ async function readMetadata() {
             return JSON.parse(str);
         }
     } catch (error) {
-        console.warn('S3 Metadata read error (might not exist yet):', error);
+        console.warn('Metadata read failed:', error);
+        return null;
     }
-    return { latestSingleId: null };
+    return null;
 }
 
-/**
- * Public API endpoint for fetching latest content
- * Used by Hero and Music pages to display current latest single
- */
 export async function GET() {
     try {
-        const metadata = await readMetadata();
+        const [metadata, albums] = await Promise.all([
+            readMetadata(),
+            getAlbums()
+        ]);
 
-        // Get latest single from metadata
-        const allSingles = albums
-            .flatMap(a => a.tracks
-                .filter(t => t.isSingle)
-                .map(t => ({ ...t, albumId: a.id, uid: `${a.id}-${t.id}`, album: a }))
+        // Calculate Latest Studio Album (Dynamic)
+        // Filter by type 'studio' and sort by release date descending
+        const studioAlbums = albums
+            .filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
+            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+
+        const latestStudio = studioAlbums.length > 0 ? studioAlbums[0] : null;
+
+        let latestSingleUid = metadata?.latestSingleUid;
+        let latestSingleId = metadata?.latestSingleId;
+        let latestVideoId = metadata?.latestVideoId;
+        let latestVideoTitle = metadata?.latestVideoTitle;
+        let latestSingleTrackCover = null;
+        let backgroundCoverArt = null;
+
+        // Find the track for the latest single to get its cover image
+        if (latestSingleUid) {
+            const allTracks = albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id })));
+            const track = allTracks.find(t => `${t.albumId}-${t.id}` === latestSingleUid);
+
+            if (track) {
+                // S3 Image Construction
+                // Logic: albums/{folderName}/{Track Title}/cover.png
+                let folderName = track.sourceFolder;
+
+                // Fallback if sourceFolder is missing
+                if (!folderName && track.audioUrl) {
+                    const parts = track.audioUrl.split('/albums/');
+                    if (parts.length > 1) {
+                        folderName = decodeURIComponent(parts[1].split('/')[0]);
+                    }
+                }
+
+                if (folderName) {
+                    const encodedFolder = encodeURIComponent(folderName);
+                    const encodedTitle = encodeURIComponent(track.title).replace(/'/g, '%27'); // S3 Special char handling
+
+                    // Latest Single Card Image
+                    latestSingleTrackCover = `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/${encodedFolder}/${encodedTitle}/cover.png`;
+                }
+            }
+        }
+
+        // Determine Hero Background Image
+        // If "Latest Video Title" corresponds to a track, use that track's image.
+        if (latestVideoTitle) {
+            const allTracks = albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id })));
+            // Loose match: check if track title is contained in video title (case insensitive)
+            const matchingTrack = allTracks.find(t =>
+                latestVideoTitle.toLowerCase().includes(t.title.toLowerCase())
             );
 
-        let latestSingle;
-        if (metadata.latestSingleUid) {
-            latestSingle = allSingles.find((s: any) => s.uid === metadata.latestSingleUid);
-        } else if (metadata.latestSingleTitle) {
-            latestSingle = allSingles.find((s: any) => s.title === metadata.latestSingleTitle);
-        } else if (metadata.latestSingleId) {
-            // Legacy fallback
-            latestSingle = allSingles.find((s: any) => s.id === metadata.latestSingleId);
-        }
-
-        // Fallback to first single if nothing found
-        if (!latestSingle && allSingles.length > 0) {
-            latestSingle = allSingles[0];
-        }
-
-        // Find background image by matching video title to track name
-        // Use track-specific folder: /images/tracks/{track-title-slug}/cover.jpg
-        let backgroundCoverArt = latestSingle?.album?.coverArt || null;
-        let latestSingleTrackCover = latestSingle?.album?.coverArt || null;
-
-        if (metadata.latestVideoTitle) {
-            // Try to find a track that matches the video title
-            // This allows custom video titles like "Song Name - Official Music Video" to still find the right background
-            const videoTitleLower = metadata.latestVideoTitle.toLowerCase();
-
-            for (const album of albums) {
-                const matchingTrack = album.tracks.find(t => {
-                    const trackTitleLower = t.title.toLowerCase();
-                    // Check if video title contains the track title
-                    return videoTitleLower.includes(trackTitleLower) || trackTitleLower.includes(videoTitleLower);
-                });
-
-                if (matchingTrack) {
-                    // Construct S3 URL for track cover image
-                    // Only singles have cover images in S3
-                    // Extract album folder from audioUrl (e.g. "https://.../albums/new-years-odyssey/...")
-                    let albumSlug = album.id;
-                    if (matchingTrack.audioUrl) {
-                        const match = matchingTrack.audioUrl.match(/albums\/([^\/]+)\//);
-                        if (match && match[1]) {
-                            albumSlug = match[1];
-                        }
+            if (matchingTrack) {
+                let folderName = matchingTrack.sourceFolder;
+                if (!folderName && matchingTrack.audioUrl) {
+                    const parts = matchingTrack.audioUrl.split('/albums/');
+                    if (parts.length > 1) {
+                        folderName = decodeURIComponent(parts[1].split('/')[0]);
                     }
+                }
 
-                    const trackTitle = encodeURIComponent(matchingTrack.title);
-                    backgroundCoverArt = `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${albumSlug}/${trackTitle}/cover.png`;
-                    break;
+                if (folderName) {
+                    const encodedFolder = encodeURIComponent(folderName);
+                    const encodedTitle = encodeURIComponent(matchingTrack.title).replace(/'/g, '%27');
+                    backgroundCoverArt = `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/${encodedFolder}/${encodedTitle}/cover.png`;
                 }
             }
         }
 
-        // Get latest single's track-specific cover art from S3
-        if (latestSingle) {
-            let albumSlug = latestSingle.albumId;
-            if (latestSingle.audioUrl) {
-                const match = latestSingle.audioUrl.match(/albums\/([^\/]+)\//);
-                if (match && match[1]) {
-                    albumSlug = match[1];
-                }
-            }
-
-            const trackTitle = encodeURIComponent(latestSingle.title);
-            latestSingleTrackCover = `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${albumSlug}/${trackTitle}/cover.png`;
-        }
+        // Debug logging headers (optional)
+        const headers = new Headers();
+        headers.set('X-Debug-Latest-UID', latestSingleUid || 'null');
 
         return NextResponse.json({
-            latestSingleUid: latestSingle?.uid || null,
-            latestSingleTitle: latestSingle?.title || null,
-            latestSingleAlbumId: latestSingle?.albumId || null,
-            latestSingleCoverArt: backgroundCoverArt,
-            latestSingleTrackCover: latestSingleTrackCover,
-            latestVideoId: metadata.latestVideoId || null,
-            latestVideoTitle: metadata.latestVideoTitle || null
-        });
-    } catch (error: any) {
-        console.error('Latest content API error:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+            latestAlbumId: latestStudio ? latestStudio.id : "valentine-country-2026",
+            latestSingleUid,
+            latestSingleId,
+            latestVideoId,
+            latestVideoTitle,
+            latestSingleTrackCover,
+            backgroundCoverArt // Used by Hero
+        }, { headers });
+    } catch (e) {
+        console.error("Layout API Error", e);
+        return NextResponse.json({ error: "Failed to load content" }, { status: 500 });
     }
 }

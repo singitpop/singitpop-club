@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { albums, getLatestStudioAlbum } from '@/data/albumData';
-import { s3Client } from '@/lib/s3';
-import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { getAlbums, getLatestStudioAlbum } from '@/lib/data';
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 
 const BUCKET_NAME = process.env.AWS_S3_BUCKET || "singitpop-music";
 const METADATA_KEY = "admin/albumMetadata.json";
+
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION || 'eu-north-1',
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+    },
+});
 
 // Helper to read metadata from S3
 async function readMetadata() {
@@ -20,7 +27,7 @@ async function readMetadata() {
         }
     } catch (error) {
         // Log warning but don't crash - file might not exist yet on first run
-        console.warn('S3 Metadata read error (might not exist yet):', error);
+        // console.warn('S3 Metadata read error (might not exist yet):', error);
     }
     return { latestSingleId: null };
 }
@@ -46,6 +53,7 @@ async function writeMetadata(metadata: any) {
             Key: METADATA_KEY,
             Body: JSON.stringify(metadata, null, 2),
             ContentType: "application/json",
+            CacheControl: "no-cache" // Important for admin updates
         });
         await s3Client.send(command);
         return true;
@@ -60,9 +68,15 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const action = searchParams.get('action');
 
+        // Fetch Dynamic Albums
+        const albums = await getAlbums();
+
         if (action === 'latest') {
             // Get automatically selected latest albums
-            const latestStudio = getLatestStudioAlbum();
+            const studioAlbums = albums
+                .filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
+                .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+            const latestStudio = studioAlbums[0];
 
             // Calculate latest live album inline
             const today = new Date();
@@ -83,26 +97,17 @@ export async function GET(req: NextRequest) {
             let latestSingle;
             if (metadata.latestSingleUid) {
                 latestSingle = allSingles.find((s: any) => s.uid === metadata.latestSingleUid);
-                logToDebug(`🔍 Lookup UID [${metadata.latestSingleUid}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
 
                 if (!latestSingle && metadata.latestSingleTitle) {
                     latestSingle = allSingles.find((s: any) => s.title === metadata.latestSingleTitle);
-                    logToDebug(`🔍 Lookup Title [${metadata.latestSingleTitle}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
-                }
-
-                if (!latestSingle) {
-                    const available = allSingles.map((s: any) => s.uid);
-                    logToDebug(`Available UIDs in search list: ${JSON.stringify(available)}`);
                 }
             } else if (metadata.latestSingleId) {
                 // Legacy fallback
                 latestSingle = allSingles.find((s: any) => s.id === metadata.latestSingleId);
-                logToDebug(`🔍 Lookup ID [${metadata.latestSingleId}]: ${latestSingle ? 'Found' : 'NOT FOUND'}`);
             }
 
             if (!latestSingle && allSingles.length > 0) {
                 latestSingle = allSingles[0];
-                logToDebug(`⚠️ Fallback to: ${latestSingle.title} (UID: ${latestSingle.uid})`);
             }
 
             return NextResponse.json({
@@ -120,14 +125,14 @@ export async function GET(req: NextRequest) {
                     id: (latestSingle as any).id,
                     title: (latestSingle as any).title,
                     albumId: (latestSingle as any).albumId,
-                    videoLink: metadata.latestVideoId ? `https://www.youtube.com/watch?v=${metadata.latestVideoId}` : undefined // Inject video link if overrides exist
+                    videoLink: metadata.latestVideoId ? `https://www.youtube.com/watch?v=${metadata.latestVideoId}` : undefined
                 } : null,
                 latestVideoId: metadata.latestVideoId
             });
         }
 
         if (action === 'vip') {
-            // Get VIP-only albums (future releases) - calculate inline
+            // Get VIP-only albums (future releases)
             const today = new Date();
             const vipAlbums = albums.filter((a: any) => new Date(a.releaseDate) > today);
             return NextResponse.json(vipAlbums.map(a => ({
@@ -139,15 +144,10 @@ export async function GET(req: NextRequest) {
         }
 
         if (action === 'singles') {
-            // Get all singles for admin selection (current month only)
-            const today = new Date();
-            const currentYear = today.getFullYear();
-            const currentMonth = today.getMonth();
-
+            // Get all singles for admin selection
             const singlesWithDates = albums
                 .filter(a => a.tracks.some(t => t.isSingle))
                 .flatMap(a => {
-                    // Get ALL singles from this album, not just the first one
                     return a.tracks
                         .filter(t => t.isSingle)
                         .map(singleTrack => ({
@@ -215,12 +215,10 @@ export async function POST(req: NextRequest) {
             const { singleId, singleUid, singleTitle } = data;
             logToDebug(`💾 Saving Latest Single: ID=${singleId}, UID=${singleUid}, Title=${singleTitle}`);
 
-            // Update metadata with new latest single
-            // Store UID or AlbumID + TrackID to be unique
             const metadata = await readMetadata();
             metadata.latestSingleId = singleId;
             metadata.latestSingleUid = singleUid;
-            metadata.latestSingleTitle = singleTitle; // Store title for fallback
+            metadata.latestSingleTitle = singleTitle;
 
             const success = await writeMetadata(metadata);
 

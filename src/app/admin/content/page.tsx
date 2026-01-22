@@ -79,11 +79,11 @@ export default function ContentPage() {
             setCurrentLatestVideoId(singlesData.currentLatestVideoId);
             setCurrentLatestVideoTitle(singlesData.currentLatestVideoTitle || "");
 
-            // Match current ID to UID if possible
-            if (singlesData.currentLatestSingleId) {
-                setCurrentLatestSingleIdRef(singlesData.currentLatestSingleId); // Store numeric ID for fallback
-
-                // Try to find the UID if we can find a matching single
+            // Match current selection
+            if (singlesData.currentLatestSingleUid) {
+                setCurrentLatestSingleUid(singlesData.currentLatestSingleUid);
+            } else if (singlesData.currentLatestSingleId) {
+                // Fallback: Try to find UID via legacy ID
                 const matchingSingle = singlesData.singles.find((s: Single) => s.id === singlesData.currentLatestSingleId);
                 if (matchingSingle) {
                     setCurrentLatestSingleUid(matchingSingle.uid);

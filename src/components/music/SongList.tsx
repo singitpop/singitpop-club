@@ -222,18 +222,64 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
 
                                     {/* Download Logic */}
                                     {isInsider && (
-                                        <button className={styles.actionBtn} title="Download MP3 (Insider)">
+                                        <button
+                                            className={styles.actionBtn}
+                                            title="Download MP3 (Insider)"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                if (track.audioUrl) {
+                                                    const link = document.createElement('a');
+                                                    link.href = track.audioUrl;
+                                                    link.download = `${track.title}.mp3`;
+                                                    document.body.appendChild(link);
+                                                    link.click();
+                                                    document.body.removeChild(link);
+                                                }
+                                            }}
+                                        >
                                             <Download size={18} />
                                         </button>
                                     )}
                                     {isPro && track.highResUrl && (
-                                        <button className={styles.actionBtn} title="Download WAV (VIP)">
+                                        <button
+                                            className={styles.actionBtn}
+                                            title="Download WAV (VIP)"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                const link = document.createElement('a');
+                                                link.href = track.highResUrl!;
+                                                link.download = `${track.title}.wav`;
+                                                document.body.appendChild(link);
+                                                link.click();
+                                                document.body.removeChild(link);
+                                            }}
+                                        >
                                             <Download size={18} color="cyan" style={{ filter: 'drop-shadow(0 0 5px cyan)' }} />
                                         </button>
                                     )}
 
-                                    <button className={styles.actionBtn}><Heart size={18} /></button>
-                                    <button className={styles.actionBtn}><Share2 size={18} /></button>
+                                    <button
+                                        className={styles.actionBtn}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            // TODO: Implement favorites
+                                            alert("Added to Favorites! (Coming Soon)");
+                                        }}
+                                    >
+                                        <Heart size={18} />
+                                    </button>
+
+                                    <button
+                                        className={styles.actionBtn}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigator.clipboard.writeText(`${window.location.origin}/music?track=${getUniqueId(track)}`)
+                                                .then(() => alert("Link copied to clipboard!"))
+                                                .catch(() => alert("Failed to copy link"));
+                                        }}
+                                    >
+                                        <Share2 size={18} />
+                                    </button>
                                 </div>
                             </div>
                         );
