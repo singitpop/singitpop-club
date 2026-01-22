@@ -101,6 +101,11 @@ export default function TeaserPlayer() {
         }
     };
 
+    // Don't render until track is loaded
+    if (!track) {
+        return null;
+    }
+
     return (
         <div className={styles.playerWrapper}>
             <div className={`container glass-panel ${styles.player}`}>
