@@ -33,11 +33,10 @@ export default function Hero() {
                     }));
                 }
 
-                // Prioritize video-specific cover (backgroundCoverArt), then single cover
+                // Prioritize video-specific cover (backgroundCoverArt)
+                // If not found, fall back to default (generic) image to avoid mismatching the video title with the single's cover.
                 if (data.backgroundCoverArt) {
                     setBgImage(data.backgroundCoverArt);
-                } else if (data.latestSingleCoverArt) {
-                    setBgImage(data.latestSingleCoverArt);
                 } else {
                     // Fallback to default hero image
                     setBgImage('/images/hero-desert.jpg');
