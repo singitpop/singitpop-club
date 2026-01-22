@@ -76,7 +76,7 @@ export async function GET() {
                     // Only singles have cover images in S3
                     const albumSlug = album.id;
                     const trackTitle = encodeURIComponent(matchingTrack.title);
-                    backgroundCoverArt = `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${albumSlug}/${trackTitle}/cover.jpg`;
+                    backgroundCoverArt = `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${albumSlug}/${trackTitle}/cover.png`;
                     break;
                 }
             }
@@ -86,7 +86,7 @@ export async function GET() {
         if (latestSingle) {
             const albumSlug = latestSingle.albumId;
             const trackTitle = encodeURIComponent(latestSingle.title);
-            latestSingleTrackCover = `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${albumSlug}/${trackTitle}/cover.jpg`;
+            latestSingleTrackCover = `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${albumSlug}/${trackTitle}/cover.png`;
         }
 
         return NextResponse.json({
