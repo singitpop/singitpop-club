@@ -28,7 +28,8 @@ async function streamToBuffer(stream: Readable): Promise<Buffer> {
 // Convert Excel Sheet to JSON
 function parseExcel(buffer: Buffer) {
     const workbook = XLSX.read(buffer, { type: 'buffer' });
-    const sheetName = workbook.SheetNames[0]; // Assume first sheet
+    // Prefer 'Songs' sheet if it exists, otherwise default to first
+    const sheetName = workbook.SheetNames.includes('Songs') ? 'Songs' : workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
     return XLSX.utils.sheet_to_json(sheet);
 }

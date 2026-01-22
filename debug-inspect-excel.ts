@@ -23,61 +23,30 @@ async function streamToBuffer(stream: Readable): Promise<Buffer> {
 }
 
 async function run() {
-    console.log('--- INSPECTING EXCEL ROW ---');
+    console.log('--- INSPECTING EXCEL CONTENT ---');
     try {
         // 1. Find Excel
-        const prefixes = ['metadata/', 'albums/covers/', 'admin/'];
-        let excelKey = null;
-        for (const prefix of prefixes) {
-            const listCmd = new ListObjectsV2Command({ Bucket: BUCKET_NAME, Prefix: prefix });
-            const listRes = await s3Client.send(listCmd);
-            const found = listRes.Contents?.find(c => c.Key?.match(/\.xlsx?$|\.xlsl$/i));
-            if (found) { excelKey = found.Key; break; }
-        }
-
-        if (!excelKey) { console.log('No Excel found'); return; }
-        console.log('Excel:', excelKey);
+        const excelKey = 'admin/SingIt Pop Music Tracker 26-10-25.xlsx';
+        console.log('Fetching:', excelKey);
 
         // 2. Read
         const getCmd = new GetObjectCommand({ Bucket: BUCKET_NAME, Key: excelKey });
         const res = await s3Client.send(getCmd);
         const buffer = await streamToBuffer(res.Body as Readable);
         const ref = XLSX.read(buffer, { type: 'buffer' });
-        const sheet = ref.Sheets[ref.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json(sheet);
+        console.log('--- Sheets Available ---');
+        console.log(ref.SheetNames);
 
-        // 3. Find Row
-        const target = rows.find((r: any) => {
-            const title = r['Song Title'] || r['Title'] || '';
-            return title.toLowerCase().includes('goodbye california');
-        });
-
-        if (target) {
-            console.log('✅ Found Excel Row:');
-            console.log(target);
-
-            // 4. Check Album matches
-            const albumTitle = (target as any)['Album Title'] || (target as any)['Album'];
-            console.log(`\nChecking Album Title: "${albumTitle}"`);
-
-            // List S3 folders
-            const listFolders = new ListObjectsV2Command({ Bucket: BUCKET_NAME, Prefix: 'albums/', Delimiter: '/' });
-            const fRes = await s3Client.send(listFolders);
-            const prefixes = fRes.CommonPrefixes?.map(p => p.Prefix);
-            console.log('S3 Prefixes:', prefixes?.slice(0, 5)); // Sample
-
-            const normalizedTitle = albumTitle.toString().toLowerCase().trim();
-            const exact = prefixes?.find(p => p?.split('/')[1]?.toLowerCase().trim() === normalizedTitle);
-            console.log(`Exact Match Found? ${exact || 'NO'}`);
-
-            if (!exact) {
-                const slug = normalizedTitle.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                const slugMatch = prefixes?.find(p => p?.toLowerCase().includes(slug));
-                console.log(`Slug Match Found? ${slugMatch || 'NO'} (Slug: ${slug})`);
+        // Try to read ALL sheets to find "California"
+        for (const name of ref.SheetNames) {
+            console.log(`\nChecking Sheet: ${name}`);
+            const s = ref.Sheets[name];
+            const r = XLSX.utils.sheet_to_json(s);
+            const found = r.filter((row: any) => JSON.stringify(row).toLowerCase().includes('california'));
+            if (found.length > 0) {
+                console.log(`✅ MATCH FOUND IN SHEET: ${name}`);
+                console.log(found[0]); // Print sample
             }
-
-        } else {
-            console.log('❌ Row not found in Excel.');
         }
 
     } catch (e) {
