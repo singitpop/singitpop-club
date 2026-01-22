@@ -6,23 +6,18 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         console.log("📝 Signing Request Body:", body);
-        const { url } = body;
+        const { url, download } = body;
 
         if (!url) {
             return NextResponse.json({ error: 'URL is required' }, { status: 400 });
         }
 
         // Extract key from URL
-        // Expected format: https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/folder/file.wav
-        // Key should be: albums/folder/file.wav
-
         const urlObj = new URL(url);
-        // Pathname starts with /, so slice(1) to remove it
-        // BUT wait, if key has spaces, they are %20 in URL. getKey should be decoded.
         const key = decodeURIComponent(urlObj.pathname.slice(1));
-        console.log("🔑 Derived Key:", key);
+        console.log("🔑 Derived Key:", key, "Download Mode:", download);
 
-        const signedUrl = await getSignedFileUrl(key, 3600); // 1 hour expiry
+        const signedUrl = await getSignedFileUrl(key, 3600, download || false); // Pass download flag
         console.log("📝 Generated Signed URL:", signedUrl ? "Yes (Length: " + signedUrl.length + ")" : "NULL");
 
 

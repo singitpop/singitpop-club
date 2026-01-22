@@ -222,15 +222,31 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                         <button
                                             className={styles.actionBtn}
                                             title="Download MP3 (Insider)"
-                                            onClick={(e) => {
+                                            onClick={async (e) => {
                                                 e.stopPropagation();
-                                                if (track.audioUrl) {
-                                                    const link = document.createElement('a');
-                                                    link.href = track.audioUrl;
-                                                    link.download = `${track.title}.mp3`;
-                                                    document.body.appendChild(link);
-                                                    link.click();
-                                                    document.body.removeChild(link);
+                                                if (!track.audioUrl) return;
+
+                                                try {
+                                                    const res = await fetch('/api/music/sign', {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ url: track.audioUrl, download: true })
+                                                    });
+                                                    const data = await res.json();
+
+                                                    if (data.signedUrl) {
+                                                        const link = document.createElement('a');
+                                                        link.href = data.signedUrl;
+                                                        link.setAttribute('download', `${track.title}.mp3`); // Hint to browser
+                                                        document.body.appendChild(link);
+                                                        link.click();
+                                                        document.body.removeChild(link);
+                                                    } else {
+                                                        alert("Download failed: Access Denied");
+                                                    }
+                                                } catch (err) {
+                                                    console.error("Download error:", err);
+                                                    alert("Download failed. Please try again.");
                                                 }
                                             }}
                                         >
@@ -241,14 +257,30 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                         <button
                                             className={styles.actionBtn}
                                             title="Download WAV (VIP)"
-                                            onClick={(e) => {
+                                            onClick={async (e) => {
                                                 e.stopPropagation();
-                                                const link = document.createElement('a');
-                                                link.href = track.highResUrl!;
-                                                link.download = `${track.title}.wav`;
-                                                document.body.appendChild(link);
-                                                link.click();
-                                                document.body.removeChild(link);
+                                                try {
+                                                    const res = await fetch('/api/music/sign', {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ url: track.highResUrl, download: true })
+                                                    });
+                                                    const data = await res.json();
+
+                                                    if (data.signedUrl) {
+                                                        const link = document.createElement('a');
+                                                        link.href = data.signedUrl;
+                                                        link.setAttribute('download', `${track.title}.wav`);
+                                                        document.body.appendChild(link);
+                                                        link.click();
+                                                        document.body.removeChild(link);
+                                                    } else {
+                                                        alert("Download failed: Access Denied");
+                                                    }
+                                                } catch (err) {
+                                                    console.error("Download error:", err);
+                                                    alert("Download failed. Please try again.");
+                                                }
                                             }}
                                         >
                                             <Download size={18} color="cyan" style={{ filter: 'drop-shadow(0 0 5px cyan)' }} />
