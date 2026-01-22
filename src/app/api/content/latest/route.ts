@@ -1,3 +1,4 @@
+
 import { NextResponse } from 'next/server';
 import { getAlbums } from '@/lib/data';
 import { GetObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
@@ -6,7 +7,6 @@ import { s3Client, getSignedFileUrl } from '@/lib/s3';
 const BUCKET_NAME = 'singitpop-music';
 const METADATA_KEY = 'admin/albumMetadata.json';
 
-// Helper: Find the first best image key match in a folder
 // Helper: Find the first best image key match in a folder
 async function findImageKey(folderName: string, trackTitle?: string): Promise<string | null> {
     try {
@@ -20,46 +20,40 @@ async function findImageKey(folderName: string, trackTitle?: string): Promise<st
         const response = await (s3Client as any).send(command);
         const contents = response.Contents || [];
 
-        // 1. Try Specific Track Image (Nested or Flat logic)
+        // 1. Try Specific Track Image (Nested logic)
+        // User Logic: Album -> Song Title Subfolder -> cover.png
         if (trackTitle) {
             const normalizedTrack = trackTitle.toLowerCase().trim();
 
-            // Strategy A: Look for image in a subfolder matching track title
-            // e.g. "albums/my-album/My Track/cover.png" where "My Track" ~ "my track"
-            const trackFolderImage = contents.find((c: any) => {
+            // Look for a key that structure looks like: albums/{album}/{song}/cover.png
+            const trackCover = contents.find((c: any) => {
                 const key = c.Key || '';
                 const lowerKey = key.toLowerCase();
 
                 // Must be inside the album folder
                 if (!lowerKey.startsWith(albumPrefix.toLowerCase())) return false;
 
-                // Must contain track title as a segment or distinct part
-                // We check if the key includes "/track title/" 
+                // Check if the key contains the track title as a folder segment
+                // e.g. .../goodbye california/cover.png
                 if (lowerKey.includes(`/${normalizedTrack}/`)) {
-                    return key.match(/\.(png|jpg|jpeg|webp)$/i);
+                    const filename = key.split('/').pop()?.toLowerCase();
+                    return filename === 'cover.png' || filename === 'cover.jpg' || filename === 'cover.jpeg' || filename === 'cover.webp';
                 }
                 return false;
             });
 
-            if (trackFolderImage) return trackFolderImage.Key;
+            if (trackCover) return trackCover.Key;
         }
 
         // 2. Fallback: Album Cover (cover.png, front.jpg, etc in root of album folder)
         const albumCover = contents.find((c: any) => {
             const key = c.Key || '';
-            // Must be direct child? Or just checking name? 
-            // Better to rely on standard names to avoid picking random track art as album art
             const filename = key.split('/').pop()?.toLowerCase() || '';
             const isImage = filename.endsWith('.png') || filename.endsWith('.jpg') || filename.endsWith('.jpeg') || filename.endsWith('.webp');
 
             // Should be "cover" or "front" or "folder"
             const isStandardName = filename.startsWith('cover.') || filename.startsWith('front.') || filename.startsWith('folder.');
 
-            // Strict check: It should NOT be in a sub-sub folder if possible, but S3 listing is flat.
-            // We verify the path depth. 
-            // albumPrefix = "albums/foo/" (2 segments)
-            // key = "albums/foo/cover.png" (3 segments)
-            // key = "albums/foo/track/file.mp3" (4 segments)
             const depth = key.split('/').length;
             const expectedDepth = albumPrefix.split('/').length;
 
@@ -70,7 +64,6 @@ async function findImageKey(folderName: string, trackTitle?: string): Promise<st
         if (albumCover) return albumCover.Key;
 
         // 3. Last Resort: Any image in Album Root?
-        // Might be risky if user has "Back.jpg" or "Liner.jpg", but better than black.
         const anyRootImage = contents.find((c: any) => {
             const key = c.Key || '';
             const depth = key.split('/').length;
