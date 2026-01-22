@@ -1,20 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { albums, getLatestStudioAlbum } from '@/data/albumData';
-import fs from 'fs';
-import path from 'path';
+import { s3Client } from '@/lib/s3';
+import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 
-// Path to store admin overrides (only for Latest Single selection)
-const METADATA_PATH = path.join(process.cwd(), 'src/data/albumMetadata.json');
+const BUCKET_NAME = process.env.AWS_S3_BUCKET || "singitpop-music";
+const METADATA_KEY = "admin/albumMetadata.json";
 
-// Helper to read metadata
-function readMetadata() {
+// Helper to read metadata from S3
+async function readMetadata() {
     try {
-        if (fs.existsSync(METADATA_PATH)) {
-            const data = fs.readFileSync(METADATA_PATH, 'utf-8');
-            return JSON.parse(data);
+        const command = new GetObjectCommand({
+            Bucket: BUCKET_NAME,
+            Key: METADATA_KEY,
+        });
+        const response = await s3Client.send(command);
+        if (response.Body) {
+            const str = await response.Body.transformToString();
+            return JSON.parse(str);
         }
     } catch (error) {
-        console.error('Error reading metadata:', error);
+        // Log warning but don't crash - file might not exist yet on first run
+        console.warn('S3 Metadata read error (might not exist yet):', error);
     }
     return { latestSingleId: null };
 }
@@ -32,13 +38,19 @@ function logToDebug(message: string) {
     if (globalLogs.length > 50) globalLogs.shift();
 }
 
-// Helper to write metadata
-function writeMetadata(metadata: any) {
+// Helper to write metadata to S3
+async function writeMetadata(metadata: any) {
     try {
-        fs.writeFileSync(METADATA_PATH, JSON.stringify(metadata, null, 2), 'utf-8');
+        const command = new PutObjectCommand({
+            Bucket: BUCKET_NAME,
+            Key: METADATA_KEY,
+            Body: JSON.stringify(metadata, null, 2),
+            ContentType: "application/json",
+        });
+        await s3Client.send(command);
         return true;
     } catch (error) {
-        logToDebug('Error writing metadata: ' + error);
+        logToDebug('Error writing metadata to S3: ' + error);
         return false;
     }
 }
@@ -59,7 +71,7 @@ export async function GET(req: NextRequest) {
                 .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
             const latestLive = liveAlbums[0];
 
-            const metadata = readMetadata();
+            const metadata = await readMetadata();
 
             // Get latest single from metadata or first single
             const allSingles = albums
@@ -107,8 +119,10 @@ export async function GET(req: NextRequest) {
                 latestSingle: latestSingle ? {
                     id: (latestSingle as any).id,
                     title: (latestSingle as any).title,
-                    albumId: (latestSingle as any).albumId
-                } : null
+                    albumId: (latestSingle as any).albumId,
+                    videoLink: metadata.latestVideoId ? `https://www.youtube.com/watch?v=${metadata.latestVideoId}` : undefined // Inject video link if overrides exist
+                } : null,
+                latestVideoId: metadata.latestVideoId
             });
         }
 
@@ -147,7 +161,7 @@ export async function GET(req: NextRequest) {
                 })
                 .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()); // Newest first
 
-            const metadata = readMetadata();
+            const metadata = await readMetadata();
 
             return NextResponse.json({
                 singles: singlesWithDates,
@@ -197,12 +211,12 @@ export async function POST(req: NextRequest) {
 
             // Update metadata with new latest single
             // Store UID or AlbumID + TrackID to be unique
-            const metadata = readMetadata();
+            const metadata = await readMetadata();
             metadata.latestSingleId = singleId;
             metadata.latestSingleUid = singleUid;
             metadata.latestSingleTitle = singleTitle; // Store title for fallback
 
-            const success = writeMetadata(metadata);
+            const success = await writeMetadata(metadata);
 
             if (!success) {
                 return NextResponse.json({ error: 'Failed to save metadata' }, { status: 500 });
@@ -217,10 +231,10 @@ export async function POST(req: NextRequest) {
         if (action === 'set_latest_video') {
             const { videoId } = data;
 
-            const metadata = readMetadata();
+            const metadata = await readMetadata();
             metadata.latestVideoId = videoId;
 
-            const success = writeMetadata(metadata);
+            const success = await writeMetadata(metadata);
 
             if (!success) {
                 return NextResponse.json({ error: 'Failed to save metadata' }, { status: 500 });
