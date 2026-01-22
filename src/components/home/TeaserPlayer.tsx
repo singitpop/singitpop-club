@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { Play, Pause, Lock } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 import styles from './TeaserPlayer.module.css';
-import { albums } from '@/data/albumData';
 
 export default function TeaserPlayer() {
     const { isSignedIn } = useUser();
@@ -12,29 +11,33 @@ export default function TeaserPlayer() {
     const [progress, setProgress] = useState(0);
     const [signedUrl, setSignedUrl] = useState<string | null>(null);
     const [limitReached, setLimitReached] = useState(false);
+
+    // Track State
     const [track, setTrack] = useState<any>(null);
+    const [coverUrl, setCoverUrl] = useState<string | null>(null);
 
     // Fetch latest single from API
     useEffect(() => {
         fetch('/api/content/latest')
             .then(res => res.json())
             .then(data => {
-                if (data.latestSingleUid) {
-                    // Find the track in albums
-                    for (const album of albums) {
-                        const foundTrack = album.tracks.find(t =>
-                            `${album.id}-${t.id}` === data.latestSingleUid
-                        );
-                        if (foundTrack) {
-                            setTrack({
-                                title: foundTrack.title,
-                                fileUrl: foundTrack.audioUrl,
-                                duration: 210, // Default 3:30
-                                badge: 'LATEST SINGLE 🔥'
-                            });
-                            break;
-                        }
+                if (data.latestSingleTrack) {
+                    // Parse duration "3:30" -> 210
+                    let seconds = 210;
+                    if (data.latestSingleTrack.duration && data.latestSingleTrack.duration.includes(':')) {
+                        const parts = data.latestSingleTrack.duration.split(':');
+                        seconds = parseInt(parts[0]) * 60 + parseInt(parts[1]);
                     }
+
+                    setTrack({
+                        ...data.latestSingleTrack,
+                        fileUrl: data.latestSingleTrack.audioUrl,
+                        duration: seconds,
+                        badge: 'LATEST SINGLE 🔥'
+                    });
+                }
+                if (data.latestSingleTrackCover) {
+                    setCoverUrl(data.latestSingleTrackCover);
                 }
             })
             .catch(err => console.error("Failed to fetch latest single", err));
@@ -92,8 +95,6 @@ export default function TeaserPlayer() {
                 audio.pause();
                 setIsPlaying(false);
                 setLimitReached(true);
-                // Optionally clamp time
-                // audio.currentTime = 30; // Creates specific behavior, maybe keep it at 30
             } else {
                 setLimitReached(false);
             }
@@ -110,7 +111,10 @@ export default function TeaserPlayer() {
         <div className={styles.playerWrapper}>
             <div className={`container glass-panel ${styles.player}`}>
                 <div className={styles.trackInfo}>
-                    <div className={styles.coverArt} />
+                    <div
+                        className={styles.coverArt}
+                        style={coverUrl ? { backgroundImage: `url(${coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+                    />
                     <div>
                         <h5>{track.title}</h5>
                         <span className={styles.badge} style={{ background: '#ffd700', color: 'black' }}>{track.badge}</span>
@@ -133,7 +137,7 @@ export default function TeaserPlayer() {
                     </div>
 
                     <span className={styles.time}>
-                        {Math.floor((progress * (track?.duration || 210) / 100) / 60)}:{Math.floor((progress * (track?.duration || 210) / 100) % 60).toString().padStart(2, '0')} / {Math.floor((track?.duration || 210) / 60)}:{Math.floor((track?.duration || 210) % 60).toString().padStart(2, '0')}
+                        {Math.floor((progress * (track.duration) / 100) / 60)}:{Math.floor((progress * (track.duration) / 100) % 60).toString().padStart(2, '0')} / {Math.floor(track.duration / 60)}:{Math.floor(track.duration % 60).toString().padStart(2, '0')}
                     </span>
                 </div>
 

@@ -38,8 +38,7 @@ export async function GET() {
             getAlbums()
         ]);
 
-        // Calculate Latest Studio Album (Dynamic)
-        // Filter by type 'studio' and sort by release date descending
+        // Calculate Latest Studio Album
         const studioAlbums = albums
             .filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
             .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
@@ -52,6 +51,7 @@ export async function GET() {
         let latestVideoTitle = metadata?.latestVideoTitle;
         let latestSingleTrackCover = null;
         let backgroundCoverArt = null;
+        let latestSingleTrack = null;
 
         // Find the track for the latest single to get its cover image
         if (latestSingleUid) {
@@ -59,11 +59,9 @@ export async function GET() {
             const track = allTracks.find(t => `${t.albumId}-${t.id}` === latestSingleUid);
 
             if (track) {
+                latestSingleTrack = track;
                 // S3 Image Construction
-                // Logic: albums/{folderName}/{Track Title}/cover.png
                 let folderName = track.sourceFolder;
-
-                // Fallback if sourceFolder is missing
                 if (!folderName && track.audioUrl) {
                     const parts = track.audioUrl.split('/albums/');
                     if (parts.length > 1) {
@@ -73,19 +71,15 @@ export async function GET() {
 
                 if (folderName) {
                     const encodedFolder = encodeURIComponent(folderName);
-                    const encodedTitle = encodeURIComponent(track.title).replace(/'/g, '%27'); // S3 Special char handling
-
-                    // Latest Single Card Image
+                    const encodedTitle = encodeURIComponent(track.title).replace(/'/g, '%27');
                     latestSingleTrackCover = `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/${encodedFolder}/${encodedTitle}/cover.png`;
                 }
             }
         }
 
         // Determine Hero Background Image
-        // If "Latest Video Title" corresponds to a track, use that track's image.
         if (latestVideoTitle) {
             const allTracks = albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id })));
-            // Loose match: check if track title is contained in video title (case insensitive)
             const matchingTrack = allTracks.find(t =>
                 latestVideoTitle.toLowerCase().includes(t.title.toLowerCase())
             );
@@ -107,18 +101,19 @@ export async function GET() {
             }
         }
 
-        // Debug logging headers (optional)
         const headers = new Headers();
         headers.set('X-Debug-Latest-UID', latestSingleUid || 'null');
 
         return NextResponse.json({
             latestAlbumId: latestStudio ? latestStudio.id : "valentine-country-2026",
+            latestAlbumTitle: latestStudio ? latestStudio.title : "Valentine Country",
             latestSingleUid,
             latestSingleId,
             latestVideoId,
             latestVideoTitle,
             latestSingleTrackCover,
-            backgroundCoverArt // Used by Hero
+            latestSingleTrack,
+            backgroundCoverArt
         }, { headers });
     } catch (e) {
         console.error("Layout API Error", e);

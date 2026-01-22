@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Sparkles } from 'lucide-react';
 import styles from './RecommendationStrip.module.css';
 
 import { LATEST_RELEASES } from '@/config/latestReleases';
@@ -9,19 +8,27 @@ import { LATEST_RELEASES } from '@/config/latestReleases';
 export default function RecommendationStrip() {
     const [latestSingleTitle, setLatestSingleTitle] = useState(LATEST_RELEASES.SINGLE.TITLE);
     const [latestSingleCover, setLatestSingleCover] = useState<string | null>(null);
+    const [latestAlbumTitle, setLatestAlbumTitle] = useState(LATEST_RELEASES.ALBUM_CARD.TITLE);
 
     useEffect(() => {
         fetch('/api/content/latest')
             .then(res => res.json())
             .then(data => {
-                if (data.latestSingleTitle) {
+                if (data.latestSingleTrack && data.latestSingleTrack.title) {
+                    setLatestSingleTitle(data.latestSingleTrack.title);
+                } else if (data.latestSingleTitle) { // Fallback
                     setLatestSingleTitle(data.latestSingleTitle);
                 }
+
                 if (data.latestSingleTrackCover) {
                     setLatestSingleCover(data.latestSingleTrackCover);
                 }
+
+                if (data.latestAlbumTitle) {
+                    setLatestAlbumTitle(data.latestAlbumTitle);
+                }
             })
-            .catch(err => console.error("Failed to fetch latest single", err));
+            .catch(err => console.error("Failed to fetch latest content", err));
     }, []);
 
     const recommendations = [
@@ -31,7 +38,12 @@ export default function RecommendationStrip() {
             reason: '🔥 Latest Single',
             icon: latestSingleCover || '/images/icons/music-note-clean.png'
         },
-        { id: 2, title: LATEST_RELEASES.ALBUM_CARD.TITLE, reason: '🎵 Latest Album', icon: '/images/icons/music-note-clean.png' },
+        {
+            id: 2,
+            title: latestAlbumTitle,
+            reason: '🎵 Latest Album',
+            icon: '/images/icons/music-note-clean.png' // Could fetch album cover too if needed
+        },
         { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
         { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },
     ];

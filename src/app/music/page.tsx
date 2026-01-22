@@ -2,48 +2,79 @@
 
 import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Music, TrendingUp, Star, Clock, Grid } from 'lucide-react';
+import { TrendingUp, Star, Clock, Grid } from 'lucide-react';
 import SongList from '@/components/music/SongList';
 import AlbumOverlay from '@/components/music/AlbumOverlay';
 import Charts from '@/components/music/Charts';
 import styles from './page.module.css';
-import { albums, getLatestStudioAlbum, getLatestSingle } from '@/data/albumData';
-
+import { albums as staticAlbums, Album } from '@/data/albumData';
 import { siteContent } from '@/config/siteContent';
 
 function MusicContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(() => {
-        const latest = getLatestStudioAlbum();
-        return latest ? latest.id : siteContent.musicPage.latestAlbumId;
-    });
+
+    // State for Dynamic Data
+    const [albums, setAlbums] = useState<Album[]>(staticAlbums);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(null);
     const [latestSingleUid, setLatestSingleUid] = useState<string | null>(null);
 
-    // Fetch dynamic metadata (Latest Single)
+    // Fetch Dynamic Data on Mount
     useEffect(() => {
-        fetch('/api/content/latest')
-            .then(res => res.json())
-            .then(data => {
-                if (data.latestSingleUid) {
-                    setLatestSingleUid(data.latestSingleUid);
-                } else if (data.latestSingleId) {
-                    // Fallback to find UID via ID?
-                    // music page doesn't have easy lookup, but SongList passes UID
-                    // ideally we just use UID.
+        let isCancelled = false;
+        async function loadData() {
+            try {
+                // 1. Fetch Latest Metadata
+                const metaRes = await fetch('/api/content/latest');
+                const metaData = await metaRes.json();
+                if (!isCancelled && metaData.latestSingleUid) {
+                    setLatestSingleUid(metaData.latestSingleUid);
                 }
-            })
-            .catch(err => console.error("Failed to fetch metadata", err));
+
+                // 2. Fetch Full Album Data
+                const albumsRes = await fetch('/api/content/albums');
+                if (albumsRes.ok) {
+                    const dynamicAlbums = await albumsRes.json();
+                    if (!isCancelled && Array.isArray(dynamicAlbums) && dynamicAlbums.length > 0) {
+                        setAlbums(dynamicAlbums);
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to load dynamic content", e);
+            } finally {
+                if (!isCancelled) setIsLoading(false);
+            }
+        }
+
+        loadData();
+        return () => { isCancelled = true; };
     }, []);
+
+    // Set initial Selected Album (Dynamic Logic)
+    useEffect(() => {
+        // Only run if user hasn't selected an album yet
+        if (!selectedAlbumId) {
+            const studios = albums.filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
+                .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+
+            if (studios.length > 0) {
+                setSelectedAlbumId(studios[0].id);
+            } else {
+                setSelectedAlbumId(siteContent.musicPage.latestAlbumId);
+            }
+        }
+    }, [isLoading, albums, selectedAlbumId]); // React to albums update
 
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
 
-    // Auto-Add Track Logic
+    // Auto-Add Track Logic (Wait for albums to load)
     useEffect(() => {
         const trackTitleToAdd = searchParams.get('addTrack');
-        if (trackTitleToAdd) {
+        if (trackTitleToAdd && albums.length > 0) {
             // Find the track
             const allTracks = albums.flatMap(a => a.tracks);
             const foundTrack = allTracks.find(t => t.title.toLowerCase() === trackTitleToAdd.toLowerCase());
@@ -66,7 +97,7 @@ function MusicContent() {
                 router.replace(`/music?${newParams.toString()}`, { scroll: false });
             }
         }
-    }, [searchParams, router]);
+    }, [searchParams, router, albums]);
 
     const filterButtons = [
         { id: 'latest', label: 'Latest Release', icon: Clock },
@@ -85,7 +116,9 @@ function MusicContent() {
         }
 
         if (filterMode === 'latest') {
-            const latestAlbum = getLatestStudioAlbum();
+            const studios = albums.filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
+                .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+            const latestAlbum = studios.length > 0 ? studios[0] : null;
 
             return {
                 tracks: latestAlbum ? latestAlbum.tracks.map(t => ({ ...t, albumId: latestAlbum.id })) : [],
@@ -117,10 +150,9 @@ function MusicContent() {
         }
 
         return { tracks: [], title: '' };
-    }, [filterMode, selectedAlbumId]);
+    }, [filterMode, selectedAlbumId, albums]); // Added albums
 
     const handleSelectAlbum = (id: string) => {
-        console.log(`[MusicPage] handleSelectAlbum called with ID: ${id}`);
         setSelectedAlbumId(id);
         setFilterMode('album');
     };
@@ -241,6 +273,7 @@ function MusicContent() {
                     </div>
                     <SongList
                         tracks={tracks}
+                        albums={albums}
                         selectedTracks={selectedTracks}
                         onToggleSelection={handleToggleSelection}
                         latestSingleUid={latestSingleUid}
@@ -272,7 +305,7 @@ function MusicContent() {
             </div>
             {/* VERSION STAMP - Forces content change and verifies deployment */}
             <div style={{ textAlign: 'center', padding: '20px', color: '#666', fontSize: '0.8rem' }}>
-                System Version: v2026.01.15-AutoAddFix (Build: Checked)
+                System Version: v2026.01.16-DynamicSync (Build: Cloud-Ready)
             </div>
         </div>
     );

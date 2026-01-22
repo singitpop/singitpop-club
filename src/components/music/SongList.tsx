@@ -4,14 +4,15 @@ import { Play, Lock, Share2, Heart, Check, ShoppingBag, Download } from 'lucide-
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import styles from './SongList.module.css';
-import { Track, getAlbumById, albums } from '@/data/albumData';
+import { Track, Album } from '@/data/albumData'; // Just types
 
 interface SongListProps {
     tracks: Track[];
+    albums: Album[]; // New Prop
     filterMode?: 'all' | 'trending' | 'favorites' | 'latest';
     selectedTracks: string[];
     onToggleSelection: (id: string) => void;
-    latestSingleUid?: string | null; // UID of the free single
+    latestSingleUid?: string | null;
 }
 
 const MAX_MIXTAPE_TRACKS = 12;
@@ -19,7 +20,7 @@ const MAX_MIXTAPE_TRACKS = 12;
 // Helper to generate unique ID
 const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
 
-export default function SongList({ tracks, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid }: SongListProps) {
+export default function SongList({ tracks, albums, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid }: SongListProps) {
     const { isPro, isInsider } = useAuth();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -118,7 +119,6 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
         } else {
             setIsPlaying(false); // Stop asking for previous track
             setActiveTrackId(uniqueId);
-            // Effect will trigger fetching signed URL, then set isPlaying to true
         }
     };
 
@@ -137,10 +137,10 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                         const isSelected = selectedTracks.includes(uniqueId);
 
                         // Time-Based Gating Logic
-                        // Robust Album Lookup
-                        let album = track.albumId ? getAlbumById(track.albumId) : undefined;
+                        // Robust Album Lookup using Props
+                        let album = track.albumId ? albums.find(a => a.id === track.albumId) : undefined;
                         if (!album) {
-                            // Fallback: Find album containing this track
+                            // Fallback
                             album = albums.find(a => a.tracks.some(t => t.id === track.id));
                         }
 
@@ -152,21 +152,18 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                         let isPreview = false;
                         let lockMessage = "";
 
-                        // Define what constitutes a "Premium" track
-                        // Only the LATEST single is free. All others are premium.
                         const isLatestSingle = uniqueId === latestSingleUid;
                         const isPremiumContent = !isLatestSingle;
 
                         if (isPreRelease && !isLatestSingle) {
-                            // Pre-Release: ONLY VIPs can listen (Exception: The designated Latest Single)
+                            // Pre-Release
                             if (!isPro) {
                                 isLocked = true;
                                 lockMessage = "Early Access! Upgrade to VIP to listen before the official release.";
                             }
                         } else {
-                            // Standard Release (or Latest Single from Pre-Release album)
+                            // Standard Release
                             if (isPremiumContent && !isInsider && !isPro) {
-                                // Premium content is limited to 30s for free users
                                 isPreview = true;
                             }
                         }
@@ -309,7 +306,6 @@ export default function SongList({ tracks, filterMode = 'all', selectedTracks, o
                 </div>
             </div>
 
-            {/* Hidden Audio Element */}
             <audio
                 ref={audioRef}
                 src={currentSignedUrl || undefined}
