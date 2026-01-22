@@ -21,12 +21,30 @@ const MAX_MIXTAPE_TRACKS = 12;
 const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
 
 export default function SongList({ tracks, albums, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid }: SongListProps) {
-    const { isPro, isInsider } = useAuth();
+    const { isPro, isInsider, user } = useAuth();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
     const [showPreviewModal, setShowPreviewModal] = useState(false);
+    const [favorites, setFavorites] = useState<string[]>([]);
+
+    // Fetch favorites on mount
+    useEffect(() => {
+        if (!user) return;
+        async function fetchFavorites() {
+            try {
+                const res = await fetch('/api/user/favorites');
+                if (res.ok) {
+                    const data = await res.json();
+                    setFavorites(data.favorites || []);
+                }
+            } catch (e) {
+                console.error("Failed to load favorites", e);
+            }
+        }
+        fetchFavorites();
+    }, [user]);
 
     // Fetch Signed URL when active track changes
     useEffect(() => {
@@ -119,6 +137,44 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         } else {
             setIsPlaying(false); // Stop asking for previous track
             setActiveTrackId(uniqueId);
+        }
+    };
+
+    const toggleFavorite = async (track: Track) => {
+        if (!user) {
+            alert("Please sign in to save favorites!");
+            return;
+        }
+
+        const uniqueId = getUniqueId(track);
+        const isFav = favorites.includes(uniqueId);
+
+        // Optimistic Update
+        let newFavs;
+        if (isFav) {
+            newFavs = favorites.filter(id => id !== uniqueId);
+        } else {
+            newFavs = [...favorites, uniqueId];
+        }
+        setFavorites(newFavs);
+
+        // API Call
+        try {
+            const method = isFav ? 'DELETE' : 'POST';
+            const res = await fetch('/api/user/favorites', {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ trackId: uniqueId })
+            });
+
+            if (!res.ok) {
+                // Revert on failure
+                setFavorites(favorites);
+                alert("Failed to update favorite. Please try again.");
+            }
+        } catch (e) {
+            setFavorites(favorites);
+            console.error("Favorite API Error", e);
         }
     };
 
@@ -291,11 +347,10 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                         className={styles.actionBtn}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            // TODO: Implement favorites
-                                            alert("Added to Favorites! (Coming Soon)");
+                                            toggleFavorite(track);
                                         }}
                                     >
-                                        <Heart size={18} />
+                                        <Heart size={18} fill={favorites.includes(uniqueId) ? "var(--accent)" : "none"} color={favorites.includes(uniqueId) ? "var(--accent)" : "currentColor"} />
                                     </button>
 
                                     <button

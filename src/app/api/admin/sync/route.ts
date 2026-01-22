@@ -41,11 +41,26 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Missing AWS Credentials' }, { status: 500 });
         }
 
-        // 1. Fetch Excel File from S3
-        console.log('Fetching Excel from S3:', EXCEL_FILE_KEY);
+        // 1. Find Excel File in metadata/
+        console.log('Searching for Excel file in metadata/...');
+        const listCommand = new ListObjectsV2Command({
+            Bucket: BUCKET_NAME,
+            Prefix: 'metadata/'
+        });
+        const listResponse = await (s3Client as any).send(listCommand);
+
+        const excelFile = listResponse.Contents?.find((file: any) =>
+            file.Key && (file.Key.endsWith('.xlsx') || file.Key.endsWith('.xlsl') || file.Key.endsWith('.xls'))
+        );
+
+        if (!excelFile || !excelFile.Key) {
+            return NextResponse.json({ error: 'Excel file not found. Please upload your tracker (e.g., "SingIt Pop Music Tracker.xlsx") to the "metadata/" folder.' }, { status: 404 });
+        }
+
+        console.log('Found Excel file:', excelFile.Key);
         const getCommand = new GetObjectCommand({
             Bucket: BUCKET_NAME,
-            Key: EXCEL_FILE_KEY
+            Key: excelFile.Key
         });
 
         let s3Response;
@@ -53,9 +68,6 @@ export async function POST(request: NextRequest) {
             s3Response = await (s3Client as any).send(getCommand);
         } catch (e: any) {
             console.error('Failed to fetch Excel:', e);
-            if (e.name === 'NoSuchKey') {
-                return NextResponse.json({ error: 'Excel file not found. Please upload "SingIt Pop Music Tracker.xlsx" to "metadata/" folder in S3.' }, { status: 404 });
-            }
             throw e;
         }
 
