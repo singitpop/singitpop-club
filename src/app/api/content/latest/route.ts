@@ -54,11 +54,33 @@ export async function GET() {
             latestSingle = allSingles[0];
         }
 
+        // Find background image by matching video title to track name
+        let backgroundCoverArt = latestSingle?.album?.coverArt || null;
+
+        if (metadata.latestVideoTitle) {
+            // Try to find a track that matches the video title
+            // This allows custom video titles like "Song Name - Official Music Video" to still find the right background
+            const videoTitleLower = metadata.latestVideoTitle.toLowerCase();
+
+            for (const album of albums) {
+                const matchingTrack = album.tracks.find(t => {
+                    const trackTitleLower = t.title.toLowerCase();
+                    // Check if video title contains the track title
+                    return videoTitleLower.includes(trackTitleLower) || trackTitleLower.includes(videoTitleLower);
+                });
+
+                if (matchingTrack) {
+                    backgroundCoverArt = album.coverArt;
+                    break;
+                }
+            }
+        }
+
         return NextResponse.json({
             latestSingleUid: latestSingle?.uid || null,
             latestSingleTitle: latestSingle?.title || null,
             latestSingleAlbumId: latestSingle?.albumId || null,
-            latestSingleCoverArt: latestSingle?.album?.coverArt || null,
+            latestSingleCoverArt: backgroundCoverArt,
             latestVideoId: metadata.latestVideoId || null,
             latestVideoTitle: metadata.latestVideoTitle || null
         });
