@@ -72,18 +72,21 @@ export async function GET() {
                 });
 
                 if (matchingTrack) {
-                    // Create slug from track title for folder name
-                    const trackSlug = matchingTrack.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                    backgroundCoverArt = `/images/tracks/${trackSlug}/cover.jpg`;
+                    // Construct S3 URL for track cover image
+                    // Only singles have cover images in S3
+                    const albumSlug = album.id;
+                    const trackTitle = encodeURIComponent(matchingTrack.title);
+                    backgroundCoverArt = `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${albumSlug}/${trackTitle}/cover.jpg`;
                     break;
                 }
             }
         }
 
-        // Get latest single's track-specific cover art
+        // Get latest single's track-specific cover art from S3
         if (latestSingle) {
-            const trackSlug = latestSingle.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-            latestSingleTrackCover = `/images/tracks/${trackSlug}/cover.jpg`;
+            const albumSlug = latestSingle.albumId;
+            const trackTitle = encodeURIComponent(latestSingle.title);
+            latestSingleTrackCover = `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${albumSlug}/${trackTitle}/cover.jpg`;
         }
 
         return NextResponse.json({
