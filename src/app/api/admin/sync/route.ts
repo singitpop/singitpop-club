@@ -131,20 +131,42 @@ export async function POST(request: NextRequest) {
             const releaseDateVal = rows[0]['Release Date'];
             const currentYear = new Date().getFullYear();
             let year = currentYear.toString();
+            let releaseDateStr = `${currentYear}-01-01`;
 
             if (releaseDateVal) {
-                // Try parsing as Date object (handles Excel serial dates)
-                const d = new Date(releaseDateVal);
-                if (!isNaN(d.getTime()) && d.getFullYear() > 1900 && d.getFullYear() <= currentYear + 10) {
-                    year = d.getFullYear().toString();
+                // Excel stores dates as serial numbers (days since 1900-01-01)
+                if (typeof releaseDateVal === 'number') {
+                    // Convert Excel serial date to JavaScript Date
+                    // Excel epoch is 1900-01-01, but has a leap year bug (treats 1900 as leap year)
+                    const excelEpoch = new Date(1899, 11, 30); // Dec 30, 1899
+                    const msPerDay = 24 * 60 * 60 * 1000;
+                    const jsDate = new Date(excelEpoch.getTime() + releaseDateVal * msPerDay);
+
+                    if (!isNaN(jsDate.getTime()) && jsDate.getFullYear() > 1900 && jsDate.getFullYear() <= currentYear + 10) {
+                        year = jsDate.getFullYear().toString();
+                        releaseDateStr = jsDate.toISOString().split('T')[0];
+                    }
                 } else if (typeof releaseDateVal === 'string') {
                     // Try parsing string formats like "DD/MM/YYYY" or "YYYY-MM-DD"
                     const parts = releaseDateVal.split(/[-/]/);
                     if (parts.length === 3) {
                         // Try YYYY-MM-DD format
-                        if (parts[0].length === 4) year = parts[0];
+                        if (parts[0].length === 4) {
+                            year = parts[0];
+                            releaseDateStr = releaseDateVal;
+                        }
                         // Try DD/MM/YYYY format
-                        else if (parts[2].length === 4) year = parts[2];
+                        else if (parts[2].length === 4) {
+                            year = parts[2];
+                            releaseDateStr = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                        }
+                    }
+                } else {
+                    // Try as Date object
+                    const d = new Date(releaseDateVal);
+                    if (!isNaN(d.getTime()) && d.getFullYear() > 1900 && d.getFullYear() <= currentYear + 10) {
+                        year = d.getFullYear().toString();
+                        releaseDateStr = d.toISOString().split('T')[0];
                     }
                 }
             }
@@ -161,7 +183,7 @@ export async function POST(request: NextRequest) {
                 genre: rows[0]['Genre'] ? [rows[0]['Genre']] : ['Pop'],
                 coverArt: coverUrl || `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/covers/default.jpg`,
                 tracks: [] as any[],
-                releaseDate: releaseDateVal || `${year}-01-01`,
+                releaseDate: releaseDateStr,
                 folderPath: matchedFolderPrefix.split('/')[1],
                 type: 'studio'
             };
