@@ -119,11 +119,21 @@ export async function POST(request: NextRequest) {
             const listFilesRes = await (s3Client as any).send(listFilesCmd);
             const files = listFilesRes.Contents || [];
 
-            // C. Find Cover Image (Specific: cover.png or cover.jpg or from excel)
-            // User said: "every album has a cover.png"
+            // C. Find Cover Image (Specific: cover.png in root folder of album)
+            // Fix: Ensure we don't pick a nested single's cover.
+            // Expected Key: "{prefix}cover.png"
             const coverFile = files.find((f: any) => {
-                const name = f.Key.split('/').pop().toLowerCase();
-                return name === 'cover.png' || name === 'cover.jpg';
+                const key = f.Key;
+                // Check if file is exactly in the album root folder
+                // prefix includes slash at end: "albums/folder/"
+                // key should be "albums/folder/cover.png"
+                if (!key.toLowerCase().startsWith(matchedFolderPrefix.toLowerCase())) return false;
+
+                const relativePath = key.slice(matchedFolderPrefix.length);
+                if (relativePath.includes('/')) return false; // In a subfolder
+
+                const name = relativePath.toLowerCase();
+                return name === 'cover.png' || name === 'cover.jpg' || name === 'cover.jpeg' || name === 'front.jpg';
             });
             const coverUrl = coverFile ? `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${coverFile.Key}` : null;
 
@@ -171,6 +181,10 @@ export async function POST(request: NextRequest) {
                 }
             }
 
+            // Determine Album Type
+            const isLive = albumTitle.toString().toLowerCase().includes('live') || (rows[0]['Type'] && rows[0]['Type'].toLowerCase() === 'live');
+            const type = isLive ? 'live' : 'studio';
+
             // E. Build Album Object
             // Slug for ID with year suffix to match existing albumData.ts format
             const baseSlug = albumTitle.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -185,7 +199,7 @@ export async function POST(request: NextRequest) {
                 tracks: [] as any[],
                 releaseDate: releaseDateStr,
                 folderPath: matchedFolderPrefix.split('/')[1],
-                type: 'studio'
+                type: type
             };
 
             // F. Process Tracks
@@ -230,15 +244,28 @@ export async function POST(request: NextRequest) {
                 // User stated structure: AlbumFolder -> Song Subfolder -> File
                 // We search for file keys that include the normalized song title
                 // This covers `Album/Track/Track.mp3` or even `Album/Track.mp3`
-                const mp3File = files.find((f: any) => {
-                    const key = f.Key.toLowerCase();
-                    return key.endsWith('.mp3') && normalize(key).includes(targetName) && isValidFile(f.Key);
-                });
+                // Track Matching Fix: Priorities Exact Name Match > Includes
+                // This prevents "Title" matching "Title Reprise" by mistake.
+                const findBestMatch = (extension: string) => {
+                    return files.find((f: any) => {
+                        const key = f.Key.toLowerCase();
+                        if (!key.endsWith(extension) || !isValidFile(f.Key)) return false;
 
-                const wavFile = files.find((f: any) => {
-                    const key = f.Key.toLowerCase();
-                    return key.endsWith('.wav') && normalize(key).includes(targetName) && isValidFile(f.Key);
-                });
+                        const fileName = key.split('/').pop().replace(extension, '');
+                        const normalizedFileName = normalize(fileName);
+
+                        // Exact match of filename
+                        return normalizedFileName === targetName;
+                    }) || files.find((f: any) => {
+                        // Fallback: Includes (but fuzzy) - only if exact match fails
+                        const key = f.Key.toLowerCase();
+                        return key.endsWith(extension) && normalize(key).includes(targetName) && isValidFile(f.Key);
+                    });
+                }
+
+                const mp3File = findBestMatch('.mp3');
+
+                const wavFile = findBestMatch('.wav');
 
                 // Find track-specific cover art
                 // Look for: albums/{Album}/{Track}/cover.png
