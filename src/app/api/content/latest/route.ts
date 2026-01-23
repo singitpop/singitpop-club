@@ -194,15 +194,44 @@ export async function GET() {
 
         const latestLive = liveAlbums.length > 0 ? liveAlbums[0] : null;
 
+        // Helper to sign cover art (Key or URL)
+        const signCover = async (urlOrKey: string | null) => {
+            if (!urlOrKey) return null;
+            try {
+                // If it's already signed (has params), return as is
+                if (urlOrKey.includes('?')) return urlOrKey;
+
+                // Extract key if it's a full URL
+                let key = urlOrKey;
+                if (urlOrKey.startsWith('http')) {
+                    const url = new URL(urlOrKey);
+                    // /albums/cover.jpg -> albums/cover.jpg (remove leading slash)
+                    key = url.pathname.startsWith('/') ? url.pathname.slice(1) : url.pathname;
+                    key = decodeURIComponent(key);
+                }
+
+                // If it's a local path (starts with /), don't sign
+                if (urlOrKey.startsWith('/')) return urlOrKey;
+
+                return await getSignedFileUrl(key, 3600);
+            } catch (e) {
+                console.warn("Failed to sign cover:", urlOrKey);
+                return urlOrKey;
+            }
+        };
+
+        const signedLatestCover = latestStudio ? await signCover(latestStudio.coverArt) : null;
+        const signedLiveCover = latestLive ? await signCover(latestLive.coverArt) : "/images/album-step-live.jpg";
+
         const headers = new Headers();
         headers.set('X-Debug-Latest', 'true');
 
         return NextResponse.json({
             latestAlbumId: latestStudio ? latestStudio.id : "valentine-country-2026",
             latestAlbumTitle: latestStudio ? latestStudio.title : "Valentine Country",
-            latestAlbumCover: latestStudio ? latestStudio.coverArt : null,
+            latestAlbumCover: signedLatestCover,
             latestLiveAlbumTitle: latestLive ? latestLive.title : "Step into the Light",
-            latestLiveAlbumCover: latestLive ? latestLive.coverArt : "/images/album-step-live.jpg",
+            latestLiveAlbumCover: signedLiveCover,
             latestSingleUid,
             latestVideoTitle,
             latestSingleTrackCover,

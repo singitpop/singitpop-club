@@ -182,11 +182,23 @@ export async function POST(request: NextRequest) {
             }
 
             // Determine Album Type
-            const isLive = albumTitle.toString().toLowerCase().includes('live') || (rows[0]['Type'] && rows[0]['Type'].toLowerCase() === 'live');
+            // Robust check: Look for "Live" in Title OR "Type" column OR Column H (Index 7ish)
+            // We scan ALL values in the first row for the word "Live" to be safe.
+            const rowValues = Object.values(rows[0]).map(v => String(v).toLowerCase());
+            const isLive = albumTitle.toString().toLowerCase().includes('live') ||
+                rowValues.some(v => v === 'live' || v.includes('live album'));
             const type = isLive ? 'live' : 'studio';
 
+            // Default Cover (Signed)
+            const defaultCoverKey = 'albums/covers/default.jpg';
+            // We don't sign it here because we sign on read (GET /api/content/albums). 
+            // BUT, if we put a raw S3 URL here, the frontend might try to use it directly if the read-side signing misses it.
+            // Best practice: Store the KEY for default too, or a consistent URL structure.
+            // Current logic in GET /api/content/albums: signs if it looks like a key or specific S3 URL.
+            // Let's store the full S3 URL for consistent storage, but ensure GET signs it.
+            const defaultCoverUrl = `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${defaultCoverKey}`;
+
             // E. Build Album Object
-            // Slug for ID with year suffix to match existing albumData.ts format
             const baseSlug = albumTitle.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
             const albumId = `${baseSlug}-${year}`;
 
@@ -195,7 +207,7 @@ export async function POST(request: NextRequest) {
                 title: albumTitle,
                 year: year,
                 genre: rows[0]['Genre'] ? [rows[0]['Genre']] : ['Pop'],
-                coverArt: coverUrl || `https://${BUCKET_NAME}.s3.eu-north-1.amazonaws.com/albums/covers/default.jpg`,
+                coverArt: coverUrl || defaultCoverUrl,
                 tracks: [] as any[],
                 releaseDate: releaseDateStr,
                 folderPath: matchedFolderPrefix.split('/')[1],
