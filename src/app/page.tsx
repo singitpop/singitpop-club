@@ -1,5 +1,5 @@
 import Hero from '@/components/home/Hero';
-import WelcomeMessage from '@/components/home/WelcomeMessage';
+// import WelcomeMessage from '@/components/home/WelcomeMessage'; (Integrated into Hero)
 import SmartCTA from '@/components/home/SmartCTA';
 import TeaserPlayer from '@/components/home/TeaserPlayer';
 import VisualScroll from '@/components/home/VisualScroll';
@@ -11,7 +11,7 @@ export default function Home() {
             <RecommendationStrip />
             <Hero />
             <VisualScroll />
-            <WelcomeMessage />
+            {/* Welcome Message moved to Hero Overlay */}
             <SmartCTA />
 
             <TeaserPlayer />

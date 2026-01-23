@@ -8,12 +8,16 @@ import styles from './Hero.module.css';
 import { LATEST_RELEASES } from '@/config/latestReleases';
 import { albums } from '@/data/albumData';
 
+import WelcomeOverlay from './WelcomeOverlay';
+
 export default function Hero() {
     const [showVideo, setShowVideo] = useState(false);
     const [heroData, setHeroData] = useState(LATEST_RELEASES.HERO_VIDEO);
     const [bgImage, setBgImage] = useState('/images/hero-desert.jpg');
+    const [showWelcome, setShowWelcome] = useState(true);
 
     useEffect(() => {
+        // ... (existing fetch logic remains same)
         fetch('/api/content/latest')
             .then(res => res.json())
             .then(data => {
@@ -60,6 +64,12 @@ export default function Hero() {
 
     const videoId = getYouTubeId(heroData.VIDEO_URL);
 
+    // Auto-dismiss welcome when video starts
+    const handleshowVideo = () => {
+        setShowVideo(true);
+        setShowWelcome(false);
+    };
+
     return (
         <section className={styles.heroImmersive}>
             <div className={styles.videoBackground}>
@@ -67,6 +77,13 @@ export default function Hero() {
                 <div className={styles.zoomImage} style={{ backgroundImage: `url(${bgImage})` }} />
                 <div className={styles.overlay} />
             </div>
+
+            {/* NEW: Integrated Welcome Overlay */}
+            <AnimatePresence>
+                {showWelcome && !showVideo && (
+                    <WelcomeOverlay onDismiss={() => setShowWelcome(false)} />
+                )}
+            </AnimatePresence>
 
             <div className={styles.centerStage}>
                 <motion.button
@@ -76,7 +93,7 @@ export default function Hero() {
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    onClick={() => setShowVideo(true)}
+                    onClick={handleshowVideo}
                 >
                     <Play size={48} fill="currentColor" />
                     <div className={styles.pulseRing} />

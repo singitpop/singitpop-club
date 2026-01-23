@@ -24,7 +24,9 @@ async function findImageKey(folderName: string, trackTitle?: string, strictTrack
         // 1. Try Specific Track Image (Nested logic)
         // User Logic: Album -> Song Title Subfolder -> cover.png
         if (trackTitle) {
-            const normalizedTrack = trackTitle.toLowerCase().trim();
+            // Smart Normalization: remove special chars, extra spaces, lowercase
+            const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+            const normalizedTrack = normalize(trackTitle);
 
             // Look for a key that structure looks like: albums/{album}/{song}/cover.png
             const trackCover = contents.find((c: any) => {
@@ -34,9 +36,15 @@ async function findImageKey(folderName: string, trackTitle?: string, strictTrack
                 // Must be inside the album folder
                 if (!lowerKey.startsWith(albumPrefix.toLowerCase())) return false;
 
-                // Check if the key contains the track title as a folder segment
-                // e.g. .../goodbye california/cover.png
-                if (lowerKey.includes(`/${normalizedTrack}/`)) {
+                // Check for folder match using normalized terms
+                // We split by slash to check folder segments
+                const segments = lowerKey.split('/');
+                // segments[0]='albums', segments[1]='albumName', segments[2]='possibleSongName' ...
+
+                // We search segments for a fuzzy match against normalized track title
+                const songFolderMatch = segments.some((seg: string) => normalize(seg).includes(normalizedTrack));
+
+                if (songFolderMatch) {
                     const filename = key.split('/').pop()?.toLowerCase();
                     return filename === 'cover.png' || filename === 'cover.jpg' || filename === 'cover.jpeg' || filename === 'cover.webp';
                 }

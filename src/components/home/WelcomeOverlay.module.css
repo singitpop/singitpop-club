@@ -1,0 +1,77 @@
+.overlayContainer {
+    position: absolute;
+    bottom: 80px;
+    /* Positioned above the bottom edge */
+    left: 5%;
+    z-index: 20;
+    max-width: 450px;
+    width: 90%;
+    pointer-events: auto;
+}
+
+.glassPanel {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(90deg, #fff, #ccc);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.5rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.dismissBtn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0.5rem 1rem;
+}
+
+.dismissBtn:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .overlayContainer {
+        bottom: 120px;
+        /* Make room for mobile bottom nav if any */
+        left: 50%;
+        transform: translateX(-50%) !important;
+        /* Override motion x if needed, but motion handles y/opacity */
+        width: 90%;
+        text-align: center;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+}
