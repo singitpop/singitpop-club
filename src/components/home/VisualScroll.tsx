@@ -84,7 +84,7 @@ export default function VisualScroll() {
 
                             <div className={styles.content}>
                                 <span className={styles.subtitle}>{item.subtitle}</span>
-                                {/* Title removed per user feedback (in Artwork) */}
+                                <h3 className={styles.title}>{item.title}</h3>
                                 {item.action === 'modal' ? (
                                     <button
                                         onClick={() => setShowModal(true)}
