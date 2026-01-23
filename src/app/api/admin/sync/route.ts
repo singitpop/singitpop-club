@@ -129,14 +129,23 @@ export async function POST(request: NextRequest) {
 
             // D. Extract Year from Release Date
             const releaseDateVal = rows[0]['Release Date'];
-            let year = '2025';
+            const currentYear = new Date().getFullYear();
+            let year = currentYear.toString();
+
             if (releaseDateVal) {
+                // Try parsing as Date object (handles Excel serial dates)
                 const d = new Date(releaseDateVal);
-                if (!isNaN(d.getTime())) {
+                if (!isNaN(d.getTime()) && d.getFullYear() > 1900 && d.getFullYear() <= currentYear + 10) {
                     year = d.getFullYear().toString();
                 } else if (typeof releaseDateVal === 'string') {
+                    // Try parsing string formats like "DD/MM/YYYY" or "YYYY-MM-DD"
                     const parts = releaseDateVal.split(/[-/]/);
-                    if (parts.length === 3 && parts[2].length === 4) year = parts[2];
+                    if (parts.length === 3) {
+                        // Try YYYY-MM-DD format
+                        if (parts[0].length === 4) year = parts[0];
+                        // Try DD/MM/YYYY format
+                        else if (parts[2].length === 4) year = parts[2];
+                    }
                 }
             }
 
