@@ -183,10 +183,14 @@ export async function POST(request: NextRequest) {
 
             // Determine Album Type
             // Robust check: Look for "Live" in Title OR "Type" column OR Column H (Index 7ish)
-            // We scan ALL values in the first row for the word "Live" to be safe.
-            const rowValues = Object.values(rows[0]).map(v => String(v).toLowerCase());
-            const isLive = albumTitle.toString().toLowerCase().includes('live') ||
-                rowValues.some(v => v === 'live' || v.includes('live album'));
+            // We scan ALL values in all available rows (header + first) for the word "Live" to be safe.
+            // This covers the case where "Live" is in a specific column like H.
+            const allValues = [
+                ...Object.values(rows[0] || {}),
+                albumTitle
+            ].map(v => String(v).toLowerCase());
+
+            const isLive = allValues.some(v => v.includes('live')); // Checks for "Live" anywhere
             const type = isLive ? 'live' : 'studio';
 
             // Default Cover (Signed)

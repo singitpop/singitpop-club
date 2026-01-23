@@ -236,7 +236,7 @@ export async function GET() {
             latestVideoTitle,
             latestSingleTrackCover,
             latestSingleTrack,
-            backgroundCoverArt
+            backgroundCoverArt: backgroundCoverArt || latestSingleTrackCover || signedLatestCover || "/images/hero-desert.jpg"
         }, { headers });
     } catch (e) {
         console.error("Layout API Error", e);

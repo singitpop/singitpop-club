@@ -106,8 +106,27 @@ export default function Hero() {
                         onClick={() => setShowVideo(false)}
                     >
                         <div className={styles.videoWrapper}>
-                            <button className={styles.closeBtn} onClick={() => setShowVideo(false)}>
-                                <X size={32} />
+                            <button
+                                className={styles.closeBtn}
+                                onClick={() => setShowVideo(false)}
+                                style={{
+                                    position: 'absolute',
+                                    top: '20px',
+                                    right: '20px',
+                                    zIndex: 3000,
+                                    background: 'rgba(0,0,0,0.5)',
+                                    border: '1px solid rgba(255,255,255,0.2)',
+                                    borderRadius: '50%',
+                                    width: '40px',
+                                    height: '40px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    color: 'white'
+                                }}
+                            >
+                                <X size={24} />
                             </button>
                             <iframe
                                 src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}

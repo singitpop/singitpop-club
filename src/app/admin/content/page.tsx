@@ -40,6 +40,8 @@ function extractVideoId(url: string | null) {
     return null;
 }
 
+import ConfirmModal from '@/components/ui/ConfirmModal';
+
 export default function ContentPage() {
     const { isLabel } = useAuth();
     const { showNotification, removeNotification, notifications } = useNotification();
@@ -47,10 +49,17 @@ export default function ContentPage() {
     const [vipAlbums, setVIPAlbums] = useState<VIPAlbum[]>([]);
     const [singles, setSingles] = useState<Single[]>([]);
     const [currentLatestSingleUid, setCurrentLatestSingleUid] = useState<string | null>(null);
-    const [currentLatestSingleIdRef, setCurrentLatestSingleIdRef] = useState<number | null>(null); // Fallback for ID matching
     const [currentLatestVideoId, setCurrentLatestVideoId] = useState<string | null>(null);
     const [currentLatestVideoTitle, setCurrentLatestVideoTitle] = useState<string>("");
     const [isLoading, setIsLoading] = useState(true);
+
+    // Modal State
+    const [modalConfig, setModalConfig] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+    }>({ isOpen: false, title: "", message: "", onConfirm: () => { } });
 
     useEffect(() => {
         if (isLabel) {
@@ -79,11 +88,9 @@ export default function ContentPage() {
             setCurrentLatestVideoId(singlesData.currentLatestVideoId);
             setCurrentLatestVideoTitle(singlesData.currentLatestVideoTitle || "");
 
-            // Match current selection
             if (singlesData.currentLatestSingleUid) {
                 setCurrentLatestSingleUid(singlesData.currentLatestSingleUid);
             } else if (singlesData.currentLatestSingleId) {
-                // Fallback: Try to find UID via legacy ID
                 const matchingSingle = singlesData.singles.find((s: Single) => s.id === singlesData.currentLatestSingleId);
                 if (matchingSingle) {
                     setCurrentLatestSingleUid(matchingSingle.uid);
@@ -96,7 +103,17 @@ export default function ContentPage() {
         }
     }
 
-
+    const openConfirm = (title: string, message: string, action: () => void) => {
+        setModalConfig({
+            isOpen: true,
+            title,
+            message,
+            onConfirm: () => {
+                action();
+                setModalConfig(prev => ({ ...prev, isOpen: false }));
+            }
+        });
+    };
 
     async function saveLatestVideo() {
         const videoId = extractVideoId(currentLatestVideoId);
@@ -139,30 +156,35 @@ export default function ContentPage() {
 
     async function setLatestSingle(uid: string) {
         const single = singles.find(s => s.uid === uid);
-        if (!confirm(`Set "${single?.title}" as the Latest Single?\n\nThe previous single will revert to 30s preview for Fans.`)) return;
 
-        try {
-            const res = await fetch('/api/admin/content', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'set_latest_single',
-                    data: {
-                        singleId: single?.id,
-                        singleUid: uid,
-                        singleTitle: single?.title // Title Fallback for robustness
+        openConfirm(
+            "Update Latest Single?",
+            `Set "${single?.title}" as the Latest Single?\n\nThe previous single will revert to 30s preview for Fans.`,
+            async () => {
+                try {
+                    const res = await fetch('/api/admin/content', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: 'set_latest_single',
+                            data: {
+                                singleId: single?.id,
+                                singleUid: uid,
+                                singleTitle: single?.title
+                            }
+                        })
+                    });
+
+                    if (res.ok) {
+                        showNotification(`"${single?.title}" is now the Latest Single!`, "success");
+                        fetchData();
                     }
-                })
-            });
-
-            if (res.ok) {
-                showNotification(`"${single?.title}" is now the Latest Single!`, "success");
-                fetchData();
+                } catch (error) {
+                    console.error(error);
+                    showNotification('Failed to update latest single', "error");
+                }
             }
-        } catch (error) {
-            console.error(error);
-            showNotification('Failed to update latest single', "error");
-        }
+        );
     }
 
     if (!isLabel) {
@@ -174,7 +196,7 @@ export default function ContentPage() {
         );
     }
 
-    if (isLoading) {
+    if (isLoading && !latestAlbums) { // Only full page load initially
         return (
             <div className={styles.loading}>
                 <div className={styles.spinner}></div>
@@ -185,6 +207,14 @@ export default function ContentPage() {
 
     return (
         <>
+            <ConfirmModal
+                isOpen={modalConfig.isOpen}
+                title={modalConfig.title}
+                message={modalConfig.message}
+                onConfirm={modalConfig.onConfirm}
+                onCancel={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
+            />
+
             {notifications.map(notif => (
                 <Notification
                     key={notif.id}
@@ -204,23 +234,29 @@ export default function ContentPage() {
                     <p className={styles.subtitle}>Automated album selection based on release dates</p>
 
                     <button
-                        onClick={async () => {
-                            if (!confirm("Start content sync? This runs the local Excel/Folder script.")) return;
-                            setIsLoading(true);
-                            try {
-                                const res = await fetch('/api/admin/sync', { method: 'POST' });
-                                const data = await res.json();
-                                if (res.ok) {
-                                    showNotification(data.message + (data.details ? "\n\n" + (data.details.slice(0, 100) + "...") : ""), "success");
-                                    window.location.reload();
-                                } else {
-                                    showNotification("Sync Failed: " + (data.error || data.details || "Unknown error"), "error");
+                        onClick={() => {
+                            openConfirm(
+                                "Sync Content?",
+                                "Start content sync? This runs the local Excel/Folder script. It may take a few seconds.",
+                                async () => {
+                                    setIsLoading(true);
+                                    try {
+                                        const res = await fetch('/api/admin/sync', { method: 'POST' });
+                                        const data = await res.json();
+                                        if (res.ok) {
+                                            showNotification("Sync Successful!", "success");
+                                            // setTimeout(() => window.location.reload(), 1500); // Optional reload if needed
+                                            fetchData(); // Refresh data without reload
+                                        } else {
+                                            showNotification("Sync Failed: " + (data.error || "Unknown"), "error");
+                                        }
+                                    } catch (e) {
+                                        showNotification("Sync Request Failed", "error");
+                                    } finally {
+                                        setIsLoading(false);
+                                    }
                                 }
-                            } catch (e) {
-                                showNotification("Sync Request Failed", "error");
-                            } finally {
-                                setIsLoading(false);
-                            }
+                            );
                         }}
                         className={styles.syncBtn}
                         style={{
@@ -237,8 +273,8 @@ export default function ContentPage() {
                             fontSize: '0.9rem'
                         }}
                     >
-                        <RefreshCw size={16} />
-                        Sync Local Content
+                        <RefreshCw size={16} className={isLoading ? "spin" : ""} />
+                        {isLoading ? "Syncing..." : "Sync Local Content"}
                     </button>
                 </div>
 
