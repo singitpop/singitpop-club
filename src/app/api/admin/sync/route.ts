@@ -268,7 +268,8 @@ export async function POST(request: NextRequest) {
             Key: ALBUMS_JSON_KEY,
             Body: jsonBuffer,
             ContentType: 'application/json',
-            CacheControl: 'max-age=60'
+            CacheControl: 'max-age=60',
+            ACL: 'public-read'
         });
 
         await (s3Client as any).send(uploadCommand);
