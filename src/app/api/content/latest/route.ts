@@ -8,7 +8,7 @@ const BUCKET_NAME = 'singitpop-music';
 const METADATA_KEY = 'admin/albumMetadata.json';
 
 // Helper: Find the first best image key match in a folder
-async function findImageKey(folderName: string, trackTitle?: string): Promise<string | null> {
+async function findImageKey(folderName: string, trackTitle?: string, strictTrackMatch = false): Promise<string | null> {
     try {
         // We list the Album Root to find both the Album Cover matches AND nested Track folders (case-insensitive)
         const albumPrefix = `albums/${folderName}/`;
@@ -44,6 +44,12 @@ async function findImageKey(folderName: string, trackTitle?: string): Promise<st
             });
 
             if (trackCover) return trackCover.Key;
+        }
+
+        // if strict mode is on and we didn't find the track cover, return null (don't fallback)
+        if (strictTrackMatch && trackTitle) {
+            console.log(`[FindImageKey] Strict match failed for track: ${trackTitle}`);
+            return null;
         }
 
         // 2. Fallback: Album Cover (cover.png, front.jpg, etc in root of album folder)
@@ -175,7 +181,10 @@ export async function GET() {
 
                 if (folderName) {
                     console.log(`[Latest] Searching cover for hero: ${folderName} / ${matchingTrack.title}`);
-                    const key = await findImageKey(folderName, matchingTrack.title);
+                    // Use STRICT MATCH (true) to find the specific song folder cover.
+                    // If strict match fails, we want null here so we can decide our own fallback (e.g. latestSingleTrackCover)
+                    // rather than getting the generic album cover which might be wrong for the video context.
+                    const key = await findImageKey(folderName, matchingTrack.title, true);
                     if (key) {
                         backgroundCoverArt = await getSignedFileUrl(key, 3600);
                     }
