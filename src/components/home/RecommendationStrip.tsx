@@ -9,6 +9,7 @@ export default function RecommendationStrip() {
     const [latestSingleTitle, setLatestSingleTitle] = useState(LATEST_RELEASES.SINGLE.TITLE);
     const [latestSingleCover, setLatestSingleCover] = useState<string | null>(null);
     const [latestAlbumTitle, setLatestAlbumTitle] = useState(LATEST_RELEASES.ALBUM_CARD.TITLE);
+    const [latestAlbumCover, setLatestAlbumCover] = useState<string | null>(null);
 
     useEffect(() => {
         fetch('/api/content/latest')
@@ -27,6 +28,10 @@ export default function RecommendationStrip() {
                 if (data.latestAlbumTitle) {
                     setLatestAlbumTitle(data.latestAlbumTitle);
                 }
+
+                if (data.latestAlbumCover) {
+                    setLatestAlbumCover(data.latestAlbumCover);
+                }
             })
             .catch(err => console.error("Failed to fetch latest content", err));
     }, []);
@@ -42,7 +47,7 @@ export default function RecommendationStrip() {
             id: 2,
             title: latestAlbumTitle,
             reason: '🎵 Latest Album',
-            icon: '/images/icons/music-note-clean.png' // Could fetch album cover too if needed
+            icon: latestAlbumCover || '/images/icons/music-note-clean.png'
         },
         { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
         { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },

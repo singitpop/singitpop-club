@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './VisualScroll.module.css';
 
 import { siteContent } from '@/config/siteContent';
@@ -12,12 +12,65 @@ const items = siteContent.hero.cards;
 
 export default function VisualScroll() {
     const [showModal, setShowModal] = useState(false);
+    const [dynamicItems, setDynamicItems] = useState(items);
+
+    useEffect(() => {
+        fetch('/api/content/latest')
+            .then(res => res.json())
+            .then(data => {
+                setDynamicItems(prev => {
+                    const newItems = [...prev];
+
+                    // Update Latest Album (Index 0)
+                    if (data.latestAlbumTitle && data.latestAlbumCover) {
+                        newItems[0] = {
+                            ...newItems[0],
+                            title: data.latestAlbumTitle,
+                            image: data.latestAlbumCover
+                        };
+                    }
+
+                    // Update Latest Single (Index 1)
+                    if (data.latestSingleTrack) {
+                        // API returns latestSingleTrack as an object or just title? 
+                        // Check API response: latestSingleTrack is an object with title, etc.
+                        // But the previous API call I checked only returned latestSingleUid...
+                        // Let's re-verify API response structure.
+                        // Actually, look at Hero.tsx: data.latestSingleTitle is available?
+                        // In route.ts: latestSingleTrack is the object. 
+                        // But return JSON has: latestSingleTrack: latestSingleTrack (object)
+
+                        const singleTitle = typeof data.latestSingleTrack === 'string' ? data.latestSingleTrack : data.latestSingleTrack?.title;
+
+                        if (singleTitle) {
+                            newItems[1] = {
+                                ...newItems[1],
+                                title: singleTitle,
+                                image: data.latestSingleTrackCover || newItems[1].image
+                            };
+                        }
+                    }
+
+                    // Update Latest Live Album (Index 2)
+                    if (data.latestLiveAlbumTitle && data.latestLiveAlbumCover) {
+                        newItems[2] = {
+                            ...newItems[2],
+                            title: data.latestLiveAlbumTitle,
+                            image: data.latestLiveAlbumCover
+                        };
+                    }
+
+                    return newItems;
+                });
+            })
+            .catch(err => console.error("Failed to fetch visual scroll data", err));
+    }, []);
 
     return (
         <>
             <section className={styles.section}>
                 <div className={styles.scrollContainer}>
-                    {items.map((item) => (
+                    {dynamicItems.map((item) => (
                         <motion.div
                             key={item.id}
                             className={styles.card}

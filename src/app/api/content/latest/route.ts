@@ -176,12 +176,21 @@ export async function GET() {
             }
         }
 
+        const liveAlbums = albums
+            .filter(a => a.type === 'live' && new Date(a.releaseDate) <= new Date())
+            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+
+        const latestLive = liveAlbums.length > 0 ? liveAlbums[0] : null;
+
         const headers = new Headers();
         headers.set('X-Debug-Latest', 'true');
 
         return NextResponse.json({
             latestAlbumId: latestStudio ? latestStudio.id : "valentine-country-2026",
             latestAlbumTitle: latestStudio ? latestStudio.title : "Valentine Country",
+            latestAlbumCover: latestStudio ? latestStudio.coverArt : null,
+            latestLiveAlbumTitle: latestLive ? latestLive.title : "Step into the Light",
+            latestLiveAlbumCover: latestLive ? latestLive.coverArt : "/images/album-step-live.jpg",
             latestSingleUid,
             latestVideoTitle,
             latestSingleTrackCover,
