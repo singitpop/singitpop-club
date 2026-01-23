@@ -38,9 +38,16 @@ const PRODUCT_TYPES = {
     }
 };
 
+import { useAuth } from '@/context/AuthContext';
+
 function CheckoutContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
+    const { isInsider, isPro, isLabel } = useAuth(); // Auth integration
+
+    // Check eligibility for free mixtape
+    const isEligibleForFree = isInsider || isPro || isLabel;
+
     const [selectedType, setSelectedType] = useState<'download'>('download'); // Restricted types
     const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
     const [formData, setFormData] = useState({
@@ -82,12 +89,22 @@ function CheckoutContent() {
     // Fixed pricing model
     // const tracksPrice = selectedTrackDetails.reduce((sum, t) => sum + t.price, 0);
     const productPrice = PRODUCT_TYPES['download'].price;
-    const totalPrice = productPrice; // Flat rate 8.99
+    const totalPrice = isEligibleForFree ? 0.00 : productPrice; // Override for Members
     const needsShipping = false; // Store-only digital
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+
+        // Bypass Stripe for eligible members
+        if (isEligibleForFree) {
+            // No backend call needed for simple Claim (unless logging stats)
+            // Simulating API latency for better UX
+            setTimeout(() => {
+                setOrderPlaced(true);
+            }, 800);
+            return;
+        }
 
         try {
             const res = await fetch('/api/checkout', {
@@ -120,8 +137,12 @@ function CheckoutContent() {
                 <div className={styles.successIcon}>
                     <Check size={64} />
                 </div>
-                <h1>Order Confirmed!</h1>
-                <p>Thank you for your purchase. You'll receive a confirmation email shortly.</p>
+                <h1>{isEligibleForFree ? "Download Claimed!" : "Order Confirmed!"}</h1>
+                <p>
+                    {isEligibleForFree
+                        ? "As a valued member, this mixtape is on the house."
+                        : "Thank you for your purchase. You'll receive a confirmation email shortly."}
+                </p>
                 {needsShipping && (
                     <p className={styles.shippingNote}>
                         Your {PRODUCT_TYPES[selectedType].name} will be shipped to:<br />
@@ -129,9 +150,10 @@ function CheckoutContent() {
                     </p>
                 )}
                 {!needsShipping && (
-                    <p className={styles.downloadNote}>
-                        Download links have been sent to: <strong>{formData.email}</strong>
-                    </p>
+                    <div className={styles.downloadNote}>
+                        <p>Enjoy your custom mixtape!</p>
+                        {isEligibleForFree && <p style={{ fontSize: '0.9rem', color: '#aaa', marginTop: '0.5rem' }}>Your songs are ready for playback.</p>}
+                    </div>
                 )}
                 <button onClick={() => router.push('/music')} className="primary-button">
                     Back to Music
@@ -144,7 +166,7 @@ function CheckoutContent() {
         return (
             <div className={styles.success} style={{ justifyContent: 'center', height: '60vh' }}>
                 <Loader2 size={48} className="spin" />
-                <h2>Redirecting to Stripe...</h2>
+                <h2>{isEligibleForFree ? "Claiming Download..." : "Redirecting to Stripe..."}</h2>
             </div>
         );
     }
@@ -166,8 +188,16 @@ function CheckoutContent() {
                             <span className={styles.productIcon}>{PRODUCT_TYPES.download.icon}</span>
                             <h3>{PRODUCT_TYPES.download.name}</h3>
                             <p className={styles.productPrice}>
-                                £{PRODUCT_TYPES.download.price.toFixed(2)}
+                                {isEligibleForFree ? (
+                                    <>
+                                        <span style={{ textDecoration: 'line-through', opacity: 0.6, fontSize: '0.8em' }}>£{PRODUCT_TYPES.download.price.toFixed(2)}</span>
+                                        <span style={{ color: '#4ade80', marginLeft: '8px' }}>FREE</span>
+                                    </>
+                                ) : (
+                                    `£${PRODUCT_TYPES.download.price.toFixed(2)}`
+                                )}
                             </p>
+                            {isEligibleForFree && <div style={{ fontSize: '0.8rem', color: '#4ade80', marginTop: '4px' }}>Member Perk Unlocked 🎁</div>}
                         </div>
                     </div>
 
@@ -273,7 +303,13 @@ function CheckoutContent() {
                             <h3>Order Summary</h3>
                             <div className={styles.summaryRow}>
                                 <span>{PRODUCT_TYPES[selectedType].name}</span>
-                                <span>£{totalPrice.toFixed(2)}</span>
+                                <span>
+                                    {isEligibleForFree ? (
+                                        <>£0.00 <span style={{ fontSize: '0.8em', color: '#aaa' }}>(Member)</span></>
+                                    ) : (
+                                        `£${totalPrice.toFixed(2)}`
+                                    )}
+                                </span>
                             </div>
                             {needsShipping && (
                                 <div className={styles.summaryRow}>
@@ -288,11 +324,15 @@ function CheckoutContent() {
                         </div>
 
                         <button type="submit" className={`primary-button ${styles.submitBtn}`}>
-                            {needsShipping ? 'Place Order' : 'Complete Purchase'}
+                            {needsShipping ? 'Place Order' : (
+                                isEligibleForFree ? 'Claim Free Download' : 'Complete Purchase'
+                            )}
                         </button>
 
                         <p className={styles.note}>
-                            * Payment processing will be handled securely via Stripe
+                            {isEligibleForFree
+                                ? "* Perks of being a premium member!"
+                                : "* Payment processing will be handled securely via Stripe"}
                         </p>
                     </form>
                 </div>
