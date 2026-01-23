@@ -141,8 +141,9 @@ export async function POST(request: NextRequest) {
             }
 
             // E. Build Album Object
-            // Slug for ID
-            const albumId = albumTitle.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            // Slug for ID with year suffix to match existing albumData.ts format
+            const baseSlug = albumTitle.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            const albumId = `${baseSlug}-${year}`;
 
             const albumObj = {
                 id: albumId,
