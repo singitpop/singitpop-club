@@ -1,5 +1,6 @@
 "use client";
 
+// @ts-ignore
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -18,6 +19,7 @@ export default function VisualScroll() {
         fetch('/api/content/latest')
             .then(res => res.json())
             .then(data => {
+                console.log("[VisualScroll] Fetched data:", data);
                 setDynamicItems(prev => {
                     const newItems = [...prev];
 
@@ -32,14 +34,6 @@ export default function VisualScroll() {
 
                     // Update Latest Single (Index 1)
                     if (data.latestSingleTrack) {
-                        // API returns latestSingleTrack as an object or just title? 
-                        // Check API response: latestSingleTrack is an object with title, etc.
-                        // But the previous API call I checked only returned latestSingleUid...
-                        // Let's re-verify API response structure.
-                        // Actually, look at Hero.tsx: data.latestSingleTitle is available?
-                        // In route.ts: latestSingleTrack is the object. 
-                        // But return JSON has: latestSingleTrack: latestSingleTrack (object)
-
                         const singleTitle = typeof data.latestSingleTrack === 'string' ? data.latestSingleTrack : data.latestSingleTrack?.title;
 
                         if (singleTitle) {
@@ -48,7 +42,12 @@ export default function VisualScroll() {
                                 title: singleTitle,
                                 image: data.latestSingleTrackCover || newItems[1].image
                             };
+                            console.log("[VisualScroll] Updated Latest Single:", singleTitle);
+                        } else {
+                            console.warn("[VisualScroll] Latest Single has no title");
                         }
+                    } else {
+                        console.warn("[VisualScroll] No latestSingleTrack in API response");
                     }
 
                     // Update Latest Live Album (Index 2)
@@ -116,7 +115,7 @@ export default function VisualScroll() {
                         animate={{ scale: 1, opacity: 1 }}
                         className="glass-panel"
                         style={{ padding: '2rem', maxWidth: '400px', width: '90%', textAlign: 'center', position: 'relative' }}
-                        onClick={e => e.stopPropagation()}
+                        onClick={(e: any) => e.stopPropagation()}
                     >
                         <h3>Choose Your Platform 🎧</h3>
                         <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Stream on your favorite service</p>

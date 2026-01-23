@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+// @ts-ignore
 import { motion } from 'framer-motion';
 import { Lock, User, Music, Zap } from 'lucide-react';
 import Link from 'next/link';

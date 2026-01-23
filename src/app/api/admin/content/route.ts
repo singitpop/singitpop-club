@@ -74,7 +74,12 @@ export async function GET(req: NextRequest) {
             // Calculate latest live album inline
             const today = new Date();
             const liveAlbums = albums
-                .filter(a => a.title.toLowerCase().includes('live') && new Date(a.releaseDate) <= today)
+                .filter(a => {
+                    const isLiveType = a.type?.toLowerCase() === 'live';
+                    const titleHasLive = a.title.toLowerCase().includes('live');
+                    const released = new Date(a.releaseDate) <= today;
+                    return (isLiveType || titleHasLive) && released;
+                })
                 .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
             const latestLive = liveAlbums[0];
 

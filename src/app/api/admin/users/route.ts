@@ -18,7 +18,7 @@ export async function GET(req: Request) {
         });
 
         // Map to simpler object
-        let userData = users.data.map(u => ({
+        let userData = users.data.map((u: any) => ({
             id: u.id,
             email: u.emailAddresses[0]?.emailAddress,
             firstName: u.firstName,
@@ -30,11 +30,11 @@ export async function GET(req: Request) {
 
         // Filter by Tier (Client-side filtering as Clerk doesn't support metadata filtering in list)
         if (tier) {
-            userData = userData.filter(u => u.publicMetadata?.tier === tier);
+            userData = userData.filter((u: any) => u.publicMetadata?.tier === tier);
         }
 
         // Sort
-        userData.sort((a, b) => {
+        userData.sort((a: any, b: any) => {
             const valA = a[sort as keyof typeof a] || 0;
             const valB = b[sort as keyof typeof b] || 0;
             return valB < valA ? -1 : 1; // Descending

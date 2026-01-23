@@ -19,6 +19,7 @@ async function findImageKey(folderName: string, trackTitle?: string): Promise<st
 
         const response = await (s3Client as any).send(command);
         const contents = response.Contents || [];
+        console.log(`[FindImageKey] Searching in '${albumPrefix}', found ${contents.length} items. Track: ${trackTitle || 'N/A'}`);
 
         // 1. Try Specific Track Image (Nested logic)
         // User Logic: Album -> Song Title Subfolder -> cover.png
@@ -143,10 +144,16 @@ export async function GET() {
                         console.log(`[Latest] Found key: ${key}`);
                         latestSingleTrackCover = await getSignedFileUrl(key, 3600);
                     } else {
-                        console.log(`[Latest] No cover found for single.`);
+                        console.log(`[Latest] No cover found for single: ${folderName} / ${track.title}. Checking root fallback.`);
+                        // Try strict album root fallback if track-specific failed?
+                        // Actually findImageKey already does fallback.
                     }
                 }
+            } else {
+                console.warn(`[Latest] Track not found for UID: ${latestSingleUid}`);
             }
+        } else {
+            console.log(`[Latest] No latestSingleUid in metadata.`);
         }
 
         // --- 2. Hero Background (Video) ---
@@ -177,7 +184,12 @@ export async function GET() {
         }
 
         const liveAlbums = albums
-            .filter(a => a.type === 'live' && new Date(a.releaseDate) <= new Date())
+            .filter(a => {
+                const isLiveType = a.type?.toLowerCase() === 'live';
+                const titleHasLive = a.title.toLowerCase().includes('live');
+                const released = new Date(a.releaseDate) <= new Date();
+                return (isLiveType || titleHasLive) && released;
+            })
             .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
 
         const latestLive = liveAlbums.length > 0 ? liveAlbums[0] : null;

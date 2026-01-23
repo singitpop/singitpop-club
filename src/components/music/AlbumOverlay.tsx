@@ -10,9 +10,10 @@ interface AlbumOverlayProps {
     onClose: () => void;
     albums: Album[];
     onSelectAlbum: (id: string, title: string) => void;
+    title?: string; // Optional title override
 }
 
-export default function AlbumOverlay({ isOpen, onClose, albums, onSelectAlbum }: AlbumOverlayProps) {
+export default function AlbumOverlay({ isOpen, onClose, albums, onSelectAlbum, title = "Explore Discography" }: AlbumOverlayProps) {
     const [searchTerm, setSearchTerm] = useState('');
     const [isVisible, setIsVisible] = useState(false);
 
@@ -48,7 +49,7 @@ export default function AlbumOverlay({ isOpen, onClose, albums, onSelectAlbum }:
     return (
         <div className={styles.overlay} style={{ opacity: isOpen ? 1 : 0, pointerEvents: isOpen ? 'all' : 'none' }}>
             <div className={styles.header}>
-                <h2 className={styles.title}>Explore Discography</h2>
+                <h2 className={styles.title}>{title}</h2>
                 <button className={styles.closeBtn} onClick={onClose}>
                     <X size={24} />
                 </button>

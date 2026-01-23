@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TrendingUp, Star, Clock, Grid } from 'lucide-react';
+import { TrendingUp, Star, Clock, Grid, Crown } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 import SongList from '@/components/music/SongList';
 import AlbumOverlay from '@/components/music/AlbumOverlay';
 import Charts from '@/components/music/Charts';
@@ -11,6 +12,7 @@ import { albums as staticAlbums, Album } from '@/data/albumData';
 import { siteContent } from '@/config/siteContent';
 
 function MusicContent() {
+    const { isPro, isLabel } = useAuth();
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -69,7 +71,14 @@ function MusicContent() {
 
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [isVipOverlayOpen, setIsVipOverlayOpen] = useState(false);
     const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
+
+    // derive VIP albums
+    const vipAlbums = useMemo(() => {
+        return albums.filter(a => new Date(a.releaseDate) > new Date());
+    }, [albums]);
+
 
     // Auto-Add Track Logic (Wait for albums to load)
     useEffect(() => {
@@ -181,8 +190,16 @@ function MusicContent() {
             <AlbumOverlay
                 isOpen={isOverlayOpen}
                 onClose={() => setIsOverlayOpen(false)}
-                albums={albums}
+                albums={albums} // All albums for standard discography
                 onSelectAlbum={handleSelectAlbum}
+                title="Explore Discography"
+            />
+            <AlbumOverlay
+                isOpen={isVipOverlayOpen}
+                onClose={() => setIsVipOverlayOpen(false)}
+                albums={vipAlbums}
+                onSelectAlbum={handleSelectAlbum}
+                title="VIP Vault 👑"
             />
 
             <div className={styles.header}>
@@ -237,10 +254,28 @@ function MusicContent() {
                         ))}
                     </div>
 
-                    <button className={styles.browseBtn} onClick={() => setIsOverlayOpen(true)}>
-                        <Grid size={18} />
-                        Browse Discography
-                    </button>
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                        <button
+                            className={styles.browseBtn}
+                            onClick={() => {
+                                // Check VIP Access
+                                if (!isPro && !isLabel) {
+                                    alert("VIP Early Access Required! Upgrade your membership to access the VIP Vault.");
+                                    return;
+                                }
+                                setIsVipOverlayOpen(true);
+                            }}
+                            style={{ background: 'linear-gradient(45deg, #FFD700, #FFA500)', border: 'none', color: '#000', fontWeight: 'bold' }}
+                        >
+                            <Crown size={18} />
+                            VIP Access
+                        </button>
+
+                        <button className={styles.browseBtn} onClick={() => setIsOverlayOpen(true)}>
+                            <Grid size={18} />
+                            Browse Discography
+                        </button>
+                    </div>
                 </div>
             </div>
 

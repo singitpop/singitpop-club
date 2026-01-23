@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+// @ts-ignore
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 import styles from './Hero.module.css';
@@ -36,8 +37,10 @@ export default function Hero() {
                 // Prioritize video-specific cover (backgroundCoverArt)
                 // If not found, fall back to default (generic) image to avoid mismatching the video title with the single's cover.
                 if (data.backgroundCoverArt) {
+                    console.log("[Hero] Using backgroundCoverArt:", data.backgroundCoverArt);
                     setBgImage(data.backgroundCoverArt);
                 } else {
+                    console.log("[Hero] Using default fallback image");
                     // Fallback to default hero image
                     setBgImage('/images/hero-desert.jpg');
                 }

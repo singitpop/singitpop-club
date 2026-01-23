@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
                 });
 
                 const usersByDay = last30Days.map(day => {
-                    const count = users.data.filter(u => {
+                    const count = users.data.filter((u: any) => {
                         const createdDate = new Date(u.createdAt).toISOString().split('T')[0];
                         return createdDate === day;
                     }).length;
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
             case 'tiers': {
                 const users = await client.users.getUserList({ limit: 500 });
 
-                const tierCounts = users.data.reduce((acc, user) => {
+                const tierCounts = users.data.reduce((acc: any, user: any) => {
                     const tier = (user.publicMetadata.tier as string) || 'FAN';
                     acc[tier] = (acc[tier] || 0) + 1;
                     return acc;
