@@ -45,7 +45,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'This feature is exclusively for Insider and VIP members.' }, { status: 403 });
         }
 
-        // 2. Check Limits
+        // Check Limits
         const currentMonth = new Date().toISOString().slice(0, 7); // "2026-01"
         let count = metadata.downloadsThisMonth || 0;
 
@@ -54,8 +54,11 @@ export async function POST(req: Request) {
             count = 0;
         }
 
-        if (count >= MIXTAPE_LIMIT_PER_MONTH && tier !== 'LABEL') { // Label gets unlimited
-            return NextResponse.json({ error: `You have reached your limit of ${MIXTAPE_LIMIT_PER_MONTH} mixtapes for this month. Wait until next month or contact support.` }, { status: 429 });
+        // Limits: Insider = 3, VIP/Label = 10 (or unlimited/higher)
+        const limit = (tier === 'VIP' || tier === 'LABEL' || metadata.role === 'admin') ? 10 : 3;
+
+        if (count >= limit && tier !== 'LABEL') {
+            return NextResponse.json({ error: `You have reached your limit of ${limit} mixtapes for this month. Upgrade tier or wait until next month.` }, { status: 429 });
         }
 
         // 3. Generate Links

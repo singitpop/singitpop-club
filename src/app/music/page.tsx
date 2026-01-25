@@ -12,7 +12,7 @@ import { albums as staticAlbums, Album } from '@/data/albumData';
 import { siteContent } from '@/config/siteContent';
 
 function MusicContent() {
-    const { isPro, isLabel } = useAuth();
+    const { isPro, isLabel, isInsider } = useAuth();
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -206,8 +206,8 @@ function MusicContent() {
                 <h1>SingIt Pop Music</h1>
                 <p>Stream authentic mixtapes, explore the discography, and unlock exclusive content.</p>
 
-                {/* Top Mixtape CTA */}
-                {selectedTracks.length > 0 && (
+                {/* Top Mixtape CTA - Only for Free Users (Insiders use Floating Box) */}
+                {selectedTracks.length > 0 && !isInsider && !isPro && !isLabel && (
                     <div style={{
                         marginTop: '1rem',
                         padding: '1rem',
@@ -293,7 +293,7 @@ function MusicContent() {
 
 
 
-                        {(filterMode === 'album' || filterMode === 'latest') && (
+                        {(filterMode === 'album' || filterMode === 'latest') && !isInsider && !isPro && !isLabel && (
                             <button
                                 className="primary-button"
                                 style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }}
