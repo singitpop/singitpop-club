@@ -21,7 +21,7 @@ const MAX_MIXTAPE_TRACKS = 12;
 const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
 
 export default function SongList({ tracks, albums, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid }: SongListProps) {
-    const { isPro, isInsider, user } = useAuth();
+    const { isPro, isInsider, isLabel, user } = useAuth();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
@@ -237,12 +237,14 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     '--index': index
                                 } as React.CSSProperties}
                             >
-                                <div
-                                    className={`${styles.checkbox} ${isSelected ? styles.checked : ''}`}
-                                    onClick={(e) => { e.stopPropagation(); toggleSelection(uniqueId); }}
-                                >
-                                    {isSelected && <Check size={14} strokeWidth={4} />}
-                                </div>
+                                {(isInsider || isPro || isLabel) && (
+                                    <div
+                                        className={`${styles.checkbox} ${isSelected ? styles.checked : ''}`}
+                                        onClick={(e) => { e.stopPropagation(); toggleSelection(uniqueId); }}
+                                    >
+                                        {isSelected && <Check size={14} strokeWidth={4} />}
+                                    </div>
+                                )}
 
                                 <div className={styles.mainInfo}>
                                     <button className={styles.playBtn} onClick={(e) => {
@@ -371,27 +373,62 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                 )}
             </div>
 
-            <div className={`${styles.mixtapeBar} ${selectedTracks.length > 0 ? styles.visible : ''}`}>
-                <ShoppingBag size={24} color="var(--accent)" />
-                <div className={styles.mixtapeInfo}>
-                    <span className={styles.mixtapeCount}>
-                        {selectedTracks.length}/{MAX_MIXTAPE_TRACKS} Tracks Selected
-                    </span>
-                    <span className={styles.mixtapeTotal}>Price: £8.99</span>
-                </div>
-                <div className={styles.purchaseOptions}>
+            {/* Floating Mixtape Status Box (Top Right) */}
+            {(isInsider || isPro || isLabel) && selectedTracks.length > 0 && (
+                <div className={styles.floatingMixtapeBox}>
+                    <div className={styles.floatingHeader}>
+                        <ShoppingBag size={18} color="var(--accent)" />
+                        <span>Mixtape Builder</span>
+                    </div>
+                    <div className={styles.floatingContent}>
+                        <strong>{selectedTracks.length} / {MAX_MIXTAPE_TRACKS} Selected</strong>
+                        <p style={{ fontSize: '0.8rem', opacity: 0.8 }}>Insider Perk: Free Claim</p>
+                    </div>
+
                     <button
-                        className={`${styles.optionBtn} ${styles.primary}`}
-                        onClick={() => {
-                            if (selectedTracks.length === 0) return;
-                            window.location.href = `/music/checkout?type=download&tracks=${selectedTracks.join(',')}`;
+                        className={styles.claimBtn}
+                        onClick={async () => {
+                            if (confirm(`Claim these ${selectedTracks.length} tracks as one of your monthly mixtapes?`)) {
+                                // Claim Logic
+                                try {
+                                    const res = await fetch('/api/user/mixtapes/claim', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ trackIds: selectedTracks })
+                                    });
+                                    const data = await res.json();
+
+                                    if (data.success) {
+                                        alert(`Success! You have ${data.remaining} claims left this month. Downloading...`);
+                                        // Trigger downloads
+                                        if (data.links && Array.isArray(data.links)) {
+                                            data.links.forEach((item: any, i: number) => {
+                                                setTimeout(() => {
+                                                    const link = document.createElement('a');
+                                                    link.href = item.url;
+                                                    link.setAttribute('download', `${item.title}.mp3`);
+                                                    document.body.appendChild(link);
+                                                    link.click();
+                                                    document.body.removeChild(link);
+                                                }, i * 500); // Stagger downloads
+                                            });
+                                        }
+                                        // Clear selection
+                                        selectedTracks.forEach(id => onToggleSelection(id));
+                                    } else {
+                                        alert(data.error || "Claim failed");
+                                    }
+                                } catch (e) {
+                                    alert("Error processing claim");
+                                    console.error(e);
+                                }
+                            }
                         }}
-                        title="Purchase Mixtape - £8.99"
                     >
-                        Purchase Mixtape (£8.99)
+                        Claim Mixtape 🎁
                     </button>
                 </div>
-            </div>
+            )}
 
             <audio
                 ref={audioRef}

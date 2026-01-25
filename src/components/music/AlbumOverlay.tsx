@@ -100,6 +100,11 @@ export default function AlbumOverlay({ isOpen, onClose, albums, onSelectAlbum, t
                             <div className={styles.albumInfo}>
                                 <h3>{album.title}</h3>
                                 <span className={styles.year}>{album.year} • {album.tracks.length} Tracks</span>
+                                {album.description && (
+                                    <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#ccc', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                        {album.description}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     ))}
