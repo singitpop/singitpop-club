@@ -119,7 +119,7 @@ export async function POST(req: Request) {
         return NextResponse.json({
             success: true,
             links: signedUrls,
-            remaining: MIXTAPE_LIMIT_PER_MONTH - (count + 1)
+            remaining: limit - (count + 1)
         });
 
     } catch (error) {

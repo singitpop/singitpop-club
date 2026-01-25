@@ -225,12 +225,14 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
 
     // Determine Album Type (Studio, Live, or Standard)
     // If ANY track is marked Studio/Live in Column K, the whole album gets that tag
+    // Determine Album Type (Studio, Live, or Standard)
     let albumType = 'standard';
-    const hasStudioTag = tracks.some(t => t.latestMarker && t.latestMarker.includes('studio'));
-    const hasLiveTag = tracks.some(t => t.latestMarker && t.latestMarker.includes('live'));
+    const hasStudioTag = tracks.some(t => t.latestMarker && t.latestMarker.toLowerCase().includes('studio'));
+    const hasLiveTag = tracks.some(t => t.latestMarker && t.latestMarker.toLowerCase().includes('live'));
 
-    if (hasStudioTag) albumType = 'studio';
-    else if (hasLiveTag) albumType = 'live';
+    // Priority: Live > Studio > Standard (default)
+    if (hasLiveTag) albumType = 'live';
+    else if (hasStudioTag) albumType = 'studio';
 
     // Initialize album
     albums[albumSlug] = {
@@ -437,6 +439,7 @@ console.log(`   - Year range: ${Math.min(...allYears)} - ${Math.max(...allYears)
 console.log(`\n📁 Output: ${outputPath}\n`);
 
 // Generate a summary JSON for review
+// Generate a summary JSON for review
 const summaryPath = path.join(__dirname, '../src/data/albumSummary.json');
 const summary = {
     generated: new Date().toISOString(),
@@ -456,6 +459,11 @@ const summary = {
 };
 fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
 console.log(`📋 Summary: ${summaryPath}\n`);
+
+// NEW: Generate full albums.json for S3 Metadata (Admin Dashboard Source)
+const fullJsonPath = path.join(__dirname, '../src/data/albums.json');
+fs.writeFileSync(fullJsonPath, JSON.stringify(albumsArray, null, 2));
+console.log(`📄 Full Metadata: ${fullJsonPath} (Ready for S3 Upload)\n`);
 
 function getAllGenres() {
     const genres = new Set();

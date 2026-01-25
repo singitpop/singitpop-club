@@ -1,6 +1,7 @@
 "use client";
 
 import { Play, Lock, Share2, Heart, Check, ShoppingBag, Download } from 'lucide-react';
+import { createPortal } from 'react-dom';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import styles from './SongList.module.css';
@@ -374,75 +375,84 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
             </div>
 
             {/* Floating Mixtape Status Box (Top Right) - Always visible for Premium to indicate feature availability */}
+            {/* Floating Mixtape Status Box - Portalled to body to escape parent stacking contexts */}
             {(isInsider || isPro || isLabel) && (
-                <div className={styles.floatingMixtapeBox}>
-                    <div className={styles.floatingHeader}>
-                        <ShoppingBag size={18} color="var(--accent)" />
-                        <span>Mixtape Builder</span>
-                    </div>
-                    <div className={styles.floatingContent}>
-                        {selectedTracks.length === 0 ? (
-                            <div style={{ opacity: 0.7, fontSize: '0.9rem' }}>
-                                <div><strong>0 / {MAX_MIXTAPE_TRACKS} Selected</strong></div>
-                                <div>Tap checkboxes to add tracks</div>
+                typeof document !== 'undefined' ? (
+                    // @ts-ignore - createPortal is standard but sometimes TS complains if not imported
+                    createPortal(
+                        <div className={styles.floatingMixtapeBox}>
+                            <div className={styles.floatingHeader}>
+                                <ShoppingBag size={18} color="var(--accent)" />
+                                <span>Mixtape Builder</span>
                             </div>
-                        ) : (
-                            <>
-                                <strong>{selectedTracks.length} / {MAX_MIXTAPE_TRACKS} Selected</strong>
-                                <p style={{ fontSize: '0.8rem', opacity: 0.8 }}>Insider Perk: Free Claim</p>
-                            </>
-                        )}
-                    </div>
+                            <div className={styles.floatingContent}>
+                                {selectedTracks.length === 0 ? (
+                                    <div style={{ opacity: 0.7, fontSize: '0.9rem' }}>
+                                        <div><strong>0 / {MAX_MIXTAPE_TRACKS} Selected</strong></div>
+                                        <div>Tap checkboxes to add tracks</div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <strong>{selectedTracks.length} / {MAX_MIXTAPE_TRACKS} Selected</strong>
+                                        <p style={{ fontSize: '0.8rem', opacity: 0.8 }}>
+                                            {isPro || isLabel ? "VIP Limit: 10 Mixes/Month" : "Insider Limit: 3 Mixes/Month"}
+                                        </p>
+                                    </>
+                                )}
+                            </div>
 
-                    {selectedTracks.length > 0 ? (
-                        <button
-                            className={styles.claimBtn}
-                            onClick={async () => {
-                                if (confirm(`Claim these ${selectedTracks.length} tracks as one of your monthly mixtapes?`)) {
-                                    // Claim Logic
-                                    try {
-                                        const res = await fetch('/api/user/mixtapes/claim', {
-                                            method: 'POST',
-                                            headers: { 'Content-Type': 'application/json' },
-                                            body: JSON.stringify({ trackIds: selectedTracks })
-                                        });
-                                        const data = await res.json();
-
-                                        if (data.success) {
-                                            alert(`Success! You have ${data.remaining} claims left this month. Downloading...`);
-                                            // Trigger downloads
-                                            if (data.links && Array.isArray(data.links)) {
-                                                data.links.forEach((item: any, i: number) => {
-                                                    setTimeout(() => {
-                                                        const link = document.createElement('a');
-                                                        link.href = item.url;
-                                                        link.setAttribute('download', `${item.title}.mp3`);
-                                                        document.body.appendChild(link);
-                                                        link.click();
-                                                        document.body.removeChild(link);
-                                                    }, i * 500); // Stagger downloads
+                            {selectedTracks.length > 0 ? (
+                                <button
+                                    className={styles.claimBtn}
+                                    onClick={async () => {
+                                        if (confirm(`Claim these ${selectedTracks.length} tracks as one of your monthly mixtapes?`)) {
+                                            // Claim Logic
+                                            try {
+                                                const res = await fetch('/api/user/mixtapes/claim', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ trackIds: selectedTracks })
                                                 });
+                                                const data = await res.json();
+
+                                                if (data.success) {
+                                                    alert(`Success! You have ${data.remaining} claims left this month. Downloading...`);
+                                                    // Trigger downloads
+                                                    if (data.links && Array.isArray(data.links)) {
+                                                        data.links.forEach((item: any, i: number) => {
+                                                            setTimeout(() => {
+                                                                const link = document.createElement('a');
+                                                                link.href = item.url;
+                                                                link.setAttribute('download', `${item.title}.mp3`);
+                                                                document.body.appendChild(link);
+                                                                link.click();
+                                                                document.body.removeChild(link);
+                                                            }, i * 500); // Stagger downloads
+                                                        });
+                                                    }
+                                                    // Clear selection
+                                                    selectedTracks.forEach(id => onToggleSelection(id));
+                                                } else {
+                                                    alert(data.error || "Claim failed");
+                                                }
+                                            } catch (e) {
+                                                alert("Error processing claim");
+                                                console.error(e);
                                             }
-                                            // Clear selection
-                                            selectedTracks.forEach(id => onToggleSelection(id));
-                                        } else {
-                                            alert(data.error || "Claim failed");
                                         }
-                                    } catch (e) {
-                                        alert("Error processing claim");
-                                        console.error(e);
-                                    }
-                                }
-                            }}
-                        >
-                            Claim Mixtape 🎁
-                        </button>
-                    ) : (
-                        <div style={{ fontSize: '0.8rem', color: '#666', fontStyle: 'italic', textAlign: 'center' }}>
-                            Start selecting...
-                        </div>
-                    )}
-                </div>
+                                    }}
+                                >
+                                    Claim Mixtape 🎁
+                                </button>
+                            ) : (
+                                <div style={{ fontSize: '0.8rem', color: '#666', fontStyle: 'italic', textAlign: 'center' }}>
+                                    Start selecting...
+                                </div>
+                            )}
+                        </div>,
+                        document.body
+                    )
+                ) : null
             )}
 
             <audio
