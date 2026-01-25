@@ -1,7 +1,7 @@
 /**
  * Album Data
  * Auto-generated from Excel spreadsheet
- * Generated: 2026-01-21T16:03:27.284Z
+ * Generated: 2026-01-23T16:32:26.805Z
  * 
  * Source: /Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx
  * Albums folder: /Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE
@@ -9,34 +9,34 @@
  */
 
 export interface Track {
-    id: number;
-    title: string;
-    duration: string;
-    plays: string;
-    locked: boolean;
-    price: number;
-    genre: string;
-    highResUrl?: string;
-    audioUrl?: string;
-    albumId?: string;
-    sourceFolder?: string;
-    isSingle?: boolean;
+  id: number;
+  title: string;
+  duration: string;
+  plays: string;
+  locked: boolean;
+  price: number;
+  genre: string;
+  highResUrl?: string;
+  audioUrl?: string;
+  albumId?: string;
+  sourceFolder?: string;
+  isSingle?: boolean;
 }
 
 export interface Album {
-    id: string;
-    title: string;
-    year: number;
-    genre: string[];
-    coverArt: string;
-    tracks: Track[];
-    releaseDate: string;
-    description?: string;
-    featured?: boolean;
-    trending?: boolean;
-    folderPath?: string;
-    mp3Count?: number;
-    type?: 'studio' | 'live' | 'standard';
+  id: string;
+  title: string;
+  year: number;
+  genre: string[];
+  coverArt: string;
+  tracks: Track[];
+  releaseDate: string;
+  description?: string;
+  featured?: boolean;
+  trending?: boolean;
+  folderPath?: string;
+  mp3Count?: number;
+  type?: 'studio' | 'live' | 'standard';
 }
 
 export const albums: Album[] = [
@@ -320,8 +320,6 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Stars%20Over%20Highway%209u.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/Stars%20Over%20Highway%209u.mp3",
         "sourceFolder": "Desert Winds And Open Roads",
         "albumId": "desert-winds-and-open-roads-2026",
         "isSingle": false
@@ -399,8 +397,8 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2026-01-16",
     "folderPath": "Desert Winds And Open Roads",
-    "mp3Count": 55,
-    "type": "studio"
+    "mp3Count": 33,
+    "type": "standard"
   },
   {
     "id": "echoes-of-light-2026",
@@ -7581,6 +7579,20 @@ export const albums: Album[] = [
         "sourceFolder": "New Year’s Odyssey",
         "albumId": "new-year-s-odyssey-2025",
         "isSingle": false
+      },
+      {
+        "id": 13,
+        "title": "Paradise Again",
+        "duration": "3:30",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "New Year",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/New%20Year%E2%80%99s%20Odyssey/Paradise%20Again/PARADISE%20AGAIN.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/New%20Year%E2%80%99s%20Odyssey/Paradise%20Again/PARADISE%20AGAIN.mp3",
+        "sourceFolder": "New Year’s Odyssey",
+        "albumId": "new-years-odyssey-2025",
+        "isSingle": true
       }
     ],
     "releaseDate": "2025-12-01",
@@ -7767,7 +7779,7 @@ export const albums: Album[] = [
     "releaseDate": "2025-12-08",
     "folderPath": "Live Step Into the Light",
     "mp3Count": 40,
-    "type": "live"
+    "type": "standard"
   },
   {
     "id": "night-drive-80s-beats-ballads-2024",
@@ -9371,57 +9383,57 @@ export const albums: Album[] = [
 
 // Helper functions
 export function getAlbumById(id: string): Album | undefined {
-    return albums.find(album => album.id === id);
+  return albums.find(album => album.id === id);
 }
 
 export function getAlbumsByGenre(genre: string): Album[] {
-    return albums.filter(album => 
-        album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
-    );
+  return albums.filter(album =>
+    album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
+  );
 }
 
 export function getAlbumsByYear(year: number): Album[] {
-    return albums.filter(album => album.year === year);
+  return albums.filter(album => album.year === year);
 }
 
 export function searchAlbums(query: string): Album[] {
-    const lowerQuery = query.toLowerCase();
-    return albums.filter(album =>
-        album.title.toLowerCase().includes(lowerQuery) ||
-        album.tracks.some(track => track.title.toLowerCase().includes(lowerQuery))
-    );
+  const lowerQuery = query.toLowerCase();
+  return albums.filter(album =>
+    album.title.toLowerCase().includes(lowerQuery) ||
+    album.tracks.some(track => track.title.toLowerCase().includes(lowerQuery))
+  );
 }
 
 export function getAllGenres(): string[] {
-    const genres = new Set<string>();
-    albums.forEach(album => {
-        album.genre.forEach(g => genres.add(g));
-    });
-    return Array.from(genres).sort();
+  const genres = new Set<string>();
+  albums.forEach(album => {
+    album.genre.forEach(g => genres.add(g));
+  });
+  return Array.from(genres).sort();
 }
 
 export function getAllYears(): number[] {
-    const years = new Set<number>();
-    albums.forEach(album => years.add(album.year));
-    return Array.from(years).sort((a, b) => b - a);
+  const years = new Set<number>();
+  albums.forEach(album => years.add(album.year));
+  return Array.from(years).sort((a, b) => b - a);
 }
 
 // Latest Release Helpers
 export function getLatestStudioAlbum(): Album | undefined {
-    // Filter for type 'studio', fallback to 'standard' if none found
-    // Sort by year descending, then by releaseDate if available
-    const studioAlbums = albums.filter(a => a.type === 'studio');
-    return studioAlbums.length > 0 ? studioAlbums[0] : albums[0];
+  // Filter for type 'studio', fallback to 'standard' if none found
+  // Sort by year descending, then by releaseDate if available
+  const studioAlbums = albums.filter(a => a.type === 'studio');
+  return studioAlbums.length > 0 ? studioAlbums[0] : albums[0];
 }
 
 export function getLatestSingle(): Track | undefined {
-    // Find the latest album that contains a single
-    // Then find the specific track marked as single
-    for (const album of albums) {
-        const singleTrack = album.tracks.find(t => t.isSingle);
-        if (singleTrack) {
-            return singleTrack;
-        }
+  // Find the latest album that contains a single
+  // Then find the specific track marked as single
+  for (const album of albums) {
+    const singleTrack = album.tracks.find(t => t.isSingle);
+    if (singleTrack) {
+      return singleTrack;
     }
-    return undefined;
+  }
+  return undefined;
 }

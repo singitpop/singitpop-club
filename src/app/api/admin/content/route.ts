@@ -67,7 +67,7 @@ export async function GET(req: NextRequest) {
         if (action === 'latest') {
             // Get automatically selected latest albums
             const studioAlbums = albums
-                .filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
+                .filter(a => (a.type === 'studio' || a.type === 'standard') && new Date(a.releaseDate) <= new Date())
                 .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
             const latestStudio = studioAlbums[0];
 
@@ -177,7 +177,8 @@ export async function GET(req: NextRequest) {
                 currentLatestSingleId: metadata.latestSingleId,
                 currentLatestSingleUid: metadata.latestSingleUid, // Return the precise UID
                 currentLatestVideoId: metadata.latestVideoId,
-                currentLatestVideoTitle: metadata.latestVideoTitle
+                currentLatestVideoTitle: metadata.latestVideoTitle,
+                currentLatestVideoAlbum: metadata.latestVideoAlbum // NEW
             });
         }
 
@@ -242,11 +243,13 @@ export async function POST(req: NextRequest) {
         }
 
         if (action === 'set_latest_video') {
-            const { videoId, videoTitle } = data;
+            const { videoId, videoTitle, videoAlbum } = data;
 
             const metadata = await readMetadata();
             metadata.latestVideoId = videoId;
             metadata.latestVideoTitle = videoTitle;
+            // NEW: optional manual album override
+            metadata.latestVideoAlbum = videoAlbum || "";
 
             const success = await writeMetadata(metadata);
 

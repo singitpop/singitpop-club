@@ -51,6 +51,7 @@ export default function ContentPage() {
     const [currentLatestSingleUid, setCurrentLatestSingleUid] = useState<string | null>(null);
     const [currentLatestVideoId, setCurrentLatestVideoId] = useState<string | null>(null);
     const [currentLatestVideoTitle, setCurrentLatestVideoTitle] = useState<string>("");
+    const [currentLatestVideoAlbum, setCurrentLatestVideoAlbum] = useState<string>("");
     const [isLoading, setIsLoading] = useState(true);
 
     // Modal State
@@ -87,6 +88,7 @@ export default function ContentPage() {
             setSingles(singlesData.singles);
             setCurrentLatestVideoId(singlesData.currentLatestVideoId);
             setCurrentLatestVideoTitle(singlesData.currentLatestVideoTitle || "");
+            setCurrentLatestVideoAlbum(singlesData.currentLatestVideoAlbum || "");
 
             if (singlesData.currentLatestSingleUid) {
                 setCurrentLatestSingleUid(singlesData.currentLatestSingleUid);
@@ -136,7 +138,8 @@ export default function ContentPage() {
                     action: 'set_latest_video',
                     data: {
                         videoId,
-                        videoTitle: currentLatestVideoTitle
+                        videoTitle: currentLatestVideoTitle,
+                        videoAlbum: currentLatestVideoAlbum
                     }
                 })
             });
@@ -377,6 +380,14 @@ export default function ContentPage() {
                             placeholder="Video Title (e.g. Riding Down The Line - Official Music Video)"
                             value={currentLatestVideoTitle}
                             onChange={(e) => setCurrentLatestVideoTitle(e.target.value)}
+                            className={styles.input}
+                            style={{ width: '100%' }}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Album Name (Optional override, e.g. New Year's Odyssey)"
+                            value={currentLatestVideoAlbum}
+                            onChange={(e) => setCurrentLatestVideoAlbum(e.target.value)}
                             className={styles.input}
                             style={{ width: '100%' }}
                         />

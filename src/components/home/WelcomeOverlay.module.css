@@ -1,77 +1,126 @@
 .overlayContainer {
     position: absolute;
-    bottom: 80px;
-    /* Positioned above the bottom edge */
-    left: 5%;
+    /* Optical center-left vertical alignment */
+    top: 35%;
+    transform: translateY(-50%);
+    left: 8%;
     z-index: 20;
-    max-width: 450px;
+    max-width: 500px;
     width: 90%;
     pointer-events: auto;
 }
 
 .glassPanel {
-    background: rgba(20, 20, 20, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Deep, premium glass effect */
+    background: rgba(8, 8, 12, 0.65);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+
+    /* Sleek border with subtle gradient glow */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 4px solid #8b5cf6;
+    /* Accent accentuation */
+
     border-radius: 24px;
-    padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: 3rem;
+
+    /* Cinematic shadow */
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+
     color: white;
+    transition: transform 0.3s ease;
 }
 
 .title {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 3.5rem;
+    /* Larger, more impactful */
+    font-weight: 800;
     margin-bottom: 0.75rem;
-    background: linear-gradient(90deg, #fff, #ccc);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.02em;
+
+    /* Crisp White for legibility over video, with subtle shine */
+    color: white;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+    letter-spacing: -0.04em;
+    line-height: 1.0;
 }
 
 .text {
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1.15rem;
+    line-height: 1.5;
     color: rgba(255, 255, 255, 0.85);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    max-width: 90%;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .actions {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     align-items: center;
 }
 
+/* Custom Dismiss Button */
 .dismissBtn {
     background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: color 0.2s;
-    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
 }
 
 .dismissBtn:hover {
-    color: white;
-    text-decoration: underline;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    transform: translateY(-1px);
 }
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
     .overlayContainer {
-        bottom: 120px;
-        /* Make room for mobile bottom nav if any */
+        top: auto;
+        bottom: 140px;
         left: 50%;
         transform: translateX(-50%) !important;
-        /* Override motion x if needed, but motion handles y/opacity */
-        width: 90%;
+        width: 92%;
+        max-width: none;
         text-align: center;
+    }
+
+    .glassPanel {
+        padding: 2rem;
+        background: rgba(8, 8, 12, 0.85);
+        /* Darker on mobile for readability */
+        backdrop-filter: blur(30px);
+    }
+
+    .title {
+        font-size: 2.25rem;
+    }
+
+    .text {
+        font-size: 1rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .actions {
         justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .dismissBtn {
+        width: 100%;
+        border: none;
+        color: rgba(255, 255, 255, 0.6);
+        padding: 0.5rem;
     }
 }

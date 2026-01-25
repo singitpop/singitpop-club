@@ -40,7 +40,8 @@ export default function VisualScroll() {
                             newItems[1] = {
                                 ...newItems[1],
                                 title: singleTitle,
-                                image: data.latestSingleTrackCover || newItems[1].image
+                                // ALWAYS prefer the specific track cover if available
+                                image: data.latestSingleTrackCover || data.backgroundCoverArt || newItems[1].image
                             };
                             console.log("[VisualScroll] Updated Latest Single:", singleTitle);
                         } else {
@@ -55,7 +56,7 @@ export default function VisualScroll() {
                         newItems[2] = {
                             ...newItems[2],
                             title: data.latestLiveAlbumTitle,
-                            image: data.latestLiveAlbumCover
+                            image: data.latestLiveAlbumCover || '/images/album-step-live.jpg'
                         };
                     }
 

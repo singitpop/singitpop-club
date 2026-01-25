@@ -18,8 +18,7 @@ export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
             <div className={styles.glassPanel}>
                 <h2 className={styles.title}>Welcome to the Club</h2>
                 <p className={styles.text}>
-                    Join the SingIt Pop family for exclusive access to unreleased tracks,
-                    behind-the-scenes content, and special VIP events.
+                    Join the SingIt Pop family for exclusive access to unreleased tracks.
                 </p>
                 <div className={styles.actions}>
                     <Link href="/club" className="primary-button">

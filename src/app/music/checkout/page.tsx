@@ -2,32 +2,12 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { ShoppingBag, Disc, Package, Download, Check, Loader2 } from 'lucide-react';
+import { ShoppingBag, Check, Loader2 } from 'lucide-react';
 import styles from './page.module.css';
 
-import { albums, Track } from '@/data/albumData';
-
-// Helper to find track by composite ID (albumId:trackId)
-const findTrackById = (compositeId: string): Track | undefined => {
-    // Handle composite ID "albumId:trackId"
-    if (compositeId.includes(':')) {
-        const [albumId, trackIdStr] = compositeId.split(':');
-        const album = albums.find(a => a.id === albumId);
-        if (album) {
-            return album.tracks.find(t => String(t.id) === trackIdStr);
-        }
-    }
-    // Fallback for legacy numeric IDs (if any links exist) - try to find first match
-    else {
-        for (const album of albums) {
-            const track = album.tracks.find(t => String(t.id) === compositeId);
-            if (track) return track;
-        }
-    }
-    return undefined;
-};
-
+import { Track, Album } from '@/data/albumData';
 import { siteContent } from '@/config/siteContent';
+import { useAuth } from '@/context/AuthContext';
 
 const PRODUCT_TYPES = {
     download: {
@@ -38,18 +18,19 @@ const PRODUCT_TYPES = {
     }
 };
 
-import { useAuth } from '@/context/AuthContext';
-
 function CheckoutContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const { isInsider, isPro, isLabel } = useAuth(); // Auth integration
+    const { isInsider, isPro, isLabel } = useAuth();
 
     // Check eligibility for free mixtape
     const isEligibleForFree = isInsider || isPro || isLabel;
 
-    const [selectedType, setSelectedType] = useState<'download'>('download'); // Restricted types
+    const [selectedType, setSelectedType] = useState<'download'>('download');
     const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
+    const [albums, setAlbums] = useState<Album[]>([]);
+    const [isFetchingData, setIsFetchingData] = useState(true);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -61,6 +42,25 @@ function CheckoutContent() {
     const [orderPlaced, setOrderPlaced] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    // Fetch Albums Data
+    useEffect(() => {
+        async function fetchAlbums() {
+            try {
+                const res = await fetch('/api/content/albums');
+                if (res.ok) {
+                    const data = await res.json();
+                    setAlbums(data);
+                } else {
+                    console.error("Failed to fetch albums");
+                }
+            } catch (e) {
+                console.error("Error fetching albums:", e);
+            } finally {
+                setIsFetchingData(false);
+            }
+        }
+        fetchAlbums();
+    }, []);
 
     useEffect(() => {
         // Force download type
@@ -76,30 +76,78 @@ function CheckoutContent() {
             }
         }
         if (searchParams.get('canceled')) {
-            // Optional: Show a message
             console.log("Order canceled");
         }
     }, [searchParams]);
 
+    // Helper to find track by composite ID (albumId:trackId) using DYNAMIC albums
+    const findTrackById = (compositeId: string): Track | undefined => {
+        if (!albums || albums.length === 0) return undefined;
+
+        // Handle composite ID "albumId:trackId" or "albumId-trackId"
+        // Note: The Music Page uses "albumId-trackId" or "id" (if legacy)
+        // We should handle both separators just in case, though the Music page uses hyphens mostly.
+
+        let albumId = '';
+        let trackIdStr = '';
+
+        if (compositeId.includes(':')) {
+            [albumId, trackIdStr] = compositeId.split(':');
+        } else if (compositeId.includes('-')) {
+            // CAREFUL: Some standard UUIDs might have hyphens. 
+            // But our album IDs are usually slug-like or UUIDs. 
+            // Our track IDs are numbers.
+            // The Music Page constructs ID as: `foundTrack.albumId}-${foundTrack.id}`
+
+            // Strategy: Try to split by last hyphen if we assume track ID is numeric or short?
+            // Or iterate albums to find a matching track ID within an album ID?
+
+            // Safer approach: Iterate all tracks and verify.
+
+            for (const album of albums) {
+                // Check if compositeId matches specific format if we knew it
+                // But let's look for exact match if we reconstructed it
+
+                const t = album.tracks.find(t => {
+                    const constructedId = `${album.id}-${t.id}`;
+                    return constructedId === compositeId;
+                });
+                if (t) return t;
+            }
+        }
+
+        // Fallback: Check for exact album ID match if split worked (for 'colon' case)
+        if (albumId && trackIdStr) {
+            const album = albums.find(a => a.id === albumId);
+            if (album) {
+                return album.tracks.find(t => String(t.id) === trackIdStr);
+            }
+        }
+
+        // Fallback for legacy numeric IDs (if any links exist)
+        for (const album of albums) {
+            const track = album.tracks.find(t => String(t.id) === compositeId);
+            if (track) return track;
+        }
+        return undefined;
+    };
+
     // Resolve track objects from IDs
-    const selectedTrackDetails = selectedTrackIds
+    // We only rely on findTrackById once albums are loaded
+    const selectedTrackDetails = isFetchingData ? [] : selectedTrackIds
         .map(id => findTrackById(id))
         .filter((t): t is Track => t !== undefined);
 
     // Fixed pricing model
-    // const tracksPrice = selectedTrackDetails.reduce((sum, t) => sum + t.price, 0);
     const productPrice = PRODUCT_TYPES['download'].price;
-    const totalPrice = isEligibleForFree ? 0.00 : productPrice; // Override for Members
-    const needsShipping = false; // Store-only digital
+    const totalPrice = isEligibleForFree ? 0.00 : productPrice;
+    const needsShipping = false;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
 
-        // Bypass Stripe for eligible members
         if (isEligibleForFree) {
-            // No backend call needed for simple Claim (unless logging stats)
-            // Simulating API latency for better UX
             setTimeout(() => {
                 setOrderPlaced(true);
             }, 800);
@@ -119,7 +167,7 @@ function CheckoutContent() {
             const data = await res.json();
 
             if (data.url) {
-                window.location.href = data.url; // Redirect to Stripe
+                window.location.href = data.url;
             } else {
                 alert('Checkout failed: ' + (data.error || 'Unknown error'));
                 setIsLoading(false);
@@ -143,18 +191,10 @@ function CheckoutContent() {
                         ? "As a valued member, this mixtape is on the house."
                         : "Thank you for your purchase. You'll receive a confirmation email shortly."}
                 </p>
-                {needsShipping && (
-                    <p className={styles.shippingNote}>
-                        Your {PRODUCT_TYPES[selectedType].name} will be shipped to:<br />
-                        <strong>{formData.address}, {formData.city}, {formData.postcode}</strong>
-                    </p>
-                )}
-                {!needsShipping && (
-                    <div className={styles.downloadNote}>
-                        <p>Enjoy your custom mixtape!</p>
-                        {isEligibleForFree && <p style={{ fontSize: '0.9rem', color: '#aaa', marginTop: '0.5rem' }}>Your songs are ready for playback.</p>}
-                    </div>
-                )}
+                <div className={styles.downloadNote}>
+                    <p>Enjoy your custom mixtape!</p>
+                    {isEligibleForFree && <p style={{ fontSize: '0.9rem', color: '#aaa', marginTop: '0.5rem' }}>Your songs are ready for playback.</p>}
+                </div>
                 <button onClick={() => router.push('/music')} className="primary-button">
                     Back to Music
                 </button>
@@ -162,11 +202,11 @@ function CheckoutContent() {
         );
     }
 
-    if (isLoading) {
+    if (isLoading || isFetchingData) {
         return (
             <div className={styles.success} style={{ justifyContent: 'center', height: '60vh' }}>
                 <Loader2 size={48} className="spin" />
-                <h2>{isEligibleForFree ? "Claiming Download..." : "Redirecting to Stripe..."}</h2>
+                <h2>{isFetchingData ? "Loading Track Details..." : (isEligibleForFree ? "Claiming Download..." : "Redirecting to Stripe...")}</h2>
             </div>
         );
     }
@@ -182,7 +222,6 @@ function CheckoutContent() {
             <div className={styles.grid}>
                 {/* Left: Product Selection */}
                 <div className={styles.productSelection}>
-                    {/* <h2>Choose Format</h2> - Removed as per request */}
                     <div className={styles.productSummary}>
                         <div className={styles.productCard} style={{ cursor: 'default', borderColor: 'var(--primary-color)' }}>
                             <span className={styles.productIcon}>{PRODUCT_TYPES.download.icon}</span>
@@ -208,18 +247,24 @@ function CheckoutContent() {
                                 ? `Album Selection (${selectedTrackIds.length} tracks)`
                                 : `Your Mixtape (${selectedTrackIds.length}/12 tracks)`}
                         </h3>
-                        {selectedTrackDetails.map(track => (
-                            <div key={track.id} className={styles.trackItem}>
-                                <span>{track.title}</span>
-                                <span>{track.duration}</span>
+                        {selectedTrackDetails.length === 0 && selectedTrackIds.length > 0 ? (
+                            <div style={{ color: '#ff6b6b', fontSize: '0.9rem' }}>
+                                Error: Could not resolve tracks. Please try selecting tracks again from the Music page.
                             </div>
-                        ))}
+                        ) : (
+                            selectedTrackDetails.map(track => (
+                                <div key={track.id} className={styles.trackItem}>
+                                    <span>{track.title}</span>
+                                    <span>{track.duration}</span>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
 
                 {/* Right: Delivery Form */}
                 <div className={styles.checkoutForm}>
-                    <h2>{needsShipping ? 'Delivery Details' : 'Contact Information'}</h2>
+                    <h2>Contact Information</h2>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.formGroup}>
                             <label>Email *</label>
@@ -231,72 +276,6 @@ function CheckoutContent() {
                                 placeholder="your@email.com"
                             />
                         </div>
-
-                        {needsShipping && (
-                            <>
-                                <div className={styles.formGroup}>
-                                    <label>Full Name *</label>
-                                    <input
-                                        type="text"
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        required
-                                        placeholder="John Smith"
-                                    />
-                                </div>
-
-                                <div className={styles.formGroup}>
-                                    <label>Address *</label>
-                                    <input
-                                        type="text"
-                                        value={formData.address}
-                                        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                                        required
-                                        placeholder="123 High Street"
-                                    />
-                                </div>
-
-                                <div className={styles.formRow}>
-                                    <div className={styles.formGroup}>
-                                        <label>City *</label>
-                                        <input
-                                            type="text"
-                                            value={formData.city}
-                                            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                                            required
-                                            placeholder="London"
-                                        />
-                                    </div>
-
-                                    <div className={styles.formGroup}>
-                                        <label>Postcode *</label>
-                                        <input
-                                            type="text"
-                                            value={formData.postcode}
-                                            onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
-                                            required
-                                            placeholder="SW1A 1AA"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className={styles.formGroup}>
-                                    <label>Country *</label>
-                                    <select
-                                        value={formData.country}
-                                        onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                                        required
-                                    >
-                                        <option>United Kingdom</option>
-                                        <option>Ireland</option>
-                                        <option>United States</option>
-                                        <option>Canada</option>
-                                        <option>Australia</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-                            </>
-                        )}
 
                         {/* Order Summary */}
                         <div className={styles.orderSummary}>
@@ -311,22 +290,14 @@ function CheckoutContent() {
                                     )}
                                 </span>
                             </div>
-                            {needsShipping && (
-                                <div className={styles.summaryRow}>
-                                    <span>Shipping (UK Standard)</span>
-                                    <span>£3.99</span>
-                                </div>
-                            )}
                             <div className={`${styles.summaryRow} ${styles.total}`}>
                                 <span>Total</span>
-                                <span>£{(totalPrice + (needsShipping ? 3.99 : 0)).toFixed(2)}</span>
+                                <span>£{totalPrice.toFixed(2)}</span>
                             </div>
                         </div>
 
                         <button type="submit" className={`primary-button ${styles.submitBtn}`}>
-                            {needsShipping ? 'Place Order' : (
-                                isEligibleForFree ? 'Claim Free Download' : 'Complete Purchase'
-                            )}
+                            {isEligibleForFree ? 'Claim Free Download' : 'Complete Purchase'}
                         </button>
 
                         <p className={styles.note}>
@@ -350,3 +321,4 @@ export default function MixtapeCheckout() {
         </div>
     );
 }
+

@@ -1,8 +1,20 @@
 "use client";
 
 import FanLeaderboard from '@/components/fans/FanLeaderboard';
-import { Play, Heart, Share2, Sparkles, Filter } from 'lucide-react';
+import { Play, Heart, Share2, Sparkles, Filter, Pause } from 'lucide-react';
 import styles from './page.module.css';
+import { useState, useRef, useEffect } from 'react';
+import { albums } from '@/data/albumData';
+
+// Map playlist IDs to real tracks for demo purposes
+const trackMapping: Record<number, { albumId: string, trackId: number }> = {
+    1: { albumId: 'a-love-that-never-ends-2026', trackId: 1 }, // Summer Vibes -> Slow Motion Love
+    2: { albumId: 'echoes-of-light-2026', trackId: 1 }, // Sad Boi -> The Silent Conversation
+    3: { albumId: 'desert-winds-and-open-roads-2026', trackId: 1 }, // Gym -> Riding Down the Line
+    4: { albumId: 'valentine-country-2026', trackId: 1 }, // Midnight -> Front Porch
+    5: { albumId: 'echoes-of-light-2026', trackId: 2 }, // Acoustic -> Stillness
+    6: { albumId: 'a-love-that-never-ends-2026', trackId: 4 }, // Party -> Unspoken Fire
+};
 
 const playlists = [
     { id: 1, title: 'Summer Vibes Mix', creator: '@NeonDreamer', likes: 240, color: 'linear-gradient(135deg, #cd93ff 0%, #a5fecb 100%)', size: 'large' }, // Lavender to Mint (Fresh/Light)
@@ -14,6 +26,80 @@ const playlists = [
 ];
 
 export default function FanAlbumsPage() {
+    const [playingId, setPlayingId] = useState<number | null>(null);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
+
+    // Stop audio when component unmounts
+    useEffect(() => {
+        return () => {
+            if (audioRef.current) {
+                audioRef.current.pause();
+            }
+        };
+    }, []);
+
+    // Handle Signed URL fetching and playback
+    useEffect(() => {
+        if (!playingId) {
+            if (audioRef.current) audioRef.current.pause();
+            return;
+        }
+
+        const map = trackMapping[playingId];
+        if (!map) return;
+
+        const album = albums.find(a => a.id === map.albumId);
+        const track = album?.tracks.find(t => t.id === map.trackId);
+
+        if (!track || !track.audioUrl) {
+            console.error("Track not found or no audio URL");
+            setPlayingId(null);
+            return;
+        }
+
+        async function playTrack() {
+            try {
+                const res = await fetch('/api/music/sign', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: track!.audioUrl })
+                });
+
+                if (!res.ok) throw new Error("Failed to sign URL");
+
+                const data = await res.json();
+                if (data.signedUrl) {
+                    setCurrentSignedUrl(data.signedUrl);
+                    // Audio element will auto-play when src changes effectively if we manage it right, 
+                    // but safer to trigger play() in a useEffect dependency on url
+                }
+            } catch (error) {
+                console.error("Playback error:", error);
+                setPlayingId(null);
+            }
+        }
+
+        playTrack();
+    }, [playingId]);
+
+    // Effect to trigger play when URL updates
+    useEffect(() => {
+        if (currentSignedUrl && audioRef.current) {
+            audioRef.current.src = currentSignedUrl;
+            audioRef.current.play().catch(e => console.error("Play failed:", e));
+        }
+    }, [currentSignedUrl]);
+
+    const handlePlay = (id: number) => {
+        if (playingId === id) {
+            setPlayingId(null); // Pause/Stop
+            if (audioRef.current) audioRef.current.pause();
+        } else {
+            setPlayingId(id);
+        }
+    };
+
     return (
         <div className={`container ${styles.page}`}>
             {/* Spotlight Hero */}
@@ -22,7 +108,10 @@ export default function FanAlbumsPage() {
                     <div className={styles.badge}><Sparkles size={14} /> Creator of the Month</div>
                     <h1>@NeonDreamer</h1>
                     <p className={styles.quote}>"I just wanted to capture that feeling of driving with the windows down."</p>
-                    <button className={styles.listenBtn}><Play size={18} fill="currentColor" /> Listen to 'Summer Vibes'</button>
+                    <button className={styles.listenBtn} onClick={() => handlePlay(1)}>
+                        {playingId === 1 ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}
+                        {playingId === 1 ? "Listening..." : "Listen to 'Summer Vibes'"}
+                    </button>
                 </div>
                 <div className={styles.spotlightVisual} />
             </section>
@@ -41,7 +130,9 @@ export default function FanAlbumsPage() {
                         {playlists.map((playlist) => (
                             <div key={playlist.id} className={styles.card} style={{ background: playlist.color }}>
                                 <div className={styles.cardOverlay}>
-                                    <button className={styles.playFab}><Play size={24} fill="currentColor" /></button>
+                                    <button className={styles.playFab} onClick={() => handlePlay(playlist.id)}>
+                                        {playingId === playlist.id ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" />}
+                                    </button>
                                     <div className={styles.cardInfo}>
                                         <h4>{playlist.title}</h4>
                                         <div className={styles.meta}>
@@ -75,6 +166,13 @@ export default function FanAlbumsPage() {
                     <FanLeaderboard />
                 </div>
             </div>
+
+            {/* Hidden Audio Element */}
+            <audio
+                ref={audioRef}
+                onEnded={() => setPlayingId(null)}
+                onError={(e) => { console.error("Audio error", e); setPlayingId(null); }}
+            />
         </div>
     );
 }

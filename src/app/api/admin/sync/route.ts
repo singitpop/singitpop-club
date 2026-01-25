@@ -75,17 +75,46 @@ export async function POST(request: NextRequest) {
         const listFoldersRes = await (s3Client as any).send(listFoldersCmd);
         const s3Folders = listFoldersRes.CommonPrefixes?.map((p: any) => p.Prefix) || [];
 
-        // 4. Group Rows by Album
+        // 4. Group Rows by Album (Smart Grouping)
         const albumsMap = new Map<string, any>();
         let trackIdCounter = 1;
 
+        // Helper: Normalize Album Title for Grouping Key
+        // "New Year's Odyssey" -> "newyearsodyssey"
+        // "New Year’s Odyssey " -> "newyearsodyssey"
+        const getAlbumKey = (title: string) => {
+            return title.toString().toLowerCase()
+                .replace(/['’‘`]/g, '') // Remove all apostrophe variants
+                .replace(/[^a-z0-9]/g, ''); // Remove non-alphanumeric
+        };
+
         const rowsByAlbum = new Map<string, any[]>();
+
+        // First pass: Group raw rows by Normalized Key
+        const rawGroups = new Map<string, any[]>();
+
         rawRows.forEach((row: any) => {
-            const title = row['Album Title'] || row['Album']; // Fallback
+            let title = row['Album Title'] || row['Album'];
             if (!title) return;
-            if (!rowsByAlbum.has(title)) rowsByAlbum.set(title, []);
-            rowsByAlbum.get(title)!.push(row);
+
+            const key = getAlbumKey(title);
+            if (!rawGroups.has(key)) rawGroups.set(key, []);
+            rawGroups.get(key)!.push(row);
         });
+
+        // Convert back to [BestTitle, Rows] map
+        // We pick the most frequent or first title as the "Official" title for the group
+        for (const [key, rows] of rawGroups.entries()) {
+            // Find the most common title string used in this group (to fix typos)
+            const titleCounts = rows.reduce((acc: any, row: any) => {
+                const t = row['Album Title'] || row['Album'];
+                acc[t] = (acc[t] || 0) + 1;
+                return acc;
+            }, {});
+
+            const officialTitle = Object.keys(titleCounts).sort((a, b) => titleCounts[b] - titleCounts[a])[0];
+            rowsByAlbum.set(officialTitle, rows);
+        }
 
         // Processing
         for (const [albumTitle, rows] of rowsByAlbum.entries()) {
