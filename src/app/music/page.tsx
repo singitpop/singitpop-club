@@ -204,7 +204,14 @@ function MusicContent() {
 
             <div className={styles.header}>
                 <h1>SingIt Pop Music</h1>
-                <p>Stream authentic mixtapes, explore the discography, and unlock exclusive content.</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
+                    <p>Create your own custom Mixtapes (Club Members), explore the discography, and unlock exclusive content.</p>
+                    {(isInsider || isPro || isLabel) && (
+                        <p style={{ fontSize: '0.9rem', color: 'var(--accent)', background: 'rgba(255,0,128,0.1)', padding: '0.5rem 1rem', borderRadius: '20px', border: '1px solid rgba(255,0,128,0.2)' }}>
+                            <strong>💡 Tip:</strong> Tap the checkbox next to any track to start building your mix!
+                        </p>
+                    )}
+                </div>
 
                 {/* Top Mixtape CTA - Only for Free Users (Insiders use Floating Box) */}
                 {selectedTracks.length > 0 && !isInsider && !isPro && !isLabel && (
