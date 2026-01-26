@@ -531,6 +531,8 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     key={i}
                                     href={link.url}
                                     download={link.title} // Hint to browser
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
                                     style={{ justifyContent: 'space-between', fontSize: '0.9rem' }}
                                 >
