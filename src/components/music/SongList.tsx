@@ -32,6 +32,8 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
     const [claimsLeft, setClaimsLeft] = useState<number | null>(null);
     const [downloadLinks, setDownloadLinks] = useState<{ title: string; url: string }[]>([]);
     const [showDownloadModal, setShowDownloadModal] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [isClaiming, setIsClaiming] = useState(false);
 
     // Fetch initial claims usage
     useEffect(() => {
@@ -206,6 +208,42 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
 
     const toggleSelection = (uniqueId: string) => {
         onToggleSelection(uniqueId);
+    };
+
+    const processClaim = async () => {
+        setIsClaiming(true);
+        // Claim Logic
+        try {
+            const res = await fetch('/api/user/mixtapes/claim', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ trackIds: selectedTracks })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                // Update local state immediately
+                if (data.remaining !== undefined) setClaimsLeft(data.remaining);
+
+                // Trigger downloads via Modal
+                if (data.links && Array.isArray(data.links)) {
+                    setDownloadLinks(data.links);
+                    setShowConfirmModal(false); // Close confirm
+                    setShowDownloadModal(true); // Open download
+                }
+                // Clear selection
+                selectedTracks.forEach(id => onToggleSelection(id));
+            } else {
+                alert(data.error || "Claim failed");
+                setShowConfirmModal(false);
+            }
+        } catch (e) {
+            alert("Error processing claim");
+            console.error(e);
+            setShowConfirmModal(false);
+        } finally {
+            setIsClaiming(false);
+        }
     };
 
     return (
@@ -433,39 +471,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                             {selectedTracks.length > 0 ? (
                                 <button
                                     className={styles.claimBtn}
-                                    onClick={async () => {
-                                        if (confirm(`Claim these ${selectedTracks.length} tracks as one of your monthly mixtapes?`)) {
-                                            // Claim Logic
-                                            try {
-                                                const res = await fetch('/api/user/mixtapes/claim', {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({ trackIds: selectedTracks })
-                                                });
-                                                const data = await res.json();
-
-                                                if (data.success) {
-                                                    // Update local state immediately
-                                                    if (data.remaining !== undefined) setClaimsLeft(data.remaining);
-
-                                                    alert(`Success! Starting downloads... Please allow popups if prompted.`);
-
-                                                    // Trigger downloads via Modal (prevents browser blocking)
-                                                    if (data.links && Array.isArray(data.links)) {
-                                                        setDownloadLinks(data.links);
-                                                        setShowDownloadModal(true);
-                                                    }
-                                                    // Clear selection
-                                                    selectedTracks.forEach(id => onToggleSelection(id));
-                                                } else {
-                                                    alert(data.error || "Claim failed");
-                                                }
-                                            } catch (e) {
-                                                alert("Error processing claim");
-                                                console.error(e);
-                                            }
-                                        }
-                                    }}
+                                    onClick={() => setShowConfirmModal(true)}
                                 >
                                     Claim Mixtape 🎁
                                 </button>
@@ -519,7 +525,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                             Your tracks have been claimed successfully.<br />
                             Click below to download each one.
                         </p>
-                        <div className={styles.modalActions} style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '5px' }}>
+                        <div className={styles.modalActions} style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '5px', marginBottom: '1rem' }}>
                             {downloadLinks.map((link, i) => (
                                 <a
                                     key={i}
@@ -533,8 +539,41 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     </span>
                                 </a>
                             ))}
-                            <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowDownloadModal(false)}>
-                                Done
+                        </div>
+                        <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowDownloadModal(false)}>
+                            Done
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Confirm Claim Modal */}
+            {showConfirmModal && (
+                <div className={styles.modalOverlay} onClick={() => !isClaiming && setShowConfirmModal(false)}>
+                    <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                        <h3 className={styles.modalTitle}>Confirm Claim 🎁</h3>
+                        <p className={styles.modalText}>
+                            Claim these {selectedTracks.length} tracks as one of your monthly mixtapes?
+                            <br />
+                            <small style={{ opacity: 0.7 }}>
+                                {claimsLeft !== null ? `${claimsLeft} claims remaining this month` : 'Processing...'}
+                            </small>
+                        </p>
+                        <div className={styles.modalActions}>
+                            <button
+                                className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
+                                onClick={processClaim}
+                                disabled={isClaiming}
+                                style={{ opacity: isClaiming ? 0.7 : 1 }}
+                            >
+                                {isClaiming ? 'Processing...' : 'Yes, Claim Now'}
+                            </button>
+                            <button
+                                className={`${styles.modalBtn} ${styles.modalBtnSecondary}`}
+                                onClick={() => setShowConfirmModal(false)}
+                                disabled={isClaiming}
+                            >
+                                Cancel
                             </button>
                         </div>
                     </div>
