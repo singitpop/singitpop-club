@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth, clerkClient } from '@clerk/nextjs/server';
-import { albums } from '@/data/albumData';
+import { getAlbums } from '@/lib/data'; // Use dynamic data source
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 
@@ -27,6 +27,9 @@ export async function POST(req: Request) {
     }
 
     try {
+        // Fetch fresh album data (source of truth)
+        const albums = await getAlbums();
+
         const { trackIds } = await req.json(); // Array of "albumId-trackId" or just IDs
         if (!trackIds || !Array.isArray(trackIds) || trackIds.length === 0) {
             return NextResponse.json({ error: 'No tracks selected' }, { status: 400 });
