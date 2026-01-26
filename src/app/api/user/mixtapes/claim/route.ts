@@ -47,10 +47,11 @@ export async function POST(req: Request) {
             count = 0;
         }
 
-        // Limits: Insider = 3, VIP/Label = 10 (or unlimited/higher)
-        const limit = (tier === 'VIP' || tier === 'LABEL' || metadata.role === 'admin') ? 10 : 3;
+        // Limits: Insider = 3, VIP = 10, Admin/Label = Unlimited
+        const isAdminOrLabel = tier === 'LABEL' || metadata.role === 'admin';
+        const limit = (tier === 'VIP') ? 10 : 3;
 
-        if (count >= limit && tier !== 'LABEL') {
+        if (!isAdminOrLabel && count >= limit) {
             return NextResponse.json({ error: `You have reached your limit of ${limit} mixtapes for this month. Upgrade tier or wait until next month.` }, { status: 429 });
         }
 
@@ -136,11 +137,12 @@ export async function GET(req: Request) {
     if (metadata.lastDownloadMonth !== currentMonth) {
         count = 0;
     }
-    const limit = (tier === 'VIP' || tier === 'LABEL' || metadata.role === 'admin') ? 10 : 3;
+    const limit = (tier === 'VIP') ? 10 : 3;
+    const isAdminOrLabel = tier === 'LABEL' || metadata.role === 'admin';
 
     return NextResponse.json({
         usage: count,
-        limit: limit,
-        remaining: Math.max(0, limit - count)
+        limit: isAdminOrLabel ? 9999 : limit,
+        remaining: isAdminOrLabel ? 9999 : Math.max(0, limit - count)
     });
 }
