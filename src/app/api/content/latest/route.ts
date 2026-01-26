@@ -4,6 +4,9 @@ import { getAlbums } from '@/lib/data';
 import { GetObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
 import { s3Client, getSignedFileUrl } from '@/lib/s3';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const BUCKET_NAME = 'singitpop-music';
 const METADATA_KEY = 'admin/albumMetadata.json';
 
@@ -176,6 +179,9 @@ export async function GET() {
 
         let latestSingleUid = metadata?.latestSingleUid; // e.g. "albumid-1"
         let latestVideoTitle = metadata?.latestVideoTitle;
+
+        console.log(`[API] Latest Video: ID=${metadata?.latestVideoId}, Title=${latestVideoTitle}`);
+
         let latestSingleTrackCover = null;
         let backgroundCoverArt = null;
         let latestSingleTrack = null;
