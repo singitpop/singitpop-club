@@ -1,10 +1,16 @@
-
 import { NextResponse } from 'next/server';
 import { auth, clerkClient } from '@clerk/nextjs/server';
 import { albums } from '@/data/albumData';
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { GetObjectCommand } from "@aws-sdk/client-s3";
-import { s3Client } from '@/lib/s3';
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION!,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    },
+});
 
 const MIXTAPE_LIMIT_PER_MONTH = 3;
 
@@ -58,6 +64,7 @@ export async function POST(req: Request) {
         // 3. Generate Links
         // Resolve track IDs to real audio URLs
         const signedUrls: { title: string, url: string }[] = [];
+        const debugLogs: string[] = [];
 
         for (const uniqueId of trackIds) {
             // Find track
@@ -81,23 +88,30 @@ export async function POST(req: Request) {
                 }
             }
 
-            if (foundTrack && foundTrack.audioUrl) {
-                try {
-                    // Extract Key from URL
-                    const urlObj = new URL(foundTrack.audioUrl);
-                    const key = decodeURIComponent(urlObj.pathname.substring(1)); // Remove leading slash
+            if (foundTrack) {
+                if (foundTrack.audioUrl) {
+                    try {
+                        // Extract Key from URL
+                        const urlObj = new URL(foundTrack.audioUrl);
+                        const key = decodeURIComponent(urlObj.pathname.substring(1)); // Remove leading slash
 
-                    const command = new GetObjectCommand({
-                        Bucket: process.env.AWS_S3_BUCKET || "singitpop-music",
-                        Key: key,
-                        ResponseContentDisposition: `attachment; filename="${foundTrack.title.replace(/[^a-zA-Z0-9.-]/g, '_')}.mp3"`
-                    });
+                        const command = new GetObjectCommand({
+                            Bucket: process.env.AWS_S3_BUCKET || "singitpop-music",
+                            Key: key,
+                            ResponseContentDisposition: `attachment; filename="${foundTrack.title.replace(/[^a-zA-Z0-9.-]/g, '_')}.mp3"`
+                        });
 
-                    const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1 hour link for download
-                    signedUrls.push({ title: foundTrack.title, url: signedUrl });
-                } catch (e) {
-                    console.error(`Failed to sign ${foundTrack.title}`, e);
+                        const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1 hour link for download
+                        signedUrls.push({ title: foundTrack.title, url: signedUrl });
+                    } catch (e) {
+                        console.error(`Failed to sign ${foundTrack.title}`, e);
+                        debugLogs.push(`Failed to sign ${foundTrack.title}: ${e}`);
+                    }
+                } else {
+                    debugLogs.push(`Track ${foundTrack.title} has no audioUrl`);
                 }
+            } else {
+                debugLogs.push(`Track ID ${uniqueId} not found`);
             }
         }
 
@@ -113,7 +127,12 @@ export async function POST(req: Request) {
         return NextResponse.json({
             success: true,
             links: signedUrls,
-            remaining: limit - (count + 1)
+            remaining: isAdminOrLabel ? 9999 : (limit - (count + 1)),
+            debug: {
+                requested: trackIds.length,
+                found: signedUrls.length,
+                logs: debugLogs
+            }
         });
 
     } catch (error) {

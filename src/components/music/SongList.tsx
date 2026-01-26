@@ -226,10 +226,15 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                 if (data.remaining !== undefined) setClaimsLeft(data.remaining);
 
                 // Trigger downloads via Modal
-                if (data.links && Array.isArray(data.links)) {
+                if (data.links && Array.isArray(data.links) && data.links.length > 0) {
                     setDownloadLinks(data.links);
                     setShowConfirmModal(false); // Close confirm
                     setShowDownloadModal(true); // Open download
+                } else {
+                    // Success but no links? Likely an issue.
+                    console.warn("Claim success but no links", data.debug);
+                    alert(`Mixtape claimed, but no download links were generated.\nDebug: ${JSON.stringify(data.debug?.logs || "Unknown error")}`);
+                    setShowConfirmModal(false);
                 }
                 // Clear selection
                 selectedTracks.forEach(id => onToggleSelection(id));
