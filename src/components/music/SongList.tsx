@@ -527,19 +527,32 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                         </p>
                         <div className={styles.modalActions} style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '5px', marginBottom: '1rem' }}>
                             {downloadLinks.map((link, i) => (
-                                <a
-                                    key={i}
-                                    href={link.url}
-                                    download={link.title} // Hint to browser
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
-                                    style={{ justifyContent: 'space-between', fontSize: '0.9rem' }}
-                                >
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <Download size={16} /> {link.title}
-                                    </span>
-                                </a>
+                                <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                                    <a
+                                        href={link.url}
+                                        download={link.title} // Hint to browser
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
+                                        style={{ justifyContent: 'space-between', fontSize: '0.9rem', flex: 1 }}
+                                    >
+                                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <Download size={16} /> {link.title}
+                                        </span>
+                                    </a>
+                                    <button
+                                        className={`${styles.modalBtn} ${styles.modalBtnSecondary}`}
+                                        style={{ width: '40px', padding: '0', flexShrink: 0 }}
+                                        title="Copy Link"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigator.clipboard.writeText(link.url);
+                                            alert("Link copied!");
+                                        }}
+                                    >
+                                        <Share2 size={16} />
+                                    </button>
+                                </div>
                             ))}
                         </div>
                         <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowDownloadModal(false)}>
