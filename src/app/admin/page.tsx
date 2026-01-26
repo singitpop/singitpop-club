@@ -70,6 +70,7 @@ export default function AdminPage() {
                                 <option value="FAN">Fan</option>
                                 <option value="INSIDER">Insider</option>
                                 <option value="VIP">VIP</option>
+                                <option value="LABEL">Label (Admin)</option>
                             </select>
 
                             <button
