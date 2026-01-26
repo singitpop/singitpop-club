@@ -113,6 +113,8 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Red%20Roses%20And%20Them%20Old%20Boots.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Red%20Roses%20And%20Them%20Old%20Boots.mp3",
         "sourceFolder": "Valentine Country",
         "albumId": "valentine-country-2026",
         "isSingle": true
@@ -125,6 +127,8 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Country",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Two%20Heart%20One%20Highway.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Two%20Heart%20One%20Highway.mp3",
         "sourceFolder": "Valentine Country",
         "albumId": "valentine-country-2026",
         "isSingle": false
@@ -557,6 +561,8 @@ export const albums: Album[] = [
         "locked": false,
         "price": 0.99,
         "genre": "Rock",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/The%20Light%20We%20Leave%20Behind.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/The%20Light%20We%20Leave%20Behind.mp3",
         "sourceFolder": "Echoes Of Light",
         "albumId": "echoes-of-light-2026",
         "isSingle": false

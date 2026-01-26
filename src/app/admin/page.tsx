@@ -119,6 +119,26 @@ export default function AdminPage() {
         }
     }
 
+    async function resetDownloads(userId: string) {
+        if (!confirm("Reset this user's monthly download usage to 0?")) return;
+        try {
+            const res = await fetch('/api/admin/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, action: 'reset_downloads' })
+            });
+            if (res.ok) {
+                alert("✅ Downloads reset!");
+                // No need to re-fetch users as this metadata might not be in the list view, 
+                // but if we were showing it, we would. For now, just alert is enough.
+            } else {
+                alert("❌ Failed to reset downloads");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     function impersonateUser(tier: string) {
         const targetTier = tier || 'FAN';
         if (!confirm(`🎭 Impersonate a ${targetTier} user?\n\nThis will switch your view to match their permissions.`)) return;
@@ -261,6 +281,14 @@ export default function AdminPage() {
                                                 title="Impersonate User"
                                             >
                                                 <Eye size={18} />
+                                            </button>
+
+                                            <button
+                                                onClick={() => resetDownloads(user.id)}
+                                                className={styles.actionBtn}
+                                                title="Reset Monthly Downloads"
+                                            >
+                                                <RefreshCw size={18} />
                                             </button>
 
                                             <button

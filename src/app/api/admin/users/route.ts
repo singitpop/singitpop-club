@@ -65,6 +65,15 @@ export async function POST(req: Request) {
             return NextResponse.json({ success: true, banned: true });
         }
 
+        if (action === 'reset_downloads') {
+            await client.users.updateUserMetadata(userId, {
+                publicMetadata: {
+                    downloadsThisMonth: 0
+                }
+            });
+            return NextResponse.json({ success: true, reset: true });
+        }
+
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
 
     } catch (error: any) {

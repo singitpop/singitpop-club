@@ -127,3 +127,27 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
+
+export async function GET(req: Request) {
+    const { userId } = await auth();
+    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const client = await clerkClient();
+    const user = await client.users.getUser(userId);
+    const metadata = user.publicMetadata as UserMetadata;
+    const tier = (metadata.tier as string) || 'FAN';
+
+    // Calculate usage
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    let count = metadata.downloadsThisMonth || 0;
+    if (metadata.lastDownloadMonth !== currentMonth) {
+        count = 0;
+    }
+    const limit = (tier === 'VIP' || tier === 'LABEL' || metadata.role === 'admin') ? 10 : 3;
+
+    return NextResponse.json({
+        usage: count,
+        limit: limit,
+        remaining: Math.max(0, limit - count)
+    });
+}

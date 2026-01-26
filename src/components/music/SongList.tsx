@@ -29,6 +29,31 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
     const [showPreviewModal, setShowPreviewModal] = useState(false);
     const [favorites, setFavorites] = useState<string[]>([]);
+    const [claimsLeft, setClaimsLeft] = useState<number | null>(null);
+    const [downloadLinks, setDownloadLinks] = useState<{ title: string; url: string }[]>([]);
+    const [showDownloadModal, setShowDownloadModal] = useState(false);
+
+    // Fetch initial claims usage
+    useEffect(() => {
+        if (!user) return;
+        // Simple fetch to get usage (re-using the claim endpoint with a dry-run or a specific usage endpoint would be better,
+        // but for now we can infer it or just start with null and let it update on first claim, 
+        // OR we can make a lightweight endpoint.
+        // Let's create a tailored fetch.)
+        async function fetchUsage() {
+            try {
+                // We'll add a GET handler to the claim route to return usage
+                const res = await fetch('/api/user/mixtapes/claim', { method: 'GET' });
+                if (res.ok) {
+                    const data = await res.json();
+                    setClaimsLeft(data.remaining);
+                }
+            } catch (e) {
+                console.error("Failed to fetch mixtape usage", e);
+            }
+        }
+        fetchUsage();
+    }, [user]);
 
     // Fetch favorites on mount
     useEffect(() => {
@@ -376,6 +401,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
 
             {/* Floating Mixtape Status Box (Top Right) - Always visible for Premium to indicate feature availability */}
             {/* Floating Mixtape Status Box - Portalled to body to escape parent stacking contexts */}
+            {/* Floating Mixtape Status Box - Portalled to body to escape parent stacking contexts */}
             {(isInsider || isPro || isLabel) && (
                 typeof document !== 'undefined' ? (
                     // @ts-ignore - createPortal is standard but sometimes TS complains if not imported
@@ -395,7 +421,10 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     <>
                                         <strong>{selectedTracks.length} / {MAX_MIXTAPE_TRACKS} Selected</strong>
                                         <p style={{ fontSize: '0.8rem', opacity: 0.8 }}>
-                                            {isPro || isLabel ? "VIP Limit: 10 Mixes/Month" : "Insider Limit: 3 Mixes/Month"}
+                                            {claimsLeft !== null
+                                                ? `Remaining Claims: ${claimsLeft} / ${(isPro || isLabel ? 10 : 3)}`
+                                                : (isPro || isLabel ? "VIP Limit: 10 Mixes/Month" : "Insider Limit: 3 Mixes/Month")
+                                            }
                                         </p>
                                     </>
                                 )}
@@ -416,19 +445,15 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                                 const data = await res.json();
 
                                                 if (data.success) {
-                                                    alert(`Success! You have ${data.remaining} claims left this month. Downloading...`);
-                                                    // Trigger downloads
+                                                    // Update local state immediately
+                                                    if (data.remaining !== undefined) setClaimsLeft(data.remaining);
+
+                                                    alert(`Success! Starting downloads... Please allow popups if prompted.`);
+
+                                                    // Trigger downloads via Modal (prevents browser blocking)
                                                     if (data.links && Array.isArray(data.links)) {
-                                                        data.links.forEach((item: any, i: number) => {
-                                                            setTimeout(() => {
-                                                                const link = document.createElement('a');
-                                                                link.href = item.url;
-                                                                link.setAttribute('download', `${item.title}.mp3`);
-                                                                document.body.appendChild(link);
-                                                                link.click();
-                                                                document.body.removeChild(link);
-                                                            }, i * 500); // Stagger downloads
-                                                        });
+                                                        setDownloadLinks(data.links);
+                                                        setShowDownloadModal(true);
                                                     }
                                                     // Clear selection
                                                     selectedTracks.forEach(id => onToggleSelection(id));
@@ -479,6 +504,37 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                             </a>
                             <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowPreviewModal(false)}>
                                 Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Download Ready Modal */}
+            {showDownloadModal && (
+                <div className={styles.modalOverlay} onClick={() => setShowDownloadModal(false)}>
+                    <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                        <h3 className={styles.modalTitle}>Mixtape Ready! 📼</h3>
+                        <p className={styles.modalText}>
+                            Your tracks have been claimed successfully.<br />
+                            Click below to download each one.
+                        </p>
+                        <div className={styles.modalActions} style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '5px' }}>
+                            {downloadLinks.map((link, i) => (
+                                <a
+                                    key={i}
+                                    href={link.url}
+                                    download={link.title} // Hint to browser
+                                    className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
+                                    style={{ justifyContent: 'space-between', fontSize: '0.9rem' }}
+                                >
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <Download size={16} /> {link.title}
+                                    </span>
+                                </a>
+                            ))}
+                            <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowDownloadModal(false)}>
+                                Done
                             </button>
                         </div>
                     </div>
