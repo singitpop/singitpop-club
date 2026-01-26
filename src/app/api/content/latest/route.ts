@@ -352,6 +352,7 @@ export async function GET() {
             latestLiveAlbumTitle: latestLive ? latestLive.title : "Step into the Light",
             latestLiveAlbumCover: signedLiveCover,
             latestSingleUid,
+            latestVideoId: metadata?.latestVideoId,
             latestVideoTitle,
             latestSingleTrackCover,
             latestSingleTrack,
