@@ -613,66 +613,62 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                             </div>
                         </div>
                     </div>
-                </div >
-    )
-}
+                )}
 
-{/* Review Modal */ }
-{
-    showReviewModal && (
-        <div className={styles.modalOverlay} onClick={() => setShowReviewModal(false)}>
-            <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                <h3 className={styles.modalTitle}>Your Selection 🎧</h3>
-                <p className={styles.modalText} style={{ marginBottom: '1.5rem' }}>
-                    {selectedTracks.length} / {MAX_MIXTAPE_TRACKS} tracks selected
-                </p>
+            {/* Review Modal */}
+            {showReviewModal && (
+                <div className={styles.modalOverlay} onClick={() => setShowReviewModal(false)}>
+                    <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                        <h3 className={styles.modalTitle}>Your Selection 🎧</h3>
+                        <p className={styles.modalText} style={{ marginBottom: '1.5rem' }}>
+                            {selectedTracks.length} / {MAX_MIXTAPE_TRACKS} tracks selected
+                        </p>
 
-                <div className={styles.reviewList}>
-                    {selectedTracks.map(id => {
-                        const track = tracks.find(t => getUniqueId(t) === id);
-                        if (!track) return null;
-                        return (
-                            <div key={id} className={styles.reviewItem}>
-                                <span className={styles.reviewItemTitle}>{track.title}</span>
-                                <button
-                                    className={styles.removeBtn}
-                                    onClick={() => toggleSelection(id)}
-                                    title="Remove track"
-                                >
-                                    <X size={18} />
-                                </button>
-                            </div>
-                        );
-                    })}
-                    {selectedTracks.length === 0 && (
-                        <div style={{ color: '#666', fontStyle: 'italic', padding: '1rem' }}>
-                            No tracks selected yet.
+                        <div className={styles.reviewList}>
+                            {selectedTracks.map(id => {
+                                const track = tracks.find(t => getUniqueId(t) === id);
+                                if (!track) return null;
+                                return (
+                                    <div key={id} className={styles.reviewItem}>
+                                        <span className={styles.reviewItemTitle}>{track.title}</span>
+                                        <button
+                                            className={styles.removeBtn}
+                                            onClick={() => toggleSelection(id)}
+                                            title="Remove track"
+                                        >
+                                            <X size={18} />
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                            {selectedTracks.length === 0 && (
+                                <div style={{ color: '#666', fontStyle: 'italic', padding: '1rem' }}>
+                                    No tracks selected yet.
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
 
-                <div className={styles.modalActions}>
-                    <button
-                        className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
-                        onClick={() => {
-                            setShowReviewModal(false);
-                            if (selectedTracks.length > 0) setShowConfirmModal(true);
-                        }}
-                        disabled={selectedTracks.length === 0}
-                    >
-                        Proceed to Claim
-                    </button>
-                    <button
-                        className={`${styles.modalBtn} ${styles.modalBtnSecondary}`}
-                        onClick={() => setShowReviewModal(false)}
-                    >
-                        Continue Selecting
-                    </button>
+                        <div className={styles.modalActions}>
+                            <button
+                                className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
+                                onClick={() => {
+                                    setShowReviewModal(false);
+                                    if (selectedTracks.length > 0) setShowConfirmModal(true);
+                                }}
+                                disabled={selectedTracks.length === 0}
+                            >
+                                Proceed to Claim
+                            </button>
+                            <button
+                                className={`${styles.modalBtn} ${styles.modalBtnSecondary}`}
+                                onClick={() => setShowReviewModal(false)}
+                            >
+                                Continue Selecting
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
-    )
-}
-        </div >
     );
 }
