@@ -43,7 +43,7 @@ export default function AdminPage() {
         <th>Usage</th>
         <th>Actions</th>
     </tr>
-                    </thead >
+                    </thead>
         <tbody>
             {filteredUsers.map(user => (
                 <tr key={user.id}>
@@ -101,10 +101,10 @@ export default function AdminPage() {
                 </tr>
             ))}
         </tbody>
-                    </table >
-                </div >
+                    </table>
+                </div>
             )
 }
-        </div >
+        </div>
     );
 }
