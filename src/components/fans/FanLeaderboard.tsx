@@ -3,11 +3,13 @@
 import { Crown, Share2 } from 'lucide-react';
 import styles from './FanLeaderboard.module.css';
 
-{ rank: 1, name: "@NeonDreamer", score: 1250, avatar: "✨" },
-{ rank: 2, name: "@MusicLover99", score: 1100, avatar: "🎵" },
-{ rank: 3, name: "@PopStan_UK", score: 980, avatar: "🇬🇧" },
-{ rank: 4, name: "@VibezOnly", score: 850, avatar: "🎧" },
-{ rank: 5, name: "@ChartWatcher", score: 720, avatar: "📈" },
+
+const fans = [
+    { rank: 1, name: "@NeonDreamer", score: 1250, avatar: "✨" },
+    { rank: 2, name: "@MusicLover99", score: 1100, avatar: "🎵" },
+    { rank: 3, name: "@PopStan_UK", score: 980, avatar: "🇬🇧" },
+    { rank: 4, name: "@VibezOnly", score: 850, avatar: "🎧" },
+    { rank: 5, name: "@ChartWatcher", score: 720, avatar: "📈" },
 ];
 
 export default function FanLeaderboard() {

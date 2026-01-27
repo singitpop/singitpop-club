@@ -1,3 +1,5 @@
+"use client";
+
 import SidebarNav from '@/components/fans/SidebarNav';
 import PlaylistViewer from '@/components/fans/PlaylistViewer';
 import FanLeaderboard from '@/components/fans/FanLeaderboard';

@@ -1,3 +1,5 @@
+"use client";
+
 import { X, Heart, Play, Pause, Share2, MoreHorizontal } from 'lucide-react';
 import styles from './PlaylistViewer.module.css';
 import { useState, useEffect } from 'react';
