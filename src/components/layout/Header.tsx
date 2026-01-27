@@ -15,7 +15,7 @@ const navItems = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Music', href: '/music' },
-  { name: 'Fan Albums', href: '/fan-albums' },
+  { name: 'Community Hub', href: '/fan-albums' },
   { name: 'Projects', href: '/projects' },
   // { name: 'For Artists', href: '/releasio' }, // Hidden for now
   { name: 'My Club', href: '/club' },
