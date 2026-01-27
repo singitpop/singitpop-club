@@ -116,13 +116,35 @@ export default function FanAlbumsPage() {
                 <div className={styles.spotlightVisual} />
             </section>
 
-            <div className={styles.grid}>
-                <div className={styles.mainContent}>
-                    <div className={styles.filterBar}>
-                        <button className={styles.activeFilter}>All</button>
-                        <button>Chill</button>
-                        <button>Hype</button>
-                        <button>Remix</button>
+            <div className={styles.layoutGrid}>
+                {/* Left Column: Filters & Rules */}
+                <aside className={styles.leftSidebar}>
+                    <div className={styles.filterGroup}>
+                        <h3>Filters</h3>
+                        <div className={styles.filterList}>
+                            <button className={styles.activeFilter}>All</button>
+                            <button>Chill</button>
+                            <button>Hype</button>
+                            <button>Remix</button>
+                            <button>Acoustic</button>
+                        </div>
+                    </div>
+
+                    <div className={styles.rulesCard}>
+                        <h4>Rank Up 📈</h4>
+                        <ul>
+                            <li>+10 pts / Like</li>
+                            <li>+20 pts / Share</li>
+                            <li>+50 pts / Created Playlist</li>
+                        </ul>
+                        <button className={styles.joinBtn}>Join Leaderboard</button>
+                    </div>
+                </aside>
+
+                {/* Center Column: Main Grid */}
+                <main className={styles.mainContent}>
+                    <div className={styles.gridHeader}>
+                        <h2>Trending Mixes</h2>
                         <button className={styles.filterBtn}><Filter size={16} /> Filter</button>
                     </div>
 
@@ -144,27 +166,17 @@ export default function FanAlbumsPage() {
                             </div>
                         ))}
                     </div>
-                </div>
+                </main>
 
-                <div className={styles.sidebarSecondary}>
-                    <div className={styles.rulesCard}>
-                        <h4>Rank Up 📈</h4>
-                        <ul>
-                            <li>+10 pts / Like</li>
-                            <li>+20 pts / Share</li>
-                        </ul>
-                        <button className={styles.joinBtn}>Join Leaderboard</button>
-                    </div>
-                </div>
-
-                <div className={styles.sidebarPrimary}>
+                {/* Right Column: Leaderboard & Challenges */}
+                <aside className={styles.rightSidebar}>
                     <div className={styles.challengeCard}>
                         <h3> Weekly Challenge 🎯</h3>
                         <p>Create a "Rainy Day" playlist using at least 3 tracks from *Blue Horizon*.</p>
                         <button className={styles.challengeBtn}>Accept Challenge</button>
                     </div>
                     <FanLeaderboard />
-                </div>
+                </aside>
             </div>
 
             {/* Hidden Audio Element */}

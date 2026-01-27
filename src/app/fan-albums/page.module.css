@@ -98,169 +98,128 @@
     transform: scale(1.05);
 }
 
-/* --- Layout --- */
-.grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
+/* --- 3-Column Layout --- */
+.layoutGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
-@media (min-width: 1200px) {
-    .grid {
-        /* [ Content ] [ Rules (Narrow) ] [ Sidebar (Wide) ] */
-        grid-template-columns: 1fr 200px 320px;
+@media (min-width: 1024px) {
+    .layoutGrid {
+        display: grid;
+        grid-template-columns: 240px 1fr 300px;
         gap: 2rem;
+        align-items: start;
     }
 }
 
-/* --- Filter Bar --- */
-.filterBar {
+/* --- Left Sidebar (Filters) --- */
+.leftSidebar {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
+    flex-direction: column;
+    gap: 2rem;
+    position: sticky;
+    top: 2rem;
 }
 
-.filterBar button {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.filterGroup h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
     color: var(--text-muted);
-    padding: 0.5rem 1.2rem;
-    border-radius: 50px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
 }
 
-.activeFilter {
-    background: var(--primary) !important;
-    color: white !important;
-    border-color: var(--primary) !important;
-}
-
-.filterBtn {
-    margin-left: auto;
+.filterList {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 0.5rem;
 }
 
-/* --- Uniform Grid (4-Wide - Smaller Boxes) --- */
-.masonry {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* 4 Columns for smaller boxes */
-    gap: 1rem;
-    /* Tighter gap */
-}
-
-@media (max-width: 1200px) {
-    .masonry {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .masonry {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Removed dense flow for symmetry */
-
-.card {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    position: relative;
+.filterList button {
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.3s;
-    height: 160px;
-    /* Reduced height */
+    transition: all 0.2s;
+    font-size: 0.95rem;
 }
 
-/* Removed varying size classes .large, .medium, .small */
-
-.cardOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    opacity: 1;
-    /* Always visible */
-    transition: all 0.3s;
+.filterList button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    padding-left: 1.25rem;
 }
 
-.card:hover .cardOverlay {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 100%);
+.filterList button.activeFilter {
+    background: rgba(255, 0, 128, 0.1);
+    color: var(--accent);
+    font-weight: 600;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
 }
 
-.cardInfo h4 {
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-    font-weight: 700;
-}
 
-.meta {
+/* --- Main Content (Center) --- */
+.gridHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
 }
 
-.likes {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.gridHeader h2 {
+    font-size: 1.5rem;
+    margin: 0;
 }
 
-.playFab {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* Compact Grid */
+.masonry {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
 }
 
-.card:hover .playFab {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+.card {
+    border-radius: 12px;
+    /* Slightly tighter radius */
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+    height: 180px;
+    /* Square-ish compact ratio */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* --- Sidebars --- */
-.sidebarPrimary,
-.sidebarSecondary {
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.cardInfo {
+    margin-top: auto;
+}
+
+.cardInfo h4 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* --- Right Sidebar --- */
+.rightSidebar {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     position: sticky;
     top: 2rem;
-    height: fit-content;
-}
-
-.sidebarSecondary {
-    /* Challenge + Rules */
-    top: 2rem;
-    /* Ensure aligns with primary */
 }
 
 .challengeCard {
