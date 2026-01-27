@@ -475,145 +475,146 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                             </div>
 
                             {selectedTracks.length > 0 ? (
-                                <button
-                                    className={styles.claimBtn}
-                                    onClick={() => setShowConfirmModal(true)}
-                                >
-                                    Claim Mixtape 🎁
-                                </button>
-                                <button 
-                                    className={styles.reviewBtn}
-                                    onClick={() => setShowReviewModal(true)}
-                                >
-                                    Review Selection
-                                </button>
-                            </>
-                    ) : (
-                    <div style={{ fontSize: '0.8rem', color: '#666', fontStyle: 'italic', textAlign: 'center' }}>
-                        Start selecting...
-                    </div>
-                )}
-        </div>,
-        document.body
-    )
+                                <>
+                                    <button
+                                        className={styles.claimBtn}
+                                        onClick={() => setShowConfirmModal(true)}
+                                    >
+                                        Claim Mixtape 🎁
+                                    </button>
+                                    <button
+                                        className={styles.reviewBtn}
+                                        onClick={() => setShowReviewModal(true)}
+                                    >
+                                        Review Selection
+                                    </button>
+                                </>
+                            ) : (
+                                <div style={{ fontSize: '0.8rem', color: '#666', fontStyle: 'italic', textAlign: 'center' }}>
+                                    Start selecting...
+                                </div>
+                            )}
+                        </div>,
+                        document.body
+                    )
                 ) : null
             )
-}
+            }
 
-<audio
-    ref={audioRef}
-    src={currentSignedUrl || undefined}
-    onEnded={() => setIsPlaying(false)}
-    onPause={() => setIsPlaying(false)}
-    onPlay={() => setIsPlaying(true)}
-    onTimeUpdate={handleTimeUpdate}
-    preload="none"
-/>
-{/* Preview Modal */ }
-{
-    showPreviewModal && (
-        <div className={styles.modalOverlay} onClick={() => setShowPreviewModal(false)}>
-            <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                <h3 className={styles.modalTitle}>Preview Ended 🎵</h3>
-                <p className={styles.modalText}>
-                    You've hit the 30-second preview limit.<br />
-                    Join the Club to unlock full streaming!
-                </p>
-                <div className={styles.modalActions}>
-                    <a href="/club" className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}>
-                        Join the Club
-                    </a>
-                    <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowPreviewModal(false)}>
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    )
-}
+            <audio
+                ref={audioRef}
+                src={currentSignedUrl || undefined}
+                onEnded={() => setIsPlaying(false)}
+                onPause={() => setIsPlaying(false)}
+                onPlay={() => setIsPlaying(true)}
+                onTimeUpdate={handleTimeUpdate}
+                preload="none"
+            />
+            {/* Preview Modal */}
+            {
+                showPreviewModal && (
+                    <div className={styles.modalOverlay} onClick={() => setShowPreviewModal(false)}>
+                        <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                            <h3 className={styles.modalTitle}>Preview Ended 🎵</h3>
+                            <p className={styles.modalText}>
+                                You've hit the 30-second preview limit.<br />
+                                Join the Club to unlock full streaming!
+                            </p>
+                            <div className={styles.modalActions}>
+                                <a href="/club" className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}>
+                                    Join the Club
+                                </a>
+                                <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowPreviewModal(false)}>
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
 
-{/* Download Ready Modal */ }
-{
-    showDownloadModal && (
-        <div className={styles.modalOverlay} onClick={() => setShowDownloadModal(false)}>
-            <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                <h3 className={styles.modalTitle}>Mixtape Ready! 📼</h3>
-                <p className={styles.modalText}>
-                    Your tracks have been claimed successfully.<br />
-                    Click below to download each one.
-                </p>
-                <div className={styles.modalActions} style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '5px', marginBottom: '1rem' }}>
-                    {downloadLinks.map((link, i) => (
-                        <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
-                            <a
-                                href={link.url}
-                                download={link.title} // Hint to browser
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
-                                style={{ justifyContent: 'space-between', fontSize: '0.9rem', flex: 1 }}
-                            >
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <Download size={16} /> {link.title}
-                                </span>
-                            </a>
-                            <button
-                                className={`${styles.modalBtn} ${styles.modalBtnSecondary}`}
-                                style={{ width: '40px', padding: '0', flexShrink: 0 }}
-                                title="Copy Link"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    navigator.clipboard.writeText(link.url);
-                                    alert("Link copied!");
-                                }}
-                            >
-                                <Share2 size={16} />
+            {/* Download Ready Modal */}
+            {
+                showDownloadModal && (
+                    <div className={styles.modalOverlay} onClick={() => setShowDownloadModal(false)}>
+                        <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                            <h3 className={styles.modalTitle}>Mixtape Ready! 📼</h3>
+                            <p className={styles.modalText}>
+                                Your tracks have been claimed successfully.<br />
+                                Click below to download each one.
+                            </p>
+                            <div className={styles.modalActions} style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: '5px', marginBottom: '1rem' }}>
+                                {downloadLinks.map((link, i) => (
+                                    <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                                        <a
+                                            href={link.url}
+                                            download={link.title} // Hint to browser
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
+                                            style={{ justifyContent: 'space-between', fontSize: '0.9rem', flex: 1 }}
+                                        >
+                                            <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <Download size={16} /> {link.title}
+                                            </span>
+                                        </a>
+                                        <button
+                                            className={`${styles.modalBtn} ${styles.modalBtnSecondary}`}
+                                            style={{ width: '40px', padding: '0', flexShrink: 0 }}
+                                            title="Copy Link"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigator.clipboard.writeText(link.url);
+                                                alert("Link copied!");
+                                            }}
+                                        >
+                                            <Share2 size={16} />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowDownloadModal(false)}>
+                                Done
                             </button>
                         </div>
-                    ))}
-                </div>
-                <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowDownloadModal(false)}>
-                    Done
-                </button>
-            </div>
-        </div>
-    )
-}
+                    </div>
+                )
+            }
 
-{/* Confirm Claim Modal */ }
-{
-    showConfirmModal && (
-        <div className={styles.modalOverlay} onClick={() => !isClaiming && setShowConfirmModal(false)}>
-            <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                <h3 className={styles.modalTitle}>Confirm Claim 🎁</h3>
-                <p className={styles.modalText}>
-                    Claim these {selectedTracks.length} tracks as one of your monthly mixtapes?
-                    <br />
-                    <small style={{ opacity: 0.7 }}>
-                        {claimsLeft !== null ? `${claimsLeft} claims remaining this month` : 'Processing...'}
-                    </small>
-                </p>
-                <div className={styles.modalActions}>
-                    <button
-                        className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
-                        onClick={processClaim}
-                        disabled={isClaiming}
-                        style={{ opacity: isClaiming ? 0.7 : 1 }}
-                    >
-                        {isClaiming ? 'Processing...' : 'Yes, Claim Now'}
-                    </button>
-                    <button
-                        className={`${styles.modalBtn} ${styles.modalBtnSecondary}`}
-                        onClick={() => setShowConfirmModal(false)}
-                        disabled={isClaiming}
-                    >
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
+            {/* Confirm Claim Modal */}
+            {
+                showConfirmModal && (
+                    <div className={styles.modalOverlay} onClick={() => !isClaiming && setShowConfirmModal(false)}>
+                        <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                            <h3 className={styles.modalTitle}>Confirm Claim 🎁</h3>
+                            <p className={styles.modalText}>
+                                Claim these {selectedTracks.length} tracks as one of your monthly mixtapes?
+                                <br />
+                                <small style={{ opacity: 0.7 }}>
+                                    {claimsLeft !== null ? `${claimsLeft} claims remaining this month` : 'Processing...'}
+                                </small>
+                            </p>
+                            <div className={styles.modalActions}>
+                                <button
+                                    className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}
+                                    onClick={processClaim}
+                                    disabled={isClaiming}
+                                    style={{ opacity: isClaiming ? 0.7 : 1 }}
+                                >
+                                    {isClaiming ? 'Processing...' : 'Yes, Claim Now'}
+                                </button>
+                                <button
+                                    className={`${styles.modalBtn} ${styles.modalBtnSecondary}`}
+                                    onClick={() => setShowConfirmModal(false)}
+                                    disabled={isClaiming}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div >
-            )
+    )
 }
 
 {/* Review Modal */ }
