@@ -35,7 +35,17 @@ export default function PlaylistViewer({ playlist, onClose }: PlaylistViewerProp
                     <div className={styles.artwork} style={{ background: playlist.color || '#333' }}>
                         {/* Placeholder for actual cover image if available */}
                         <div className={styles.artworkPlaceholder}>
-                            <span>🎵</span>
+                            {isPlaying ? (
+                                <div className={styles.visualizer}>
+                                    <div className={styles.bar}></div>
+                                    <div className={styles.bar}></div>
+                                    <div className={styles.bar}></div>
+                                    <div className={styles.bar}></div>
+                                    <div className={styles.bar}></div>
+                                </div>
+                            ) : (
+                                <span>🎵</span>
+                            )}
                         </div>
                     </div>
 
