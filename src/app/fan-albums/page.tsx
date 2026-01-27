@@ -18,14 +18,14 @@ const trackMapping: Record<number, { albumId: string, trackId: number }> = {
     6: { albumId: 'a-love-that-never-ends-2026', trackId: 4 },
 };
 
-// Enhanced Mock Data
+// Enhanced Mock Data with BOLD colors
 const playlists = [
-    { id: 1, title: 'Summer Vibes Mix', creator: '@NeonDreamer', likes: 240, color: 'linear-gradient(135deg, #cd93ff 0%, #a5fecb 100%)', size: 'large' },
-    { id: 2, title: 'Sad Boi Hours', creator: '@EmoKid2000', likes: 185, color: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)', size: 'small' },
-    { id: 3, title: 'Gym Hype', creator: '@FitFam', likes: 890, color: 'linear-gradient(135deg, #ffffff 0%, #e6e6fa 100%)', size: 'medium' },
-    { id: 4, title: 'Midnight Drive', creator: '@NightOwl', likes: 420, color: 'linear-gradient(135deg, #5ee7df 0%, #b490ca 100%)', size: 'small' },
-    { id: 5, title: 'Acoustic Covers', creator: '@GuitarHero', likes: 310, color: 'linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%)', size: 'medium' },
-    { id: 6, title: 'Party Anthems', creator: '@DJKhaledFan', likes: 1200, color: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)', size: 'large' },
+    { id: 1, title: 'Summer Vibes Mix', creator: '@NeonDreamer', likes: 240, color: 'linear-gradient(135deg, #FF0080 0%, #7928CA 100%)', size: 'large' }, // Electric Pink -> Purple
+    { id: 2, title: 'Sad Boi Hours', creator: '@EmoKid2000', likes: 185, color: 'linear-gradient(135deg, #007CF0 0%, #00DFD8 100%)', size: 'small' }, // Electric Blue -> Cyan
+    { id: 3, title: 'Gym Hype', creator: '@FitFam', likes: 890, color: 'linear-gradient(135deg, #FF4D4D 0%, #F9CB28 100%)', size: 'medium' }, // Red -> Gold
+    { id: 4, title: 'Midnight Drive', creator: '@NightOwl', likes: 420, color: 'linear-gradient(135deg, #100C29 0%, #7d1c69 100%)', size: 'small' }, // Deep Midnight
+    { id: 5, title: 'Acoustic Covers', creator: '@GuitarHero', likes: 310, color: 'linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)', size: 'medium' }, // Gold -> Orange
+    { id: 6, title: 'Party Anthems', creator: '@DJKhaledFan', likes: 1200, color: 'linear-gradient(135deg, #FF00CC 0%, #333399 100%)', size: 'large' }, // Magenta -> Deep Blue
 ];
 
 export default function CommunityHubPage() {

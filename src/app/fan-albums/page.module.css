@@ -158,17 +158,46 @@
 
 .trendingCard {
     border-radius: 32px;
-    padding: 2rem;
+    padding: 2.5rem;
     position: relative;
     cursor: pointer;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Vinyl Record Effect */
+.trendingCard::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    width: 60%;
+    aspect-ratio: 1;
+    background: repeating-radial-gradient(#111 0,
+            #111 2px,
+            #222 3px,
+            #222 4px);
+    border-radius: 50%;
+    opacity: 0.15;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 10s linear;
+    mask-image: linear-gradient(to left, black, transparent 80%);
+    -webkit-mask-image: linear-gradient(to left, black, transparent 80%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.trendingCard:hover::after {
+    transform: translateY(-50%) rotate(360deg);
+    opacity: 0.3;
 }
 
 .trendingCard:hover {
     transform: scale(1.02) translateY(-5px);
     box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .heroCard {
