@@ -5,19 +5,28 @@
   --background: #0a0a0e;
   --surface: #121218;
   --surface-hover: #1a1a24;
-  
-  --primary: #8b5cf6; /* Violet */
+
+  --primary: #8b5cf6;
+  /* Violet */
   --primary-glow: rgba(139, 92, 246, 0.5);
-  
-  --accent: #f472b6; /* Pink */
+
+  --accent: #f472b6;
+  /* Pink */
   --accent-glow: rgba(244, 114, 182, 0.5);
 
   --text-main: #ffffff;
   --text-muted: #a1a1aa;
-  
+
   --border: rgba(255, 255, 255, 0.1);
   --glass: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.05);
+
+  /* Dark Neon Palette */
+  --neon-pink: #ff0080;
+  --neon-cyan: #00fff0;
+  --neon-gold: #ffd700;
+  --midnight-bg: #050507;
+  --glass-surface: rgba(255, 255, 255, 0.05);
 
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -28,13 +37,13 @@
 
   /* Typography */
   --font-main: 'Outfit', sans-serif;
-  
+
   /* Radius */
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 32px;
   --radius-full: 9999px;
-  
+
   /* Header Height */
   --header-height: 80px;
 }

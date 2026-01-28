@@ -1,11 +1,11 @@
 "use client";
 
-import { X, Heart, Play, Pause, Share2, MoreHorizontal } from 'lucide-react';
+import { X, Heart, Play, Pause, Share2, MoreHorizontal, Clock, Music } from 'lucide-react';
 import styles from './PlaylistViewer.module.css';
 import { useState, useEffect } from 'react';
 
 interface PlaylistViewerProps {
-    playlist: any; // Type strictly later
+    playlist: any;
     onClose: () => void;
 }
 
@@ -28,35 +28,27 @@ export default function PlaylistViewer({ playlist, onClose }: PlaylistViewerProp
         <div className={styles.overlay} onClick={onClose}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
                 <button className={styles.closeBtn} onClick={onClose}>
-                    <X size={24} />
+                    <X size={20} />
                 </button>
 
                 <div className={styles.header}>
-                    <div className={styles.artwork} style={{ background: playlist.color || '#333' }}>
-                        {/* Placeholder for actual cover image if available */}
-                        <div className={styles.artworkPlaceholder}>
-                            {isPlaying ? (
-                                <div className={styles.visualizer}>
-                                    <div className={styles.bar}></div>
-                                    <div className={styles.bar}></div>
-                                    <div className={styles.bar}></div>
-                                    <div className={styles.bar}></div>
-                                    <div className={styles.bar}></div>
-                                </div>
-                            ) : (
-                                <span>🎵</span>
-                            )}
-                        </div>
+                    <div className={styles.artworkContainer}>
+                        <div
+                            className={styles.artwork}
+                            style={{ background: playlist.color || '#333' }}
+                        />
                     </div>
 
                     <div className={styles.info}>
+                        <span className={styles.subtitle}>Curated Playlist</span>
                         <h2 className={styles.title}>{playlist.title}</h2>
-                        <div className={styles.creator}>
-                            <span className={styles.avatar}>👤</span>
-                            <span className={styles.username}>{playlist.creator}</span>
-                        </div>
 
-                        <div className={styles.stats}>
+                        <div className={styles.meta}>
+                            <div className={styles.creator}>
+                                <span className={styles.avatar}>GB</span>
+                                <span>{playlist.creator}</span>
+                            </div>
+                            <span>•</span>
                             <span>{playlist.likes + (liked ? 1 : 0)} Likes</span>
                             <span>•</span>
                             <span>12 Tracks</span>
@@ -69,14 +61,14 @@ export default function PlaylistViewer({ playlist, onClose }: PlaylistViewerProp
                                 className={styles.playBtn}
                                 onClick={() => setIsPlaying(!isPlaying)}
                             >
-                                {isPlaying ? <Pause size={24} fill="black" /> : <Play size={24} fill="black" />}
+                                {isPlaying ? <Pause size={28} fill="white" /> : <Play size={28} fill="white" style={{ marginLeft: 4 }} />}
                             </button>
 
                             <button
                                 className={`${styles.actionBtn} ${liked ? styles.liked : ''}`}
                                 onClick={() => setLiked(!liked)}
                             >
-                                <Heart size={24} fill={liked ? "#ff0080" : "none"} stroke={liked ? "#ff0080" : "currentColor"} />
+                                <Heart size={28} fill={liked ? "currentColor" : "none"} />
                             </button>
 
                             <button className={styles.actionBtn}>
@@ -91,14 +83,25 @@ export default function PlaylistViewer({ playlist, onClose }: PlaylistViewerProp
                 </div>
 
                 <div className={styles.tracklist}>
-                    <h3>Tracks</h3>
-                    {/* Mock Tracks for now - replace with real data if available in playlist obj */}
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                    <div className={styles.trackHeader}>
+                        <span>#</span>
+                        <span>Title</span>
+                        <span style={{ textAlign: 'right' }}><Clock size={14} /></span>
+                    </div>
+
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                         <div key={num} className={styles.track}>
-                            <span className={styles.trackNum}>{num}</span>
-                            <span className={styles.trackTitle}>Hit Song #{num}</span>
-                            <span className={styles.trackArtist}>Singitpop</span>
-                            <span className={styles.trackDuration}>3:45</span>
+                            <div className={styles.trackNum}>
+                                <span className={styles.num}>{num}</span>
+                                <span className={styles.trackPlayIcon}><Play size={12} fill="white" /></span>
+                            </div>
+
+                            <div>
+                                <div className={styles.trackTitle}>Hit Song #{num}</div>
+                                <span className={styles.trackArtist}>SingIt Pop</span>
+                            </div>
+
+                            <div className={styles.trackDuration}>3:45</div>
                         </div>
                     ))}
                 </div>

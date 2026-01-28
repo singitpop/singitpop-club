@@ -214,7 +214,7 @@ function MusicContent() {
                 </div>
 
                 {/* Top Mixtape CTA - Only for Free Users (Insiders use Floating Box) */}
-                {selectedTracks.length > 0 && !isInsider && !isPro && !isLabel && (
+                {selectedTracks.length > 0 && (
                     <div style={{
                         marginTop: '1rem',
                         padding: '1rem',
@@ -243,6 +243,35 @@ function MusicContent() {
                             >
                                 Purchase Mixtape (£{mixtapePrice})
                             </button>
+
+                            {(isPro || isInsider || isLabel) && (
+                                <button
+                                    className="secondary-button"
+                                    style={{ fontSize: '0.9rem', padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.2)', color: 'white' }}
+                                    onClick={() => {
+                                        const title = prompt("Name your Mixtape for the Community:");
+                                        if (!title) return;
+
+                                        fetch('/api/community/playlist', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({
+                                                title: title,
+                                                tracks: selectedTracks
+                                            })
+                                        }).then(res => res.json()).then(data => {
+                                            if (data.success) {
+                                                alert("Mixtape shared to Community Hub!");
+                                                router.push('/fan-albums');
+                                            } else {
+                                                alert("Failed to share: " + (data.error || "Unknown error"));
+                                            }
+                                        }).catch(err => alert("Error sharing mix"));
+                                    }}
+                                >
+                                    Share to Community 🌍
+                                </button>
+                            )}
                         </div>
                     </div>
                 )}

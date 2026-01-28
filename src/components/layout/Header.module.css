@@ -33,7 +33,8 @@
 
 .desktopNav {
     display: none;
-    gap: 2rem;
+    gap: 1.2rem;
+    /* Reduced from 2rem to prevent wrapping */
 }
 
 @media (min-width: 768px) {

@@ -1,27 +1,60 @@
 "use client";
 
 import { Crown, Share2 } from 'lucide-react';
+import { useMemo } from 'react';
 import styles from './FanLeaderboard.module.css';
 
 
-const fans = [
-    { rank: 1, name: "@NeonDreamer", score: 1250, avatar: "✨" },
-    { rank: 2, name: "@MusicLover99", score: 1100, avatar: "🎵" },
-    { rank: 3, name: "@PopStan_UK", score: 980, avatar: "🇬🇧" },
-    { rank: 4, name: "@VibezOnly", score: 850, avatar: "🎧" },
-    { rank: 5, name: "@ChartWatcher", score: 720, avatar: "📈" },
-];
+interface FanLeaderboardProps {
+    playlists: any[];
+}
 
-export default function FanLeaderboard() {
+export default function FanLeaderboard({ playlists }: FanLeaderboardProps) {
+    // Calculate Top Fans based on number of playlists shared
+    const topFans = useMemo(() => {
+        const counts: Record<string, number> = {};
+
+        // Count mixes per creator
+        playlists.forEach(p => {
+            const creator = p.creator || "Anonymous";
+            counts[creator] = (counts[creator] || 0) + 1;
+        });
+
+        // Convert to array and sort
+        return Object.entries(counts)
+            .map(([name, count], index) => ({
+                name,
+                score: count * 100 + Math.floor(Math.random() * 50), // Mock score logic: 100 pts per mix + activity bonus
+                avatar: ["✨", "🎵", "🇬🇧", "🎧", "📈"][index % 5] || "👤"
+            }))
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 5)
+            .map((fan, i) => ({ ...fan, rank: i + 1 }));
+
+    }, [playlists]);
+
+    if (topFans.length === 0) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <h3><Crown size={16} color="var(--accent)" /> Top Fans</h3>
+                </div>
+                <div className={styles.list} style={{ textAlign: 'center', padding: '1rem', color: '#666' }}>
+                    No activity yet. Be the first!
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <h3><Crown size={16} color="var(--accent)" /> Top Fans</h3>
-                <span className={styles.week}>Week 42</span>
+                <span className={styles.week}>All Time</span>
             </div>
 
             <div className={styles.list}>
-                {fans.map((fan) => (
+                {topFans.map((fan: any) => (
                     <div key={fan.rank} className={styles.row}>
                         <div className={`${styles.rank} ${fan.rank === 1 ? styles.rank1 : fan.rank === 2 ? styles.rank2 : fan.rank === 3 ? styles.rank3 : ''}`}>
                             {fan.rank}

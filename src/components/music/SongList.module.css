@@ -239,7 +239,8 @@
 .floatingMixtapeBox {
     position: fixed;
     top: calc(var(--header-height) + 50px);
-    right: 20px;
+    right: 5px;
+    /* Moved closer to edge to avoid overlapping center content */
     width: 280px;
     background: rgba(20, 20, 25, 0.9);
     backdrop-filter: blur(20px);

@@ -12,14 +12,29 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'URL is required' }, { status: 400 });
         }
 
+        console.log("📝 Signing Request for URL:", url);
+
         // Extract key from URL
         const urlObj = new URL(url);
-        const key = decodeURIComponent(urlObj.pathname.slice(1));
-        console.log("🔑 Derived Key:", key, "Download Mode:", download);
+        let key = "";
 
-        const signedUrl = await getSignedFileUrl(key, 3600, download || false); // Pass download flag
-        console.log("📝 Generated Signed URL:", signedUrl ? "Yes (Length: " + signedUrl.length + ")" : "NULL");
+        if (urlObj.hostname.startsWith("s3.") || urlObj.hostname.includes(".s3.")) {
+            // Virtual-hosted style: bucket.s3.region.amazonaws.com OR s3.region.amazonaws.com/bucket
+            if (urlObj.pathname.startsWith('/')) {
+                key = urlObj.pathname.substring(1);
+            } else {
+                key = urlObj.pathname;
+            }
+        } else {
+            // Basic path assumption if not standard S3 URL (fallback)
+            key = decodeURIComponent(urlObj.pathname.slice(1));
+        }
 
+        // Handle the specific decoding carefully - sometimes it's double encoded or has spaces
+        const decodedKey = decodeURIComponent(key);
+
+        // We use the decoded key for signing usually, as S3 expects the actual key name
+        const signedUrl = await getSignedFileUrl(decodedKey, 3600, download || false);
 
         return NextResponse.json({ signedUrl });
 

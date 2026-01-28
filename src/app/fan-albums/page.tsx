@@ -3,7 +3,9 @@
 import SidebarNav from '@/components/fans/SidebarNav';
 import PlaylistViewer from '@/components/fans/PlaylistViewer';
 import FanLeaderboard from '@/components/fans/FanLeaderboard';
-import { Play, Heart, Share2, Sparkles, Filter, Pause, Search } from 'lucide-react';
+import PlaylistCard from '@/components/fans/PlaylistCard';
+import VotingSection from '@/components/fans/VotingSection'; // New Import
+import { Search, Filter } from 'lucide-react';
 import styles from './page.module.css';
 import { useState, useRef, useEffect } from 'react';
 import { albums } from '@/data/albumData';
@@ -18,22 +20,38 @@ const trackMapping: Record<number, { albumId: string, trackId: number }> = {
     6: { albumId: 'a-love-that-never-ends-2026', trackId: 4 },
 };
 
-// Enhanced Mock Data with BOLD colors
-const playlists = [
-    { id: 1, title: 'Summer Vibes Mix', creator: '@NeonDreamer', likes: 240, color: 'linear-gradient(135deg, #FF0080 0%, #7928CA 100%)', size: 'large' }, // Electric Pink -> Purple
-    { id: 2, title: 'Sad Boi Hours', creator: '@EmoKid2000', likes: 185, color: 'linear-gradient(135deg, #007CF0 0%, #00DFD8 100%)', size: 'small' }, // Electric Blue -> Cyan
-    { id: 3, title: 'Gym Hype', creator: '@FitFam', likes: 890, color: 'linear-gradient(135deg, #FF4D4D 0%, #F9CB28 100%)', size: 'medium' }, // Red -> Gold
-    { id: 4, title: 'Midnight Drive', creator: '@NightOwl', likes: 420, color: 'linear-gradient(135deg, #100C29 0%, #7d1c69 100%)', size: 'small' }, // Deep Midnight
-    { id: 5, title: 'Acoustic Covers', creator: '@GuitarHero', likes: 310, color: 'linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)', size: 'medium' }, // Gold -> Orange
-    { id: 6, title: 'Party Anthems', creator: '@DJKhaledFan', likes: 1200, color: 'linear-gradient(135deg, #FF00CC 0%, #333399 100%)', size: 'large' }, // Magenta -> Deep Blue
-];
+// Initial Mock Data (Fallback)
+const initialPlaylists: any[] = [];
 
 export default function CommunityHubPage() {
     const [activeTab, setActiveTab] = useState('home');
+    const [playlists, setPlaylists] = useState<any[]>(initialPlaylists);
+    const [isLoading, setIsLoading] = useState(true);
+
     const [selectedPlaylist, setSelectedPlaylist] = useState<any>(null);
     const [playingId, setPlayingId] = useState<number | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
+
+    // Fetch Live Community Playlists
+    useEffect(() => {
+        async function fetchPlaylists() {
+            try {
+                const res = await fetch('/api/community/playlist');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data)) {
+                        setPlaylists(data);
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to fetch community playlists", e);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchPlaylists();
+    }, []);
 
     // Stop audio/effects on unmount
     useEffect(() => {
@@ -49,35 +67,71 @@ export default function CommunityHubPage() {
             return;
         }
 
-        const map = trackMapping[playingId];
-        if (!map) return;
+        // Find the track in ANY playlist's tracks (flattened search for now)
+        // Since we don't have a structured backend for tracks yet, we rely on the playlists having the necessary metadata.
+        // However, our `playlists` from S3 mostly have IDs.
+        // Real implementation would need to resolve these IDs.
+        // For this demo, let's assume we can map the stored IDs back to `albumData` locally.
 
-        const album = albums.find(a => a.id === map.albumId);
-        const track = album?.tracks.find(t => t.id === map.trackId);
-
-        if (!track?.audioUrl) {
-            setPlayingId(null);
-            return;
-        }
+        // Wait, the playlist objects from S3 store track IDs like "album-track".
+        // We need to resolve that ID to a URL.
 
         async function playTrack() {
             try {
+                // Here we cheat a bit: we need the ID to find the track.
+                // But `playingId` is just a number in the original code. 
+                // Let's assume we pass the FULL track object or a string ID in the future.
+                // For now, if we are playing a playlist, we probably clicked play on the CARD (which is a playlist, not a track).
+                // Wait, the original code played a *playlist* which mapped to a single *track*.
+
+                // Let's keep it simple: if we click Play on a card (playlist), we play the first track of that playlist.
+
+                const playlist = playlists.find(p => p.id === playingId);
+                if (!playlist || !playlist.tracks || playlist.tracks.length === 0) return;
+
+                const firstTrackId = playlist.tracks[0]; // "albumId-trackId" or "trackId"
+
+                // Fetch the signed URL for this track ID via our claim/sign logic?
+                // Or just use the sign endpoint if we can resolve the URL.
+                // We need to resolve ID -> URL.
+                // Let's assume the frontend has access to `albums` data to lookup.
+                // This component doesn't import `albums`... wait, it does! line 11.
+
+                // Resolve ID -> Track
+                let foundTrack = null;
+                const parts = String(firstTrackId).split('-');
+                if (parts.length >= 2) {
+                    const aId = parts.slice(0, -1).join('-');
+                    const tId = parseInt(parts[parts.length - 1]);
+                    const album = albums.find(a => a.id === aId);
+                    foundTrack = album?.tracks.find(t => t.id === tId);
+                } else {
+                    const tId = parseInt(firstTrackId);
+                    for (const a of albums) {
+                        const match = a.tracks.find(t => t.id === tId);
+                        if (match) { foundTrack = match; break; }
+                    }
+                }
+
+                if (!foundTrack?.audioUrl) return;
+
                 const res = await fetch('/api/music/sign', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: track!.audioUrl })
+                    body: JSON.stringify({ url: foundTrack.audioUrl })
                 });
 
                 if (!res.ok) throw new Error("Failed to sign URL");
                 const data = await res.json();
                 if (data.signedUrl) setCurrentSignedUrl(data.signedUrl);
+
             } catch (error) {
                 console.error("Playback error", error);
                 setPlayingId(null);
             }
         }
         playTrack();
-    }, [playingId]);
+    }, [playingId, playlists]);
 
     useEffect(() => {
         if (currentSignedUrl && audioRef.current) {
@@ -124,66 +178,57 @@ export default function CommunityHubPage() {
                         <button className={styles.seeAllBtn}>See all</button>
                     </div>
 
-                    <div className={styles.trendingGrid}>
-                        {/* Highlight the top playlist specifically */}
-                        <div
-                            className={`${styles.trendingCard} ${styles.heroCard}`}
-                            style={{ background: playlists[0].color }}
-                            onClick={() => setSelectedPlaylist(playlists[0])}
-                        >
-                            <div className={styles.cardContent}>
-                                <div className={styles.cardText}>
-                                    <span className={styles.tag}>#1 Trending</span>
-                                    <h3>{playlists[0].title}</h3>
-                                    <p>{playlists[0].creator}</p>
-                                </div>
-                                <button className={styles.heroPlayBtn} onClick={(e) => handlePlay(e, playlists[0].id)}>
-                                    {playingId === playlists[0].id ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" />}
-                                </button>
+                    {/* Featured / Trending Grid */}
+                    {playlists.length > 0 ? (
+                        <div className={styles.trendingGrid}>
+                            {/* Highlight the top playlist specifically as a larger hero item */}
+                            <div className={styles.heroCardWrapper}>
+                                <PlaylistCard
+                                    playlist={playlists[0]}
+                                    isPlaying={playingId === playlists[0].id}
+                                    onPlay={(e) => handlePlay(e, playlists[0].id)}
+                                    onClick={() => setSelectedPlaylist(playlists[0])}
+                                />
+                            </div>
+
+                            {/* Smaller trending items */}
+                            <div className={styles.miniGrid}>
+                                {playlists.slice(1, 3).map(playlist => (
+                                    <div key={playlist.id} className={styles.miniCardWrapper}>
+                                        <PlaylistCard
+                                            playlist={playlist}
+                                            isPlaying={playingId === playlist.id}
+                                            onPlay={(e) => handlePlay(e, playlist.id)}
+                                            onClick={() => setSelectedPlaylist(playlist)}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
-
-                        {/* Smaller trending items */}
-                        <div className={styles.miniGrid}>
-                            {playlists.slice(1, 3).map(playlist => (
-                                <div
-                                    key={playlist.id}
-                                    className={`${styles.trendingCard} ${styles.miniCard}`}
-                                    style={{ background: playlist.color }}
-                                    onClick={() => setSelectedPlaylist(playlist)}
-                                >
-                                    <div className={styles.cardContent}>
-                                        <h4>{playlist.title}</h4>
-                                        <button className={styles.miniPlayBtn} onClick={(e) => handlePlay(e, playlist.id)}>
-                                            {playingId === playlist.id ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" />}
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
+                    ) : (
+                        <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>
+                            {isLoading ? "Loading Community Hub..." : "No playlists shared yet. Be the first!"}
                         </div>
-                    </div>
+                    )}
+
+                    {/* Voting Section */}
+                    <VotingSection />
 
                     {/* Recommendations / Grid */}
-                    <div className={styles.sectionHeader} style={{ marginTop: '2rem' }}>
+                    <div className={styles.sectionHeader} style={{ marginTop: '3rem' }}>
                         <h2>Fresh Mixes 🎧</h2>
                         <button className={styles.filterBtn}><Filter size={16} /> Filter</button>
                     </div>
 
                     <div className={styles.masonry}>
                         {playlists.map((playlist) => (
-                            <div key={playlist.id} className={styles.card} style={{ background: playlist.color }} onClick={() => setSelectedPlaylist(playlist)}>
-                                <div className={styles.cardOverlay}>
-                                    <button className={styles.playFab} onClick={(e) => handlePlay(e, playlist.id)}>
-                                        {playingId === playlist.id ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" />}
-                                    </button>
-                                    <div className={styles.cardInfo}>
-                                        <h4>{playlist.title}</h4>
-                                        <div className={styles.meta}>
-                                            <span>{playlist.creator}</span>
-                                            <span className={styles.likes}><Heart size={12} fill="currentColor" /> {playlist.likes}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div key={playlist.id} className={styles.masonryItem}>
+                                <PlaylistCard
+                                    playlist={playlist}
+                                    isPlaying={playingId === playlist.id}
+                                    onPlay={(e) => handlePlay(e, playlist.id)}
+                                    onClick={() => setSelectedPlaylist(playlist)}
+                                />
                             </div>
                         ))}
                     </div>
@@ -197,7 +242,7 @@ export default function CommunityHubPage() {
                         <button className={styles.challengeBtn}>Accept Challenge</button>
                     </div>
 
-                    <FanLeaderboard />
+                    <FanLeaderboard playlists={playlists} />
 
                     <div className={styles.nowPlayingWidget}>
                         <h4>Now Playing</h4>
@@ -231,7 +276,19 @@ export default function CommunityHubPage() {
             <audio
                 ref={audioRef}
                 onEnded={() => setPlayingId(null)}
-                onError={(e) => { console.error("Audio error", e); setPlayingId(null); }}
+                onError={(e) => {
+                    const target = e.target as HTMLAudioElement;
+                    console.error("❌ Audio playback error:", {
+                        src: target.src,
+                        error: target.error,
+                        code: target.error?.code,
+                        message: target.error?.message,
+                        readyState: target.readyState,
+                        networkState: target.networkState,
+                        currentSrc: target.currentSrc
+                    });
+                    setPlayingId(null);
+                }}
             />
         </div>
     );

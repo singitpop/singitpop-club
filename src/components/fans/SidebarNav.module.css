@@ -4,10 +4,11 @@
     gap: 2rem;
     height: 100%;
     padding: 2rem 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(5, 5, 7, 0.5);
+    /* Using midnight tint */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid var(--border);
 }
 
 .logo {
@@ -27,10 +28,11 @@
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #fff 0%, #d8b4fe 100%);
+    background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
 }
 
 .menu {
@@ -70,14 +72,15 @@
 .navItem:hover {
     color: white;
     background: rgba(255, 255, 255, 0.05);
-    transform: translateX(5px);
+    transform: translateX(4px);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .active {
-    background: linear-gradient(90deg, rgba(139, 92, 246, 0.2), rgba(244, 114, 182, 0.05));
+    background: linear-gradient(90deg, rgba(255, 0, 128, 0.1), rgba(139, 92, 246, 0.05));
     color: white;
-    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
-    border: 1px solid rgba(139, 92, 246, 0.2);
+    box-shadow: 0 4px 20px rgba(255, 0, 128, 0.1);
+    border: 1px solid rgba(255, 0, 128, 0.2);
 }
 
 .active::before {
@@ -88,13 +91,16 @@
     transform: translateY(-50%);
     height: 40%;
     width: 4px;
-    background: #c084fc;
+    background: var(--neon-pink);
     border-radius: 0 4px 4px 0;
-    box-shadow: 0 0 10px #c084fc;
+    box-shadow: 0 0 10px var(--neon-pink);
 }
 
 .footer {
     margin-top: auto;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border);
+    opacity: 0.6;
+    font-size: 0.8rem;
+    text-align: center;
 }
