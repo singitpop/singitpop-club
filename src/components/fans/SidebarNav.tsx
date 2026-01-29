@@ -48,7 +48,7 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
             </div>
 
             <div className={styles.footer}>
-                <Link href="/settings" style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
+                <Link href="/club/account" style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
                     <button className={`${styles.navItem} ${activeTab === 'settings' ? styles.active : ''}`}>
                         <Settings size={20} />
                         <span>Settings</span>
