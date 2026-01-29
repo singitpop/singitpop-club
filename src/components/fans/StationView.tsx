@@ -51,7 +51,12 @@ const getStationTracks = (stationGenre: string, isVip: boolean) => {
 
     // Strict Filter
     return allTracks.filter(t => {
-        const g = (t.genre || "").toLowerCase();
+        // Handle genre safely (can be string or string[])
+        const rawG = t.genre || "";
+        const g = Array.isArray(rawG)
+            ? rawG.map((x: string) => x.toLowerCase()).join(' ')
+            : (typeof rawG === 'string' ? rawG.toLowerCase() : "");
+
         // Handle albumGenre safely
         const rawAg = (t as any).albumGenre;
         const ag = Array.isArray(rawAg)
