@@ -31,6 +31,7 @@ const initialPlaylists: any[] = [];
 
 export default function CommunityHubPage() {
     const { user: clerkUser } = useUser();
+    const { isPro } = useAuth(); // Get VIP status
     const userId = clerkUser?.id;
     const router = useRouter();
     const [activeTab, setActiveTab] = useState('home');
@@ -65,6 +66,41 @@ export default function CommunityHubPage() {
             sorted.sort((a, b) => (b.likes || 0) - (a.likes || 0));
         }
         return sorted;
+    };
+
+    // Prevent rapid-fire clicks
+    const isSwitchingRef = useRef(false);
+
+    // Extracted Shuffle Logic
+    const playNextRadioTrack = () => {
+        // Get all valid tracks (must have audioUrl)
+        // Also exclude the CURRENT track to prevent repeating the same broken one
+        const now = new Date();
+
+        const allTracks = albums.flatMap(a => {
+            // VIP Check
+            if (!isPro && new Date(a.releaseDate) > now) return [];
+
+            return a.tracks.filter(t => t.audioUrl && t.id !== currentTrackId);
+        });
+
+        if (allTracks.length === 0) {
+            console.error("No valid tracks found for radio");
+            return;
+        }
+
+        const randomTrack = allTracks[Math.floor(Math.random() * allTracks.length)];
+        const album = albums.find(a => a.tracks.some(t => t.id === randomTrack.id));
+
+        console.log("📻 Auto-skipping to:", randomTrack.title);
+
+        handleTrackPlay({
+            ...randomTrack,
+            id: randomTrack.id, // Original ID
+            uniqueId: `${album?.id}-${randomTrack.id}`,
+            albumId: album?.id,
+            audioUrl: randomTrack.audioUrl
+        });
     };
 
     // Fetch Live Community Playlists

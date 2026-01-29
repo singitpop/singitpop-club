@@ -23,10 +23,20 @@ const STATIONS = [
     { freq: '92.3', name: 'All Hits', genre: 'All', color: '#fff', img: '/stations/station_all_hits_1769687943568.png' }
 ];
 
-const getStationTracks = (stationGenre: string) => {
+import { useAuth } from '@/context/AuthContext';
+
+const getStationTracks = (stationGenre: string, isVip: boolean) => {
+    const now = new Date();
+
     // Flatten all tracks
-    const allTracks = albums.flatMap(album =>
-        album.tracks.map(track => ({
+    const allTracks = albums.flatMap(album => {
+        // VIP Check: If album is future release and user is NOT VIP, skip it
+        const releaseDate = new Date(album.releaseDate);
+        if (!isVip && releaseDate > now) {
+            return [];
+        }
+
+        return album.tracks.map(track => ({
             ...track,
             albumId: album.id,
             albumTitle: album.title,
@@ -34,8 +44,8 @@ const getStationTracks = (stationGenre: string) => {
             // Ensure genre is normalized
             genre: track.genre || album.genre || 'Pop',
             albumGenre: album.genre
-        }))
-    ).filter(t => t.audioUrl); // Must have audio
+        }));
+    }).filter(t => t.audioUrl); // Must have audio
 
     if (stationGenre === 'All') return allTracks;
 
@@ -62,6 +72,7 @@ const getStationTracks = (stationGenre: string) => {
 };
 
 export default function StationView({ currentTrackId, isPlaying, onPlayTrack, currentTrack, onNext, onStop }: StationViewProps) {
+    const { isPro } = useAuth();
     const [visualizerBars, setVisualizerBars] = useState<number[]>([]);
     const [activeStation, setActiveStation] = useState(STATIONS[0]);
 
@@ -76,9 +87,9 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
 
     // Handle "Start Radio"
     const handleStartRadio = () => {
-        let filtered = getStationTracks(activeStation.genre);
+        let filtered = getStationTracks(activeStation.genre, isPro);
 
-        if (filtered.length === 0) filtered = getStationTracks('All');
+        if (filtered.length === 0) filtered = getStationTracks('All', isPro);
 
         const randomTrack = filtered[Math.floor(Math.random() * filtered.length)];
 
@@ -104,11 +115,11 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
     };
 
     const playRandomForStation = (station: any) => {
-        let filtered = getStationTracks(station.genre);
+        let filtered = getStationTracks(station.genre, isPro);
 
         if (filtered.length === 0) {
             // Fallback to all tracks if no specific genre tracks are found
-            filtered = getStationTracks('All');
+            filtered = getStationTracks('All', isPro);
         }
 
         const randomTrack = filtered[Math.floor(Math.random() * filtered.length)];
