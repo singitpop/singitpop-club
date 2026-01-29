@@ -179,8 +179,7 @@ export default function CommunityHubPage() {
         }
     }, [isPlaying, currentSignedUrl]);
 
-    // Prevent rapid-fire clicks
-    const isSwitchingRef = useRef(false);
+
 
     // Handle Play Button Click (Card Play)
     const handlePlay = (e: React.MouseEvent, playlistId: number | string) => {
@@ -423,30 +422,7 @@ export default function CommunityHubPage() {
         return Array.from(new Set(imageUrls)).slice(0, 4);
     };
 
-    // Extracted Shuffle Logic
-    const playNextRadioTrack = () => {
-        // Get all valid tracks (must have audioUrl)
-        // Also exclude the CURRENT track to prevent repeating the same broken one
-        const allTracks = albums.flatMap(a => a.tracks.filter(t => t.audioUrl && t.id !== currentTrackId));
 
-        if (allTracks.length === 0) {
-            console.error("No valid tracks found for radio");
-            return;
-        }
-
-        const randomTrack = allTracks[Math.floor(Math.random() * allTracks.length)];
-        const album = albums.find(a => a.tracks.some(t => t.id === randomTrack.id));
-
-        console.log("📻 Auto-skipping to:", randomTrack.title);
-
-        handleTrackPlay({
-            ...randomTrack,
-            id: randomTrack.id, // Original ID
-            uniqueId: `${album?.id}-${randomTrack.id}`,
-            albumId: album?.id,
-            audioUrl: randomTrack.audioUrl
-        });
-    };
 
     return (
         <div className={`container ${styles.pageContainer}`}>
