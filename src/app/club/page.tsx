@@ -33,7 +33,7 @@ export default async function ClubPage() {
                     <div className={styles.iconWrapper}>
                         <span style={{ fontSize: '2.5rem' }}>💎</span>
                     </div>
-                    <h3 className={styles.cardTitle}>VIP Demos</h3>
+                    <h3 className={styles.cardTitle}>Exclusive Content</h3>
                     <p className={styles.cardText}>
                         Unreleased tracks, acoustic sketches, and studio diaries.
                         <strong> (VIP Tier Only)</strong>

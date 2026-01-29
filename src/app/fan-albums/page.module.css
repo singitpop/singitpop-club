@@ -102,11 +102,11 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 2rem;
+    margin-bottom: 0.8rem;
 }
 
 .sectionHeader h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin: 0;
     font-weight: 800;
     background: linear-gradient(to right, #fff, #e2e8f0);
@@ -151,43 +151,29 @@
 }
 
 /* Trending Grid (Bento Style) */
+/* Trending grid: Simple row of 3 cards */
 .trendingGrid {
     display: grid;
-    grid-template-columns: 1.8fr 1fr;
-    gap: 2rem;
-    /* Height is now determined by content aspect ratios */
-    margin-bottom: 3rem;
-    align-items: stretch;
-}
-
-/* Wrapper for the Hero Card to allow pure aspect ratio control */
-.heroCardWrapper {
-    width: 100%;
-    height: 100%;
-    min-height: 400px;
-    /* Ensure impact */
-}
-
-/* Mini Grid for side items */
-.miniGrid {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-    height: 100%;
+    margin-bottom: 2rem;
+    align-items: start;
 }
 
-.miniCardWrapper {
-    flex: 1;
-    min-height: 0;
-    /* flex fix */
+.trendingCardWrapper {
+    width: 100%;
+    /* Let height be determined by aspect ratio of card, but limit max height if needed */
+    /* Ideally PlaylistCard is responsive. To ensure they are small, we rely on grid columns splitting width */
+    /* If we want them distinctly short/wide, we'd need to modify PlaylistCard CSS too, but width constraint is usually enough */
+    min-height: 200px;
 }
 
 
 /* --- Standard Grid (Fresh Mixes) --- */
 .masonry {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 2rem;
     /* More breathing room for the vinyl slide-out */
 }
 
@@ -360,20 +346,9 @@
         height: auto;
     }
 
-    .heroCardWrapper {
-        min-height: 300px;
-    }
-
-    .miniGrid {
-        flex-direction: row;
-        gap: 1rem;
-        overflow-x: auto;
-        padding-bottom: 1rem;
-        /* scrollbar space */
-    }
-
-    .miniCardWrapper {
-        min-width: 200px;
+    .trendingGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .masonry {
@@ -384,4 +359,3 @@
     .searchBar {
         width: 100%;
     }
-}

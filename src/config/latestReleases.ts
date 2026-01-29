@@ -22,7 +22,7 @@ export const LATEST_RELEASES = {
     // Premier Video Configuration (The big video on the homepage)
     // This is INDEPENDENT of the latest single. You can change this whenever you drop a new video/vlog.
     HERO_VIDEO: {
-        HERO_TITLE: "PARADISE AGAIN", // The Big Text on the screen
+        HERO_TITLE: "", // Empty initially to prevent FOUC (Flash of Unstyled Content)
         BUTTON_TEXT: "Watch Premiere",
         VIDEO_URL: "https://www.youtube.com/watch?v=s5GwnVX3-dY&list=RDMMs5GwnVX3-dY&start_radio=1",
     }

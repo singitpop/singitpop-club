@@ -6,9 +6,10 @@ interface RadialVisualizerProps {
     isPlaying: boolean;
     width?: number;
     height?: number;
+    color?: string;
 }
 
-export default function RadialVisualizer({ isPlaying, width = 300, height = 300 }: RadialVisualizerProps) {
+export default function RadialVisualizer({ isPlaying, width = 300, height = 300, color }: RadialVisualizerProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const animationRef = useRef<number | null>(null);
 
@@ -82,7 +83,7 @@ export default function RadialVisualizer({ isPlaying, width = 300, height = 300 
                     hue = 10 + Math.sin(angle * 2) * 20;
                 }
 
-                ctx.strokeStyle = `hsl(${hue}, 100%, 60%)`;
+                ctx.strokeStyle = color || `hsl(${hue}, 100%, 60%)`;
                 ctx.lineWidth = 2;
                 ctx.beginPath();
                 ctx.moveTo(startX, startY);

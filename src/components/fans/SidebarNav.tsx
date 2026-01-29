@@ -1,5 +1,7 @@
-import { Home, Compass, Heart, Radio, User, Settings, LogOut } from 'lucide-react';
+import { Home, Compass, Heart, Radio, User, Settings, LogOut, PlusCircle } from 'lucide-react';
 import styles from './SidebarNav.module.css';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface SidebarNavProps {
     activeTab: string;
@@ -37,10 +39,12 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
 
             <div className={styles.menu}>
                 <h4 className={styles.menuTitle}>Library</h4>
-                <button className={styles.navItem}>
-                    <User size={20} />
-                    <span>My Mixes</span>
-                </button>
+                <Link href="/fan-albums/create" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <button className={styles.navItem}>
+                        <PlusCircle size={20} color="#FF0080" />
+                        <span style={{ color: '#FF0080', fontWeight: 'bold' }}>Create Mix</span>
+                    </button>
+                </Link>
             </div>
 
             <div className={styles.footer}>

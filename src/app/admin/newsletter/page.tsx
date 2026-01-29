@@ -1,0 +1,171 @@
+
+"use client";
+
+import { useState } from 'react';
+import styles from '../Admin.module.css'; // Reuse basic admin styles
+import { Copy, FileOutput, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+
+export default function NewsletterBuilder() {
+    const [subject, setSubject] = useState("New Release from SingIt Pop!");
+    const [headerText, setHeaderText] = useState("We have some exciting news for you.");
+    const [featuredType, setFeaturedType] = useState("single");
+    const [ctaLink, setCtaLink] = useState("https://singitpop.com/music");
+    const [generatedHtml, setGeneratedHtml] = useState("");
+
+    const generateEmail = () => {
+        // Simple HTML Template
+        const html = `
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 0; }
+  .container { max-width: 600px; margin: 20px auto; background: white; border-radius: 8px; overflow: hidden; }
+  .header { background: #000; color: white; padding: 20px; text-align: center; }
+  .content { padding: 30px; }
+  .btn { display: inline-block; background: #FF0080; color: white; text-decoration: none; padding: 12px 24px; border-radius: 4px; font-weight: bold; }
+  .footer { background: #eee; text-align: center; padding: 20px; font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+        <h1>SingIt Pop</h1>
+    </div>
+    <div class="content">
+        <h2>${subject}</h2>
+        <p>${headerText.replace(/\n/g, '<br>')}</p>
+        
+        <div style="margin: 30px 0; padding: 20px; background: #f9f9f9; border-left: 4px solid #FF0080;">
+            <h3>${featuredType === 'single' ? 'New Single Out Now!' : 'Featured Update'}</h3>
+            <p>Listen to the latest tracks on our website.</p>
+            <a href="${ctaLink}" class="btn">Listen Now</a>
+        </div>
+
+        <p>Thanks for being a fan!<br><strong>The SingIt Pop Team</strong></p>
+    </div>
+    <div class="footer">
+        &copy; ${new Date().getFullYear()} SingIt Pop. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>
+        `;
+        setGeneratedHtml(html.trim());
+    };
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(generatedHtml);
+        alert("HTML copied to clipboard!");
+    };
+
+    return (
+        <div className={styles.container} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+            <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#aaa', marginBottom: '1rem', textDecoration: 'none' }}>
+                <ArrowLeft size={16} /> Back to Dashboard
+            </Link>
+            <h1>Newsletter Builder</h1>
+            <p>Create simple HTML emails to send to your fans.</p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', width: '100%', marginTop: '2rem' }}>
+                {/* Editor */}
+                <div style={{ background: '#111', padding: '2rem', borderRadius: '12px' }}>
+                    <h3>Edit Content</h3>
+
+                    <div style={{ marginBottom: '1rem' }}>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }}>Subject Line</label>
+                        <input
+                            type="text"
+                            className={styles.searchInput}
+                            style={{ width: '100%' }}
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)}
+                        />
+                    </div>
+
+                    <div style={{ marginBottom: '1rem' }}>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }}>Intro Text</label>
+                        <textarea
+                            className={styles.searchInput}
+                            style={{ width: '100%', minHeight: '100px', fontFamily: 'inherit' }}
+                            value={headerText}
+                            onChange={(e) => setHeaderText(e.target.value)}
+                        />
+                    </div>
+
+                    <div style={{ marginBottom: '1rem' }}>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }}>Featured Type</label>
+                        <select
+                            className={styles.searchInput}
+                            style={{ width: '100%' }}
+                            value={featuredType}
+                            onChange={(e) => setFeaturedType(e.target.value)}
+                        >
+                            <option value="single">New Single</option>
+                            <option value="album">Album Launch</option>
+                            <option value="merch">Merch Drop</option>
+                        </select>
+                    </div>
+
+                    <div style={{ marginBottom: '1rem' }}>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }}>CTA Link</label>
+                        <input
+                            type="text"
+                            className={styles.searchInput}
+                            style={{ width: '100%' }}
+                            value={ctaLink}
+                            onChange={(e) => setCtaLink(e.target.value)}
+                        />
+                    </div>
+
+                    <button className={styles.btn} onClick={generateEmail} style={{ width: '100%', marginTop: '1rem' }}>
+                        <FileOutput size={18} /> Generate HTML
+                    </button>
+                </div>
+
+                {/* Preview / Code */}
+                <div style={{ background: '#111', padding: '2rem', borderRadius: '12px', display: 'flex', flexDirection: 'column' }}>
+                    <h3>HTML Output</h3>
+                    <textarea
+                        readOnly
+                        value={generatedHtml}
+                        style={{
+                            flex: 1,
+                            width: '100%',
+                            background: '#000',
+                            color: '#0f0',
+                            fontFamily: 'monospace',
+                            padding: '1rem',
+                            border: '1px solid #333',
+                            borderRadius: '8px',
+                            marginBottom: '1rem',
+                            resize: 'none'
+                        }}
+                        placeholder="Click Generate to see HTML code..."
+                    />
+                    <button
+                        className={styles.btn}
+                        onClick={copyToClipboard}
+                        disabled={!generatedHtml}
+                        style={{ alignSelf: 'flex-start', opacity: !generatedHtml ? 0.5 : 1 }}
+                    >
+                        <Copy size={18} /> Copy Code
+                    </button>
+
+                    <div style={{ marginTop: '1rem', borderTop: '1px solid #333', paddingTop: '1rem' }}>
+                        <span style={{ fontSize: '0.9rem', color: '#888' }}>Preview (Simple)</span>
+                        {/* We could use an iframe here to preview accurately */}
+                        <div style={{ background: '#fff', color: '#000', padding: '1rem', marginTop: '0.5rem', borderRadius: '4px', minHeight: '200px' }}>
+                            {generatedHtml ? (
+                                <div dangerouslySetInnerHTML={{ __html: generatedHtml }} /> // Render the HTML
+                            ) : (
+                                <p style={{ color: '#ccc', textAlign: 'center', paddingTop: '3rem' }}>Preview will appear here</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

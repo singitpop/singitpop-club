@@ -12,21 +12,30 @@ interface FanLeaderboardProps {
 export default function FanLeaderboard({ playlists }: FanLeaderboardProps) {
     // Calculate Top Fans based on number of playlists shared
     const topFans = useMemo(() => {
-        const counts: Record<string, number> = {};
+        const stats: Record<string, { mixes: number, likes: number }> = {};
 
-        // Count mixes per creator
+        // Count mixes and likes per creator
         playlists.forEach(p => {
             const creator = p.creator || "Anonymous";
-            counts[creator] = (counts[creator] || 0) + 1;
+            if (!stats[creator]) stats[creator] = { mixes: 0, likes: 0 };
+
+            stats[creator].mixes += 1;
+            stats[creator].likes += (p.likes || 0);
         });
 
         // Convert to array and sort
-        return Object.entries(counts)
-            .map(([name, count], index) => ({
-                name,
-                score: count * 100 + Math.floor(Math.random() * 50), // Mock score logic: 100 pts per mix + activity bonus
-                avatar: ["✨", "🎵", "🇬🇧", "🎧", "📈"][index % 5] || "👤"
-            }))
+        return Object.entries(stats)
+            .map(([name, data], index) => {
+                // Score = (Mixes * 50) + (Likes * 10) + Random Activity Bonus (Voting etc)
+                const activityBonus = Math.floor(Math.random() * 20);
+                const score = (data.mixes * 50) + (data.likes * 10) + activityBonus;
+
+                return {
+                    name,
+                    score,
+                    avatar: ["✨", "🎵", "🇬🇧", "🎧", "📈"][index % 5] || "👤"
+                };
+            })
             .sort((a, b) => b.score - a.score)
             .slice(0, 5)
             .map((fan, i) => ({ ...fan, rank: i + 1 }));

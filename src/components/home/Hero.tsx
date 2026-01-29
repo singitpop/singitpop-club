@@ -105,11 +105,11 @@ export default function Hero() {
             <motion.div
                 className={styles.titleContainer}
                 initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
+                animate={{ opacity: heroData.HERO_TITLE ? 1 : 0, x: heroData.HERO_TITLE ? 0 : -30 }}
                 transition={{ delay: 1, duration: 0.8 }}
             >
                 <span className={styles.artistName}>SingIt Pop</span>
-                <h1 className={styles.songTitle}>{heroData.HERO_TITLE}</h1>
+                {heroData.HERO_TITLE && <h1 className={styles.songTitle}>{heroData.HERO_TITLE}</h1>}
             </motion.div>
 
             {/* Video Modal */}

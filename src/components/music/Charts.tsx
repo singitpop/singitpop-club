@@ -3,11 +3,11 @@
 import styles from './Charts.module.css';
 
 const topTracks = [
-    { rank: 1, title: 'Neon Heart', change: 'up' },
-    { rank: 2, title: 'Southern Lights', change: 'same' },
-    { rank: 3, title: 'Whiskey Slide', change: 'down' },
-    { rank: 4, title: 'Electric Soul', change: 'up' },
-    { rank: 5, title: 'Midnight Drive', change: 'new' },
+    { rank: 1, title: 'Desert Winds', change: 'up' },
+    { rank: 2, title: 'A Love That Never Ends', change: 'same' },
+    { rank: 3, title: 'Front Porch Valentine', change: 'down' },
+    { rank: 4, title: 'The Silent Conversation', change: 'up' },
+    { rank: 5, title: 'Slow Motion Love', change: 'new' },
 ];
 
 export default function Charts() {

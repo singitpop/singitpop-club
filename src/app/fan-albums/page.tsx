@@ -1,14 +1,20 @@
 "use client";
 
+import { useUser } from '@clerk/nextjs';
+
 import SidebarNav from '@/components/fans/SidebarNav';
 import PlaylistViewer from '@/components/fans/PlaylistViewer';
 import FanLeaderboard from '@/components/fans/FanLeaderboard';
 import PlaylistCard from '@/components/fans/PlaylistCard';
 import VotingSection from '@/components/fans/VotingSection'; // New Import
-import { Search, Filter } from 'lucide-react';
+import StationView from '@/components/fans/StationView'; // New Import
+import { Search, Filter, TrendingUp, Clock } from 'lucide-react';
 import styles from './page.module.css';
 import { useState, useRef, useEffect } from 'react';
 import { albums } from '@/data/albumData';
+import { useAuth } from '@/context/AuthContext';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // Map playlist IDs to real tracks for demo purposes
 const trackMapping: Record<number, { albumId: string, trackId: number }> = {
@@ -24,14 +30,42 @@ const trackMapping: Record<number, { albumId: string, trackId: number }> = {
 const initialPlaylists: any[] = [];
 
 export default function CommunityHubPage() {
+    const { user: clerkUser } = useUser();
+    const userId = clerkUser?.id;
+    const router = useRouter();
     const [activeTab, setActiveTab] = useState('home');
     const [playlists, setPlaylists] = useState<any[]>(initialPlaylists);
     const [isLoading, setIsLoading] = useState(true);
 
     const [selectedPlaylist, setSelectedPlaylist] = useState<any>(null);
-    const [playingId, setPlayingId] = useState<number | null>(null);
+    const [currentTrackId, setCurrentTrackId] = useState<number | string | null>(null);
+    const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
+    const [activeSort, setActiveSort] = useState<'newest' | 'popular'>('newest');
+    const [activeChallenge, setActiveChallenge] = useState<any>(null);
+
+    const getSortedPlaylists = () => {
+        let filtered = [...playlists];
+
+        // Filter by Tab
+        if (activeTab === 'favorites' && userId) {
+            filtered = filtered.filter(p => p.likedBy && p.likedBy.includes(userId));
+        }
+
+        const sorted = filtered;
+        if (activeSort === 'newest') {
+            sorted.sort((a, b) => {
+                const idA = parseInt(String(a.id)) || 0;
+                const idB = parseInt(String(b.id)) || 0;
+                return idB - idA;
+            });
+        } else {
+            // Popular = Most Likes
+            sorted.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+        }
+        return sorted;
+    };
 
     // Fetch Live Community Playlists
     useEffect(() => {
@@ -50,7 +84,15 @@ export default function CommunityHubPage() {
                 setIsLoading(false);
             }
         }
+
         fetchPlaylists();
+
+        // Fetch Active Challenge
+        fetch('/api/community/challenge', { cache: 'no-store' }).then(res => res.json()).then(data => {
+            if (data && data.active) {
+                setActiveChallenge(data);
+            }
+        });
     }, []);
 
     // Stop audio/effects on unmount
@@ -60,94 +102,314 @@ export default function CommunityHubPage() {
         };
     }, []);
 
-    // Handle Playback Logic
+    // Handle Playback Logic (Side Effects for Audio Element)
     useEffect(() => {
-        if (!playingId) {
-            if (audioRef.current) audioRef.current.pause();
+        if (!audioRef.current) return;
+
+        const audio = audioRef.current;
+
+        const attemptPlay = async () => {
+            if (audio.src !== currentSignedUrl) {
+                // Only set SRC if different. This prevents reloading on re-renders.
+                if (currentSignedUrl) {
+                    audio.src = currentSignedUrl;
+                    audio.load();
+                    try {
+                        await audio.play();
+                    } catch (e: any) {
+                        // Ignore AbortError which happens on rapid skipping
+                        if (e.name !== 'AbortError') {
+                            console.error("Play call failed:", e);
+                        }
+                    }
+                }
+            } else if (isPlaying && audio.paused) {
+                // Resume
+                try {
+                    await audio.play();
+                } catch (e: any) {
+                    if (e.name !== 'AbortError') {
+                        console.error("Resume call failed:", e);
+                    }
+                }
+            }
+        };
+
+        if (isPlaying && currentSignedUrl) {
+            attemptPlay();
+        } else {
+            // Only pause if explicitly set to false
+            if (!audio.paused) audio.pause();
+        }
+    }, [isPlaying, currentSignedUrl]);
+
+    // Prevent rapid-fire clicks
+    const isSwitchingRef = useRef(false);
+
+    // Handle Play Button Click (Card Play)
+    const handlePlay = (e: React.MouseEvent, playlistId: number | string) => {
+        e.stopPropagation(); // Prevent opening modal
+
+        // Find the playlist
+        const playlist = playlists.find(p => p.id === playlistId);
+        if (!playlist || !playlist.tracks || playlist.tracks.length === 0) return;
+
+        // Resolve first track ID
+        const firstTrackId = playlist.tracks[0];
+
+        // NOTE: We rely on the loose coupling here. If we click play on a playlist, we try to play its first track.
+        // But we need to map "playlistId" to a "currentTrackId" check?
+        // Actually, let's keep it simple: If any track FROM this playlist is playing, we pause. 
+        // Otherwise, we play the first track.
+
+        // Optimization: Check if currentTrackId belongs to this playlist? 
+        // For now, if we click play on the playlist card, we just want to play the first track.
+
+        // Logic:
+        // 1. Resolve first track ID (to match format)
+        // 2. See if that is currentTrackId
+
+        // Issue: We don't easily know the Resolved Track ID without doing the split logic again.
+        // Let's reuse the logic inside `handleTrackPlay` if possible, but we don't have the track object yet.
+
+        // For now, let's call `handleTrackPlay` with the resolved first track if possible.
+        // But we need to resolve it.
+
+        // Copied resolution logic:
+        let foundTrack: any = null;
+        const parts = String(firstTrackId).split('-');
+        let realId: string | number = firstTrackId;
+
+        if (parts.length >= 2) {
+            const aId = parts.slice(0, -1).join('-');
+            const tId = parseInt(parts[parts.length - 1]);
+            const album = albums.find(a => a.id === aId);
+            foundTrack = album?.tracks.find(t => t.id === tId);
+            // Construct unique ID used in Viewer
+            if (foundTrack) foundTrack = { ...foundTrack, id: `track-${firstTrackId}` }; // Use consistent ID
+        } else {
+            const tId = parseInt(firstTrackId);
+            for (const album of albums) {
+                const match = album.tracks.find(t => t.id === tId);
+                if (match) {
+                    foundTrack = match;
+                    foundTrack = { ...foundTrack, id: `track-${firstTrackId}` };
+                    break;
+                }
+            }
+        }
+
+        if (foundTrack) {
+            handleTrackPlay(foundTrack);
+        }
+    };
+
+    const handleTrackPlay = async (track: any) => {
+        if (!track || !track.audioUrl) {
+            console.warn("Invalid track requested:", track);
+            // If radio, skip
+            if (activeTab === 'radio' && !isSwitchingRef.current) {
+                playNextRadioTrack();
+            }
             return;
         }
 
-        // Find the track in ANY playlist's tracks (flattened search for now)
-        // Since we don't have a structured backend for tracks yet, we rely on the playlists having the necessary metadata.
-        // However, our `playlists` from S3 mostly have IDs.
-        // Real implementation would need to resolve these IDs.
-        // For this demo, let's assume we can map the stored IDs back to `albumData` locally.
+        // Debounce / Guard
+        if (isSwitchingRef.current) {
+            console.log("Ignored click: Track switch in progress");
+            return;
+        }
 
-        // Wait, the playlist objects from S3 store track IDs like "album-track".
-        // We need to resolve that ID to a URL.
+        // Check if same track toggling
+        if (currentTrackId === track.id) {
+            setIsPlaying(!isPlaying);
+            return;
+        }
 
-        async function playTrack() {
-            try {
-                // Here we cheat a bit: we need the ID to find the track.
-                // But `playingId` is just a number in the original code. 
-                // Let's assume we pass the FULL track object or a string ID in the future.
-                // For now, if we are playing a playlist, we probably clicked play on the CARD (which is a playlist, not a track).
-                // Wait, the original code played a *playlist* which mapped to a single *track*.
+        // Start Switch
+        isSwitchingRef.current = true;
+        setIsLoading(true);
+        setIsPlaying(false); // Stop previous
+        setCurrentTrackId(track.id);
 
-                // Let's keep it simple: if we click Play on a card (playlist), we play the first track of that playlist.
+        try {
+            // Sign URL
+            const res = await fetch('/api/music/sign', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: track.audioUrl })
+            });
 
-                const playlist = playlists.find(p => p.id === playingId);
-                if (!playlist || !playlist.tracks || playlist.tracks.length === 0) return;
+            if (!res.ok) throw new Error("Failed to sign URL");
+            const data = await res.json();
 
-                const firstTrackId = playlist.tracks[0]; // "albumId-trackId" or "trackId"
+            if (data.signedUrl) {
+                setCurrentSignedUrl(data.signedUrl);
 
-                // Fetch the signed URL for this track ID via our claim/sign logic?
-                // Or just use the sign endpoint if we can resolve the URL.
-                // We need to resolve ID -> URL.
-                // Let's assume the frontend has access to `albums` data to lookup.
-                // This component doesn't import `albums`... wait, it does! line 11.
-
-                // Resolve ID -> Track
-                let foundTrack = null;
-                const parts = String(firstTrackId).split('-');
-                if (parts.length >= 2) {
-                    const aId = parts.slice(0, -1).join('-');
-                    const tId = parseInt(parts[parts.length - 1]);
-                    const album = albums.find(a => a.id === aId);
-                    foundTrack = album?.tracks.find(t => t.id === tId);
-                } else {
-                    const tId = parseInt(firstTrackId);
-                    for (const a of albums) {
-                        const match = a.tracks.find(t => t.id === tId);
-                        if (match) { foundTrack = match; break; }
-                    }
+                // Reset Audio Props safely
+                if (audioRef.current) {
+                    audioRef.current.volume = 1.0;
+                    audioRef.current.muted = false;
                 }
 
-                if (!foundTrack?.audioUrl) return;
-
-                const res = await fetch('/api/music/sign', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: foundTrack.audioUrl })
-                });
-
-                if (!res.ok) throw new Error("Failed to sign URL");
-                const data = await res.json();
-                if (data.signedUrl) setCurrentSignedUrl(data.signedUrl);
-
-            } catch (error) {
-                console.error("Playback error", error);
-                setPlayingId(null);
+                setIsPlaying(true);
+            } else {
+                throw new Error("No signed URL returned");
             }
-        }
-        playTrack();
-    }, [playingId, playlists]);
+        } catch (e) {
+            console.error("Track play error", e);
 
-    useEffect(() => {
-        if (currentSignedUrl && audioRef.current) {
-            audioRef.current.src = currentSignedUrl;
-            audioRef.current.play().catch(console.error);
+            if (activeTab === 'radio') {
+                console.log("📻 Radio error -> Skipping");
+                setTimeout(() => {
+                    isSwitchingRef.current = false; // Reset lock before recursing
+                    playNextRadioTrack();
+                }, 500);
+                return; // Return early, don't unlock yet (the recursive call will lock)
+            } else {
+                setCurrentTrackId(null);
+                setIsPlaying(false);
+            }
+        } finally {
+            setIsLoading(false);
+            // Only unlock if we didn't recurse into radio skip (handled above)
+            // Actually, safe to just unlock after a short delay to ensure UI updates
+            setTimeout(() => {
+                isSwitchingRef.current = false;
+            }, 300);
         }
-    }, [currentSignedUrl]);
+    };
 
-    const handlePlay = (e: React.MouseEvent, id: number) => {
-        e.stopPropagation(); // Prevent opening modal
-        if (playingId === id) {
-            setPlayingId(null);
-            audioRef.current?.pause();
-        } else {
-            setPlayingId(id);
+    const handleLike = async (playlistId: string | number) => {
+        if (!userId) {
+            router.push('/sign-in'); // Redirect to sign in if not logged in (using clerk)
+            return;
         }
+
+        // Optimistic Update
+        let isLiked = false;
+        setPlaylists(prev => prev.map(p => {
+            if (p.id === playlistId) {
+                const likedBy = p.likedBy || [];
+                const alreadyLiked = likedBy.includes(userId);
+                isLiked = !alreadyLiked;
+
+                return {
+                    ...p,
+                    likes: alreadyLiked ? (p.likes - 1) : (p.likes + 1),
+                    likedBy: alreadyLiked ? likedBy.filter((id: string) => id !== userId) : [...likedBy, userId]
+                };
+            }
+            return p;
+        }));
+
+        // Update selectedPlaylist if it matches, to reflect in modal instantly
+        if (selectedPlaylist && selectedPlaylist.id === playlistId) {
+            setSelectedPlaylist((prev: any) => {
+                const likedBy = prev.likedBy || [];
+                const alreadyLiked = likedBy.includes(userId);
+                return {
+                    ...prev,
+                    likes: alreadyLiked ? (prev.likes - 1) : (prev.likes + 1),
+                    likedBy: alreadyLiked ? likedBy.filter((id: string) => id !== userId) : [...likedBy, userId]
+                };
+            });
+        }
+
+        try {
+            const res = await fetch('/api/community/playlist/like', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ playlistId })
+            });
+
+            if (!res.ok) {
+                // Revert on failure (complex to revert exact state, but fetching fresh might be better)
+                // For now, accept occasional desync on error
+                console.error("Like failed");
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const handleDeletePlaylist = async (playlistId: string) => {
+        try {
+            const res = await fetch(`/api/community/playlist?id=${playlistId}`, {
+                method: 'DELETE'
+            });
+            if (res.ok) {
+                // Remove from state
+                setPlaylists(prev => prev.filter(p => p.id !== playlistId));
+                setSelectedPlaylist(null); // Close modal
+                // If it was playing, maybe stop?
+                if (currentTrackId && String(currentTrackId).includes(String(playlistId))) {
+                    setIsPlaying(false);
+                    setCurrentTrackId(null);
+                }
+            } else {
+                alert("Failed to delete playlist. You might not have permission.");
+            }
+        } catch (e) {
+            console.error("Delete failed", e);
+            alert("Error deleting playlist");
+        }
+    };
+
+    // Helper: Get artwork URLs for a playlist
+    const getPlaylistArtwork = (playlist: any) => {
+        if (!playlist || !playlist.tracks) return [];
+
+        // Take up to 4 tracks
+        const trackIds = playlist.tracks.slice(0, 4);
+        const imageUrls: string[] = [];
+
+        trackIds.forEach((tId: string | number) => {
+            // Logic to find artwork from albumData
+            const parts = String(tId).split('-');
+            if (parts.length >= 2) {
+                const aId = parts.slice(0, -1).join('-');
+                const album = albums.find(a => a.id === aId);
+                if (album) imageUrls.push(album.coverArt);
+            } else {
+                // Try brute force search if just number
+                const idNum = parseInt(String(tId));
+                for (const album of albums) {
+                    if (album.tracks.some(t => t.id === idNum)) {
+                        imageUrls.push(album.coverArt);
+                        break;
+                    }
+                }
+            }
+        });
+
+        // Remove duplicates if multiple tracks from same album
+        return Array.from(new Set(imageUrls)).slice(0, 4);
+    };
+
+    // Extracted Shuffle Logic
+    const playNextRadioTrack = () => {
+        // Get all valid tracks (must have audioUrl)
+        // Also exclude the CURRENT track to prevent repeating the same broken one
+        const allTracks = albums.flatMap(a => a.tracks.filter(t => t.audioUrl && t.id !== currentTrackId));
+
+        if (allTracks.length === 0) {
+            console.error("No valid tracks found for radio");
+            return;
+        }
+
+        const randomTrack = allTracks[Math.floor(Math.random() * allTracks.length)];
+        const album = albums.find(a => a.tracks.some(t => t.id === randomTrack.id));
+
+        console.log("📻 Auto-skipping to:", randomTrack.title);
+
+        handleTrackPlay({
+            ...randomTrack,
+            id: randomTrack.id, // Original ID
+            uniqueId: `${album?.id}-${randomTrack.id}`,
+            albumId: album?.id,
+            audioUrl: randomTrack.audioUrl
+        });
     };
 
     return (
@@ -160,86 +422,149 @@ export default function CommunityHubPage() {
 
                 {/* Center: Feed / Main Content */}
                 <main className={styles.feed}>
-                    {/* Header / Search */}
-                    <div className={styles.feedHeader}>
-                        <div className={styles.searchBar}>
-                            <Search size={18} color="var(--text-muted)" />
-                            <input type="text" placeholder="Search artists, mixes, vibes..." />
+                    {/* Header / Search - Hide on Radio Tab */}
+                    {activeTab !== 'radio' && (
+                        <div className={styles.feedHeader}>
+                            <div className={styles.searchBar}>
+                                <Search size={18} color="var(--text-muted)" />
+                                <input type="text" placeholder="Search artists, mixes, vibes..." />
+                            </div>
+                            <div className={styles.profileBadge}>
+                                <span>Gary Birrell</span>
+                                <div className={styles.avatar}>GB</div>
+                            </div>
                         </div>
-                        <div className={styles.profileBadge}>
-                            <span>Gary Birrell</span>
-                            <div className={styles.avatar}>GB</div>
-                        </div>
-                    </div>
+                    )}
 
-                    {/* Spotlight / Trending Section */}
-                    <div className={styles.sectionHeader}>
-                        <h2>Trending Right Now 🔥</h2>
-                        <button className={styles.seeAllBtn}>See all</button>
-                    </div>
-
-                    {/* Featured / Trending Grid */}
-                    {playlists.length > 0 ? (
-                        <div className={styles.trendingGrid}>
-                            {/* Highlight the top playlist specifically as a larger hero item */}
-                            <div className={styles.heroCardWrapper}>
-                                <PlaylistCard
-                                    playlist={playlists[0]}
-                                    isPlaying={playingId === playlists[0].id}
-                                    onPlay={(e) => handlePlay(e, playlists[0].id)}
-                                    onClick={() => setSelectedPlaylist(playlists[0])}
-                                />
+                    {activeTab === 'home' && (
+                        <>
+                            {/* Spotlight / Trending Section */}
+                            <div className={styles.sectionHeader}>
+                                <h2>Trending Right Now 🔥</h2>
+                                <button className={styles.seeAllBtn}>See all</button>
                             </div>
 
-                            {/* Smaller trending items */}
-                            <div className={styles.miniGrid}>
-                                {playlists.slice(1, 3).map(playlist => (
-                                    <div key={playlist.id} className={styles.miniCardWrapper}>
+                            {/* Featured / Trending Grid */}
+                            {playlists.length > 0 ? (
+                                <div className={styles.trendingGrid}>
+                                    {playlists.slice(0, 3).map(playlist => (
+                                        <div key={playlist.id} className={styles.trendingCardWrapper}>
+                                            <PlaylistCard
+                                                playlist={playlist}
+                                                coverImages={getPlaylistArtwork(playlist)}
+                                                isPlaying={isPlaying && currentTrackId === `track-${playlist.tracks[0]}`}
+                                                onPlay={(e) => handlePlay(e, playlist.id)}
+                                                onClick={() => setSelectedPlaylist(playlist)}
+                                                onLike={() => handleLike(playlist.id)}
+                                                hasLiked={playlist.likedBy?.includes(userId)}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>
+                                    {isLoading ? "Loading Community Hub..." : "No playlists shared yet. Be the first!"}
+                                </div>
+                            )}
+
+                            {/* Voting Section */}
+                            <VotingSection />
+                        </>
+                    )}
+
+                    {activeTab === 'radio' && (
+                        <StationView
+                            currentTrackId={currentTrackId}
+                            isPlaying={isPlaying}
+                            onPlayTrack={handleTrackPlay}
+                            currentTrack={(() => {
+                                // Resolve current track object for display
+                                if (!currentTrackId) return undefined;
+                                const parts = String(currentTrackId).split('-');
+                                if (parts.length >= 2) {
+                                    const aId = parts.slice(0, -1).join('-');
+                                    const tId = parseInt(parts[parts.length - 1]);
+                                    const album = albums.find(a => a.id === aId);
+                                    const t = album?.tracks.find(tr => tr.id === tId);
+                                    return t ? { ...t, coverArt: album?.coverArt } : undefined;
+                                }
+                                return undefined;
+                            })()}
+                            onNext={playNextRadioTrack}
+                            onStop={() => {
+                                setIsPlaying(false);
+                            }}
+                        />
+                    )}
+
+                    {/* Recommendations / Grid - Only show if NOT on radio tab (or maybe keep it below?) */}
+                    {/* Let's hide grid for Radio tab to focus on the player */}
+                    {activeTab !== 'radio' && (
+                        <>
+                            <div className={styles.sectionHeader} style={{ marginTop: '3rem' }}>
+                                <h2>
+                                    {activeTab === 'favorites' ? 'My Favorites ❤️' :
+                                        activeTab === 'browse' ? 'Browse All Mixes' :
+                                            'Fresh Mixes 🎧'}
+                                </h2>
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <button
+                                        className={`${styles.filterBtn} ${activeSort === 'newest' ? styles.activeFilter : ''}`}
+                                        onClick={() => setActiveSort('newest')}
+                                        style={{
+                                            background: activeSort === 'newest' ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                                            borderColor: activeSort === 'newest' ? 'white' : 'rgba(255,255,255,0.1)'
+                                        }}
+                                    >
+                                        <Clock size={16} /> Newest
+                                    </button>
+                                    <button
+                                        className={`${styles.filterBtn} ${activeSort === 'popular' ? styles.activeFilter : ''}`}
+                                        onClick={() => setActiveSort('popular')}
+                                        style={{
+                                            background: activeSort === 'popular' ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                                            borderColor: activeSort === 'popular' ? 'white' : 'rgba(255,255,255,0.1)'
+                                        }}
+                                    >
+                                        <TrendingUp size={16} /> Popular
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className={styles.masonry}>
+                                {getSortedPlaylists().map((playlist) => (
+                                    <div key={playlist.id} className={styles.masonryItem}>
                                         <PlaylistCard
                                             playlist={playlist}
-                                            isPlaying={playingId === playlist.id}
+                                            coverImages={getPlaylistArtwork(playlist)}
+                                            isPlaying={isPlaying && currentTrackId === `track-${playlist.tracks[0]}`}
                                             onPlay={(e) => handlePlay(e, playlist.id)}
                                             onClick={() => setSelectedPlaylist(playlist)}
+                                            onLike={() => handleLike(playlist.id)}
+                                            hasLiked={playlist.likedBy?.includes(userId)}
                                         />
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                    ) : (
-                        <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>
-                            {isLoading ? "Loading Community Hub..." : "No playlists shared yet. Be the first!"}
-                        </div>
+                        </>
                     )}
-
-                    {/* Voting Section */}
-                    <VotingSection />
-
-                    {/* Recommendations / Grid */}
-                    <div className={styles.sectionHeader} style={{ marginTop: '3rem' }}>
-                        <h2>Fresh Mixes 🎧</h2>
-                        <button className={styles.filterBtn}><Filter size={16} /> Filter</button>
-                    </div>
-
-                    <div className={styles.masonry}>
-                        {playlists.map((playlist) => (
-                            <div key={playlist.id} className={styles.masonryItem}>
-                                <PlaylistCard
-                                    playlist={playlist}
-                                    isPlaying={playingId === playlist.id}
-                                    onPlay={(e) => handlePlay(e, playlist.id)}
-                                    onClick={() => setSelectedPlaylist(playlist)}
-                                />
-                            </div>
-                        ))}
-                    </div>
                 </main>
 
                 {/* Right Sidebar: Activity */}
                 <aside className={styles.sidebarRight}>
                     <div className={styles.challengeCard}>
-                        <h3> Weekly Challenge 🎯</h3>
-                        <p>Create a "Rainy Day" playlist using at least 3 tracks from *Blue Horizon*.</p>
-                        <button className={styles.challengeBtn}>Accept Challenge</button>
+                        <h3>🎯 Weekly Challenge</h3>
+                        {activeChallenge ? (
+                            <>
+                                <h4 style={{ color: '#4ade80', fontSize: '1.1rem', marginBottom: '0.5rem' }}>{activeChallenge.title}</h4>
+                                <p>{activeChallenge.description}</p>
+                                <Link href={`/fan-albums/create?challenge=${encodeURIComponent(activeChallenge.title)}`}>
+                                    <button className={styles.challengeBtn}>Accept Challenge</button>
+                                </Link>
+                            </>
+                        ) : (
+                            <p style={{ color: '#aaa', fontStyle: 'italic' }}>Loading challenge details...</p>
+                        )}
                     </div>
 
                     <FanLeaderboard playlists={playlists} />
@@ -247,16 +572,16 @@ export default function CommunityHubPage() {
                     <div className={styles.nowPlayingWidget}>
                         <h4>Now Playing</h4>
                         <div className={styles.nowPlayingTrack}>
-                            {playingId ? (
+                            {currentTrackId ? (
                                 <>
                                     <div className={styles.waveVisual}>
-                                        <div className={styles.bar}></div>
-                                        <div className={styles.bar}></div>
-                                        <div className={styles.bar}></div>
+                                        <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
+                                        <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
+                                        <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
                                     </div>
                                     <div>
-                                        <p style={{ fontWeight: 'bold' }}>{playlists.find(p => p.id === playingId)?.title}</p>
-                                        <p style={{ fontSize: '0.8rem', color: '#888' }}>Singitpop</p>
+                                        <p style={{ fontWeight: 'bold' }}>Playing Mix</p>
+                                        <p style={{ fontSize: '0.8rem', color: '#888' }}>{isPlaying ? 'Playing' : 'Paused'}</p>
                                     </div>
                                 </>
                             ) : (
@@ -269,25 +594,53 @@ export default function CommunityHubPage() {
 
             {/* Viewer Modal */}
             {selectedPlaylist && (
-                <PlaylistViewer playlist={selectedPlaylist} onClose={() => setSelectedPlaylist(null)} />
+                <PlaylistViewer
+                    playlist={selectedPlaylist}
+                    onClose={() => setSelectedPlaylist(null)}
+                    onPlayTrack={handleTrackPlay}
+                    currentTrackId={currentTrackId}
+                    isPlaying={isPlaying}
+                    onLike={() => handleLike(selectedPlaylist.id)}
+                    hasLiked={selectedPlaylist.likedBy?.includes(userId)}
+                    onDelete={() => handleDeletePlaylist(selectedPlaylist.id)}
+                    canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin'}
+                />
             )}
 
             {/* Hidden Audio Element */}
             <audio
                 ref={audioRef}
-                onEnded={() => setPlayingId(null)}
+                onWaiting={() => console.log("⏳ Audio Buffering...")}
+                onCanPlay={() => console.log("✅ Audio Ready to Play")}
+                onStalled={() => console.log("⚠️ Audio Stalled (Network)")}
+                onEnded={() => {
+                    if (activeTab === 'radio') {
+                        playNextRadioTrack();
+                    } else {
+                        setIsPlaying(false);
+                    }
+                }}
                 onError={(e) => {
                     const target = e.target as HTMLAudioElement;
-                    console.error("❌ Audio playback error:", {
+                    console.error("❌ Audio playback error event:", {
                         src: target.src,
                         error: target.error,
                         code: target.error?.code,
-                        message: target.error?.message,
-                        readyState: target.readyState,
-                        networkState: target.networkState,
-                        currentSrc: target.currentSrc
+                        message: target.error?.message
                     });
-                    setPlayingId(null);
+
+                    // AUTO-SKIP LOGIC
+                    if (activeTab === 'radio') {
+                        console.log("📻 Radio track failed (Event). Auto-skipping in 500ms...");
+                        setTimeout(() => {
+                            isSwitchingRef.current = false;
+                            playNextRadioTrack();
+                        }, 500);
+
+                    } else {
+                        setIsPlaying(false);
+                        setCurrentTrackId(null);
+                    }
                 }}
             />
         </div>

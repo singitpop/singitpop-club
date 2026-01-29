@@ -76,3 +76,55 @@ export async function getVotingResults(campaignId: string): Promise<Record<numbe
         return {};
     }
 }
+
+// --- Campaign Management ---
+
+export interface Campaign {
+    id: string; // e.g., 'active', 'campaign-2024-01'
+    title: string;
+    description: string;
+    deadline: string; // ISO date
+    tracks: {
+        id: number;
+        title: string;
+        artist: string;
+        artwork: string;
+        color: string;
+        audioUrl: string;
+    }[];
+}
+
+export async function saveCampaign(campaign: Campaign): Promise<boolean> {
+    try {
+        const command = new PutObjectCommand({
+            Bucket: BUCKET,
+            Key: `community/campaigns/active.json`,
+            Body: JSON.stringify(campaign),
+            ContentType: "application/json"
+        });
+
+        await s3Client.send(command);
+        return true;
+    } catch (error) {
+        console.error("Error saving campaign:", error);
+        return false;
+    }
+}
+
+export async function getActiveCampaign(): Promise<Campaign | null> {
+    try {
+        const command = new GetObjectCommand({
+            Bucket: BUCKET,
+            Key: `community/campaigns/active.json`
+        });
+
+        const response = await s3Client.send(command);
+        if (!response.Body) return null;
+
+        const str = await response.Body.transformToString();
+        return JSON.parse(str);
+    } catch (error) {
+        // console.error("Error fetching campaign:", error);
+        return null;
+    }
+}

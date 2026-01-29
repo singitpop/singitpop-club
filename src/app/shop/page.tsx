@@ -23,7 +23,7 @@ const tiers = [
     {
         name: "The Insider",
         price: "3.99",
-        benefits: ["Unlock ALL Tracks 🔓", "Early Access to Demos ⏳", "Download Standard MP3s 🎧", "Insider Profile Badge 🛡️"],
+        benefits: ["Unlock ALL Tracks 🔓", "Early Access to Future Releases ⏳", "Download Standard MP3s 🎧", "Insider Profile Badge 🛡️"],
         color: "var(--primary)",
         button: "Upgrade",
         current: true // Simulating User State

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-01-23T16:32:26.810Z",
+  "generated": "2026-01-29T11:25:22.664Z",
   "totalAlbums": 51,
   "totalTracks": 621,
   "genres": [
@@ -9,17 +9,14 @@
     "Disco",
     "Disney",
     "EDM",
-    "Electronic",
     "Folk",
-    "Halloween",
     "New Year",
     "Pop",
     "R&B",
     "Rock",
     "Romantic",
     "Scottish",
-    "Trance",
-    "Worldbeat"
+    "Trance"
   ],
   "years": [
     2026,
@@ -88,7 +85,7 @@
       "year": 2026,
       "trackCount": 12,
       "genres": [
-        "Worldbeat"
+        "Pop"
       ],
       "folderPath": "Heart of the Sky Drums",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heart-of-the-sky-drums/"
@@ -121,7 +118,7 @@
       "year": 2025,
       "trackCount": 12,
       "genres": [
-        "Electronic"
+        "Pop"
       ],
       "folderPath": "Neon Dreams",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/neon-dreams/"
@@ -231,7 +228,7 @@
       "year": 2025,
       "trackCount": 12,
       "genres": [
-        "Pop"
+        "Dance Pop"
       ],
       "folderPath": "Eternal Summer",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/eternal-summer/"
@@ -242,7 +239,7 @@
       "year": 2025,
       "trackCount": 12,
       "genres": [
-        "Pop"
+        "Dance Pop"
       ],
       "folderPath": "Glass Bloom",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/"
@@ -253,7 +250,7 @@
       "year": 2025,
       "trackCount": 12,
       "genres": [
-        "Pop"
+        "Dance Pop"
       ],
       "folderPath": "Summer fever",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/"
@@ -397,7 +394,8 @@
       "year": 2025,
       "trackCount": 15,
       "genres": [
-        "Halloween"
+        "Dance Pop",
+        "Rock"
       ],
       "folderPath": "Hallowave Dance of the shadows",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/"
@@ -542,7 +540,8 @@
       "year": 2024,
       "trackCount": 14,
       "genres": [
-        "Trance"
+        "Trance",
+        "Dance Pop"
       ],
       "folderPath": "Waves of Tranquility Deep House Reflections",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/"

@@ -1,6 +1,60 @@
 import { NextResponse } from 'next/server';
 import { auth, clerkClient } from '@clerk/nextjs/server';
-import { saveCommunityPlaylist, getCommunityPlaylists } from '@/lib/community-s3';
+import { saveCommunityPlaylist, getCommunityPlaylists, getCommunityPlaylist, deleteCommunityPlaylist } from '@/lib/community-s3';
+
+export async function DELETE(req: Request) {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const { searchParams } = new URL(req.url);
+        const id = searchParams.get('id');
+
+        if (!id) {
+            return NextResponse.json({ error: 'Missing ID' }, { status: 400 });
+        }
+
+        // 1. Fetch Playlist
+        const playlist = await getCommunityPlaylist(id);
+        if (!playlist) {
+            return NextResponse.json({ error: 'Not found' }, { status: 404 });
+        }
+
+        // 2. Verified Owner or Admin
+        let isAllowed = false;
+
+        if (playlist.userId === userId) {
+            isAllowed = true;
+        } else {
+            // Check Admin
+            const client = await clerkClient();
+            const user = await client.users.getUser(userId);
+            const role = user.publicMetadata.role as string; // 'admin'
+            if (role === 'admin') {
+                isAllowed = true;
+            }
+        }
+
+        if (!isAllowed) {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+        }
+
+        // 3. Delete
+        const success = await deleteCommunityPlaylist(id);
+        if (success) {
+            return NextResponse.json({ success: true });
+        } else {
+            return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
+        }
+
+    } catch (error) {
+        console.error("Delete Error:", error);
+        return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
+    }
+}
+
 
 // Mock vibrant gradients for new mixes
 const GRADIENTS = [

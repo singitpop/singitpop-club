@@ -24,9 +24,16 @@
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    background: var(--surface);
+    background: #050505;
+    /* Deep Black */
     z-index: 2;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover .sleeve {
+    border-color: var(--glow-color, rgba(255, 255, 255, 0.5));
+    box-shadow: 0 0 15px var(--glow-color, rgba(255, 255, 255, 0.2));
 }
 
 /* Gradient overlay on sleeve for 'vibe' */

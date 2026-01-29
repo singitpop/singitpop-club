@@ -152,8 +152,34 @@ function MusicContent() {
         }
 
         if (filterMode === 'favorites') {
+            const favoriteTitles = [
+                'Desert Winds',
+                'A Love That Never Ends',
+                'Front Porch Valentine',
+                'The Silent Conversation',
+                'Slow Motion Love',
+                'Riding Down the Line',
+                'Sweet Tea Kisses',
+                'In the Stillness We Speak',
+                'Hold Me Like Home',
+                'Moonlit Hearts',
+                'Firelight And Forever',
+                'The Distance Between'
+            ];
+
+            // Find tracks matching titles (case-insensitive partial match or exact)
+            const favTracks = albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id })))
+                .filter(t => favoriteTitles.some(ft => t.title.toLowerCase().includes(ft.toLowerCase())));
+
+            // Sort them to match the order in favoriteTitles
+            const sortedFavs = favTracks.sort((a, b) => {
+                const indexA = favoriteTitles.findIndex(ft => a.title.toLowerCase().includes(ft.toLowerCase()));
+                const indexB = favoriteTitles.findIndex(ft => b.title.toLowerCase().includes(ft.toLowerCase()));
+                return indexA - indexB;
+            });
+
             return {
-                tracks: albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id }))).filter((_, i) => i % 3 === 0).slice(0, 12),
+                tracks: sortedFavs.slice(0, 12),
                 title: 'Fan Favorites'
             };
         }

@@ -14,6 +14,7 @@ const items = siteContent.hero.cards;
 export default function VisualScroll() {
     const [showModal, setShowModal] = useState(false);
     const [dynamicItems, setDynamicItems] = useState(items);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch('/api/content/latest')
@@ -63,7 +64,8 @@ export default function VisualScroll() {
                     return newItems;
                 });
             })
-            .catch(err => console.error("Failed to fetch visual scroll data", err));
+            .catch(err => console.error("Failed to fetch visual scroll data", err))
+            .finally(() => setIsLoading(false));
     }, []);
 
     return (
@@ -74,29 +76,39 @@ export default function VisualScroll() {
                         <motion.div
                             key={item.id}
                             className={styles.card}
-                            whileHover={{ scale: 0.98 }}
+                            whileHover={isLoading ? {} : { scale: 0.98 }}
                             transition={{ duration: 0.3 }}
                         >
                             <div className={styles.imageWrapper}>
-                                <img src={item.image} alt={item.title} className={styles.image} />
-                                <div className={styles.overlay} />
+                                {isLoading ? (
+                                    <div style={{ width: '100%', height: '100%', background: '#050505', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <div className="spinner" style={{ borderTopColor: '#333' }}></div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <img src={item.image} alt={item.title} className={styles.image} />
+                                        <div className={styles.overlay} />
+                                    </>
+                                )}
                             </div>
 
                             <div className={styles.content}>
-                                <span className={styles.subtitle}>{item.subtitle}</span>
-                                <h3 className={styles.title}>{item.title}</h3>
-                                {item.action === 'modal' ? (
-                                    <button
-                                        onClick={() => setShowModal(true)}
-                                        className={styles.link}
-                                        style={{ background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0, fontSize: 'inherit', color: 'inherit', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-                                    >
-                                        {item.cta} <ArrowRight size={18} />
-                                    </button>
-                                ) : (
-                                    <Link href={item.link!} className={styles.link}>
-                                        {item.cta} <ArrowRight size={18} />
-                                    </Link>
+                                <span className={styles.subtitle}>{isLoading ? "" : item.subtitle}</span>
+                                <h3 className={styles.title}>{isLoading ? "" : item.title}</h3>
+                                {isLoading ? null : (
+                                    item.action === 'modal' ? (
+                                        <button
+                                            onClick={() => setShowModal(true)}
+                                            className={styles.link}
+                                            style={{ background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0, fontSize: 'inherit', color: 'inherit', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                        >
+                                            {item.cta} <ArrowRight size={18} />
+                                        </button>
+                                    ) : (
+                                        <Link href={item.link!} className={styles.link}>
+                                            {item.cta} <ArrowRight size={18} />
+                                        </Link>
+                                    )
                                 )}
                             </div>
                         </motion.div>

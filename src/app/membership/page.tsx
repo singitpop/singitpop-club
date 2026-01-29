@@ -24,7 +24,7 @@ const tiers = [
     {
         name: "The VIP",
         price: "£8.99/mo",
-        features: ["Everything in Insider ✨", "Lossless WAV Downloads 💎", "20% Shop Discount 🏷️", "Exclusive Demos 🎹"],
+        features: ["Everything in Insider ✨", "Lossless WAV Downloads 💎", "20% Shop Discount 🏷️", "Exclusive Future Album Content 🎹"],
         highlight: false,
         action: "Upgrade"
     }

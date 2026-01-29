@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, ListObjectsV2Command, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, ListObjectsV2Command, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 const s3Client = new S3Client({
     region: process.env.AWS_REGION!,
@@ -21,17 +21,21 @@ export interface CommunityPlaylist {
     createdAt: string;
     color: string; // Gradient
     themeColor: string; // Hex
-    likes: number; // Stored in JSON, careful with race conditions
+    likes: number; // Stored in JSON
+    likedBy?: string[]; // Array of user IDs who liked
 }
 
 export async function saveCommunityPlaylist(playlist: CommunityPlaylist): Promise<boolean> {
     try {
-        // Create a filename: timestamp-userId-random.json
-        const filename = `${Date.now()}-${playlist.userId.slice(-5)}-${Math.floor(Math.random() * 1000)}.json`;
-        const key = `${PREFIX}${filename}`;
+        let filename = playlist.id;
 
-        // Ensure ID matches key if needed, or store key in ID
-        playlist.id = filename;
+        // If new, generate filename
+        if (!filename) {
+            filename = `${Date.now()}-${playlist.userId.slice(-5)}-${Math.floor(Math.random() * 1000)}.json`;
+            playlist.id = filename;
+        }
+
+        const key = `${PREFIX}${filename}`;
 
         const command = new PutObjectCommand({
             Bucket: BUCKET,
@@ -101,4 +105,78 @@ export async function getCommunityPlaylists(limit = 50): Promise<CommunityPlayli
         console.error("Error fetching community playlists:", error);
         return [];
     }
+}
+
+export async function getCommunityPlaylist(playlistId: string): Promise<CommunityPlaylist | null> {
+    try {
+        const cleanId = playlistId.endsWith('.json') ? playlistId : `${playlistId}.json`;
+        const key = `${PREFIX}${cleanId}`;
+        const cmd = new GetObjectCommand({ Bucket: BUCKET, Key: key });
+        const res = await s3Client.send(cmd);
+
+        if (res.Body) {
+            const str = await res.Body.transformToString();
+            const json = JSON.parse(str);
+            if (!json.id) json.id = cleanId;
+            return json;
+        }
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
+
+export async function deleteCommunityPlaylist(playlistId: string): Promise<boolean> {
+    try {
+        const cleanId = playlistId.endsWith('.json') ? playlistId : `${playlistId}.json`;
+        const key = `${PREFIX}${cleanId}`;
+        const cmd = new DeleteObjectCommand({ Bucket: BUCKET, Key: key });
+        await s3Client.send(cmd);
+        return true;
+    } catch (e) {
+        console.error("Delete ID error:", e);
+        return false;
+    }
+}
+
+export interface WeeklyChallenge {
+    title: string;
+    description: string;
+    reward: string;
+    active: boolean;
+    updatedAt: string;
+}
+
+export async function saveChallenge(challenge: WeeklyChallenge): Promise<boolean> {
+    try {
+        const command = new PutObjectCommand({
+            Bucket: BUCKET,
+            Key: "community/challenge/weekly_active.json",
+            Body: JSON.stringify(challenge),
+            ContentType: "application/json",
+            CacheControl: "no-cache"
+        });
+        await s3Client.send(command);
+        return true;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+export async function getActiveChallenge(): Promise<WeeklyChallenge | null> {
+    try {
+        const command = new GetObjectCommand({
+            Bucket: BUCKET,
+            Key: "community/challenge/weekly_active.json"
+        });
+        const res = await s3Client.send(command);
+        if (res.Body) {
+            const str = await res.Body.transformToString();
+            return JSON.parse(str);
+        }
+    } catch (e: any) {
+        return null;
+    }
+    return null;
 }

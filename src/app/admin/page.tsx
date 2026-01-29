@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2 } from 'lucide-react';
+import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail } from 'lucide-react';
 import styles from './Admin.module.css';
 
 interface UserData {
@@ -64,8 +64,10 @@ export default function AdminPage() {
             const res = await fetch('/api/admin/users');
             if (res.ok) {
                 const data = await res.json();
-                setUsers(data.users);
-                setFilteredUsers(data.users);
+                // API returns array directly
+                const userList = Array.isArray(data) ? data : (data.users || []);
+                setUsers(userList);
+                setFilteredUsers(userList);
             }
         } catch (error) {
             console.error("Failed to fetch users", error);
@@ -130,6 +132,14 @@ export default function AdminPage() {
                 <Link href="/admin/content" className={styles.btn}>
                     <Music2 size={18} />
                     Manage Content
+                </Link>
+                <Link href="/admin/voting" className={styles.btn}>
+                    <Vote size={18} />
+                    Voting Manager
+                </Link>
+                <Link href="/admin/newsletter" className={styles.btn}>
+                    <Mail size={18} />
+                    Newsletter Builder
                 </Link>
                 <Link href="/admin/analytics" className={styles.btn}>
                     <BarChart3 size={18} />

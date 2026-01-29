@@ -51,7 +51,7 @@ export default function SmartCTA() {
                     <ul className={styles.features}>
                         <li>✅ <strong>Lossless WAV Downloads</strong></li>
                         <li>✅ 20% Shop Discount</li>
-                        <li>✅ Exclusive Demos & Content</li>
+                        <li>✅ Exclusive Future Album Content</li>
                     </ul>
                     <button className={styles.outlineBtn}>Get VIP Access</button>
                 </div>

@@ -9,18 +9,23 @@ interface PlaylistCardProps {
         title: string;
         creator: string;
         likes: number;
-        color: string; // Gradient string
-        themeColor?: string; // Hex for glow (e.g. #ff0080)
+        color: string; // Fallback
+        themeColor?: string;
     };
+    coverImages?: string[]; // Array of up to 4 artwork URLs
     isPlaying: boolean;
     onPlay: (e: React.MouseEvent) => void;
     onClick: () => void;
+    onLike?: () => void;
+    hasLiked?: boolean;
 }
 
-export default function PlaylistCard({ playlist, isPlaying, onPlay, onClick }: PlaylistCardProps) {
-    // Extract a solid color from the gradient for the glow, or use a default
-    // We can try to parse it or just blindly use the themeColor if provided, fallback to neon-pink
-    const glowColor = playlist.themeColor || '#8b5cf6'; // Violet default
+import RadialVisualizer from '../ui/RadialVisualizer';
+
+export default function PlaylistCard({ playlist, coverImages = [], isPlaying, onPlay, onClick, onLike, hasLiked }: PlaylistCardProps) {
+    const glowColor = playlist.themeColor || '#8b5cf6';
+    // Use first image for vinyl label if available
+    const vinylImage = coverImages.length > 0 ? coverImages[0] : null;
 
     return (
         <div
@@ -28,19 +33,73 @@ export default function PlaylistCard({ playlist, isPlaying, onPlay, onClick }: P
             onClick={onClick}
             style={{ '--glow-color': glowColor } as React.CSSProperties}
         >
-            {/* The Vinyl Record (Behind Sleeve, slides out) */}
+            {/* The Vinyl Record (Behind Sleeve) */}
             <div className={styles.vinyl}>
                 <div
                     className={styles.vinylLabel}
-                    style={{ background: playlist.color }}
+                    style={{
+                        background: vinylImage ? `url(${vinylImage}) center/cover no-repeat` : playlist.color,
+                        boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.2)'
+                    }}
                 />
             </div>
 
             {/* The Sleeve (Front) */}
             <div
                 className={styles.sleeve}
-                style={{ background: playlist.color }}
+                style={{ background: '#111', overflow: 'hidden', position: 'relative' }}
             >
+                {/* 2x2 Grid or Single Image */}
+                {coverImages.length > 0 ? (
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: coverImages.length >= 4 ? '1fr 1fr' : '1fr',
+                        gridTemplateRows: coverImages.length >= 4 ? '1fr 1fr' : '1fr',
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        opacity: isPlaying ? 0.4 : 1, // Dim slightly when playing to show viz better?
+                        transition: 'opacity 0.3s ease'
+                    }}>
+                        {coverImages.slice(0, 4).map((img, i) => (
+                            <img
+                                key={i}
+                                src={img}
+                                alt=""
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    display: (coverImages.length === 3 && i === 2) ? 'none' : 'block'
+                                }}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div style={{
+                        width: '100%', height: '100%', position: 'absolute', top: 0,
+                        background: playlist.color,
+                        opacity: 0.8
+                    }} />
+                )}
+
+                {/* Radial Visualizer Overlay */}
+                {isPlaying && (
+                    <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 4,
+                        pointerEvents: 'none'
+                    }}>
+                        <RadialVisualizer isPlaying={true} width={200} height={200} color="rgba(255,255,255,0.8)" />
+                    </div>
+                )}
+
                 <div className={styles.sleeveOverlay} />
 
                 {/* Play Button Orb */}
@@ -61,21 +120,15 @@ export default function PlaylistCard({ playlist, isPlaying, onPlay, onClick }: P
 
                     <div className={styles.creator}>
                         <span>{playlist.creator}</span>
-                        {/* Visualizer if playing */}
-                        {isPlaying && (
-                            <div className={styles.visualizer}>
-                                <div className={styles.bar}></div>
-                                <div className={styles.bar}></div>
-                                <div className={styles.bar}></div>
-                                <div className={styles.bar}></div>
-                            </div>
-                        )}
-
                         {!isPlaying && (
-                            <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.8rem' }}>
-                                <Heart size={14} fill="rgba(255,255,255,0.5)" stroke="none" />
+                            <button
+                                onClick={(e) => { e.stopPropagation(); onLike && onLike(); }}
+                                className={styles.likeBtn}
+                                style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.8rem', background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}
+                            >
+                                <Heart size={14} fill={hasLiked ? "var(--primary)" : "rgba(255,255,255,0.5)"} color={hasLiked ? "var(--primary)" : "white"} />
                                 {playlist.likes}
-                            </span>
+                            </button>
                         )}
                     </div>
                 </div>
