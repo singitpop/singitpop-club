@@ -22,12 +22,6 @@
     "@google/generative-ai": "^0.24.1",
     "@remotion/bundler": "4.0.411",
     "@remotion/cli": "4.0.411",
-    "@remotion/compositor-darwin-arm64": "4.0.411",
-    "@remotion/compositor-darwin-x64": "4.0.411",
-    "@remotion/compositor-linux-arm64-gnu": "4.0.411",
-    "@remotion/compositor-linux-arm64-musl": "4.0.411",
-    "@remotion/compositor-linux-x64-gnu": "4.0.411",
-    "@remotion/compositor-linux-x64-musl": "4.0.411",
     "@remotion/media-utils": "4.0.411",
     "@remotion/player": "4.0.411",
     "@remotion/renderer": "4.0.411",
@@ -59,5 +53,13 @@
     "eslint-config-next": "16.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "optionalDependencies": {
+    "@remotion/compositor-darwin-arm64": "4.0.411",
+    "@remotion/compositor-darwin-x64": "4.0.411",
+    "@remotion/compositor-linux-arm64-gnu": "4.0.411",
+    "@remotion/compositor-linux-arm64-musl": "4.0.411",
+    "@remotion/compositor-linux-x64-gnu": "4.0.411",
+    "@remotion/compositor-linux-x64-musl": "4.0.411"
   }
 }
