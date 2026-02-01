@@ -7,8 +7,6 @@ interface Scene {
     endTime: number;
     lyrics: string[];
     image?: string;
-    image?: string;
-    image?: string;
     zoomEffect?: 'zoom-in' | 'zoom-out' | 'static' | 'pan-left' | 'pan-right';
     textAnimation?: 'fade' | 'slide' | 'typewriter' | 'kinetic';
     visualEffect?: 'none' | 'dust' | 'pulse' | 'flash' | 'grain' | 'vhs' | 'chromatic' | 'bloom' | 'shake' | 'film-damage' | 'light-leak';
