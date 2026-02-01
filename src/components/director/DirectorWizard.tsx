@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Sparkles, Users, Clapperboard, MonitorPlay, Mic2, LayoutTemplate } from "lucide-react";
+import { Sparkles, Users, Clapperboard, MonitorPlay, Mic2, LayoutTemplate, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Step1Briefing from "./Step1Briefing";
 import Step2Casting from "./Step2Casting";
@@ -83,6 +83,18 @@ export default function DirectorWizard() {
                 </div>
 
                 <nav className="flex-1 px-4 space-y-2">
+                    <a
+                        href="/admin"
+                        className="flex items-center gap-3 p-3 rounded-xl text-left hover:bg-white/5 text-white/50 hover:text-white transition-all duration-200 mb-6 border border-transparent hover:border-white/10"
+                    >
+                        <div className="p-2 rounded-lg bg-white/5">
+                            <ChevronRight size={18} className="rotate-180" />
+                        </div>
+                        <div>
+                            <div className="font-semibold text-sm">Back to Admin</div>
+                        </div>
+                    </a>
+
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
                         const isActive = activeTab === tab.id;

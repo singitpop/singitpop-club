@@ -26,21 +26,35 @@ export async function GET() {
             return NextResponse.json({ tracks: [] });
         }
 
-        // Filter and map S3 objects to tracks
-        const tracks = await Promise.all(s3Response.Contents
-            .filter((item: any) => item.Key && (item.Key.endsWith('.mp3') || item.Key.endsWith('.wav')))
-            .map(async (item: any, index: number) => {
-                const key = item.Key!;
-                const filename = key.split('/').pop()!;
+        // Filter and map S3 objects to unique tracks (prefer WAV)
+        const trackMap = new Map<string, any>();
+
+        s3Response.Contents.forEach((item: any) => {
+            if (!item.Key) return;
+            const isMp3 = item.Key.endsWith('.mp3');
+            const isWav = item.Key.endsWith('.wav');
+
+            if (isMp3 || isWav) {
+                const filename = item.Key.split('/').pop()!;
                 const title = filename.replace(/\.(mp3|wav)$/, '');
 
-                // Determine format
-                const isWav = key.endsWith('.wav');
+                // If exists, only overwrite if current is MP3 and new is WAV
+                if (trackMap.has(title)) {
+                    if (isWav && !trackMap.get(title).isWav) {
+                        trackMap.set(title, { item, isWav: true, title });
+                    }
+                } else {
+                    trackMap.set(title, { item, isWav, title });
+                }
+            }
+        });
+
+        const tracks = await Promise.all(Array.from(trackMap.values())
+            .map(async (entry: any, index: number) => {
+                const { item, isWav, title } = entry;
+                const key = item.Key!;
 
                 // Generate Signed URLs
-                // For now, we use the same key for audioUrl. 
-                // In a real app we'd map MP3 vs WAV versions. 
-                // Here we just serve what we found.
                 const [signedUrl, downloadUrl] = await Promise.all([
                     getSignedFileUrl(key, 3600, false),
                     getSignedFileUrl(key, 3600, true)
@@ -49,15 +63,14 @@ export async function GET() {
                 return {
                     id: index + 1,
                     title: title,
-                    duration: '0:00', // S3 doesn't give duration metadata
-                    plays: '100K',    // Placeholder
-                    locked: false, // Unlock all tracks for verified playback
+                    duration: '0:00', // Will be updated by metadata script later
+                    plays: '100K',
+                    locked: false,
                     price: 0.99,
-                    genre: 'Pop',     // Placeholder
+                    genre: 'Pop',
                     audioUrl: signedUrl,
-                    highResUrl: isWav ? signedUrl : '', // If it's WAV, treat as highRes
+                    highResUrl: isWav ? signedUrl : '',
                     mp3DownloadUrl: !isWav ? downloadUrl : '',
-                    // Use format specific download if available, otherwise fallback
                     downloadUrl: downloadUrl
                 };
             }));

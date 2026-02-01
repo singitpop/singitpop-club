@@ -143,8 +143,14 @@ export default function AdminPage() {
                 </Link>
                 <Link href="/admin/analytics" className={styles.btn}>
                     <BarChart3 size={18} />
-                    Analytics
-                </Link>
+                    <Link href="/admin/analytics" className={styles.btn}>
+                        <BarChart3 size={18} />
+                        Analytics
+                    </Link>
+                    <Link href="/admin/director" className={`${styles.btn} ${styles.btnSpecial}`}>
+                        <Clapperboard size={18} />
+                        Director Mode
+                    </Link>
             </div>
 
             <div className={styles.tableWrapper}>
