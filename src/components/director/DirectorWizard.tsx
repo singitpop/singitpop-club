@@ -5,6 +5,7 @@ import { Sparkles, Users, Clapperboard, MonitorPlay, Mic2, LayoutTemplate } from
 import { motion } from "framer-motion";
 import Step1Briefing from "./Step1Briefing";
 import Step2Casting from "./Step2Casting";
+import Step3Timeline from "./Step3Timeline";
 
 // Types for our "Ultra" Project
 export type DirectorTab = 'briefing' | 'cast' | 'timeline' | 'studio';
@@ -153,12 +154,6 @@ export default function DirectorWizard() {
                                     initialCast={project.castMembers}
                                 />
                             </div>
-                        </div>
-                    )}
-
-                    {activeTab === 'cast' && (
-                        <div className="flex items-center justify-center h-full text-white/30">
-                            Cast & Character Lab (Coming Soon)
                         </div>
                     )}
 
