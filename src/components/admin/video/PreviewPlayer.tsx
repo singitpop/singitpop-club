@@ -51,6 +51,7 @@ interface Scene {
     endTime: number;
     lyrics: string[];
     image?: string;
+    visualEffect?: string;
     zoomEffect?: 'zoom-in' | 'zoom-out' | 'static' | 'pan-left' | 'pan-right';
     textAnimation?: 'fade' | 'slide' | 'typewriter' | 'kinetic';
 }
