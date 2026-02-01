@@ -170,10 +170,6 @@ export default function DirectorPage() {
             <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', background: 'radial-gradient(circle at center, #111 0%, #000 100%)' }}>
                 {step === 1 && (
                     <Step1Briefing
-                        allTracks={allTracks}  // Note: prop name changed from 'tracks' to 'allTracks' in some versions, check interface. 
-                        // Visual Inspection shows Step1Briefing accepts 'allTracks' in my previous code but 'tracks' in the viewed file. 
-                        // Let's assume 'allTracks' based on variable name unless I see Step1Briefing.
-                        // Wait, in viewed file it was 'tracks={allTracks}'. Let's stick to that to be safe.
                         tracks={allTracks}
                         onNext={handleBriefingComplete}
                     />
