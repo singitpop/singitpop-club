@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
       '@remotion/compositor-linux-arm64-musl',
       '@remotion/compositor-linux-x64-gnu',
       '@remotion/compositor-linux-x64-musl',
-      '@remotion/compositor-win32-x64-msvc'
+      '@remotion/compositor-win32-x64-msvc',
+      'esbuild'
     );
     return config;
   },
