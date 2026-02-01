@@ -71,17 +71,16 @@ export async function GET(req: NextRequest) {
                 .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
             const latestStudio = studioAlbums[0];
 
-            // Calculate latest live album inline
+            // Calculate latest Country album (Replaces Live logic)
             const today = new Date();
-            const liveAlbums = albums
+            const countryAlbums = albums
                 .filter(a => {
-                    const isLiveType = a.type?.toLowerCase() === 'live';
-                    const titleHasLive = a.title.toLowerCase().includes('live');
+                    const isCountry = a.genre?.some(g => g.toLowerCase() === 'country');
                     const released = new Date(a.releaseDate) <= today;
-                    return (isLiveType || titleHasLive) && released;
+                    return isCountry && released;
                 })
                 .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
-            const latestLive = liveAlbums[0];
+            const latestCountry = countryAlbums[0];
 
             const metadata = await readMetadata();
 
@@ -114,10 +113,10 @@ export async function GET(req: NextRequest) {
                     title: latestStudio.title,
                     releaseDate: latestStudio.releaseDate
                 } : null,
-                latestLive: latestLive ? {
-                    id: latestLive.id,
-                    title: latestLive.title,
-                    releaseDate: latestLive.releaseDate
+                latestCountry: latestCountry ? {
+                    id: latestCountry.id,
+                    title: latestCountry.title,
+                    releaseDate: latestCountry.releaseDate
                 } : null,
                 latestSingle: latestSingle ? {
                     id: (latestSingle as any).id,

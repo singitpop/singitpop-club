@@ -10,7 +10,7 @@ import styles from './Content.module.css';
 
 interface LatestAlbums {
     latestStudio: { id: string; title: string; releaseDate: string } | null;
-    latestLive: { id: string; title: string; releaseDate: string } | null;
+    latestCountry: { id: string; title: string; releaseDate: string } | null;
     latestSingle: { id: string; title: string; albumId: string } | null;
 }
 
@@ -308,15 +308,15 @@ export default function ContentPage() {
 
                         <div className={styles.latestCard}>
                             <div className={styles.latestLabel}>Latest Country Album</div>
-                            {latestAlbums?.latestLive ? (
+                            {latestAlbums?.latestCountry ? (
                                 <>
-                                    <div className={styles.latestTitle}>{latestAlbums.latestLive.title}</div>
+                                    <div className={styles.latestTitle}>{latestAlbums.latestCountry.title}</div>
                                     <div className={styles.latestDate}>
-                                        Released: {new Date(latestAlbums.latestLive.releaseDate).toLocaleDateString()}
+                                        Released: {new Date(latestAlbums.latestCountry.releaseDate).toLocaleDateString()}
                                     </div>
                                 </>
                             ) : (
-                                <div className={styles.latestEmpty}>No live albums found</div>
+                                <div className={styles.latestEmpty}>No country albums found</div>
                             )}
                         </div>
                     </div>
