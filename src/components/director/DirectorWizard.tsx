@@ -43,7 +43,14 @@ export default function DirectorWizard() {
                 const res = await fetch('/api/music/tracks');
                 if (res.ok) {
                     const data = await res.json();
-                    setTracks(data);
+                    if (data.tracks && Array.isArray(data.tracks)) {
+                        setTracks(data.tracks);
+                    } else if (Array.isArray(data)) {
+                        setTracks(data); // Fallback if API changes
+                    } else {
+                        console.error("Tracks API returned unexpected format:", data);
+                        setTracks([]);
+                    }
                 }
             } catch (e) {
                 console.error("Failed to load tracks", e);
