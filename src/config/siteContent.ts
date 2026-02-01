@@ -22,7 +22,7 @@ export const siteContent = {
             {
                 id: 3,
                 title: "Step into the Light",
-                subtitle: "Live Country Album",
+                subtitle: "Latest Country Album",
                 image: "/images/album-step-live.jpg",
                 action: "modal",
                 cta: "Stream Now 🎧"

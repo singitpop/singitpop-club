@@ -307,7 +307,7 @@ export default function ContentPage() {
                         </div>
 
                         <div className={styles.latestCard}>
-                            <div className={styles.latestLabel}>Latest Live Album</div>
+                            <div className={styles.latestLabel}>Latest Country Album</div>
                             {latestAlbums?.latestLive ? (
                                 <>
                                     <div className={styles.latestTitle}>{latestAlbums.latestLive.title}</div>

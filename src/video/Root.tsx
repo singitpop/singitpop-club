@@ -18,7 +18,10 @@ export const RemotionRoot: React.FC = () => {
                     title: "Song Title",
                     artist: "Artist Name",
                     coverImg: "/Club_Gateway_Pop.png",
-                    lyrics: "Example lyrics..."
+                    lyrics: "Example lyrics...", // Legacy prop, can remove later
+                    scenes: [],
+                    font: 'Bebas Neue',
+                    animation: 'kinetic'
                 }}
             />
             <Composition

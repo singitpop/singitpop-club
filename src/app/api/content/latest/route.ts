@@ -171,11 +171,27 @@ export async function GET() {
             getAlbums()
         ]);
 
-        const studioAlbums = albums
-            .filter(a => (a.type === 'studio' || a.type === 'standard') && new Date(a.releaseDate) <= new Date())
+        // Latest NON-Country Album (any genre except Country)
+        const nonCountryAlbums = albums
+            .filter(a => {
+                const isCountry = a.genre && a.genre.some(g => g.toLowerCase() === 'country');
+                const isReleased = new Date(a.releaseDate) <= new Date();
+                return !isCountry && isReleased;
+            })
             .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
 
-        const latestStudio = studioAlbums.length > 0 ? studioAlbums[0] : null;
+        const latestNonCountry = nonCountryAlbums.length > 0 ? nonCountryAlbums[0] : null;
+
+        // Latest Country Album (includes live country albums)
+        const countryAlbums = albums
+            .filter(a => {
+                const isCountry = a.genre && a.genre.some(g => g.toLowerCase() === 'country');
+                const isReleased = new Date(a.releaseDate) <= new Date();
+                return isCountry && isReleased;
+            })
+            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+
+        const latestCountry = countryAlbums.length > 0 ? countryAlbums[0] : null;
 
         let latestSingleUid = metadata?.latestSingleUid; // e.g. "albumid-1"
         let latestVideoTitle = metadata?.latestVideoTitle;
@@ -286,16 +302,7 @@ export async function GET() {
             }
         }
 
-        const liveAlbums = albums
-            .filter(a => {
-                const isLiveType = a.type?.toLowerCase() === 'live';
-                const titleHasLive = a.title.toLowerCase().includes('live');
-                const released = new Date(a.releaseDate) <= new Date();
-                return (isLiveType || titleHasLive) && released;
-            })
-            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
-
-        const latestLive = liveAlbums.length > 0 ? liveAlbums[0] : null;
+        // NOTE: Live album logic removed - Country albums now handled above
 
         // Helper to sign cover art (Key or URL)
         const signCover = async (urlOrKey: string | null) => {
@@ -325,24 +332,24 @@ export async function GET() {
             }
         };
 
-        const signedLatestCover = latestStudio ? await signCover(latestStudio.coverArt) : null;
+        const signedLatestCover = latestNonCountry ? await signCover(latestNonCountry.coverArt) : null;
 
-        // Fix: Use dynamic, robust lookup for Live Album too
-        let signedLiveCover = "/images/album-step-live.jpg";
+        // Latest Country Album Cover
+        let signedCountryCover = "/images/album-step-live.jpg"; // Fallback
 
-        if (latestLive) {
+        if (latestCountry) {
             // 1. Try dynamic lookup (Priority) - handles smart quotes/typos in folder name
-            const folder = latestLive.folderPath || latestLive.title;
+            const folder = latestCountry.folderPath || latestCountry.title;
             const key = await findImageKey(folder, undefined, false);
 
             if (key) {
-                signedLiveCover = await getSignedFileUrl(key, 3600);
+                signedCountryCover = await getSignedFileUrl(key, 3600);
             } else {
                 // 2. Fallback to stored URL if valid
-                const stored = latestLive.coverArt;
+                const stored = latestCountry.coverArt;
                 if (stored && !stored.includes('default.jpg')) {
                     const signed = await signCover(stored);
-                    if (signed) signedLiveCover = signed;
+                    if (signed) signedCountryCover = signed;
                 }
             }
         }
@@ -352,11 +359,11 @@ export async function GET() {
         headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'); // Force fresh fetch
 
         return NextResponse.json({
-            latestAlbumId: latestStudio ? latestStudio.id : "valentine-country-2026",
-            latestAlbumTitle: latestStudio ? latestStudio.title : "Valentine Country",
+            latestAlbumId: latestNonCountry ? latestNonCountry.id : "valentine-country-2026",
+            latestAlbumTitle: latestNonCountry ? latestNonCountry.title : "Valentine Country",
             latestAlbumCover: signedLatestCover,
-            latestLiveAlbumTitle: latestLive ? latestLive.title : "Step into the Light",
-            latestLiveAlbumCover: signedLiveCover,
+            latestCountryAlbumTitle: latestCountry ? latestCountry.title : "Step into the Light",
+            latestCountryAlbumCover: signedCountryCover,
             latestSingleUid,
             latestVideoId: metadata?.latestVideoId,
             latestVideoTitle,

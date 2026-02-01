@@ -1,61 +1,87 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import path from 'path';
 
-const execAsync = promisify(exec);
+import { NextRequest, NextResponse } from 'next/server';
+import { bundle } from '@remotion/bundler';
+import { renderMedia, selectComposition } from '@remotion/renderer';
+import path from 'path';
+import fs from 'fs';
 
 export async function POST(req: NextRequest) {
+    let body;
     try {
-        const body = await req.json();
-        const { compositionId, props, outName } = body;
+        body = await req.json();
+    } catch (e) {
+        return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
 
-        if (!compositionId || !props) {
-            return NextResponse.json({ error: "Missing compositionId or props" }, { status: 400 });
-        }
+    const { compositionId, props, outName } = body;
 
-        // Secure the output name to alphanumeric only to prevent injection
-        const safeName = (outName || 'video').replace(/[^a-z0-9-_]/gi, '_');
-        const extension = compositionId === 'Thumbnail' ? 'png' : 'mp4';
-        const outFile = path.join(process.cwd(), 'public', 'downloads', `${safeName}.${extension}`);
+    if (!compositionId || !props) {
+        return NextResponse.json({ error: "Missing compositionId or props" }, { status: 400 });
+    }
 
-        // Construct command
-        // Note: Using npx remotion render
-        // We pass props as a JSON string
-        const propsString = JSON.stringify(props);
+    const safeName = (outName || 'video').replace(/[^a-z0-9-_]/gi, '_');
+    const extension = compositionId === 'Thumbnail' ? 'png' : 'mp4';
+    const downloadsDir = path.join(process.cwd(), 'public', 'downloads');
+    const outFile = path.join(downloadsDir, `${safeName}.${extension}`);
+    const statusFile = path.join(downloadsDir, `${safeName}.status.json`);
+    const publicPath = `/downloads/${safeName}.${extension}`;
 
-        // Escape single quotes for shell safety if needed, but JSON.stringify usually handles it.
-        // Better: Use an environment variable or file for props if complex, but CLI supports --props='...'
-        // For zsh/bash, we need to be careful with escaping.
+    // Ensure downloads directory exists
+    if (!fs.existsSync(downloadsDir)) {
+        fs.mkdirSync(downloadsDir, { recursive: true });
+    }
 
-        // Alternative: Write props to a temp file and reference it? 
-        // Remotion CLI supports --props=./path/to/props.json
-        // Let's stick to inline for simple props, but escape single quotes.
-        const safeProps = JSON.stringify(props).replace(/'/g, "'\\''");
+    try {
+        console.log("🎬 Starting Render Job (Async):", safeName);
+        fs.writeFileSync(statusFile, JSON.stringify({ progress: 0, status: 'initializing' }));
 
-        const cmd = `npx remotion render ${compositionId} ${outFile} --props='${safeProps}'`;
+        // Fire and forget (keep process running)
+        // Note: This relies on the server process staying alive.
+        (async () => {
+            try {
+                // 1. Bundle
+                const entryPoint = path.join(process.cwd(), 'src/video/index.ts');
+                console.log("Bundling:", entryPoint);
+                const bundled = await bundle({ entryPoint });
 
-        console.log("🎬 Starting Render:", cmd);
+                // 2. Select Composition
+                const composition = await selectComposition({
+                    serveUrl: bundled,
+                    id: compositionId,
+                    inputProps: props,
+                });
 
-        // Execute
-        // This might take a while, so we might want to return "Processing" and let user poll?
-        // But for local dev, awaiting is okay for short videos / thumbnails.
-        // For long videos, it will timeout Vercel (10s limit). 
-        // BUT this is for LOCAL use mostly (`npm run dev`). User said "set it up on my Mac".
-        // So hitting the API locally has a longer timeout.
+                // 3. Render
+                await renderMedia({
+                    composition,
+                    serveUrl: bundled,
+                    codec: 'h264',
+                    outputLocation: outFile,
+                    inputProps: props,
+                    onProgress: ({ progress }) => {
+                        const p = Math.round(progress * 100);
+                        // Write status
+                        fs.writeFileSync(statusFile, JSON.stringify({ progress: p, status: 'rendering' }));
+                    },
+                });
 
-        await execAsync(cmd);
+                console.log("✅ Render Complete:", outFile);
+                fs.writeFileSync(statusFile, JSON.stringify({ progress: 100, status: 'complete', url: publicPath }));
+            } catch (err: any) {
+                console.error("Async Render Error:", err);
+                fs.writeFileSync(statusFile, JSON.stringify({ progress: 0, status: 'error', error: err.message }));
+            }
+        })();
 
-        console.log("✅ Render Complete:", outFile);
-
+        // Return immediately with the job ID (outName)
         return NextResponse.json({
             success: true,
-            path: `/downloads/${safeName}.${extension}`,
-            absolutePath: outFile
+            jobId: safeName,
+            statusUrl: `/api/admin/render/status?outName=${safeName}`
         });
 
     } catch (e: any) {
-        console.error("Render failed:", e);
-        return NextResponse.json({ error: e.message || "Render failed" }, { status: 500 });
+        console.error("Render trigger failed:", e);
+        return NextResponse.json({ error: "Render failed: " + e.message }, { status: 500 });
     }
 }

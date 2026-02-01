@@ -269,16 +269,22 @@ export default function CommunityHubPage() {
 
         try {
             // Sign URL
+            console.log(`🔐 Signing audio URL for: "${track.title}" | URL: ${track.audioUrl}`);
             const res = await fetch('/api/music/sign', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url: track.audioUrl })
             });
 
-            if (!res.ok) throw new Error("Failed to sign URL");
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error(`❌ Sign API failed (${res.status}):`, errorText);
+                throw new Error(`Failed to sign URL: ${res.status} - ${errorText}`);
+            }
             const data = await res.json();
 
             if (data.signedUrl) {
+                console.log(`✅ Signed URL received for: "${track.title}"`);
                 setCurrentSignedUrl(data.signedUrl);
 
                 // Reset Audio Props safely
@@ -289,13 +295,14 @@ export default function CommunityHubPage() {
 
                 setIsPlaying(true);
             } else {
+                console.error(`❌ No signed URL in response for: "${track.title}"`, data);
                 throw new Error("No signed URL returned");
             }
         } catch (e) {
-            console.error("Track play error", e);
+            console.error(`❌ Track play error for "${track.title}":`, e);
 
             if (activeTab === 'radio') {
-                console.log("📻 Radio error -> Skipping");
+                console.log("📻 Radio error -> Skipping to next track");
                 setTimeout(() => {
                     isSwitchingRef.current = false; // Reset lock before recursing
                     playNextRadioTrack();

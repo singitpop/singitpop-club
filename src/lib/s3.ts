@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 // @ts-ignore
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -10,8 +10,10 @@ export const s3Client = new S3Client({
     },
 });
 
-export async function generateSignedUrl(s3Url: string, expiresInSeconds: number = 604800): Promise<string> {
+export async function generateSignedUrl(s3Url: string, expiresInSeconds: number = 604800, isDownload: boolean = true): Promise<string> {
     try {
+        console.log(`[S3] Signing URL: ${s3Url}`);
+
         // Parse Bucket and Key from URL
         // Expected format: https://[bucket].s3.[region].amazonaws.com/[key]
         // OR: https://s3.[region].amazonaws.com/[bucket]/[key]
@@ -34,6 +36,13 @@ export async function generateSignedUrl(s3Url: string, expiresInSeconds: number 
         // Decode the key (it was likely encoded in the DB)
         key = decodeURIComponent(key);
 
+        console.log(`[S3] Parsed - Bucket: ${bucket}, Key: ${key}`);
+
+        // Verify AWS credentials are set
+        if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
+            throw new Error("AWS credentials not configured in environment variables");
+        }
+
         // Sanitize filename for headers (replace spaces/special chars to prevent mobile download errors)
         const filename = key.split('/').pop() || "download.mp3";
         const safeFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
@@ -41,16 +50,19 @@ export async function generateSignedUrl(s3Url: string, expiresInSeconds: number 
         const command = new GetObjectCommand({
             Bucket: bucket,
             Key: key,
-            ResponseContentDisposition: `attachment; filename="${safeFilename}"`, // Safer filename for mobile
+            ResponseContentDisposition: isDownload ? `attachment; filename="${safeFilename}"` : undefined, // safer filename for mobile
         });
 
         // 604800 seconds = 7 days
         const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: expiresInSeconds });
+        console.log(`[S3] ✅ Successfully signed URL for: ${key}`);
         return signedUrl;
 
-    } catch (err) {
-        console.error("Error generating signed URL:", err);
-        return s3Url; // Fallback to original URL if signing fails
+    } catch (err: any) {
+        console.error(`[S3] ❌ SIGNING FAILED for ${s3Url}:`, err.message || err);
+        // CRITICAL: Throw error instead of returning unsigned URL
+        // Returning unsigned URL causes silent 403 errors
+        throw new Error(`S3 signing failed: ${err.message || 'Unknown error'}`);
     }
 }
 
@@ -67,5 +79,31 @@ export async function getSignedFileUrl(key: string, expiresIn: number = 3600, is
     } catch (err) {
         console.error("Error generating signed file URL:", err);
         return "";
+    }
+}
+
+export async function uploadFileToS3(fileBuffer: Buffer, fileName: string, contentType: string): Promise<string> {
+    try {
+        const bucketName = process.env.AWS_S3_BUCKET || "singitpop-music";
+        // Organize uploads into a specific folder
+        const key = `uploads/director/${Date.now()}_${fileName.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+
+        const command = new PutObjectCommand({
+            Bucket: bucketName,
+            Key: key,
+            Body: fileBuffer,
+            ContentType: contentType,
+            // ACL: 'public-read' // Optional: if you want them public. Better to keep private and use signed URLs or CloudFront.
+        });
+
+        await s3Client.send(command);
+
+        // Return the s3 URL (which we can sign later)
+        // Format: https://[bucket].s3.[region].amazonaws.com/[key]
+        const region = process.env.AWS_REGION || "eu-north-1";
+        return `https://${bucketName}.s3.${region}.amazonaws.com/${key}`;
+    } catch (err) {
+        console.error("Error uploading to S3:", err);
+        throw new Error("S3 Upload Failed");
     }
 }

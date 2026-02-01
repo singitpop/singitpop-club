@@ -65,8 +65,11 @@ const getStationTracks = (stationGenre: string, isVip: boolean) => {
 
         const s = stationGenre.toLowerCase();
 
-        // Exact match or includes for sub-genres (e.g., "Dance Pop" should show in Pop, NOT Rock)
-        if (s === 'pop') return (g.includes('pop') && !g.includes('rock')) || g.includes('dance');
+        // Strict genre matching to prevent cross-contamination
+        if (s === 'pop') {
+            // Pop ONLY - exclude rock, dance, country, folk
+            return g.includes('pop') && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk');
+        }
         if (s === 'rock') return g.includes('rock') || g.includes('alternative') || g.includes('metal') || g.includes('grunge');
         if (s === 'country') return g.includes('country') || g.includes('americana');
         if (s === 'folk') return g.includes('folk') || g.includes('acoustic') || g.includes('singer-songwriter');

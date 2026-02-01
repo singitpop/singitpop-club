@@ -52,12 +52,12 @@ export default function VisualScroll() {
                         console.warn("[VisualScroll] No latestSingleTrack in API response");
                     }
 
-                    // Update Latest Live Album (Index 2)
-                    if (data.latestLiveAlbumTitle && data.latestLiveAlbumCover) {
+                    // Update Latest Country Album (Index 2)
+                    if (data.latestCountryAlbumTitle && data.latestCountryAlbumCover) {
                         newItems[2] = {
                             ...newItems[2],
-                            title: data.latestLiveAlbumTitle,
-                            image: data.latestLiveAlbumCover || '/images/album-step-live.jpg'
+                            title: data.latestCountryAlbumTitle,
+                            image: data.latestCountryAlbumCover || '/images/album-step-live.jpg'
                         };
                     }
 
