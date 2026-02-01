@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Sparkles, Users, Clapperboard, MonitorPlay, Mic2, LayoutTemplate } from "lucide-react";
 import { motion } from "framer-motion";
 import Step1Briefing from "./Step1Briefing";
+import Step2Casting from "./Step2Casting";
 
 // Types for our "Ultra" Project
 export type DirectorTab = 'briefing' | 'cast' | 'timeline' | 'studio';
@@ -124,10 +125,32 @@ export default function DirectorWizard() {
                                 </div>
                             </div>
 
+                            {/* Placeholder for Step 1 Component */}
                             <div className="h-[calc(100%-120px)]">
                                 <Step1Briefing
                                     tracks={tracks}
                                     onNext={handleBriefingComplete}
+                                />
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'cast' && (
+                        <div className="space-y-8 h-full">
+                            <div className="flex items-end justify-between">
+                                <div>
+                                    <h2 className="text-4xl font-bold mb-2">Cast & Crew</h2>
+                                    <p className="text-white/60 text-lg">Define your stars. Consistent characters for your movie.</p>
+                                </div>
+                            </div>
+
+                            <div className="h-[calc(100%-120px)]">
+                                <Step2Casting
+                                    onNext={(data) => {
+                                        setProject(prev => ({ ...prev, castMembers: data.castMembers }));
+                                        setActiveTab('timeline');
+                                    }}
+                                    initialCast={project.castMembers}
                                 />
                             </div>
                         </div>

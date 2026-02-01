@@ -9,7 +9,7 @@ export const RemotionRoot: React.FC = () => {
         <>
             <Composition
                 id="LyricVideo169"
-                component={LyricVideo}
+                component={LyricVideo as any}
                 durationInFrames={300 * 30}
                 fps={30}
                 width={1920}
@@ -26,7 +26,7 @@ export const RemotionRoot: React.FC = () => {
             />
             <Composition
                 id="LyricVideo916"
-                component={LyricVideo}
+                component={LyricVideo as any}
                 durationInFrames={300 * 30}
                 fps={30}
                 width={1080}
