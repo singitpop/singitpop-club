@@ -59,7 +59,17 @@ function MusicContent() {
         // Only run if user hasn't selected an album yet
         if (!selectedAlbumId) {
             const studios = albums.filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
-                .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+                .sort((a, b) => {
+                    const timeA = new Date(a.releaseDate).getTime();
+                    const timeB = new Date(b.releaseDate).getTime();
+                    if (timeB === timeA) {
+                        // Tie-breaker: Prioritize 'A Love That Never Ends'
+                        if (b.title === 'A Love That Never Ends') return 1;
+                        if (a.title === 'A Love That Never Ends') return -1;
+                        return 0;
+                    }
+                    return timeB - timeA;
+                });
 
             if (studios.length > 0) {
                 setSelectedAlbumId(studios[0].id);
@@ -126,7 +136,17 @@ function MusicContent() {
 
         if (filterMode === 'latest') {
             const studios = albums.filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
-                .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+                .sort((a, b) => {
+                    const timeA = new Date(a.releaseDate).getTime();
+                    const timeB = new Date(b.releaseDate).getTime();
+                    if (timeB === timeA) {
+                        // Tie-breaker: Prioritize 'A Love That Never Ends'
+                        if (b.title === 'A Love That Never Ends') return 1;
+                        if (a.title === 'A Love That Never Ends') return -1;
+                        return 0;
+                    }
+                    return timeB - timeA;
+                });
             const latestAlbum = studios.length > 0 ? studios[0] : null;
 
             return {

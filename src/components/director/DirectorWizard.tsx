@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Step1Briefing from "./Step1Briefing";
 import Step2Casting from "./Step2Casting";
 import Step3Timeline from "./Step3Timeline";
+import Step4Production from "./Step4Production";
 
 // Types for our "Ultra" Project
 export type DirectorTab = 'briefing' | 'cast' | 'timeline' | 'studio';
@@ -158,14 +159,41 @@ export default function DirectorWizard() {
                     )}
 
                     {activeTab === 'timeline' && (
-                        <div className="flex items-center justify-center h-full text-white/30">
-                            8-Minute Timeline Engine (Coming Soon)
+                        <div className="space-y-8 h-full">
+                            <div className="flex items-end justify-between">
+                                <div>
+                                    <h2 className="text-4xl font-bold mb-2">Timeline</h2>
+                                    <p className="text-white/60 text-lg">Sequence your scenes. Build the narrative arc.</p>
+                                </div>
+                            </div>
+
+                            <div className="h-[calc(100%-120px)]">
+                                <Step3Timeline
+                                    project={project}
+                                    onNext={(data) => {
+                                        setProject(prev => ({ ...prev, scenes: data.scenes }));
+                                        setActiveTab('studio');
+                                    }}
+                                />
+                            </div>
                         </div>
                     )}
 
                     {activeTab === 'studio' && (
-                        <div className="flex items-center justify-center h-full text-white/30">
-                            Production Studio (Coming Soon)
+                        <div className="space-y-8 h-full">
+                            <div className="flex items-end justify-between">
+                                <div>
+                                    <h2 className="text-4xl font-bold mb-2">Production Studio</h2>
+                                    <p className="text-white/60 text-lg">Finalize budget. Generate your masterpiece.</p>
+                                </div>
+                            </div>
+
+                            <div className="h-[calc(100%-120px)]">
+                                <Step4Production
+                                    project={project}
+                                    onBack={() => setActiveTab('timeline')}
+                                />
+                            </div>
                         </div>
                     )}
                 </div>
