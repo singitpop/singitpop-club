@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "video:preview": "remotion preview",
     "video:render": "remotion render",
     "video:thumbnail": "remotion render Thumbnail out/thumbnail.png",
