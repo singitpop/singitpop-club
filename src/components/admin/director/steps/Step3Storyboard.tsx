@@ -64,7 +64,7 @@ export const Step3Storyboard: React.FC<Step3Props> = ({ concept, character, sync
 
             if (lineCounter >= threshold || isLast) {
                 const endTime = syncedLyrics[i].endTime;
-                const sceneIndex = generated.length;
+                const sceneIndex: number = generated.length;
 
                 // Creative Direction
                 const visualDetails = concept.visualStyle.split(', ');
