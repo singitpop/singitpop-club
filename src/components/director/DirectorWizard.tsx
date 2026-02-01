@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sparkles, Users, Clapperboard, MonitorPlay, Mic2, LayoutTemplate } from "lucide-react";
 import { motion } from "framer-motion";
+import Step1Briefing from "./Step1Briefing";
 
 // Types for our "Ultra" Project
 export type DirectorTab = 'briefing' | 'cast' | 'timeline' | 'studio';
@@ -10,12 +11,14 @@ export type DirectorTab = 'briefing' | 'cast' | 'timeline' | 'studio';
 interface DirectorState {
     trackId: string | null;
     concept: string;
-    castMembers: any[]; // To be defined
-    scenes: any[];      // To be defined
+    castMembers: any[];
+    scenes: any[];
+    vibe?: any;
 }
 
 export default function DirectorWizard() {
     const [activeTab, setActiveTab] = useState<DirectorTab>('briefing');
+    const [tracks, setTracks] = useState<any[]>([]);
     const [project, setProject] = useState<DirectorState>({
         trackId: null,
         concept: "",
@@ -29,6 +32,34 @@ export default function DirectorWizard() {
         { id: 'timeline', label: 'Timeline', icon: Clapperboard, desc: 'Story & Sequencing' },
         { id: 'studio', label: 'Production', icon: MonitorPlay, desc: 'Generate & Render' },
     ];
+
+    // Fetch tracks on mount
+    useEffect(() => {
+        async function loadTracks() {
+            try {
+                const res = await fetch('/api/music/tracks');
+                if (res.ok) {
+                    const data = await res.json();
+                    setTracks(data);
+                }
+            } catch (e) {
+                console.error("Failed to load tracks", e);
+            }
+        }
+        loadTracks();
+    }, []);
+
+    const handleBriefingComplete = (data: any) => {
+        console.log("Briefing Complete:", data);
+        setProject(prev => ({
+            ...prev,
+            trackId: data.track.id,
+            vibe: data.vibe,
+            concept: data.userPrompt
+        }));
+        // Move to next tab (Concept/Cast logic would be next, usually Cast)
+        setActiveTab('cast');
+    };
 
     return (
         <div className="flex h-screen bg-[#050507] text-white overflow-hidden font-sans">
@@ -85,7 +116,7 @@ export default function DirectorWizard() {
 
                 <div className="max-w-7xl mx-auto p-8 relative z-10 h-full">
                     {activeTab === 'briefing' && (
-                        <div className="space-y-8">
+                        <div className="space-y-8 h-full">
                             <div className="flex items-end justify-between">
                                 <div>
                                     <h2 className="text-4xl font-bold mb-2">The Briefing Room</h2>
@@ -93,14 +124,11 @@ export default function DirectorWizard() {
                                 </div>
                             </div>
 
-                            {/* Placeholder for Step 1 Component */}
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-12 text-center min-h-[400px] flex flex-col items-center justify-center border-dashed">
-                                <Mic2 size={48} className="text-white/20 mb-4" />
-                                <h3 className="text-xl font-semibold mb-2">Select a Track</h3>
-                                <p className="text-white/40 mb-6">Load a song from your library to begin analysis.</p>
-                                <button className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm font-medium transition-colors">
-                                    Browse Library
-                                </button>
+                            <div className="h-[calc(100%-120px)]">
+                                <Step1Briefing
+                                    tracks={tracks}
+                                    onNext={handleBriefingComplete}
+                                />
                             </div>
                         </div>
                     )}
