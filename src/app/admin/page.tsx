@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail } from 'lucide-react';
+import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail, Clapperboard } from 'lucide-react';
 import styles from './Admin.module.css';
 
 interface UserData {
