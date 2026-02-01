@@ -38,6 +38,10 @@ export async function GET() {
                 const filename = item.Key.split('/').pop()!;
                 const title = filename.replace(/\.(mp3|wav)$/, '');
 
+                // Filter out numbered duplicates/versions (e.g. "Song-2", "Song 2")
+                // User requirement: "remove any tracks that have a number on the end"
+                if (/[- ]\d+$/.test(title)) return;
+
                 // If exists, only overwrite if current is MP3 and new is WAV
                 if (trackMap.has(title)) {
                     if (isWav && !trackMap.get(title).isWav) {
