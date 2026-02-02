@@ -364,7 +364,9 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
                     <div className="flex-1 flex flex-col min-h-0">
                         <div className="flex justify-between items-center mb-2">
-                            <label className="text-xs font-bold text-white/60 uppercase tracking-widest">Lyrics & Vision</label>
+                            <label className="text-xs font-bold text-white/60 uppercase tracking-widest">
+                                Input Source (Lyrics or ChatGPT)
+                            </label>
 
                             {/* AUTO-DIRECT BUTTON */}
                             <button
@@ -377,15 +379,15 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                                 `}
                             >
                                 <Wand2 size={10} />
-                                {isAnalyzing ? "Analyzing..." : "Auto-Direct"}
+                                {isAnalyzing ? "Analyzing Input..." : "Auto-Direct Scene"}
                             </button>
                         </div>
 
                         <textarea
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
-                            placeholder={`Paste your song lyrics here to capture the emotion...\n\nThen click 'Auto-Direct' to let the AI set the scene.`}
-                            className="w-full bg-black/20 border border-white/10 rounded-xl p-4 text-sm text-white flex-1 focus:border-indigo-500 transition-all resize-none leading-relaxed placeholder:text-white/20"
+                            placeholder={`PASTE HERE:\n• Song Lyrics\n• OR Your ChatGPT "Ultra-Compact" Prompt\n\nThe Director Engine will analyze either input to set the scene.`}
+                            className="w-full bg-black/20 border border-white/10 rounded-xl p-4 text-sm text-white flex-1 focus:border-indigo-500 transition-all resize-none leading-relaxed placeholder:text-white/20 min-h-[120px]"
                         />
                     </div>
 
