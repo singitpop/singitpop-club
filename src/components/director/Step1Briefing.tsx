@@ -58,12 +58,13 @@ const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     "kiss": { lighting: { mood: ["Romantic"], lighting: ["Candlelight"] }, camera: { angle: ["Close Up", "POV"] } },
     "smile": { lighting: { mood: ["Romantic", "Dreamy"], lighting: ["Cinematic Soft", "Natural Window Light"] }, camera: { angle: ["Close Up", "Portrait"] } },
     "eyes": { camera: { lens: ["50mm Portrait", "85mm Anamorphic"], angle: ["Close Up"] } },
+    "chest": { camera: { angle: ["Close Up", "Low Angle"] } },
 
     // Action / Energy
     "dance": { lighting: { mood: ["Cinematic", "Neon Noir"], lighting: ["Strobe", "Neon Signs"] }, camera: { movement: ["Fast Zoom", "Handheld Shaky"] } },
     "party": { lighting: { mood: ["Cinematic"], lighting: ["Strobe", "Neon Signs"] }, world: { location: ["Jazz Club", "Ballroom", "Dive Bar"] } },
     "run": { camera: { movement: ["Tracking Shot", "Handheld Shaky"] }, lighting: { mood: ["Tense", "Gritty"] } },
-    "walk": { camera: { movement: ["Tracking Shot", "Slow Pan"] }, world: { location: ["Tokyo Streets", "Beach at Night"] } },
+    "walk": { camera: { movement: ["Tracking Shot", "Slow Pan"] } }, // Removed "Tokyo Streets" to avoid forcing a location
     "slow": { camera: { movement: ["Slow Pan", "Smooth Gimbal"] }, lighting: { mood: ["Dreamy", "Melancholic"] } },
     "wave": { camera: { movement: ["Slow Pan"] } },
     "breath": { lighting: { mood: ["Tense", "Romantic"] }, camera: { angle: ["Close Up"] } },
@@ -77,6 +78,7 @@ const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
 
     // Setting / Objects
     "room": { world: { location: ["Luxury Penthouse", "Restaurant", "Ballroom", "Abandoned Warehouse"] }, lighting: { lighting: ["Natural Window Light", "Candlelight"] } },
+    "floor": { world: { location: ["Luxury Penthouse", "Ballroom"] }, camera: { angle: ["Low Angle"] } },
     "future": { lighting: { mood: ["Cyberpunk"], lighting: ["Neon Signs"] }, world: { location: ["Cyberpunk City", "Space Station", "Tokyo Streets"] }, elements: { vehicles: ["Cyberpunk Bike", "Spaceship"], clothing: ["Cyber Armor", "Techwear"] } },
     "neon": { lighting: { mood: ["Dark Neon", "Cyberpunk"], lighting: ["Neon Signs"] }, style: { artDirection: ["Hyper-Realistic"] } },
     "retro": { lighting: { mood: ["Retro VHS"], colorGrade: ["Sepia Vintage"] }, style: { filmStock: ["VHS Tape", "16mm Grain"] }, elements: { clothing: ["Vintage Leather"] } },
@@ -93,8 +95,26 @@ const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     "forest": { world: { location: ["Forest"] }, lighting: { lighting: ["Volumetric Beams"] } },
 };
 
-
 type OptionCategory = 'world' | 'lighting' | 'camera' | 'style' | 'elements';
+
+const INITIAL_SELECTIONS = {
+    location: "",
+    timeOfDay: "",
+    weather: "Clear",
+    lighting: "Cinematic Soft",
+    mood: "Cinematic",
+    colorGrade: "",
+    angle: "",
+    lens: "",
+    movement: "",
+    filmStock: "",
+    artDirection: "",
+    vehicles: "",
+    props: [] as string[],
+    animals: "",
+    clothing: "",
+    details: [] as string[]
+};
 
 export default function Step1Briefing({ tracks, onNext }: Step1Props) {
     const [selectedTrackId, setSelectedTrackId] = useState<string | number>("");
@@ -102,24 +122,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
     const [prompt, setPrompt] = useState("");
 
     // Selection State
-    const [selections, setSelections] = useState({
-        location: "",
-        timeOfDay: "",
-        weather: "Clear",
-        lighting: "Cinematic Soft",
-        mood: "Cinematic",
-        colorGrade: "",
-        angle: "",
-        lens: "",
-        movement: "",
-        filmStock: "",
-        artDirection: "",
-        vehicles: "",
-        props: [] as string[],
-        animals: "",
-        clothing: "",
-        details: [] as string[] // Legacy support
-    });
+    const [selections, setSelections] = useState({ ...INITIAL_SELECTIONS });
 
     const toggleSelection = (field: keyof typeof selections, value: string) => {
         setSelections(prev => {
@@ -170,13 +173,16 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
         setTimeout(() => {
             const lowerPrompt = prompt.toLowerCase();
 
-            // 1. Reset categories to a "Neutral" state to avoid stale data from previous runs.
-            const newSelections = { ...selections, location: "", timeOfDay: "", lighting: "", mood: "", angle: "", filmStock: "" };
+            // 1. Reset categories to a "Neutral" state to avoid stale data.
+            // MUST reset all fields so we don't keep "Heatwave" from a previous run!
+            const newSelections = { ...INITIAL_SELECTIONS };
 
             // We'll behave like a real director: Pick the STRONGEST signals.
 
             Object.entries(DIRECTOR_BRAIN).forEach(([keyword, map]) => {
-                if (lowerPrompt.includes(keyword)) {
+                // Use Regex for whole-word matching to avoid "sun" inside "sunglasses" or "run" in "trunk"
+                const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+                if (regex.test(lowerPrompt)) {
                     // We found a match! Apply settings.
                     // Loop through categories in the map (world, lighting, etc)
                     Object.entries(map).forEach(([category, fields]) => {
