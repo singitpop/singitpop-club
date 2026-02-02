@@ -176,5 +176,7 @@ function CheckIcon() {
         <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
             <Check size={12} className="text-green-400" />
         </div>
+    );
+}
 
 
