@@ -38,12 +38,8 @@ const CUSTOM_SONG_TIERS = [
 
 
 
-const products = [
-    { id: 2, name: 'Midnight Tour Hoodie (Sustainable)', price: 65.00, imageColor: 'linear-gradient(45deg, #111, #333)', proOnly: false, badge: 'POD UK 🇬🇧' },
-    { id: 3, name: 'Echoes Lyric Tee', price: 35.00, imageColor: 'linear-gradient(45deg, #fff, #eee)', proOnly: false, badge: 'POD UK 🇬🇧', link: 'https://teemill.com/store/singitpop' },
-    { id: 4, name: 'Pro Member Pin Set', price: 15.00, imageColor: 'linear-gradient(45deg, #FFD700, #FDB931)', proOnly: true, badge: 'Exclusive' },
-    { id: 6, name: 'SingIt Pop Essentials Vol. 1 (Sample Pack)', price: 14.99, imageColor: 'linear-gradient(45deg, #FF3CAC, #784BA0)', proOnly: false, badge: 'Digital Download 💾' },
-];
+import { VINYL_PRODUCTS, MERCH_PRODUCTS } from "@/data/shopProducts";
+
 
 export default function ShopPage() {
     const { login, user } = useAuth();
