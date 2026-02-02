@@ -172,42 +172,111 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
         // Simulate "Thinking" time for the AI Director
         setTimeout(() => {
             const lowerPrompt = prompt.toLowerCase();
-
-            // 1. Reset categories to a "Neutral" state to avoid stale data.
-            // MUST reset all fields so we don't keep "Heatwave" from a previous run!
             const newSelections = { ...INITIAL_SELECTIONS };
 
-            // We'll behave like a real director: Pick the STRONGEST signals.
+            // 🧠 PHASE 1: EMOTIONAL SCORING (The Vibe Check)
+            // We count keywords to find the DOMINANT EMOTION.
+            const scores = {
+                romance: 0,
+                energy: 0,
+                melancholy: 0,
+                dark: 0,
+                dreamy: 0
+            };
 
-            Object.entries(DIRECTOR_BRAIN).forEach(([keyword, map]) => {
-                // Use Regex for whole-word matching to avoid "sun" inside "sunglasses" or "run" in "trunk"
-                const regex = new RegExp(`\\b${keyword}\\b`, 'i');
-                if (regex.test(lowerPrompt)) {
-                    // We found a match! Apply settings.
-                    // Loop through categories in the map (world, lighting, etc)
-                    Object.entries(map).forEach(([category, fields]) => {
-                        // Loop through fields (location, mood, etc)
-                        Object.entries(fields as Record<string, string[]>).forEach(([field, possibleValues]) => {
-                            // Pick a random one from the possible values to add variety
-                            const pick = possibleValues[Math.floor(Math.random() * possibleValues.length)];
-                            if (pick) {
-                                // @ts-ignore
-                                newSelections[field as keyof typeof selections] = pick;
-                            }
-                        });
-                    });
+            const keywords = {
+                romance: ["love", "heart", "kiss", "baby", "smile", "touch", "hold", "forever", "you", "beautiful", "sweet"],
+                energy: ["dance", "party", "run", "fast", "jump", "beat", "rhythm", "go", "shake", "loud", "crazy", "wild"],
+                melancholy: ["sad", "cry", "lonely", "tears", "pain", "gone", "miss", "blue", "broken", "rain", "hurt", "quiet", "goodbye"],
+                dark: ["dark", "night", "blood", "kill", "gun", "fear", "shadow", "black", "death", "fight", "war", "danger", "cold"],
+                dreamy: ["dream", "sleep", "sky", "cloud", "fly", "float", "star", "moon", "magic", "wonder", "high", "light"]
+            };
+
+            // Count hits
+            Object.entries(keywords).forEach(([theme, words]) => {
+                words.forEach(w => {
+                    const regex = new RegExp(`\\b${w}\\b`, 'i');
+                    if (regex.test(lowerPrompt)) {
+                        scores[theme as keyof typeof scores] += 1;
+                    }
+                });
+            });
+
+            // Find Winning Theme
+            let winningTheme = "dreamy"; // Default
+            let maxScore = -1;
+            Object.entries(scores).forEach(([theme, score]) => {
+                if (score > maxScore) {
+                    maxScore = score;
+                    winningTheme = theme;
                 }
             });
 
-            // 2. Fallbacks: If nothing selected, pick sensible defaults based on "Vibe"
-            if (!newSelections.mood) newSelections.mood = "Cinematic";
-            if (!newSelections.lighting) newSelections.lighting = "Cinematic Soft";
-            if (!newSelections.filmStock) newSelections.filmStock = "Kodak Portra 400";
-            if (!newSelections.angle) newSelections.angle = "Wide Shot";
+            // Apply COHESIVE PRESETS based on Winning Theme
+            switch (winningTheme) {
+                case "romance":
+                    newSelections.mood = "Romantic";
+                    newSelections.lighting = "Cinematic Soft";
+                    newSelections.colorGrade = "Pastel Dream";
+                    newSelections.filmStock = "Kodak Portra 400";
+                    newSelections.angle = "Close Up";
+                    // Default location for romance if none found later
+                    newSelections.location = "Luxury Penthouse";
+                    break;
+                case "energy":
+                    newSelections.mood = "Cinematic";
+                    newSelections.lighting = "Strobe";
+                    newSelections.colorGrade = "High Contrast";
+                    newSelections.filmStock = "Digital Crisp";
+                    newSelections.movement = "Fast Zoom";
+                    newSelections.location = "Jazz Club";
+                    break;
+                case "melancholy":
+                    newSelections.mood = "Melancholic";
+                    newSelections.lighting = "Natural Window Light";
+                    newSelections.colorGrade = "Bleach Bypass";
+                    newSelections.filmStock = "16mm Grain";
+                    newSelections.weather = "Heavy Rain";
+                    newSelections.angle = "Wide Shot"; // Isolation
+                    break;
+                case "dark":
+                    newSelections.mood = "Gritty";
+                    newSelections.lighting = "Low-Key Noir";
+                    newSelections.colorGrade = "Black & White";
+                    newSelections.timeOfDay = "Midnight";
+                    newSelections.weather = "Foggy";
+                    break;
+                case "dreamy":
+                default:
+                    newSelections.mood = "Dreamy";
+                    newSelections.lighting = "Volumetric Beams";
+                    newSelections.colorGrade = "Teal & Orange";
+                    newSelections.filmStock = "Fujifilm Velvia";
+                    newSelections.timeOfDay = "Golden Hour";
+                    break;
+            }
+
+            // 🧠 PHASE 2: CONTEXT EXTRACTION (The Details)
+            // Now we look for specific NOUNS to override/fill details without breaking the vibe.
+
+            // Location Overrides
+            if (/\b(room|home|house|bed|sofa)\b/i.test(lowerPrompt)) newSelections.location = "Luxury Penthouse";
+            if (/\b(bar|club|pub|drink)\b/i.test(lowerPrompt)) newSelections.location = "Dive Bar";
+            if (/\b(street|road|city|town)\b/i.test(lowerPrompt)) newSelections.location = "Tokyo Streets";
+            if (/\b(car|drive|ride)\b/i.test(lowerPrompt)) {
+                newSelections.location = "Desert Highway";
+                newSelections.vehicles = "Vintage Muscle Car";
+            }
+            if (/\b(beach|sea|ocean|sand)\b/i.test(lowerPrompt)) newSelections.location = winningTheme === 'dark' ? "Beach at Night" : "Beach at Night"; // Could add a sunny beach if available
+
+            // Weather/Time Overrides (Only if explicit)
+            if (/\b(rain|storm|wet)\b/i.test(lowerPrompt)) newSelections.weather = "Heavy Rain";
+            if (/\b(sun|sunny|hot)\b/i.test(lowerPrompt)) { newSelections.weather = "Clear"; newSelections.timeOfDay = "Noon"; }
+            if (/\b(night|dark|moon)\b/i.test(lowerPrompt)) newSelections.timeOfDay = "Midnight";
 
             setSelections(newSelections);
             setIsAnalyzing(false);
-        }, 1200);
+        }, 1500); // Slightly longer "thinking" time
     };
 
     return (
