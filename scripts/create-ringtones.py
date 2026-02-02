@@ -31,18 +31,17 @@ def extract_singles_from_album_data():
     # Find all track objects with isSingle: true
     singles = []
     
-    # Split by albums
-    album_pattern = r'"id":\s*"([^"]+)".*?"title":\s*"([^"]+)".*?"tracks":\s*\[(.*?)\]'
-    
-    # Find tracks with isSingle: true
-    track_pattern = r'\{[^}]*"title":\s*"([^"]+)"[^}]*"audioUrl":\s*"([^"]+)"[^}]*"isSingle":\s*true[^}]*\}'
+    # Find tracks with isSingle: true and capture title, audioUrl, and genre
+    track_pattern = r'\{[^}]*"title":\s*"([^"]+)"[^}]*"genre":\s*"([^"]+)"[^}]*"audioUrl":\s*"([^"]+)"[^}]*"isSingle":\s*true[^}]*\}'
     
     for match in re.finditer(track_pattern, content, re.DOTALL):
         title = match.group(1)
-        audio_url = match.group(2)
+        genre = match.group(2)
+        audio_url = match.group(3)
         
         singles.append({
             'title': title,
+            'genre': genre,
             'audioUrl': audio_url
         })
     
@@ -168,6 +167,7 @@ def process_single(s3_client, single, temp_dir):
     if mp3_uploaded and m4r_uploaded:
         return {
             'title': title,
+            'genre': single['genre'],
             'mp3_key': f"{ringtone_key_base}.mp3",
             'm4r_key': f"{ringtone_key_base}.m4r",
             'price': RINGTONE_PRICE,

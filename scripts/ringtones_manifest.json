@@ -1,6 +1,7 @@
 [
   {
     "title": "Front Porch Valentine",
+    "genre": "Country",
     "mp3_key": "ringtones/front-porch-valentine.mp3",
     "m4r_key": "ringtones/front-porch-valentine.m4r",
     "price": 3.0,
@@ -8,6 +9,7 @@
   },
   {
     "title": "sweet tea kisses",
+    "genre": "Country",
     "mp3_key": "ringtones/sweet-tea-kisses.mp3",
     "m4r_key": "ringtones/sweet-tea-kisses.m4r",
     "price": 3.0,
@@ -15,6 +17,7 @@
   },
   {
     "title": "under the valentine moon",
+    "genre": "Country",
     "mp3_key": "ringtones/under-the-valentine-moon.mp3",
     "m4r_key": "ringtones/under-the-valentine-moon.m4r",
     "price": 3.0,
@@ -22,6 +25,7 @@
   },
   {
     "title": "forever starts tonight",
+    "genre": "Country",
     "mp3_key": "ringtones/forever-starts-tonight.mp3",
     "m4r_key": "ringtones/forever-starts-tonight.m4r",
     "price": 3.0,
@@ -29,6 +33,7 @@
   },
   {
     "title": "riding down the line",
+    "genre": "Country",
     "mp3_key": "ringtones/riding-down-the-line.mp3",
     "m4r_key": "ringtones/riding-down-the-line.m4r",
     "price": 3.0,
