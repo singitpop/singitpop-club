@@ -136,9 +136,12 @@ export default function DirectorWizard() {
             <main className="flex-1 overflow-y-auto bg-[#050507] relative">
                 {/* 🌌 ATMOSPHERE: Deep Gradient Mesh for Glass Effects */}
                 <div className="fixed inset-0 pointer-events-none overflow-hidden">
-                    <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[120px] opacity-40 mix-blend-screen" />
-                    <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px] opacity-30 mix-blend-screen" />
-                    <div className="absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-pink-500/10 rounded-full blur-[80px] opacity-20 mix-blend-overlay" />
+                    {/* Brand Primary (Violet) Orb */}
+                    <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-[#8b5cf6]/20 rounded-full blur-[120px] opacity-40 mix-blend-screen" />
+                    {/* Brand Accent (Pink) Orb */}
+                    <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#f472b6]/20 rounded-full blur-[100px] opacity-30 mix-blend-screen" />
+                    {/* Cyan Neon Highlight */}
+                    <div className="absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-[#00fff0]/10 rounded-full blur-[80px] opacity-20 mix-blend-overlay" />
                     <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] bg-repeat" />
                 </div>
 
