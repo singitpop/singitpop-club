@@ -318,23 +318,23 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
     };
 
     return (
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 h-full font-sans">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 h-full font-sans p-6 rounded-3xl bg-black/40 backdrop-blur-xl border border-white/5 shadow-2xl">
 
             {/* LEFT: Track & Prompt Preview (4 cols) */}
             <div className="xl:col-span-4 space-y-6 flex flex-col h-full">
                 {/* Track Selector */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-6 shadow-lg backdrop-blur-md">
                     <div className="flex items-center gap-3 mb-4">
                         <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
                             <Mic2 size={20} />
                         </div>
-                        <h3 className="text-lg font-semibold">Select Track</h3>
+                        <h3 className="text-lg font-bold text-white tracking-tight">Select Track</h3>
                     </div>
-                    <div className="relative">
+                    <div className="relative group">
                         <select
                             value={selectedTrackId}
                             onChange={(e) => setSelectedTrackId(e.target.value)}
-                            className="block w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-4 pr-10 text-white text-base appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                            className="block w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-4 pr-10 text-white text-base appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all hover:bg-black/60 cursor-pointer shadow-inner"
                         >
                             <option value="">-- Choose Song --</option>
                             {tracks.map((t) => (
@@ -343,96 +343,110 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                                 </option>
                             ))}
                         </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/30">▼</div>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/40 group-hover:text-white transition-colors">▼</div>
                     </div>
                 </div>
 
 
                 {/* Live Prompt Preview */}
-                <div className="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 border border-white/10 rounded-2xl p-6 flex-1 flex flex-col">
-                    <div className="flex items-center justify-between mb-4">
+                <div className="bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-black/60 border border-white/10 rounded-2xl p-6 flex-1 flex flex-col shadow-xl backdrop-blur-md relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none"></div>
+
+                    <div className="flex items-center justify-between mb-4 relative z-10">
                         <div className="flex items-center gap-2">
-                            <Sparkles size={16} className="text-yellow-400" />
-                            <h3 className="text-sm font-bold uppercase tracking-wider text-white/60">Mega Prompt Preview</h3>
+                            <Sparkles size={16} className="text-yellow-400 animate-pulse-slow" />
+                            <h3 className="text-sm font-bold uppercase tracking-widest text-indigo-200">Director's Vision</h3>
                         </div>
-                        {isAnalyzing && <span className="text-xs text-yellow-400 animate-pulse font-mono">DIRECTOR IS ANALYZING...</span>}
+                        {isAnalyzing && <span className="text-xs text-yellow-400 font-mono animate-pulse">Running Neural Engine...</span>}
                     </div>
 
-                    <div className="bg-black/40 rounded-xl p-4 font-mono text-sm text-indigo-200 overflow-y-auto mb-4 border border-white/5 h-24">
-                        <span className="text-white/40 block mb-2 text-xs uppercase tracking-wider">Auto-Generated Context:</span>
-                        {constructedPrompt || <span className="text-white/20">Select options from the right...</span>}
+                    <div className="bg-black/60 rounded-xl p-4 font-mono text-sm text-indigo-200 overflow-y-auto mb-6 border border-white/5 h-28 shadow-inner custom-scrollbar relative z-10">
+                        <span className="text-white/30 block mb-2 text-[10px] uppercase tracking-wider font-bold">Detected Context:</span>
+                        {constructedPrompt ? (
+                            <span className="leading-relaxed animate-in fade-in duration-500">{constructedPrompt}</span>
+                        ) : (
+                            <span className="text-white/20 italic">Awaiting Input...</span>
+                        )}
                     </div>
 
-                    <div className="flex-1 flex flex-col min-h-0">
-                        <div className="flex justify-between items-center mb-2">
-                            <label className="text-xs font-bold text-white/60 uppercase tracking-widest">
-                                Input Source (Lyrics or ChatGPT)
+                    <div className="flex-1 flex flex-col min-h-0 relative z-10">
+                        <div className="flex justify-between items-center mb-3">
+                            <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest flex items-center gap-1">
+                                Input Source <span className="hidden sm:inline opacity-50">(Lyrics / AI Prompt)</span>
                             </label>
 
                             {/* AUTO-DIRECT BUTTON */}
                             <button
                                 onClick={analyzeLyrics}
                                 disabled={!prompt || prompt.length < 5 || isAnalyzing}
-                                className={`text-[10px] px-3 py-1.5 rounded-full border flex items-center gap-2 transition-all
+                                className={`text-[10px] px-4 py-1.5 rounded-full border flex items-center gap-2 transition-all duration-300 font-bold tracking-wide
                                     ${prompt && prompt.length >= 5 && !isAnalyzing
-                                        ? 'bg-indigo-500/20 border-indigo-500/50 text-indigo-300 hover:bg-indigo-500 hover:text-white cursor-pointer shadow-lg shadow-indigo-500/20'
+                                        ? 'bg-gradient-to-r from-indigo-500 to-purple-500 border-transparent text-white hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/40 cursor-pointer'
                                         : 'bg-white/5 border-white/5 text-white/20 cursor-not-allowed'}
                                 `}
                             >
-                                <Wand2 size={10} />
-                                {isAnalyzing ? "Analyzing Input..." : "Auto-Direct Scene"}
+                                <Wand2 size={12} />
+                                {isAnalyzing ? "Processing..." : "Auto-Direct Scene"}
                             </button>
                         </div>
 
                         <textarea
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
-                            placeholder={`PASTE HERE:\n• Song Lyrics\n• OR Your ChatGPT "Ultra-Compact" Prompt\n\nThe Director Engine will analyze either input to set the scene.`}
-                            className="w-full bg-black/20 border border-white/10 rounded-xl p-4 text-sm text-white flex-1 focus:border-indigo-500 transition-all resize-none leading-relaxed placeholder:text-white/20 min-h-[120px]"
+                            placeholder={`PASTE HERE:\n• Song Lyrics\n• OR Your ChatGPT "Ultra-Compact" Prompt`}
+                            className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-sm text-white/90 flex-1 focus:border-indigo-500 focus:bg-black/60 focus:ring-1 focus:ring-indigo-500/50 transition-all resize-none leading-relaxed placeholder:text-white/20 min-h-[140px] shadow-inner font-normal"
                         />
                     </div>
 
                     <button
                         onClick={handleGenerate}
                         disabled={!selectedTrackId}
-                        className={`mt-6 w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all
+                        className={`mt-6 w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all duration-300 relative z-10 overflow-hidden
                         ${selectedTrackId
-                                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] shadow-xl shadow-indigo-900/50'
-                                : 'bg-white/5 text-white/20 cursor-not-allowed'}
+                                ? 'bg-white text-black hover:bg-indigo-50 hover:scale-[1.02] shadow-xl shadow-white/5 hover:shadow-white/20'
+                                : 'bg-white/5 text-white/20 cursor-not-allowed border border-white/5'}
                     `}
                     >
-                        Initialize Director Engine <ChevronRight size={20} />
+                        Initialize Engine <ChevronRight size={20} />
                     </button>
                 </div>
             </div>
 
 
             {/* RIGHT: The Mega Control Panel (8 cols) */}
-            <div className="xl:col-span-8 bg-white/5 border border-white/10 rounded-2xl overflow-hidden flex flex-col">
+            <div className="xl:col-span-8 bg-gradient-to-b from-white/5 to-black/40 border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-2xl backdrop-blur-md">
 
                 {/* Category Tabs */}
-                <div className="flex border-b border-white/10 overflow-x-auto scrollbar-hide">
+                <div className="flex border-b border-white/5 overflow-x-auto scrollbar-hide bg-black/20">
                     {
                         categories.map(c => (
                             <button
                                 key={c.id}
                                 onClick={() => setActiveCategory(c.id as OptionCategory)}
-                                className={`flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors whitespace-nowrap
-                                ${activeCategory === c.id ? 'bg-white/10 text-white border-b-2 border-indigo-500' : 'text-white/40 hover:text-white hover:bg-white/5'}
+                                className={`flex items-center gap-2 px-6 py-5 text-sm font-medium transition-all duration-300 whitespace-nowrap relative
+                                ${activeCategory === c.id
+                                        ? 'text-white'
+                                        : 'text-white/40 hover:text-white hover:bg-white/5'}
                             `}
                             >
-                                <c.icon size={16} />
+                                <c.icon size={16} className={activeCategory === c.id ? "text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]" : ""} />
                                 {c.label}
+                                {activeCategory === c.id && (
+                                    <motion.div
+                                        layoutId="activeTab"
+                                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500"
+                                    />
+                                )}
                             </button>
                         ))
                     }
                 </div>
 
                 {/* Scrollable Options Area */}
-                <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-black/20">
+                <div className="flex-1 overflow-y-auto p-10 space-y-10 custom-scrollbar">
 
                     {activeCategory === 'world' && (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <ControlGroup title="1. Location (Where is this happening?)" options={OPTIONS.world.location} current={selections.location} onSelect={(v) => toggleSelection('location', v)} allowCustom={true} />
                             <ControlGroup title="2. Time of Day" options={OPTIONS.world.timeOfDay} current={selections.timeOfDay} onSelect={(v) => toggleSelection('timeOfDay', v)} />
                             <ControlGroup title="3. Weather / Element" options={OPTIONS.world.weather} current={selections.weather} onSelect={(v) => toggleSelection('weather', v)} />
@@ -442,7 +456,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
                     {
                         activeCategory === 'lighting' && (
-                            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <ControlGroup title="Lighting Setup" options={OPTIONS.lighting.lighting} current={selections.lighting} onSelect={(v) => toggleSelection('lighting', v)} />
                                 <ControlGroup title="Overall Mood" options={OPTIONS.lighting.mood} current={selections.mood} onSelect={(v) => toggleSelection('mood', v)} />
                                 <ControlGroup title="Color Grading" options={OPTIONS.lighting.colorGrade} current={selections.colorGrade} onSelect={(v) => toggleSelection('colorGrade', v)} />
@@ -452,7 +466,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
                     {
                         activeCategory === 'camera' && (
-                            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <ControlGroup title="Camera Angle" options={OPTIONS.camera.angle} current={selections.angle} onSelect={(v) => toggleSelection('angle', v)} />
                                 <ControlGroup title="Lens Info" options={OPTIONS.camera.lens} current={selections.lens} onSelect={(v) => toggleSelection('lens', v)} />
                                 <ControlGroup title="Camera Movement" options={OPTIONS.camera.movement} current={selections.movement} onSelect={(v) => toggleSelection('movement', v)} />
@@ -462,7 +476,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
                     {
                         activeCategory === 'style' && (
-                            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <ControlGroup title="Film Stock / Medium" options={OPTIONS.style.filmStock} current={selections.filmStock} onSelect={(v) => toggleSelection('filmStock', v)} />
                                 <ControlGroup title="Art Direction Style" options={OPTIONS.style.artDirection} current={selections.artDirection} onSelect={(v) => toggleSelection('artDirection', v)} />
                             </div>
@@ -471,7 +485,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
                     {
                         activeCategory === 'elements' && (
-                            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <ControlGroup title="Lead Character Outfit" options={OPTIONS.elements.clothing} current={selections.clothing} onSelect={(v) => toggleSelection('clothing', v)} />
                                 <ControlGroup title="Key Props" options={OPTIONS.elements.props} current={selections.props} onSelect={(v) => toggleSelection('props', v)} isMulti />
                                 <ControlGroup title="Vehicles" options={OPTIONS.elements.vehicles} current={selections.vehicles} onSelect={(v) => toggleSelection('vehicles', v)} />
@@ -492,18 +506,18 @@ function ControlGroup({ title, options, current, onSelect, isMulti = false, allo
 
     return (
         <div>
-            <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">{title}</h4>
-            <div className="flex flex-wrap gap-2">
+            <h4 className="text-xs font-bold text-white/30 uppercase tracking-[0.2em] mb-4 ml-1">{title}</h4>
+            <div className="flex flex-wrap gap-2.5">
                 {options.map(opt => {
                     const isSelected = isMulti ? (current as string[]).includes(opt) : current === opt;
                     return (
                         <button
                             key={opt}
                             onClick={() => onSelect(opt)}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200 hover:scale-105
+                            className={`px-5 py-2.5 rounded-xl text-sm font-medium border transition-all duration-300 hover:scale-[1.03] active:scale-95
                                 ${isSelected
-                                    ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-900/50'
-                                    : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white'}
+                                    ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] font-bold'
+                                    : 'bg-black/20 border-white/5 text-white/50 hover:bg-white/10 hover:text-white hover:border-white/20'}
                             `}
                         >
                             {opt}
@@ -512,21 +526,21 @@ function ControlGroup({ title, options, current, onSelect, isMulti = false, allo
                 })}
 
                 {allowCustom && (
-                    <div className={`relative flex items-center transition-all duration-200
+                    <div className={`relative flex items-center transition-all duration-300
                         ${isCustomSelected
-                            ? 'w-64 border-indigo-500 ring-1 ring-indigo-500/50'
-                            : 'w-40 border-white/10 hover:border-white/30'}
-                        rounded-lg border bg-white/5
+                            ? 'w-64 border-indigo-500 bg-indigo-500/10 ring-1 ring-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.2)]'
+                            : 'w-48 border-white/5 bg-black/20 hover:border-white/20'}
+                        rounded-xl border
                     `}>
-                        <div className="absolute left-3 text-white/40 pointer-events-none">
+                        <div className={`absolute left-4 pointer-events-none transition-colors ${isCustomSelected ? 'text-indigo-400' : 'text-white/30'}`}>
                             <MapPin size={14} />
                         </div>
                         <input
                             type="text"
                             value={isCustomSelected ? (current as string) : ''}
                             onChange={(e) => onSelect(e.target.value)}
-                            placeholder="Scout Location..."
-                            className="w-full bg-transparent text-sm text-white px-3 py-2 pl-9 outline-none placeholder:text-white/20"
+                            placeholder="Type Custom Location..."
+                            className="w-full bg-transparent text-sm text-white px-4 py-2.5 pl-10 outline-none placeholder:text-white/20"
                         />
                     </div>
                 )}
