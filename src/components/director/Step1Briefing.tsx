@@ -327,13 +327,13 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
     };
 
     return (
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 h-full font-sans p-6 rounded-3xl bg-black/20 backdrop-blur-2xl border border-white/10 shadow-2xl relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full font-sans p-6 rounded-3xl bg-black/20 backdrop-blur-2xl border border-white/10 shadow-2xl relative overflow-hidden">
             {/* Gloss Reflection */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-50" />
 
 
             {/* LEFT: Track & Prompt Preview (4 cols) */}
-            <div className="xl:col-span-4 space-y-6 flex flex-col h-full">
+            <div className="lg:col-span-4 space-y-6 flex flex-col h-full">
                 {/* Track Selector */}
                 <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-6 shadow-lg backdrop-blur-md">
                     <div className="flex items-center gap-3 mb-4">
@@ -426,7 +426,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
 
             {/* RIGHT: The Mega Control Panel (8 cols) */}
-            <div className="xl:col-span-8 bg-gradient-to-b from-white/5 to-black/40 border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-2xl backdrop-blur-md">
+            <div className="lg:col-span-8 bg-gradient-to-b from-white/5 to-black/40 border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-2xl backdrop-blur-md">
 
                 {/* Category Tabs */}
                 <div className="flex border-b border-white/5 overflow-x-auto scrollbar-hide bg-black/20">
