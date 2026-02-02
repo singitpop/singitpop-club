@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY || 're_123456789'); // Vali
 
 export async function POST(request: Request) {
     try {
-        const { name, email, message } = await request.json();
+        const { name, email, category, subject, message } = await request.json();
 
         // Validate inputs
         if (!name || !email || !message) {
@@ -16,10 +16,11 @@ export async function POST(request: Request) {
         }
 
         const emailTo = process.env.CONTACT_EMAIL || 'info@singitpop.com';
+        const categoryLabel = category ? ` [${category.toUpperCase()}]` : '';
 
         // Development simulation
         if (process.env.NODE_ENV === 'development' && !process.env.RESEND_API_KEY) {
-            console.log('[Dev Contact] Email:', email, 'Message:', message);
+            console.log('[Dev Contact]', categoryLabel, 'Email:', email, 'Subject:', subject, 'Message:', message);
             return NextResponse.json({ success: true, message: 'Message sent! (Simulated)' });
         }
 
@@ -27,10 +28,12 @@ export async function POST(request: Request) {
             await resend.emails.send({
                 from: 'SingItPop Contact <onboarding@resend.dev>', // Update with verified domain in Prod
                 to: emailTo,
-                subject: `New Contact from ${name}`,
+                subject: `${categoryLabel} ${subject || `New Contact from ${name}`}`,
                 html: `
+                    <p><strong>Category:</strong> ${category || 'General'}</p>
                     <p><strong>Name:</strong> ${name}</p>
                     <p><strong>Email:</strong> ${email}</p>
+                    ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
                     <p><strong>Message:</strong></p>
                     <p>${message.replace(/\n/g, '<br>')}</p>
                 `
