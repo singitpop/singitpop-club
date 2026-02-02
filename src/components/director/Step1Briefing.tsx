@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mic2, Sparkles, MapPin, Camera, Car, Shirt, CloudRain, Sun, Palette, Globe, Aperture, Dog, ChevronRight, Clapperboard } from "lucide-react";
+import { Mic2, Sparkles, MapPin, Camera, Car, Shirt, CloudRain, Sun, Palette, Globe, Aperture, Dog, ChevronRight, Clapperboard, Wand2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Track {
