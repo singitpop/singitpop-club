@@ -3,7 +3,7 @@
 import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Play, Lock, Download, Star, Video, Settings, CreditCard, ChevronRight } from 'lucide-react';
+import { Play, Lock, Download, Star, Video, Settings, CreditCard, ChevronRight, Check } from 'lucide-react';
 
 export default function ClubPage() {
     const { user, isLoaded } = useUser();
@@ -179,5 +179,5 @@ function CheckIcon() {
     );
 }
 
-import { Check } from "lucide-react";
+import { Play, Lock, Download, Star, Video, Settings, CreditCard, ChevronRight, Check } from 'lucide-react';
 
