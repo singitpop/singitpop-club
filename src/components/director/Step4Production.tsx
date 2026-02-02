@@ -16,18 +16,22 @@ export default function Step4Production({ onBack, project }: Step4Props) {
     const [completedSteps, setCompletedSteps] = useState<string[]>([]);
     const [showPreview, setShowPreview] = useState(false);
 
-    // Dynamic Cost: £0.15 per scene + £0.05 per minute of duration
-    const trackDurationSeconds = ((): number => {
-        if (!project.track?.duration) return 180;
-        const parts = project.track.duration.split(':');
-        return parts.length === 2 ? (parseInt(parts[0]) * 60) + parseInt(parts[1]) : 180;
-    })();
+    // Dynamic Cost Logic based on Location Tier
+    const location = project.vibe?.selections?.location || "Studio";
 
-    const sceneCost = (project.scenes?.length || 0) * 0.15;
+    const getCostPerScene = (loc: string) => {
+        if (["Stadium Stage", "Luxury Penthouse"].includes(loc)) return 0.50; // Premium
+        if (["Abandoned Warehouse", "Jazz Club", "Tokyo Streets"].includes(loc)) return 0.25; // Standard
+        return 0.15; // Budget (Dive Bar, Field, etc)
+    };
+
+    const costPerScene = getCostPerScene(location);
+    const sceneCost = (project.scenes?.length || 0) * costPerScene;
     const durationCost = (trackDurationSeconds / 60) * 0.05;
     const totalCost = sceneCost + durationCost;
 
     const renderSequence = [
+        `Initializing set at ${location}...`,
         "Analyzing Script & Pacing...",
         "Allocating AI Cast Members...",
         "Generating Consistency Seeds...",
@@ -75,7 +79,7 @@ export default function Step4Production({ onBack, project }: Step4Props) {
                             <span>•</span>
                             <span>{Math.floor(trackDurationSeconds / 60)}:{(trackDurationSeconds % 60).toString().padStart(2, '0')} DURATION</span>
                             <span>•</span>
-                            <span>DIRECTOR'S CUT</span>
+                            <span>Location: {location.toUpperCase()}</span>
                         </div>
                     </div>
                 </div>
@@ -117,7 +121,7 @@ export default function Step4Production({ onBack, project }: Step4Props) {
                         <div>
                             <h3 className="text-xs font-bold text-white/40 uppercase mb-2">Director's Vision</h3>
                             <div className="bg-black/30 p-3 rounded-lg border border-white/5 text-sm text-white/70 italic">
-                                "{project.concept?.vibe || "Cinematic masterpiece with high contrast lighting..."}"
+                                "Shooting at <span className="text-white font-bold">{location}</span> with {project.concept?.vibe?.selections?.lighting || "Standard"} lighting."
                             </div>
                         </div>
                     </div>
@@ -172,12 +176,18 @@ export default function Step4Production({ onBack, project }: Step4Props) {
 
                     <div className="space-y-4 mb-8">
                         <div className="flex justify-between items-center text-sm">
-                            <span className="text-white/60">Scene Generations ({project.scenes?.length || 0})</span>
-                            <span>£{(totalCost * 0.8).toFixed(2)}</span>
+                            <span className="text-white/60">Location Fee ({location})</span>
+                            <span className={costPerScene >= 0.5 ? "text-yellow-400 font-bold" : "text-white"}>
+                                {costPerScene >= 0.5 ? "PREMIUM" : "STANDARD"}
+                            </span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                            <span className="text-white/60">Generations ({project.scenes?.length || 0} x £{costPerScene.toFixed(2)})</span>
+                            <span>£{sceneCost.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between items-center text-sm">
                             <span className="text-white/60">Lip Sync Processing</span>
-                            <span>£{(totalCost * 0.2).toFixed(2)}</span>
+                            <span>£{durationCost.toFixed(2)}</span>
                         </div>
                         <div className="h-px bg-white/10 my-2" />
                         <div className="flex justify-between items-center text-xl font-bold">
