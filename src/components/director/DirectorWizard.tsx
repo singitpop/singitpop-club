@@ -63,12 +63,9 @@ export default function DirectorWizard() {
         console.log("Briefing Complete:", data);
         setProject(prev => ({
             ...prev,
-            trackId: data.trackId,
-            vibe: {
-                selections: data.selections,
-                theme: data.theme
-            },
-            concept: data.prompt
+            trackId: data.track.id,
+            vibe: data.vibe,
+            concept: data.userPrompt
         }));
         // Move to next tab (Concept/Cast logic would be next, usually Cast)
         setActiveTab('cast');
@@ -136,10 +133,16 @@ export default function DirectorWizard() {
             </div>
 
             {/* Main Content Area */}
-            <main className="flex-1 overflow-y-auto bg-[url('/grid.svg')] bg-opacity-5 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/5 via-transparent to-purple-900/5 pointer-events-none" />
+            <main className="flex-1 overflow-y-auto bg-[#050507] relative">
+                {/* 🌌 ATMOSPHERE: Deep Gradient Mesh for Glass Effects */}
+                <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[120px] opacity-40 mix-blend-screen" />
+                    <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px] opacity-30 mix-blend-screen" />
+                    <div className="absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-pink-500/10 rounded-full blur-[80px] opacity-20 mix-blend-overlay" />
+                    <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] bg-repeat" />
+                </div>
 
-                <div className="max-w-7xl mx-auto p-8 relative z-10 h-full">
+                <div className="max-w-[1600px] mx-auto p-8 relative z-10 h-full">
                     {activeTab === 'briefing' && (
                         <div className="space-y-8 h-full">
                             <div className="flex items-end justify-between">
@@ -175,7 +178,6 @@ export default function DirectorWizard() {
                                         setActiveTab('timeline');
                                     }}
                                     initialCast={project.castMembers}
-                                    vibe={project.vibe}
                                 />
                             </div>
                         </div>

@@ -318,7 +318,10 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
     };
 
     return (
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 h-full font-sans p-6 rounded-3xl bg-black/40 backdrop-blur-xl border border-white/5 shadow-2xl">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 h-full font-sans p-6 rounded-3xl bg-black/20 backdrop-blur-2xl border border-white/10 shadow-2xl relative overflow-hidden">
+            {/* Gloss Reflection */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-50" />
+
 
             {/* LEFT: Track & Prompt Preview (4 cols) */}
             <div className="xl:col-span-4 space-y-6 flex flex-col h-full">
