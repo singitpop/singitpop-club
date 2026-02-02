@@ -1,76 +1,77 @@
 #!/usr/bin/env python3
 """
-Automated Ringtone Creation System
-Extracts 15-30 second clips from singles, creates M4R/MP3 versions, uploads to S3
+Automated Ringtone Creation System (v2)
+Uses albumData.ts to find singles with isSingle: true
+Downloads from existing S3 URLs, extracts clips, creates M4R/MP3
 """
 
 import os
 import sys
 import json
+import re
 import boto3
 from pathlib import Path
 from pydub import AudioSegment
-import openpyxl
+from urllib.parse import unquote
 
 # Configuration
-TRACKER_PATH = "/Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx"
+ALBUM_DATA_PATH = "/Users/garybirrell/Desktop/Singitpop/website/src/data/albumData.ts"
 S3_BUCKET = "singitpop-music"
-S3_MUSIC_PREFIX = "music/"
 S3_RINGTONES_PREFIX = "ringtones/"
 RINGTONE_DURATION = 20  # seconds
 RINGTONE_PRICE = 3.00  # GBP
 
-def load_singles_from_tracker():
-    """Load all singles from the tracker spreadsheet (Column D = 'Single')"""
-    print("📊 Loading singles from tracker...")
-    wb = openpyxl.load_workbook(TRACKER_PATH)
-    ws = wb.active
+def extract_singles_from_album_data():
+    """Parse albumData.ts and extract all tracks with isSingle: true"""
+    print("📊 Loading singles from albumData.ts...")
     
+    with open(ALBUM_DATA_PATH, 'r') as f:
+        content = f.read()
+    
+    # Find all track objects with isSingle: true
     singles = []
-    for row in ws.iter_rows(min_row=2, values_only=True):
-        if row[3] == 'Single':  # Column D
-            track_name = row[0]
-            genre = row[1]
-            album = row[2] if len(row) > 2 else "Unknown"
-            singles.append({
-                'title': track_name,
-                'genre': genre,
-                'album': album
-            })
     
-    print(f"✅ Found {len(singles)} singles")
+    # Split by albums
+    album_pattern = r'"id":\s*"([^"]+)".*?"title":\s*"([^"]+)".*?"tracks":\s*\[(.*?)\]'
+    
+    # Find tracks with isSingle: true
+    track_pattern = r'\{[^}]*"title":\s*"([^"]+)"[^}]*"audioUrl":\s*"([^"]+)"[^}]*"isSingle":\s*true[^}]*\}'
+    
+    for match in re.finditer(track_pattern, content, re.DOTALL):
+        title = match.group(1)
+        audio_url = match.group(2)
+        
+        singles.append({
+            'title': title,
+            'audioUrl': audio_url
+        })
+    
+    print(f"✅ Found {len(singles)} singles with isSingle: true")
     return singles
 
-def find_track_in_s3(s3_client, track_title):
-    """Find the full track file in S3"""
-    # Normalize title for S3 key matching
-    normalized = track_title.lower().replace(' ', '-').replace("'", '')
-    
+def download_track_from_s3(s3_client, url, output_path):
+    """Download track from S3 using boto3 (handles private buckets)"""
+    print(f"📥 Downloading from S3...")
     try:
-        response = s3_client.list_objects_v2(
-            Bucket=S3_BUCKET,
-            Prefix=S3_MUSIC_PREFIX
-        )
+        # Parse S3 URL to extract bucket and key
+        # Format: https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/...
+        parts = url.replace('https://', '').split('/')
+        bucket = parts[0].split('.')[0]  # Extract bucket name
+        key = unquote('/'.join(parts[1:]))  # Decode URL-encoded characters
         
-        if 'Contents' not in response:
-            return None
+        print(f"   Bucket: {bucket}")
+        print(f"   Key: {key}")
         
-        for obj in response['Contents']:
-            key = obj['Key'].lower()
-            if normalized in key and key.endswith('.mp3'):
-                return obj['Key']
-        
-        return None
+        s3_client.download_file(bucket, key, str(output_path))
+        print(f"✅ Downloaded successfully")
+        return True
     except Exception as e:
-        print(f"❌ Error searching S3: {e}")
-        return None
+        print(f"❌ Download failed: {e}")
+        return False
 
 def extract_chorus_segment(audio_path, duration=20):
-    """
-    Extract the most energetic segment (likely chorus) from the track
-    Uses simple energy-based detection
-    """
-    print(f"🎵 Analyzing audio: {audio_path}")
+    """Extract the most energetic segment (likely chorus) from the track"""
+    print(f"🎵 Analyzing audio...")
     audio = AudioSegment.from_mp3(audio_path)
     
     # Calculate segment position (typically chorus is 1/3 to 1/2 through the song)
@@ -110,11 +111,12 @@ def create_ringtone_files(segment, output_base_path):
 def upload_to_s3(s3_client, local_path, s3_key):
     """Upload ringtone to S3"""
     try:
+        content_type = 'audio/mpeg' if s3_key.endswith('.mp3') else 'audio/x-m4a'
         s3_client.upload_file(
             local_path,
             S3_BUCKET,
             s3_key,
-            ExtraArgs={'ContentType': 'audio/mpeg' if s3_key.endswith('.mp3') else 'audio/x-m4a'}
+            ExtraArgs={'ContentType': content_type}
         )
         print(f"✅ Uploaded to S3: {s3_key}")
         return True
@@ -125,32 +127,33 @@ def upload_to_s3(s3_client, local_path, s3_key):
 def process_single(s3_client, single, temp_dir):
     """Process a single track to create ringtone"""
     title = single['title']
+    audio_url = single['audioUrl']
+    
     print(f"\n{'='*60}")
     print(f"Processing: {title}")
     print(f"{'='*60}")
     
-    # Find track in S3
-    s3_key = find_track_in_s3(s3_client, title)
-    if not s3_key:
-        print(f"⚠️  Track not found in S3: {title}")
-        return None
-    
-    print(f"📥 Found in S3: {s3_key}")
-    
     # Download track
     local_track = temp_dir / f"{title}.mp3"
-    try:
-        s3_client.download_file(S3_BUCKET, s3_key, str(local_track))
-    except Exception as e:
-        print(f"❌ Download failed: {e}")
+    if not download_track_from_s3(s3_client, audio_url, str(local_track)):
         return None
     
     # Extract chorus segment
-    segment = extract_chorus_segment(str(local_track), RINGTONE_DURATION)
+    try:
+        segment = extract_chorus_segment(str(local_track), RINGTONE_DURATION)
+    except Exception as e:
+        print(f"❌ Audio processing failed: {e}")
+        local_track.unlink()
+        return None
     
     # Create ringtone files
     output_base = temp_dir / f"{title}_ringtone"
-    mp3_path, m4r_path = create_ringtone_files(segment, str(output_base))
+    try:
+        mp3_path, m4r_path = create_ringtone_files(segment, str(output_base))
+    except Exception as e:
+        print(f"❌ Ringtone creation failed: {e}")
+        local_track.unlink()
+        return None
     
     # Upload to S3
     ringtone_key_base = f"{S3_RINGTONES_PREFIX}{title.lower().replace(' ', '-')}"
@@ -165,7 +168,6 @@ def process_single(s3_client, single, temp_dir):
     if mp3_uploaded and m4r_uploaded:
         return {
             'title': title,
-            'genre': single['genre'],
             'mp3_key': f"{ringtone_key_base}.mp3",
             'm4r_key': f"{ringtone_key_base}.m4r",
             'price': RINGTONE_PRICE,
@@ -175,8 +177,16 @@ def process_single(s3_client, single, temp_dir):
     return None
 
 def main():
-    print("🎵 Automated Ringtone Creation System")
+    print("🎵 Automated Ringtone Creation System v2")
     print("=" * 60)
+    
+    # Check for ffmpeg
+    try:
+        import subprocess
+        subprocess.run(['ffmpeg', '-version'], capture_output=True, check=True)
+    except:
+        print("❌ ffmpeg not found! Install with: brew install ffmpeg")
+        sys.exit(1)
     
     # Setup
     s3_client = boto3.client('s3')
@@ -184,7 +194,11 @@ def main():
     temp_dir.mkdir(exist_ok=True)
     
     # Load singles
-    singles = load_singles_from_tracker()
+    singles = extract_singles_from_album_data()
+    
+    if not singles:
+        print("❌ No singles found in albumData.ts")
+        sys.exit(1)
     
     # Ask user how many to process
     print(f"\nFound {len(singles)} singles total.")
@@ -218,7 +232,10 @@ def main():
     print(f"{'='*60}")
     
     # Cleanup
-    temp_dir.rmdir()
+    try:
+        temp_dir.rmdir()
+    except:
+        pass
 
 if __name__ == "__main__":
     main()
