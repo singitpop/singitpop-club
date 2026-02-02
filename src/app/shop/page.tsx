@@ -402,19 +402,7 @@ export default function ShopPage() {
             </div>
 
 
-            {/* Vinyl Section (Qrates) */}
-            <div className="max-w-6xl mx-auto mb-24">
-                <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-3xl p-12 border border-purple-500/20 text-center">
-                    <Disc size={64} className="mx-auto mb-6 text-purple-400" />
-                    <h2 className="text-4xl font-bold mb-4">Vinyl Records</h2>
-                    <p className="text-white/60 mb-8 max-w-2xl mx-auto">
-                        Limited edition vinyl pressings of your favorite albums. Print-on-demand, shipped directly to you.
-                    </p>
-                    <div className="inline-block px-6 py-3 bg-white/10 rounded-full text-sm font-semibold text-white/40">
-                        Coming Soon via Qrates
-                    </div>
-                </div>
-            </div>
+
         </div>
     );
 }
