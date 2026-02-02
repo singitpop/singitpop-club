@@ -1,136 +1,306 @@
 "use client";
 
-import { ShoppingBag, Lock, ChevronRight, Check, ExternalLink } from 'lucide-react';
+import { useState } from "react";
+import { ShoppingBag, Lock, ChevronRight, Check, ExternalLink, Music, Heart, Sparkles, Smartphone, Disc, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import styles from './page.module.css';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const CUSTOM_SONG_TIERS = [
+    {
+        id: "jingle",
+        name: "30-Second Jingle",
+        price: 50,
+        duration: "30 seconds",
+        features: ["Perfect for birthdays", "Anniversaries", "Special occasions", "MP3 delivery"],
+        icon: Music,
+        gradient: "from-pink-500 to-rose-500"
+    },
+    {
+        id: "full",
+        name: "Full Song",
+        price: 200,
+        duration: "2-3 minutes",
+        features: ["Weddings", "Proposals", "Celebrations", "Full production", "MP3 + WAV delivery"],
+        icon: Heart,
+        gradient: "from-purple-500 to-pink-500",
+        popular: true
+    },
+    {
+        id: "premium",
+        name: "Premium Package",
+        price: 500,
+        duration: "4+ minutes",
+        features: ["Full song", "Music video", "Behind-the-scenes", "All formats", "Priority delivery"],
+        icon: Sparkles,
+        gradient: "from-cyan-500 to-purple-500"
+    }
+];
+
+const RINGTONES = [
+    { id: "1", title: "Stardust (Chorus)", price: 3, duration: "0:15" },
+    { id: "2", title: "Circuit Love (Hook)", price: 3, duration: "0:20" },
+    { id: "3", title: "Echoes (Intro)", price: 3, duration: "0:18" },
+    { id: "4", title: "Velvet Dreams (Bridge)", price: 3, duration: "0:22" }
+];
 
 const products = [
     { id: 2, name: 'Midnight Tour Hoodie (Sustainable)', price: 65.00, imageColor: 'linear-gradient(45deg, #111, #333)', proOnly: false, badge: 'POD UK 🇬🇧' },
     { id: 3, name: 'Echoes Lyric Tee', price: 35.00, imageColor: 'linear-gradient(45deg, #fff, #eee)', proOnly: false, badge: 'POD UK 🇬🇧', link: 'https://teemill.com/store/singitpop' },
     { id: 4, name: 'Pro Member Pin Set', price: 15.00, imageColor: 'linear-gradient(45deg, #FFD700, #FDB931)', proOnly: true, badge: 'Exclusive' },
-    { id: 5, name: 'Custom 30s AI Song (Birthday/Event)', price: 25.00, imageColor: 'linear-gradient(45deg, #00C9FF, #92FE9D)', proOnly: false, badge: 'Digital Service 🎹' },
     { id: 6, name: 'SingIt Pop Essentials Vol. 1 (Sample Pack)', price: 14.99, imageColor: 'linear-gradient(45deg, #FF3CAC, #784BA0)', proOnly: false, badge: 'Digital Download 💾' },
 ];
 
-const tiers = [
-    {
-        name: "The Fan",
-        price: "Free",
-        benefits: ["Vote on Next Single 🗳️", "Stream Public Singles 🎵", "Newsletter Updates 📧", "Access to Shop 🛍️"],
-        color: "var(--border)",
-        button: "Join"
-    },
-    {
-        name: "The Insider",
-        price: "3.99",
-        benefits: ["Unlock ALL Tracks 🔓", "Early Access to Future Releases ⏳", "Download Standard MP3s 🎧", "Insider Profile Badge 🛡️"],
-        color: "var(--primary)",
-        button: "Upgrade",
-        current: true // Simulating User State
-    },
-    {
-        name: "The VIP",
-        price: "8.99",
-        benefits: ["Full Access to Releasio OS 🎹", "20% Shop Discount 🏷️", "High-Res WAV Downloads 💎", "Priority on Custom Songs ⚡"],
-        color: "#ffd700",
-        button: "Upgrade"
-    }
-];
-
 export default function ShopPage() {
-    const { login, user } = useAuth(); // Auth trigger update
+    const { login, user } = useAuth();
+    const [selectedTier, setSelectedTier] = useState<string | null>(null);
+    const [customSongForm, setCustomSongForm] = useState({
+        name: "",
+        email: "",
+        occasion: "",
+        details: ""
+    });
 
-    const handleUpgrade = (tierName: string) => {
-        if (tierName === 'The Fan') login('FAN');
-        if (tierName === 'The Insider') login('INSIDER');
-        if (tierName === 'The VIP') login('VIP');
+    const handleCustomSongSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // TODO: Submit to API
+        console.log("Custom song order:", { tier: selectedTier, ...customSongForm });
+        alert("Order submitted! We'll contact you within 24 hours.");
+        setCustomSongForm({ name: "", email: "", occasion: "", details: "" });
+        setSelectedTier(null);
     };
+
     return (
-        <div className={`container ${styles.page}`}>
-            {/* Hero Section */}
-            <section className={styles.hero}>
-                <div className={styles.heroOverlay}>
-                    <span className="glow-text" style={{ fontSize: '0.9rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Limited Drop</span>
-                    <h1>Midnight Collection</h1>
-                    <p>Exclusive streetwear for the new era.</p>
-                </div>
-            </section>
+        <div className="min-h-screen bg-black text-white pt-24 pb-16 px-4">
+            {/* Hero */}
+            <div className="max-w-6xl mx-auto mb-16 text-center">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                        Shop
+                    </h1>
+                    <p className="text-xl text-white/60 max-w-2xl mx-auto">
+                        Custom songs, ringtones, vinyl, and exclusive merch
+                    </p>
+                </motion.div>
+            </div>
 
-            {/* Product Grid */}
-            <section>
-                <div className={styles.sectionTitle}>
-                    <h3>Latest Merch</h3>
-                    <ChevronRight color="var(--text-muted)" />
-                </div>
-
-                <div className={styles.grid}>
-                    {products.map(product => (
-                        <div key={product.id} className={styles.productCard}>
-                            <div className={styles.imageContainer} style={{ background: product.imageColor }}>
-                                {product.proOnly && <span className={`${styles.badge} ${styles.badgePro}`}>Pro 👑</span>}
-                                {product.badge && !product.proOnly && <span className={styles.badge}>{product.badge}</span>}
-                                {product.badge && product.proOnly && product.badge !== 'Exclusive' && <span className={styles.badge} style={{ top: '3rem' }}>{product.badge}</span>}
-                            </div>
-                            <div className={styles.info}>
-                                <h3>{product.name}</h3>
-                                <div className={styles.priceRow}>
-                                    <span className={styles.price}>£{product.price.toFixed(2)}</span>
-                                    {product.link ? (
-                                        <a href={product.link} target="_blank" rel="noopener noreferrer" className="icon-button">
-                                            <ExternalLink size={18} />
-                                        </a>
-                                    ) : (
-                                        <button className="icon-button">
-                                            <ShoppingBag size={18} />
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Membership Tiers */}
-            <section className={styles.membershipSection} id="membership">
-                <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                    <h2>The Co-Creation Lab</h2>
-                    <p style={{ color: 'var(--text-muted)' }}>Join the team. Shape the next hit.</p>
+            {/* Custom Songs Section */}
+            <div className="max-w-6xl mx-auto mb-24">
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl font-bold mb-4">Custom Songs</h2>
+                    <p className="text-white/60">Let me write a song just for you or someone special</p>
                 </div>
 
-                <div className={styles.tiersGrid}>
-                    {tiers.map(tier => {
-                        const isCurrent = (user?.tier === 'FAN' && tier.name === 'The Fan') ||
-                            (user?.tier === 'INSIDER' && tier.name === 'The Insider') ||
-                            (user?.tier === 'VIP' && tier.name === 'The VIP');
-
+                <div className="grid md:grid-cols-3 gap-6 mb-12">
+                    {CUSTOM_SONG_TIERS.map((tier, index) => {
+                        const Icon = tier.icon;
                         return (
-                            <div key={tier.name} className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', border: isCurrent ? '1px solid var(--primary)' : undefined }}>
-                                {isCurrent && <span style={{ alignSelf: 'center', background: 'var(--primary)', padding: '0.2rem 0.8rem', borderRadius: '20px', fontSize: '0.7rem', marginBottom: '1rem' }}>CURRENT PLAN</span>}
-                                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: tier.name === 'Executive Producer' ? '#ffd700' : 'white' }}>{tier.name}</h3>
-                                £{tier.price}<span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400 }}>/mo</span>
+                            <motion.div
+                                key={tier.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                onClick={() => setSelectedTier(tier.id)}
+                                className={`relative bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border cursor-pointer transition-all ${selectedTier === tier.id
+                                        ? "border-pink-500 shadow-2xl shadow-pink-500/20 scale-105"
+                                        : "border-white/10 hover:border-white/30"
+                                    }`}
+                            >
+                                {tier.popular && (
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full text-xs font-bold">
+                                        MOST POPULAR
+                                    </div>
+                                )}
 
-                                <ul style={{ flex: 1, marginBottom: '2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                                    {tier.benefits.map(benefit => (
-                                        <li key={benefit} style={{ display: 'flex', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                            <Check size={16} color="var(--primary)" />
-                                            {benefit}
+                                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${tier.gradient} flex items-center justify-center mb-6`}>
+                                    <Icon size={32} className="text-white" />
+                                </div>
+
+                                <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
+                                <div className="text-4xl font-bold mb-4">
+                                    £{tier.price}
+                                    <span className="text-lg text-white/40 font-normal ml-2">{tier.duration}</span>
+                                </div>
+
+                                <ul className="space-y-3 mb-6">
+                                    {tier.features.map((feature, i) => (
+                                        <li key={i} className="flex items-center gap-2 text-sm text-white/60">
+                                            <Check size={16} className="text-green-400 shrink-0" />
+                                            {feature}
                                         </li>
                                     ))}
                                 </ul>
 
                                 <button
-                                    className={tier.name === 'Executive Producer' ? 'glow-button' : 'secondary-button'}
-                                    style={{ width: '100%' }}
-                                    onClick={() => handleUpgrade(tier.name)}
+                                    className={`w-full py-3 rounded-xl font-semibold transition-all ${selectedTier === tier.id
+                                            ? `bg-gradient-to-r ${tier.gradient} text-white`
+                                            : "bg-white/10 hover:bg-white/20"
+                                        }`}
                                 >
-                                    {tier.button}
+                                    {selectedTier === tier.id ? "Selected" : "Select"}
                                 </button>
-                            </div>
+                            </motion.div>
                         );
                     })}
                 </div>
-            </section>
+
+                {/* Order Form */}
+                <AnimatePresence>
+                    {selectedTier && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-pink-500/20"
+                        >
+                            <h3 className="text-2xl font-bold mb-6">Order Details</h3>
+                            <form onSubmit={handleCustomSongSubmit} className="space-y-4">
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-semibold mb-2">Your Name</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={customSongForm.name}
+                                            onChange={(e) => setCustomSongForm({ ...customSongForm, name: e.target.value })}
+                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white"
+                                            placeholder="John Doe"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-semibold mb-2">Email</label>
+                                        <input
+                                            type="email"
+                                            required
+                                            value={customSongForm.email}
+                                            onChange={(e) => setCustomSongForm({ ...customSongForm, email: e.target.value })}
+                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white"
+                                            placeholder="john@example.com"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold mb-2">Occasion</label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={customSongForm.occasion}
+                                        onChange={(e) => setCustomSongForm({ ...customSongForm, occasion: e.target.value })}
+                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white"
+                                        placeholder="e.g., Wedding, Birthday, Anniversary"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold mb-2">Tell me about your vision</label>
+                                    <textarea
+                                        required
+                                        rows={5}
+                                        value={customSongForm.details}
+                                        onChange={(e) => setCustomSongForm({ ...customSongForm, details: e.target.value })}
+                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white resize-none"
+                                        placeholder="Share details about the person, story, mood, or any specific lyrics you'd like included..."
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="w-full py-4 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-pink-500/20"
+                                >
+                                    Submit Order
+                                    <ArrowRight size={20} />
+                                </button>
+                            </form>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            {/* Ringtones Section */}
+            <div className="max-w-6xl mx-auto mb-24">
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl font-bold mb-4">Ringtones</h2>
+                    <p className="text-white/60">Exclusive snippets from your favorite tracks</p>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {RINGTONES.map((ringtone, index) => (
+                        <motion.div
+                            key={ringtone.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                            className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-pink-500/30 transition-all"
+                        >
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
+                                <Smartphone size={24} className="text-white" />
+                            </div>
+                            <h3 className="font-bold mb-1">{ringtone.title}</h3>
+                            <p className="text-sm text-white/40 mb-4">{ringtone.duration}</p>
+                            <div className="flex items-center justify-between">
+                                <span className="text-2xl font-bold">£{ringtone.price}</span>
+                                <button className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-semibold transition-colors">
+                                    Buy
+                                </button>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Merch Section */}
+            <div className="max-w-6xl mx-auto mb-24">
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl font-bold mb-4">Merch & Digital Products</h2>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {products.map((product, index) => (
+                        <motion.div
+                            key={product.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                            className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-pink-500/30 transition-all"
+                        >
+                            <div className="relative h-48" style={{ background: product.imageColor }}>
+                                {product.proOnly && <span className="absolute top-3 left-3 px-3 py-1 bg-yellow-500 text-black rounded-full text-xs font-bold">Pro 👑</span>}
+                                {product.badge && !product.proOnly && <span className="absolute top-3 left-3 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold">{product.badge}</span>}
+                            </div>
+                            <div className="p-6">
+                                <h3 className="font-bold mb-2">{product.name}</h3>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-2xl font-bold">£{product.price.toFixed(2)}</span>
+                                    {product.link ? (
+                                        <a href={product.link} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                                            <ExternalLink size={18} />
+                                        </a>
+                                    ) : (
+                                        <button className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                                            <ShoppingBag size={18} />
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Vinyl Section (Qrates) */}
+            <div className="max-w-6xl mx-auto mb-24">
+                <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-3xl p-12 border border-purple-500/20 text-center">
+                    <Disc size={64} className="mx-auto mb-6 text-purple-400" />
+                    <h2 className="text-4xl font-bold mb-4">Vinyl Records</h2>
+                    <p className="text-white/60 mb-8 max-w-2xl mx-auto">
+                        Limited edition vinyl pressings of your favorite albums. Print-on-demand, shipped directly to you.
+                    </p>
+                    <div className="inline-block px-6 py-3 bg-white/10 rounded-full text-sm font-semibold text-white/40">
+                        Coming Soon via Qrates
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
