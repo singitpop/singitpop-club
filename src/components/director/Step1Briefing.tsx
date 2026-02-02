@@ -279,13 +279,13 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             }
             if (/\b(beach|sea|ocean|sand)\b/i.test(lowerPrompt)) newSelections.location = winningTheme === 'dark' ? "Beach at Night" : "Beach at Night"; // Could add a sunny beach if available
 
-            // Musical/Atmosphere Overrides (The "Unspoken Fire" Fix)
+            // Musical/Atmosphere Overrides (The "Boy Band" Fix)
             const isBanger = /\b(fire|electric|burn|heat|tighten|loud|fast|spark)\b/i.test(lowerPrompt);
             const isMusic = /\b(rhythm|tempo|beat|music|band|stage)\b/i.test(lowerPrompt);
 
             if (isMusic || isBanger) {
-                if (isBanger) newSelections.location = "Abandoned Warehouse"; // High energy / Gritty banger
-                else if (winningTheme === 'romance') newSelections.location = "Jazz Club"; // Soft/Romantic music
+                if (isBanger) newSelections.location = "Stadium Stage"; // Concert/Boy Band Banger
+                else if (winningTheme === 'romance') newSelections.location = isBanger ? "Stadium Stage" : "Open Field"; // Boy Band Ballad
                 else newSelections.location = "Dive Bar"; // General band vibe
             }
 
@@ -294,12 +294,17 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             if (/\b(sun|sunny|hot)\b/i.test(lowerPrompt)) { newSelections.weather = "Clear"; newSelections.timeOfDay = "Noon"; }
             if (/\b(night|dark|moon|midnight)\b/i.test(lowerPrompt)) newSelections.timeOfDay = "Midnight";
 
-            // SUPER-MEGA PROMPT PARSING (User Paste Support)
-            // If the user pastes a ChatGPT prompt, we look for explicit "Director Language"
-            if (/\b(burgundy|ember|rose-gold)\b/i.test(lowerPrompt)) newSelections.colorGrade = "Pastel Dream"; // Closest match
+            // SUPER-MEGA PROMPT PARSING (User Paste Support / "Training")
+            // If the user pastes a ChatGPT prompt, we extract the "Director Language"
+            if (/\b(burgundy|ember|rose-gold)\b/i.test(lowerPrompt)) newSelections.colorGrade = "Pastel Dream";
             if (/\b(low-key|silhouette|rim light)\b/i.test(lowerPrompt)) newSelections.lighting = "Low-Key Noir";
             if (/\b(shallow depth|push-in|close-up)\b/i.test(lowerPrompt)) newSelections.angle = "Close Up";
             if (/\b(ribbons|particles|haze)\b/i.test(lowerPrompt)) newSelections.lighting = "Volumetric Beams";
+
+            // Explicit Location Extraction from Paste (The "Self-Training" effect)
+            if (/\b(stadium|concert|arena|stage)\b/i.test(lowerPrompt)) newSelections.location = "Stadium Stage";
+            if (/\b(field|meadow|open|nature)\b/i.test(lowerPrompt)) newSelections.location = "Open Field";
+            if (/\b(city|urban|concrete)\b/i.test(lowerPrompt)) newSelections.location = "Tokyo Streets";
 
             setSelections(newSelections);
             setIsAnalyzing(false);
