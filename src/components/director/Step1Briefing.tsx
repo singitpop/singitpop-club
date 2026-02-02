@@ -147,7 +147,8 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
     // Auto-generate context string
     const constructedPrompt = [
         selections.location, selections.timeOfDay, selections.weather,
-        selections.lighting, selections.mood, selections.filmStock, selections.artDirection
+        selections.lighting, selections.mood, selections.colorGrade,
+        selections.angle, selections.filmStock
     ].filter(Boolean).join(" • ");
 
     const handleGenerate = () => {
@@ -191,10 +192,10 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             };
 
             const keywords = {
-                romance: ["love", "heart", "kiss", "baby", "smile", "touch", "hold", "forever", "you", "beautiful", "sweet"],
-                energy: ["dance", "party", "run", "fast", "jump", "beat", "rhythm", "go", "shake", "loud", "crazy", "wild", "move"],
+                romance: ["love", "heart", "kiss", "baby", "smile", "touch", "hold", "forever", "you", "beautiful", "sweet", "intimate", "desire", "tension", "breath", "skin"],
+                energy: ["dance", "party", "run", "fast", "jump", "beat", "rhythm", "go", "shake", "loud", "crazy", "wild", "move", "burn", "fire"],
                 melancholy: ["sad", "cry", "lonely", "tears", "pain", "gone", "miss", "blue", "broken", "rain", "hurt", "quiet", "goodbye", "loss"],
-                dark: ["dark", "night", "blood", "kill", "gun", "fear", "shadow", "black", "death", "fight", "war", "danger", "cold"],
+                dark: ["dark", "night", "blood", "kill", "gun", "fear", "shadow", "black", "death", "fight", "war", "danger", "cold", "murder"],
                 dreamy: ["dream", "sleep", "sky", "cloud", "fly", "float", "star", "moon", "magic", "wonder", "high", "light", "sun", "spring", "rise", "change", "new"]
             };
 
