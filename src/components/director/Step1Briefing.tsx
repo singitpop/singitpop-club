@@ -79,7 +79,6 @@ const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     // Setting / Objects
     "room": { world: { location: ["Luxury Penthouse", "Restaurant", "Ballroom", "Abandoned Warehouse"] }, lighting: { lighting: ["Natural Window Light", "Candlelight"] } },
     "floor": { world: { location: ["Luxury Penthouse", "Ballroom"] }, camera: { angle: ["Low Angle"] } },
-    "porch": { world: { location: ["Forest", "Abandoned Warehouse"] }, lighting: { lighting: ["Natural Window Light", "Golden Hour"] } },
     "future": { lighting: { mood: ["Cyberpunk"], lighting: ["Neon Signs"] }, world: { location: ["Cyberpunk City", "Space Station", "Tokyo Streets"] }, elements: { vehicles: ["Cyberpunk Bike", "Spaceship"], clothing: ["Cyber Armor", "Techwear"] } },
     "neon": { lighting: { mood: ["Dark Neon", "Cyberpunk"], lighting: ["Neon Signs"] }, style: { artDirection: ["Hyper-Realistic"] } },
     "retro": { lighting: { mood: ["Retro VHS"], colorGrade: ["Sepia Vintage"] }, style: { filmStock: ["VHS Tape", "16mm Grain"] }, elements: { clothing: ["Vintage Leather"] } },
@@ -93,12 +92,10 @@ const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     "ground": { world: { location: ["Forest", "Desert Highway"] }, camera: { angle: ["High Angle", "Tracking Shot"] } },
     "night": { world: { timeOfDay: ["Midnight", "Blue Hour"], location: ["Beach at Night"] }, lighting: { lighting: ["Moonlight", "Neon Signs"] } },
     "car": { elements: { vehicles: ["Vintage Muscle Car", "Luxury Sports Car"] }, world: { location: ["Desert Highway", "Tokyo Streets"] } },
-    "road": { elements: { vehicles: ["Vintage Muscle Car"] }, world: { location: ["Desert Highway"] } },
     "drive": { elements: { vehicles: ["Vintage Muscle Car"] }, camera: { movement: ["Tracking Shot"] } },
     "space": { world: { location: ["Space Station"] }, elements: { vehicles: ["Spaceship"], clothing: ["Cyber Armor"] } },
     "city": { world: { location: ["Cyberpunk City", "Tokyo Streets"] } },
     "forest": { world: { location: ["Forest"] }, lighting: { lighting: ["Volumetric Beams"] } },
-    "fireflies": { world: { location: ["Forest"] }, lighting: { mood: ["Dreamy", "Ethereal"], lighting: ["Candlelight"] } },
 };
 
 type OptionCategory = 'world' | 'lighting' | 'camera' | 'style' | 'elements';
@@ -153,14 +150,11 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
         selections.lighting, selections.mood, selections.filmStock, selections.artDirection
     ].filter(Boolean).join(" • ");
 
-    const [winningTheme, setWinningTheme] = useState<string>("");
-
     const handleGenerate = () => {
         onNext({
             trackId: selectedTrackId,
             prompt,
-            selections,
-            theme: winningTheme
+            selections
         });
     };
 
@@ -197,11 +191,11 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             };
 
             const keywords = {
-                romance: ["love", "heart", "kiss", "baby", "smile", "touch", "hold", "forever", "you", "beautiful", "sweet", "moon"],
+                romance: ["love", "heart", "kiss", "baby", "smile", "touch", "hold", "forever", "you", "beautiful", "sweet"],
                 energy: ["dance", "party", "run", "fast", "jump", "beat", "rhythm", "go", "shake", "loud", "crazy", "wild", "move"],
-                melancholy: ["sad", "cry", "lonely", "tears", "pain", "gone", "miss", "blue", "broken", "rain", "hurt", "quiet", "goodbye", "loss", "ghost", "haunt", "past"],
+                melancholy: ["sad", "cry", "lonely", "tears", "pain", "gone", "miss", "blue", "broken", "rain", "hurt", "quiet", "goodbye", "loss"],
                 dark: ["dark", "night", "blood", "kill", "gun", "fear", "shadow", "black", "death", "fight", "war", "danger", "cold"],
-                dreamy: ["dream", "sleep", "sky", "cloud", "fly", "float", "star", "moon", "magic", "wonder", "high", "light", "sun", "spring", "rise", "change", "new", "fireflies"]
+                dreamy: ["dream", "sleep", "sky", "cloud", "fly", "float", "star", "moon", "magic", "wonder", "high", "light", "sun", "spring", "rise", "change", "new"]
             };
 
             // Count hits
@@ -268,9 +262,6 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                     break;
             }
 
-            // Store winning theme for Step 2
-            setWinningTheme(winningTheme);
-
             // 🧠 PHASE 2: CONTEXT EXTRACTION (The Details)
             // Now we look for specific NOUNS to override/fill details without breaking the vibe.
 
@@ -280,13 +271,20 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                 else if (winningTheme === 'dark') newSelections.location = "Abandoned Warehouse";
                 else newSelections.location = "Luxury Penthouse";
             }
-            if (/\b(bar|club|pub|drink)\b/i.test(lowerPrompt)) newSelections.location = "Dive Bar";
+            if (/\b(bar|club|pub|drink)\b/i.test(lowerPrompt)) newSelections.location = winningTheme === 'energy' ? "Jazz Club" : "Dive Bar";
             if (/\b(street|road|city|town)\b/i.test(lowerPrompt)) newSelections.location = "Tokyo Streets";
             if (/\b(car|drive|ride)\b/i.test(lowerPrompt)) {
                 newSelections.location = "Desert Highway";
                 newSelections.vehicles = "Vintage Muscle Car";
             }
             if (/\b(beach|sea|ocean|sand)\b/i.test(lowerPrompt)) newSelections.location = winningTheme === 'dark' ? "Beach at Night" : "Beach at Night"; // Could add a sunny beach if available
+
+            // Musical/Atmosphere Overrides (The "Unspoken Fire" Fix)
+            // If we detect "rhythm", "tempo", or "music", implies a social/performance setting even if Romance wins.
+            if (/\b(rhythm|tempo|beat|music|band|stage|electric|spark)\b/i.test(lowerPrompt)) {
+                if (winningTheme === 'romance') newSelections.location = "Jazz Club"; // Romantic music setting
+                else newSelections.location = "Jazz Club";
+            }
 
             // Weather/Time Overrides (Only if explicit)
             if (/\b(rain|storm|wet)\b/i.test(lowerPrompt)) newSelections.weather = "Heavy Rain";
