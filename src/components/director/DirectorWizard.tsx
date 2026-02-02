@@ -178,6 +178,7 @@ export default function DirectorWizard() {
                                             setActiveTab('timeline');
                                         }}
                                         initialCast={project.castMembers}
+                                        vibe={project.vibe}
                                     />
                                 </div>
                             </div>
