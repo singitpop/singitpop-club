@@ -280,10 +280,13 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             if (/\b(beach|sea|ocean|sand)\b/i.test(lowerPrompt)) newSelections.location = winningTheme === 'dark' ? "Beach at Night" : "Beach at Night"; // Could add a sunny beach if available
 
             // Musical/Atmosphere Overrides (The "Unspoken Fire" Fix)
-            // If we detect "rhythm", "tempo", or "music", implies a social/performance setting even if Romance wins.
-            if (/\b(rhythm|tempo|beat|music|band|stage|electric|spark)\b/i.test(lowerPrompt)) {
-                if (winningTheme === 'romance') newSelections.location = "Jazz Club"; // Romantic music setting
-                else newSelections.location = "Jazz Club";
+            const isBanger = /\b(fire|electric|burn|heat|tighten|loud|fast|spark)\b/i.test(lowerPrompt);
+            const isMusic = /\b(rhythm|tempo|beat|music|band|stage)\b/i.test(lowerPrompt);
+
+            if (isMusic || isBanger) {
+                if (isBanger) newSelections.location = "Abandoned Warehouse"; // High energy / Gritty banger
+                else if (winningTheme === 'romance') newSelections.location = "Jazz Club"; // Soft/Romantic music
+                else newSelections.location = "Dive Bar"; // General band vibe
             }
 
             // Weather/Time Overrides (Only if explicit)
