@@ -36,12 +36,7 @@ const CUSTOM_SONG_TIERS = [
     }
 ];
 
-const RINGTONES = [
-    { id: "1", title: "Stardust (Chorus)", price: 3, duration: "0:15" },
-    { id: "2", title: "Circuit Love (Hook)", price: 3, duration: "0:20" },
-    { id: "3", title: "Echoes (Intro)", price: 3, duration: "0:18" },
-    { id: "4", title: "Velvet Dreams (Bridge)", price: 3, duration: "0:22" }
-];
+
 
 const products = [
     { id: 2, name: 'Midnight Tour Hoodie (Sustainable)', price: 65.00, imageColor: 'linear-gradient(45deg, #111, #333)', proOnly: false, badge: 'POD UK 🇬🇧' },
@@ -69,10 +64,49 @@ export default function ShopPage() {
         setSelectedTier(null);
     };
 
+    const [ringtones, setRingtones] = useState<any[]>([]);
+    const [loadingRingtones, setLoadingRingtones] = useState(true);
+
+    useEffect(() => {
+        async function fetchRingtones() {
+            try {
+                const res = await fetch('/api/ringtones');
+                const data = await res.json();
+                if (data.ringtones) {
+                    setRingtones(data.ringtones);
+                }
+            } catch (error) {
+                console.error('Failed to fetch ringtones:', error);
+            } finally {
+                setLoadingRingtones(false);
+            }
+        }
+        fetchRingtones();
+    }, []);
+
+    const handleBuyRingtone = async (priceId: string) => {
+        try {
+            const res = await fetch('/api/stripe/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ priceId })
+            });
+            const data = await res.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                alert('Checkout failed: ' + (data.error || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('Checkout failed:', error);
+            alert('Failed to start checkout');
+        }
+    };
+
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-16 px-4">
             {/* Hero */}
-            <div className="max-w-6xl mx-auto mb-16 text-center">
+            <div className="max-w-6xl mx-auto mb-16 =text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -105,8 +139,8 @@ export default function ShopPage() {
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 onClick={() => setSelectedTier(tier.id)}
                                 className={`relative bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border cursor-pointer transition-all ${selectedTier === tier.id
-                                        ? "border-pink-500 shadow-2xl shadow-pink-500/20 scale-105"
-                                        : "border-white/10 hover:border-white/30"
+                                    ? "border-pink-500 shadow-2xl shadow-pink-500/20 scale-105"
+                                    : "border-white/10 hover:border-white/30"
                                     }`}
                             >
                                 {tier.popular && (
@@ -136,8 +170,8 @@ export default function ShopPage() {
 
                                 <button
                                     className={`w-full py-3 rounded-xl font-semibold transition-all ${selectedTier === tier.id
-                                            ? `bg-gradient-to-r ${tier.gradient} text-white`
-                                            : "bg-white/10 hover:bg-white/20"
+                                        ? `bg-gradient-to-r ${tier.gradient} text-white`
+                                        : "bg-white/10 hover:bg-white/20"
                                         }`}
                                 >
                                     {selectedTier === tier.id ? "Selected" : "Select"}
@@ -224,29 +258,42 @@ export default function ShopPage() {
                     <p className="text-white/60">Exclusive snippets from your favorite tracks</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {RINGTONES.map((ringtone, index) => (
-                        <motion.div
-                            key={ringtone.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.05 }}
-                            className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-pink-500/30 transition-all"
-                        >
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
-                                <Smartphone size={24} className="text-white" />
-                            </div>
-                            <h3 className="font-bold mb-1">{ringtone.title}</h3>
-                            <p className="text-sm text-white/40 mb-4">{ringtone.duration}</p>
-                            <div className="flex items-center justify-between">
-                                <span className="text-2xl font-bold">£{ringtone.price}</span>
-                                <button className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-semibold transition-colors">
-                                    Buy
-                                </button>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+                {loadingRingtones ? (
+                    <div className="flex justify-center p-12">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+                    </div>
+                ) : ringtones.length === 0 ? (
+                    <div className="text-center p-12 bg-white/5 rounded-3xl">
+                        <p className="text-white/60">No ringtones available yet. Check back soon!</p>
+                    </div>
+                ) : (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {ringtones.map((ringtone, index) => (
+                            <motion.div
+                                key={ringtone.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.05 }}
+                                className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-pink-500/30 transition-all"
+                            >
+                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
+                                    <Smartphone size={24} className="text-white" />
+                                </div>
+                                <h3 className="font-bold mb-1 truncate" title={ringtone.title}>{ringtone.title}</h3>
+                                <p className="text-sm text-white/40 mb-4">{ringtone.duration}s • {ringtone.genre || 'Pop'}</p>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-2xl font-bold">£{ringtone.price.toFixed(2)}</span>
+                                    <button
+                                        onClick={() => handleBuyRingtone(ringtone.priceId)}
+                                        className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-semibold transition-colors"
+                                    >
+                                        Buy
+                                    </button>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Merch Section */}
