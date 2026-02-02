@@ -301,10 +301,15 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             if (/\b(shallow depth|push-in|close-up)\b/i.test(lowerPrompt)) newSelections.angle = "Close Up";
             if (/\b(ribbons|particles|haze)\b/i.test(lowerPrompt)) newSelections.lighting = "Volumetric Beams";
 
+
             // Explicit Location Extraction from Paste (The "Self-Training" effect)
+            // These MUST come last to override any "Banger/Music" defaults
             if (/\b(stadium|concert|arena|stage)\b/i.test(lowerPrompt)) newSelections.location = "Stadium Stage";
             if (/\b(field|meadow|open|nature)\b/i.test(lowerPrompt)) newSelections.location = "Open Field";
-            if (/\b(city|urban|concrete)\b/i.test(lowerPrompt)) newSelections.location = "Tokyo Streets";
+            if (/\b(city|urban|concrete|street|pavement)\b/i.test(lowerPrompt)) newSelections.location = "Neon City Street";
+            if (/\b(rooftop|roof)\b/i.test(lowerPrompt)) newSelections.location = "City Rooftop";
+            if (/\b(apartment|home|room|loft|flat)\b/i.test(lowerPrompt)) newSelections.location = "Modern Apartment";
+            if (/\b(studio|dance)\b/i.test(lowerPrompt)) newSelections.location = "Dance Studio";
 
             setSelections(newSelections);
             setIsAnalyzing(false);
