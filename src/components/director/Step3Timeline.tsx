@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Clock, Plus, GripVertical, Trash2, Film, Users, Video, MoveRight, PlayCircle } from "lucide-react";
 import { motion, Reorder } from "framer-motion";
 
@@ -25,14 +25,36 @@ interface Step3Props {
 }
 
 export default function Step3Timeline({ onNext, project }: Step3Props) {
-    // Generate some initial scenes based on the track duration (mocked as 4 chunks for now)
-    const initialScenes: Scene[] = [
-        { id: '1', description: "Opening wide shot, establishing the mood.", duration: 15, castIds: [], action: "Ambient movement", camera: "Wide Drone" },
-        { id: '2', description: "Lead singer enters, emotional close-up.", duration: 30, castIds: [], action: "Lip syncing", camera: "Close Up" }
-    ];
+    // Parse actual duration from project track (format: "3:45")
+    const parseDuration = (durStr?: string) => {
+        if (!durStr) return 180; // Default 3 mins
+        const parts = durStr.split(':');
+        if (parts.length === 2) {
+            return (parseInt(parts[0]) * 60) + parseInt(parts[1]);
+        }
+        return 180;
+    };
 
-    const [scenes, setScenes] = useState<Scene[]>(initialScenes);
-    const [totalDuration, setTotalDuration] = useState(180); // Mock 3 mins for now
+    const trackDuration = parseDuration(project.track?.duration);
+
+    // Initial scenes based on track
+    const [scenes, setScenes] = useState<Scene[]>(() => {
+        return [
+            { id: '1', description: "Opening wide shot, establishing the mood.", duration: Math.floor(trackDuration * 0.15), castIds: [], action: "Ambient movement", camera: "Wide Drone" },
+            { id: '2', description: "Lead singer enters, emotional close-up.", duration: Math.floor(trackDuration * 0.25), castIds: [], action: "Lip syncing", camera: "Close Up" }
+        ];
+    });
+
+    const [totalDuration, setTotalDuration] = useState(trackDuration);
+
+    // Update if project track changes
+    useEffect(() => {
+        if (project.track?.duration) {
+            const newDur = parseDuration(project.track.duration);
+            setTotalDuration(newDur);
+            // Optional: Adjust scenes? For now keep existing but update total limit logic if needed
+        }
+    }, [project.track?.duration]);
 
     const handleAddScene = () => {
         const newScene: Scene = {

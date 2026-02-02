@@ -92,7 +92,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
     // Auto-generate context string
     const constructedPrompt = [
         selections.location, selections.timeOfDay, selections.weather,
-        selections.lighting, selections.mood, selections.style
+        selections.lighting, selections.mood, selections.filmStock, selections.artDirection
     ].filter(Boolean).join(" • ");
 
     const handleGenerate = () => {

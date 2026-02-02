@@ -16,7 +16,16 @@ export default function Step4Production({ onBack, project }: Step4Props) {
     const [completedSteps, setCompletedSteps] = useState<string[]>([]);
     const [showPreview, setShowPreview] = useState(false);
 
-    const totalCost = (project.scenes?.length || 0) * 0.15; // Mock cost calculation
+    // Dynamic Cost: £0.15 per scene + £0.05 per minute of duration
+    const trackDurationSeconds = ((): number => {
+        if (!project.track?.duration) return 180;
+        const parts = project.track.duration.split(':');
+        return parts.length === 2 ? (parseInt(parts[0]) * 60) + parseInt(parts[1]) : 180;
+    })();
+
+    const sceneCost = (project.scenes?.length || 0) * 0.15;
+    const durationCost = (trackDurationSeconds / 60) * 0.05;
+    const totalCost = sceneCost + durationCost;
 
     const renderSequence = [
         "Analyzing Script & Pacing...",
@@ -64,7 +73,7 @@ export default function Step4Production({ onBack, project }: Step4Props) {
                         <div className="flex gap-4 text-sm text-gray-300 font-mono">
                             <span>4K ULTRA HD</span>
                             <span>•</span>
-                            <span>8:00 DURATION</span>
+                            <span>{Math.floor(trackDurationSeconds / 60)}:{(trackDurationSeconds % 60).toString().padStart(2, '0')} DURATION</span>
                             <span>•</span>
                             <span>DIRECTOR'S CUT</span>
                         </div>
@@ -203,7 +212,7 @@ export default function Step4Production({ onBack, project }: Step4Props) {
                     <div className="mt-6 p-4 bg-yellow-900/20 border border-yellow-500/20 rounded-lg flex gap-3">
                         <AlertTriangle size={16} className="text-yellow-500 shrink-0" />
                         <p className="text-xs text-yellow-200/60 leading-relaxed">
-                            Generating an 8-minute video takes significant GPU resources.
+                            Generating a {Math.ceil(trackDurationSeconds / 60)}-minute video takes significant GPU resources.
                             Your account will be debited only upon successful render.
                         </p>
                     </div>

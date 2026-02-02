@@ -22,7 +22,7 @@ interface LyricVideoProps {
 }
 
 // Animation Keyframes
-const styles = `
+const cssKeyframes = `
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
@@ -206,7 +206,7 @@ export const LyricVideo: React.FC<LyricVideoProps> = ({
 
     return (
         <AbsoluteFill style={{ backgroundColor: '#000', justifyContent: 'center', alignItems: 'center', perspective: '1000px' }}>
-            <style>{styles}</style>
+            <style>{cssKeyframes}</style>
 
             {/* Font Import (Google Fonts) */}
             <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;800&family=Montserrat:wght@400;900&family=Playfair+Display:ital,wght@1,400&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet" />
