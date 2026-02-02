@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ShoppingBag, Lock, ChevronRight, Check, ExternalLink, Music, Heart, Sparkles, Smartphone, Disc, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
