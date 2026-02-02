@@ -63,9 +63,12 @@ export default function DirectorWizard() {
         console.log("Briefing Complete:", data);
         setProject(prev => ({
             ...prev,
-            trackId: data.track.id,
-            vibe: data.vibe,
-            concept: data.userPrompt
+            trackId: data.trackId,
+            vibe: {
+                selections: data.selections,
+                theme: data.theme
+            },
+            concept: data.prompt
         }));
         // Move to next tab (Concept/Cast logic would be next, usually Cast)
         setActiveTab('cast');
@@ -172,6 +175,7 @@ export default function DirectorWizard() {
                                         setActiveTab('timeline');
                                     }}
                                     initialCast={project.castMembers}
+                                    vibe={project.vibe}
                                 />
                             </div>
                         </div>

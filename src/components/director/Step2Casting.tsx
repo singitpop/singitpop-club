@@ -18,20 +18,88 @@ interface Step2Props {
     initialCast?: Character[];
 }
 
-// Mock Database of Saved Stars
+// EXPANDED STAR LOCKER 🌟
 const SAVED_STARS: Character[] = [
-    { id: '1', name: "Neon Rose", description: "Cyberpunk singer with pink hair and glowing visor", seed: 123456, style: "Cyberpunk" },
-    { id: '2', name: "The Drifter", description: "Rugged cowboy, dusty coat, mysterious vibe", seed: 987654, style: "Western" }
+    // LEADS
+    { id: 'lead_f_1', name: "Luna V", description: "Pop superstar, blue hair, futuristic outfit", seed: 1001, style: "Lead" },
+    { id: 'lead_m_1', name: "Jaxon", description: "Male lead, leather jacket, brooding look", seed: 1002, style: "Lead" },
+    { id: 'lead_dist', name: "The Drifter", description: "Rugged cowboy, dusty coat, mysterious vibe", seed: 987654, style: "Western" },
+
+    // DANCERS
+    { id: 'dancers_1', name: "Neon Squad", description: "Backup dancers in glowing LED suits", seed: 2001, style: "Dancers" },
+    { id: 'dancers_2', name: "Street Crew", description: "Urban street dancers, hoodies and sneakers", seed: 2002, style: "Dancers" },
+    { id: 'dancers_3', name: "Ballet Corps", description: "Ethereal dancers in white silk", seed: 2003, style: "Dancers" },
+
+    // SUPPORTING / VIBE
+    { id: 'villain_1', name: "Shadow Man", description: "Antagonist in a suit, obscured face", seed: 3001, style: "Villain" },
+    { id: 'lover_1', name: "The Muse", description: "Dreamy love interest, soft lighting, floral dress", seed: 3002, style: "Romance" },
+    { id: 'sci_fi_1', name: "Cyborg X", description: "Chrome plated android helper", seed: 4001, style: "Sci-Fi" },
+    { id: 'retro_1', name: "Vinyl DJ", description: "70s style DJ with afro and sunglasses", seed: 5001, style: "Retro" },
+    { id: 'goth_1', name: "Raven", description: "Gothic style, dark makeup, velvet dress", seed: 6001, style: "Dark" },
+    { id: 'band_1', name: "The Band", description: "Drummer and guitarist handling instruments", seed: 7001, style: "Band" }
 ];
 
-export default function Step2Casting({ onNext, initialCast = [] }: Step2Props) {
+interface Step2Props {
+    onNext: (data: any) => void;
+    initialCast?: Character[];
+    vibe?: {
+        selections: any;
+        theme: string;
+    };
+}
+
+export default function Step2Casting({ onNext, initialCast = [], vibe }: Step2Props) {
     const [myCast, setMyCast] = useState<Character[]>(initialCast);
     const [isCreating, setIsCreating] = useState(false);
+    const [isAutoCasting, setIsAutoCasting] = useState(false);
 
     // New Character Form State
     const [newName, setNewName] = useState("");
     const [newDesc, setNewDesc] = useState("");
     const [newSeed, setNewSeed] = useState<number | undefined>(undefined);
+
+    // 🧠 SMART CASTING ENGINE
+    const autoCast = () => {
+        if (!vibe?.theme) return;
+        setIsAutoCasting(true);
+
+        setTimeout(() => {
+            const suggestions: Character[] = [];
+            const theme = vibe.theme;
+
+            // 1. ALWAYS need a Lead (Pick randomly between Luna and Jaxon if empty)
+            if (myCast.length === 0) {
+                suggestions.push(Math.random() > 0.5 ? SAVED_STARS[0] : SAVED_STARS[1]);
+            }
+
+            // 2. THEME BASED SUGGESTIONS
+            if (theme === 'romance') {
+                suggestions.push(SAVED_STARS.find(s => s.id === 'lover_1')!);
+            }
+            if (theme === 'energy') {
+                suggestions.push(SAVED_STARS.find(s => s.id === 'dancers_1')!); // Neon Squad
+                suggestions.push(SAVED_STARS.find(s => s.id === 'band_1')!);
+            }
+            if (theme === 'melancholy') {
+                // Solo vibe, maybe just the lead. Or the Drifter.
+                suggestions.push(SAVED_STARS.find(s => s.id === 'lead_dist')!);
+            }
+            if (theme === 'dark') {
+                suggestions.push(SAVED_STARS.find(s => s.id === 'villain_1')!);
+                suggestions.push(SAVED_STARS.find(s => s.id === 'goth_1')!);
+            }
+            if (theme === 'dreamy') {
+                suggestions.push(SAVED_STARS.find(s => s.id === 'dancers_3')!); // Ballet
+            }
+
+            // Filter out duplicates
+            const uniqueNew = suggestions.filter(s => !myCast.some(c => c.id === s.id));
+
+            setMyCast(prev => [...prev, ...uniqueNew]);
+            setIsAutoCasting(false);
+        }, 1000);
+    };
+
 
     const handleAddCharacter = () => {
         if (!newName || !newDesc) return;
@@ -79,13 +147,25 @@ export default function Step2Casting({ onNext, initialCast = [] }: Step2Props) {
                         </h2>
                         <p className="text-white/40 mt-1">Assemble your stars. Consistent characters across every scene.</p>
                     </div>
-                    <button
-                        onClick={() => setIsCreating(true)}
-                        className="px-6 py-3 bg-pink-600 hover:bg-pink-500 text-white rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-pink-900/20"
-                    >
-                        <UserPlus size={18} />
-                        New Casting
-                    </button>
+                    <div className="flex gap-3">
+                        {vibe?.theme && (
+                            <button
+                                onClick={autoCast}
+                                disabled={isAutoCasting}
+                                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-900/20"
+                            >
+                                <Wand2 size={18} className={isAutoCasting ? "animate-spin" : ""} />
+                                {isAutoCasting ? "Casting..." : "Auto-Cast Check"}
+                            </button>
+                        )}
+                        <button
+                            onClick={() => setIsCreating(true)}
+                            className="px-6 py-3 bg-pink-600 hover:bg-pink-500 text-white rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-pink-900/20"
+                        >
+                            <UserPlus size={18} />
+                            New Casting
+                        </button>
+                    </div>
                 </div>
 
                 {/* My Active Cast Grid */}
@@ -94,7 +174,12 @@ export default function Step2Casting({ onNext, initialCast = [] }: Step2Props) {
                         <div className="h-full flex flex-col items-center justify-center text-center opacity-40">
                             <Users size={64} className="mb-4 text-white/20" />
                             <h3 className="text-xl font-bold mb-2">The Stage is Empty</h3>
-                            <p className="max-w-md">Create a new character or select from your Star Locker to begin casting your movie.</p>
+                            <p className="max-w-md mb-6">Create a new character or select from your Star Locker to begin casting your movie.</p>
+                            {vibe?.theme && (
+                                <button onClick={autoCast} className="text-indigo-400 hover:text-indigo-300 underline font-semibold">
+                                    Auto-Suggest based on "{vibe.theme}" vibe?
+                                </button>
+                            )}
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -111,7 +196,7 @@ export default function Step2Casting({ onNext, initialCast = [] }: Step2Props) {
 
                                     <div className="flex items-start gap-4 mb-3">
                                         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 p-0.5">
-                                            <img src={char.avatarUrl} alt={char.name} className="w-full h-full rounded-full bg-black object-cover" />
+                                            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${char.seed}`} alt={char.name} className="w-full h-full rounded-full bg-black object-cover" />
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-lg">{char.name}</h4>
@@ -217,8 +302,8 @@ export default function Step2Casting({ onNext, initialCast = [] }: Step2Props) {
                                         className="w-full text-left bg-black/20 hover:bg-white/10 border border-white/5 hover:border-white/20 rounded-xl p-3 transition-all group"
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold">
-                                                {star.name.substring(0, 2).toUpperCase()}
+                                            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold overflow-hidden">
+                                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${star.seed}`} alt={star.name} className="w-full h-full object-cover" />
                                             </div>
                                             <div>
                                                 <div className="font-bold text-sm text-white group-hover:text-pink-400 transition-colors">{star.name}</div>

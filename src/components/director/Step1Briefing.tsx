@@ -153,11 +153,14 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
         selections.lighting, selections.mood, selections.filmStock, selections.artDirection
     ].filter(Boolean).join(" • ");
 
+    const [winningTheme, setWinningTheme] = useState<string>("");
+
     const handleGenerate = () => {
         onNext({
             trackId: selectedTrackId,
             prompt,
-            selections
+            selections,
+            theme: winningTheme
         });
     };
 
@@ -264,6 +267,9 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                     newSelections.timeOfDay = "Golden Hour";
                     break;
             }
+
+            // Store winning theme for Step 2
+            setWinningTheme(winningTheme);
 
             // 🧠 PHASE 2: CONTEXT EXTRACTION (The Details)
             // Now we look for specific NOUNS to override/fill details without breaking the vibe.
