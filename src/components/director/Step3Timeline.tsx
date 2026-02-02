@@ -120,23 +120,93 @@ export default function Step3Timeline({ onNext, project }: Step3Props) {
     const handleImport = () => {
         if (!importText) return;
 
-        // Expected Format: "1. [0:00-0:15] Description" OR "1. Description (15s)"
-        const lines = importText.split('\n');
-        const parsedScenes: Scene[] = [];
+        // 1. Regex to find "Header (0:00-0:15)" pattern
+        // Supports: "INTRO (0:00-0:15)", "Verse 1 [0:15 - 0:45]", "1. Scene Name (10s)"
+        const sceneRegex = /(?:^|\n)(.*?)(?:\(|\[)(\d{1,2}:\d{2}|\d+s?)(?:\s*(?:-|–|to)\s*(\d{1,2}:\d{2}))?(?:\)|\])(?::)?/g;
 
-        lines.forEach((line, i) => {
-            // Simple heuristic: If line has text, make it a scene
-            if (line.trim().length > 3) {
-                parsedScenes.push({
-                    id: Date.now().toString() + i,
-                    description: line.replace(/^\d+[\.\)]\s*/, '').trim(), // Remove "1. "
-                    duration: 15, // Default chunk
+        const parsedScenes: Scene[] = [];
+        let match;
+        let lastIndex = 0;
+
+        // Helper to convert "1:30" or "90s" to seconds
+        const toSeconds = (str: string) => {
+            if (!str) return 0;
+            if (str.includes(':')) {
+                const [m, s] = str.split(':').map(Number);
+                return (m * 60) + s;
+            }
+            return parseInt(str);
+        };
+
+        while ((match = sceneRegex.exec(importText)) !== null) {
+            const header = match[1].trim().replace(/^\d+[\.\)]\s*/, ''); // "INTRO"
+            const startStr = match[2]; // "0:00"
+            const endStr = match[3];   // "0:18" (Optional)
+
+            // Calculate Duration
+            let duration = 15; // Default
+            if (endStr) {
+                duration = toSeconds(endStr) - toSeconds(startStr);
+            } else if (startStr.includes('s')) {
+                duration = parseInt(startStr);
+            }
+
+            // Capture Description (Text *between* this match and the next match)
+            const startOfDesc = match.index + match[0].length;
+            const nextMatch = sceneRegex.lastIndex; // Wait, exec moves lastIndex? No, need to peek.
+
+            // Actually, we can just grab everything until the next regex hit or end of string
+            // But regex iteration is tricky. Let's start simple:
+            // The description is the text IMMEDIATELY following this match, until the next newline that looks like a header.
+        }
+
+        // Simpler "Split by blocks" approach for robustness
+        // We split by lines, look for "Header (Time)" lines, then group subsequent lines as description.
+        const blocks = importText.split(/\n+/);
+        let currentScene: Partial<Scene> | null = null;
+        let accumulatedDesc = [];
+
+        blocks.forEach(line => {
+            // Check for "HEADER (0:00...)"
+            const timeMatch = line.match(/(.*?)(?:\(|\[)(\d{1,2}:\d{2})(?:\s*(?:-|–|to)\s*(\d{1,2}:\d{2}))?(?:\)|\])/);
+
+            if (timeMatch) {
+                // Save Previous
+                if (currentScene) {
+                    parsedScenes.push({
+                        ...currentScene as Scene,
+                        description: accumulatedDesc.join(" ").trim() || currentScene.description
+                    } as Scene);
+                }
+
+                // Start New
+                const start = toSeconds(timeMatch[2]);
+                const end = timeMatch[3] ? toSeconds(timeMatch[3]) : start + 15;
+
+                currentScene = {
+                    id: Date.now().toString() + Math.random(),
+                    description: timeMatch[1].trim(), // Header as provisional desc
+                    duration: Math.max(5, end - start), // Min 5s
                     castIds: [],
-                    action: "Story Action",
+                    action: "Performance",
                     camera: "Medium Shot"
-                });
+                };
+                accumulatedDesc = [];
+            } else {
+                // It's a description line
+                if (currentScene && line.trim().length > 0) {
+                    accumulatedDesc.push(line.trim());
+                }
             }
         });
+
+        // Push final
+        if (currentScene) {
+            parsedScenes.push({
+                ...currentScene as Scene,
+                description: accumulatedDesc.join(" ").trim() || currentScene.description
+            } as Scene);
+        }
 
         if (parsedScenes.length > 0) {
             setScenes(parsedScenes);
