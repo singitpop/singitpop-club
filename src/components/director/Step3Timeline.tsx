@@ -164,7 +164,7 @@ export default function Step3Timeline({ onNext, project }: Step3Props) {
         // We split by lines, look for "Header (Time)" lines, then group subsequent lines as description.
         const blocks = importText.split(/\n+/);
         let currentScene: Partial<Scene> | null = null;
-        let accumulatedDesc = [];
+        let accumulatedDesc: string[] = [];
 
         blocks.forEach(line => {
             // Check for "HEADER (0:00...)"
