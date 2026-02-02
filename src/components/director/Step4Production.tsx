@@ -16,16 +16,17 @@ export default function Step4Production({ onBack, project }: Step4Props) {
     const [completedSteps, setCompletedSteps] = useState<string[]>([]);
     const [showPreview, setShowPreview] = useState(false);
 
-    // Dynamic Cost Logic based on Location Tier
     const location = project.vibe?.selections?.location || "Studio";
 
-    const getCostPerScene = (loc: string) => {
-        if (["Stadium Stage", "Luxury Penthouse"].includes(loc)) return 0.50; // Premium
-        if (["Abandoned Warehouse", "Jazz Club", "Tokyo Streets"].includes(loc)) return 0.25; // Standard
-        return 0.15; // Budget (Dive Bar, Field, etc)
-    };
+    // Restore track duration logic (Essential for durationCost)
+    const trackDurationSeconds = ((): number => {
+        if (!project.track?.duration) return 180;
+        const parts = project.track.duration.split(':');
+        return parts.length === 2 ? (parseInt(parts[0]) * 60) + parseInt(parts[1]) : 180;
+    })();
 
-    const costPerScene = getCostPerScene(location);
+    // FLat Rate Cost: AI locations are virtual, so cost is consistent
+    const costPerScene = 0.15;
     const sceneCost = (project.scenes?.length || 0) * costPerScene;
     const durationCost = (trackDurationSeconds / 60) * 0.05;
     const totalCost = sceneCost + durationCost;
@@ -176,13 +177,7 @@ export default function Step4Production({ onBack, project }: Step4Props) {
 
                     <div className="space-y-4 mb-8">
                         <div className="flex justify-between items-center text-sm">
-                            <span className="text-white/60">Location Fee ({location})</span>
-                            <span className={costPerScene >= 0.5 ? "text-yellow-400 font-bold" : "text-white"}>
-                                {costPerScene >= 0.5 ? "PREMIUM" : "STANDARD"}
-                            </span>
-                        </div>
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-white/60">Generations ({project.scenes?.length || 0} x £{costPerScene.toFixed(2)})</span>
+                            <span className="text-white/60">Scenes ({project.scenes?.length || 0} x £0.15)</span>
                             <span>£{sceneCost.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between items-center text-sm">
