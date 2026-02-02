@@ -210,7 +210,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
                     {activeCategory === 'world' && (
                         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <ControlGroup title="1. Location (Where is this happening?)" options={OPTIONS.world.location} current={selections.location} onSelect={(v) => toggleSelection('location', v)} />
+                            <ControlGroup title="1. Location (Where is this happening?)" options={OPTIONS.world.location} current={selections.location} onSelect={(v) => toggleSelection('location', v)} allowCustom={true} />
                             <ControlGroup title="2. Time of Day" options={OPTIONS.world.timeOfDay} current={selections.timeOfDay} onSelect={(v) => toggleSelection('timeOfDay', v)} />
                             <ControlGroup title="3. Weather / Element" options={OPTIONS.world.weather} current={selections.weather} onSelect={(v) => toggleSelection('weather', v)} />
                         </div>
@@ -264,7 +264,9 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 }
 
 // Sub-component for options grid
-function ControlGroup({ title, options, current, onSelect, isMulti = false }: { title: string, options: string[], current: string | string[], onSelect: (v: string) => void, isMulti?: boolean }) {
+function ControlGroup({ title, options, current, onSelect, isMulti = false, allowCustom = false }: { title: string, options: string[], current: string | string[], onSelect: (v: string) => void, isMulti?: boolean, allowCustom?: boolean }) {
+    const isCustomSelected = allowCustom && !Array.isArray(current) && current && !options.includes(current);
+
     return (
         <div>
             <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">{title}</h4>
@@ -285,6 +287,26 @@ function ControlGroup({ title, options, current, onSelect, isMulti = false }: { 
                         </button>
                     );
                 })}
+
+                {allowCustom && (
+                    <div className={`relative flex items-center transition-all duration-200
+                        ${isCustomSelected
+                            ? 'w-64 border-indigo-500 ring-1 ring-indigo-500/50'
+                            : 'w-40 border-white/10 hover:border-white/30'}
+                        rounded-lg border bg-white/5
+                    `}>
+                        <div className="absolute left-3 text-white/40 pointer-events-none">
+                            <MapPin size={14} />
+                        </div>
+                        <input
+                            type="text"
+                            value={isCustomSelected ? (current as string) : ''}
+                            onChange={(e) => onSelect(e.target.value)}
+                            placeholder="Scout Location..."
+                            className="w-full bg-transparent text-sm text-white px-3 py-2 pl-9 outline-none placeholder:text-white/20"
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );
