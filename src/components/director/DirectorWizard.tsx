@@ -13,6 +13,7 @@ export type DirectorTab = 'briefing' | 'cast' | 'timeline' | 'studio';
 
 interface DirectorState {
     trackId: string | null;
+    track?: any; // Full track object
     concept: string;
     castMembers: any[];
     scenes: any[];
@@ -64,6 +65,7 @@ export default function DirectorWizard() {
         setProject(prev => ({
             ...prev,
             trackId: data.track.id,
+            track: data.track, // Store full track object (contains duration)
             vibe: data.vibe,
             concept: data.userPrompt
         }));

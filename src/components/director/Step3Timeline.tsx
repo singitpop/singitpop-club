@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Clock, Plus, GripVertical, Trash2, Film, Users, Video, MoveRight, PlayCircle } from "lucide-react";
+import { Clock, Plus, GripVertical, Trash2, Film, Users, Video, MoveRight, PlayCircle, Sparkles, FileText, X, Wand2 } from "lucide-react";
 import { motion, Reorder } from "framer-motion";
 
 interface Character {
@@ -25,36 +25,126 @@ interface Step3Props {
 }
 
 export default function Step3Timeline({ onNext, project }: Step3Props) {
-    // Parse actual duration from project track (format: "3:45")
-    const parseDuration = (durStr?: string) => {
-        if (!durStr) return 180; // Default 3 mins
-        const parts = durStr.split(':');
-        if (parts.length === 2) {
-            return (parseInt(parts[0]) * 60) + parseInt(parts[1]);
+    const [showImport, setShowImport] = useState(false);
+    const [importText, setImportText] = useState("");
+
+    // Parse actual duration from project track (format: "3:45" or raw seconds)
+    const parseDuration = (track: any) => {
+        if (!track) return 180;
+        if (typeof track.duration === 'number') return track.duration; // Already seconds
+        if (typeof track.duration === 'string') {
+            const parts = track.duration.split(':');
+            if (parts.length === 2) {
+                return (parseInt(parts[0]) * 60) + parseInt(parts[1]);
+            }
         }
-        return 180;
+        return 180; // Default 3 mins
     };
 
-    const trackDuration = parseDuration(project.track?.duration);
+    const trackDuration = parseDuration(project.track);
+    const [totalDuration, setTotalDuration] = useState(trackDuration);
 
     // Initial scenes based on track
     const [scenes, setScenes] = useState<Scene[]>(() => {
+        // If scenes passed from wizard state (back navigation), use them
+        if (project.scenes && project.scenes.length > 0) return project.scenes;
+
+        // Otherwise default
         return [
             { id: '1', description: "Opening wide shot, establishing the mood.", duration: Math.floor(trackDuration * 0.15), castIds: [], action: "Ambient movement", camera: "Wide Drone" },
             { id: '2', description: "Lead singer enters, emotional close-up.", duration: Math.floor(trackDuration * 0.25), castIds: [], action: "Lip syncing", camera: "Close Up" }
         ];
     });
 
-    const [totalDuration, setTotalDuration] = useState(trackDuration);
 
     // Update if project track changes
     useEffect(() => {
-        if (project.track?.duration) {
-            const newDur = parseDuration(project.track.duration);
-            setTotalDuration(newDur);
-            // Optional: Adjust scenes? For now keep existing but update total limit logic if needed
+        const newDur = parseDuration(project.track);
+        setTotalDuration(newDur);
+    }, [project.track]);
+
+    // 🧠 AUTO-SEQUENCE LOGIC
+    const handleAutoSequence = () => {
+        const theme = project.vibe?.theme || "cinematic";
+        const total = totalDuration;
+
+        // Structure: Intro (15%) -> Verse 1 (25%) -> Chorus (20%) -> Bridge (25%) -> Outro (15%)
+        const segments = [
+            { pct: 0.15, type: 'Intro', action: 'Ambient movement' },
+            { pct: 0.25, type: 'Verse', action: 'Lip syncing' },
+            { pct: 0.20, type: 'Chorus', action: 'Performance' },
+            { pct: 0.25, type: 'Bridge/Story', action: 'Story Action' },
+            { pct: 0.15, type: 'Outro', action: 'B-Roll / Cinematic' }
+        ];
+
+        let accumulatedTime = 0;
+        const newScenes = segments.map((seg, i) => {
+            const dur = Math.floor(total * seg.pct);
+            const isLast = i === segments.length - 1;
+            // Ensure exact total matches for last item
+            const finalDur = isLast ? (total - accumulatedTime) : dur;
+            accumulatedTime += finalDur;
+
+            let desc = "";
+            switch (theme) {
+                case 'dark':
+                    desc = seg.type === 'Intro' ? "Slow pan over dark city streets." :
+                        seg.type === 'Chorus' ? "Intense performance with strobes." : "Shadowy figures moving.";
+                    break;
+                case 'romance':
+                    desc = seg.type === 'Intro' ? "Soft focus on candles." :
+                        seg.type === 'Chorus' ? "Emotional close up, singing to camera." : "Walking hand in hand.";
+                    break;
+                case 'energy':
+                    desc = seg.type === 'Intro' ? "Fast cuts of the venue." :
+                        seg.type === 'Chorus' ? "Explosive dance sequence." : "High energy movement.";
+                    break;
+                default:
+                    desc = `${seg.type}: Establishing ${project.vibe?.selections?.mood || "cinematic"} atmosphere.`;
+            }
+
+            return {
+                id: Date.now().toString() + i,
+                description: desc,
+                duration: finalDur,
+                castIds: [],
+                action: seg.action,
+                camera: i % 2 === 0 ? "Wide Shot" : "Close Up"
+            };
+        });
+
+        setScenes(newScenes);
+    };
+
+    // 🤖 CHATGPT PARSER
+    const handleImport = () => {
+        if (!importText) return;
+
+        // Expected Format: "1. [0:00-0:15] Description" OR "1. Description (15s)"
+        const lines = importText.split('\n');
+        const parsedScenes: Scene[] = [];
+
+        lines.forEach((line, i) => {
+            // Simple heuristic: If line has text, make it a scene
+            if (line.trim().length > 3) {
+                parsedScenes.push({
+                    id: Date.now().toString() + i,
+                    description: line.replace(/^\d+[\.\)]\s*/, '').trim(), // Remove "1. "
+                    duration: 15, // Default chunk
+                    castIds: [],
+                    action: "Story Action",
+                    camera: "Medium Shot"
+                });
+            }
+        });
+
+        if (parsedScenes.length > 0) {
+            setScenes(parsedScenes);
+            setShowImport(false);
+            setImportText("");
         }
-    }, [project.track?.duration]);
+    };
+
 
     const handleAddScene = () => {
         const newScene: Scene = {
@@ -128,6 +218,54 @@ export default function Step3Timeline({ onNext, project }: Step3Props) {
 
                 {/* Scene List (Scrollable) */}
                 <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+
+                    {/* 🛠️ TOOLBAR: Auto-Tools */}
+                    <div className="flex gap-2 mb-2">
+                        <button
+                            onClick={handleAutoSequence}
+                            className="flex-1 py-3 bg-gradient-to-r from-violet-600/20 to-pink-600/20 border border-violet-500/30 rounded-xl text-violet-200 text-sm font-bold flex items-center justify-center gap-2 hover:bg-violet-600/30 transition-all"
+                        >
+                            <Wand2 size={16} /> Auto-Sequence (Director Brain)
+                        </button>
+                        <button
+                            onClick={() => setShowImport(!showImport)}
+                            className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-white/60 text-sm font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+                        >
+                            <FileText size={16} /> Paste from ChatGPT
+                        </button>
+                    </div>
+
+                    {/* 📥 IMPORT PANEL */}
+                    <AnimatePresence>
+                        {showImport && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="overflow-hidden"
+                            >
+                                <div className="bg-black/40 border border-white/10 rounded-xl p-4 mb-4">
+                                    <div className="flex justify-between items-center mb-2">
+                                        <label className="text-xs font-bold text-white/40 uppercase">Paste Scene List</label>
+                                        <button onClick={() => setShowImport(false)} className="text-white/20 hover:text-white"><X size={14} /></button>
+                                    </div>
+                                    <textarea
+                                        value={importText}
+                                        onChange={(e) => setImportText(e.target.value)}
+                                        placeholder={`1. [0:00-0:15] Intense close up of singer...\n2. [0:15-0:30] Wide shot of city skyline...`}
+                                        className="w-full h-32 bg-black/50 border border-white/10 rounded-lg p-3 text-sm text-white font-mono focus:border-violet-500 outline-none resize-none mb-3"
+                                    />
+                                    <button
+                                        onClick={handleImport}
+                                        className="w-full py-2 bg-violet-600 rounded-lg text-white font-bold text-sm hover:bg-violet-500"
+                                    >
+                                        Parse & Generate Scenes
+                                    </button>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
                     <Reorder.Group axis="y" values={scenes} onReorder={setScenes} className="space-y-4">
                         {scenes.map((scene, index) => (
                             <Reorder.Item key={scene.id} value={scene}>
