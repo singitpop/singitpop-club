@@ -45,6 +45,34 @@ const OPTIONS = {
     }
 };
 
+// THE DIRECTOR INTELLIGENCE ENGINE 🧠
+// Maps keywords to likely cinematic choices.
+const DIRECTOR_BRAIN: Record<string, Partial<typeof OPTIONS>> = {
+    // Vibe / Mood
+    "love": { lighting: { mood: ["Romantic", "Dreamy"], lighting: ["Cinematic Soft", "Candlelight", "Golden Hour"] } },
+    "heart": { lighting: { mood: ["Romantic", "Melancholic"], colorGrade: ["Pastel Dream", "Teal & Orange"] } },
+    "dance": { lighting: { mood: ["Cinematic", "Neon Noir"], lighting: ["Strobe", "Neon Signs"] }, camera: { movement: ["Fast Zoom", "Handheld Shaky"] } },
+    "party": { lighting: { mood: ["Cinematic"], lighting: ["Strobe", "Neon Signs"] }, world: { location: ["Jazz Club", "Ballroom"] } },
+    "sad": { lighting: { mood: ["Melancholic", "Gritty"], colorGrade: ["Bleach Bypass", "Black & White"] }, world: { weather: ["Heavy Rain", "Foggy"] } },
+    "lonely": { lighting: { mood: ["Melancholic"], lighting: ["Low-Key Noir"] }, camera: { angle: ["Wide Shot"] } },
+    "dark": { lighting: { mood: ["Gritty", "Tense"], lighting: ["Low-Key Noir", "Moonlight"] }, world: { timeOfDay: ["Pitch Black", "Midnight"] } },
+    "future": { lighting: { mood: ["Cyberpunk"], lighting: ["Neon Signs"] }, world: { location: ["Cyberpunk City", "Space Station", "Tokyo Streets"] }, elements: { vehicles: ["Cyberpunk Bike", "Spaceship"], clothing: ["Cyber Armor", "Techwear"] } },
+    "neon": { lighting: { mood: ["Dark Neon", "Cyberpunk"], lighting: ["Neon Signs"] }, style: { artDirection: ["Hyper-Realistic"] } },
+    "retro": { lighting: { mood: ["Retro VHS"], colorGrade: ["Sepia Vintage"] }, style: { filmStock: ["VHS Tape", "16mm Grain"] }, elements: { clothing: ["Vintage Leather"] } },
+    "dream": { lighting: { mood: ["Ethereal", "Dreamy"], lighting: ["Volumetric Beams"] }, style: { filmStock: ["Fujifilm Velvia"] } },
+
+    // Elements
+    "rain": { world: { weather: ["Heavy Rain", "Electric Storm"] }, lighting: { mood: ["Melancholic", "Cinematic"] } },
+    "sun": { world: { timeOfDay: ["Noon", "Golden Hour"], weather: ["Clear", "Heatwave"] }, lighting: { lighting: ["Natural Window Light"] } },
+    "night": { world: { timeOfDay: ["Midnight", "Blue Hour"], location: ["Beach at Night"] }, lighting: { lighting: ["Moonlight", "Neon Signs"] } },
+    "car": { elements: { vehicles: ["Vintage Muscle Car", "Luxury Sports Car"] }, world: { location: ["Desert Highway", "Tokyo Streets"] } },
+    "drive": { elements: { vehicles: ["Vintage Muscle Car"] }, camera: { movement: ["Tracking Shot"] } },
+    "space": { world: { location: ["Space Station"] }, elements: { vehicles: ["Spaceship"], clothing: ["Cyber Armor"] } },
+    "city": { world: { location: ["Cyberpunk City", "Tokyo Streets"] } },
+    "forest": { world: { location: ["Forest"] }, lighting: { lighting: ["Volumetric Beams"] } },
+};
+
+
 type OptionCategory = 'world' | 'lighting' | 'camera' | 'style' | 'elements';
 
 export default function Step1Briefing({ tracks, onNext }: Step1Props) {
@@ -111,6 +139,50 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
         { id: 'elements', label: '5. Set Dressing', icon: Car },
     ];
 
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+    const analyzeLyrics = () => {
+        if (!prompt || prompt.length < 5) return;
+        setIsAnalyzing(true);
+
+        // Simulate "Thinking" time for the AI Director
+        setTimeout(() => {
+            const lowerPrompt = prompt.toLowerCase();
+            const words = lowerPrompt.split(/\s+/);
+            const newSelections = { ...selections };
+
+            // 1. Reset categories to a "Neutral" state if needed, or just overwrite matches.
+            // We'll behave like a real director: Pick the STRONGEST signals.
+
+            Object.entries(DIRECTOR_BRAIN).forEach(([keyword, map]) => {
+                if (lowerPrompt.includes(keyword)) {
+                    // We found a match! Apply settings.
+                    // Loop through categories in the map (world, lighting, etc)
+                    Object.entries(map).forEach(([category, fields]) => {
+                        // Loop through fields (location, mood, etc)
+                        Object.entries(fields as any).forEach(([field, possibleValues]: [string, string[]]) => {
+                            // Pick a random one from the possible values to add variety
+                            const pick = possibleValues[Math.floor(Math.random() * possibleValues.length)];
+                            if (pick) {
+                                // @ts-ignore
+                                newSelections[field as keyof typeof selections] = pick;
+                            }
+                        });
+                    });
+                }
+            });
+
+            // 2. Fallbacks: If nothing selected, pick sensible defaults based on "Vibe"
+            if (!newSelections.mood) newSelections.mood = "Cinematic";
+            if (!newSelections.lighting) newSelections.lighting = "Cinematic Soft";
+            if (!newSelections.filmStock) newSelections.filmStock = "Kodak Portra 400";
+            if (!newSelections.angle) newSelections.angle = "Wide Shot";
+
+            setSelections(newSelections);
+            setIsAnalyzing(false);
+        }, 1200);
+    };
+
     return (
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 h-full font-sans">
 
@@ -144,10 +216,14 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
                 {/* Live Prompt Preview */}
                 <div className="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 border border-white/10 rounded-2xl p-6 flex-1 flex flex-col">
-                    <div className="flex items-center gap-2 mb-4">
-                        <Sparkles size={16} className="text-yellow-400" />
-                        <h3 className="text-sm font-bold uppercase tracking-wider text-white/60">Mega Prompt Preview</h3>
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                            <Sparkles size={16} className="text-yellow-400" />
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-white/60">Mega Prompt Preview</h3>
+                        </div>
+                        {isAnalyzing && <span className="text-xs text-yellow-400 animate-pulse font-mono">DIRECTOR IS ANALYZING...</span>}
                     </div>
+
                     <div className="bg-black/40 rounded-xl p-4 font-mono text-sm text-indigo-200 overflow-y-auto mb-4 border border-white/5 h-24">
                         <span className="text-white/40 block mb-2 text-xs uppercase tracking-wider">Auto-Generated Context:</span>
                         {constructedPrompt || <span className="text-white/20">Select options from the right...</span>}
@@ -156,15 +232,26 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                     <div className="flex-1 flex flex-col min-h-0">
                         <div className="flex justify-between items-center mb-2">
                             <label className="text-xs font-bold text-white/60 uppercase tracking-widest">Lyrics & Vision</label>
-                            <span className="text-[10px] text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded border border-indigo-500/20">
-                                Tip: Paste full lyrics here!
-                            </span>
+
+                            {/* AUTO-DIRECT BUTTON */}
+                            <button
+                                onClick={analyzeLyrics}
+                                disabled={!prompt || prompt.length < 5 || isAnalyzing}
+                                className={`text-[10px] px-3 py-1.5 rounded-full border flex items-center gap-2 transition-all
+                                    ${prompt && prompt.length >= 5 && !isAnalyzing
+                                        ? 'bg-indigo-500/20 border-indigo-500/50 text-indigo-300 hover:bg-indigo-500 hover:text-white cursor-pointer shadow-lg shadow-indigo-500/20'
+                                        : 'bg-white/5 border-white/5 text-white/20 cursor-not-allowed'}
+                                `}
+                            >
+                                <Wand2 size={10} />
+                                {isAnalyzing ? "Analyzing..." : "Auto-Direct"}
+                            </button>
                         </div>
 
                         <textarea
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
-                            placeholder={`Paste your song lyrics here to capture the emotion...\n\nThen add specific details:\n• Location & Atmosphere\n• Time of Day & Weather\n• Cinematic Style & Lighting\n• Key visuals you want to see`}
+                            placeholder={`Paste your song lyrics here to capture the emotion...\n\nThen click 'Auto-Direct' to let the AI set the scene.`}
                             className="w-full bg-black/20 border border-white/10 rounded-xl p-4 text-sm text-white flex-1 focus:border-indigo-500 transition-all resize-none leading-relaxed placeholder:text-white/20"
                         />
                     </div>
