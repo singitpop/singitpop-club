@@ -123,6 +123,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
     const [selectedTrackId, setSelectedTrackId] = useState<string | number>("");
     const [activeCategory, setActiveCategory] = useState<OptionCategory>('world');
     const [prompt, setPrompt] = useState("");
+    const [aiTheme, setAiTheme] = useState<string>("cinematic"); // Store the detected theme
 
     // Selection State
     const [selections, setSelections] = useState({ ...INITIAL_SELECTIONS });
@@ -218,6 +219,9 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                     winningTheme = theme;
                 }
             });
+
+            // Update State with extracted theme
+            setAiTheme(winningTheme);
 
             // Apply COHESIVE PRESETS based on Winning Theme
             switch (winningTheme) {
@@ -315,6 +319,17 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             setSelections(newSelections);
             setIsAnalyzing(false);
         }, 1500); // Slightly longer "thinking" time
+    };
+
+    const handleGenerate = () => {
+        onNext({
+            track: tracks.find(t => t.id == selectedTrackId),
+            userPrompt: prompt,
+            vibe: {
+                theme: aiTheme, // Pass the winning theme
+                selections: selections
+            }
+        });
     };
 
     return (
