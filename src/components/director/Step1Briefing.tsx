@@ -260,42 +260,23 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             // Now we look for specific NOUNS to override/fill details without breaking the vibe.
 
             // Location Overrides
-            if (/\b(room|home|house|bed|sofa)\b/i.test(lowerPrompt)) newSelections.location = "Luxury Penthouse";
-            if (/\b(bar|club|pub|drink)\b/i.test(lowerPrompt)) newSelections.location = winningTheme === 'energy' ? "Jazz Club" : "Dive Bar";
+            if (/\b(room|home|house|bed|sofa)\b/i.test(lowerPrompt)) {
+                if (winningTheme === 'energy') newSelections.location = "Jazz Club";
+                else if (winningTheme === 'dark') newSelections.location = "Abandoned Warehouse";
+                else newSelections.location = "Luxury Penthouse";
+            }
+            if (/\b(bar|club|pub|drink)\b/i.test(lowerPrompt)) newSelections.location = "Dive Bar";
             if (/\b(street|road|city|town)\b/i.test(lowerPrompt)) newSelections.location = "Tokyo Streets";
             if (/\b(car|drive|ride)\b/i.test(lowerPrompt)) {
                 newSelections.location = "Desert Highway";
                 newSelections.vehicles = "Vintage Muscle Car";
             }
-            if (/\b(beach|sea|ocean|sand)\b/i.test(lowerPrompt)) newSelections.location = winningTheme === 'dark' ? "Beach at Night" : "Beach at Night";
+            if (/\b(beach|sea|ocean|sand)\b/i.test(lowerPrompt)) newSelections.location = winningTheme === 'dark' ? "Beach at Night" : "Beach at Night"; // Could add a sunny beach if available
 
             // Weather/Time Overrides (Only if explicit)
             if (/\b(rain|storm|wet)\b/i.test(lowerPrompt)) newSelections.weather = "Heavy Rain";
             if (/\b(sun|sunny|hot)\b/i.test(lowerPrompt)) { newSelections.weather = "Clear"; newSelections.timeOfDay = "Noon"; }
             if (/\b(night|dark|moon)\b/i.test(lowerPrompt)) newSelections.timeOfDay = "Midnight";
-
-
-            // 🧠 PHASE 3: FINE TUNING (The Specifics)
-            // Re-run the Director Brain dictionary to catch specific camera angles or props
-            // that the broad themes missed (e.g., "floor" -> Low Angle, "chest" -> Close Up).
-            Object.entries(DIRECTOR_BRAIN).forEach(([keyword, map]) => {
-                const regex = new RegExp(`\\b${keyword}\\b`, 'i');
-                if (regex.test(lowerPrompt)) {
-                    Object.entries(map).forEach(([category, fields]) => {
-                        Object.entries(fields as Record<string, string[]>).forEach(([field, possibleValues]) => {
-                            // Only apply if we haven't already hard-set this in Phase 2,
-                            // OR if it's a "Camera" setting (which we want to be specific)
-                            if (category === 'camera' || !newSelections[field as keyof typeof selections]) {
-                                const pick = possibleValues[Math.floor(Math.random() * possibleValues.length)];
-                                if (pick) {
-                                    // @ts-ignore
-                                    newSelections[field as keyof typeof selections] = pick;
-                                }
-                            }
-                        });
-                    });
-                }
-            });
 
             setSelections(newSelections);
             setIsAnalyzing(false);
