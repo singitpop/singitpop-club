@@ -79,7 +79,7 @@ export default function DirectorWizard() {
                     <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
                         Director<span className="text-white font-light">Ultra</span>
                     </h1>
-                    <p className="text-xs text-white/40 mt-1 uppercase tracking-wider">AI Movie Studio</p>
+                    <p className="text-xs text-white/40 mt-1 uppercase tracking-wider">AI Movie Studio v2.4 (Live)</p>
                 </div>
 
                 <nav className="flex-1 px-4 space-y-2">
