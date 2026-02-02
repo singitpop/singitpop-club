@@ -54,18 +54,35 @@ type DeepPartialOptions = {
 const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     // Vibe / Mood
     "love": { lighting: { mood: ["Romantic", "Dreamy"], lighting: ["Cinematic Soft", "Candlelight", "Golden Hour"] } },
-    "heart": { lighting: { mood: ["Romantic", "Melancholic"], colorGrade: ["Pastel Dream", "Teal & Orange"] } },
+    "heart": { lighting: { mood: ["Romantic", "Melancholic"], colorGrade: ["Pastel Dream", "Teal & Orange"] }, camera: { angle: ["Close Up"] } },
+    "kiss": { lighting: { mood: ["Romantic"], lighting: ["Candlelight"] }, camera: { angle: ["Close Up", "POV"] } },
+    "smile": { lighting: { mood: ["Romantic", "Dreamy"], lighting: ["Cinematic Soft", "Natural Window Light"] }, camera: { angle: ["Close Up", "Portrait"] } },
+    "eyes": { camera: { lens: ["50mm Portrait", "85mm Anamorphic"], angle: ["Close Up"] } },
+
+    // Action / Energy
     "dance": { lighting: { mood: ["Cinematic", "Neon Noir"], lighting: ["Strobe", "Neon Signs"] }, camera: { movement: ["Fast Zoom", "Handheld Shaky"] } },
-    "party": { lighting: { mood: ["Cinematic"], lighting: ["Strobe", "Neon Signs"] }, world: { location: ["Jazz Club", "Ballroom"] } },
+    "party": { lighting: { mood: ["Cinematic"], lighting: ["Strobe", "Neon Signs"] }, world: { location: ["Jazz Club", "Ballroom", "Dive Bar"] } },
+    "run": { camera: { movement: ["Tracking Shot", "Handheld Shaky"] }, lighting: { mood: ["Tense", "Gritty"] } },
+    "walk": { camera: { movement: ["Tracking Shot", "Slow Pan"] }, world: { location: ["Tokyo Streets", "Beach at Night"] } },
+    "slow": { camera: { movement: ["Slow Pan", "Smooth Gimbal"] }, lighting: { mood: ["Dreamy", "Melancholic"] } },
+    "wave": { camera: { movement: ["Slow Pan"] } },
+    "breath": { lighting: { mood: ["Tense", "Romantic"] }, camera: { angle: ["Close Up"] } },
+
+    // Emotion
     "sad": { lighting: { mood: ["Melancholic", "Gritty"], colorGrade: ["Bleach Bypass", "Black & White"] }, world: { weather: ["Heavy Rain", "Foggy"] } },
+    "cry": { lighting: { mood: ["Melancholic"], lighting: ["Low-Key Noir"] }, world: { weather: ["Heavy Rain"] } },
     "lonely": { lighting: { mood: ["Melancholic"], lighting: ["Low-Key Noir"] }, camera: { angle: ["Wide Shot"] } },
     "dark": { lighting: { mood: ["Gritty", "Tense"], lighting: ["Low-Key Noir", "Moonlight"] }, world: { timeOfDay: ["Pitch Black", "Midnight"] } },
+    "quiet": { lighting: { mood: ["Tense", "Melancholic"], lighting: ["Low-Key Noir", "Natural Window Light"] } },
+
+    // Setting / Objects
+    "room": { world: { location: ["Luxury Penthouse", "Restaurant", "Ballroom", "Abandoned Warehouse"] }, lighting: { lighting: ["Natural Window Light", "Candlelight"] } },
     "future": { lighting: { mood: ["Cyberpunk"], lighting: ["Neon Signs"] }, world: { location: ["Cyberpunk City", "Space Station", "Tokyo Streets"] }, elements: { vehicles: ["Cyberpunk Bike", "Spaceship"], clothing: ["Cyber Armor", "Techwear"] } },
     "neon": { lighting: { mood: ["Dark Neon", "Cyberpunk"], lighting: ["Neon Signs"] }, style: { artDirection: ["Hyper-Realistic"] } },
     "retro": { lighting: { mood: ["Retro VHS"], colorGrade: ["Sepia Vintage"] }, style: { filmStock: ["VHS Tape", "16mm Grain"] }, elements: { clothing: ["Vintage Leather"] } },
     "dream": { lighting: { mood: ["Ethereal", "Dreamy"], lighting: ["Volumetric Beams"] }, style: { filmStock: ["Fujifilm Velvia"] } },
 
-    // Elements
+    // Nature / Elements
     "rain": { world: { weather: ["Heavy Rain", "Electric Storm"] }, lighting: { mood: ["Melancholic", "Cinematic"] } },
     "sun": { world: { timeOfDay: ["Noon", "Golden Hour"], weather: ["Clear", "Heatwave"] }, lighting: { lighting: ["Natural Window Light"] } },
     "night": { world: { timeOfDay: ["Midnight", "Blue Hour"], location: ["Beach at Night"] }, lighting: { lighting: ["Moonlight", "Neon Signs"] } },
@@ -152,10 +169,10 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
         // Simulate "Thinking" time for the AI Director
         setTimeout(() => {
             const lowerPrompt = prompt.toLowerCase();
-            const words = lowerPrompt.split(/\s+/);
-            const newSelections = { ...selections };
 
-            // 1. Reset categories to a "Neutral" state if needed, or just overwrite matches.
+            // 1. Reset categories to a "Neutral" state to avoid stale data from previous runs.
+            const newSelections = { ...selections, location: "", timeOfDay: "", lighting: "", mood: "", angle: "", filmStock: "" };
+
             // We'll behave like a real director: Pick the STRONGEST signals.
 
             Object.entries(DIRECTOR_BRAIN).forEach(([keyword, map]) => {
