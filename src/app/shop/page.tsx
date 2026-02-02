@@ -311,9 +311,9 @@ export default function ShopPage() {
                             viewport={{ once: true }}
                             className="group relative bg-white/5 rounded-3xl overflow-hidden border border-white/10 hover:border-pink-500/50 transition-all"
                         >
-                            <div className="aspect-square bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-8">
+                            <div className="aspect-square bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-6">
                                 <div
-                                    className="w-full h-full rounded-full shadow-2xl flex items-center justify-center relative animate-[spin_10s_linear_infinite] group-hover:animate-[spin_3s_linear_infinite]"
+                                    className="w-full h-full aspect-square rounded-full shadow-2xl flex items-center justify-center relative animate-[spin_10s_linear_infinite] group-hover:animate-[spin_3s_linear_infinite]"
                                     style={{ background: '#111' }}
                                 >
                                     {/* Vinyl Grooves */}
