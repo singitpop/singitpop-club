@@ -164,7 +164,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                     // Loop through categories in the map (world, lighting, etc)
                     Object.entries(map).forEach(([category, fields]) => {
                         // Loop through fields (location, mood, etc)
-                        Object.entries(fields as any).forEach(([field, possibleValues]: [string, string[]]) => {
+                        Object.entries(fields as Record<string, string[]>).forEach(([field, possibleValues]) => {
                             // Pick a random one from the possible values to add variety
                             const pick = possibleValues[Math.floor(Math.random() * possibleValues.length)];
                             if (pick) {
