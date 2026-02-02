@@ -152,13 +152,7 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
         selections.angle, selections.filmStock
     ].filter(Boolean).join(" • ");
 
-    const handleGenerate = () => {
-        onNext({
-            trackId: selectedTrackId,
-            prompt,
-            selections
-        });
-    };
+
 
     const categories = [
         { id: 'world', label: '1. Scene (Where & When)', icon: MapPin },
