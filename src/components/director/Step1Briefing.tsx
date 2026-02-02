@@ -79,6 +79,7 @@ const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     // Setting / Objects
     "room": { world: { location: ["Luxury Penthouse", "Restaurant", "Ballroom", "Abandoned Warehouse"] }, lighting: { lighting: ["Natural Window Light", "Candlelight"] } },
     "floor": { world: { location: ["Luxury Penthouse", "Ballroom"] }, camera: { angle: ["Low Angle"] } },
+    "porch": { world: { location: ["Forest", "Abandoned Warehouse"] }, lighting: { lighting: ["Natural Window Light", "Golden Hour"] } },
     "future": { lighting: { mood: ["Cyberpunk"], lighting: ["Neon Signs"] }, world: { location: ["Cyberpunk City", "Space Station", "Tokyo Streets"] }, elements: { vehicles: ["Cyberpunk Bike", "Spaceship"], clothing: ["Cyber Armor", "Techwear"] } },
     "neon": { lighting: { mood: ["Dark Neon", "Cyberpunk"], lighting: ["Neon Signs"] }, style: { artDirection: ["Hyper-Realistic"] } },
     "retro": { lighting: { mood: ["Retro VHS"], colorGrade: ["Sepia Vintage"] }, style: { filmStock: ["VHS Tape", "16mm Grain"] }, elements: { clothing: ["Vintage Leather"] } },
@@ -92,10 +93,12 @@ const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     "ground": { world: { location: ["Forest", "Desert Highway"] }, camera: { angle: ["High Angle", "Tracking Shot"] } },
     "night": { world: { timeOfDay: ["Midnight", "Blue Hour"], location: ["Beach at Night"] }, lighting: { lighting: ["Moonlight", "Neon Signs"] } },
     "car": { elements: { vehicles: ["Vintage Muscle Car", "Luxury Sports Car"] }, world: { location: ["Desert Highway", "Tokyo Streets"] } },
+    "road": { elements: { vehicles: ["Vintage Muscle Car"] }, world: { location: ["Desert Highway"] } },
     "drive": { elements: { vehicles: ["Vintage Muscle Car"] }, camera: { movement: ["Tracking Shot"] } },
     "space": { world: { location: ["Space Station"] }, elements: { vehicles: ["Spaceship"], clothing: ["Cyber Armor"] } },
     "city": { world: { location: ["Cyberpunk City", "Tokyo Streets"] } },
     "forest": { world: { location: ["Forest"] }, lighting: { lighting: ["Volumetric Beams"] } },
+    "fireflies": { world: { location: ["Forest"] }, lighting: { mood: ["Dreamy", "Ethereal"], lighting: ["Candlelight"] } },
 };
 
 type OptionCategory = 'world' | 'lighting' | 'camera' | 'style' | 'elements';
@@ -191,11 +194,11 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             };
 
             const keywords = {
-                romance: ["love", "heart", "kiss", "baby", "smile", "touch", "hold", "forever", "you", "beautiful", "sweet"],
+                romance: ["love", "heart", "kiss", "baby", "smile", "touch", "hold", "forever", "you", "beautiful", "sweet", "moon"],
                 energy: ["dance", "party", "run", "fast", "jump", "beat", "rhythm", "go", "shake", "loud", "crazy", "wild", "move"],
-                melancholy: ["sad", "cry", "lonely", "tears", "pain", "gone", "miss", "blue", "broken", "rain", "hurt", "quiet", "goodbye", "loss"],
+                melancholy: ["sad", "cry", "lonely", "tears", "pain", "gone", "miss", "blue", "broken", "rain", "hurt", "quiet", "goodbye", "loss", "ghost", "haunt", "past"],
                 dark: ["dark", "night", "blood", "kill", "gun", "fear", "shadow", "black", "death", "fight", "war", "danger", "cold"],
-                dreamy: ["dream", "sleep", "sky", "cloud", "fly", "float", "star", "moon", "magic", "wonder", "high", "light", "sun", "spring", "rise", "change", "new"]
+                dreamy: ["dream", "sleep", "sky", "cloud", "fly", "float", "star", "moon", "magic", "wonder", "high", "light", "sun", "spring", "rise", "change", "new", "fireflies"]
             };
 
             // Count hits
