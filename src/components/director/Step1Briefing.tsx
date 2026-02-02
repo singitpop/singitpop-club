@@ -158,16 +158,26 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                         <Sparkles size={16} className="text-yellow-400" />
                         <h3 className="text-sm font-bold uppercase tracking-wider text-white/60">Mega Prompt Preview</h3>
                     </div>
-                    <div className="bg-black/40 rounded-xl p-4 flex-1 font-mono text-sm text-indigo-200 overflow-y-auto mb-4 border border-white/5">
-                        {constructedPrompt || <span className="text-white/20">Select options to build your prompt...</span>}
+                    <div className="bg-black/40 rounded-xl p-4 font-mono text-sm text-indigo-200 overflow-y-auto mb-4 border border-white/5 h-24">
+                        <span className="text-white/40 block mb-2 text-xs uppercase tracking-wider">Auto-Generated Context:</span>
+                        {constructedPrompt || <span className="text-white/20">Select options from the right...</span>}
                     </div>
 
-                    <textarea
-                        value={prompt}
-                        onChange={(e) => setPrompt(e.target.value)}
-                        placeholder="Add specific custom details..."
-                        className="w-full bg-black/20 border border-white/10 rounded-xl p-3 text-sm text-white h-24 focus:border-indigo-500 transition-all resize-none"
-                    />
+                    <div className="flex-1 flex flex-col min-h-0">
+                        <div className="flex justify-between items-center mb-2">
+                            <label className="text-xs font-bold text-white/60 uppercase tracking-widest">Lyrics & Vision</label>
+                            <span className="text-[10px] text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded border border-indigo-500/20">
+                                Tip: Paste full lyrics here!
+                            </span>
+                        </div>
+
+                        <textarea
+                            value={prompt}
+                            onChange={(e) => setPrompt(e.target.value)}
+                            placeholder={`Paste your song lyrics here to capture the emotion...\n\nThen add specific details:\n• Location & Atmosphere\n• Time of Day & Weather\n• Cinematic Style & Lighting\n• Key visuals you want to see`}
+                            className="w-full bg-black/20 border border-white/10 rounded-xl p-4 text-sm text-white flex-1 focus:border-indigo-500 transition-all resize-none leading-relaxed placeholder:text-white/20"
+                        />
+                    </div>
 
                     <button
                         onClick={handleGenerate}
