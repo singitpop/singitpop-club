@@ -47,7 +47,11 @@ const OPTIONS = {
 
 // THE DIRECTOR INTELLIGENCE ENGINE 🧠
 // Maps keywords to likely cinematic choices.
-const DIRECTOR_BRAIN: Record<string, Partial<typeof OPTIONS>> = {
+type DeepPartialOptions = {
+    [K in keyof typeof OPTIONS]?: Partial<typeof OPTIONS[K]>
+};
+
+const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     // Vibe / Mood
     "love": { lighting: { mood: ["Romantic", "Dreamy"], lighting: ["Cinematic Soft", "Candlelight", "Golden Hour"] } },
     "heart": { lighting: { mood: ["Romantic", "Melancholic"], colorGrade: ["Pastel Dream", "Teal & Orange"] } },
