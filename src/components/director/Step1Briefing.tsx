@@ -292,7 +292,14 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
             // Weather/Time Overrides (Only if explicit)
             if (/\b(rain|storm|wet)\b/i.test(lowerPrompt)) newSelections.weather = "Heavy Rain";
             if (/\b(sun|sunny|hot)\b/i.test(lowerPrompt)) { newSelections.weather = "Clear"; newSelections.timeOfDay = "Noon"; }
-            if (/\b(night|dark|moon)\b/i.test(lowerPrompt)) newSelections.timeOfDay = "Midnight";
+            if (/\b(night|dark|moon|midnight)\b/i.test(lowerPrompt)) newSelections.timeOfDay = "Midnight";
+
+            // SUPER-MEGA PROMPT PARSING (User Paste Support)
+            // If the user pastes a ChatGPT prompt, we look for explicit "Director Language"
+            if (/\b(burgundy|ember|rose-gold)\b/i.test(lowerPrompt)) newSelections.colorGrade = "Pastel Dream"; // Closest match
+            if (/\b(low-key|silhouette|rim light)\b/i.test(lowerPrompt)) newSelections.lighting = "Low-Key Noir";
+            if (/\b(shallow depth|push-in|close-up)\b/i.test(lowerPrompt)) newSelections.angle = "Close Up";
+            if (/\b(ribbons|particles|haze)\b/i.test(lowerPrompt)) newSelections.lighting = "Volumetric Beams";
 
             setSelections(newSelections);
             setIsAnalyzing(false);
