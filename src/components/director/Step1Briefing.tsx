@@ -100,150 +100,160 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
                             value={selectedTrackId}
                             onChange={(e) => setSelectedTrackId(e.target.value)}
                             className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white appearance-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer"
-                        >
-                            <option value="">-- Choose Song --</option>
-                            {tracks.map((t) => (
-                                <option key={t.id} value={t.id}>
-                                    {t.title}
-                                </option>
-                            ))}
-                        </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/30">▼</div>
-                    </div>
-                </div>
+                            // Construct the "Mega Prompt" string for preview
+                            const constructedPrompt= [
+                        selections.location, selections.timeOfDay, selections.weather, // World First
+                        selections.lighting, selections.mood, selections.colorGrade, // Lighting Second
+                        selections.angle, selections.lens, selections.movement, // Camera
+                        selections.filmStock, selections.artDirection, // Style
+                        selections.vehicles ? selections.vehicles : "",
+                        selections.animals ? selections.animals : "",
+                        selections.clothing,
+                        selections.props.join(", "),
+                        selections.details.join(", ")
+                        ].filter(Boolean).join(", ");
 
-                {/* Live Prompt Preview */}
-                <div className="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 border border-white/10 rounded-2xl p-6 flex-1 flex flex-col">
-                    <div className="flex items-center gap-2 mb-4">
-                        <Sparkles size={16} className="text-yellow-400" />
-                        <h3 className="text-sm font-bold uppercase tracking-wider text-white/60">Mega Prompt Preview</h3>
-                    </div>
-                    <div className="bg-black/40 rounded-xl p-4 font-mono text-sm text-indigo-200 overflow-y-auto mb-4 border border-white/5 h-24">
-                        <span className="text-white/40 block mb-2 text-xs uppercase tracking-wider">Auto-Generated Context:</span>
-                        {constructedPrompt || <span className="text-white/20">Select options from the right...</span>}
-                    </div>
+    const handleGenerate = () => {
+        if (!selectedTrackId) return;
+        const selectedTrack = tracks.find(t => t.id === selectedTrackId);
+                        onNext({
+                            track: selectedTrack,
+                        userPrompt: constructedPrompt,
+                        rawSelections: selections,
+                        manualPrompt: prompt
+        });
+    };
+                        <div className="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 border border-white/10 rounded-2xl p-6 flex-1 flex flex-col">
+                            <div className="flex items-center gap-2 mb-4">
+                                <Sparkles size={16} className="text-yellow-400" />
+                                <h3 className="text-sm font-bold uppercase tracking-wider text-white/60">Mega Prompt Preview</h3>
+                            </div>
+                            <div className="bg-black/40 rounded-xl p-4 font-mono text-sm text-indigo-200 overflow-y-auto mb-4 border border-white/5 h-24">
+                                <span className="text-white/40 block mb-2 text-xs uppercase tracking-wider">Auto-Generated Context:</span>
+                                {constructedPrompt || <span className="text-white/20">Select options from the right...</span>}
+                            </div>
 
-                    <div className="flex-1 flex flex-col min-h-0">
-                        <div className="flex justify-between items-center mb-2">
-                            <label className="text-xs font-bold text-white/60 uppercase tracking-widest">Lyrics & Vision</label>
-                            <span className="text-[10px] text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded border border-indigo-500/20">
-                                Tip: Paste full lyrics here!
-                            </span>
-                        </div>
+                            <div className="flex-1 flex flex-col min-h-0">
+                                <div className="flex justify-between items-center mb-2">
+                                    <label className="text-xs font-bold text-white/60 uppercase tracking-widest">Lyrics & Vision</label>
+                                    <span className="text-[10px] text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded border border-indigo-500/20">
+                                        Tip: Paste full lyrics here!
+                                    </span>
+                                </div>
 
-                        <textarea
-                            value={prompt}
-                            onChange={(e) => setPrompt(e.target.value)}
-                            placeholder={`Paste your song lyrics here to capture the emotion...\n\nThen add specific details:\n• Location & Atmosphere\n• Time of Day & Weather\n• Cinematic Style & Lighting\n• Key visuals you want to see`}
-                            className="w-full bg-black/20 border border-white/10 rounded-xl p-4 text-sm text-white flex-1 focus:border-indigo-500 transition-all resize-none leading-relaxed placeholder:text-white/20"
-                        />
-                    </div>
+                                <textarea
+                                    value={prompt}
+                                    onChange={(e) => setPrompt(e.target.value)}
+                                    placeholder={`Paste your song lyrics here to capture the emotion...\n\nThen add specific details:\n• Location & Atmosphere\n• Time of Day & Weather\n• Cinematic Style & Lighting\n• Key visuals you want to see`}
+                                    className="w-full bg-black/20 border border-white/10 rounded-xl p-4 text-sm text-white flex-1 focus:border-indigo-500 transition-all resize-none leading-relaxed placeholder:text-white/20"
+                                />
+                            </div>
 
-                    <button
-                        onClick={handleGenerate}
-                        disabled={!selectedTrackId}
-                        className={`mt-6 w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all
+                            <button
+                                onClick={handleGenerate}
+                                disabled={!selectedTrackId}
+                                className={`mt-6 w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all
                             ${selectedTrackId
-                                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] shadow-xl shadow-indigo-900/50'
-                                : 'bg-white/5 text-white/20 cursor-not-allowed'}
+                                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] shadow-xl shadow-indigo-900/50'
+                                        : 'bg-white/5 text-white/20 cursor-not-allowed'}
                         `}
-                    >
-                        Initialize Director Engine <ChevronRight size={20} />
-                    </button>
-                </div>
-            </div>
+                            >
+                                Initialize Director Engine <ChevronRight size={20} />
+                            </button>
+                        </div>
+                    </div>
 
-            {/* RIGHT: The Mega Control Panel (8 cols) */}
-            <div className="xl:col-span-8 bg-white/5 border border-white/10 rounded-2xl overflow-hidden flex flex-col">
+                    {/* RIGHT: The Mega Control Panel (8 cols) */}
+                    <div className="xl:col-span-8 bg-white/5 border border-white/10 rounded-2xl overflow-hidden flex flex-col">
 
-                {/* Category Tabs */}
-                <div className="flex border-b border-white/10 overflow-x-auto scrollbar-hide">
-                    {categories.map(c => (
-                        <button
-                            key={c.id}
-                            onClick={() => setActiveCategory(c.id as OptionCategory)}
-                            className={`flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors whitespace-nowrap
+                        {/* Category Tabs */}
+                        <div className="flex border-b border-white/10 overflow-x-auto scrollbar-hide">
+                            {categories.map(c => (
+                                <button
+                                    key={c.id}
+                                    onClick={() => setActiveCategory(c.id as OptionCategory)}
+                                    className={`flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors whitespace-nowrap
                                 ${activeCategory === c.id ? 'bg-white/10 text-white border-b-2 border-indigo-500' : 'text-white/40 hover:text-white hover:bg-white/5'}
                             `}
-                        >
-                            <c.icon size={16} />
-                            {c.label}
-                        </button>
-                    ))}
+                                >
+                                    <c.icon size={16} />
+                                    {c.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Scrollable Options Area */}
+                        <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-black/20">
+
+                            {activeCategory === 'world' && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <ControlGroup title="1. Location (Where is this happening?)" options={OPTIONS.world.location} current={selections.location} onSelect={(v) => toggleSelection('location', v)} />
+                                    <ControlGroup title="2. Time of Day" options={OPTIONS.world.timeOfDay} current={selections.timeOfDay} onSelect={(v) => toggleSelection('timeOfDay', v)} />
+                                    <ControlGroup title="3. Weather / Element" options={OPTIONS.world.weather} current={selections.weather} onSelect={(v) => toggleSelection('weather', v)} />
+                                </div>
+                            )}
+
+                            {activeCategory === 'lighting' && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <ControlGroup title="Lighting Setup" options={OPTIONS.lighting.lighting} current={selections.lighting} onSelect={(v) => toggleSelection('lighting', v)} />
+                                    <ControlGroup title="Overall Mood" options={OPTIONS.lighting.mood} current={selections.mood} onSelect={(v) => toggleSelection('mood', v)} />
+                                    <ControlGroup title="Color Grading" options={OPTIONS.lighting.colorGrade} current={selections.colorGrade} onSelect={(v) => toggleSelection('colorGrade', v)} />
+                                </div>
+                            )}
+
+                            {activeCategory === 'camera' && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <ControlGroup title="Camera Angle" options={OPTIONS.camera.angle} current={selections.angle} onSelect={(v) => toggleSelection('angle', v)} />
+                                    <ControlGroup title="Lens Info" options={OPTIONS.camera.lens} current={selections.lens} onSelect={(v) => toggleSelection('lens', v)} />
+                                    <ControlGroup title="Camera Movement" options={OPTIONS.camera.movement} current={selections.movement} onSelect={(v) => toggleSelection('movement', v)} />
+                                </div>
+                            )}
+
+                            {activeCategory === 'style' && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <ControlGroup title="Film Stock / Medium" options={OPTIONS.style.filmStock} current={selections.filmStock} onSelect={(v) => toggleSelection('filmStock', v)} />
+                                    <ControlGroup title="Art Direction Style" options={OPTIONS.style.artDirection} current={selections.artDirection} onSelect={(v) => toggleSelection('artDirection', v)} />
+                                </div>
+                            )}
+
+                            {activeCategory === 'elements' && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <ControlGroup title="Lead Character Outfit" options={OPTIONS.elements.clothing} current={selections.clothing} onSelect={(v) => toggleSelection('clothing', v)} />
+                                    <ControlGroup title="Key Props" options={OPTIONS.elements.props} current={selections.props} onSelect={(v) => toggleSelection('props', v)} isMulti />
+                                    <ControlGroup title="Vehicles" options={OPTIONS.elements.vehicles} current={selections.vehicles} onSelect={(v) => toggleSelection('vehicles', v)} />
+                                    <ControlGroup title="Animals" options={OPTIONS.elements.animals} current={selections.animals} onSelect={(v) => toggleSelection('animals', v)} />
+                                </div>
+                            )}
+
+                        </div>
+                    </div>
                 </div>
-
-                {/* Scrollable Options Area */}
-                <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-black/20">
-
-                    {activeCategory === 'world' && (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <ControlGroup title="1. Location (Where is this happening?)" options={OPTIONS.world.location} current={selections.location} onSelect={(v) => toggleSelection('location', v)} />
-                            <ControlGroup title="2. Time of Day" options={OPTIONS.world.timeOfDay} current={selections.timeOfDay} onSelect={(v) => toggleSelection('timeOfDay', v)} />
-                            <ControlGroup title="3. Weather / Element" options={OPTIONS.world.weather} current={selections.weather} onSelect={(v) => toggleSelection('weather', v)} />
-                        </div>
-                    )}
-
-                    {activeCategory === 'lighting' && (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <ControlGroup title="Lighting Setup" options={OPTIONS.lighting.lighting} current={selections.lighting} onSelect={(v) => toggleSelection('lighting', v)} />
-                            <ControlGroup title="Overall Mood" options={OPTIONS.lighting.mood} current={selections.mood} onSelect={(v) => toggleSelection('mood', v)} />
-                            <ControlGroup title="Color Grading" options={OPTIONS.lighting.colorGrade} current={selections.colorGrade} onSelect={(v) => toggleSelection('colorGrade', v)} />
-                        </div>
-                    )}
-
-                    {activeCategory === 'camera' && (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <ControlGroup title="Camera Angle" options={OPTIONS.camera.angle} current={selections.angle} onSelect={(v) => toggleSelection('angle', v)} />
-                            <ControlGroup title="Lens Info" options={OPTIONS.camera.lens} current={selections.lens} onSelect={(v) => toggleSelection('lens', v)} />
-                            <ControlGroup title="Camera Movement" options={OPTIONS.camera.movement} current={selections.movement} onSelect={(v) => toggleSelection('movement', v)} />
-                        </div>
-                    )}
-
-                    {activeCategory === 'style' && (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <ControlGroup title="Film Stock / Medium" options={OPTIONS.style.filmStock} current={selections.filmStock} onSelect={(v) => toggleSelection('filmStock', v)} />
-                            <ControlGroup title="Art Direction Style" options={OPTIONS.style.artDirection} current={selections.artDirection} onSelect={(v) => toggleSelection('artDirection', v)} />
-                        </div>
-                    )}
-
-                    {activeCategory === 'elements' && (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <ControlGroup title="Lead Character Outfit" options={OPTIONS.elements.clothing} current={selections.clothing} onSelect={(v) => toggleSelection('clothing', v)} />
-                            <ControlGroup title="Key Props" options={OPTIONS.elements.props} current={selections.props} onSelect={(v) => toggleSelection('props', v)} isMulti />
-                            <ControlGroup title="Vehicles" options={OPTIONS.elements.vehicles} current={selections.vehicles} onSelect={(v) => toggleSelection('vehicles', v)} />
-                            <ControlGroup title="Animals" options={OPTIONS.elements.animals} current={selections.animals} onSelect={(v) => toggleSelection('animals', v)} />
-                        </div>
-                    )}
-
-                </div>
-            </div>
-        </div>
-    );
+                );
 }
 
-// Sub-component for options grid
-function ControlGroup({ title, options, current, onSelect, isMulti = false }: { title: string, options: string[], current: string | string[], onSelect: (v: string) => void, isMulti?: boolean }) {
+                // Sub-component for options grid
+                function ControlGroup({title, options, current, onSelect, isMulti = false}: {title: string, options: string[], current: string | string[], onSelect: (v: string) => void, isMulti?: boolean }) {
     return (
-        <div>
-            <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">{title}</h4>
-            <div className="flex flex-wrap gap-2">
-                {options.map(opt => {
-                    const isSelected = isMulti ? (current as string[]).includes(opt) : current === opt;
-                    return (
-                        <button
-                            key={opt}
-                            onClick={() => onSelect(opt)}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200 hover:scale-105
+                <div>
+                    <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">{title}</h4>
+                    <div className="flex flex-wrap gap-2">
+                        {options.map(opt => {
+                            const isSelected = isMulti ? (current as string[]).includes(opt) : current === opt;
+                            return (
+                                <button
+                                    key={opt}
+                                    onClick={() => onSelect(opt)}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200 hover:scale-105
                                 ${isSelected
-                                    ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-900/50'
-                                    : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white'}
+                                            ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-900/50'
+                                            : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white'}
                             `}
-                        >
-                            {opt}
-                        </button>
-                    );
-                })}
-            </div>
-        </div>
-    );
+                                >
+                                    {opt}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+                );
 }
