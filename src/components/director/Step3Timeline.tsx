@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Clock, Plus, GripVertical, Trash2, Film, Users, Video, MoveRight, PlayCircle, Sparkles, FileText, X, Wand2 } from "lucide-react";
-import { motion, Reorder } from "framer-motion";
+import { motion, Reorder, AnimatePresence } from "framer-motion";
 
 interface Character {
     id: string;
@@ -175,7 +175,7 @@ export default function Step3Timeline({ onNext, project }: Step3Props) {
                 if (currentScene) {
                     parsedScenes.push({
                         ...currentScene as Scene,
-                        description: accumulatedDesc.join(" ").trim() || currentScene.description
+                        description: accumulatedDesc.join(" ").trim() || (currentScene as any).description
                     } as Scene);
                 }
 
@@ -204,7 +204,7 @@ export default function Step3Timeline({ onNext, project }: Step3Props) {
         if (currentScene) {
             parsedScenes.push({
                 ...currentScene as Scene,
-                description: accumulatedDesc.join(" ").trim() || currentScene.description
+                description: accumulatedDesc.join(" ").trim() || (currentScene as any).description
             } as Scene);
         }
 
