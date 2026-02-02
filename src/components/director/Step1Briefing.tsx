@@ -87,6 +87,9 @@ const DIRECTOR_BRAIN: Record<string, DeepPartialOptions> = {
     // Nature / Elements
     "rain": { world: { weather: ["Heavy Rain", "Electric Storm"] }, lighting: { mood: ["Melancholic", "Cinematic"] } },
     "sun": { world: { timeOfDay: ["Noon", "Golden Hour"], weather: ["Clear", "Heatwave"] }, lighting: { lighting: ["Natural Window Light"] } },
+    "spring": { world: { location: ["Forest"], timeOfDay: ["Dawn", "Golden Hour"] }, lighting: { mood: ["Ethereal", "Dreamy"] } },
+    "sky": { world: { location: ["Forest", "Beach at Night"] }, camera: { angle: ["Low Angle", "POV"] } },
+    "ground": { world: { location: ["Forest", "Desert Highway"] }, camera: { angle: ["High Angle", "Tracking Shot"] } },
     "night": { world: { timeOfDay: ["Midnight", "Blue Hour"], location: ["Beach at Night"] }, lighting: { lighting: ["Moonlight", "Neon Signs"] } },
     "car": { elements: { vehicles: ["Vintage Muscle Car", "Luxury Sports Car"] }, world: { location: ["Desert Highway", "Tokyo Streets"] } },
     "drive": { elements: { vehicles: ["Vintage Muscle Car"] }, camera: { movement: ["Tracking Shot"] } },
@@ -172,6 +175,9 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
         // Simulate "Thinking" time for the AI Director
         setTimeout(() => {
             const lowerPrompt = prompt.toLowerCase();
+
+            // 1. Reset categories to a "Neutral" state to avoid stale data.
+            // MUST reset all fields so we don't keep "Heatwave" from a previous run!
             const newSelections = { ...INITIAL_SELECTIONS };
 
             // 🧠 PHASE 1: EMOTIONAL SCORING (The Vibe Check)
@@ -186,10 +192,10 @@ export default function Step1Briefing({ tracks, onNext }: Step1Props) {
 
             const keywords = {
                 romance: ["love", "heart", "kiss", "baby", "smile", "touch", "hold", "forever", "you", "beautiful", "sweet"],
-                energy: ["dance", "party", "run", "fast", "jump", "beat", "rhythm", "go", "shake", "loud", "crazy", "wild"],
-                melancholy: ["sad", "cry", "lonely", "tears", "pain", "gone", "miss", "blue", "broken", "rain", "hurt", "quiet", "goodbye"],
+                energy: ["dance", "party", "run", "fast", "jump", "beat", "rhythm", "go", "shake", "loud", "crazy", "wild", "move"],
+                melancholy: ["sad", "cry", "lonely", "tears", "pain", "gone", "miss", "blue", "broken", "rain", "hurt", "quiet", "goodbye", "loss"],
                 dark: ["dark", "night", "blood", "kill", "gun", "fear", "shadow", "black", "death", "fight", "war", "danger", "cold"],
-                dreamy: ["dream", "sleep", "sky", "cloud", "fly", "float", "star", "moon", "magic", "wonder", "high", "light"]
+                dreamy: ["dream", "sleep", "sky", "cloud", "fly", "float", "star", "moon", "magic", "wonder", "high", "light", "sun", "spring", "rise", "change", "new"]
             };
 
             // Count hits
