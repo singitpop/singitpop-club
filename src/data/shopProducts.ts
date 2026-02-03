@@ -19,7 +19,7 @@ export const MERCH_PRODUCTS: Product[] = [
     {
         id: "vinyl-limited",
         name: "Limited Edition Vinyl",
-        price: 30.00,
+        price: 35.00,
         description: "The 'Director's Cut' Vinyl Edit. Curated audiophile master on 180g vinyl. Includes high-res digital download of the vinyl master.",
         imageColor: "linear-gradient(45deg, #000, #222)",
         category: "vinyl",
