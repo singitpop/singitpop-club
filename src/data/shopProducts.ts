@@ -28,18 +28,18 @@ export const MERCH_PRODUCTS: Product[] = [
     {
         id: "hoodie-midnight",
         name: "Midnight Hoodie",
-        price: 49.00,
+        price: 41.00,
         description: "Heavyweight premium cotton. Small front logo, large back graphic.",
         imageColor: "linear-gradient(45deg, #111, #333)",
         category: "apparel",
-        link: "https://fourthwall.com",
+        link: "https://singit-pop-shop.fourthwall.com/products/the-midnight-hoodie",
         badge: "Best Seller",
         inStock: true
     },
     {
         id: "tee-signature",
         name: "Signature Heavy Tee",
-        price: 30.00,
+        price: 26.00,
         description: "Oversized fit, vintage wash. The classic fan essential.",
         imageColor: "linear-gradient(45deg, #222, #444)",
         category: "apparel",
@@ -49,7 +49,7 @@ export const MERCH_PRODUCTS: Product[] = [
     {
         id: "beanie-logo",
         name: "Studio Cuffed Beanie",
-        price: 20.00,
+        price: 24.00,
         description: "Warm knit with premium 3D embroidery.",
         imageColor: "linear-gradient(45deg, #333, #555)",
         category: "apparel",
@@ -59,7 +59,7 @@ export const MERCH_PRODUCTS: Product[] = [
     {
         id: "tote-vinyl",
         name: "Vinyl Carrier Tote",
-        price: 20.00,
+        price: 26.00,
         description: "Heavy canvas bag perfectly sized for 12\" records.",
         imageColor: "linear-gradient(45deg, #444, #666)",
         category: "accessory",
@@ -69,7 +69,7 @@ export const MERCH_PRODUCTS: Product[] = [
     {
         id: "hat-dad",
         name: "Studio Dad Hat",
-        price: 22.00,
+        price: 26.00,
         description: "Low profile, unstructured comfort. Embroidered logo.",
         imageColor: "linear-gradient(45deg, #222, #333)",
         category: "apparel",
@@ -79,7 +79,7 @@ export const MERCH_PRODUCTS: Product[] = [
     {
         id: "mug-midnight",
         name: "Midnight Coffee Mug",
-        price: 15.00,
+        price: 14.00,
         description: "Premium black glossy mug. Double-sided print (Left & Right handed).",
         imageColor: "linear-gradient(45deg, #000, #222)",
         category: "accessory",
