@@ -73,16 +73,17 @@ export const MERCH_PRODUCTS: Product[] = [
         description: "Low profile, unstructured comfort. Embroidered logo.",
         imageColor: "linear-gradient(45deg, #222, #333)",
         category: "apparel",
-        link: "https://singit-pop-shop.fourthwall.com", // Pending Link
+        link: "https://singit-pop-shop.fourthwall.com/products/the-studio-dad-hat",
         inStock: true
     },
-    id: "mug-midnight",
-    name: "Midnight Coffee Mug",
-    price: 15.00,
-    description: "Premium black glossy mug. Double-sided print (Left & Right handed).",
-    imageColor: "linear-gradient(45deg, #000, #222)",
-    category: "accessory",
-    link: "https://singit-pop-shop.fourthwall.com", // Pending Link
-    inStock: true
+    {
+        id: "mug-midnight",
+        name: "Midnight Coffee Mug",
+        price: 15.00,
+        description: "Premium black glossy mug. Double-sided print (Left & Right handed).",
+        imageColor: "linear-gradient(45deg, #000, #222)",
+        category: "accessory",
+        link: "https://singit-pop-shop.fourthwall.com/products/midnight-coffee-mug",
+        inStock: true
     }
 ];
