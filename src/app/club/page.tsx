@@ -3,61 +3,42 @@
 import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Play, Lock, Download, Star, Video, Settings, CreditCard, ChevronRight, Check, MessageSquare, Heart, MessageCircle, Image as ImageIcon } from 'lucide-react';
-import { VIP_UPDATES } from "../../data/vipUpdates";
-
-// Placeholder data for exclusive albums
-const albums = [
-    {
-        id: "album-1",
-        title: "Echoes of Tomorrow",
-        artist: "Aurora Bloom",
-        year: 2024,
-        genre: ["Electronic", "Ambient"],
-        coverArt: "https://images.unsplash.com/photo-1518609426025-0106c8557937?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        tracks: [
-            { id: 1, title: "Starlight Serenade", duration: "3:45" },
-            { id: 2, title: "Whispering Winds", duration: "4:10" },
-            { id: 3, title: "Cosmic Dance", duration: "3:20" },
-        ],
-        exclusive: true,
-    },
-    {
-        id: "album-2",
-        title: "Midnight Reverie",
-        artist: "The Lunar Collective",
-        year: 2024,
-        genre: ["Indie Pop", "Dream Pop"],
-        coverArt: "https://images.unsplash.com/photo-1517486804529-06232777b218?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        tracks: [
-            { id: 1, title: "Neon Glow", duration: "3:15" },
-            { id: 2, title: "Silent City", duration: "4:00" },
-            { id: 3, title: "Lost in Translation", duration: "3:50" },
-        ],
-        exclusive: true,
-    },
-    {
-        id: "album-3",
-        title: "Urban Pulse",
-        artist: "Rhythm Architects",
-        year: 2023,
-        genre: ["Hip Hop", "Lo-Fi"],
-        coverArt: "https://images.unsplash.com/photo-1519706039-da1b7639f795?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        tracks: [
-            { id: 1, title: "Street Lights", duration: "2:55" },
-            { id: 2, title: "Concrete Jungle", duration: "3:30" },
-        ],
-        exclusive: false, // Not exclusive, won't be shown
-    },
-];
+import { Play, Lock, Download, Star, Video, Settings, CreditCard, ChevronRight, Check, MessageSquare, Heart, MessageCircle, Image as ImageIcon, Music } from 'lucide-react';
+import { useState, useEffect } from "react";
 
 export default function ClubPage() {
     const { user, isLoaded } = useUser();
+    const [updates, setUpdates] = useState<any[]>([]);
+    const [exclusiveAlbums, setExclusiveAlbums] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const res = await fetch('/api/club-content');
+                if (res.ok) {
+                    const data = await res.json();
+                    setUpdates(data.updates || []);
+                    setExclusiveAlbums(data.albums || []);
+                }
+            } catch (error) {
+                console.error("Failed to fetch club content", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, []);
 
     if (!isLoaded) return null;
 
-    // Filter exclusive albums
-    const exclusiveAlbums = albums.filter(album => album.exclusive);
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-black text-white flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-16 px-4">
@@ -118,12 +99,18 @@ export default function ClubPage() {
                                     >
                                         <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                                             {/* Cover Art */}
-                                            <div className="relative w-40 h-40 shrink-0 shadow-2xl rounded-2xl overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                                                <img
-                                                    src={album.coverArt || "/images/album-placeholder.jpg"}
-                                                    alt={album.title}
-                                                    className="w-full h-full object-cover"
-                                                />
+                                            <div className="relative w-40 h-40 shrink-0 shadow-2xl rounded-2xl overflow-hidden group-hover:scale-105 transition-transform duration-500 bg-white/5">
+                                                {album.coverArt ? (
+                                                    <img
+                                                        src={album.coverArt}
+                                                        alt={album.title}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center">
+                                                        <Music size={40} className="text-white/20" />
+                                                    </div>
+                                                )}
                                                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <Play size={32} className="fill-white" />
                                                 </div>
@@ -142,13 +129,12 @@ export default function ClubPage() {
                                                     {album.genre?.join(', ')} • {album.tracks?.length || 0} Tracks
                                                 </p>
 
-                                                <Link
-                                                    href={`/music/album/${album.id}`}
+                                                <button
                                                     className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-pink-500 hover:text-white transition-colors"
                                                 >
                                                     <Play size={18} className="fill-current" />
                                                     Listen Now
-                                                </Link>
+                                                </button>
                                             </div>
                                         </div>
                                     </motion.div>
@@ -170,45 +156,51 @@ export default function ClubPage() {
                             <h2 className="text-2xl font-bold">Exclusive Updates</h2>
                         </div>
 
-                        <div className="space-y-6">
-                            {VIP_UPDATES.map((update) => (
-                                <motion.div
-                                    key={update.id}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    className="bg-white/5 rounded-2xl p-6 border border-white/10"
-                                >
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold">
-                                            {update.author[0]}
+                        {updates.length > 0 ? (
+                            <div className="space-y-6">
+                                {updates.map((update) => (
+                                    <motion.div
+                                        key={update.id}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        className="bg-white/5 rounded-2xl p-6 border border-white/10"
+                                    >
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold">
+                                                {update.author ? update.author[0] : 'G'}
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-sm">{update.title}</h4>
+                                                <span className="text-white/40 text-xs">{update.date} • by {update.author}</span>
+                                            </div>
+                                            {update.image && (
+                                                <span className="ml-auto text-xs px-2 py-1 bg-white/10 rounded-full flex items-center gap-1">
+                                                    <ImageIcon size={10} /> Photo attached
+                                                </span>
+                                            )}
                                         </div>
-                                        <div>
-                                            <h4 className="font-bold text-sm">{update.title}</h4>
-                                            <span className="text-white/40 text-xs">{update.date} • by {update.author}</span>
+
+                                        <p className="text-white/80 text-sm leading-relaxed mb-4 whitespace-pre-wrap">
+                                            {update.content}
+                                        </p>
+
+                                        <div className="flex items-center gap-4 text-white/40 text-xs">
+                                            <button className="flex items-center gap-1 hover:text-pink-400 transition-colors">
+                                                <Heart size={14} /> {update.likes || 0}
+                                            </button>
+                                            <button className="flex items-center gap-1 hover:text-white transition-colors">
+                                                <MessageCircle size={14} /> Comment
+                                            </button>
                                         </div>
-                                        {update.image && (
-                                            <span className="ml-auto text-xs px-2 py-1 bg-white/10 rounded-full flex items-center gap-1">
-                                                <ImageIcon size={10} /> Photo attached
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <p className="text-white/80 text-sm leading-relaxed mb-4">
-                                        {update.content}
-                                    </p>
-
-                                    <div className="flex items-center gap-4 text-white/40 text-xs">
-                                        <button className="flex items-center gap-1 hover:text-pink-400 transition-colors">
-                                            <Heart size={14} /> {update.likes || 0}
-                                        </button>
-                                        <button className="flex items-center gap-1 hover:text-white transition-colors">
-                                            <MessageCircle size={14} /> Comment
-                                        </button>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="p-8 text-white/40 text-center bg-white/5 rounded-2xl">
+                                No updates yet.
+                            </div>
+                        )}
                     </div>
 
                 </div>

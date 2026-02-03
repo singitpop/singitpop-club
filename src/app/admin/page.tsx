@@ -153,6 +153,10 @@ export default function AdminPage() {
                     <FolderOpen size={18} />
                     Projects
                 </Link>
+                <Link href="/admin/club" className={styles.btn}>
+                    <Lock size={18} />
+                    Club Manager
+                </Link>
             </div>
 
             <div className={styles.tableWrapper}>
