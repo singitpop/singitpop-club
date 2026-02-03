@@ -4,51 +4,7 @@ import { useState, useEffect } from "react";
 import { Music, Film, Calendar, TrendingUp, Clock, CheckCircle, Loader } from "lucide-react";
 import { motion } from "framer-motion";
 
-interface Project {
-    id: string;
-    type: "album" | "video";
-    title: string;
-    description: string;
-    status: "in_progress" | "completed" | "planned";
-    progress: number;
-    coverImage?: string;
-    releaseDate?: string;
-    createdAt: string;
-}
-
-// Mock data - will be replaced with API call from admin
-const MOCK_PROJECTS: Project[] = [
-    {
-        id: "1",
-        type: "album",
-        title: "Velvet Frequency",
-        description: "Upcoming EP featuring electronic soundscapes and intimate vocals",
-        status: "in_progress",
-        progress: 82,
-        releaseDate: "2026-04-01",
-        createdAt: "2025-12-01"
-    },
-    {
-        id: "2",
-        type: "video",
-        title: "You Are My Valentine",
-        description: "Romantic AI-generated music video",
-        status: "in_progress",
-        progress: 60,
-        releaseDate: "2026-02-14",
-        createdAt: "2026-01-20"
-    },
-    {
-        id: "3",
-        type: "album",
-        title: "Summer Vibes 2026",
-        description: "Upbeat tracks for the sunny season",
-        status: "planned",
-        progress: 0,
-        releaseDate: "2026-06-01",
-        createdAt: "2026-02-01"
-    }
-];
+import { PROJECTS, Project } from "@/data/projects";
 
 const STATUS_CONFIG = {
     in_progress: { label: "In Progress", color: "from-yellow-500 to-orange-500", icon: Clock },
@@ -65,8 +21,10 @@ export default function ProjectsPage() {
         // TODO: Replace with actual API call
         // fetch('/api/projects').then(res => res.json()).then(setProjects)
         setTimeout(() => {
-            setProjects(MOCK_PROJECTS);
-            setLoading(false);
+            setTimeout(() => {
+                setProjects(PROJECTS);
+                setLoading(false);
+            }, 500);
         }, 500);
     }, []);
 
@@ -112,8 +70,8 @@ export default function ProjectsPage() {
                                 key={tab.value}
                                 onClick={() => setFilter(tab.value as any)}
                                 className={`px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-all ${filter === tab.value
-                                        ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg shadow-pink-500/20"
-                                        : "bg-white/5 text-white/60 hover:bg-white/10"
+                                    ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg shadow-pink-500/20"
+                                    : "bg-white/5 text-white/60 hover:bg-white/10"
                                     }`}
                             >
                                 <Icon size={18} />
@@ -145,8 +103,8 @@ export default function ProjectsPage() {
                                     {/* Icon/Cover */}
                                     <div className="shrink-0">
                                         <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${project.type === "album"
-                                                ? "from-pink-500 to-purple-500"
-                                                : "from-cyan-500 to-blue-500"
+                                            ? "from-pink-500 to-purple-500"
+                                            : "from-cyan-500 to-blue-500"
                                             } flex items-center justify-center shadow-lg`}>
                                             {project.type === "album" ? (
                                                 <Music size={40} className="text-white" />
