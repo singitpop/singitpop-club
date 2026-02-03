@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail, Clapperboard } from 'lucide-react';
+import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail, Clapperboard, FolderOpen } from 'lucide-react';
 import styles from './Admin.module.css';
 
 interface UserData {
@@ -148,6 +148,10 @@ export default function AdminPage() {
                 <Link href="/admin/director" className={`${styles.btn} ${styles.btnSpecial}`}>
                     <Clapperboard size={18} />
                     Director Mode
+                </Link>
+                <Link href="/admin/projects" className={styles.btn}>
+                    <FolderOpen size={18} />
+                    Projects
                 </Link>
             </div>
 

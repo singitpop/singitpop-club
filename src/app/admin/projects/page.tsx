@@ -18,26 +18,89 @@ export default function AdminProjectsPage() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState<Partial<Project>>({});
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // TODO: Fetch from API
-        // fetch('/api/admin/projects').then(res => res.json()).then(setProjects)
+        fetchProjects();
     }, []);
 
+    const fetchProjects = async () => {
+        try {
+            const res = await fetch('/api/projects');
+            if (res.ok) {
+                const data = await res.json();
+                setProjects(data);
+            }
+        } catch (error) {
+            console.error("Failed to load projects", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const handleSave = async () => {
-        // TODO: Save to API
-        // await fetch('/api/admin/projects', { method: 'POST', body: JSON.stringify(formData) })
-        console.log('Saving:', formData);
-        setEditingId(null);
-        setFormData({});
+        if (!formData.title) return alert("Title is required");
+
+        let updatedProjects = [...projects];
+
+        if (editingId === 'new') {
+            const newProject: Project = {
+                id: crypto.randomUUID(),
+                type: formData.type || 'album',
+                title: formData.title,
+                description: formData.description || '',
+                status: formData.status || 'planned',
+                progress: formData.progress || 0,
+                releaseDate: formData.releaseDate,
+                createdAt: new Date().toISOString()
+            };
+            updatedProjects.push(newProject);
+        } else {
+            updatedProjects = projects.map(p =>
+                p.id === editingId ? { ...p, ...formData } as Project : p
+            );
+        }
+
+        try {
+            const res = await fetch('/api/projects', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedProjects)
+            });
+
+            if (res.ok) {
+                setProjects(updatedProjects);
+                setEditingId(null);
+                setFormData({});
+            } else {
+                alert("Failed to save");
+            }
+        } catch (error) {
+            console.error("Error saving", error);
+        }
     };
 
     const handleDelete = async (id: string) => {
         if (!confirm('Delete this project?')) return;
-        // TODO: Delete from API
-        // await fetch(`/api/admin/projects/${id}`, { method: 'DELETE' })
-        setProjects(prev => prev.filter(p => p.id !== id));
+
+        const updatedProjects = projects.filter(p => p.id !== id);
+
+        try {
+            const res = await fetch('/api/projects', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedProjects)
+            });
+
+            if (res.ok) {
+                setProjects(updatedProjects);
+            }
+        } catch (error) {
+            console.error("Error deleting", error);
+        }
     };
+
+    if (isLoading) return <div className="p-8 text-white">Loading projects...</div>;
 
     return (
         <div className="min-h-screen bg-black text-white p-8">
