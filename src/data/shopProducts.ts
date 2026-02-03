@@ -92,6 +92,7 @@ export const MERCH_PRODUCTS: Product[] = [
         category: "accessory",
         link: "https://singit-pop-shop.fourthwall.com/products/midnight-coffee-mug",
         startingPrice: true,
+        image: "/images/shop/merch-6.png",
         inStock: true
     }
 ];
