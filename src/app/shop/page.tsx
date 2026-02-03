@@ -152,7 +152,7 @@ export default function ShopPage() {
 
                                 <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
                                 <div className="text-4xl font-bold mb-4">
-                                    £{tier.price}
+                                    ${tier.price}
                                     <span className="text-lg text-white/40 font-normal ml-2">{tier.duration}</span>
                                 </div>
 
@@ -279,7 +279,7 @@ export default function ShopPage() {
                                 <h3 className="font-bold mb-1 truncate" title={ringtone.title}>{ringtone.title}</h3>
                                 <p className="text-sm text-white/40 mb-4">{ringtone.duration}s • {ringtone.genre || 'Pop'}</p>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-2xl font-bold">£{ringtone.price.toFixed(2)}</span>
+                                    <span className="text-2xl font-bold">${ringtone.price.toFixed(2)}</span>
                                     <button
                                         onClick={() => handleBuyRingtone(ringtone.priceId)}
                                         className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-semibold transition-colors"
@@ -343,7 +343,7 @@ export default function ShopPage() {
                                 <h3 className="font-bold mb-1 truncate">{product.name}</h3>
                                 <p className="text-sm text-white/50 mb-3 truncate">{product.description}</p>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-lg font-bold">£{product.price.toFixed(2)}</span>
+                                    <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
                                     <span className="p-2 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
                                         <ExternalLink size={18} />
                                     </span>
