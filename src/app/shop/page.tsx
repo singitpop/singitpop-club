@@ -349,6 +349,7 @@ export default function ShopPage() {
                                 {product.category === 'vinyl' ? (
                                     <VinylCard
                                         imageColor={product.imageColor}
+                                        imageUrl={product.image}
                                         className="w-full h-full"
                                     />
                                 ) : product.image ? (

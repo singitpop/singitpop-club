@@ -36,6 +36,39 @@ export async function GET() {
                 })
         );
 
+        // Fallback if no Stripe keys/products (for immediate display)
+        if (ringtones.length === 0) {
+            ringtones.push(
+                {
+                    id: 'rt_1',
+                    title: 'Neon Lights',
+                    description: 'Chorus - High Energy',
+                    price: 3.00,
+                    priceId: 'price_mock_1',
+                    genre: 'Pop',
+                    duration: '20'
+                },
+                {
+                    id: 'rt_2',
+                    title: 'Midnight Drive',
+                    description: 'Drop - Synthwave',
+                    price: 3.00,
+                    priceId: 'price_mock_2',
+                    genre: 'Retro',
+                    duration: '20'
+                },
+                {
+                    id: 'rt_3',
+                    title: 'Summer Vibes',
+                    description: 'Hook - Tropical',
+                    price: 3.00,
+                    priceId: 'price_mock_3',
+                    genre: 'Pop',
+                    duration: '20'
+                }
+            );
+        }
+
         return NextResponse.json({ ringtones });
     } catch (error: any) {
         console.error('Error fetching ringtones:', error);
