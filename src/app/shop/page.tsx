@@ -40,6 +40,7 @@ const CUSTOM_SONG_TIERS = [
 
 
 import { MERCH_PRODUCTS } from "@/data/shopProducts";
+import { getArtworkForTrack } from "@/utils/artworkMatcher";
 
 
 export default function ShopPage() {
@@ -264,32 +265,60 @@ export default function ShopPage() {
                         <p className="text-white/60">No ringtones available yet. Check back soon!</p>
                     </div>
                 ) : (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {ringtones.map((ringtone, index) => (
-                            <motion.div
-                                key={ringtone.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.05 }}
-                                className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-pink-500/30 transition-all"
-                            >
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
-                                    <Smartphone size={24} className="text-white" />
-                                </div>
-                                <h3 className="font-bold mb-1 truncate" title={ringtone.title}>{ringtone.title}</h3>
-                                <p className="text-sm text-white/40 mb-4">{ringtone.duration}s • {ringtone.genre || 'Pop'}</p>
-                                <div className="flex items-center justify-between">
-                                    <span className="text-2xl font-bold">${ringtone.price.toFixed(2)}</span>
-                                    <button
-                                        onClick={() => handleBuyRingtone(ringtone.priceId)}
-                                        className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-semibold transition-colors"
+                    <>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+                            {ringtones.slice(0, 6).map((ringtone, index) => {
+                                const artwork = getArtworkForTrack(ringtone.title);
+                                return (
+                                    <motion.div
+                                        key={ringtone.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.5, delay: index * 0.05 }}
+                                        className="bg-white/5 backdrop-blur-sm rounded-2xl p-3 border border-white/10 hover:border-pink-500/30 transition-all group"
                                     >
-                                        Buy
-                                    </button>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                                        <div className="aspect-square rounded-xl overflow-hidden mb-3 relative bg-black/50">
+                                            <img
+                                                src={artwork}
+                                                alt={ringtone.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                onError={(e) => {
+                                                    (e.target as HTMLImageElement).src = "/images/defaults/vinyl_default.png";
+                                                }}
+                                            />
+                                            {/* Icon overlay */}
+                                            <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md p-1.5 rounded-full text-white/80">
+                                                <Smartphone size={12} />
+                                            </div>
+                                        </div>
+
+                                        <h3 className="font-bold text-sm mb-1 truncate" title={ringtone.title}>{ringtone.title}</h3>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm font-bold text-pink-400">${ringtone.price.toFixed(2)}</span>
+                                            <button
+                                                onClick={() => handleBuyRingtone(ringtone.priceId)}
+                                                className="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-md text-xs font-semibold transition-colors"
+                                            >
+                                                Buy
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+
+                        {ringtones.length > 6 && (
+                            <div className="text-center">
+                                <a
+                                    href="/shop/ringtones"
+                                    className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5"
+                                >
+                                    View All Ringtones
+                                    <ArrowRight size={16} />
+                                </a>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
 
