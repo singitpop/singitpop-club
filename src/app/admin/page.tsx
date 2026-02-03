@@ -81,7 +81,7 @@ export default function AdminPage() {
             const res = await fetch('/api/admin/users', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'update_tier', userId, tier: newTier })
+                body: JSON.stringify({ action: 'set_tier', userId, tier: newTier })
             });
             if (res.ok) fetchUsers();
         } catch (error) { console.error(error); }
