@@ -586,7 +586,11 @@ export default function CommunityHubPage() {
                         )}
                     </div>
 
-                    <FanLeaderboard playlists={playlists} />
+                    <FanLeaderboard
+                        playlists={playlists}
+                        currentUserId={userId}
+                        currentUserName={clerkUser?.firstName}
+                    />
 
                     <div className={styles.nowPlayingWidget}>
                         <h4>Now Playing</h4>

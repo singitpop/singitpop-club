@@ -315,13 +315,21 @@ export default function ShopPage() {
                             viewport={{ once: true }}
                         >
                             <div
-                                className="aspect-square relative flex items-center justify-center p-6"
+                                className="aspect-square relative flex items-center justify-center p-6 bg-white/5"
                             >
                                 {product.category === 'vinyl' ? (
                                     <VinylCard
                                         imageColor={product.imageColor}
                                         className="w-full h-full"
                                     />
+                                ) : product.image ? (
+                                    <div className="w-full h-full relative rounded-xl overflow-hidden group-hover:scale-105 transition-transform duration-300">
+                                        <img
+                                            src={product.image}
+                                            alt={product.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
                                 ) : (
                                     <div
                                         className="w-full h-full flex items-center justify-center rounded-xl relative overflow-hidden"

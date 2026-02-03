@@ -1,97 +1,144 @@
 "use client";
 
-import { Crown, Share2 } from 'lucide-react';
+import { Crown, Trophy, Medal, Star, TrendingUp } from 'lucide-react';
 import { useMemo } from 'react';
 import styles from './FanLeaderboard.module.css';
 
-
 interface FanLeaderboardProps {
     playlists: any[];
+    currentUserId?: string | null;
+    currentUserName?: string | null;
 }
 
-export default function FanLeaderboard({ playlists }: FanLeaderboardProps) {
-    // Calculate Top Fans based on number of playlists shared
-    const topFans = useMemo(() => {
-        const stats: Record<string, { mixes: number, likes: number }> = {};
+export default function FanLeaderboard({ playlists, currentUserId, currentUserName }: FanLeaderboardProps) {
+    // Calculate Top Fans based on actual activity
+    const leaderboardData = useMemo(() => {
+        const stats: Record<string, { mixes: number, likes: number, userId: string, name: string }> = {};
 
-        // Count mixes and likes per creator
+        // 1. Process Playlists
         playlists.forEach(p => {
-            const creator = p.creator || "Anonymous";
-            if (!stats[creator]) stats[creator] = { mixes: 0, likes: 0 };
+            const userId = p.userId || "anonymous";
+            const userName = p.creator || "Anonymous Fan";
 
-            stats[creator].mixes += 1;
-            stats[creator].likes += (p.likes || 0);
+            if (!stats[userId]) {
+                stats[userId] = { mixes: 0, likes: 0, userId, name: userName };
+            }
+
+            stats[userId].mixes += 1;
+            stats[userId].likes += (p.likes || 0);
         });
 
-        // Convert to array and sort
-        return Object.entries(stats)
-            .map(([name, data], index) => {
-                // Score = (Mixes * 50) + (Likes * 10) + Random Activity Bonus (Voting etc)
-                const activityBonus = Math.floor(Math.random() * 20);
-                const score = (data.mixes * 50) + (data.likes * 10) + activityBonus;
+        // 2. Ensure Current User is in the list (even if 0 points)
+        if (currentUserId && !stats[currentUserId]) {
+            stats[currentUserId] = {
+                mixes: 0,
+                likes: 0,
+                userId: currentUserId,
+                name: currentUserName || "You"
+            };
+        }
 
-                return {
-                    name,
-                    score,
-                    avatar: ["✨", "🎵", "🇬🇧", "🎧", "📈"][index % 5] || "👤"
-                };
-            })
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 5)
-            .map((fan, i) => ({ ...fan, rank: i + 1 }));
+        // 3. Score & Sort
+        const allFans = Object.values(stats).map(data => {
+            // Score Formula: (Mixes * 50) + (Likes * 10)
+            const score = (data.mixes * 50) + (data.likes * 10);
 
-    }, [playlists]);
+            // Assign Avatar based on score tier
+            let avatar = "👤";
+            if (score > 500) avatar = "👑";
+            else if (score > 200) avatar = "🔥";
+            else if (score > 100) avatar = "🎵";
+            else if (score > 0) avatar = "🎧";
 
-    if (topFans.length === 0) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.header}>
-                    <h3><Crown size={16} color="var(--accent)" /> Top Fans</h3>
-                </div>
-                <div className={styles.list} style={{ textAlign: 'center', padding: '1rem', color: '#666' }}>
-                    No activity yet. Be the first!
-                </div>
-            </div>
-        );
-    }
+            return { ...data, score, avatar };
+        });
+
+        const sortedFans = allFans.sort((a, b) => b.score - a.score);
+
+        // 4. Assign Ranks
+        return sortedFans.map((fan, index) => ({
+            ...fan,
+            rank: index + 1
+        }));
+
+    }, [playlists, currentUserId, currentUserName]);
+
+    const top3 = leaderboardData.slice(0, 3);
+    const rest = leaderboardData.slice(3, 8); // Show next 5
+    const currentUserStats = currentUserId ? leaderboardData.find(f => f.userId === currentUserId) : null;
+    const isUserInTop8 = currentUserStats && currentUserStats.rank <= 8;
+
+    if (leaderboardData.length === 0) return null;
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h3><Crown size={16} color="var(--accent)" /> Top Fans</h3>
+                <h3><Trophy size={16} className="text-yellow-500" /> Top Superfans</h3>
                 <span className={styles.week}>All Time</span>
             </div>
 
+            {/* PODIUM SECTION */}
+            <div className={styles.podium}>
+                {top3[1] && (
+                    <div className={`${styles.podiumPlace} ${styles.secondPlace}`}>
+                        <div className={styles.avatarLarge}>{top3[1].avatar}</div>
+                        <div className={styles.podiumRank}>2</div>
+                        <div className={styles.podiumName}>{top3[1].name}</div>
+                        <div className={styles.podiumScore}>{top3[1].score}</div>
+                    </div>
+                )}
+
+                {top3[0] && (
+                    <div className={`${styles.podiumPlace} ${styles.firstPlace}`}>
+                        <div className={styles.crown}><Crown size={24} fill="#FFD700" color="#B8860B" /></div>
+                        <div className={styles.avatarLarge}>{top3[0].avatar}</div>
+                        <div className={styles.podiumRank}>1</div>
+                        <div className={styles.podiumName}>{top3[0].name}</div>
+                        <div className={styles.podiumScore}>{top3[0].score} pts</div>
+                    </div>
+                )}
+
+                {top3[2] && (
+                    <div className={`${styles.podiumPlace} ${styles.thirdPlace}`}>
+                        <div className={styles.avatarLarge}>{top3[2].avatar}</div>
+                        <div className={styles.podiumRank}>3</div>
+                        <div className={styles.podiumName}>{top3[2].name}</div>
+                        <div className={styles.podiumScore}>{top3[2].score}</div>
+                    </div>
+                )}
+            </div>
+
+            {/* LIST SECTION */}
             <div className={styles.list}>
-                {topFans.map((fan: any) => (
-                    <div key={fan.rank} className={styles.row}>
-                        <div className={`${styles.rank} ${fan.rank === 1 ? styles.rank1 : fan.rank === 2 ? styles.rank2 : fan.rank === 3 ? styles.rank3 : ''}`}>
-                            {fan.rank}
-                        </div>
-                        <div className={styles.avatar}>{fan.avatar}</div>
+                {rest.map((fan) => (
+                    <div
+                        key={fan.userId}
+                        className={`${styles.row} ${fan.userId === currentUserId ? styles.currentUserRow : ''}`}
+                    >
+                        <div className={styles.rank}>{fan.rank}</div>
                         <div className={styles.info}>
                             <div className={styles.name}>{fan.name}</div>
-                            <div className={styles.score}>{fan.score} pts</div>
+                            <div className={styles.details}>{fan.mixes} Mixes • {fan.likes} Likes</div>
                         </div>
-                        {fan.rank === 1 && <Crown size={14} color="#FFD700" />}
+                        <div className={styles.score}>{fan.score} pts</div>
                     </div>
                 ))}
             </div>
 
-            <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-                <button style={{
-                    background: 'transparent',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    color: 'var(--text-muted)',
-                    fontSize: '0.8rem',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '20px',
-                    cursor: 'pointer',
-                    width: '100%'
-                }}>
-                    View Full Board
-                </button>
-            </div>
+            {/* STICKY FOOTER (If user not visible) */}
+            {currentUserStats && !isUserInTop8 && (
+                <div className={styles.stickyFooter}>
+                    <div className={styles.stickyLabel}>Your Rank</div>
+                    <div className={styles.stickyRow}>
+                        <div className={styles.rank}>{currentUserStats.rank}</div>
+                        <div className={styles.info}>
+                            <div className={styles.name}>You</div>
+                            <div className={styles.details}>Keep mixing to climb!</div>
+                        </div>
+                        <div className={styles.score}>{currentUserStats.score} pts</div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
