@@ -10,6 +10,7 @@ export interface Product {
     proOnly?: boolean;
     inStock: boolean;
     startingPrice?: boolean; // Uses "From $XX" logic
+    image?: string; // Real product image URL
 }
 
 
@@ -35,6 +36,7 @@ export const MERCH_PRODUCTS: Product[] = [
         category: "apparel",
         link: "https://singit-pop-shop.fourthwall.com/products/the-midnight-hoodie",
         badge: "Best Seller",
+        image: "/images/shop/merch-1.png",
         inStock: true
     },
     {
@@ -45,6 +47,7 @@ export const MERCH_PRODUCTS: Product[] = [
         imageColor: "linear-gradient(45deg, #222, #444)",
         category: "apparel",
         link: "https://singit-pop-shop.fourthwall.com/products/the-signature-neon-tee",
+        image: "/images/shop/merch-2.png",
         inStock: true
     },
     {
@@ -55,6 +58,7 @@ export const MERCH_PRODUCTS: Product[] = [
         imageColor: "linear-gradient(45deg, #333, #555)",
         category: "apparel",
         link: "https://singit-pop-shop.fourthwall.com/products/studio-cuffed-beanie",
+        image: "/images/shop/merch-3.png",
         inStock: true
     },
     {
@@ -65,6 +69,7 @@ export const MERCH_PRODUCTS: Product[] = [
         imageColor: "linear-gradient(45deg, #444, #666)",
         category: "accessory",
         link: "https://singit-pop-shop.fourthwall.com/products/the-vinyl-carrier-tote",
+        image: "/images/shop/merch-4.png",
         inStock: true
     },
     {
@@ -75,6 +80,7 @@ export const MERCH_PRODUCTS: Product[] = [
         imageColor: "linear-gradient(45deg, #222, #333)",
         category: "apparel",
         link: "https://singit-pop-shop.fourthwall.com/products/the-studio-dad-hat",
+        image: "/images/shop/merch-5.png",
         inStock: true
     },
     {
