@@ -4,80 +4,85 @@ export interface Product {
     price: number;
     description: string;
     imageColor: string; // Gradient background for now, replace with image in v2
-    category: 'vinyl' | 'apparel' | 'digital' | 'accessory';
-    link: string; // External link to Qrates/Printful/Stripe
+    category: 'apparel' | 'digital' | 'accessory' | 'vinyl';
+    link: string; // External link to Printful/Stripe
     badge?: string;
     proOnly?: boolean;
     inStock: boolean;
 }
 
-export const VINYL_PRODUCTS: Product[] = [
+
+
+export const MERCH_PRODUCTS: Product[] = [
     {
-        id: "vinyl-neon-dreams",
-        name: "Neon Dreams - Limited Edition Vinyl",
+        id: "vinyl-limited",
+        name: "Limited Edition Vinyl",
         price: 25.00,
-        description: "180g Heavyweight Vinyl in Translucent Pink. Includes digital download.",
-        imageColor: "linear-gradient(135deg, #FF69B4, #9370DB)",
+        description: "The 'Director's Cut' Vinyl Edit. Curated audiophile master on 180g vinyl. Includes high-res digital download of the vinyl master.",
+        imageColor: "linear-gradient(45deg, #000, #222)",
         category: "vinyl",
-        link: "https://qrates.com/", // Placeholder
+        link: "https://www.diggersfactory.com/vinyl/331968", // Live Project Link
         badge: "Crowdfunding Now",
         inStock: true
     },
     {
-        id: "vinyl-echoes",
-        name: "Echoes of Light - Collector's LP",
-        price: 28.00,
-        description: "Double LP with gatefold artwork and exclusive poster.",
-        imageColor: "linear-gradient(135deg, #4B0082, #0000FF)",
-        category: "vinyl",
-        link: "https://qrates.com/", // Placeholder
-        badge: "Pre-order",
-        inStock: true
-    }
-];
-
-export const MERCH_PRODUCTS: Product[] = [
-    {
         id: "hoodie-midnight",
-        name: "Midnight Tour Hoodie",
-        price: 65.00,
-        description: "Sustainable organic cotton blend. Puff print logo on back.",
+        name: "Midnight Hoodie",
+        price: 49.00,
+        description: "Heavyweight premium cotton. Small front logo, large back graphic.",
         imageColor: "linear-gradient(45deg, #111, #333)",
         category: "apparel",
-        link: "https://printful.com", // Placeholder
+        link: "https://fourthwall.com",
         badge: "Best Seller",
         inStock: true
     },
     {
-        id: "tee-c-minor",
-        name: "C Minor Lyric Tee",
-        price: 35.00,
-        description: "Oversized fit. 'It's C Minor, baby' print on chest.",
-        imageColor: "linear-gradient(45deg, #fff, #eee)",
+        id: "tee-signature",
+        name: "Signature Heavy Tee",
+        price: 30.00,
+        description: "Oversized fit, vintage wash. The classic fan essential.",
+        imageColor: "linear-gradient(45deg, #222, #444)",
         category: "apparel",
-        link: "https://printful.com", // Placeholder
+        link: "https://singit-pop-shop.fourthwall.com/products/the-signature-neon-tee",
         inStock: true
     },
     {
-        id: "cap-logo",
-        name: "SingIt Pop Dad Cap",
-        price: 25.00,
-        description: "Embroidered logo. Adjustable strap.",
-        imageColor: "linear-gradient(45deg, #FFD700, #FDB931)",
-        category: "accessory",
-        link: "https://printful.com", // Placeholder
+        id: "beanie-logo",
+        name: "Studio Cuffed Beanie",
+        price: 20.00,
+        description: "Warm knit with premium 3D embroidery.",
+        imageColor: "linear-gradient(45deg, #333, #555)",
+        category: "apparel",
+        link: "https://singit-pop-shop.fourthwall.com/products/studio-cuffed-beanie",
         inStock: true
     },
     {
-        id: "pin-set",
-        name: "Pro Member Pin Set",
-        price: 15.00,
-        description: "Set of 3 enamel pins. Exclusive to Club members.",
-        imageColor: "linear-gradient(45deg, #FF3CAC, #784BA0)",
+        id: "tote-vinyl",
+        name: "Vinyl Carrier Tote",
+        price: 20.00,
+        description: "Heavy canvas bag perfectly sized for 12\" records.",
+        imageColor: "linear-gradient(45deg, #444, #666)",
         category: "accessory",
-        link: "https://printful.com", // Placeholder
-        proOnly: true,
-        badge: "VIP Exclusive",
+        link: "https://singit-pop-shop.fourthwall.com/products/the-vinyl-carrier-tote",
         inStock: true
+    },
+    {
+        id: "hat-dad",
+        name: "Studio Dad Hat",
+        price: 22.00,
+        description: "Low profile, unstructured comfort. Embroidered logo.",
+        imageColor: "linear-gradient(45deg, #222, #333)",
+        category: "apparel",
+        link: "https://singit-pop-shop.fourthwall.com", // Pending Link
+        inStock: true
+    },
+    id: "mug-midnight",
+    name: "Midnight Coffee Mug",
+    price: 15.00,
+    description: "Premium black glossy mug. Double-sided print (Left & Right handed).",
+    imageColor: "linear-gradient(45deg, #000, #222)",
+    category: "accessory",
+    link: "https://singit-pop-shop.fourthwall.com", // Pending Link
+    inStock: true
     }
 ];

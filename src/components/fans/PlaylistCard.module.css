@@ -28,12 +28,14 @@
     /* Deep Black */
     z-index: 2;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s ease-out;
+    transform-style: preserve-3d;
 }
 
 .card:hover .sleeve {
     border-color: var(--glow-color, rgba(255, 255, 255, 0.5));
     box-shadow: 0 0 15px var(--glow-color, rgba(255, 255, 255, 0.2));
+    transform: rotateY(-5deg);
 }
 
 /* Gradient overlay on sleeve for 'vibe' */
@@ -53,12 +55,8 @@
     height: 90%;
     /* slightly smaller than sleeve */
     border-radius: 50%;
-    background: #111;
-    background-image:
-        repeating-radial-gradient(#111 0,
-            #111 2px,
-            #222 3px,
-            #222 4px);
+    background:
+        radial-gradient(circle at center, #000 0%, #111 20%, #000 21%, #111 25%, #000 26%, #111 30%, #000 31%, #111 35%, #000 36%, #111 40%, #000 41%, #111 45%, #000 46%, #1c1c1c 50%, #000 55%, #111 60%, #000 65%, #111 70%, #000 100%);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     z-index: 1;

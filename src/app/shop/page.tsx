@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ShoppingBag, Lock, ChevronRight, Check, ExternalLink, Music, Heart, Sparkles, Smartphone, Disc, ArrowRight } from 'lucide-react';
+import VinylCard from '@/components/shop/VinylCard';
 import { useAuth } from '@/context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -38,7 +39,7 @@ const CUSTOM_SONG_TIERS = [
 
 
 
-import { VINYL_PRODUCTS, MERCH_PRODUCTS } from "@/data/shopProducts";
+import { MERCH_PRODUCTS } from "@/data/shopProducts";
 
 
 export default function ShopPage() {
@@ -292,67 +293,7 @@ export default function ShopPage() {
                 )}
             </div>
 
-            {/* Vinyl Section */}
-            <div className="max-w-6xl mx-auto mb-24">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold mb-4">Vinyl</h2>
-                    <p className="text-white/60">Limited edition runs on Qrates</p>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    {VINYL_PRODUCTS.map((product) => (
-                        <motion.a
-                            key={product.id}
-                            href={product.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="group relative bg-white/5 rounded-3xl overflow-hidden border border-white/10 hover:border-pink-500/50 transition-all"
-                        >
-                            <div className="aspect-square bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-6">
-                                <div
-                                    className="w-full h-full aspect-square rounded-full shadow-2xl flex items-center justify-center relative animate-[spin_10s_linear_infinite] group-hover:animate-[spin_3s_linear_infinite]"
-                                    style={{ background: '#111' }}
-                                >
-                                    {/* Vinyl Grooves */}
-                                    <div className="absolute inset-1 rounded-full border-2 border-white/5"></div>
-                                    <div className="absolute inset-4 rounded-full border border-white/5"></div>
-                                    <div className="absolute inset-8 rounded-full border border-white/5"></div>
-                                    <div className="absolute inset-12 rounded-full border border-white/5"></div>
-
-                                    {/* Center Label */}
-                                    <div
-                                        className="w-1/3 h-1/3 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-inner"
-                                        style={{ background: product.imageColor }}
-                                    >
-                                        VINYL
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="p-6">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-xl font-bold">{product.name}</h3>
-                                    {product.badge && (
-                                        <span className="px-3 py-1 bg-pink-500/20 text-pink-400 text-xs font-bold rounded-full">
-                                            {product.badge}
-                                        </span>
-                                    )}
-                                </div>
-                                <p className="text-white/60 text-sm mb-4">{product.description}</p>
-                                <div className="flex justify-between items-center">
-                                    <span className="text-2xl font-bold">£{product.price.toFixed(2)}</span>
-                                    <span className="flex items-center gap-2 text-pink-400 font-semibold group-hover:translate-x-1 transition-transform">
-                                        Pre-order <ArrowRight size={18} />
-                                    </span>
-                                </div>
-                            </div>
-                        </motion.a>
-                    ))}
-                </div>
-            </div>
 
             {/* Merch Section */}
             <div className="max-w-6xl mx-auto">
@@ -375,15 +316,27 @@ export default function ShopPage() {
                         >
                             <div
                                 className="aspect-square relative flex items-center justify-center p-6"
-                                style={{ background: product.imageColor }}
                             >
+                                {product.category === 'vinyl' ? (
+                                    <VinylCard
+                                        imageColor={product.imageColor}
+                                        className="w-full h-full"
+                                    />
+                                ) : (
+                                    <div
+                                        className="w-full h-full flex items-center justify-center rounded-xl relative overflow-hidden"
+                                        style={{ background: product.imageColor }}
+                                    >
+                                        <div className="w-full h-full bg-black/20" />
+                                    </div>
+                                )}
+
                                 {product.proOnly && (
-                                    <div className="absolute top-4 right-4 flex items-center gap-1 px-3 py-1 bg-black/80 backdrop-blur-md rounded-full text-xs font-bold border border-yellow-500/50 text-yellow-500">
+                                    <div className="absolute top-4 right-4 flex items-center gap-1 px-3 py-1 bg-black/80 backdrop-blur-md rounded-full text-xs font-bold border border-yellow-500/50 text-yellow-500 z-20">
                                         <Lock size={12} />
                                         VIP ONLY
                                     </div>
                                 )}
-                                <div className="w-full h-full bg-black/20 rounded-xl" />
                             </div>
 
                             <div className="p-4">

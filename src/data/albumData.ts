@@ -619,6 +619,7 @@ export const albums: Album[] = [
       "Pop"
     ],
     "coverArt": "/albums/artwork/a-love-that-never-ends-2026.jpg",
+    "description": "A cinematic pop masterpiece celebrating the timeless journey of romance. Blending lush string arrangements with heartfelt melodies, this album captures every shade of love—from the breathless anticipation of 'Slow Motion Love' to the eternal promise of the title track.",
     "tracks": [
       {
         "id": 1,

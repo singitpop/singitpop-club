@@ -3,7 +3,8 @@
 import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Play, Lock, Download, Star, Video, Settings, CreditCard, ChevronRight, Check } from 'lucide-react';
+import { Play, Lock, Download, Star, Video, Settings, CreditCard, ChevronRight, Check, MessageSquare, Heart, MessageCircle, Image as ImageIcon } from 'lucide-react';
+import { VIP_UPDATES } from "../../data/vipUpdates";
 
 // Placeholder data for exclusive albums
 const albums = [
@@ -160,6 +161,54 @@ export default function ClubPage() {
                                 <p className="text-white/20 mt-2">Check back soon for early access releases.</p>
                             </div>
                         )}
+                    </div>
+
+                    {/* VIP Updates Section */}
+                    <div className="space-y-6 pt-8 border-t border-white/10">
+                        <div className="flex items-center gap-3 mb-4">
+                            <MessageSquare className="text-purple-400" size={24} />
+                            <h2 className="text-2xl font-bold">Exclusive Updates</h2>
+                        </div>
+
+                        <div className="space-y-6">
+                            {VIP_UPDATES.map((update) => (
+                                <motion.div
+                                    key={update.id}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="bg-white/5 rounded-2xl p-6 border border-white/10"
+                                >
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold">
+                                            {update.author[0]}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-sm">{update.title}</h4>
+                                            <span className="text-white/40 text-xs">{update.date} • by {update.author}</span>
+                                        </div>
+                                        {update.image && (
+                                            <span className="ml-auto text-xs px-2 py-1 bg-white/10 rounded-full flex items-center gap-1">
+                                                <ImageIcon size={10} /> Photo attached
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <p className="text-white/80 text-sm leading-relaxed mb-4">
+                                        {update.content}
+                                    </p>
+
+                                    <div className="flex items-center gap-4 text-white/40 text-xs">
+                                        <button className="flex items-center gap-1 hover:text-pink-400 transition-colors">
+                                            <Heart size={14} /> {update.likes || 0}
+                                        </button>
+                                        <button className="flex items-center gap-1 hover:text-white transition-colors">
+                                            <MessageCircle size={14} /> Comment
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
 
                 </div>
