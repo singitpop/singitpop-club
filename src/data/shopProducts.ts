@@ -80,7 +80,7 @@ export const MERCH_PRODUCTS: Product[] = [
     {
         id: "mug-midnight",
         name: "Midnight Coffee Mug",
-        price: 22.00, // Starting price
+        price: 18.00, // Starting price
         description: "Premium black glossy mug. Available in 11oz and 15oz sizes.",
         imageColor: "linear-gradient(45deg, #000, #222)",
         category: "accessory",
