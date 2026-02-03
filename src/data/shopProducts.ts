@@ -25,6 +25,7 @@ export const MERCH_PRODUCTS: Product[] = [
         category: "vinyl",
         link: "https://www.diggersfactory.com/vinyl/331968", // Live Project Link
         badge: "Crowdfunding Now",
+        image: "/images/shop/vinyl-sleeve.png",
         inStock: true
     },
     {
