@@ -343,7 +343,10 @@ export default function ShopPage() {
                                 <h3 className="font-bold mb-1 truncate">{product.name}</h3>
                                 <p className="text-sm text-white/50 mb-3 truncate">{product.description}</p>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
+                                    <span className="text-lg font-bold">
+                                        {product.startingPrice && <span className="text-sm font-normal text-white/60 mr-1">From</span>}
+                                        ${product.price.toFixed(2)}
+                                    </span>
                                     <span className="p-2 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
                                         <ExternalLink size={18} />
                                     </span>
