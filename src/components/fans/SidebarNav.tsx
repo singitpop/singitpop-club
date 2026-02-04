@@ -1,7 +1,8 @@
 import { Home, Compass, Heart, Radio, User, Settings, LogOut, PlusCircle } from 'lucide-react';
 import styles from './SidebarNav.module.css';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 interface SidebarNavProps {
     activeTab: string;
@@ -9,6 +10,8 @@ interface SidebarNavProps {
 }
 
 export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) {
+    const { user } = useAuth();
+    const router = useRouter();
     const navItems = [
         { id: 'home', icon: Home, label: 'Hub Home' },
         { id: 'browse', icon: Compass, label: 'Browse' },
@@ -39,12 +42,18 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
 
             <div className={styles.menu}>
                 <h4 className={styles.menuTitle}>Library</h4>
-                <Link href="/fan-albums/create" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div onClick={() => {
+                    if (!user) {
+                        router.push('/sign-in');
+                    } else {
+                        router.push('/fan-albums/create');
+                    }
+                }} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
                     <button className={styles.navItem}>
                         <PlusCircle size={20} color="#FF0080" />
                         <span style={{ color: '#FF0080', fontWeight: 'bold' }}>Create Mix</span>
                     </button>
-                </Link>
+                </div>
             </div>
 
             <div className={styles.footer}>

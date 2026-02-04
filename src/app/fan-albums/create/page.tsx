@@ -19,13 +19,20 @@ function CreateMixtapeContent() {
     const { isLoaded, userId } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const challengeId = searchParams.get('challenge');
+    const challengeId = searchParams?.get('challenge');
 
     const [title, setTitle] = useState("My Awesome Mix");
     // ... existing state ...
     const [selectedTracks, setSelectedTracks] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
+
+    // Redirect if not logged in
+    useEffect(() => {
+        if (isLoaded && !userId) {
+            router.push('/sign-in');
+        }
+    }, [isLoaded, userId, router]);
 
     // Auto-setup for challenge
     useEffect(() => {
