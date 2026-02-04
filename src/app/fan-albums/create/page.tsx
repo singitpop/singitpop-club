@@ -21,7 +21,7 @@ function CreateMixtapeContent() {
     const searchParams = useSearchParams();
     const challengeId = searchParams?.get('challenge');
 
-    const [title, setTitle] = useState("My Awesome Mix");
+    const [title, setTitle] = useState("Awesome Mix");
     // ... existing state ...
     const [selectedTracks, setSelectedTracks] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);

@@ -104,7 +104,7 @@ export default function ShopPage() {
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-16 px-4">
             {/* Hero */}
-            <div className="max-w-6xl mx-auto mb-16 =text-center">
+            <div className="max-w-6xl mx-auto mb-16 text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -118,6 +118,31 @@ export default function ShopPage() {
                     </p>
                 </motion.div>
             </div>
+
+            {/* VIP Discount Banner */}
+            {user?.publicMetadata?.tier === 'VIP' || user?.publicMetadata?.tier === 'LABEL' ? (
+                <div className="max-w-4xl mx-auto mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border border-yellow-500/50 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 bg-yellow-500/20 rounded-xl text-yellow-500">
+                                <Sparkles size={24} />
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-yellow-500">VIP Exclusive Benefit</h3>
+                                <p className="text-white/80">You get <span className="text-white font-bold">20% OFF</span> everything in the store!</p>
+                            </div>
+                        </div>
+                        <div className="bg-black/50 px-6 py-3 rounded-xl border border-white/10 flex flex-col items-center">
+                            <span className="text-xs text-white/40 uppercase tracking-widest mb-1">Use Code at Checkout</span>
+                            <span className="text-2xl font-mono font-bold text-yellow-400 tracking-wider">VIP20</span>
+                        </div>
+                    </motion.div>
+                </div>
+            ) : null}
 
             {/* Custom Songs Section */}
             <div className="max-w-6xl mx-auto mb-24">

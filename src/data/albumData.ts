@@ -798,7 +798,7 @@ export const albums: Album[] = [
     "genre": [
       "Pop"
     ],
-    "coverArt": "/albums/artwork/spring-begins-inside-you-2026.jpg",
+    "coverArt": "/albums/artwork/spring-begins-inside-you-1905.jpg",
     "tracks": [
       {
         "id": 1,
@@ -1152,7 +1152,7 @@ export const albums: Album[] = [
     "genre": [
       "Country"
     ],
-    "coverArt": "/albums/artwork/through-the-glass-2026.jpg",
+    "coverArt": "/albums/artwork/through-the-glass-1905.jpg",
     "tracks": [
       {
         "id": 1,
@@ -9281,7 +9281,7 @@ export const albums: Album[] = [
       "Rock",
       "Pop"
     ],
-    "coverArt": "/albums/artwork/singles-2024.jpg",
+    "coverArt": "/albums/artwork/singles-cover.png",
     "tracks": [
       {
         "id": 1,

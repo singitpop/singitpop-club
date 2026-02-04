@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import styles from '../Admin.module.css'; // Reuse basic admin styles
-import { Copy, FileOutput, ArrowLeft } from 'lucide-react';
+import { Copy, FileOutput, ArrowLeft, Send } from 'lucide-react';
 import Link from 'next/link';
 
 export default function NewsletterBuilder() {
@@ -12,6 +12,34 @@ export default function NewsletterBuilder() {
     const [featuredType, setFeaturedType] = useState("single");
     const [ctaLink, setCtaLink] = useState("https://singitpop.com/music");
     const [generatedHtml, setGeneratedHtml] = useState("");
+    const [isSending, setIsSending] = useState(false);
+
+    const handleSend = async () => {
+        if (!generatedHtml) return alert("Please generate the email content first.");
+        if (!confirm("Are you sure you want to send this newsletter to ALL fans? This cannot be undone.")) return;
+
+        setIsSending(true);
+        try {
+            const res = await fetch('/api/admin/newsletter/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ subject, html: generatedHtml })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert(`Success! Sent to ${data.sent} users.`);
+            } else {
+                alert(`Error: ${data.error || 'Failed to send'}`);
+            }
+        } catch (error) {
+            console.error("Send failed", error);
+            alert("Failed to send newsletter.");
+        } finally {
+            setIsSending(false);
+        }
+    };
 
     const generateEmail = () => {
         let title = "Featured Update";
@@ -136,9 +164,34 @@ export default function NewsletterBuilder() {
                         />
                     </div>
 
-                    <button className={styles.btn} onClick={generateEmail} style={{ width: '100%', marginTop: '1rem' }}>
-                        <FileOutput size={18} /> Generate HTML
-                    </button>
+                    <div className="flex gap-2">
+                        <button className={styles.btn} onClick={generateEmail} style={{ width: '100%', marginTop: '1rem', flex: 1 }}>
+                            <FileOutput size={18} /> Generate HTML
+                        </button>
+                    </div>
+
+                    <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid #333' }}>
+                        <h3 className="text-xl font-bold mb-4">Send Campaign</h3>
+                        <p className="text-sm text-gray-400 mb-4">
+                            Ready to launch? This will send the email to all eligible users (Friends, Fans, Insiders, VIPs).
+                            <br /><strong className="text-yellow-500">Note: Label (Admin) users are excluded.</strong>
+                        </p>
+
+                        <button
+                            className={styles.btn}
+                            onClick={handleSend}
+                            disabled={!generatedHtml || isSending}
+                            style={{
+                                width: '100%',
+                                background: isSending ? '#333' : '#db2777',
+                                border: 'none',
+                                opacity: !generatedHtml ? 0.5 : 1
+                            }}
+                        >
+                            <Send size={18} />
+                            {isSending ? 'Sending...' : 'Send to All Fans'}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Preview / Code */}

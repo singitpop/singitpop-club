@@ -12,20 +12,29 @@ const STATUS_CONFIG = {
     planned: { label: "Planned", color: "from-blue-500 to-cyan-500", icon: Calendar }
 };
 
+import { useAuth } from '@/context/AuthContext';
+
 export default function ProjectsPage() {
+    const { user } = useAuth();
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState<"all" | "album" | "video">("all");
 
     useEffect(() => {
-        // TODO: Replace with actual API call
-        // fetch('/api/projects').then(res => res.json()).then(setProjects)
-        setTimeout(() => {
-            setTimeout(() => {
-                setProjects(PROJECTS);
+        async function loadProjects() {
+            try {
+                const res = await fetch('/api/projects');
+                if (res.ok) {
+                    const data = await res.json();
+                    setProjects(data);
+                }
+            } catch (error) {
+                console.error("Failed to load projects", error);
+            } finally {
                 setLoading(false);
-            }, 500);
-        }, 500);
+            }
+        }
+        loadProjects();
     }, []);
 
     const filteredProjects = projects.filter(p => filter === "all" || p.type === filter);
@@ -172,21 +181,23 @@ export default function ProjectsPage() {
                 )}
             </div>
 
-            {/* Call to Action */}
-            <div className="max-w-6xl mx-auto mt-16 text-center">
-                <div className="bg-gradient-to-br from-pink-500/10 to-purple-500/10 backdrop-blur-xl rounded-3xl p-8 border border-pink-500/20">
-                    <h3 className="text-2xl font-bold mb-4">Want to stay updated?</h3>
-                    <p className="text-white/60 mb-6">
-                        Join the club to get exclusive behind-the-scenes access and early releases
-                    </p>
-                    <a
-                        href="/club"
-                        className="inline-block px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 rounded-full font-bold text-lg transition-all shadow-lg shadow-pink-500/20"
-                    >
-                        Join the Club
-                    </a>
+            {/* Call to Action - Only for Guests/Fans */}
+            {(!user || user.publicMetadata?.tier === 'FAN') && (
+                <div className="max-w-6xl mx-auto mt-16 text-center">
+                    <div className="bg-gradient-to-br from-pink-500/10 to-purple-500/10 backdrop-blur-xl rounded-3xl p-8 border border-pink-500/20">
+                        <h3 className="text-2xl font-bold mb-4">Want to stay updated?</h3>
+                        <p className="text-white/60 mb-6">
+                            Join the club to get exclusive behind-the-scenes access and early releases
+                        </p>
+                        <a
+                            href="/club"
+                            className="inline-block px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 rounded-full font-bold text-lg transition-all shadow-lg shadow-pink-500/20"
+                        >
+                            Join the Club
+                        </a>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
