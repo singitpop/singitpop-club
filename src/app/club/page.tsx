@@ -1,5 +1,8 @@
 
 import { useAuth } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 // ... inside component ...
 const { user: clerkUser, isLoaded } = useUser();

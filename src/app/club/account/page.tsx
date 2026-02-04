@@ -5,12 +5,42 @@ import Link from "next/link";
 import { ArrowLeft, CreditCard, Loader2 } from "lucide-react";
 import styles from "./Account.module.css";
 import { dark } from "@clerk/themes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function AccountPage() {
     const [isLoadingPortal, setIsLoadingPortal] = useState(false);
     const router = useRouter();
+
+    // Auto-trigger checkout if user came from "Go Insider/VIP" but had to sign up first
+    useEffect(() => {
+        const intendedTier = localStorage.getItem('intended_tier');
+        if (intendedTier) {
+            localStorage.removeItem('intended_tier'); // Clear it so it doesn't loop
+
+            // Determine Price ID (We need to duplicately fetch this or pass it? 
+            // Better to re-fetch from an API or just map it here to be safe and quick)
+            let priceId = '';
+            if (intendedTier === 'INSIDER') priceId = process.env.NEXT_PUBLIC_PRICE_INSIDER || '';
+            if (intendedTier === 'VIP') priceId = process.env.NEXT_PUBLIC_PRICE_VIP || '';
+
+            if (priceId) {
+                // Trigger Checkout
+                setIsLoadingPortal(true); // Re-use loading state or create new one
+                fetch('/api/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ priceId }),
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.url) window.location.href = data.url;
+                    })
+                    .catch(err => console.error("Auto-checkout failed", err))
+                    .finally(() => setIsLoadingPortal(false));
+            }
+        }
+    }, []);
 
     const handlePortal = async () => {
         setIsLoadingPortal(true);

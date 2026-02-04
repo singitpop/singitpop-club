@@ -27,8 +27,8 @@ export default function SmartCTA() {
                 if (data.url) window.location.href = data.url;
             } else {
                 if (res.status === 401) {
-                    // Not logged in -> Redirect to Sign Up with a flag? 
-                    // For now, simpler to just open sign up
+                    // Not logged in -> Store intent and redirect to Sign Up
+                    localStorage.setItem('intended_tier', tierName); // 'INSIDER' or 'VIP'
                     openSignUp();
                 } else {
                     console.error("Checkout failed");
@@ -44,7 +44,7 @@ export default function SmartCTA() {
     };
 
     return (
-        <section className={styles.section}>
+        <section id="access" className={styles.section}>
             <div className={styles.header}>
                 <h2 className={styles.title}>Choose Your Access 🔑</h2>
                 <p className={styles.subtitle}>Unlock the full SingIt Pop experience.</p>

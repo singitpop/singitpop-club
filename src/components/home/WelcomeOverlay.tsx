@@ -74,12 +74,21 @@ export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
                 </p>
 
                 <div className={styles.actions}>
-                    <Link href="/club" className={styles.enterClubBtn}>
-                        Enter The Club
-                    </Link>
+                    <button
+                        onClick={() => {
+                            handleDismiss();
+                            setTimeout(() => {
+                                const element = document.getElementById('access');
+                                if (element) element.scrollIntoView({ behavior: 'smooth' });
+                            }, 600);
+                        }}
+                        className={styles.enterClubBtn}
+                    >
+                        Choose Your Access
+                    </button>
 
                     <button onClick={handleDismiss} className={styles.enterSiteBtn}>
-                        Continue to Site <ArrowRight size={14} style={{ display: 'inline', marginLeft: '4px' }} />
+                        Explore Site <ArrowRight size={14} style={{ display: 'inline', marginLeft: '4px' }} />
                     </button>
                 </div>
             </motion.div>
