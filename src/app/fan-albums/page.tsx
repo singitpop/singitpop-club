@@ -31,7 +31,7 @@ const initialPlaylists: any[] = [];
 
 export default function CommunityHubPage() {
     const { user: clerkUser } = useUser();
-    const { isPro } = useAuth(); // Get VIP status
+    const { isPro: isVIP, isInsider } = useAuth(); // Get VIP/Insider status
     const userId = clerkUser?.id;
     const router = useRouter();
     const [activeTab, setActiveTab] = useState('home');
@@ -493,9 +493,7 @@ export default function CommunityHubPage() {
 
 
     // Tier Logic
-                    const userTier = (clerkUser?.publicMetadata?.tier as string) || 'FAN';
-                    const isVIP = userTier === 'VIP' || userTier === 'LABEL';
-                    const isInsider = userTier === 'INSIDER' || isVIP;
+
 
                     // ... (rest of imports/setup)
 
