@@ -31,7 +31,9 @@ export async function GET() {
                         price: prices.data[0]?.unit_amount ? prices.data[0].unit_amount / 100 : 0,
                         priceId: prices.data[0]?.id,
                         genre: product.metadata?.genre,
-                        duration: product.description?.match(/(\d+)s/)?.[1] || '20'
+                        duration: product.description?.match(/(\d+)s/)?.[1] || '20',
+                        createdAt: product.created * 1000, // Stripe uses seconds
+                        isNew: (Date.now() - (product.created * 1000)) < (60 * 24 * 60 * 60 * 1000) // 60 days (approx 2 months)
                     };
                 })
         );
@@ -46,7 +48,9 @@ export async function GET() {
                     price: 3.00,
                     priceId: 'price_mock_1',
                     genre: 'Pop',
-                    duration: '20'
+                    duration: '20',
+                    createdAt: Date.now(),
+                    isNew: true
                 },
                 {
                     id: 'rt_2',
@@ -55,7 +59,9 @@ export async function GET() {
                     price: 3.00,
                     priceId: 'price_mock_2',
                     genre: 'Retro',
-                    duration: '20'
+                    duration: '20',
+                    createdAt: Date.now() - 10000000,
+                    isNew: true
                 },
                 {
                     id: 'rt_3',
@@ -64,7 +70,9 @@ export async function GET() {
                     price: 3.00,
                     priceId: 'price_mock_3',
                     genre: 'Pop',
-                    duration: '20'
+                    duration: '20',
+                    createdAt: Date.now() - 6000000000, // Old
+                    isNew: false
                 }
             );
         }
