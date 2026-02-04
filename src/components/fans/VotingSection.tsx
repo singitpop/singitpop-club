@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from 'react';
 import { Timer, Info } from 'lucide-react';
 import styles from './VotingSection.module.css';
 import VotingCard from './VotingCard';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 // Mock Data for Upcoming Singles
 const initialTracks = [
@@ -40,6 +42,8 @@ const initialTracks = [
 ];
 
 export default function VotingSection() {
+    const { user } = useAuth();
+    const router = useRouter();
     const [tracks, setTracks] = useState<any[]>([]);
     const [campaignTitle, setCampaignTitle] = useState("Help Choose the Next Single! 🗳️");
     const [deadline, setDeadline] = useState<string | null>(null);
@@ -135,6 +139,10 @@ export default function VotingSection() {
     };
 
     const handleVote = async (id: number) => {
+        if (!user) {
+            router.push('/sign-in');
+            return;
+        }
         let newVotes = [...userVotes];
 
         if (newVotes.includes(id)) {

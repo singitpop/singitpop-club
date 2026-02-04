@@ -492,10 +492,7 @@ export default function CommunityHubPage() {
                     )}
 
 
-    // Tier Logic
 
-
-                    // ... (rest of imports/setup)
 
                     {activeTab === 'radio' && (
                         isVIP ? (
