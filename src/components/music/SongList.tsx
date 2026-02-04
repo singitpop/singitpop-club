@@ -145,10 +145,27 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         const track = tracks.find(t => getUniqueId(t) === activeTrackId);
         if (!track) return;
 
-        // Check permissions again to be safe
-        // Singles are free for everyone. Album tracks are premium.
-        const isPremiumContent = !track.isSingle;
-        const isFullAccess = isPro || isInsider || !isPremiumContent;
+        // Access Logic (Mirrors render logic)
+        let album = track.albumId ? albums.find(a => a.id === track.albumId) : undefined;
+        if (!album) album = albums.find(a => a.tracks.some(t => t.id === track.id));
+
+        const uniqueId = getUniqueId(track);
+        // Ensure latestSingleUid is string comparison
+        const isLatestSingle = String(uniqueId) === String(latestSingleUid);
+
+        // 1. Latest Single: Guests = Preview, Fans+ = Full
+        if (isLatestSingle) {
+            if (!user && audioRef.current.currentTime >= 30) {
+                audioRef.current.pause();
+                setIsPlaying(false);
+                audioRef.current.currentTime = 0;
+                setShowPreviewModal(true);
+            }
+            return;
+        }
+
+        // 2. Standard Album Tracks: Guest/Fan = Preview, Insider+ = Full
+        const isFullAccess = isPro || isInsider;
 
         // If not full access, enforce 30s limit
         if (!isFullAccess && audioRef.current.currentTime >= 30) {
@@ -278,19 +295,22 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                         let isPreview = false;
                         let lockMessage = "";
 
-                        const isLatestSingle = uniqueId === latestSingleUid;
-                        const isPremiumContent = !isLatestSingle;
+                        const isLatestSingle = String(uniqueId) === String(latestSingleUid);
 
                         if (isPreRelease && !isLatestSingle) {
-                            // Pre-Release
+                            // Pre-Release (VIP Only)
                             if (!isPro) {
                                 isLocked = true;
-                                lockMessage = "Early Access! Upgrade to VIP to listen before the official release.";
+                                lockMessage = "VIP Exclusive! Upgrade to listen before release.";
                             }
                         } else {
-                            // Standard Release
-                            if (isPremiumContent && !isInsider && !isPro) {
-                                isPreview = true;
+                            // Standard Release Logic
+                            if (isLatestSingle) {
+                                // Latest Single: Guests = Preview, Fans+ = Full
+                                if (!user) isPreview = true;
+                            } else {
+                                // Album Tracks: Guest/Fans = Preview, Insider+ = Full
+                                if (!isInsider && !isPro) isPreview = true;
                             }
                         }
 
@@ -515,19 +535,39 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                 showPreviewModal && (
                     <div className={styles.modalOverlay} onClick={() => setShowPreviewModal(false)}>
                         <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                            <h3 className={styles.modalTitle}>Preview Ended 🎵</h3>
-                            <p className={styles.modalText}>
-                                You've hit the 30-second preview limit.<br />
-                                Join the Club to unlock full streaming!
-                            </p>
-                            <div className={styles.modalActions}>
-                                <a href="/club" className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}>
-                                    Join the Club
-                                </a>
-                                <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowPreviewModal(false)}>
-                                    Close
-                                </button>
-                            </div>
+                            {user ? (
+                                <>
+                                    <h3 className={styles.modalTitle}>Upgrade for Full Access 🎧</h3>
+                                    <p className={styles.modalText}>
+                                        You've hit the preview limit on this premium track.<br />
+                                        Upgrade to <strong>Insider</strong> or <strong>VIP</strong> to unlock full streaming!
+                                    </p>
+                                    <div className={styles.modalActions}>
+                                        <a href="/club/account" className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}>
+                                            Upgrade Plan
+                                        </a>
+                                        <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowPreviewModal(false)}>
+                                            Close
+                                        </button>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <h3 className={styles.modalTitle}>Preview Ended 🎵</h3>
+                                    <p className={styles.modalText}>
+                                        You've hit the 30-second preview limit.<br />
+                                        Join the Club to unlock full streaming!
+                                    </p>
+                                    <div className={styles.modalActions}>
+                                        <a href="/club" className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}>
+                                            Join the Club
+                                        </a>
+                                        <button className={`${styles.modalBtn} ${styles.modalBtnSecondary}`} onClick={() => setShowPreviewModal(false)}>
+                                            Close
+                                        </button>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 )
