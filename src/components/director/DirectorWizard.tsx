@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 import { useAuth } from "@/context/AuthContext";
 import { Sparkles, Users, Clapperboard, MonitorPlay, Mic2, LayoutTemplate, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -24,7 +25,8 @@ interface DirectorState {
 
 export default function DirectorWizard() {
     const router = useRouter();
-    const { user, isLabel, isLoaded } = useAuth();
+    const { isLoaded } = useUser();
+    const { user, isLabel } = useAuth();
     const [activeTab, setActiveTab] = useState<DirectorTab>('briefing');
     const [tracks, setTracks] = useState<any[]>([]);
     const [project, setProject] = useState<DirectorState>({
