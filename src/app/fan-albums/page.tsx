@@ -79,7 +79,7 @@ export default function CommunityHubPage() {
 
         const allTracks = albums.flatMap(a => {
             // VIP Check
-            if (!isPro && new Date(a.releaseDate) > now) return [];
+            if (!isVIP && new Date(a.releaseDate) > now) return [];
 
             return a.tracks.filter(t => t.audioUrl && t.id !== currentTrackId);
         });
