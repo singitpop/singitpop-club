@@ -7,11 +7,21 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { useClerk } from '@clerk/nextjs';
+import { useAuth } from '@/context/AuthContext'; // Import Auth
 
 export default function SmartCTA() {
+    const { user } = useAuth(); // Get User Tier
+    const loadingTier = null; // Removed local state for now, or keep it if handleCheckout uses it. 
+    // Wait, handleCheckout uses setLoadingTier. I should keep the state.
+
+    // Let's rewrite the start of component properly
     const [loadingTier, setLoadingTier] = useState<string | null>(null);
     const router = useRouter();
     const { openSignUp } = useClerk();
+
+    // Helper to check tier levels
+    const isInsider = user?.tier === 'INSIDER' || user?.tier === 'VIP' || user?.tier === 'LABEL';
+    const isVIP = user?.tier === 'VIP' || user?.tier === 'LABEL';
 
     const handleCheckout = async (priceId: string, tierName: string) => {
         setLoadingTier(tierName);
@@ -86,9 +96,10 @@ export default function SmartCTA() {
                     <button
                         className={styles.glowBtn}
                         onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_INSIDER || '', 'INSIDER')}
-                        disabled={loadingTier === 'INSIDER'}
+                        disabled={loadingTier === 'INSIDER' || isInsider}
+                        style={isInsider ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
                     >
-                        {loadingTier === 'INSIDER' ? <Loader2 className="animate-spin" size={20} /> : 'Go Insider'}
+                        {loadingTier === 'INSIDER' ? <Loader2 className="animate-spin" size={20} /> : (isInsider ? 'Current Plan' : 'Go Insider')}
                     </button>
                 </div>
 
@@ -102,14 +113,16 @@ export default function SmartCTA() {
                     <ul className={styles.features}>
                         <li>✅ <strong>Lossless WAV Downloads</strong></li>
                         <li>✅ 20% Shop Discount</li>
+                        <li>✅ VIP Radio Stations 📻</li>
                         <li>✅ Exclusive Future Album Content</li>
                     </ul>
                     <button
                         className={styles.outlineBtn}
                         onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_VIP || '', 'VIP')}
-                        disabled={loadingTier === 'VIP'}
+                        disabled={loadingTier === 'VIP' || isVIP}
+                        style={isVIP ? { background: '#222', borderColor: '#444', color: '#888', cursor: 'default' } : {}}
                     >
-                        {loadingTier === 'VIP' ? <Loader2 className="animate-spin" size={20} /> : 'Get VIP Access'}
+                        {loadingTier === 'VIP' ? <Loader2 className="animate-spin" size={20} /> : (isVIP ? 'Current Plan' : 'Get VIP Access')}
                     </button>
                 </div>
             </div>
