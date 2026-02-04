@@ -11,13 +11,11 @@ import { useAuth } from '@/context/AuthContext'; // Import Auth
 
 export default function SmartCTA() {
     const { user } = useAuth(); // Get User Tier
-    const loadingTier = null; // Removed local state for now, or keep it if handleCheckout uses it. 
-    // Wait, handleCheckout uses setLoadingTier. I should keep the state.
-
-    // Let's rewrite the start of component properly
-    const [loadingTier, setLoadingTier] = useState<string | null>(null);
-    const router = useRouter();
+    const appRouter = useRouter(); // Standard hook
     const { openSignUp } = useClerk();
+
+    const [loadingTier, setLoadingTier] = useState<string | null>(null);
+    // Router and Clerk are already defined above
 
     // Helper to check tier levels
     const isInsider = user?.tier === 'INSIDER' || user?.tier === 'VIP' || user?.tier === 'LABEL';

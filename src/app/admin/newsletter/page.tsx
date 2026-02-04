@@ -14,7 +14,24 @@ export default function NewsletterBuilder() {
     const [generatedHtml, setGeneratedHtml] = useState("");
 
     const generateEmail = () => {
-        // Simple HTML Template
+        let title = "Featured Update";
+        let body = "Listen to the latest tracks on our website.";
+        let btnText = "Listen Now";
+
+        if (featuredType === 'single') {
+            title = "New Single Out Now!";
+            body = "Listen to our latest track on the website.";
+            btnText = "Listen Now";
+        } else if (featuredType === 'merch') {
+            title = "New Merch Drop! 👕";
+            body = "Check out the latest gear in our shop.";
+            btnText = "Shop Now";
+        } else if (featuredType === 'album') {
+            title = "New Album Release! 💿";
+            body = "Stream the full album now.";
+            btnText = "Stream Now";
+        }
+
         const html = `
 <!DOCTYPE html>
 <html>
@@ -38,9 +55,9 @@ export default function NewsletterBuilder() {
         <p>${headerText.replace(/\n/g, '<br>')}</p>
         
         <div style="margin: 30px 0; padding: 20px; background: #f9f9f9; border-left: 4px solid #FF0080;">
-            <h3>${featuredType === 'single' ? 'New Single Out Now!' : 'Featured Update'}</h3>
-            <p>Listen to the latest tracks on our website.</p>
-            <a href="${ctaLink}" class="btn">Listen Now</a>
+            <h3>${title}</h3>
+            <p>${body}</p>
+            <a href="${ctaLink}" class="btn">${btnText}</a>
         </div>
 
         <p>Thanks for being a fan!<br><strong>The SingIt Pop Team</strong></p>
@@ -155,10 +172,13 @@ export default function NewsletterBuilder() {
 
                     <div style={{ marginTop: '1rem', borderTop: '1px solid #333', paddingTop: '1rem' }}>
                         <span style={{ fontSize: '0.9rem', color: '#888' }}>Preview (Simple)</span>
-                        {/* We could use an iframe here to preview accurately */}
-                        <div style={{ background: '#fff', color: '#000', padding: '1rem', marginTop: '0.5rem', borderRadius: '4px', minHeight: '200px' }}>
+                        <div style={{ background: '#fff', padding: '0', marginTop: '0.5rem', borderRadius: '4px', height: '400px', overflow: 'hidden' }}>
                             {generatedHtml ? (
-                                <div dangerouslySetInnerHTML={{ __html: generatedHtml }} /> // Render the HTML
+                                <iframe
+                                    srcDoc={generatedHtml}
+                                    style={{ width: '100%', height: '100%', border: 'none' }}
+                                    title="Email Preview"
+                                />
                             ) : (
                                 <p style={{ color: '#ccc', textAlign: 'center', paddingTop: '3rem' }}>Preview will appear here</p>
                             )}
