@@ -26,6 +26,7 @@ function CreateMixtapeContent() {
     const [selectedTracks, setSelectedTracks] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
+    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(null); // New State
 
     // Redirect if not logged in
     useEffect(() => {
@@ -51,11 +52,26 @@ function CreateMixtapeContent() {
         }))
     );
 
-    // Filter tracks
-    const filteredTracks = allTracks.filter(t =>
-        t.title.toLowerCase().includes(search.toLowerCase()) ||
-        t.albumTitle?.toLowerCase().includes(search.toLowerCase())
-    );
+    // Filter tracks OR Show Album Grid Logic
+    // If Searching -> Show Search Results (Flat)
+    // If Album Selected -> Show Album Tracks
+    // Else -> Show Album Grid
+
+    const isSearching = search.length > 0;
+
+    let viewTracks = allTracks;
+
+    if (isSearching) {
+        viewTracks = allTracks.filter(t =>
+            t.title.toLowerCase().includes(search.toLowerCase()) ||
+            t.albumTitle?.toLowerCase().includes(search.toLowerCase())
+        );
+    } else if (selectedAlbumId) {
+        // Show tracks for this album only
+        viewTracks = allTracks.filter(t => t.uniqueId.startsWith(selectedAlbumId));
+    } else {
+        viewTracks = []; // Empty, we show Album Grid instead
+    }
 
     const toggleTrack = (track: any) => {
         const exists = selectedTracks.find(t => t.uniqueId === track.uniqueId);
@@ -185,41 +201,83 @@ function CreateMixtapeContent() {
                             />
                         </div>
 
-                        {/* List */}
+                        {/* List Area */}
                         <div style={{ flex: 1, overflowY: 'auto', background: '#111', borderRadius: '12px', border: '1px solid #222', padding: '0.5rem' }}>
-                            {filteredTracks.map(track => {
-                                const isSelected = selectedTracks.find(t => t.uniqueId === track.uniqueId);
-                                return (
-                                    <div
-                                        key={track.uniqueId}
-                                        onClick={() => toggleTrack(track)}
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            padding: '10px',
-                                            gap: '12px',
-                                            cursor: 'pointer',
-                                            borderBottom: '1px solid #1a1a1a',
-                                            background: isSelected ? 'rgba(255, 0, 128, 0.1)' : 'transparent'
-                                        }}
-                                    >
-                                        <img src={track.artwork} style={{ width: 48, height: 48, borderRadius: 4, objectFit: 'cover' }} />
-                                        <div style={{ flex: 1 }}>
-                                            <div style={{ fontWeight: '500' }}>{track.title}</div>
-                                            <div style={{ fontSize: '0.8rem', color: '#666' }}>{track.albumTitle}</div>
+
+                            {/* VIEW 1: ALBUM GRID (Default) */}
+                            {!isSearching && !selectedAlbumId && (
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '1rem', padding: '1rem' }}>
+                                    {albums.map(album => (
+                                        <div
+                                            key={album.id}
+                                            onClick={() => setSelectedAlbumId(album.id)}
+                                            style={{ cursor: 'pointer', textAlign: 'center' }}
+                                        >
+                                            <div style={{ position: 'relative', aspectRatio: '1/1', marginBottom: '8px', borderRadius: '8px', overflow: 'hidden' }}>
+                                                <img src={album.coverArt} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.2s' }} />
+                                                <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.2s', fontWeight: 'bold' }} className="hover-overlay">
+                                                    Open
+                                                </div>
+                                            </div>
+                                            <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{album.title}</div>
+                                            <div style={{ fontSize: '0.8rem', color: '#666' }}>{album.tracks.length} Tracks</div>
                                         </div>
-                                        <div style={{
-                                            width: 24, height: 24,
-                                            borderRadius: '50%',
-                                            border: isSelected ? 'none' : '2px solid #333',
-                                            background: isSelected ? '#FF0080' : 'transparent',
-                                            display: 'flex', alignItems: 'center', justifyContent: 'center'
-                                        }}>
-                                            {isSelected && <CheckCircle size={16} color="white" />}
-                                        </div>
-                                    </div>
-                                )
-                            })}
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* VIEW 2: TRACK LIST (Search or Album View) */}
+                            {(isSearching || selectedAlbumId) && (
+                                <>
+                                    {/* Back Button for Album View */}
+                                    {!isSearching && selectedAlbumId && (
+                                        <button
+                                            onClick={() => setSelectedAlbumId(null)}
+                                            style={{ width: '100%', padding: '0.8rem', background: '#222', border: 'none', borderBottom: '1px solid #333', color: '#aaa', cursor: 'pointer', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                        >
+                                            <ArrowLeft size={16} /> Back to Albums
+                                        </button>
+                                    )}
+
+                                    {viewTracks.length === 0 ? (
+                                        <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>No tracks found.</div>
+                                    ) : (
+                                        viewTracks.map(track => {
+                                            const isSelected = selectedTracks.find(t => t.uniqueId === track.uniqueId);
+                                            return (
+                                                <div
+                                                    key={track.uniqueId}
+                                                    onClick={() => toggleTrack(track)}
+                                                    style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        padding: '10px',
+                                                        gap: '12px',
+                                                        cursor: 'pointer',
+                                                        borderBottom: '1px solid #1a1a1a',
+                                                        background: isSelected ? 'rgba(255, 0, 128, 0.1)' : 'transparent'
+                                                    }}
+                                                >
+                                                    <img src={track.artwork} style={{ width: 48, height: 48, borderRadius: 4, objectFit: 'cover' }} />
+                                                    <div style={{ flex: 1 }}>
+                                                        <div style={{ fontWeight: '500' }}>{track.title}</div>
+                                                        <div style={{ fontSize: '0.8rem', color: '#666' }}>{track.albumTitle}</div>
+                                                    </div>
+                                                    <div style={{
+                                                        width: 24, height: 24,
+                                                        borderRadius: '50%',
+                                                        border: isSelected ? 'none' : '2px solid #333',
+                                                        background: isSelected ? '#FF0080' : 'transparent',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                                    }}>
+                                                        {isSelected && <CheckCircle size={16} color="white" />}
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    )}
+                                </>
+                            )}
                         </div>
                     </div>
 
