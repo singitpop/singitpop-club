@@ -182,7 +182,7 @@ export default function ProjectsPage() {
             </div>
 
             {/* Call to Action - Only for Guests/Fans */}
-            {(!user || user.publicMetadata?.tier === 'FAN') && (
+            {(!user || (user as any).publicMetadata?.tier === 'FAN') && (
                 <div className="max-w-6xl mx-auto mt-16 text-center">
                     <div className="bg-gradient-to-br from-pink-500/10 to-purple-500/10 backdrop-blur-xl rounded-3xl p-8 border border-pink-500/20">
                         <h3 className="text-2xl font-bold mb-4">Want to stay updated?</h3>

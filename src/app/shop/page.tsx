@@ -120,7 +120,7 @@ export default function ShopPage() {
             </div>
 
             {/* VIP Discount Banner */}
-            {user?.publicMetadata?.tier === 'VIP' || user?.publicMetadata?.tier === 'LABEL' ? (
+            {(user as any)?.publicMetadata?.tier === 'VIP' || (user as any)?.publicMetadata?.tier === 'LABEL' ? (
                 <div className="max-w-4xl mx-auto mb-16">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -178,7 +178,7 @@ export default function ShopPage() {
 
                                 <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
                                 <div className="text-4xl font-bold mb-4">
-                                    ${tier.price}
+                                    £{tier.price}
                                     <span className="text-lg text-white/40 font-normal ml-2">{tier.duration}</span>
                                 </div>
 
@@ -319,7 +319,7 @@ export default function ShopPage() {
 
                                         <h3 className="font-bold text-sm mb-1 truncate" title={ringtone.title}>{ringtone.title}</h3>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-sm font-bold text-pink-400">${ringtone.price.toFixed(2)}</span>
+                                            <span className="text-sm font-bold text-pink-400">£{ringtone.price.toFixed(2)}</span>
                                             <button
                                                 onClick={() => handleBuyRingtone(ringtone.priceId)}
                                                 className="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-md text-xs font-semibold transition-colors"
@@ -408,7 +408,7 @@ export default function ShopPage() {
                                 <div className="flex items-center justify-between">
                                     <span className="text-lg font-bold">
                                         {product.startingPrice && <span className="text-sm font-normal text-white/60 mr-1">From</span>}
-                                        ${product.price.toFixed(2)}
+                                        £{product.price.toFixed(2)}
                                     </span>
                                     <span className="p-2 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
                                         <ExternalLink size={18} />
