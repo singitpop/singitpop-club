@@ -159,7 +159,7 @@ export default function AdminPage() {
                     Projects
                 </Link>
                 <Link href="/admin/club" className={styles.btn}>
-                    <Lock size={18} />
+                    <LockIcon size={18} />
                     Club Manager
                 </Link>
             </div>

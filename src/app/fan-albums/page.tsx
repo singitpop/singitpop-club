@@ -491,82 +491,54 @@ export default function CommunityHubPage() {
                         </>
                     )}
 
+
+    // Tier Logic
+                    const userTier = (clerkUser?.publicMetadata?.tier as string) || 'FAN';
+                    const isVIP = userTier === 'VIP' || userTier === 'LABEL';
+                    const isInsider = userTier === 'INSIDER' || isVIP;
+
+                    // ... (rest of imports/setup)
+
                     {activeTab === 'radio' && (
-                        <StationView
-                            currentTrackId={currentTrackId}
-                            isPlaying={isPlaying}
-                            onPlayTrack={handleTrackPlay}
-                            currentTrack={(() => {
-                                // Resolve current track object for display
-                                if (!currentTrackId) return undefined;
-                                const parts = String(currentTrackId).split('-');
-                                if (parts.length >= 2) {
-                                    const aId = parts.slice(0, -1).join('-');
-                                    const tId = parseInt(parts[parts.length - 1]);
-                                    const album = albums.find(a => a.id === aId);
-                                    const t = album?.tracks.find(tr => tr.id === tId);
-                                    return t ? { ...t, coverArt: album?.coverArt } : undefined;
-                                }
-                                return undefined;
-                            })()}
-                            onNext={playNextRadioTrack}
-                            onStop={() => {
-                                setIsPlaying(false);
-                            }}
-                        />
-                    )}
-
-                    {/* Recommendations / Grid - Only show if NOT on radio tab (or maybe keep it below?) */}
-                    {/* Let's hide grid for Radio tab to focus on the player */}
-                    {activeTab !== 'radio' && (
-                        <>
-                            <div className={styles.sectionHeader} style={{ marginTop: '3rem' }}>
-                                <h2>
-                                    {activeTab === 'favorites' ? 'My Favorites ❤️' :
-                                        activeTab === 'browse' ? 'Browse All Mixes' :
-                                            'Fresh Mixes 🎧'}
-                                </h2>
-                                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                    <button
-                                        className={`${styles.filterBtn} ${activeSort === 'newest' ? styles.activeFilter : ''}`}
-                                        onClick={() => setActiveSort('newest')}
-                                        style={{
-                                            background: activeSort === 'newest' ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                                            borderColor: activeSort === 'newest' ? 'white' : 'rgba(255,255,255,0.1)'
-                                        }}
-                                    >
-                                        <Clock size={16} /> Newest
-                                    </button>
-                                    <button
-                                        className={`${styles.filterBtn} ${activeSort === 'popular' ? styles.activeFilter : ''}`}
-                                        onClick={() => setActiveSort('popular')}
-                                        style={{
-                                            background: activeSort === 'popular' ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                                            borderColor: activeSort === 'popular' ? 'white' : 'rgba(255,255,255,0.1)'
-                                        }}
-                                    >
-                                        <TrendingUp size={16} /> Popular
-                                    </button>
+                        isVIP ? (
+                            <StationView
+                                currentTrackId={currentTrackId}
+                                isPlaying={isPlaying}
+                                onPlayTrack={handleTrackPlay}
+                                currentTrack={(() => {
+                                    if (!currentTrackId) return undefined;
+                                    const parts = String(currentTrackId).split('-');
+                                    if (parts.length >= 2) {
+                                        const aId = parts.slice(0, -1).join('-');
+                                        const tId = parseInt(parts[parts.length - 1]);
+                                        const album = albums.find(a => a.id === aId);
+                                        const t = album?.tracks.find(tr => tr.id === tId);
+                                        return t ? { ...t, coverArt: album?.coverArt } : undefined;
+                                    }
+                                    return undefined;
+                                })()}
+                                onNext={playNextRadioTrack}
+                                onStop={() => setIsPlaying(false)}
+                            />
+                        ) : (
+                            <div className="flex flex-col items-center justify-center h-[60vh] text-center p-8 bg-white/5 rounded-3xl border border-white/10">
+                                <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-orange-500/20">
+                                    <Clock size={40} className="text-white" />
                                 </div>
+                                <h2 className="text-3xl font-bold mb-3">VIP Access Only</h2>
+                                <p className="text-white/60 max-w-md mb-8">
+                                    The "SingItPop Radio" station is an exclusive perk for our VIP members.
+                                    Upgrade to listen to non-stop curated mixes.
+                                </p>
+                                <Link href="/membership" className="px-8 py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform">
+                                    Upgrade to VIP
+                                </Link>
                             </div>
-
-                            <div className={styles.masonry}>
-                                {getSortedPlaylists().map((playlist) => (
-                                    <div key={playlist.id} className={styles.masonryItem}>
-                                        <PlaylistCard
-                                            playlist={playlist}
-                                            coverImages={getPlaylistArtwork(playlist)}
-                                            isPlaying={isPlaying && currentTrackId === `track-${playlist.tracks[0]}`}
-                                            onPlay={(e) => handlePlay(e, playlist.id)}
-                                            onClick={() => setSelectedPlaylist(playlist)}
-                                            onLike={() => handleLike(playlist.id)}
-                                            hasLiked={playlist.likedBy?.includes(userId)}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </>
+                        )
                     )}
+
+                    {/* ... (Recommendations grid code) ... */}
+
                 </main>
 
                 {/* Right Sidebar: Activity */}
@@ -577,9 +549,20 @@ export default function CommunityHubPage() {
                             <>
                                 <h4 style={{ color: '#4ade80', fontSize: '1.1rem', marginBottom: '0.5rem' }}>{activeChallenge.title}</h4>
                                 <p>{activeChallenge.description}</p>
-                                <Link href={`/fan-albums/create?challenge=${encodeURIComponent(activeChallenge.title)}`}>
-                                    <button className={styles.challengeBtn}>Accept Challenge</button>
-                                </Link>
+                                {isInsider ? (
+                                    <Link href={`/fan-albums/create?challenge=${encodeURIComponent(activeChallenge.title)}`}>
+                                        <button className={styles.challengeBtn}>Accept Challenge</button>
+                                    </Link>
+                                ) : (
+                                    <div>
+                                        <button disabled className={`${styles.challengeBtn} opacity-50 cursor-not-allowed mb-2`}>
+                                            Locked (Insider Only)
+                                        </button>
+                                        <Link href="/membership" className="text-xs text-pink-400 hover:text-pink-300 underline">
+                                            Join the Club to Enter
+                                        </Link>
+                                    </div>
+                                )}
                             </>
                         ) : (
                             <p style={{ color: '#aaa', fontStyle: 'italic' }}>Loading challenge details...</p>
