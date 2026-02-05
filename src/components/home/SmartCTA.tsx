@@ -78,8 +78,10 @@ export default function SmartCTA() {
                     <button
                         className={styles.outlineBtn}
                         onClick={() => openSignUp()}
+                        disabled={!!user}
+                        style={user?.tier === 'FAN' ? { background: '#222', borderColor: '#444', color: '#888', cursor: 'default' } : (user ? { opacity: 0.5, cursor: 'not-allowed' } : {})}
                     >
-                        Join Free
+                        {user?.tier === 'FAN' ? 'Current Plan' : user ? 'Upgrade Above' : 'Join Free'}
                     </button>
                 </div>
 
