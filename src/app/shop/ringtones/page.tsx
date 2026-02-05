@@ -11,17 +11,25 @@ export default function RingtonesPage() {
     const { user } = useAuth();
     const [ringtones, setRingtones] = useState<any[]>([]);
     const [loadingRingtones, setLoadingRingtones] = useState(true);
+    const [debugError, setDebugError] = useState<string>('');
 
     useEffect(() => {
         async function fetchRingtones() {
             try {
                 const res = await fetch('/api/ringtones');
                 const data = await res.json();
+
+                if (data.error) {
+                    setDebugError(data.error);
+                    console.error('API Error:', data.error);
+                }
+
                 if (data.ringtones) {
                     setRingtones(data.ringtones);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 console.error('Failed to fetch ringtones:', error);
+                setDebugError(error.message || 'Network fetch failed');
             } finally {
                 setLoadingRingtones(false);
             }
@@ -77,6 +85,11 @@ export default function RingtonesPage() {
                     </div>
                 ) : ringtones.length === 0 ? (
                     <div className="text-center p-12 bg-white/5 rounded-3xl">
+                        {debugError && (
+                            <div className="mb-4 p-4 bg-red-500/20 border border-red-500 rounded-xl text-red-200 font-mono text-sm">
+                                <strong>Debug Error:</strong> {debugError}
+                            </div>
+                        )}
                         <p className="text-white/60">No ringtones available yet. Check back soon!</p>
                     </div>
                 ) : (
