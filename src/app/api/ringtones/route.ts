@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-    apiVersion: '2026-01-28.clover',
+    apiVersion: '2023-10-16',
 });
 
 export async function GET() {
@@ -16,7 +16,8 @@ export async function GET() {
         // Filter for ringtones and get their prices
         const ringtones = await Promise.all(
             products.data
-                .filter(p => p.metadata?.type === 'ringtone')
+            products.data
+                .filter(p => p.metadata?.type === 'ringtone' || p.name.toLowerCase().includes('ringtone'))
                 .map(async (product) => {
                     const prices = await stripe.prices.list({
                         product: product.id,
@@ -26,7 +27,7 @@ export async function GET() {
 
                     return {
                         id: product.id,
-                        title: product.name.replace(' Ringtone', ''),
+                        title: product.name.replace(/ Ringtone$/i, ''),
                         description: product.description,
                         price: prices.data[0]?.unit_amount ? prices.data[0].unit_amount / 100 : 0,
                         priceId: prices.data[0]?.id,
