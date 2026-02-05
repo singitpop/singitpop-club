@@ -67,7 +67,10 @@ for (let i = 1; i < data.length; i++) {
 
     const trackNumber = row[5]; // Column F: Track No
     const releaseDate = row[8]; // Column I: Release Date (Excel date number)
-    const latestMarker = row[10] ? String(row[10]).trim().toLowerCase() : ''; // Column K: Latest single marker
+    const latestMarker = row[11] ? String(row[11]).trim().toLowerCase() : ''; // Column L: Trending/Latest
+    const isTrendingMarker = latestMarker.includes('trend') || latestMarker.includes('trand');
+    const playsRaw = row[12]; // Column M: Plays
+
 
     // Skip empty rows
     if (!trackTitle || !albumName) continue;
@@ -121,7 +124,8 @@ for (let i = 1; i < data.length; i++) {
         year: year,
         releaseDate: fullDateStr, // Store full date
         singleType: singleType,
-        latestMarker: latestMarker
+        latestMarker: latestMarker,
+        plays: playsRaw
     });
 }
 
@@ -234,6 +238,11 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
     if (hasLiveTag) albumType = 'live';
     else if (hasStudioTag) albumType = 'studio';
 
+    const isTrending = tracks.some(t => {
+        const marker = (t.latestMarker || '').toLowerCase();
+        return marker.includes('trend') || marker.includes('trand');
+    });
+
     // Initialize album
     albums[albumSlug] = {
         id: albumSlug,
@@ -245,7 +254,8 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
         releaseDate: releaseDate, // Use full date
         folderPath: matchingFolder,
         mp3Count: audioFiles.length,
-        type: albumType // New field
+        type: albumType,
+        trending: isTrending
     };
 
     // Add tracks
@@ -297,7 +307,7 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
             id: index + 1,
             title: track.title,
             duration: '3:30',
-            plays: '0',
+            plays: track.plays ? String(track.plays) : '0', // From spreadsheet
             locked: false, // Lock logic handled by client component based on tier
             price: 0.99,
             genre: track.genre,
@@ -314,8 +324,13 @@ for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
     console.log(`   ✅ ${albumName} (${year}) - ${tracks.length} tracks, ${audioFiles.length} Audio Files`);
 }
 
-// Convert to array and sort by year (newest first)
-const albumsArray = Object.values(albums).sort((a, b) => b.year - a.year);
+// Convert to array and sort by Release Date (newest first)
+const albumsArray = Object.values(albums).sort((a, b) => {
+    const dateA = new Date(a.releaseDate).getTime();
+    const dateB = new Date(b.releaseDate).getTime();
+    if (dateB !== dateA) return dateB - dateA;
+    return b.year - a.year; // Fallback
+});
 
 console.log(`\n✨ Processed ${albumsArray.length} albums successfully!\n`);
 

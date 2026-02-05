@@ -11,6 +11,17 @@ import styles from './page.module.css';
 import { albums as staticAlbums, Album } from '@/data/albumData';
 import { siteContent } from '@/config/siteContent';
 
+// Robust Date Helper: Parses 'YYYY-MM-DD' and compares with current date (ignoring time)
+const isReleased = (dateStr: string) => {
+    if (!dateStr || dateStr === '0') return false;
+    const releaseDate = new Date(dateStr);
+    const today = new Date();
+    // Normalize to midnight for fair comparison
+    today.setHours(0, 0, 0, 0);
+    return releaseDate <= today;
+};
+
+
 function MusicContent() {
     const { isPro, isLabel, isInsider } = useAuth();
     const searchParams = useSearchParams();
@@ -56,28 +67,31 @@ function MusicContent() {
 
     // Set initial Selected Album (Dynamic Logic)
     useEffect(() => {
-        // Only run if user hasn't selected an album yet
-        if (!selectedAlbumId) {
-            const studios = albums.filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
-                .sort((a, b) => {
-                    const timeA = new Date(a.releaseDate).getTime();
-                    const timeB = new Date(b.releaseDate).getTime();
-                    if (timeB === timeA) {
-                        // Tie-breaker: Prioritize 'A Love That Never Ends'
-                        if (b.title === 'A Love That Never Ends') return 1;
-                        if (a.title === 'A Love That Never Ends') return -1;
-                        return 0;
-                    }
-                    return timeB - timeA;
-                });
+        // Initialize or Update Current Selection
+        if (albums.length > 0) {
+            const activeAlbums = albums.filter(a =>
+                (a.type === 'studio' || a.type === 'standard') &&
+                isReleased(a.releaseDate)
+            ).sort((a, b) => {
+                const timeA = new Date(a.releaseDate).getTime();
+                const timeB = new Date(b.releaseDate).getTime();
+                if (timeB === timeA) {
+                    if (b.title === 'A Love That Never Ends') return 1;
+                    if (a.title === 'A Love That Never Ends') return -1;
+                    return 0;
+                }
+                return timeB - timeA;
+            });
 
-            if (studios.length > 0) {
-                setSelectedAlbumId(studios[0].id);
-            } else {
-                setSelectedAlbumId(siteContent.musicPage.latestAlbumId);
+            const topActiveId = activeAlbums.length > 0 ? activeAlbums[0].id : siteContent.musicPage.latestAlbumId;
+
+            // Update if no selection OR if current selection is invalid (e.g. future album)
+            if (!selectedAlbumId || !activeAlbums.some(a => a.id === selectedAlbumId)) {
+                setSelectedAlbumId(topActiveId);
             }
         }
-    }, [isLoading, albums, selectedAlbumId]); // React to albums update
+    }, [isLoading, albums, selectedAlbumId]);
+    // React to albums update
 
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -92,7 +106,7 @@ function MusicContent() {
 
     // Auto-Add Track Logic (Wait for albums to load)
     useEffect(() => {
-        const trackTitleToAdd = searchParams.get('addTrack');
+        const trackTitleToAdd = searchParams?.get('addTrack');
         if (trackTitleToAdd && albums.length > 0) {
             // Find the track
             const allTracks = albums.flatMap(a => a.tracks);
@@ -111,7 +125,7 @@ function MusicContent() {
                     return prev;
                 });
                 // Clear param
-                const newParams = new URLSearchParams(searchParams.toString());
+                const newParams = new URLSearchParams(searchParams?.toString() || '');
                 newParams.delete('addTrack');
                 router.replace(`/music?${newParams.toString()}`, { scroll: false });
             }
@@ -126,28 +140,39 @@ function MusicContent() {
 
     // derive tracks based on state
     const { tracks, title } = useMemo(() => {
+        // Helper to filter out future releases
+        const activeAlbums = albums.filter(a => isReleased(a.releaseDate));
+        const allActiveTracks = activeAlbums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id })));
+
+
         if (filterMode === 'album' && selectedAlbumId) {
             const album = albums.find(a => a.id === selectedAlbumId);
+            const isReleasedAlbum = album ? isReleased(album.releaseDate) : false;
+
             return {
-                tracks: album ? album.tracks.map(t => ({ ...t, albumId: album.id })) : [],
-                title: album ? album.title : 'Album not found'
+                tracks: (album && isReleasedAlbum) ? album.tracks.map(t => ({ ...t, albumId: album.id })) : [],
+                title: (album && !isReleasedAlbum) ? 'Coming Soon' : (album ? album.title : 'Album not found')
             };
         }
 
         if (filterMode === 'latest') {
-            const studios = albums.filter(a => a.type === 'studio' && new Date(a.releaseDate) <= new Date())
+            const studios = activeAlbums
+                .filter(a => {
+                    // Exclude Country albums
+                    const isCountry = a.genre && a.genre.some(g => g.toLowerCase() === 'country');
+                    return !isCountry && (a.type === 'studio' || a.type === 'standard');
+                })
                 .sort((a, b) => {
                     const timeA = new Date(a.releaseDate).getTime();
                     const timeB = new Date(b.releaseDate).getTime();
                     if (timeB === timeA) {
-                        // Tie-breaker: Prioritize 'A Love That Never Ends'
                         if (b.title === 'A Love That Never Ends') return 1;
                         if (a.title === 'A Love That Never Ends') return -1;
                         return 0;
                     }
                     return timeB - timeA;
                 });
-            const latestAlbum = studios.length > 0 ? studios[0] : null;
+            const latestAlbum = studios.length > 0 ? studios[0] : (activeAlbums.length > 0 ? activeAlbums[0] : null);
 
             return {
                 tracks: latestAlbum ? latestAlbum.tracks.map(t => ({ ...t, albumId: latestAlbum.id })) : [],
@@ -157,49 +182,55 @@ function MusicContent() {
 
         if (filterMode === 'all') {
             return {
-                tracks: albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id }))),
+                tracks: allActiveTracks,
                 title: 'All Tracks'
             };
         }
 
         if (filterMode === 'trending') {
-            // Flatten first, then slice
-            const trendingTracks = albums.slice(0, 5).flatMap(a => a.tracks.slice(0, 2).map(t => ({ ...t, albumId: a.id })));
+            // Logic: Manual Trending items first, then Latest Tracks
+            const trendingFromMetadata = activeAlbums.filter(a => a.trending)
+                .flatMap(a => a.tracks.slice(0, 4).map(t => ({ ...t, albumId: a.id })));
+
+            // Map for quick lookup
+            const albumDateMap = new Map(activeAlbums.map(a => [a.id, new Date(a.releaseDate || 0).getTime()]));
+
+            const recentTracks = [...allActiveTracks]
+                .sort((a, b) => {
+                    const timeB = albumDateMap.get(b.albumId!) || 0;
+                    const timeA = albumDateMap.get(a.albumId!) || 0;
+                    return timeB - timeA;
+                })
+                .slice(0, 30);
+
+
+
+            // Deduplicate and combine
+            const combined = [...trendingFromMetadata];
+            recentTracks.forEach(t => {
+                if (!combined.some(ct => ct.title === t.title)) {
+                    combined.push(t);
+                }
+            });
+
             return {
-                tracks: trendingTracks,
+                tracks: combined.slice(0, 20),
                 title: 'Trending Now'
             };
         }
 
         if (filterMode === 'favorites') {
-            const favoriteTitles = [
-                'Desert Winds',
-                'A Love That Never Ends',
-                'Front Porch Valentine',
-                'The Silent Conversation',
-                'Slow Motion Love',
-                'Riding Down the Line',
-                'Sweet Tea Kisses',
-                'In the Stillness We Speak',
-                'Hold Me Like Home',
-                'Moonlit Hearts',
-                'Firelight And Forever',
-                'The Distance Between'
-            ];
-
-            // Find tracks matching titles (case-insensitive partial match or exact)
-            const favTracks = albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id })))
-                .filter(t => favoriteTitles.some(ft => t.title.toLowerCase().includes(ft.toLowerCase())));
-
-            // Sort them to match the order in favoriteTitles
-            const sortedFavs = favTracks.sort((a, b) => {
-                const indexA = favoriteTitles.findIndex(ft => a.title.toLowerCase().includes(ft.toLowerCase()));
-                const indexB = favoriteTitles.findIndex(ft => b.title.toLowerCase().includes(ft.toLowerCase()));
-                return indexA - indexB;
-            });
+            // Logic: Sort all tracks by "plays" (from spreadsheet)
+            const topPlayedTracks = [...allActiveTracks]
+                .sort((a, b) => {
+                    const playsA = parseInt(String(a.plays).replace(/[^0-9]/g, '')) || 0;
+                    const playsB = parseInt(String(b.plays).replace(/[^0-9]/g, '')) || 0;
+                    return playsB - playsA;
+                })
+                .slice(0, 24);
 
             return {
-                tracks: sortedFavs.slice(0, 12),
+                tracks: topPlayedTracks,
                 title: 'Fan Favorites'
             };
         }
@@ -399,7 +430,8 @@ function MusicContent() {
 
                 {/* Right: Charts/Promo */}
                 <div className={styles.sidebarRight}>
-                    <Charts />
+                    <Charts albums={albums} />
+
 
                     <div className={`glass-panel ${styles.promo}`}>
                         <h4>Stream Everywhere</h4>

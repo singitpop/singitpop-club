@@ -1,16 +1,38 @@
 "use client";
 
+import { useMemo } from 'react';
+import { Album } from '@/data/albumData';
 import styles from './Charts.module.css';
 
-const topTracks = [
-    { rank: 1, title: 'Desert Winds', change: 'up' },
-    { rank: 2, title: 'A Love That Never Ends', change: 'same' },
-    { rank: 3, title: 'Front Porch Valentine', change: 'down' },
-    { rank: 4, title: 'The Silent Conversation', change: 'up' },
-    { rank: 5, title: 'Slow Motion Love', change: 'new' },
-];
+interface ChartsProps {
+    albums: Album[];
+}
 
-export default function Charts() {
+export default function Charts({ albums }: ChartsProps) {
+    const topTracks = useMemo(() => {
+        if (!albums || albums.length === 0) return [];
+
+        const now = new Date();
+        const activeAlbums = albums.filter(a => new Date(a.releaseDate) <= now);
+
+        // Flatten and sort by plays
+        return activeAlbums
+            .flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id })))
+            .sort((a, b) => {
+                const playsA = parseInt(String(a.plays).replace(/[^0-9]/g, '')) || 0;
+                const playsB = parseInt(String(b.plays).replace(/[^0-9]/g, '')) || 0;
+                return playsB - playsA;
+            })
+            .slice(0, 5)
+            .map((track, index) => ({
+                rank: index + 1,
+                title: track.title,
+                change: index === 0 ? 'up' : (index === 4 ? 'down' : 'same') // Dummy change indicator
+            }));
+    }, [albums]);
+
+    if (topTracks.length === 0) return null;
+
     return (
         <div className={`glass-panel ${styles.container}`}>
             <h3>Fan Favourites 🏆</h3>
