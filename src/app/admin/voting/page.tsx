@@ -192,13 +192,13 @@ export default function AdminVotingPage() {
     };
 
     return (
-        <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto', color: 'white' }}>
-            <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#aaa', marginBottom: '1rem', textDecoration: 'none' }}>
+        <div className="min-h-screen bg-black text-white p-8 max-w-7xl mx-auto">
+            <Link href="/admin" className="inline-flex items-center gap-2 text-white/60 hover:text-white mb-4 transition-colors">
                 <ArrowLeft size={16} /> Back to Dashboard
             </Link>
-            <h1 style={{ fontSize: '2rem', marginBottom: '2rem', fontWeight: 'bold' }}>Voting Campaign Manager 🗳️</h1>
+            <h1 className="text-4xl font-bold mb-8">Voting Campaign Manager 🗳️</h1>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '2rem' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
 
                 {/* Track Selector */}
                 <div style={{ background: 'rgba(255,255,255,0.05)', padding: '1.5rem', borderRadius: '12px' }}>
@@ -359,7 +359,8 @@ export default function AdminVotingPage() {
             <hr style={{ margin: '4rem 0', borderColor: 'rgba(255,255,255,0.1)' }} />
 
             {/* Weekly Challenge Section */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '2rem' }}>
+            {/* Weekly Challenge Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
                 <div style={{ background: 'rgba(255,255,255,0.05)', padding: '2rem', borderRadius: '12px' }}>
                     <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem' }}>
                         🎯 Weekly Challenge Manager
