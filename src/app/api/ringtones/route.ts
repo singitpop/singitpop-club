@@ -131,9 +131,13 @@ export async function GET() {
                 genre: product.metadata?.genre || 'Pop',
                 duration: product.description?.match(/(\d+)s/)?.[1] || '20',
                 createdAt: realReleaseDate,
-                isNew: isNew
-            };
-        });
+                isNew: isNew,
+                // Debug properties
+                _debug_raw_title: product.name,
+                _debug_clean_title: title,
+                _debug_date_source: getRingtoneReleaseDate(title) ? 'Matched Album' : 'Fallback 2020',
+                _debug_release_date: realReleaseDate
+            });
 
         // Sort by Release Date (Newest First)
         ringtones.sort((a, b) => b.createdAt - a.createdAt);
