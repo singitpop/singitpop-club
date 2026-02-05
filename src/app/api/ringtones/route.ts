@@ -115,9 +115,11 @@ export async function GET() {
             // Normalize: Remove "Ringtone", "- Ringtone", " - Ringtone" case insensitive
             const title = product.name.replace(/[- ]*Ringtone$/i, '').trim();
 
+            let realReleaseDate = getRingtoneReleaseDate(title);
+
             // Force 2026/Valentine tracks to be NEW and Future-dated to ensure top sorting
             if (title.toLowerCase().includes('valentine') || title.includes('2026') || realReleaseDate > Date.now()) {
-                // If unmatched (0), force it to 2026-01-01. If matched 2026, keep it.
+                // If unmatched (0), force it to 2026-01-30. If matched 2026, keep it.
                 if (realReleaseDate === 0) realReleaseDate = new Date('2026-01-30').getTime();
             }
 
