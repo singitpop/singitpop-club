@@ -99,8 +99,8 @@ export async function GET() {
             const price = prices.data[0];
             const title = product.name.replace(/ Ringtone$/i, '');
 
-            // Use real release date from Album Data if available, fallback to 2025-06-01 (Old)
-            const realReleaseDate = getRingtoneReleaseDate(title) || (new Date('2025-06-01').getTime());
+            // Use real release date from Album Data if available, fallback to 2020-01-01 (Old)
+            const realReleaseDate = getRingtoneReleaseDate(title) || (new Date('2020-01-01').getTime());
 
             // "New" if released in the last 60 days
             const isNew = (Date.now() - realReleaseDate) < (60 * 24 * 60 * 60 * 1000);
