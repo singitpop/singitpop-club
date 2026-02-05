@@ -10,6 +10,7 @@ export default function RecommendationStrip() {
     const [latestSingleCover, setLatestSingleCover] = useState<string | null>(null);
     const [latestAlbumTitle, setLatestAlbumTitle] = useState(LATEST_RELEASES.ALBUM_CARD.TITLE);
     const [latestAlbumCover, setLatestAlbumCover] = useState<string | null>(null);
+    const [topTrendingTitle, setTopTrendingTitle] = useState('Whiskey Slide'); // Fallback
 
     useEffect(() => {
         fetch('/api/content/latest')
@@ -32,6 +33,11 @@ export default function RecommendationStrip() {
                 if (data.latestAlbumCover) {
                     setLatestAlbumCover(data.latestAlbumCover);
                 }
+
+                // Fetch top trending track
+                if (data.topTrendingTrack) {
+                    setTopTrendingTitle(data.topTrendingTrack);
+                }
             })
             .catch(err => console.error("Failed to fetch latest content", err));
     }, []);
@@ -49,7 +55,7 @@ export default function RecommendationStrip() {
             reason: '🎵 Latest Album',
             icon: latestAlbumCover || '/images/icons/music-note-clean.png'
         },
-        { id: 3, title: 'Whiskey Slide', reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
+        { id: 3, title: topTrendingTitle, reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
         { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },
     ];
 

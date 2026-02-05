@@ -358,6 +358,23 @@ export async function GET() {
         headers.set('X-Debug-Latest', 'true');
         headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'); // Force fresh fetch
 
+        // Calculate Top Trending Track
+        const now = new Date();
+        const trendingAlbums = albums.filter(a => a.trending && new Date(a.releaseDate) <= now);
+        let topTrendingTrack = 'Whiskey Slide'; // Fallback
+
+        if (trendingAlbums.length > 0) {
+            // Get most recent trending album
+            const sortedTrending = trendingAlbums.sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+            const topAlbum = sortedTrending[0];
+
+            // Get track with most plays from that album
+            const topTrack = topAlbum.tracks.sort((a, b) => parseInt(b.plays || '0') - parseInt(a.plays || '0'))[0];
+            if (topTrack) {
+                topTrendingTrack = topTrack.title;
+            }
+        }
+
         return NextResponse.json({
             latestAlbumId: latestNonCountry ? latestNonCountry.id : "valentine-country-2026",
             latestAlbumTitle: latestNonCountry ? latestNonCountry.title : "Valentine Country",
@@ -369,6 +386,7 @@ export async function GET() {
             latestVideoTitle,
             latestSingleTrackCover,
             latestSingleTrack,
+            topTrendingTrack,
             backgroundCoverArt: backgroundCoverArt || signedLatestCover || "/images/hero-desert.jpg"
         }, { headers });
     } catch (e) {
