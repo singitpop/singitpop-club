@@ -90,16 +90,25 @@ export async function GET() {
             return NextResponse.json({ ringtones: [], message: "No ringtones found" });
         }
 
-        // Fetch prices in parallel
-        const ringtones = await Promise.all(products.data.map(async (product) => {
-            // Explicitly fetch prices since default_price might be null on manually created items
-            const prices = await stripe.prices.list({
-                product: product.id,
-                active: true,
-                limit: 1
-            });
+        // Fetch all active prices in one go to avoid Rate Limiting (N+1 problem)
+        const prices = await stripe.prices.list({
+            active: true,
+            limit: 100,
+            type: 'one_time',
+        });
 
-            const price = prices.data[0];
+        // Create a map of ProductID -> Price
+        const priceMap = new Map();
+        prices.data.forEach(price => {
+            // We prioritize the first price found for a product
+            if (typeof price.product === 'string' && !priceMap.has(price.product)) {
+                priceMap.set(price.product, price);
+            }
+        });
+
+        // Map products to ringtones using the price map
+        const ringtones = products.data.map((product) => {
+            const price = priceMap.get(product.id);
             const title = product.name.replace(/ Ringtone$/i, '');
 
             // Use real release date from Album Data if available, fallback to 2020-01-01 (Old)
@@ -113,14 +122,14 @@ export async function GET() {
                 title: title,
                 description: product.description || '',
                 price: price?.unit_amount ? price.unit_amount / 100 : 3.00,
-                // Critical Fix: Ensure priceId is never empty if we found a price
+                // Ensure priceId is never empty. If missing, this ringtone won't be buyable (handled in UI)
                 priceId: price?.id || '',
                 genre: product.metadata?.genre || 'Pop',
                 duration: product.description?.match(/(\d+)s/)?.[1] || '20',
                 createdAt: realReleaseDate,
                 isNew: isNew
             };
-        }));
+        });
 
         // Sort by Release Date (Newest First)
         ringtones.sort((a, b) => b.createdAt - a.createdAt);
