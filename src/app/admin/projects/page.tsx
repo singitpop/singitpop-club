@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Edit2, Trash2, Save, X, Music, Film } from "lucide-react";
+import Link from 'next/link';
+import { Plus, Edit2, Trash2, Save, X, Music, Film, ArrowLeft } from "lucide-react";
 
 interface Project {
     id: string;
@@ -106,7 +107,12 @@ export default function AdminProjectsPage() {
         <div className="min-h-screen bg-black text-white p-8">
             <div className="max-w-6xl mx-auto">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-4xl font-bold">Manage Projects</h1>
+                    <div>
+                        <Link href="/admin" className="flex items-center gap-2 text-white/60 hover:text-white mb-4 transition-colors">
+                            <ArrowLeft size={16} /> Back to Admin Console
+                        </Link>
+                        <h1 className="text-4xl font-bold">Manage Projects</h1>
+                    </div>
                     <button
                         onClick={() => {
                             setEditingId('new');

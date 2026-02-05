@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Save, Trash2, Edit2, X, MessageSquare, Lock, Image as ImageIcon, Music } from "lucide-react";
+import Link from 'next/link';
+import { Plus, Save, Trash2, Edit2, X, MessageSquare, Lock, Image as ImageIcon, Music, ArrowLeft } from "lucide-react";
 
 interface VipUpdate {
     id: string;
@@ -135,7 +136,13 @@ export default function AdminClubPage() {
         <div className="min-h-screen bg-black text-white p-8">
             <div className="max-w-6xl mx-auto">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-4xl font-bold">Club Manager</h1>
+                    <div>
+                        <Link href="/admin" className="flex items-center gap-2 text-white/60 hover:text-white mb-4 transition-colors">
+                            <ArrowLeft size={16} /> Back to Admin Console
+                        </Link>
+                        <h1 className="text-4xl font-bold">Club Manager</h1>
+                        <p className="text-white/40 mt-1">Manage exclusive updates and albums for your paying Club subscribers.</p>
+                    </div>
                     <button
                         onClick={() => {
                             setEditingId('new');
