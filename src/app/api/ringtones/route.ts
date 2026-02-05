@@ -71,8 +71,11 @@ const getRingtoneReleaseDate = (ringtoneTitle: string) => {
 
 export async function GET() {
     if (!process.env.STRIPE_SECRET_KEY) {
-        console.warn("⚠️ No STRIPE_SECRET_KEY found. Returning mock data.");
-        return NextResponse.json({ ringtones: MOCK_DATA });
+        console.warn("⚠️ No STRIPE_SECRET_KEY found. Check Vercel Env Vars.");
+        return NextResponse.json({
+            ringtones: [],
+            error: "Configuration Error: STRIPE_SECRET_KEY is missing."
+        });
     }
 
     try {
