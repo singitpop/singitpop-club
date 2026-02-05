@@ -134,6 +134,9 @@ export async function GET() {
         });
 
         // 3. Map products to ringtones
+        const now = Date.now();
+        const sixtyDaysAgo = now - (60 * 24 * 60 * 60 * 1000);
+
         const allRingtones = ringtoneProducts.map((product) => {
             const price = priceMap.get(product.id);
             const title = product.name.replace(/[- ]*Ringtone$/i, '').trim();
@@ -157,11 +160,8 @@ export async function GET() {
                 releaseDate = getRingtoneReleaseDate(title);
             }
 
-            const now = Date.now();
-            const sixtyDaysAgo = now - (60 * 24 * 60 * 60 * 1000);
-
-            // isNew if released in the last 60 days OR released today/future (pre-drop)
-            const isNew = releaseDate >= sixtyDaysAgo;
+            // isNew IF released between (Today - 60 days) AND (Today)
+            const isNew = releaseDate >= sixtyDaysAgo && releaseDate <= now;
 
             return {
                 id: product.id,
@@ -185,18 +185,19 @@ export async function GET() {
             }
         });
 
-        const ringtones = Array.from(deduplicatedMap.values());
+        const deduplicatedRingtones = Array.from(deduplicatedMap.values());
 
-        // Filter: Show ringtones that have a price (if priceId is missing, it's not purchasable)
-        const activeRingtones = ringtones.filter(r => r.priceId);
+        // 5. Visibility Filtering
+        // - Must have a price
+        // - Must NOT be in the future (releaseDate <= now)
+        const activeRingtones = deduplicatedRingtones.filter(r =>
+            r.priceId &&
+            r.createdAt > 0 &&
+            r.createdAt <= now
+        );
 
         // Sort by Release Date (Newest First)
-        activeRingtones.sort((a, b) => {
-            if (a.createdAt === 0 && b.createdAt === 0) return 0;
-            if (a.createdAt === 0) return 1;
-            if (b.createdAt === 0) return -1;
-            return b.createdAt - a.createdAt;
-        });
+        activeRingtones.sort((a, b) => b.createdAt - a.createdAt);
 
         return NextResponse.json({ ringtones: activeRingtones });
 
