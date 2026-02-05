@@ -85,11 +85,7 @@ export default function RingtonesPage() {
                     </div>
                 ) : ringtones.length === 0 ? (
                     <div className="text-center p-12 bg-white/5 rounded-3xl">
-                        {debugError && (
-                            <div className="mb-4 p-4 bg-red-500/20 border border-red-500 rounded-xl text-red-200 font-mono text-sm">
-                                <strong>Debug Error:</strong> {debugError}
-                            </div>
-                        )}
+
                         <p className="text-white/60">No ringtones available yet. Check back soon!</p>
                     </div>
                 ) : (
@@ -117,7 +113,7 @@ export default function RingtonesPage() {
                                                     alt={ringtone.title}
                                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                     onError={(e) => {
-                                                        (e.target as HTMLImageElement).src = "/images/defaults/vinyl_default.png";
+                                                        (e.target as HTMLImageElement).src = "/images/singles-cover.png";
                                                     }}
                                                 />
                                                 <div className="absolute top-2 right-2 bg-pink-600 backdrop-blur-md px-1.5 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wide">
@@ -147,23 +143,30 @@ export default function RingtonesPage() {
                         {/* Archive / Vault Section */}
                         <div>
                             <h3 className="text-xl font-bold mb-6 text-white/60">The Vault</h3>
-                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 opacity-80 hover:opacity-100 transition-opacity">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 opacity-80 hover:opacity-100 transition-opacity">
                                 {ringtones.filter(r => !r.isNew).map((ringtone) => {
                                     const artwork = getArtworkForTrack(ringtone.title);
                                     return (
-                                        <div key={ringtone.id} className="bg-black/20 rounded-xl p-3 border border-white/5 hover:border-white/20 transition-all">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <img src={artwork} className="w-8 h-8 rounded bg-gray-800 object-cover" alt="" />
+                                        <div key={ringtone.id} className="bg-black/20 rounded-xl p-3 border border-white/5 hover:border-white/20 transition-all flex items-center justify-between gap-4">
+                                            <div className="flex items-center gap-3 overflow-hidden">
+                                                <img
+                                                    src={artwork}
+                                                    className="w-10 h-10 rounded bg-gray-800 object-cover flex-shrink-0"
+                                                    alt=""
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).src = "/images/singles-cover.png";
+                                                    }}
+                                                />
                                                 <div className="overflow-hidden">
                                                     <h4 className="font-bold text-xs truncate text-white/80">{ringtone.title}</h4>
+                                                    <span className="text-[10px] text-pink-400 font-bold">£{ringtone.price.toFixed(2)}</span>
                                                 </div>
                                             </div>
-                                            {/* Debug removed */}
                                             <button
                                                 onClick={() => handleBuyRingtone(ringtone.priceId)}
-                                                className="w-full py-1 bg-white/5 hover:bg-white/10 rounded text-[10px] text-white/60 hover:text-white transition-colors"
+                                                className="px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded text-[10px] text-white/60 hover:text-white transition-colors whitespace-nowrap"
                                             >
-                                                Buy £{ringtone.price.toFixed(2)}
+                                                Buy
                                             </button>
                                         </div>
                                     );

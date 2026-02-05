@@ -83,62 +83,85 @@ export async function GET() {
     }
 
     try {
-        // Use search endpoint for better filtering
-        const products = await stripe.products.search({
-            query: "active:'true' AND name~'Ringtone'",
-            limit: 100,
-        });
+        // 1. Fetch ALL active ringtone products (paginated)
+        let allProducts: Stripe.Product[] = [];
+        let hasMoreProducts = true;
+        let lastProductId: string | undefined = undefined;
 
-        if (products.data.length === 0) {
-            console.log("No ringtones found via search.");
+        while (hasMoreProducts) {
+            const result: Stripe.ApiList<Stripe.Product> = await stripe.products.list({
+                active: true,
+                limit: 100,
+                starting_after: lastProductId
+            });
+            allProducts.push(...result.data);
+            hasMoreProducts = result.has_more;
+            lastProductId = result.data[result.data.length - 1]?.id;
+            if (allProducts.length > 500) break; // Safety cap
+        }
+
+        // Filter for Ringtones
+        const ringtoneProducts = allProducts.filter(p => p.name.toLowerCase().includes('ringtone'));
+
+        if (ringtoneProducts.length === 0) {
+            console.log("No ringtones found.");
             return NextResponse.json({ ringtones: [], message: "No ringtones found" });
         }
 
-        // Fetch all active prices in one go to avoid Rate Limiting (N+1 problem)
-        const prices = await stripe.prices.list({
-            active: true,
-            limit: 100,
-            type: 'one_time',
-        });
+        // 2. Fetch ALL active prices (paginated)
+        let allPrices: Stripe.Price[] = [];
+        let hasMorePrices = true;
+        let lastPriceId: string | undefined = undefined;
+
+        while (hasMorePrices) {
+            const result: Stripe.ApiList<Stripe.Price> = await stripe.prices.list({
+                active: true,
+                limit: 100,
+                starting_after: lastPriceId
+            });
+            allPrices.push(...result.data);
+            hasMorePrices = result.has_more;
+            lastPriceId = result.data[result.data.length - 1]?.id;
+            if (allPrices.length > 1000) break; // Safety cap
+        }
 
         // Create a map of ProductID -> Price
         const priceMap = new Map();
-        prices.data.forEach(price => {
-            // We prioritize the first price found for a product
+        allPrices.forEach(price => {
             if (typeof price.product === 'string' && !priceMap.has(price.product)) {
                 priceMap.set(price.product, price);
             }
         });
 
-        // Map products to ringtones using the price map
-        const ringtones = products.data.map((product) => {
+        // 3. Map products to ringtones
+        const allRingtones = ringtoneProducts.map((product) => {
             const price = priceMap.get(product.id);
             const title = product.name.replace(/[- ]*Ringtone$/i, '').trim();
 
-            // Get release date from Stripe metadata (if available)
-            // Expected format: metadata.releaseDate = "2026-01-30" or "30/01/2026"
             let releaseDate = 0;
             if (product.metadata?.releaseDate) {
                 try {
-                    // Handle both ISO format (YYYY-MM-DD) and UK format (DD/MM/YYYY)
                     const dateStr = product.metadata.releaseDate;
                     if (dateStr.includes('/')) {
-                        // UK format: DD/MM/YYYY
                         const [day, month, year] = dateStr.split('/');
                         releaseDate = new Date(`${year}-${month}-${day}`).getTime();
                     } else {
-                        // ISO format: YYYY-MM-DD
                         releaseDate = new Date(dateStr).getTime();
                     }
                 } catch (e) {
-                    console.warn(`Failed to parse release date for ${title}:`, product.metadata.releaseDate);
+                    // console.warn(`Failed to parse release date for ${title}:`, product.metadata.releaseDate);
                 }
             }
 
-            // If no metadata date, try album matching as fallback
             if (releaseDate === 0) {
                 releaseDate = getRingtoneReleaseDate(title);
             }
+
+            const now = Date.now();
+            const sixtyDaysAgo = now - (60 * 24 * 60 * 60 * 1000);
+
+            // isNew if released in the last 60 days OR released today/future (pre-drop)
+            const isNew = releaseDate >= sixtyDaysAgo;
 
             return {
                 id: product.id,
@@ -147,30 +170,35 @@ export async function GET() {
                 price: price?.unit_amount ? price.unit_amount / 100 : 3.00,
                 priceId: price?.id || '',
                 genre: product.metadata?.genre || 'Pop',
-                duration: product.description?.match(/(\d+)s/)?.[1] || '20',
+                duration: product.description?.match(/(\d+)s/)?.[1] || '30',
                 createdAt: releaseDate,
-                isNew: false // Not used anymore
+                isNew: isNew
             };
         });
 
-        // Filter: Show ringtones from the past 60 days
-        // Also include unmatched ringtones (createdAt === 0) so they appear in "The Vault"
-        const twoMonthsAgo = Date.now() - (60 * 24 * 60 * 60 * 1000);
-
-        const filteredRingtones = ringtones.filter(r => {
-            // Include if within past 60 days OR unmatched (will go to vault)
-            return r.createdAt >= twoMonthsAgo || r.createdAt === 0;
+        // 4. Deduplicate by Title (Keep latest releaseDate)
+        const deduplicatedMap = new Map();
+        allRingtones.forEach(r => {
+            const existing = deduplicatedMap.get(r.title);
+            if (!existing || r.createdAt > existing.createdAt) {
+                deduplicatedMap.set(r.title, r);
+            }
         });
 
-        // Sort by Release Date (Newest First, unmatched go to bottom)
-        filteredRingtones.sort((a, b) => {
+        const ringtones = Array.from(deduplicatedMap.values());
+
+        // Filter: Show ringtones that have a price (if priceId is missing, it's not purchasable)
+        const activeRingtones = ringtones.filter(r => r.priceId);
+
+        // Sort by Release Date (Newest First)
+        activeRingtones.sort((a, b) => {
             if (a.createdAt === 0 && b.createdAt === 0) return 0;
-            if (a.createdAt === 0) return 1; // a goes to bottom
-            if (b.createdAt === 0) return -1; // b goes to bottom
+            if (a.createdAt === 0) return 1;
+            if (b.createdAt === 0) return -1;
             return b.createdAt - a.createdAt;
         });
 
-        return NextResponse.json({ ringtones: filteredRingtones });
+        return NextResponse.json({ ringtones: activeRingtones });
 
     } catch (error: any) {
         console.error('❌ Error fetching ringtones:', error);
