@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Music, Zap, ShoppingBag, Disc } from 'lucide-react';
+import { Home, Music, ShoppingBag, Disc } from 'lucide-react';
 import styles from './MobileNav.module.css';
 
 export default function MobileNav() {
@@ -23,11 +23,7 @@ export default function MobileNav() {
                 <span>Music</span>
             </Link>
 
-            <Link href="/releasio/dashboard" className={`${styles.item} ${pathname.startsWith('/releasio') ? styles.active : ''}`}>
-                <div className={styles.centerButton}>
-                    <Zap size={24} fill="currentColor" />
-                </div>
-            </Link>
+
 
             <Link href="/shop" className={`${styles.item} ${pathname.startsWith('/shop') ? styles.active : ''}`}>
                 <ShoppingBag size={24} />
