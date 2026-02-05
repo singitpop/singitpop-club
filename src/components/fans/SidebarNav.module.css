@@ -110,6 +110,8 @@
     .nav {
         flex-direction: row;
         padding: 0.5rem 1rem;
+        padding-right: 1.5rem;
+        /* Extra padding on right for + button */
         height: auto;
         border-right: none;
         border-bottom: 1px solid var(--border);
@@ -124,13 +126,25 @@
     }
 
 
+
     .menu {
         flex-direction: row;
         gap: 0.5rem;
-        width: 100%;
+        width: auto;
+        /* Changed from 100% to auto */
     }
 
     /* Make Library section (Create Mix) icon-only on mobile */
+    .menu:nth-child(3) {
+        margin-left: auto;
+        /* Push to the right */
+    }
+
+    .menu:nth-child(3) .navItem {
+        padding: 0.5rem;
+        /* Smaller padding for icon-only */
+    }
+
     .menu:nth-child(3) .navItem span {
         display: none;
         /* Hide text, show only icon */
