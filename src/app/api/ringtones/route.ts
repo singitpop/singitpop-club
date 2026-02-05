@@ -115,11 +115,16 @@ export async function GET() {
             // Normalize: Remove "Ringtone", "- Ringtone", " - Ringtone" case insensitive
             const title = product.name.replace(/[- ]*Ringtone$/i, '').trim();
 
-            // Use real release date from Album Data if available, fallback to 2020-01-01 (Old)
-            const realReleaseDate = getRingtoneReleaseDate(title) || (new Date('2020-01-01').getTime());
+            // Force 2026/Valentine tracks to be NEW and Future-dated to ensure top sorting
+            if (title.toLowerCase().includes('valentine') || title.includes('2026') || realReleaseDate > Date.now()) {
+                // If unmatched (0), force it to 2026-01-01. If matched 2026, keep it.
+                if (realReleaseDate === 0) realReleaseDate = new Date('2026-01-30').getTime();
+            }
 
-            // "New" if released in the last 60 days
-            const isNew = (Date.now() - realReleaseDate) < (60 * 24 * 60 * 60 * 1000);
+            // "New" if released in the last 60 days OR in the future OR specifically forced (2026)
+            // Note: ABS check ensures Future dates are also considered "within range" (diff is negative)
+            const diff = Date.now() - realReleaseDate;
+            const isNew = diff < (60 * 24 * 60 * 60 * 1000) && diff > -(365 * 24 * 60 * 60 * 1000);
 
             return {
                 id: product.id,
@@ -131,12 +136,7 @@ export async function GET() {
                 genre: product.metadata?.genre || 'Pop',
                 duration: product.description?.match(/(\d+)s/)?.[1] || '20',
                 createdAt: realReleaseDate,
-                isNew: isNew,
-                // Debug properties
-                _debug_raw_title: product.name,
-                _debug_clean_title: title,
-                _debug_date_source: getRingtoneReleaseDate(title) ? 'Matched Album' : 'Fallback 2020',
-                _debug_release_date: realReleaseDate
+                isNew: isNew
             };
         });
 

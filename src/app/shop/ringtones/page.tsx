@@ -156,16 +156,9 @@ export default function RingtonesPage() {
                                                 <img src={artwork} className="w-8 h-8 rounded bg-gray-800 object-cover" alt="" />
                                                 <div className="overflow-hidden">
                                                     <h4 className="font-bold text-xs truncate text-white/80">{ringtone.title}</h4>
-                                                    <span className="text-[10px] text-white/40">{ringtone.genre || 'Single'}</span>
                                                 </div>
                                             </div>
-                                            {/* Debug Info Overlay */}
-                                            <div className="mb-2 p-1 bg-red-900/50 text-[8px] font-mono text-red-200 rounded border border-red-500/30 overflow-hidden">
-                                                <div>Raw: {ringtone._debug_raw_title}</div>
-                                                <div>Clean: {ringtone._debug_clean_title}</div>
-                                                <div>Source: {ringtone._debug_date_source}</div>
-                                                <div>Date: {new Date(ringtone._debug_release_date).toISOString().split('T')[0]}</div>
-                                            </div>
+                                            {/* Debug removed */}
                                             <button
                                                 onClick={() => handleBuyRingtone(ringtone.priceId)}
                                                 className="w-full py-1 bg-white/5 hover:bg-white/10 rounded text-[10px] text-white/60 hover:text-white transition-colors"
