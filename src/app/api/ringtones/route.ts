@@ -133,7 +133,22 @@ export async function GET() {
 
         // Filter: Only show ringtones from the past 60 days
         const twoMonthsAgo = Date.now() - (60 * 24 * 60 * 60 * 1000);
-        const recentRingtones = ringtones.filter(r => r.createdAt >= twoMonthsAgo);
+        console.log(`📅 Filtering ringtones. Current time: ${new Date().toISOString()}, 60 days ago: ${new Date(twoMonthsAgo).toISOString()}`);
+        console.log(`📦 Total ringtones before filter: ${ringtones.length}`);
+
+        const recentRingtones = ringtones.filter(r => {
+            const include = r.createdAt >= twoMonthsAgo && r.createdAt > 0;
+            if (!include && r.createdAt === 0) {
+                console.log(`❌ Filtered out (no match): ${r.title}`);
+            } else if (!include) {
+                console.log(`❌ Filtered out (too old): ${r.title} - ${new Date(r.createdAt).toISOString()}`);
+            } else {
+                console.log(`✅ Including: ${r.title} - ${new Date(r.createdAt).toISOString()}`);
+            }
+            return include;
+        });
+
+        console.log(`📦 Total ringtones after filter: ${recentRingtones.length}`);
 
         // Sort by Release Date (Newest First)
         recentRingtones.sort((a, b) => b.createdAt - a.createdAt);
