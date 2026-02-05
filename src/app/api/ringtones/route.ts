@@ -137,7 +137,8 @@ export async function GET() {
                 _debug_clean_title: title,
                 _debug_date_source: getRingtoneReleaseDate(title) ? 'Matched Album' : 'Fallback 2020',
                 _debug_release_date: realReleaseDate
-            });
+            };
+        });
 
         // Sort by Release Date (Newest First)
         ringtones.sort((a, b) => b.createdAt - a.createdAt);
