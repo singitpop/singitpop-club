@@ -221,8 +221,7 @@
 
     .sidebarRight {
         position: static;
-        order: -1;
-        /* Optional: move charts above or below based on preference */
+        /* Sidebar now appears below main content on mobile */
     }
 }
 
