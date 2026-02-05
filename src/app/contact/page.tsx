@@ -1,15 +1,16 @@
 'use client';
 
-import { Mail, Instagram, Youtube, Send, MessageSquare, Briefcase, Newspaper, Users, Heart, CheckCircle, Loader } from 'lucide-react';
+import { Mail, Instagram, Youtube, Send, MessageSquare, Briefcase, Newspaper, Users, Heart, CheckCircle, Loader, Music, ShoppingBag, Laptop } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const CATEGORIES = [
     { value: "general", label: "General Inquiry", icon: MessageSquare },
-    { value: "booking", label: "Booking/Performance", icon: Briefcase },
-    { value: "press", label: "Press/Media", icon: Newspaper },
+    { value: "custom_songs", label: "Custom Songs", icon: Music },
+    { value: "shop", label: "Shop Enquiries", icon: ShoppingBag },
     { value: "collaboration", label: "Collaboration", icon: Users },
-    { value: "fanmail", label: "Fan Mail", icon: Heart }
+    { value: "fanmail", label: "Fan Mail", icon: Heart },
+    { value: "website", label: "Website Support", icon: Laptop }
 ];
 
 export default function ContactPage() {
@@ -120,8 +121,8 @@ export default function ContactPage() {
                                                         type="button"
                                                         onClick={() => setFormData(prev => ({ ...prev, category: cat.value }))}
                                                         className={`p-4 rounded-xl border transition-all ${formData.category === cat.value
-                                                                ? "bg-pink-500/20 border-pink-500 text-pink-400"
-                                                                : "bg-white/5 border-white/10 hover:border-white/30 text-white/60"
+                                                            ? "bg-pink-500/20 border-pink-500 text-pink-400"
+                                                            : "bg-white/5 border-white/10 hover:border-white/30 text-white/60"
                                                             }`}
                                                     >
                                                         <Icon size={20} className="mx-auto mb-2" />
