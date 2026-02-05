@@ -1,6 +1,28 @@
 .page {
     padding-top: 0;
     padding-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+.backBtn {
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    padding: 0.5rem;
+    z-index: 10;
+    transition: color 0.2s;
+}
+
+.backBtn:hover {
+    color: white;
 }
 
 .header {
