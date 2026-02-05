@@ -54,23 +54,11 @@ export default function AdminVotingPage() {
     }, []);
     const allTracks = albums.flatMap(album =>
         album.tracks.map(track => {
-            // Attempt to derive S3 Artwork URL from Audio URL (assuming cover.jpg exists in the same folder)
-            // Example audioUrl: .../folder/track.mp3 -> .../folder/cover.jpg
-            let s3ArtworkUrl = null;
-            if (track.audioUrl) {
-                const lastSlashIndex = track.audioUrl.lastIndexOf('/');
-                if (lastSlashIndex !== -1) {
-                    const baseUrl = track.audioUrl.substring(0, lastSlashIndex);
-                    s3ArtworkUrl = `${baseUrl}/cover.jpg`;
-                }
-            }
-
             return {
                 ...track,
-                uniqueId: `${album.id}-${track.id}`, // Create unique ID avoiding collisions
+                uniqueId: `${album.id}-${track.id}`,
                 albumTitle: album.title,
-                artwork: s3ArtworkUrl || album.coverArt, // Prefer S3 if derived, else Album Art
-                fallbackArtwork: album.coverArt // Keep original as fallback
+                artwork: album.coverArt // Use album artwork directly
             };
         })
     );
@@ -227,12 +215,6 @@ export default function AdminVotingPage() {
                                 >
                                     <img
                                         src={track.artwork}
-                                        onError={(e) => {
-                                            const target = e.target as HTMLImageElement;
-                                            if (track.fallbackArtwork && target.src !== track.fallbackArtwork && !target.src.includes(track.fallbackArtwork)) {
-                                                target.src = track.fallbackArtwork;
-                                            }
-                                        }}
                                         alt=""
                                         style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }}
                                     />
@@ -262,12 +244,7 @@ export default function AdminVotingPage() {
                                             <div style={{ fontWeight: 'bold', fontSize: '1.2rem', color: '#666', width: '20px' }}>#{i + 1}</div>
                                             <img
                                                 src={track.artwork}
-                                                onError={(e) => {
-                                                    const target = e.target as HTMLImageElement;
-                                                    // We need fallback here too, but track object in results might not have it if it comes from API
-                                                    // Basic fallback
-                                                    target.style.display = 'none';
-                                                }}
+                                                alt=""
                                                 style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }}
                                             />
                                             <div style={{ flex: 1 }}>
