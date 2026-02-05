@@ -131,29 +131,24 @@ export async function GET() {
             };
         });
 
-        // Filter: Only show ringtones from the past 60 days
+        // Filter: Show ringtones from the past 60 days
+        // Also include unmatched ringtones (createdAt === 0) so they appear in "The Vault"
         const twoMonthsAgo = Date.now() - (60 * 24 * 60 * 60 * 1000);
-        console.log(`📅 Filtering ringtones. Current time: ${new Date().toISOString()}, 60 days ago: ${new Date(twoMonthsAgo).toISOString()}`);
-        console.log(`📦 Total ringtones before filter: ${ringtones.length}`);
 
-        const recentRingtones = ringtones.filter(r => {
-            const include = r.createdAt >= twoMonthsAgo && r.createdAt > 0;
-            if (!include && r.createdAt === 0) {
-                console.log(`❌ Filtered out (no match): ${r.title}`);
-            } else if (!include) {
-                console.log(`❌ Filtered out (too old): ${r.title} - ${new Date(r.createdAt).toISOString()}`);
-            } else {
-                console.log(`✅ Including: ${r.title} - ${new Date(r.createdAt).toISOString()}`);
-            }
-            return include;
+        const filteredRingtones = ringtones.filter(r => {
+            // Include if within past 60 days OR unmatched (will go to vault)
+            return r.createdAt >= twoMonthsAgo || r.createdAt === 0;
         });
 
-        console.log(`📦 Total ringtones after filter: ${recentRingtones.length}`);
+        // Sort by Release Date (Newest First, unmatched go to bottom)
+        filteredRingtones.sort((a, b) => {
+            if (a.createdAt === 0 && b.createdAt === 0) return 0;
+            if (a.createdAt === 0) return 1; // a goes to bottom
+            if (b.createdAt === 0) return -1; // b goes to bottom
+            return b.createdAt - a.createdAt;
+        });
 
-        // Sort by Release Date (Newest First)
-        recentRingtones.sort((a, b) => b.createdAt - a.createdAt);
-
-        return NextResponse.json({ ringtones: recentRingtones });
+        return NextResponse.json({ ringtones: filteredRingtones });
 
     } catch (error: any) {
         console.error('❌ Error fetching ringtones:', error);
