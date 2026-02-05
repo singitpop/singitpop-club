@@ -21,6 +21,10 @@ export default function SmartCTA() {
     const isInsider = user?.tier === 'INSIDER' || user?.tier === 'VIP' || user?.tier === 'LABEL';
     const isVIP = user?.tier === 'VIP' || user?.tier === 'LABEL';
 
+    // Exact tier checks for button display
+    const isExactlyInsider = user?.tier === 'INSIDER';
+    const isExactlyVIP = user?.tier === 'VIP' || user?.tier === 'LABEL';
+
     const handleCheckout = async (priceId: string, tierName: string) => {
         setLoadingTier(tierName);
         try {
@@ -95,9 +99,9 @@ export default function SmartCTA() {
                         className={styles.glowBtn}
                         onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_INSIDER || '', 'INSIDER')}
                         disabled={loadingTier === 'INSIDER' || isInsider}
-                        style={isInsider ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
+                        style={isExactlyInsider ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
                     >
-                        {loadingTier === 'INSIDER' ? <Loader2 className="animate-spin" size={20} /> : (isInsider ? 'Current Plan' : 'Go Insider')}
+                        {loadingTier === 'INSIDER' ? <Loader2 className="animate-spin" size={20} /> : (isExactlyInsider ? 'Current Plan' : isVIP ? 'Downgrade' : 'Go Insider')}
                     </button>
                 </div>
 
@@ -118,9 +122,9 @@ export default function SmartCTA() {
                         className={styles.outlineBtn}
                         onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_VIP || '', 'VIP')}
                         disabled={loadingTier === 'VIP' || isVIP}
-                        style={isVIP ? { background: '#222', borderColor: '#444', color: '#888', cursor: 'default' } : {}}
+                        style={isExactlyVIP ? { background: '#222', borderColor: '#444', color: '#888', cursor: 'default' } : {}}
                     >
-                        {loadingTier === 'VIP' ? <Loader2 className="animate-spin" size={20} /> : (isVIP ? 'Current Plan' : 'Get VIP Access')}
+                        {loadingTier === 'VIP' ? <Loader2 className="animate-spin" size={20} /> : (isExactlyVIP ? 'Current Plan' : 'Get VIP Access')}
                     </button>
                 </div>
             </div>
