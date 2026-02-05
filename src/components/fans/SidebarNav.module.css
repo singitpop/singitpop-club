@@ -123,15 +123,17 @@
         /* Hide logo on mobile to save space */
     }
 
+
     .menu {
         flex-direction: row;
         gap: 0.5rem;
         width: 100%;
     }
 
-    /* Hide the Library section (Create Mix) on mobile - too cramped */
-    .menu:nth-child(3) {
+    /* Make Library section (Create Mix) icon-only on mobile */
+    .menu:nth-child(3) .navItem span {
         display: none;
+        /* Hide text, show only icon */
     }
 
     .menuTitle {
