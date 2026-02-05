@@ -122,10 +122,11 @@
     box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
 }
 
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 1rem;
-margin-bottom: var(--spacing-md);
+.navGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: var(--spacing-md);
 }
 
 /* Mobile: Stack items, but keep search full width */
