@@ -69,25 +69,31 @@ export async function GET() {
     }
 
     try {
-        // Use search endpoint for better filtering and pagination
-        // Query: active:'true' AND name~'Ringtone'
+        // Use search endpoint for better filtering
         const products = await stripe.products.search({
             query: "active:'true' AND name~'Ringtone'",
-            limit: 100, // Fetch max to ensure we can sort them all
-            expand: ['data.default_price']
+            limit: 100,
         });
 
         if (products.data.length === 0) {
+            console.log("No ringtones found via search.");
             return NextResponse.json({ ringtones: MOCK_DATA });
         }
 
-        const ringtones = products.data.map(product => {
-            const price = product.default_price as Stripe.Price;
+        // Fetch prices in parallel
+        const ringtones = await Promise.all(products.data.map(async (product) => {
+            // Explicitly fetch prices since default_price might be null on manually created items
+            const prices = await stripe.prices.list({
+                product: product.id,
+                active: true,
+                limit: 1
+            });
+
+            const price = prices.data[0];
             const title = product.name.replace(/ Ringtone$/i, '');
 
-            // Use real release date from Album Data if available, fallback to 2025 (old) if not found
-            // We ignore Stripe created date because they were all bulk created at once.
-            const realReleaseDate = getRingtoneReleaseDate(title) || (new Date('2025-01-01').getTime());
+            // Use real release date from Album Data if available, fallback to 2025-06-01 (Old)
+            const realReleaseDate = getRingtoneReleaseDate(title) || (new Date('2025-06-01').getTime());
 
             // "New" if released in the last 60 days
             const isNew = (Date.now() - realReleaseDate) < (60 * 24 * 60 * 60 * 1000);
@@ -97,13 +103,14 @@ export async function GET() {
                 title: title,
                 description: product.description || '',
                 price: price?.unit_amount ? price.unit_amount / 100 : 3.00,
+                // Critical Fix: Ensure priceId is never empty if we found a price
                 priceId: price?.id || '',
                 genre: product.metadata?.genre || 'Pop',
                 duration: product.description?.match(/(\d+)s/)?.[1] || '20',
-                createdAt: realReleaseDate, // Use REAL date for sorting
+                createdAt: realReleaseDate,
                 isNew: isNew
             };
-        });
+        }));
 
         // Sort by Release Date (Newest First)
         ringtones.sort((a, b) => b.createdAt - a.createdAt);
