@@ -115,8 +115,30 @@ export async function GET() {
             const price = priceMap.get(product.id);
             const title = product.name.replace(/[- ]*Ringtone$/i, '').trim();
 
-            // Get release date from album matching
-            const releaseDate = getRingtoneReleaseDate(title);
+            // Get release date from Stripe metadata (if available)
+            // Expected format: metadata.releaseDate = "2026-01-30" or "30/01/2026"
+            let releaseDate = 0;
+            if (product.metadata?.releaseDate) {
+                try {
+                    // Handle both ISO format (YYYY-MM-DD) and UK format (DD/MM/YYYY)
+                    const dateStr = product.metadata.releaseDate;
+                    if (dateStr.includes('/')) {
+                        // UK format: DD/MM/YYYY
+                        const [day, month, year] = dateStr.split('/');
+                        releaseDate = new Date(`${year}-${month}-${day}`).getTime();
+                    } else {
+                        // ISO format: YYYY-MM-DD
+                        releaseDate = new Date(dateStr).getTime();
+                    }
+                } catch (e) {
+                    console.warn(`Failed to parse release date for ${title}:`, product.metadata.releaseDate);
+                }
+            }
+
+            // If no metadata date, try album matching as fallback
+            if (releaseDate === 0) {
+                releaseDate = getRingtoneReleaseDate(title);
+            }
 
             return {
                 id: product.id,
