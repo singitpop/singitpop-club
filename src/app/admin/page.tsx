@@ -134,34 +134,36 @@ export default function AdminPage() {
                         className={styles.searchInput}
                     />
                 </div>
-                <Link href="/admin/content" className={styles.btn}>
-                    <Music2 size={18} />
-                    Manage Content
-                </Link>
-                <Link href="/admin/voting" className={styles.btn}>
-                    <Vote size={18} />
-                    Voting Manager
-                </Link>
-                <Link href="/admin/newsletter" className={styles.btn}>
-                    <Mail size={18} />
-                    Newsletter Builder
-                </Link>
-                <Link href="/admin/analytics" className={styles.btn}>
-                    <BarChart3 size={18} />
-                    Analytics
-                </Link>
-                <Link href="/admin/director" className={`${styles.btn} ${styles.btnSpecial}`}>
-                    <Clapperboard size={18} />
-                    Director Mode
-                </Link>
-                <Link href="/admin/projects" className={styles.btn}>
-                    <FolderOpen size={18} />
-                    Projects
-                </Link>
-                <Link href="/admin/club" className={styles.btn}>
-                    <LockIcon size={18} />
-                    Club Manager
-                </Link>
+                <div className={styles.navGrid}>
+                    <Link href="/admin/content" className={styles.btn}>
+                        <Music2 size={18} />
+                        Content
+                    </Link>
+                    <Link href="/admin/voting" className={styles.btn}>
+                        <Vote size={18} />
+                        Voting
+                    </Link>
+                    <Link href="/admin/newsletter" className={styles.btn}>
+                        <Mail size={18} />
+                        Newsletter
+                    </Link>
+                    <Link href="/admin/analytics" className={styles.btn}>
+                        <BarChart3 size={18} />
+                        Analytics
+                    </Link>
+                    <Link href="/admin/director" className={`${styles.btn} ${styles.btnSpecial}`}>
+                        <Clapperboard size={18} />
+                        Director Mode
+                    </Link>
+                    <Link href="/admin/projects" className={styles.btn}>
+                        <FolderOpen size={18} />
+                        Projects
+                    </Link>
+                    <Link href="/admin/club" className={styles.btn}>
+                        <LockIcon size={18} />
+                        Club Manager
+                    </Link>
+                </div>
             </div>
 
             <div className={styles.tableWrapper}>
