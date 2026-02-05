@@ -9,6 +9,7 @@ import SidebarNav from '@/components/fans/SidebarNav';
 import PlaylistCard from '@/components/fans/PlaylistCard';
 import { ArrowLeft, Save, Music, Search, CheckCircle, Disc } from 'lucide-react';
 import Link from 'next/link';
+import styles from './page.module.css';
 
 // Reusing styles from Admin/Voting for consistency, but simpler
 const MAX_TRACKS = 12;
@@ -146,24 +147,18 @@ function CreateMixtapeContent() {
     if (!isLoaded) return <div style={{ color: 'white', padding: '2rem' }}>Loading...</div>;
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            background: '#000',
-            color: 'white',
-            padding: '2rem',
-            paddingBottom: '100px'
-        }}>
-            <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <div className={styles.container}>
+            <div className={styles.innerContainer}>
                 {/* Header */}
                 <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Link href="/fan-albums" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#888', textDecoration: 'none' }}>
                         <ArrowLeft size={20} /> Cancel
                     </Link>
-                    <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Create New Mixtape 💽</h1>
+                    <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Create New Mix 💽</h1>
                     <div style={{ width: '80px' }}></div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '2rem' }}>
+                <div className={styles.gridLayout}>
 
                     {/* Left: Track Browser */}
                     <div style={{ display: 'flex', flexDirection: 'column', height: '80vh', gap: '1rem' }}>
