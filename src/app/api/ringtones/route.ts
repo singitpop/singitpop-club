@@ -47,7 +47,8 @@ import { albums } from '@/data/albumData';
 // Helper to find release date for a ringtone title
 const getRingtoneReleaseDate = (ringtoneTitle: string) => {
     // Normalize: remove "Ringtone", "ringtone", extra spaces, dashes
-    const cleanRingtone = ringtoneTitle.replace(/ -? ?Ringtone$/i, '').toLowerCase().trim();
+    // Normalize: remove "Ringtone", "ringtone", extra spaces, dashes
+    const cleanRingtone = ringtoneTitle.replace(/[- ]*Ringtone$/i, '').toLowerCase().trim();
 
     // Find matching track in any album
     for (const album of albums) {
@@ -63,7 +64,9 @@ const getRingtoneReleaseDate = (ringtoneTitle: string) => {
     }
 
     // Fallback: If title contains "2026", assume it's new
-    if (cleanRingtone.includes('2026')) return new Date('2026-01-01').getTime();
+    if (cleanRingtone.includes('2026') || ringtoneTitle.includes('2026')) {
+        return new Date('2026-01-01').getTime();
+    }
 
     // console.log(`❌ Could not match "${ringtoneTitle}" to any album. Falling back to old date.`);
     return 0; // Unknown/Old
@@ -109,7 +112,8 @@ export async function GET() {
         // Map products to ringtones using the price map
         const ringtones = products.data.map((product) => {
             const price = priceMap.get(product.id);
-            const title = product.name.replace(/ Ringtone$/i, '');
+            // Normalize: Remove "Ringtone", "- Ringtone", " - Ringtone" case insensitive
+            const title = product.name.replace(/[- ]*Ringtone$/i, '').trim();
 
             // Use real release date from Album Data if available, fallback to 2020-01-01 (Old)
             const realReleaseDate = getRingtoneReleaseDate(title) || (new Date('2020-01-01').getTime());
