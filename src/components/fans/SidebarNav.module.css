@@ -129,6 +129,11 @@
         width: 100%;
     }
 
+    /* Hide the Library section (Create Mix) on mobile - too cramped */
+    .menu:nth-child(3) {
+        display: none;
+    }
+
     .menuTitle {
         display: none;
         /* Hide section titles on mobile */
@@ -145,8 +150,8 @@
     }
 
     .navItem span {
-        max-width: 70px;
-        /* Prevent long text from expanding */
+        max-width: none;
+        /* Remove max-width since we have more space now */
         overflow: hidden;
         text-overflow: ellipsis;
     }
