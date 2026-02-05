@@ -12,8 +12,22 @@ interface WelcomeOverlayProps {
 export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
     const [timeLeft, setTimeLeft] = useState(10); // 10 seconds auto-entry
     const [isExiting, setIsExiting] = useState(false);
+    const [shouldShow, setShouldShow] = useState(false);
+
+    // Check if user has already dismissed the overlay
+    useEffect(() => {
+        const hasVisited = localStorage.getItem('singitpop_welcome_dismissed');
+        if (!hasVisited) {
+            setShouldShow(true);
+        } else {
+            // Auto-dismiss immediately if already visited
+            if (onDismiss) onDismiss();
+        }
+    }, [onDismiss]);
 
     useEffect(() => {
+        if (!shouldShow) return;
+
         const timer = setInterval(() => {
             setTimeLeft((prev) => {
                 if (prev <= 1) {
@@ -26,14 +40,20 @@ export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, []);
+    }, [shouldShow]);
 
     const handleDismiss = () => {
+        // Save dismissal to localStorage
+        localStorage.setItem('singitpop_welcome_dismissed', 'true');
+
         setIsExiting(true);
         setTimeout(() => {
             if (onDismiss) onDismiss();
         }, 500); // Wait for exit animation
     };
+
+    // Don't render if user has already visited
+    if (!shouldShow) return null;
 
     return (
         <motion.div
