@@ -113,9 +113,9 @@ export default function NewsletterBuilder() {
             <h1>Newsletter Builder</h1>
             <p>Create simple HTML emails to send to your fans.</p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', width: '100%', marginTop: '2rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', width: '100%', marginTop: '2rem' }}>
                 {/* Editor */}
-                <div style={{ background: '#111', padding: '2rem', borderRadius: '12px' }}>
+                <div style={{ background: '#111', padding: '2rem', borderRadius: '12px', flex: '1 1 400px' }}>
                     <h3>Edit Content</h3>
 
                     <div style={{ marginBottom: '1rem' }}>
@@ -195,7 +195,7 @@ export default function NewsletterBuilder() {
                 </div>
 
                 {/* Preview / Code */}
-                <div style={{ background: '#111', padding: '2rem', borderRadius: '12px', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ background: '#111', padding: '2rem', borderRadius: '12px', display: 'flex', flexDirection: 'column', flex: '1 1 400px' }}>
                     <h3>HTML Output</h3>
                     <textarea
                         readOnly

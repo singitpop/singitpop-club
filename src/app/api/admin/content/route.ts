@@ -66,8 +66,13 @@ export async function GET(req: NextRequest) {
 
         if (action === 'latest') {
             // Get automatically selected latest albums
+            // EXCLUDE Country albums from "Latest Studio" to prevent duplication with "Latest Country"
             const studioAlbums = albums
-                .filter(a => (a.type === 'studio' || a.type === 'standard') && new Date(a.releaseDate) <= new Date())
+                .filter(a =>
+                    (a.type === 'studio' || a.type === 'standard') &&
+                    new Date(a.releaseDate) <= new Date() &&
+                    !a.genre?.some(g => g.toLowerCase() === 'country')
+                )
                 .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
             const latestStudio = studioAlbums[0];
 
