@@ -16,7 +16,7 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
         { id: 'home', icon: Home, label: 'Hub Home' },
         { id: 'browse', icon: Compass, label: 'Browse' },
         { id: 'favorites', icon: Heart, label: 'Favorites' },
-        { id: 'radio', icon: Radio, label: 'Station' },
+        { id: 'radio', icon: Radio, label: 'Radio' },
     ];
 
     return (

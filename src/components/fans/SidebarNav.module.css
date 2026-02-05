@@ -135,11 +135,20 @@
     }
 
     .navItem {
-        padding: 0.6rem 1rem;
+        padding: 0.5rem 0.75rem;
         white-space: nowrap;
-        font-size: 0.85rem;
-        gap: 0.5rem;
+        font-size: 0.75rem;
+        /* Reduced from 0.85rem */
+        gap: 0.4rem;
         flex-shrink: 0;
+        min-width: fit-content;
+    }
+
+    .navItem span {
+        max-width: 70px;
+        /* Prevent long text from expanding */
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .navItem:hover {

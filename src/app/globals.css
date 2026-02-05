@@ -111,3 +111,15 @@ a {
   box-shadow: 0 0 30px var(--primary-glow);
   filter: brightness(1.1);
 }
+
+/* Hide overlapping elements when mobile menu is open */
+body.mobile-menu-open .header>div:not(.container) {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  body.mobile-menu-open .header~* {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+}

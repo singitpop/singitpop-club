@@ -227,8 +227,8 @@
 
 @media (max-width: 768px) {
     .page {
-        padding: 1rem 0 8rem;
-        /* Increased from 3rem to 8rem for bottom nav clearance */
+        padding: 1rem 0 12rem;
+        /* Increased from 8rem to 12rem for bottom nav clearance */
     }
 
     .header h1 {
