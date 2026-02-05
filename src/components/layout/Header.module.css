@@ -103,3 +103,9 @@
     font-weight: 600;
     padding: 0.5rem;
 }
+
+@media (max-width: 768px) {
+    .desktopOnly {
+        display: none !important;
+    }
+}

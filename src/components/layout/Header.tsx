@@ -68,11 +68,11 @@ export default function Header() {
           </SignedOut>
           <SignedIn>
             {isLabel && (
-              <Link href="/admin" className={styles.navLink} style={{ marginRight: '1rem', fontWeight: 'bold', color: '#ff00d4' }}>
+              <Link href="/admin" className={`${styles.navLink} ${styles.desktopOnly}`} style={{ marginRight: '1rem', fontWeight: 'bold', color: '#ff00d4' }}>
                 Admin
               </Link>
             )}
-            <Link href="/club" className="glow-button" style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
+            <Link href="/club" className={`glow-button ${styles.desktopOnly}`} style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
               My Dashboard
             </Link>
             <div style={{ marginLeft: '1rem' }}>
@@ -106,6 +106,14 @@ export default function Header() {
               Admin Console
             </Link>
           )}
+          <Link
+            href="/club"
+            className={styles.mobileLink}
+            onClick={() => setIsOpen(false)}
+            style={{ color: 'var(--primary)', fontWeight: 'bold' }}
+          >
+            My Dashboard
+          </Link>
           {navItems.map((item) => (
             <Link
               key={item.href}
