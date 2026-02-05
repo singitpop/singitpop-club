@@ -84,7 +84,7 @@ export async function GET() {
 
         if (products.data.length === 0) {
             console.log("No ringtones found via search.");
-            return NextResponse.json({ ringtones: MOCK_DATA });
+            return NextResponse.json({ ringtones: [], message: "No ringtones found" });
         }
 
         // Fetch prices in parallel
@@ -126,6 +126,10 @@ export async function GET() {
 
     } catch (error: any) {
         console.error('❌ Error fetching ringtones:', error);
-        return NextResponse.json({ ringtones: MOCK_DATA });
+        // Return actual error in development or simpler message in prod
+        return NextResponse.json({
+            ringtones: [],
+            error: error.message || 'Failed to fetch ringtones'
+        });
     }
 }
