@@ -44,21 +44,28 @@ const MOCK_DATA = [
 import { albums } from '@/data/albumData';
 
 // Helper to find release date for a ringtone title
+// Helper to find release date for a ringtone title
 const getRingtoneReleaseDate = (ringtoneTitle: string) => {
-    const cleanTitle = ringtoneTitle.toLowerCase().trim();
+    // Normalize: remove "Ringtone", "ringtone", extra spaces, dashes
+    const cleanRingtone = ringtoneTitle.replace(/ -? ?Ringtone$/i, '').toLowerCase().trim();
 
     // Find matching track in any album
     for (const album of albums) {
-        const track = album.tracks.find(t => t.title.toLowerCase().trim() === cleanTitle);
+        const track = album.tracks.find(t => {
+            const cleanTrack = t.title.toLowerCase().trim();
+            return cleanRingtone === cleanTrack || cleanRingtone.includes(cleanTrack) && cleanTrack.length > 3;
+        });
+
         if (track) {
-            // Return album release date
+            // console.log(`✅ Matched "${ringtoneTitle}" to Album: ${album.title} (${album.releaseDate})`);
             return new Date(album.releaseDate).getTime();
         }
     }
 
     // Fallback: If title contains "2026", assume it's new
-    if (cleanTitle.includes('2026')) return new Date('2026-01-01').getTime();
+    if (cleanRingtone.includes('2026')) return new Date('2026-01-01').getTime();
 
+    // console.log(`❌ Could not match "${ringtoneTitle}" to any album. Falling back to old date.`);
     return 0; // Unknown/Old
 };
 
