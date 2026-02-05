@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Star, Shield, Zap } from 'lucide-react';
+import { Check, Star, Shield, Zap, ArrowLeft } from 'lucide-react';
 import styles from './page.module.css';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -74,8 +74,12 @@ export default function MembershipPage() {
 
     return (
         <div className={`container ${styles.page}`}>
+            <button onClick={() => router.back()} className={styles.backBtn}>
+                <ArrowLeft size={20} /> Back
+            </button>
+
             <div className={styles.header}>
-                <h1>Identify Your Status 🆔</h1>
+                <h1>Unlock Full Access 🔓</h1>
                 <p>Support the music and unlock exclusive access.</p>
             </div>
 
