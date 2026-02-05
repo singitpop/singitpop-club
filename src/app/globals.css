@@ -129,9 +129,4 @@ body.mobile-menu-open .header>div:not(.container) {
   body.mobile-menu-open .header~* div[style*="marginTop"] {
     display: none !important;
   }
-
-  /* Alternative: hide any element with "MIXTAPE" text */
-  body.mobile-menu-open .header~* *:has(*:contains("MIXTAPE")) {
-    display: none !important;
-  }
 }
