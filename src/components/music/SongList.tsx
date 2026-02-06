@@ -123,22 +123,24 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         };
     }, [activeTrackId, tracks]);
 
-    // Clear audio state when tracks change (tab switching)
+    // Track previous filterMode to detect actual changes
+    const prevFilterModeRef = useRef(filterMode);
+
+    // Stop audio when filter mode changes (tab switching)
     useEffect(() => {
-        if (activeTrackId) {
-            const stillExists = tracks.some(t => getUniqueId(t) === activeTrackId);
-            if (!stillExists) {
-                // Track no longer in list, stop playback
-                setIsPlaying(false);
-                setActiveTrackId(null);
-                setCurrentSignedUrl(null);
-                if (audioRef.current) {
-                    audioRef.current.pause();
-                    audioRef.current.currentTime = 0;
-                }
+        // Only stop if filterMode actually changed (not initial mount)
+        if (prevFilterModeRef.current !== filterMode && activeTrackId) {
+            setIsPlaying(false);
+            setActiveTrackId(null);
+            setCurrentSignedUrl(null);
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
             }
         }
-    }, [tracks, activeTrackId]);
+        // Update ref for next comparison
+        prevFilterModeRef.current = filterMode;
+    }, [filterMode, activeTrackId]);
 
     useEffect(() => {
         if (activeTrackId && audioRef.current && currentSignedUrl) {
