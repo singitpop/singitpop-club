@@ -123,6 +123,23 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         };
     }, [activeTrackId, tracks]);
 
+    // Clear audio state when tracks change (tab switching)
+    useEffect(() => {
+        if (activeTrackId) {
+            const stillExists = tracks.some(t => getUniqueId(t) === activeTrackId);
+            if (!stillExists) {
+                // Track no longer in list, stop playback
+                setIsPlaying(false);
+                setActiveTrackId(null);
+                setCurrentSignedUrl(null);
+                if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current.currentTime = 0;
+                }
+            }
+        }
+    }, [tracks, activeTrackId]);
+
     useEffect(() => {
         if (activeTrackId && audioRef.current && currentSignedUrl) {
             if (isPlaying) {

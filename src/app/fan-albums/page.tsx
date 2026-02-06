@@ -185,6 +185,12 @@ export default function CommunityHubPage() {
     const handlePlay = (e: React.MouseEvent, playlistId: number | string) => {
         e.stopPropagation(); // Prevent opening modal
 
+        // AUTH CHECK: Require sign-in to play community mixes
+        if (!userId) {
+            router.push('/sign-in');
+            return;
+        }
+
         // Find the playlist
         const playlist = playlists.find(p => p.id === playlistId);
         if (!playlist || !playlist.tracks || playlist.tracks.length === 0) return;
