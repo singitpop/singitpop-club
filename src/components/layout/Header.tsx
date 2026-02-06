@@ -1,8 +1,23 @@
-import { Search } from 'lucide-react';
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { Menu, X, Search } from 'lucide-react';
+import { motion } from 'framer-motion';
+import styles from './Header.module.css';
 import { useAuth } from '@/context/AuthContext';
 import SearchModal from '../search/SearchModal';
 
-// ... existing imports ...
+const navItems = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Music', href: '/music' },
+  { name: 'FanZone', href: '/fan-albums' },
+  { name: 'Projects', href: '/projects' },
+  // { name: 'For Artists', href: '/releasio' }, // Hidden for now
+];
 
 export default function Header() {
   const { isLabel } = useAuth();
@@ -11,7 +26,13 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  // ... existing effects ...
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -39,7 +60,6 @@ export default function Header() {
 
           <div className={styles.actions}>
             <button
-              className={styles.iconButton}
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search"
               style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', padding: '0.5rem', display: 'flex', alignItems: 'center' }}
@@ -118,4 +138,3 @@ export default function Header() {
     </>
   );
 }
-
