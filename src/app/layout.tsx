@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import { AuthProvider } from '@/context/AuthContext';
 import { BrandProvider } from '@/context/BrandContext';
 import MobileNav from '@/components/layout/MobileNav';
+import CookieConsent from '@/components/legal/CookieConsent';
 
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -31,6 +32,7 @@ export default function RootLayout({
                             </BrandProvider>
                         </main>
                         <Footer />
+                        <CookieConsent />
                     </AuthProvider>
                 </body>
             </html>

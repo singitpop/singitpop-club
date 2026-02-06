@@ -48,6 +48,14 @@ export default function Footer() {
                             </a>
                         </div>
                     </div>
+
+                    <div className={styles.links}>
+                        <h4>Legal</h4>
+                        <Link href="/privacy">Privacy Policy</Link>
+                        <Link href="/terms">Terms & Conditions</Link>
+                        <Link href="/cookies">Cookie Policy</Link>
+                        <Link href="/accessibility">Accessibility</Link>
+                    </div>
                 </div>
 
                 <div className={styles.bottom}>
