@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { stripe } from '@/lib/stripe';
+import { normalizeEmail } from '@/lib/email-utils';
 
 export async function POST(req: NextRequest) {
     try {
@@ -22,10 +23,14 @@ export async function POST(req: NextRequest) {
 
         if (!stripeCustomerId) {
             // 2. Create a new Customer in Stripe if checks fail
+            const userEmail = user.emailAddresses[0].emailAddress;
+            const normalizedEmail = normalizeEmail(userEmail);
+
             const customer = await stripe.customers.create({
-                email: user.emailAddresses[0].emailAddress,
+                email: normalizedEmail,
                 metadata: {
-                    clerkUserId: userId
+                    clerkUserId: userId,
+                    originalEmail: userEmail // Store original for reference
                 }
             });
             stripeCustomerId = customer.id;

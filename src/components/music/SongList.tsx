@@ -139,12 +139,16 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                 setCurrentSignedUrl(null);
             }
 
-            // ALWAYS stop and reset audio element
+            // ALWAYS stop and reset audio element (enhanced for iPad)
             if (audioRef.current) {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
+                // Remove src to fully disconnect audio
+                audioRef.current.removeAttribute('src');
                 // Force reload to clear any buffered audio
                 audioRef.current.load();
+                // Pause again after load (iPad-specific fix)
+                audioRef.current.pause();
             }
         }
         // Update ref for next comparison
@@ -164,6 +168,9 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
             } else {
                 audioRef.current.pause();
             }
+        } else if (audioRef.current && !currentSignedUrl) {
+            // If no URL, ensure audio is stopped
+            audioRef.current.pause();
         }
     }, [isPlaying, activeTrackId, currentSignedUrl]);
 
@@ -554,7 +561,6 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                 src={currentSignedUrl || undefined}
                 onEnded={() => setIsPlaying(false)}
                 onPause={() => setIsPlaying(false)}
-                onPlay={() => setIsPlaying(true)}
                 onTimeUpdate={handleTimeUpdate}
                 preload="none"
             />
