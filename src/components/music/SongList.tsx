@@ -130,15 +130,21 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
     useEffect(() => {
         // Only stop if filterMode actually changed (not initial mount)
         if (prevFilterModeRef.current !== filterMode) {
-            // Always clear audio state when switching tabs
+            // ALWAYS clear playing state when switching tabs
+            setIsPlaying(false);
+
+            // Clear track state if there was an active track
             if (activeTrackId) {
-                setIsPlaying(false);
                 setActiveTrackId(null);
                 setCurrentSignedUrl(null);
             }
+
+            // ALWAYS stop and reset audio element
             if (audioRef.current) {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
+                // Force reload to clear any buffered audio
+                audioRef.current.load();
             }
         }
         // Update ref for next comparison
