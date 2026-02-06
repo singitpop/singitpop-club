@@ -55,6 +55,9 @@ export default function Footer() {
                         <Link href="/terms">Terms & Conditions</Link>
                         <Link href="/cookies">Cookie Policy</Link>
                         <Link href="/accessibility">Accessibility</Link>
+                        <Link href="/refunds">Refund Policy</Link>
+                        <Link href="/company">Company Info</Link>
+                        <Link href="/complaints">Complaints</Link>
                     </div>
                 </div>
 
