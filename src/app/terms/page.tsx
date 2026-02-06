@@ -185,7 +185,7 @@ export default function TermsPage() {
                 <h2>10. Contact Us</h2>
                 <p>For questions about these Terms:</p>
                 <p>
-                    <strong>Email:</strong> <a href="mailto:legal@singitpop.club">legal@singitpop.club</a><br />
+                    <strong>Email:</strong> <a href="mailto:legal@singitpop.com">legal@singitpop.com</a><br />
                     <strong>Contact Form:</strong> <a href="/contact">Contact Us</a>
                 </p>
             </section>

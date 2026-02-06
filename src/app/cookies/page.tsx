@@ -163,7 +163,7 @@ export default function CookiesPage() {
                 <h2>8. Contact Us</h2>
                 <p>For questions about cookies:</p>
                 <p>
-                    <strong>Email:</strong> <a href="mailto:privacy@singitpop.club">privacy@singitpop.club</a><br />
+                    <strong>Email:</strong> <a href="mailto:privacy@singitpop.com">privacy@singitpop.com</a><br />
                     <strong>Contact Form:</strong> <a href="/contact">Contact Us</a>
                 </p>
             </section>

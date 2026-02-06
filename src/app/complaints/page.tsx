@@ -37,7 +37,7 @@ export default function ComplaintsPage() {
                 <h2>3. How to Make a Complaint</h2>
 
                 <h3>3.1 Step 1: Contact Us</h3>
-                <p><strong>Email:</strong> <a href="mailto:complaints@singitpop.club">complaints@singitpop.club</a></p>
+                <p><strong>Email:</strong> <a href="mailto:complaints@singitpop.com">complaints@singitpop.com</a></p>
                 <p><strong>Subject Line:</strong> "Formal Complaint - [Brief Description]"</p>
                 <p><strong>Include:</strong></p>
                 <ul>
@@ -113,7 +113,7 @@ export default function ComplaintsPage() {
                     If you're not satisfied with our initial response, you can escalate to senior management:
                 </p>
                 <p>
-                    <strong>Email:</strong> <a href="mailto:legal@singitpop.club">legal@singitpop.club</a><br />
+                    <strong>Email:</strong> <a href="mailto:legal@singitpop.com">legal@singitpop.com</a><br />
                     <strong>Subject:</strong> "Escalated Complaint - [Reference Number]"
                 </p>
                 <p>
@@ -243,8 +243,8 @@ export default function ComplaintsPage() {
             <section>
                 <h2>12. Contact Information</h2>
                 <p>
-                    <strong>Complaints:</strong> <a href="mailto:complaints@singitpop.club">complaints@singitpop.club</a><br />
-                    <strong>General Inquiries:</strong> <a href="mailto:info@singitpop.club">info@singitpop.club</a><br />
+                    <strong>Complaints:</strong> <a href="mailto:complaints@singitpop.com">complaints@singitpop.com</a><br />
+                    <strong>General Inquiries:</strong> <a href="mailto:info@singitpop.com">info@singitpop.com</a><br />
                     <strong>Contact Form:</strong> <a href="/contact">Contact Us</a>
                 </p>
             </section>

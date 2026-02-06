@@ -105,7 +105,7 @@ export default function AccessibilityPage() {
                     We welcome feedback on the accessibility of our website. If you encounter any barriers or have suggestions for improvement, please contact us:
                 </p>
                 <p>
-                    <strong>Email:</strong> <a href="mailto:accessibility@singitpop.club">accessibility@singitpop.club</a><br />
+                    <strong>Email:</strong> <a href="mailto:accessibility@singitpop.com">accessibility@singitpop.com</a><br />
                     <strong>Contact Form:</strong> <a href="/contact">Contact Us</a>
                 </p>
                 <p>We aim to respond to accessibility feedback within 5 business days.</p>

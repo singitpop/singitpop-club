@@ -129,10 +129,13 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
     // Stop audio when filter mode changes (tab switching)
     useEffect(() => {
         // Only stop if filterMode actually changed (not initial mount)
-        if (prevFilterModeRef.current !== filterMode && activeTrackId) {
-            setIsPlaying(false);
-            setActiveTrackId(null);
-            setCurrentSignedUrl(null);
+        if (prevFilterModeRef.current !== filterMode) {
+            // Always clear audio state when switching tabs
+            if (activeTrackId) {
+                setIsPlaying(false);
+                setActiveTrackId(null);
+                setCurrentSignedUrl(null);
+            }
             if (audioRef.current) {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;

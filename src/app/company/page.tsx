@@ -38,13 +38,13 @@ export default function CompanyInfoPage() {
             <section>
                 <h2>4. Contact Information</h2>
                 <p>
-                    <strong>General Inquiries:</strong> <a href="mailto:info@singitpop.club">info@singitpop.club</a><br />
+                    <strong>General Inquiries:</strong> <a href="mailto:info@singitpop.com">info@singitpop.com</a><br />
                     <strong>Customer Support:</strong> <a href="/contact">Contact Form</a><br />
-                    <strong>Privacy Inquiries:</strong> <a href="mailto:privacy@singitpop.club">privacy@singitpop.club</a><br />
-                    <strong>Legal Matters:</strong> <a href="mailto:legal@singitpop.club">legal@singitpop.club</a><br />
-                    <strong>Refunds & Cancellations:</strong> <a href="mailto:refunds@singitpop.club">refunds@singitpop.club</a><br />
-                    <strong>Accessibility:</strong> <a href="mailto:accessibility@singitpop.club">accessibility@singitpop.club</a><br />
-                    <strong>Complaints:</strong> <a href="mailto:complaints@singitpop.club">complaints@singitpop.club</a>
+                    <strong>Privacy Inquiries:</strong> <a href="mailto:privacy@singitpop.com">privacy@singitpop.com</a><br />
+                    <strong>Legal Matters:</strong> <a href="mailto:legal@singitpop.com">legal@singitpop.com</a><br />
+                    <strong>Refunds & Cancellations:</strong> <a href="mailto:refunds@singitpop.com">refunds@singitpop.com</a><br />
+                    <strong>Accessibility:</strong> <a href="mailto:accessibility@singitpop.com">accessibility@singitpop.com</a><br />
+                    <strong>Complaints:</strong> <a href="mailto:complaints@singitpop.com">complaints@singitpop.com</a>
                 </p>
             </section>
 
@@ -68,7 +68,7 @@ export default function CompanyInfoPage() {
                 <p>
                     <strong>Data Controller:</strong> SingIt Pop<br />
                     <strong>ICO Registration:</strong> [Registration number if applicable]<br />
-                    <strong>Data Protection Officer:</strong> <a href="mailto:privacy@singitpop.club">privacy@singitpop.club</a>
+                    <strong>Data Protection Officer:</strong> <a href="mailto:privacy@singitpop.com">privacy@singitpop.com</a>
                 </p>
 
                 <h3>6.2 Payment Processing</h3>

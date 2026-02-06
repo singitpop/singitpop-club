@@ -24,7 +24,7 @@ export default function PrivacyPage() {
             <section>
                 <h2>2. Data Controller</h2>
                 <p><strong>SingIt Pop</strong><br />
-                    Email: <a href="mailto:privacy@singitpop.club">privacy@singitpop.club</a></p>
+                    Email: <a href="mailto:privacy@singitpop.com">privacy@singitpop.com</a></p>
             </section>
 
             <section>
@@ -104,7 +104,7 @@ export default function PrivacyPage() {
                     <li><strong>Right to Object:</strong> Object to processing based on legitimate interests</li>
                     <li><strong>Right to Withdraw Consent:</strong> Withdraw consent for marketing or cookies</li>
                 </ul>
-                <p>To exercise these rights, contact us at <a href="mailto:privacy@singitpop.club">privacy@singitpop.club</a>.</p>
+                <p>To exercise these rights, contact us at <a href="mailto:privacy@singitpop.com">privacy@singitpop.com</a>.</p>
             </section>
 
             <section>
@@ -153,7 +153,7 @@ export default function PrivacyPage() {
                 <h2>14. Contact Us</h2>
                 <p>For privacy-related questions or to exercise your rights:</p>
                 <p>
-                    <strong>Email:</strong> <a href="mailto:privacy@singitpop.club">privacy@singitpop.club</a><br />
+                    <strong>Email:</strong> <a href="mailto:privacy@singitpop.com">privacy@singitpop.com</a><br />
                     <strong>Contact Form:</strong> <a href="/contact">Contact Us</a>
                 </p>
             </section>

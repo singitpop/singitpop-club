@@ -51,7 +51,7 @@ export default function RefundPolicyPage() {
                     <li>Confirm cancellation</li>
                 </ol>
                 <p><strong>Email Cancellation:</strong></p>
-                <p>Email <a href="mailto:refunds@singitpop.club">refunds@singitpop.club</a> with your account email and "Cancel Subscription" in the subject line.</p>
+                <p>Email <a href="mailto:refunds@singitpop.com">refunds@singitpop.com</a> with your account email and "Cancel Subscription" in the subject line.</p>
 
                 <h3>3.3 Cancellation Confirmation</h3>
                 <p>
@@ -101,7 +101,7 @@ export default function RefundPolicyPage() {
                     <li><strong>Replacement:</strong> If repair isn't possible, we'll replace it</li>
                     <li><strong>Refund:</strong> If repair/replacement fails, you get a full refund</li>
                 </ul>
-                <p>To report faulty content, email <a href="mailto:refunds@singitpop.club">refunds@singitpop.club</a> with:</p>
+                <p>To report faulty content, email <a href="mailto:refunds@singitpop.com">refunds@singitpop.com</a> with:</p>
                 <ul>
                     <li>Order number</li>
                     <li>Description of the fault</li>
@@ -177,7 +177,7 @@ export default function RefundPolicyPage() {
 
             <section>
                 <h2>9. How to Request a Refund</h2>
-                <p><strong>Email:</strong> <a href="mailto:refunds@singitpop.club">refunds@singitpop.club</a></p>
+                <p><strong>Email:</strong> <a href="mailto:refunds@singitpop.com">refunds@singitpop.com</a></p>
                 <p><strong>Include:</strong></p>
                 <ul>
                     <li>Your name and account email</li>
@@ -212,8 +212,8 @@ export default function RefundPolicyPage() {
             <section>
                 <h2>12. Contact Us</h2>
                 <p>
-                    <strong>Refunds & Cancellations:</strong> <a href="mailto:refunds@singitpop.club">refunds@singitpop.club</a><br />
-                    <strong>General Inquiries:</strong> <a href="mailto:info@singitpop.club">info@singitpop.club</a><br />
+                    <strong>Refunds & Cancellations:</strong> <a href="mailto:refunds@singitpop.com">refunds@singitpop.com</a><br />
+                    <strong>General Inquiries:</strong> <a href="mailto:info@singitpop.com">info@singitpop.com</a><br />
                     <strong>Contact Form:</strong> <a href="/contact">Contact Us</a>
                 </p>
             </section>
