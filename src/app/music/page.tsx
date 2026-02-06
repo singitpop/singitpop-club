@@ -422,6 +422,7 @@ function MusicContent() {
                     <SongList
                         tracks={tracks}
                         albums={albums}
+                        filterMode={filterMode}
                         selectedTracks={selectedTracks}
                         onToggleSelection={handleToggleSelection}
                         latestSingleUid={latestSingleUid}

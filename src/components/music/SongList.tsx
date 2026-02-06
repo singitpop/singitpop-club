@@ -130,16 +130,12 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
     useEffect(() => {
         // Only stop if filterMode actually changed (not initial mount)
         if (prevFilterModeRef.current !== filterMode) {
-            // ALWAYS clear playing state when switching tabs
+            // ALWAYS clear ALL audio state when switching tabs
             setIsPlaying(false);
+            setActiveTrackId(null);
+            setCurrentSignedUrl(null);
 
-            // Clear track state if there was an active track
-            if (activeTrackId) {
-                setActiveTrackId(null);
-                setCurrentSignedUrl(null);
-            }
-
-            // ALWAYS stop and reset audio element (enhanced for iPad)
+            // ALWAYS stop and reset audio element
             if (audioRef.current) {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
@@ -147,13 +143,11 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                 audioRef.current.removeAttribute('src');
                 // Force reload to clear any buffered audio
                 audioRef.current.load();
-                // Pause again after load (iPad-specific fix)
-                audioRef.current.pause();
             }
         }
         // Update ref for next comparison
         prevFilterModeRef.current = filterMode;
-    }, [filterMode, activeTrackId]);
+    }, [filterMode]);
 
     useEffect(() => {
         if (activeTrackId && audioRef.current && currentSignedUrl) {
