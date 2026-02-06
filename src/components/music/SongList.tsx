@@ -10,7 +10,7 @@ import { Track, Album } from '@/data/albumData'; // Just types
 interface SongListProps {
     tracks: Track[];
     albums: Album[]; // New Prop
-    filterMode?: 'all' | 'trending' | 'favorites' | 'latest';
+    filterMode?: 'all' | 'trending' | 'favorites' | 'latest' | 'album';
     selectedTracks: string[];
     onToggleSelection: (id: string) => void;
     latestSingleUid?: string | null;
