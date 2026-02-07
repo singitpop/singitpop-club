@@ -43,7 +43,7 @@ export default function ShopPage() {
                             </div>
                             <div>
                                 <h3 className="text-xl font-bold text-yellow-500">VIP Exclusive Benefit</h3>
-                                <p className="text-white/80">You get <span className="text-white font-bold">20% OFF</span> everything in the store!</p>
+                                <p className="text-white/80">You get <span className="text-white font-bold">20% OFF</span> all Merch & Apparel!</p>
                             </div>
                         </div>
                         <div className="bg-black/50 px-6 py-3 rounded-xl border border-white/10 flex flex-col items-center">

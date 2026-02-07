@@ -1,6 +1,6 @@
 "use client";
 
-import { UserProfile } from "@clerk/nextjs";
+import { UserProfile, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { ArrowLeft, CreditCard, Loader2 } from "lucide-react";
 import styles from "./Account.module.css";
@@ -41,6 +41,39 @@ export default function AccountPage() {
             }
         }
     }, []);
+
+    const { user } = useUser();
+    const [birthday, setBirthday] = useState("");
+    const [isSavingBirthday, setIsSavingBirthday] = useState(false);
+
+    useEffect(() => {
+        if (user?.unsafeMetadata?.birthday) {
+            setBirthday(user.unsafeMetadata.birthday as string);
+        }
+    }, [user]);
+
+    const handleSaveBirthday = async () => {
+        setIsSavingBirthday(true);
+        try {
+            const res = await fetch('/api/user/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ birthday })
+            });
+            if (res.ok) {
+                // Determine Reload logic by checking current user object updates automatically
+                // But a reload ensures Clerk data is fresh if client cache is stale
+                await user?.reload();
+                alert("Birthday saved! Look out for a surprise on your special day. 🎂");
+            } else {
+                alert("Failed to save birthday.");
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setIsSavingBirthday(false);
+        }
+    };
 
     const handlePortal = async () => {
         setIsLoadingPortal(true);
@@ -87,8 +120,48 @@ export default function AccountPage() {
                 </button>
             </div>
 
+            {/* Personal Details (Birthday) */}
+            <div className={styles.membershipCard} style={{ marginTop: '2rem', background: 'linear-gradient(to bottom right, #1f1f2e, #14141a)' }}>
+                <h2 className={styles.cardTitle}>Personal Details</h2>
+                <p className={styles.cardText}>
+                    Tell us your birthday so we can send you a special gift! 🎁
+                </p>
+                <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+                    <input
+                        type="date"
+                        value={birthday}
+                        onChange={(e) => setBirthday(e.target.value)}
+                        className={styles.input}
+                        style={{
+                            background: 'rgba(255,255,255,0.05)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            padding: '0.75rem',
+                            borderRadius: '0.75rem',
+                            color: 'white',
+                            flex: 1
+                        }}
+                    />
+                    <button
+                        onClick={handleSaveBirthday}
+                        disabled={isSavingBirthday}
+                        style={{
+                            padding: '0.75rem 1.5rem',
+                            borderRadius: '0.75rem',
+                            background: 'var(--primary)',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            border: 'none',
+                            cursor: 'pointer',
+                            opacity: isSavingBirthday ? 0.7 : 1
+                        }}
+                    >
+                        {isSavingBirthday ? 'Saving...' : 'Save'}
+                    </button>
+                </div>
+            </div>
+
             {/* Clerk User Profile (Security, Email, Delete Account) */}
-            <div className={styles.clerkWrapper}>
+            <div className={styles.clerkWrapper} style={{ marginTop: '2rem' }}>
                 <UserProfile
                     appearance={{
                         baseTheme: dark,

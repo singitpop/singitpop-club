@@ -7,6 +7,7 @@ import { BrandProvider } from '@/context/BrandContext';
 import MobileNav from '@/components/layout/MobileNav';
 import CookieConsent from '@/components/legal/CookieConsent';
 import SkipLink from '@/components/layout/SkipLink';
+import ChatWidget from '@/components/support/ChatWidget';
 
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -35,6 +36,7 @@ export default function RootLayout({
                         </main>
                         <Footer />
                         <CookieConsent />
+                        <ChatWidget />
                     </AuthProvider>
                 </body>
             </html>

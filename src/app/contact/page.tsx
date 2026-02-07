@@ -8,11 +8,9 @@ const CATEGORIES = [
     { value: "general", label: "General Inquiry", icon: MessageSquare },
     { value: "custom_songs", label: "Custom Songs", icon: Music },
     { value: "shop", label: "Shop Enquiries", icon: ShoppingBag },
-    { value: "collaboration", label: "Collaboration", icon: Users },
     { value: "fanmail", label: "Fan Mail", icon: Heart },
     { value: "complaint", label: "Complaint", icon: AlertCircle },
-    { value: "refund", label: "Refund Request", icon: ShoppingBag },
-    { value: "website", label: "Website Support", icon: Laptop }
+    { value: "refund", label: "Refund Request", icon: ShoppingBag }
 ];
 
 export default function ContactPage() {

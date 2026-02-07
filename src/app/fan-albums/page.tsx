@@ -13,6 +13,7 @@ import styles from './page.module.css';
 import { useState, useRef, useEffect } from 'react';
 import { albums } from '@/data/albumData';
 import { useAuth } from '@/context/AuthContext';
+import Roadmap from '@/components/fans/Roadmap';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -613,6 +614,9 @@ export default function CommunityHubPage() {
                     </div>
                 </aside>
             </div>
+
+            {/* Roadmap Section */}
+            <Roadmap />
 
             {/* Viewer Modal */}
             {selectedPlaylist && (
