@@ -20,17 +20,16 @@ export default function CompanyInfoPage() {
             <section>
                 <h2>2. Business Structure</h2>
                 <p>
-                    <strong>Type:</strong> Sole Trader / Limited Company<br />
-                    <strong>Registration Number:</strong> [To be provided by owner]<br />
-                    <strong>VAT Number:</strong> [If applicable - required if turnover &gt; £90,000]
+                    <strong>Type:</strong> Sole Trader<br />
                 </p>
             </section>
 
             <section>
                 <h2>3. Registered Address</h2>
                 <p>
-                    [Company registered address]<br />
-                    [City, Postcode]<br />
+                    30 Laburnum Grove<br />
+                    Hebburn, Tyne & Wear<br />
+                    NE31 2PL<br />
                     United Kingdom
                 </p>
             </section>

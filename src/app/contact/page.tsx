@@ -1,6 +1,6 @@
 'use client';
 
-import { Mail, Instagram, Youtube, Send, MessageSquare, Briefcase, Newspaper, Users, Heart, CheckCircle, Loader, Music, ShoppingBag, Laptop } from 'lucide-react';
+import { Mail, Instagram, Youtube, Send, MessageSquare, Briefcase, Newspaper, Users, Heart, CheckCircle, Loader, Music, ShoppingBag, Laptop, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -10,6 +10,8 @@ const CATEGORIES = [
     { value: "shop", label: "Shop Enquiries", icon: ShoppingBag },
     { value: "collaboration", label: "Collaboration", icon: Users },
     { value: "fanmail", label: "Fan Mail", icon: Heart },
+    { value: "complaint", label: "Complaint", icon: AlertCircle },
+    { value: "refund", label: "Refund Request", icon: ShoppingBag },
     { value: "website", label: "Website Support", icon: Laptop }
 ];
 

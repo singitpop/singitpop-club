@@ -55,7 +55,7 @@ export default function TermsPage() {
                 <h3>3.1 Membership Tiers</h3>
                 <p>We offer the following membership levels:</p>
                 <ul>
-                    <li><strong>Free:</strong> Limited access to preview content</li>
+                    <li><strong>FAN:</strong> Limited access to preview content</li>
                     <li><strong>Insider:</strong> Full streaming access and monthly mixtape downloads</li>
                     <li><strong>VIP:</strong> All Insider benefits plus early access and high-resolution downloads</li>
                 </ul>

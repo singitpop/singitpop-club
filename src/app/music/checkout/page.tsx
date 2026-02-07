@@ -41,6 +41,7 @@ function CheckoutContent() {
     });
     const [orderPlaced, setOrderPlaced] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [termsAccepted, setTermsAccepted] = useState(false);
 
     // Fetch Albums Data
     useEffect(() => {
@@ -84,30 +85,13 @@ function CheckoutContent() {
     const findTrackById = (compositeId: string): Track | undefined => {
         if (!albums || albums.length === 0) return undefined;
 
-        // Handle composite ID "albumId:trackId" or "albumId-trackId"
-        // Note: The Music Page uses "albumId-trackId" or "id" (if legacy)
-        // We should handle both separators just in case, though the Music page uses hyphens mostly.
-
         let albumId = '';
         let trackIdStr = '';
 
         if (compositeId.includes(':')) {
             [albumId, trackIdStr] = compositeId.split(':');
         } else if (compositeId.includes('-')) {
-            // CAREFUL: Some standard UUIDs might have hyphens. 
-            // But our album IDs are usually slug-like or UUIDs. 
-            // Our track IDs are numbers.
-            // The Music Page constructs ID as: `foundTrack.albumId}-${foundTrack.id}`
-
-            // Strategy: Try to split by last hyphen if we assume track ID is numeric or short?
-            // Or iterate albums to find a matching track ID within an album ID?
-
-            // Safer approach: Iterate all tracks and verify.
-
             for (const album of albums) {
-                // Check if compositeId matches specific format if we knew it
-                // But let's look for exact match if we reconstructed it
-
                 const t = album.tracks.find(t => {
                     const constructedId = `${album.id}-${t.id}`;
                     return constructedId === compositeId;
@@ -133,7 +117,6 @@ function CheckoutContent() {
     };
 
     // Resolve track objects from IDs
-    // We only rely on findTrackById once albums are loaded
     const selectedTrackDetails = isFetchingData ? [] : selectedTrackIds
         .map(id => findTrackById(id))
         .filter((t): t is Track => t !== undefined);
@@ -141,10 +124,15 @@ function CheckoutContent() {
     // Fixed pricing model
     const productPrice = PRODUCT_TYPES['download'].price;
     const totalPrice = isEligibleForFree ? 0.00 : productPrice;
-    const needsShipping = false;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!termsAccepted) {
+            alert("Please accept the terms regarding the immediate download and waiver of cancellation rights.");
+            return;
+        }
+
         setIsLoading(true);
 
         if (isEligibleForFree) {
@@ -294,6 +282,21 @@ function CheckoutContent() {
                                 <span>Total</span>
                                 <span>£{totalPrice.toFixed(2)}</span>
                             </div>
+                        </div>
+
+                        <div style={{ margin: '1rem 0', padding: '10px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+                            <label style={{ display: 'flex', gap: '10px', alignItems: 'start', fontSize: '0.85rem', color: '#ccc', cursor: 'pointer' }}>
+                                <input
+                                    type="checkbox"
+                                    required
+                                    checked={termsAccepted}
+                                    onChange={e => setTermsAccepted(e.target.checked)}
+                                    style={{ marginTop: '3px' }}
+                                />
+                                <span>
+                                    I consent to immediate download and acknowledge that I will lose my right to cancel once I access the content. I also agree to the <a href="/terms" target="_blank" style={{ textDecoration: 'underline', color: 'inherit' }}>Terms of Service</a>.
+                                </span>
+                            </label>
                         </div>
 
                         <button type="submit" className={`primary-button ${styles.submitBtn}`}>

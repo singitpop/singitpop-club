@@ -33,37 +33,20 @@ export default function AccessibilityPage() {
 
             <section>
                 <h2>3. Accessibility Features</h2>
-                <p>Our website includes the following accessibility features:</p>
+                <p>We are actively working to improve the accessibility of our website. Currently, we effectively support:</p>
 
-                <h3>3.1 Keyboard Navigation</h3>
+                <h3>3.1 Navigation & Structure</h3>
                 <ul>
-                    <li>All interactive elements are keyboard accessible</li>
-                    <li>Logical tab order throughout the site</li>
-                    <li>Skip navigation links for screen reader users</li>
-                    <li>Visible focus indicators on all focusable elements</li>
+                    <li><strong>Semantic HTML:</strong> We use proper headings, lists, and landmarks to help screen readers understand the page structure.</li>
+                    <li><strong>Standard Navigation:</strong> Our main menus are designed to be intuitive and consistent across the site.</li>
                 </ul>
 
-                <h3>3.2 Screen Reader Support</h3>
+                <h3>3.2 Future Improvements</h3>
+                <p>We are aware of areas that need improvement and are working to implement:</p>
                 <ul>
-                    <li>Semantic HTML structure (headings, landmarks, lists)</li>
-                    <li>ARIA labels and descriptions where needed</li>
-                    <li>Alt text for all meaningful images</li>
-                    <li>Live regions for dynamic content updates</li>
-                </ul>
-
-                <h3>3.3 Visual Design</h3>
-                <ul>
-                    <li>Sufficient color contrast (WCAG AA compliant)</li>
-                    <li>Text resizable up to 200% without loss of functionality</li>
-                    <li>No reliance on color alone to convey information</li>
-                    <li>Clear, readable fonts with adequate spacing</li>
-                </ul>
-
-                <h3>3.4 Media</h3>
-                <ul>
-                    <li>Audio player controls are keyboard accessible</li>
-                    <li>Pause/stop controls for all auto-playing content</li>
-                    <li>Volume controls clearly labeled</li>
+                    <li><strong>Keyboard Navigation:</strong> Enhancing focus indicators and adding "Skip to content" links.</li>
+                    <li><strong>Screen Reader Support:</strong> Adding detailed ARIA labels to all interactive elements and media controls.</li>
+                    <li><strong>Media Controls:</strong> Improving keyboard accessibility for our music players.</li>
                 </ul>
             </section>
 

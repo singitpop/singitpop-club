@@ -167,7 +167,7 @@ export async function GET() {
                 id: product.id,
                 title: title,
                 description: product.description || '',
-                price: price?.unit_amount ? price.unit_amount / 100 : 3.00,
+                price: price?.unit_amount ? price.unit_amount / 100 : 0.99,
                 priceId: price?.id || '',
                 genre: product.metadata?.genre || 'Pop',
                 duration: product.description?.match(/(\d+)s/)?.[1] || '30',

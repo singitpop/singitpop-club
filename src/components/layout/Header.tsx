@@ -89,6 +89,7 @@ export default function Header() {
             <button
               className={styles.mobileToggle}
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
             >
               {isOpen ? <X /> : <Menu />}
             </button>

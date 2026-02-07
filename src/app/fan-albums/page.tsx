@@ -267,6 +267,21 @@ export default function CommunityHubPage() {
             return;
         }
 
+        // ACCESS CONTROL: Prevents non-VIPs from playing unreleased tracks via playlists
+        if (track.albumId) {
+            // Find album to check release date
+            const album = albums.find(a => a.id === track.albumId);
+            if (album) {
+                const releaseDate = new Date(album.releaseDate);
+                const now = new Date();
+                if (releaseDate > now && !isVIP) {
+                    alert("This track is from an unreleased album and is exclusive to VIP members!");
+                    setIsPlaying(false);
+                    return;
+                }
+            }
+        }
+
         // Start Switch
         isSwitchingRef.current = true;
         setIsLoading(true);

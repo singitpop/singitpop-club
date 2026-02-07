@@ -46,8 +46,8 @@ export default function RefundPolicyPage() {
                 <ol>
                     <li>Log in to your account</li>
                     <li>Go to <a href="/club/account">Account Settings</a></li>
-                    <li>Click "Manage Subscription"</li>
-                    <li>Click "Cancel Subscription"</li>
+                    <li>Click "Open Billing Portal"</li>
+                    <li>Select "Cancel Plan" within the secure portal</li>
                     <li>Confirm cancellation</li>
                 </ol>
                 <p><strong>Email Cancellation:</strong></p>
@@ -198,7 +198,7 @@ export default function RefundPolicyPage() {
                 </p>
                 <ul>
                     <li><strong>Citizens Advice Consumer Service:</strong> 0808 223 1133</li>
-                    <li><strong>Alternative Dispute Resolution:</strong> We use [ADR Provider Name] for independent dispute resolution</li>
+                    <li><strong>Alternative Dispute Resolution:</strong> If we cannot resolve a dispute, we will provide details of a certified ADR provider.</li>
                 </ul>
             </section>
 

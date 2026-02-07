@@ -131,12 +131,7 @@ export default function ComplaintsPage() {
 
                 <h3>6.1 ADR Provider</h3>
                 <p>
-                    We are registered with [ADR Provider Name]:
-                </p>
-                <p>
-                    <strong>Website:</strong> [ADR provider website]<br />
-                    <strong>Email:</strong> [ADR provider email]<br />
-                    <strong>Phone:</strong> [ADR provider phone]
+                    We do not currently subscribe to a specific Alternative Dispute Resolution (ADR) provider. However, if we are unable to resolve your complaint internally to your satisfaction, we will inform you of the name and website of a certified ADR provider and verify whether we are willing to use them to settle the dispute.
                 </p>
                 <p>
                     ADR is a free, independent service that helps resolve disputes without going to court.

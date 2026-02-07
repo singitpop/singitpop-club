@@ -6,6 +6,7 @@ import { AuthProvider } from '@/context/AuthContext';
 import { BrandProvider } from '@/context/BrandContext';
 import MobileNav from '@/components/layout/MobileNav';
 import CookieConsent from '@/components/legal/CookieConsent';
+import SkipLink from '@/components/layout/SkipLink';
 
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -24,8 +25,9 @@ export default function RootLayout({
             <html lang="en" suppressHydrationWarning>
                 <body suppressHydrationWarning={true}>
                     <AuthProvider>
+                        <SkipLink />
                         <Header />
-                        <main style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
+                        <main id="main-content" style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
                             <BrandProvider>
                                 {children}
                                 <MobileNav />
