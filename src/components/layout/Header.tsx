@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import styles from './Header.module.css';
 import { useAuth } from '@/context/AuthContext';
 import SearchModal from '../search/SearchModal';
+import UserBadge from '../ui/UserBadge';
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -20,7 +21,7 @@ const navItems = [
 ];
 
 export default function Header() {
-  const { isLabel } = useAuth();
+  const { isLabel, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -81,6 +82,9 @@ export default function Header() {
               <Link href="/club" className={`glow-button ${styles.desktopOnly}`} style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
                 My Dashboard
               </Link>
+              <div className={`${styles.desktopOnly} ml-3`}>
+                <UserBadge tier={user?.tier || 'FAN'} />
+              </div>
               <div style={{ marginLeft: '1rem' }}>
                 <UserButton afterSignOutUrl="/" />
               </div>

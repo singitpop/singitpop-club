@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check, CreditCard, ChevronRight, Settings, Lock, Loader2 } from "lucide-react";
+import UserBadge from "@/components/ui/UserBadge";
 
 export default function ClubPage() {
     const { user: clerkUser, isLoaded } = useUser();
@@ -77,10 +78,9 @@ export default function ClubPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-4 ${isVIP ? 'bg-gradient-to-r from-pink-500 to-purple-500' : 'bg-white/10 text-white/60'
-                        }`}>
-                        {tierName} TIER
-                    </span>
+                    <div className="mb-4">
+                        <UserBadge tier={tierName} size="md" showLabel={true} />
+                    </div>
                     <h1 className="text-4xl md:text-5xl font-bold mb-2">
                         Welcome back, {clerkUser?.firstName || 'Member'}
                     </h1>
@@ -101,7 +101,10 @@ export default function ClubPage() {
                         className="bg-gradient-to-br from-purple-900/40 to-blue-900/40 backdrop-blur-xl rounded-3xl p-6 border border-white/10"
                     >
                         <h3 className="text-sm font-bold text-white/60 mb-1">MEMBERSHIP</h3>
-                        <p className="text-2xl font-bold mb-4">{tierName} Status</p>
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="text-2xl font-bold">Status:</span>
+                            <UserBadge tier={tierName} size="lg" showLabel={true} />
+                        </div>
 
                         <div className="space-y-3">
                             {isVIP ? (

@@ -46,7 +46,7 @@ const RESPONSES: Record<string, any> = {
 export default function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<{ type: 'bot' | 'user', content: any }[]>([
-        { type: 'bot', content: "Hi there! I'm SingItBot 🤖. How can I help you today?" }
+        { type: 'bot', content: "Hi there! I'm Riley 🤖. How can I help you today?" }
     ]);
     const pathname = usePathname();
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -91,7 +91,7 @@ export default function ChatWidget() {
                                     <Bot size={18} className="text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-white">SingIt Assistant</h3>
+                                    <h3 className="font-bold text-white">Riley</h3>
                                     <div className="flex items-center gap-1 text-xs text-white/80">
                                         <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                                         Online
