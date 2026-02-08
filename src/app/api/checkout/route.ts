@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { stripe } from '@/lib/stripe';
+import Stripe from 'stripe'; // Fix: Import Stripe type
 import { normalizeEmail } from '@/lib/email-utils';
 
 export async function POST(req: NextRequest) {
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const { priceId } = await req.json();
+        const { priceId, mode = 'subscription' } = await req.json();
 
         if (!priceId) {
             return new NextResponse("Price ID required", { status: 400 });
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest) {
         // 3. Create Checkout Session
         const session = await stripe.checkout.sessions.create({
             customer: stripeCustomerId,
-            mode: 'subscription',
+            mode: mode as Stripe.Checkout.SessionCreateParams.Mode,
             payment_method_types: ['card'], // 'link' is often auto-enabled
             line_items: [
                 {

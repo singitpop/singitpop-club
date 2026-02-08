@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useUser } from '@clerk/nextjs';
 
-type UserTier = 'GUEST' | 'FAN' | 'INSIDER' | 'VIP' | 'LABEL';
+type UserTier = 'GUEST' | 'FAN' | 'INSIDER' | 'VIP' | 'LABEL' | 'LIFETIME';
 
 interface User {
     tier: UserTier;
@@ -57,6 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         let name = 'Music Fan';
         if (tier === 'INSIDER') name = 'The Insider';
         if (tier === 'VIP') name = 'Pro Member';
+        if (tier === 'LIFETIME') name = 'Lifetime VIP';
         if (tier === 'LABEL') name = 'SingIt Pop (Admin)';
 
         const newUser: User = { tier, name };
@@ -69,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('singit_user');
     };
 
-    const isPro = user?.tier === 'VIP' || user?.tier === 'LABEL'; // VIP Get High Res
+    const isPro = user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'LIFETIME'; // VIP Get High Res
     const isInsider = user?.tier === 'INSIDER' || isPro; // Insider Gets MP3 (Pro gets this too)
     const isLabel = user?.tier === 'LABEL';
 

@@ -3,11 +3,15 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
 import { getSignedFileUrl } from "@/lib/s3";
+import { createClerkClient } from '@clerk/nextjs/server';
 
 // Init Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-    apiVersion: "2026-01-28.clover",
+    apiVersion: "2025-01-27.acacia" as any,
 });
+
+// Init Clerk
+const clerkClient = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
 // Init Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -36,16 +40,39 @@ export async function POST(req: Request) {
     if (event.type === "checkout.session.completed") {
         const session = event.data.object as Stripe.Checkout.Session;
 
-        // Retrieve the expanded session to get line items and product metadata
-        // We usually store product specific metadata on the Product object, not just the session
-        // But in our sync script, we set metadata on the PRODUCT
-
         // 1. Get the line items to find which product was bought
         const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
             expand: ['data.price.product']
         });
 
         const customerEmail = session.customer_details?.email;
+        const clerkUserId = session.metadata?.clerkUserId;
+
+        if (clerkUserId) {
+            console.log(`👤 Processing Membership for Clerk User: ${clerkUserId}`);
+
+            // CHECK FOR MEMBERSHIP TIERS
+            for (const item of lineItems.data) {
+                const priceId = item.price?.id;
+
+                if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME) {
+                    console.log("💎 Lifetime VIP Purchased!");
+                    await clerkClient.users.updateUser(clerkUserId, {
+                        publicMetadata: { tier: 'LIFETIME' }
+                    });
+                } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_VIP) {
+                    console.log("🌟 VIP Subscription Active!");
+                    await clerkClient.users.updateUser(clerkUserId, {
+                        publicMetadata: { tier: 'VIP' }
+                    });
+                } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER) {
+                    console.log("💿 Insider Subscription Active!");
+                    await clerkClient.users.updateUser(clerkUserId, {
+                        publicMetadata: { tier: 'INSIDER' }
+                    });
+                }
+            }
+        }
 
         if (!customerEmail) {
             console.error("❌ No customer email found in session");
@@ -57,8 +84,8 @@ export async function POST(req: Request) {
         for (const item of lineItems.data) {
             const product = item.price?.product as Stripe.Product;
 
+            // Skip if it's a membership (no ringtone metadata)
             if (!product || !product.metadata.mp3_key) {
-                console.log(`⚠️ Item ${item.description} has no ringtone metadata. Skipping.`);
                 continue;
             }
 

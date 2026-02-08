@@ -27,6 +27,13 @@ const tiers = [
         features: ["Everything in Insider ✨", "Lossless WAV Downloads 💎", "20% Shop Discount 🏷️", "Exclusive Future Album Content 🎹"],
         highlight: false,
         action: "Upgrade"
+    },
+    {
+        name: "Lifetime VIP",
+        price: "£299",
+        features: ["One-time payment 💸", "Forever VIP Access ♾️", "Special 'Lifetime' Badge 🏅", "All Future Perks Included 🚀"],
+        highlight: true,
+        action: "Buy Once"
     }
 ];
 
@@ -40,9 +47,13 @@ export default function MembershipPage() {
         setLoadingTier(tierName);
 
         try {
+            const isLifetime = tierName === "Lifetime VIP";
             const res = await fetch('/api/checkout', {
                 method: 'POST',
-                body: JSON.stringify({ priceId })
+                body: JSON.stringify({
+                    priceId,
+                    mode: isLifetime ? 'payment' : 'subscription'
+                })
             });
             const data = await res.json();
             if (data.url) {
@@ -70,6 +81,9 @@ export default function MembershipPage() {
         if (tierName === "The VIP") {
             handleCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_VIP!, tierName);
         }
+        if (tierName === "Lifetime VIP") {
+            handleCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME!, tierName);
+        }
     };
 
     return (
@@ -88,7 +102,8 @@ export default function MembershipPage() {
                     // Simple logic to show "Current" state
                     const isCurrent = (user?.tier === 'FAN' && tier.name === 'The Fan') ||
                         (user?.tier === 'VIP' && tier.name === 'The VIP') ||
-                        (user?.tier === 'INSIDER' && tier.name === 'The Insider');
+                        (user?.tier === 'INSIDER' && tier.name === 'The Insider') ||
+                        (user?.tier === 'LIFETIME' && tier.name === 'Lifetime VIP');
 
                     const isLoading = loadingTier === tier.name;
 
