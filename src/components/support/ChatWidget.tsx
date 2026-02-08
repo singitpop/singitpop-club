@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Robot, ChevronRight } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, ChevronRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 const SUPPORT_OPTIONS = [
@@ -57,7 +57,8 @@ export default function ChatWidget() {
     }, [messages, isOpen]);
 
     // Don't show on admin or studio pages to keep UI clean
-    if (pathname.startsWith('/admin') || pathname.startsWith('/studio')) return null;
+    // Don't show on admin or studio pages to keep UI clean
+    if (!pathname || pathname.startsWith('/admin') || pathname.startsWith('/studio')) return null;
 
     const handleOptionClick = (optionId: string) => {
         const option = SUPPORT_OPTIONS.find(o => o.id === optionId);
@@ -86,8 +87,8 @@ export default function ChatWidget() {
                         {/* Header */}
                         <div className="bg-gradient-to-r from-pink-600 to-purple-600 p-4 flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <div className="bg-white/20 p-2 rounded-full">
-                                    <MessageCircle size={20} className="text-white" />
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center shadow-lg">
+                                    <Bot size={18} className="text-white" />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-white">SingIt Assistant</h3>
@@ -112,8 +113,8 @@ export default function ChatWidget() {
                                     className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
                                     <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.type === 'user'
-                                            ? 'bg-pink-600 text-white rounded-tr-none'
-                                            : 'bg-white/10 text-white rounded-tl-none border border-white/5'
+                                        ? 'bg-pink-600 text-white rounded-tr-none'
+                                        : 'bg-white/10 text-white rounded-tl-none border border-white/5'
                                         }`}>
                                         {msg.content}
                                     </div>
