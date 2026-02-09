@@ -62,5 +62,17 @@ export function useNotification() {
         }
     };
 
-    return { isSubscribed, subscribe, subscription };
+    const [notifications, setNotifications] = useState<{ id: string; message: string; type: 'success' | 'error' | 'info' | 'warning' }[]>([]);
+
+    const showNotification = (message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info') => {
+        const id = Math.random().toString(36).substring(7);
+        setNotifications(prev => [...prev, { id, message, type }]);
+        setTimeout(() => removeNotification(id), 5000);
+    };
+
+    const removeNotification = (id: string) => {
+        setNotifications(prev => prev.filter(n => n.id !== id));
+    };
+
+    return { isSubscribed, subscribe, subscription, showNotification, removeNotification, notifications };
 }
