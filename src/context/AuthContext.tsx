@@ -8,6 +8,7 @@ type UserTier = 'GUEST' | 'FAN' | 'INSIDER' | 'VIP' | 'LABEL' | 'LIFETIME';
 interface User {
     tier: UserTier;
     name: string;
+    purchasedTracks: string[]; // Array of Track IDs (e.g. 'track_01')
 }
 
 interface AuthContextType {
@@ -16,7 +17,9 @@ interface AuthContextType {
     logout: () => void;
     isPro: boolean;
     isInsider: boolean;
+
     isLabel: boolean;
+    hasTrackAccess: (trackId: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -34,7 +37,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
             setUser({
                 tier: tier,
-                name: clerkUser.fullName || clerkUser.firstName || 'Member'
+                name: clerkUser.fullName || clerkUser.firstName || 'Member',
+                purchasedTracks: (metadata.purchasedTracks as string[]) || []
             });
         }
     }, [isLoaded, clerkUser]);
@@ -60,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (tier === 'LIFETIME') name = 'Lifetime VIP';
         if (tier === 'LABEL') name = 'SingIt Pop (Admin)';
 
-        const newUser: User = { tier, name };
+        const newUser: User = { tier, name, purchasedTracks: [] };
         setUser(newUser);
         localStorage.setItem('singit_user', JSON.stringify(newUser));
     };
@@ -74,8 +78,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const isInsider = user?.tier === 'INSIDER' || isPro; // Insider Gets MP3 (Pro gets this too)
     const isLabel = user?.tier === 'LABEL';
 
+    const hasTrackAccess = (trackId: string) => {
+        if (!user) return false;
+        if (isPro || isInsider || isLabel) return true; // VIPs/Insiders get everything
+        return user.purchasedTracks?.includes(trackId) || false;
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, isPro, isInsider, isLabel }}>
+        <AuthContext.Provider value={{ user, login, logout, isPro, isInsider, isLabel, hasTrackAccess }}>
             {children}
         </AuthContext.Provider>
     );

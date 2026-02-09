@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useListeningHistory } from '@/hooks/useListeningHistory';
 import { Play, Pause, SkipForward, Volume2, Radio, Square } from 'lucide-react';
 import styles from './StationView.module.css';
 import { albums } from '@/data/albumData';
@@ -83,6 +85,14 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
     const { isPro } = useAuth();
     const [visualizerBars, setVisualizerBars] = useState<number[]>([]);
     const [activeStation, setActiveStation] = useState(STATIONS[0]);
+    const { logPlay } = useListeningHistory();
+
+    useEffect(() => {
+        if (currentTrack && isPlaying) {
+            console.log("📊 Logging play for:", currentTrack.title);
+            logPlay(currentTrack);
+        }
+    }, [currentTrack?.uniqueId, isPlaying]);
 
     useEffect(() => {
         const interval = setInterval(() => {

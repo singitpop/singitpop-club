@@ -13,7 +13,14 @@ export async function POST(req: NextRequest) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const { priceId, mode = 'subscription' } = await req.json();
+        const { priceId: inputPriceId, mode = 'subscription', trackId, albumId } = await req.json();
+
+        let priceId = inputPriceId;
+
+        // Handle Track Purchase
+        if (!priceId && trackId) {
+            priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_TRACK;
+        }
 
         if (!priceId) {
             return new NextResponse("Price ID required", { status: 400 });
@@ -35,10 +42,6 @@ export async function POST(req: NextRequest) {
                 }
             });
             stripeCustomerId = customer.id;
-
-            // 2b. We should sync this back to Clerk, but we can relies on the webhook for resilience 
-            // OR do it here to be faster. Let's rely on webhook for the "Source of Truth" 
-            // but for this session, we pass the customer ID.
         }
 
         // 3. Create Checkout Session
@@ -54,9 +57,11 @@ export async function POST(req: NextRequest) {
             ],
             metadata: {
                 clerkUserId: userId,
+                trackId: trackId || undefined, // Add trackId if present
+                albumId: albumId || undefined  // Add albumId if present
             },
             success_url: `${process.env.NEXT_PUBLIC_APP_URL}/club?success=true`,
-            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/membership?canceled=true`,
+            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/music?canceled=true`, // Redirect to music on cancel for track buys
             billing_address_collection: 'auto',
             allow_promotion_codes: true,
         });

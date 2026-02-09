@@ -246,6 +246,12 @@ function MusicContent() {
     const MAX_MIXTAPE_TRACKS = 12;
 
     const handleToggleSelection = (uniqueId: string) => {
+        if (!isInsider && !isPro && !isLabel) {
+            alert("Mixtape creation is an Insider feature! Join the club to create your own mixes.");
+            return;
+            // Optionally redirect or show modal
+        }
+
         setSelectedTracks(prev => {
             if (prev.includes(uniqueId)) {
                 return prev.filter(tid => tid !== uniqueId);

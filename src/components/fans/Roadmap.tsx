@@ -3,20 +3,20 @@ import { MessageSquare, Crown, Bell, Music, CheckCircle, Clock } from 'lucide-re
 
 const ROADMAP_ITEMS = [
     {
-        id: 1,
-        title: "VIP Discord Community",
-        description: "A private space for VIPs to chat, vote on new songs, and get exclusive updates.",
-        icon: MessageSquare,
-        status: "In Progress",
-        date: "Coming Soon"
-    },
-    {
         id: 2,
         title: "Lifetime VIP Membership",
         description: "Pay once, get VIP access forever. The ultimate status symbol.",
         icon: Crown,
-        status: "Planned",
-        date: "March 2026"
+        status: "Live",
+        date: "Available Now"
+    },
+    {
+        id: 4,
+        title: "Single Track Downloads",
+        description: "Buy your favorite tracks individually without a subscription.",
+        icon: Music,
+        status: "Live",
+        date: "Available Now"
     },
     {
         id: 3,
@@ -25,14 +25,6 @@ const ROADMAP_ITEMS = [
         icon: Bell,
         status: "Planned",
         date: "March 2026"
-    },
-    {
-        id: 4,
-        title: "Single Track Downloads",
-        description: "Buy your favorite tracks individually without a subscription.",
-        icon: Music,
-        status: "Planned",
-        date: "April 2026"
     }
 ];
 
@@ -68,8 +60,8 @@ export default function Roadmap() {
                                     <div className="flex items-center gap-2 mb-1">
                                         <h3 className="font-bold text-lg">{item.title}</h3>
                                         <span className={`text-[10px] px-2 py-0.5 rounded-full border ${item.status === 'In Progress'
-                                                ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
-                                                : 'bg-white/5 border-white/10 text-white/40'
+                                            ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
+                                            : 'bg-white/5 border-white/10 text-white/40'
                                             }`}>
                                             {item.status}
                                         </span>

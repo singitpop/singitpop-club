@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
 // @ts-ignore
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -13,6 +14,7 @@ export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
     const [timeLeft, setTimeLeft] = useState(10); // 10 seconds auto-entry
     const [isExiting, setIsExiting] = useState(false);
     const [shouldShow, setShouldShow] = useState(false);
+    const { user } = useAuth();
 
     // Check if user has already dismissed the overlay
     useEffect(() => {
@@ -96,15 +98,19 @@ export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
                 <div className={styles.actions}>
                     <button
                         onClick={() => {
-                            handleDismiss();
-                            setTimeout(() => {
-                                const element = document.getElementById('access');
-                                if (element) element.scrollIntoView({ behavior: 'smooth' });
-                            }, 600);
+                            if (user) {
+                                window.location.href = '/club';
+                            } else {
+                                handleDismiss();
+                                setTimeout(() => {
+                                    const element = document.getElementById('access');
+                                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                                }, 600);
+                            }
                         }}
                         className={styles.enterClubBtn}
                     >
-                        Choose Your Access
+                        {user ? "Go to Dashboard" : "Choose Your Access"}
                     </button>
 
                     <button onClick={handleDismiss} className={styles.enterSiteBtn}>

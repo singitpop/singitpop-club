@@ -1,0 +1,79 @@
+{
+  "faq": [
+    {
+      "q": "How do I become a VIP?",
+      "a": "You can become a VIP by visiting the Membership page and selecting the VIP tier. It costs £9.99/month or £299 for Lifetime access."
+    },
+    {
+      "q": "What is included in the VIP membership?",
+      "a": "VIP members get 20% off merch, FLAC downloads, exclusive pre-releases, and access to the 'Inside the Studio' blog."
+    },
+    {
+      "q": "How do I download music?",
+      "a": "If you are a VIP or have purchased the track, go to the Album page. You will see a 'Download' button next to the track."
+    },
+    {
+      "q": "Can I buy a single track?",
+      "a": "Yes! You can buy individual tracks for £0.99 each directly from the music player."
+    },
+    {
+      "q": "Where is my order?",
+      "a": "You should receive an email confirmation from Stripe/Printful. If not, contact support via the Contact page."
+    },
+    {
+      "q": "Do you have a Discord?",
+      "a": "We decided not to launch a Discord to focus on making this website the best place for fans!"
+    },
+    {
+      "q": "How do I contact support?",
+      "a": "You can use the Contact page form for specific inquiries."
+    }
+  ],
+  "albums": [
+    {
+      "title": "Neon Dreams",
+      "price": "£9.99",
+      "type": "Studio Album",
+      "url": "/music"
+    },
+    {
+      "title": "Midnight Memories",
+      "price": "£9.99",
+      "type": "Studio Album",
+      "url": "/music"
+    },
+    {
+      "title": "Acoustic Sessions",
+      "price": "£9.99",
+      "type": "Live Album",
+      "url": "/music"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Shop",
+      "url": "/shop",
+      "desc": "Buy merch, vinyls, and apparel."
+    },
+    {
+      "name": "Membership",
+      "url": "/membership",
+      "desc": "Join the club and upgrade your tier."
+    },
+    {
+      "name": "Music",
+      "url": "/music",
+      "desc": "Listen to all albums and singles."
+    },
+    {
+      "name": "Contact",
+      "url": "/contact",
+      "desc": "Get in touch with the team."
+    },
+    {
+      "name": "FanZone",
+      "url": "/fanzone",
+      "desc": "Community hub for contests and news."
+    }
+  ]
+}

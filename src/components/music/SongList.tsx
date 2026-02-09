@@ -22,7 +22,7 @@ const MAX_MIXTAPE_TRACKS = 12;
 const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
 
 export default function SongList({ tracks, albums, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid }: SongListProps) {
-    const { isPro, isInsider, isLabel, user } = useAuth();
+    const { isPro, isInsider, isLabel, user, hasTrackAccess } = useAuth();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
@@ -205,6 +205,30 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         }
     };
 
+    const handleBuy = async (track: Track) => {
+        if (!user) {
+            window.location.href = '/sign-in'; // Or show auth modal
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    mode: 'payment',
+                    trackId: getUniqueId(track),
+                    albumId: track.albumId
+                })
+            });
+            const data = await res.json();
+            if (data.url) window.location.href = data.url;
+        } catch (e) {
+            console.error("Buy error", e);
+            alert("Checkout failed. Please try again.");
+        }
+    };
+
     const handlePlay = (track: Track) => {
         const uniqueId = getUniqueId(track);
         if (activeTrackId === uniqueId) {
@@ -325,6 +349,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                         let lockMessage = "";
 
                         const isLatestSingle = String(uniqueId) === String(latestSingleUid);
+                        const isOwned = hasTrackAccess(uniqueId);
 
                         if (isPreRelease && !isLatestSingle) {
                             // Pre-Release (VIP Only)
@@ -334,12 +359,8 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                             }
                         } else {
                             // Standard Release Logic
-                            if (isLatestSingle) {
-                                // Latest Single: Guests = Preview, Fans+ = Full
-                                if (!user) isPreview = true;
-                            } else {
-                                // Album Tracks: Guest/Fans = Preview, Insider+ = Full
-                                if (!isInsider && !isPro) isPreview = true;
+                            if (!isOwned) {
+                                isPreview = true;
                             }
                         }
 
@@ -393,6 +414,22 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     <span className={styles.duration}>
                                         {isPreview ? "30s Preview" : track.duration}
                                     </span>
+
+                                    {/* Buy Button for Non-Owners */}
+                                    {isPreview && !isLocked && (
+                                        <button
+                                            className={styles.actionBtn}
+                                            title="Buy Track (£0.99)"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleBuy(track);
+                                            }}
+                                            style={{ background: 'var(--accent)', color: 'white', border: 'none' }}
+                                        >
+                                            <ShoppingBag size={14} />
+                                            <span style={{ fontSize: '0.75rem', marginLeft: '4px', fontWeight: 'bold' }}>£0.99</span>
+                                        </button>
+                                    )}
 
                                     {/* Download Logic */}
                                     {isInsider && (

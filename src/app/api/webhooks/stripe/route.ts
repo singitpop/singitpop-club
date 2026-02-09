@@ -49,7 +49,31 @@ export async function POST(req: Request) {
         const clerkUserId = session.metadata?.clerkUserId;
 
         if (clerkUserId) {
-            console.log(`👤 Processing Membership for Clerk User: ${clerkUserId}`);
+            console.log(`👤 Processing Order for Clerk User: ${clerkUserId}`);
+
+            const trackId = session.metadata?.trackId;
+
+            // HANDLE TRACK PURCHASE
+            if (trackId) {
+                console.log(`🎵 Track Purchase: ${trackId}`);
+                try {
+                    const user = await clerkClient.users.getUser(clerkUserId);
+                    const currentTracks = (user.publicMetadata.purchasedTracks as string[]) || [];
+
+                    if (!currentTracks.includes(trackId)) {
+                        await clerkClient.users.updateUser(clerkUserId, {
+                            publicMetadata: {
+                                purchasedTracks: [...currentTracks, trackId]
+                            }
+                        });
+                        console.log(`✅ Added ${trackId} to user library`);
+                    } else {
+                        console.log(`⚠️ User already owns ${trackId}`);
+                    }
+                } catch (err) {
+                    console.error("❌ Error updating user tracks:", err);
+                }
+            }
 
             // CHECK FOR MEMBERSHIP TIERS
             for (const item of lineItems.data) {

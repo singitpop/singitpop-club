@@ -2,51 +2,35 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, ChevronRight } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, ChevronRight, Search } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import knowledgeBase from '@/data/knowledge.json';
 
-const SUPPORT_OPTIONS = [
-    { id: 'buying', label: "Where can I buy?" },
-    { id: 'vip', label: "How do I become VIP?" },
-    { id: 'download', label: "How to download music?" },
-    { id: 'lyrics', label: "Can you write me a song?" },
-    { id: 'contact', label: "Contact Support" }
-];
+// Simple fuzzy search helper
+const findAnswer = (query: string) => {
+    const q = query.toLowerCase();
 
-const RESPONSES: Record<string, any> = {
-    buying: (
-        <span>
-            You can grab official merch in our <a href="/shop" className="text-pink-400 underline">Shop</a>!
-            We also have digital downloads available on the specific album pages.
-        </span>
-    ),
-    vip: (
-        <span>
-            Join the Club! Click the "Join the Club" button in the menu or <a href="/membership" className="text-pink-400 underline">click here</a> to see our plans.
-            VIPs get 20% off merch!
-        </span>
-    ),
-    download: (
-        <span>
-            If you've purchased a track or are a VIP member, go to the album page and look for the "Download" button next to the track.
-        </span>
-    ),
-    lyrics: (
-        <span>
-            I can help with that! Check out our new <a href="/lab/lyrics" className="text-pink-400 underline">AI Lyric Lab</a> to co-write your next hit. 🎵
-        </span>
-    ),
-    contact: (
-        <span>
-            Have a specific issue? You can reach us via the <a href="/contact" className="text-pink-400 underline">Contact Page</a>. We usually reply within 48 hours.
-        </span>
-    )
+    // 1. Direct FAQ Match
+    const faqMatch = knowledgeBase.faq.find(f => f.q.toLowerCase().includes(q) || q.includes(f.q.toLowerCase()));
+    if (faqMatch) return faqMatch.a;
+
+    // 2. Page Match
+    const pageMatch = knowledgeBase.pages.find(p => q.includes(p.name.toLowerCase()) || p.desc.toLowerCase().includes(q));
+    if (pageMatch) return `You can find that on our ${pageMatch.name} page: <a href="${pageMatch.url}" class="text-pink-400 underline">${pageMatch.name}</a>. ${pageMatch.desc}`;
+
+    // 3. Album Match
+    const albumMatch = knowledgeBase.albums.find(a => q.includes(a.title.toLowerCase()));
+    if (albumMatch) return `That's one of our releases! "${albumMatch.title}" is a ${albumMatch.type}. You can listen to it <a href="${albumMatch.url}" class="text-pink-400 underline">here</a>.`;
+
+    // 4. Default Fallback
+    return "I'm not sure about that yet. Try asking about 'VIP', 'Shop', 'Music', or 'Contact'.";
 };
 
 export default function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false);
+    const [inputValue, setInputValue] = useState("");
     const [messages, setMessages] = useState<{ type: 'bot' | 'user', content: any }[]>([
-        { type: 'bot', content: "Hi there! I'm Riley 🤖. How can I help you today?" }
+        { type: 'bot', content: "Hi! I'm Riley 2.0 🤖. Ask me anything about the site!" }
     ]);
     const pathname = usePathname();
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -56,21 +40,25 @@ export default function ChatWidget() {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, isOpen]);
 
-    // Don't show on admin or studio pages to keep UI clean
-    // Don't show on admin or studio pages to keep UI clean
     if (!pathname || pathname.startsWith('/admin') || pathname.startsWith('/studio')) return null;
 
-    const handleOptionClick = (optionId: string) => {
-        const option = SUPPORT_OPTIONS.find(o => o.id === optionId);
-        if (!option) return;
+    const handleSend = () => {
+        if (!inputValue.trim()) return;
 
-        // Add user message
-        setMessages(prev => [...prev, { type: 'user', content: option.label }]);
+        // User Message
+        setMessages(prev => [...prev, { type: 'user', content: inputValue }]);
+        const query = inputValue;
+        setInputValue("");
 
-        // Simulate typing delay
+        // Bot Response
         setTimeout(() => {
-            setMessages(prev => [...prev, { type: 'bot', content: RESPONSES[optionId] }]);
+            const answer = findAnswer(query);
+            setMessages(prev => [...prev, { type: 'bot', content: <span dangerouslySetInnerHTML={{ __html: answer }} /> }]);
         }, 600);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') handleSend();
     };
 
     return (
@@ -91,10 +79,10 @@ export default function ChatWidget() {
                                     <Bot size={18} className="text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-white">Riley</h3>
+                                    <h3 className="font-bold text-white">Riley <span className="text-[10px] opacity-75">AI</span></h3>
                                     <div className="flex items-center gap-1 text-xs text-white/80">
                                         <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                                        Online
+                                        Context Aware
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +100,7 @@ export default function ChatWidget() {
                                     animate={{ opacity: 1, y: 0 }}
                                     className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
-                                    <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.type === 'user'
+                                    <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${msg.type === 'user'
                                         ? 'bg-pink-600 text-white rounded-tr-none'
                                         : 'bg-white/10 text-white rounded-tl-none border border-white/5'
                                         }`}>
@@ -123,21 +111,23 @@ export default function ChatWidget() {
                             <div ref={messagesEndRef} />
                         </div>
 
-                        {/* Options Area */}
-                        <div className="p-4 bg-[#121218] border-t border-white/10">
-                            <p className="text-xs text-white/40 mb-2 font-medium uppercase tracking-wider">Suggested Topics</p>
-                            <div className="flex flex-wrap gap-2">
-                                {SUPPORT_OPTIONS.map(opt => (
-                                    <button
-                                        key={opt.id}
-                                        onClick={() => handleOptionClick(opt.id)}
-                                        className="text-xs px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-pink-500/30 rounded-lg transition-colors text-left flex items-center gap-1"
-                                    >
-                                        {opt.label}
-                                        <ChevronRight size={10} className="opacity-50" />
-                                    </button>
-                                ))}
-                            </div>
+                        {/* Input Area */}
+                        <div className="p-3 bg-[#121218] border-t border-white/10 flex gap-2">
+                            <input
+                                type="text"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                placeholder="Ask about VIP, Merch, Music..."
+                                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-pink-500/50 placeholder:text-white/30"
+                            />
+                            <button
+                                onClick={handleSend}
+                                disabled={!inputValue.trim()}
+                                className="p-2 bg-pink-500 hover:bg-pink-600 rounded-xl text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                                <Send size={18} />
+                            </button>
                         </div>
                     </motion.div>
                 )}

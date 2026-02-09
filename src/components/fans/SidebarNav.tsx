@@ -1,4 +1,4 @@
-import { Home, Compass, Heart, Radio, User, Settings, LogOut, PlusCircle, Sparkles } from 'lucide-react';
+import { Home, Compass, Heart, Radio, User, Settings, LogOut, PlusCircle } from 'lucide-react';
 import styles from './SidebarNav.module.css';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -16,6 +16,7 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
         { id: 'home', icon: Home, label: 'Hub Home' },
         { id: 'browse', icon: Compass, label: 'Browse' },
         { id: 'radio', icon: Radio, label: 'Radio' },
+        { id: 'my-mixes', icon: User, label: 'My Mixes' },
         { id: 'favorites', icon: Heart, label: 'Fav' },
     ];
 
@@ -39,10 +40,7 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
                     </button>
                 ))}
 
-                <Link href="/lab/lyrics" className={styles.navItem} style={{ textDecoration: 'none', color: 'inherit', marginTop: '0.5rem' }}>
-                    <Sparkles size={20} color="#ec4899" />
-                    <span style={{ color: '#ec4899', fontWeight: 'bold' }}>Lyric Lab</span>
-                </Link>
+
             </div>
 
             <div className={styles.menu}>

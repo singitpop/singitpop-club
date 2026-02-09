@@ -55,6 +55,11 @@ export default function CommunityHubPage() {
             filtered = filtered.filter(p => p.likedBy && p.likedBy.includes(userId));
         }
 
+        if (activeTab === 'my-mixes' && userId) {
+            // Filter by creatorId or userId
+            filtered = filtered.filter(p => p.userId === userId || p.creatorId === userId);
+        }
+
         const sorted = filtered;
         if (activeSort === 'newest') {
             sorted.sort((a, b) => {
@@ -482,29 +487,45 @@ export default function CommunityHubPage() {
                             {/* Spotlight / Trending Section */}
                             <div className={styles.sectionHeader}>
                                 <h2>Trending Right Now 🔥</h2>
-                                <button className={styles.seeAllBtn}>See all</button>
+                                {isInsider && <button className={styles.seeAllBtn}>See all</button>}
                             </div>
 
-                            {/* Featured / Trending Grid */}
-                            {playlists.length > 0 ? (
-                                <div className={styles.trendingGrid}>
-                                    {playlists.slice(0, 3).map(playlist => (
-                                        <div key={playlist.id} className={styles.trendingCardWrapper}>
-                                            <PlaylistCard
-                                                playlist={playlist}
-                                                coverImages={getPlaylistArtwork(playlist)}
-                                                isPlaying={isPlaying && currentTrackId === `track-${playlist.tracks[0]}`}
-                                                onPlay={(e) => handlePlay(e, playlist.id)}
-                                                onClick={() => setSelectedPlaylist(playlist)}
-                                                onLike={() => handleLike(playlist.id)}
-                                                hasLiked={playlist.likedBy?.includes(userId)}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
+                            {/* Featured / Trending Grid - LOCKED for non-insiders */}
+                            {isInsider ? (
+                                playlists.length > 0 ? (
+                                    <div className={styles.trendingGrid}>
+                                        {playlists.slice(0, 3).map(playlist => (
+                                            <div key={playlist.id} className={styles.trendingCardWrapper}>
+                                                <PlaylistCard
+                                                    playlist={playlist}
+                                                    coverImages={getPlaylistArtwork(playlist)}
+                                                    isPlaying={isPlaying && currentTrackId === `track-${playlist.tracks[0]}`}
+                                                    onPlay={(e) => handlePlay(e, playlist.id)}
+                                                    onClick={() => setSelectedPlaylist(playlist)}
+                                                    onLike={() => handleLike(playlist.id)}
+                                                    hasLiked={playlist.likedBy?.includes(userId)}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>
+                                        {isLoading ? "Loading Community Hub..." : "No playlists shared yet. Be the first!"}
+                                    </div>
+                                )
                             ) : (
-                                <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>
-                                    {isLoading ? "Loading Community Hub..." : "No playlists shared yet. Be the first!"}
+                                // LOCKED STATE FOR NON-INSIDERS
+                                <div className="flex flex-col items-center justify-center p-12 text-center bg-white/5 rounded-3xl border border-white/10 m-4">
+                                    <div className="w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center mb-4">
+                                        <TrendingUp size={32} className="text-purple-400" />
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-2">Community Mixes Locked</h3>
+                                    <p className="text-white/60 max-w-md mb-6">
+                                        Only Insiders can browse and listen to community-created mixes. Join the club to unlock this feature.
+                                    </p>
+                                    <Link href="/membership" className="px-6 py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform">
+                                        Unlock Community Access
+                                    </Link>
                                 </div>
                             )}
 
@@ -616,22 +637,24 @@ export default function CommunityHubPage() {
             </div>
 
             {/* Roadmap Section */}
-            <Roadmap />
+            {/* Roadmap Section Removed as per Phase 4 completion */}
 
             {/* Viewer Modal */}
-            {selectedPlaylist && (
-                <PlaylistViewer
-                    playlist={selectedPlaylist}
-                    onClose={() => setSelectedPlaylist(null)}
-                    onPlayTrack={handleTrackPlay}
-                    currentTrackId={currentTrackId}
-                    isPlaying={isPlaying}
-                    onLike={() => handleLike(selectedPlaylist.id)}
-                    hasLiked={selectedPlaylist.likedBy?.includes(userId)}
-                    onDelete={() => handleDeletePlaylist(selectedPlaylist.id)}
-                    canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin'}
-                />
-            )}
+            {
+                selectedPlaylist && (
+                    <PlaylistViewer
+                        playlist={selectedPlaylist}
+                        onClose={() => setSelectedPlaylist(null)}
+                        onPlayTrack={handleTrackPlay}
+                        currentTrackId={currentTrackId}
+                        isPlaying={isPlaying}
+                        onLike={() => handleLike(selectedPlaylist.id)}
+                        hasLiked={selectedPlaylist.likedBy?.includes(userId)}
+                        onDelete={() => handleDeletePlaylist(selectedPlaylist.id)}
+                        canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin'}
+                    />
+                )
+            }
 
             {/* Hidden Audio Element */}
             <audio
@@ -669,6 +692,6 @@ export default function CommunityHubPage() {
                     }
                 }}
             />
-        </div>
+        </div >
     );
 }

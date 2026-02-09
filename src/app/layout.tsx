@@ -8,6 +8,7 @@ import MobileNav from '@/components/layout/MobileNav';
 import CookieConsent from '@/components/legal/CookieConsent';
 import SkipLink from '@/components/layout/SkipLink';
 import ChatWidget from '@/components/support/ChatWidget';
+import ReferralClaimer from '@/components/fans/ReferralClaimer';
 
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -37,7 +38,26 @@ export default function RootLayout({
                         <Footer />
                         <CookieConsent />
                         <ChatWidget />
+                        <ReferralClaimer />
                     </AuthProvider>
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                                if ('serviceWorker' in navigator) {
+                                    window.addEventListener('load', function() {
+                                        navigator.serviceWorker.register('/sw.js').then(
+                                            function(registration) {
+                                                console.log('Service Worker registration successful with scope: ', registration.scope);
+                                            },
+                                            function(err) {
+                                                console.log('Service Worker registration failed: ', err);
+                                            }
+                                        );
+                                    });
+                                }
+                            `,
+                        }}
+                    />
                 </body>
             </html>
         </ClerkProvider>

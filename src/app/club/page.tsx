@@ -167,9 +167,21 @@ export default function ClubPage() {
 
                 </div>
             </div>
+
+            <div className="mt-12">
+                <ReferralCard />
+                <StatsCard />
+                <div className="h-12" />
+                <SongOracle />
+            </div>
         </div>
+
     );
 }
+
+import SongOracle from "@/components/fans/SongOracle";
+import ReferralCard from "@/components/fans/ReferralCard";
+import StatsCard from "@/components/fans/StatsCard";
 
 function CheckIcon() {
     return (
