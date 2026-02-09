@@ -10,7 +10,13 @@ export async function GET() {
         const signedAlbums = await Promise.all(albums.map(async (album) => {
             let signedCover = album.coverArt;
 
-            if (album.coverArt && !album.coverArt.startsWith('http')) {
+            // Fix for inconsistent album art paths in data file
+            // Data file points to /albums/artwork/ but files are actually in albums/{folderPath}/cover.png
+            if (album.folderPath) {
+                const correctedKey = `albums/${album.folderPath}/cover.png`;
+                signedCover = await getSignedFileUrl(correctedKey);
+            } else if (album.coverArt && !album.coverArt.startsWith('http')) {
+                // ... legacy/fallback logic ...
                 // Strip leading slash if present for S3 key
                 const key = album.coverArt.startsWith('/') ? album.coverArt.substring(1) : album.coverArt;
 
@@ -24,7 +30,7 @@ export async function GET() {
                         signedCover = await getSignedFileUrl(key);
                     }
                 } else {
-                    // It's a direct key (e.g. albums/artwork/...)
+                    // It's a direct key
                     signedCover = await getSignedFileUrl(key);
                 }
             } else if (album.coverArt && album.coverArt.includes('s3.eu-north-1.amazonaws.com')) {
