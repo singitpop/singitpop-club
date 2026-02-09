@@ -1,9 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, RefreshCw, Play } from 'lucide-react';
-import { tracks } from '@/data/albumData';
+import { albums } from '@/data/albumData';
+
+// Flatten albums to get all tracks
+const tracks = albums.flatMap(album => album.tracks.map(track => ({
+    ...track,
+    albumId: album.id, // Ensure albumId is available
+    albumCover: album.coverArt
+})));
 
 export default function SongOracle() {
     const [suggestion, setSuggestion] = useState<any>(null);
@@ -80,9 +87,9 @@ export default function SongOracle() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="relative z-10 text-center p-8 w-full"
                             >
-                                <div className="text-xs uppercase tracking-widest text-pink-400 mb-2 font-bold">The Universe Choose</div>
+                                <div className="text-xs uppercase tracking-widest text-pink-400 mb-2 font-bold">The Universe Chooses</div>
                                 <h3 className="text-2xl md:text-3xl font-black mb-2">{suggestion.title}</h3>
-                                <p className="text-white/60 mb-6">{suggestion.duration} • {suggestion.bpm} BPM</p>
+                                <p className="text-white/60 mb-6">{suggestion.duration} • {suggestion.genre}</p>
 
                                 <div className="flex justify-center gap-4">
                                     <a
@@ -108,5 +115,3 @@ export default function SongOracle() {
         </section>
     );
 }
-
-import { AnimatePresence } from 'framer-motion';
