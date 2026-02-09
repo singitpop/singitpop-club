@@ -155,13 +155,20 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         if (autoPlayTrackId) {
             const track = tracks.find(t => getUniqueId(t) === autoPlayTrackId);
             if (track) {
-                handlePlay(track);
+                const uniqueId = getUniqueId(track);
+                if (activeTrackId === uniqueId) {
+                    // If already active but not playing, force start
+                    if (!isPlaying) setIsPlaying(true);
+                } else {
+                    handlePlay(track);
+                }
+
                 // Scroll to it
                 const el = document.getElementById(`track-${track.id}`);
                 if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
-    }, [autoPlayTrackId, tracks]);
+    }, [autoPlayTrackId, tracks, activeTrackId, isPlaying]);
 
     useEffect(() => {
         if (activeTrackId && audioRef.current && currentSignedUrl) {

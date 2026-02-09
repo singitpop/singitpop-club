@@ -326,8 +326,20 @@ function MusicContent() {
                     <SongOracle
                         compact
                         onPlay={(track) => {
+                            // Ensure the track is in the visible list
+                            if (track.albumId) {
+                                setSelectedAlbumId(track.albumId);
+                                setFilterMode('album');
+                            } else {
+                                setFilterMode('all');
+                            }
+
+                            // Set auto-play target
                             const uid = track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
                             setAutoPlayTrackId(uid);
+
+                            // Auto-clear after a delay so subsequent clicks on same track work
+                            setTimeout(() => setAutoPlayTrackId(null), 1000);
                         }}
                     />
                 </div>

@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, RefreshCw, Play } from 'lucide-react';
+import { Sparkles, RefreshCw, Play, Lock } from 'lucide-react';
 import { albums } from '@/data/albumData';
 import { useListeningHistory } from '@/hooks/useListeningHistory';
+import { useAuth } from '@/context/AuthContext';
 
 interface SongOracleProps {
     compact?: boolean;
@@ -19,9 +20,26 @@ const tracks = albums.flatMap(album => album.tracks.map(track => ({
 })));
 
 export default function SongOracle({ compact = false, onPlay }: SongOracleProps) {
+    const { isInsider, isPro, isLabel } = useAuth();
     const [suggestion, setSuggestion] = useState<any>(null);
     const [isSpinning, setIsSpinning] = useState(false);
     const { logPlay } = useListeningHistory();
+
+    const isPaidUser = isInsider || isPro || isLabel;
+
+    if (!isPaidUser) {
+        if (compact) return null; // Hide completely in compact mode for free users
+        return (
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center max-w-2xl mx-auto">
+                <Lock size={48} className="mx-auto text-white/20 mb-4" />
+                <h3 className="text-xl font-bold mb-2">Universe Oracle Locked 🔐</h3>
+                <p className="text-white/60 mb-6">Suggestions from the Oracle are reserved for <strong>Insider</strong> and <strong>VIP</strong> members. Join the club to unlock daily vibe checks!</p>
+                <a href="/club" className="inline-block px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-full font-bold transition-all">
+                    Unlock the Oracle
+                </a>
+            </div>
+        );
+    }
 
     const spinOracle = () => {
         setIsSpinning(true);
