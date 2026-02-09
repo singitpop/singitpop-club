@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 // @ts-ignore
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -79,6 +79,58 @@ export async function getSignedFileUrl(key: string, expiresIn: number = 3600, is
     } catch (err) {
         console.error("Error generating signed file URL:", err);
         return "";
+    }
+}
+
+/**
+ * Robustly find a track key in S3 when the direct path fails.
+ * Searches within albums/{folderName}/ for a title match.
+ */
+export async function findTrackKey(folderName: string, trackTitle: string): Promise<string | null> {
+    try {
+        const bucketName = process.env.AWS_S3_BUCKET || "singitpop-music";
+        const prefix = `albums/${folderName}/`;
+
+        console.log(`[S3-Search] Searching for '${trackTitle}' in '${prefix}'`);
+
+        const command = new ListObjectsV2Command({
+            Bucket: bucketName,
+            Prefix: prefix
+        });
+
+        const response = await s3Client.send(command) as any;
+        const contents = (response.Contents || []) as any[];
+
+        if (contents.length === 0) return null;
+
+        const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const targetNorm = normalize(trackTitle);
+
+        // Filter for audio files
+        const audioFiles = contents.filter((item: any) => {
+            const k = (item.Key || '').toLowerCase();
+            return k.endsWith('.mp3') || k.endsWith('.wav');
+        });
+
+        // 1. Try exact (normalized) match
+        const exactMatch = audioFiles.find((item: any) => {
+            const filename = item.Key!.split('/').pop()!.replace(/\.(mp3|wav)$/i, '');
+            return normalize(filename) === targetNorm;
+        });
+
+        if (exactMatch) return exactMatch.Key!;
+
+        // 2. Try partial match (contains)
+        const partialMatch = audioFiles.find((item: any) => {
+            const filename = item.Key!.split('/').pop()!.replace(/\.(mp3|wav)$/i, '');
+            return normalize(filename).includes(targetNorm) || targetNorm.includes(normalize(filename));
+        });
+
+        return partialMatch ? partialMatch.Key! : null;
+
+    } catch (e) {
+        console.error("[S3-Search] Error:", e);
+        return null;
     }
 }
 

@@ -96,7 +96,11 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                 const res = await fetch('/api/music/sign', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: track.audioUrl })
+                    body: JSON.stringify({
+                        url: track.audioUrl,
+                        title: track.title,
+                        albumId: track.albumId
+                    })
                 });
                 const data = await res.json();
 

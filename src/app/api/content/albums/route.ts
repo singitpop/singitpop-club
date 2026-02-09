@@ -9,14 +9,29 @@ export async function GET() {
         // Sign S3 URLs for cover art
         const signedAlbums = await Promise.all(albums.map(async (album) => {
             let signedCover = album.coverArt;
-            if (album.coverArt && !album.coverArt.startsWith('http') && !album.coverArt.startsWith('/')) {
-                // It's a key, sign it
-                signedCover = await getSignedFileUrl(album.coverArt);
+
+            if (album.coverArt && !album.coverArt.startsWith('http')) {
+                // Strip leading slash if present for S3 key
+                const key = album.coverArt.startsWith('/') ? album.coverArt.substring(1) : album.coverArt;
+
+                if (key.includes('s3.eu-north-1.amazonaws.com')) {
+                    // It's a full S3 URL but without http (unlikely, but safe to handle)
+                    try {
+                        const url = new URL(key.startsWith('http') ? key : `https://${key}`);
+                        const s3Key = url.pathname.substring(1);
+                        signedCover = await getSignedFileUrl(decodeURIComponent(s3Key));
+                    } catch (e) {
+                        signedCover = await getSignedFileUrl(key);
+                    }
+                } else {
+                    // It's a direct key (e.g. albums/artwork/...)
+                    signedCover = await getSignedFileUrl(key);
+                }
             } else if (album.coverArt && album.coverArt.includes('s3.eu-north-1.amazonaws.com')) {
-                // It's a full S3 URL, extract key and sign
+                // It's a full http S3 URL
                 try {
                     const url = new URL(album.coverArt);
-                    const key = url.pathname.substring(1); // remove leading slash
+                    const key = url.pathname.substring(1);
                     signedCover = await getSignedFileUrl(decodeURIComponent(key));
                 } catch (e) {
                     console.warn("Failed to parse S3 URL for signing:", album.coverArt);

@@ -171,8 +171,6 @@ export default function ClubPage() {
             <div className="mt-12">
                 <ReferralCard />
                 <StatsCard />
-                <div className="h-12" />
-                <SongOracle />
             </div>
         </div>
 

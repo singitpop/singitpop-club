@@ -1,22 +1,39 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import { generateSignedUrl } from '@/lib/s3';
+import { generateSignedUrl, findTrackKey, getSignedFileUrl } from '@/lib/s3';
 
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { url, download } = body;
+        const { url, download, title, albumId } = body;
 
-        if (!url) {
-            return NextResponse.json({ error: 'URL is required' }, { status: 400 });
+        // 1. Try direct signing if URL is present
+        if (url) {
+            try {
+                const signedUrl = await generateSignedUrl(url, 3600, download || false);
+                return NextResponse.json({ signedUrl });
+            } catch (err) {
+                console.warn(`[Sign-API] Direct signing failed for ${url}, trying fallback...`);
+            }
         }
 
-        // Use generateSignedUrl which extracts bucket/key from full URL robustly
-        // Pass download flag (default false for streaming)
-        // Set expiry to 1 hour (3600s) for streaming/preview
-        const signedUrl = await generateSignedUrl(url, 3600, download || false);
+        // 2. Fallback: Search S3 dynamically if title and albumId are provided
+        if (title && albumId) {
+            const folderName = albumId.replace(/-20\d\d$/, ''); // Convert ID "album-2026" to "album" folder name
+            const foundKey = await findTrackKey(folderName, title);
 
-        return NextResponse.json({ signedUrl });
+            if (foundKey) {
+                console.log(`[Sign-API] ✅ Found fallback key in S3: ${foundKey}`);
+                const signedUrl = await getSignedFileUrl(foundKey, 3600, download || false);
+                return NextResponse.json({ signedUrl, fallback: true });
+            }
+        }
+
+        if (!url) {
+            return NextResponse.json({ error: 'URL or search metadata is required' }, { status: 400 });
+        }
+
+        return NextResponse.json({ error: 'Failed to sign track' }, { status: 404 });
 
     } catch (error) {
         console.error("Signing Error:", error);
