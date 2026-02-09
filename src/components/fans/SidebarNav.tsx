@@ -16,7 +16,7 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
         { id: 'home', icon: Home, label: 'Hub Home' },
         { id: 'browse', icon: Compass, label: 'Browse' },
         { id: 'radio', icon: Radio, label: 'Radio' },
-        { id: 'my-mixes', icon: User, label: 'My Mixes' },
+        { id: 'my-mixes', icon: User, label: 'My Playlists' },
         { id: 'favorites', icon: Heart, label: 'Fav' },
     ];
 
@@ -54,7 +54,7 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
                 }} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
                     <button className={styles.navItem}>
                         <PlusCircle size={20} color="#FF0080" />
-                        <span style={{ color: '#FF0080', fontWeight: 'bold' }}>Create Mix</span>
+                        <span style={{ color: '#FF0080', fontWeight: 'bold' }}>Create Playlist</span>
                     </button>
                 </div>
             </div>
