@@ -122,34 +122,42 @@ export default function CreatePlaylistPage() {
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                     <div className="space-y-2">
-                        {viewMode === 'albums' ? (
-                            <div
-                                key="albums-title"
-                            >
-                                <Link href="/fan-albums" className="flex items-center gap-2 text-white/40 hover:text-white mb-2 transition-colors text-sm uppercase tracking-widest font-bold">
-                                    <ArrowLeft size={14} /> Back to Hub
-                                </Link>
-                                <h1 className="text-4xl md:text-6xl font-black tracking-tighter bg-gradient-to-r from-white via-white to-white/20 bg-clip-text text-transparent">
-                                    CREATE A MIX
-                                </h1>
-                                <p className="text-white/40 text-lg">Step 1: Choose an album to explore</p>
-                            </div>
-                        ) : (
-                            <div
-                                key="tracks-title"
-                            >
-                                <button
-                                    onClick={() => { setViewMode('albums'); setActiveAlbumId(null); }}
-                                    className="flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-2 transition-colors text-sm uppercase tracking-widest font-bold"
+                        <AnimatePresence mode="wait">
+                            {viewMode === 'albums' ? (
+                                <motion.div
+                                    key="albums-title"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 20 }}
                                 >
-                                    <ArrowLeft size={14} /> Back to Albums
-                                </button>
-                                <h1 className="text-4xl md:text-6xl font-black tracking-tighter">
-                                    {activeAlbum?.title || 'SELECT TRACKS'}
-                                </h1>
-                                <p className="text-white/40 text-lg">Step 2: Pick your favorite tracks</p>
-                            </div>
-                        )}
+                                    <Link href="/fan-albums" className="flex items-center gap-2 text-white/40 hover:text-white mb-2 transition-colors text-sm uppercase tracking-widest font-bold">
+                                        <ArrowLeft size={14} /> Back to Hub
+                                    </Link>
+                                    <h1 className="text-4xl md:text-6xl font-black tracking-tighter bg-gradient-to-r from-white via-white to-white/20 bg-clip-text text-transparent">
+                                        CREATE A MIX
+                                    </h1>
+                                    <p className="text-white/40 text-lg">Step 1: Choose an album to explore</p>
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="tracks-title"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 20 }}
+                                >
+                                    <button
+                                        onClick={() => { setViewMode('albums'); setActiveAlbumId(null); }}
+                                        className="flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-2 transition-colors text-sm uppercase tracking-widest font-bold"
+                                    >
+                                        <ArrowLeft size={14} /> Back to Albums
+                                    </button>
+                                    <h1 className="text-4xl md:text-6xl font-black tracking-tighter">
+                                        {activeAlbum?.title || 'SELECT TRACKS'}
+                                    </h1>
+                                    <p className="text-white/40 text-lg">Step 2: Pick your favorite tracks</p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
                     <div className="flex flex-col gap-4 w-full md:w-auto">
@@ -234,8 +242,8 @@ export default function CreatePlaylistPage() {
                                                 key={uniqueId}
                                                 onClick={() => toggleTrack(uniqueId)}
                                                 className={`group flex items-center gap-6 p-4 md:p-6 rounded-[2rem] cursor-pointer border transition-all ${isSelected
-                                                    ? 'bg-purple-600/10 border-purple-500 shadow-inner shadow-purple-500/5'
-                                                    : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
+                                                        ? 'bg-purple-600/10 border-purple-500 shadow-inner shadow-purple-500/5'
+                                                        : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
                                                     }`}
                                             >
                                                 <div className="flex-shrink-0 w-8 text-white/20 font-mono text-sm group-hover:text-purple-400 transition-colors">
