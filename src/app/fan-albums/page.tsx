@@ -624,7 +624,7 @@ export default function CommunityHubPage() {
                                         <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
                                     </div>
                                     <div>
-                                        <p style={{ fontWeight: 'bold' }}>Playing Mix</p>
+                                        <p style={{ fontWeight: 'bold' }}>Playing Playlist</p>
                                         <p style={{ fontSize: '0.8rem', color: '#888' }}>{isPlaying ? 'Playing' : 'Paused'}</p>
                                     </div>
                                 </>

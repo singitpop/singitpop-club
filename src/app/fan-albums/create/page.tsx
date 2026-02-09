@@ -134,7 +134,7 @@ export default function CreatePlaylistPage() {
                                         <ArrowLeft size={14} /> Back to Hub
                                     </Link>
                                     <h1 className="text-4xl md:text-6xl font-black tracking-tighter bg-gradient-to-r from-white via-white to-white/20 bg-clip-text text-transparent">
-                                        CREATE A MIX
+                                        CREATE A PLAYLIST
                                     </h1>
                                     <p className="text-white/40 text-lg">Step 1: Choose an album to explore</p>
                                 </motion.div>
@@ -154,7 +154,7 @@ export default function CreatePlaylistPage() {
                                     <h1 className="text-4xl md:text-6xl font-black tracking-tighter">
                                         {activeAlbum?.title || 'SELECT TRACKS'}
                                     </h1>
-                                    <p className="text-white/40 text-lg">Step 2: Pick your favorite tracks</p>
+                                    <p className="text-white/40 text-lg">Step 2: Pick your favorite tracks for your playlist</p>
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -225,7 +225,7 @@ export default function CreatePlaylistPage() {
                                     </div>
                                     <div className="hidden lg:block space-y-4 sticky top-[calc(32px+33vw+32px)]">
                                         <h2 className="text-2xl font-bold">{activeAlbum?.title}</h2>
-                                        <p className="text-white/40 leading-relaxed text-sm">{activeAlbum?.description || `Select tracks from ${activeAlbum?.title} to add them to your mix.`}</p>
+                                        <p className="text-white/40 leading-relaxed text-sm">{activeAlbum?.description || `Select tracks from ${activeAlbum?.title} to add them to your playlist.`}</p>
                                     </div>
                                 </div>
 
@@ -242,8 +242,8 @@ export default function CreatePlaylistPage() {
                                                 key={uniqueId}
                                                 onClick={() => toggleTrack(uniqueId)}
                                                 className={`group flex items-center gap-6 p-4 md:p-6 rounded-[2rem] cursor-pointer border transition-all ${isSelected
-                                                        ? 'bg-purple-600/10 border-purple-500 shadow-inner shadow-purple-500/5'
-                                                        : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
+                                                    ? 'bg-purple-600/10 border-purple-500 shadow-inner shadow-purple-500/5'
+                                                    : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
                                                     }`}
                                             >
                                                 <div className="flex-shrink-0 w-8 text-white/20 font-mono text-sm group-hover:text-purple-400 transition-colors">
@@ -289,8 +289,8 @@ export default function CreatePlaylistPage() {
                                     <span className="text-[10px] uppercase font-black tracking-widest opacity-60">Tracks</span>
                                 </div>
                                 <div className="hidden sm:block">
-                                    <h3 className="font-bold text-white mb-1">Your Mix Selection</h3>
-                                    <p className="text-xs text-white/40 uppercase tracking-widest font-black">20 max per mix</p>
+                                    <h3 className="font-bold text-white mb-1">Your Playlist Selection</h3>
+                                    <p className="text-xs text-white/40 uppercase tracking-widest font-black">20 max per playlist</p>
                                 </div>
                             </div>
 
@@ -332,7 +332,7 @@ export default function CreatePlaylistPage() {
                                     disabled={isSubmitting || !title.trim()}
                                     className="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 disabled:opacity-50 disabled:grayscale text-white px-10 py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-purple-600/20"
                                 >
-                                    {isSubmitting ? <><div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> Publishing...</> : <><Save size={20} /> Publish Mix</>}
+                                    {isSubmitting ? <><div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> Publishing...</> : <><Save size={20} /> Publish Playlist</>}
                                 </button>
                                 <button
                                     onClick={() => setSelectedTracks([])}

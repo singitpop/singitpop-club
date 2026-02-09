@@ -380,7 +380,7 @@ function MusicContent() {
                                     className="secondary-button"
                                     style={{ fontSize: '0.9rem', padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.2)', color: 'white' }}
                                     onClick={() => {
-                                        const title = prompt("Name your Mixtape for the Community:");
+                                        const title = prompt("Name your Playlist for the Community:");
                                         if (!title) return;
 
                                         fetch('/api/community/playlist', {
@@ -392,7 +392,7 @@ function MusicContent() {
                                             })
                                         }).then(res => res.json()).then(data => {
                                             if (data.success) {
-                                                alert("Mixtape shared to Community Hub!");
+                                                alert("Playlist shared to Community Hub!");
                                                 router.push('/fan-albums');
                                             } else {
                                                 alert("Failed to share: " + (data.error || "Unknown error"));

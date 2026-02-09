@@ -165,7 +165,7 @@ export default function FanLeaderboard({ playlists, currentUserId, currentUserNa
                         <div className={styles.rank}>{fan.rank}</div>
                         <div className={styles.info}>
                             <div className={styles.name}>{fan.name}</div>
-                            <div className={styles.details}>{fan.mixes} Mixes • {fan.likes} Likes</div>
+                            <div className={styles.details}>{fan.mixes} Playlists • {fan.likes} Likes</div>
                         </div>
                         <div className={styles.score}>{fan.score} pts</div>
                     </div>

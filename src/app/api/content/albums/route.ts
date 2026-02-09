@@ -13,7 +13,8 @@ export async function GET() {
             // Fix for inconsistent album art paths in data file
             // Data file points to /albums/artwork/ but files are actually in albums/{folderPath}/cover.png
             if (album.folderPath) {
-                const correctedKey = `albums/${album.folderPath}/cover.png`;
+                const filename = album.coverImageName || 'cover.png';
+                const correctedKey = `albums/${album.folderPath}/${filename}`;
                 signedCover = await getSignedFileUrl(correctedKey);
             } else if (album.coverArt && !album.coverArt.startsWith('http')) {
                 // ... legacy/fallback logic ...
