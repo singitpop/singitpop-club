@@ -37,7 +37,9 @@ export default function ReferralCard() {
                 </div>
                 <div>
                     <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>Invite Friends</h3>
-                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#aaa' }}>Earn rewards for every signup</p>
+                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#aaa' }}>
+                        Climb the Leaderboard & earn the title of <strong>Fan of the Month</strong>!
+                    </p>
                 </div>
             </div>
 

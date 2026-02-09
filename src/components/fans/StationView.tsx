@@ -90,9 +90,15 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
     useEffect(() => {
         if (currentTrack && isPlaying) {
             console.log("📊 Logging play for:", currentTrack.title);
-            logPlay(currentTrack);
+            // Ensure we have a valid ID for logging, fallback to title if needed for radio
+            const trackToLog = {
+                ...currentTrack,
+                id: currentTrack.id || currentTrack.title, // Fallback ID
+                uniqueId: currentTrack.uniqueId || `${Date.now()}-${currentTrack.title}`
+            };
+            logPlay(trackToLog);
         }
-    }, [currentTrack?.uniqueId, isPlaying]);
+    }, [currentTrack?.title, isPlaying]); // Depend on title to catch changes even if ID is same
 
     useEffect(() => {
         const interval = setInterval(() => {

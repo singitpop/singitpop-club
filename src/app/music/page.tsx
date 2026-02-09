@@ -107,27 +107,51 @@ function MusicContent() {
     // Auto-Add Track Logic (Wait for albums to load)
     useEffect(() => {
         const trackTitleToAdd = searchParams?.get('addTrack');
-        if (trackTitleToAdd && albums.length > 0) {
-            // Find the track
-            const allTracks = albums.flatMap(a => a.tracks);
-            const foundTrack = allTracks.find(t => t.title.toLowerCase() === trackTitleToAdd.toLowerCase());
+        const trackIdToPlay = searchParams?.get('track');
 
-            if (foundTrack) {
-                const uniqueId = foundTrack.albumId ? `${foundTrack.albumId}-${foundTrack.id}` : String(foundTrack.id);
-                setSelectedTracks(prev => {
-                    if (!prev.includes(uniqueId)) {
-                        if (prev.length >= 12) {
-                            alert("Mixtape is full!");
-                            return prev;
+        if ((trackTitleToAdd || trackIdToPlay) && albums.length > 0) {
+            const allTracks = albums.flatMap(a => a.tracks.map(t => ({ ...t, albumId: a.id })));
+
+            // Handle ?track=albumId-trackId (Oracle)
+            if (trackIdToPlay) {
+                const parts = trackIdToPlay.split('-');
+                if (parts.length >= 2) {
+                    const tId = parts[parts.length - 1];
+                    const found = allTracks.find(t => String(t.id) === tId);
+                    if (found) {
+                        // Scroll to track
+                        const el = document.getElementById(`track-${found.id}`);
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        // Highlight/Select album if needed
+                        if (found.albumId && found.albumId !== selectedAlbumId) {
+                            setSelectedAlbumId(found.albumId);
+                            setFilterMode('album');
                         }
-                        return [...prev, uniqueId];
                     }
-                    return prev;
-                });
-                // Clear param
-                const newParams = new URLSearchParams(searchParams?.toString() || '');
-                newParams.delete('addTrack');
-                router.replace(`/music?${newParams.toString()}`, { scroll: false });
+                }
+            }
+
+            // Handle ?addTrack=Title (Mixtape)
+            if (trackTitleToAdd) {
+                const foundTrack = allTracks.find(t => t.title.toLowerCase() === trackTitleToAdd.toLowerCase());
+
+                if (foundTrack) {
+                    const uniqueId = foundTrack.albumId ? `${foundTrack.albumId}-${foundTrack.id}` : String(foundTrack.id);
+                    setSelectedTracks(prev => {
+                        if (!prev.includes(uniqueId)) {
+                            if (prev.length >= 12) {
+                                alert("Mixtape is full!");
+                                return prev;
+                            }
+                            return [...prev, uniqueId];
+                        }
+                        return prev;
+                    });
+                    // Clear param
+                    const newParams = new URLSearchParams(searchParams?.toString() || '');
+                    newParams.delete('addTrack');
+                    router.replace(`/music?${newParams.toString()}`, { scroll: false });
+                }
             }
         }
     }, [searchParams, router, albums]);

@@ -1,7 +1,7 @@
 "use client";
 
 import { Crown, Trophy, Medal, Star, TrendingUp } from 'lucide-react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import styles from './FanLeaderboard.module.css';
 
 interface FanLeaderboardProps {
@@ -11,12 +11,26 @@ interface FanLeaderboardProps {
 }
 
 export default function FanLeaderboard({ playlists, currentUserId, currentUserName }: FanLeaderboardProps) {
+    // State for Timeframe
+    const [timeframe, setTimeframe] = useState<'all' | 'month'>('month');
+
     // Calculate Top Fans based on actual activity
     const leaderboardData = useMemo(() => {
         const stats: Record<string, { mixes: number, likes: number, userId: string, name: string }> = {};
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
 
         // 1. Process Playlists
         playlists.forEach(p => {
+            // Filter if monthly
+            if (timeframe === 'month') {
+                const created = new Date(p.createdAt || 0);
+                if (created.getMonth() !== currentMonth || created.getFullYear() !== currentYear) {
+                    return; // Skip old playlists
+                }
+            }
+
             const userId = p.userId || "anonymous";
             const userName = p.creator || "Anonymous Fan";
 
@@ -43,7 +57,7 @@ export default function FanLeaderboard({ playlists, currentUserId, currentUserNa
             // Score Formula: (Mixes * 50) + (Likes * 10)
             const score = (data.mixes * 50) + (data.likes * 10);
 
-            // Assign Avatar based on score tier
+            // Assign Avatar based on rank later, or score tiers
             let avatar = "👤";
             if (score > 500) avatar = "👑";
             else if (score > 200) avatar = "🔥";
@@ -61,20 +75,49 @@ export default function FanLeaderboard({ playlists, currentUserId, currentUserNa
             rank: index + 1
         }));
 
-    }, [playlists, currentUserId, currentUserName]);
+    }, [playlists, currentUserId, currentUserName, timeframe]);
 
     const top3 = leaderboardData.slice(0, 3);
     const rest = leaderboardData.slice(3, 8); // Show next 5
     const currentUserStats = currentUserId ? leaderboardData.find(f => f.userId === currentUserId) : null;
     const isUserInTop8 = currentUserStats && currentUserStats.rank <= 8;
 
-    if (leaderboardData.length === 0) return null;
-
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <h3><Trophy size={16} className="text-yellow-500" /> Top Superfans</h3>
-                <span className={styles.week}>All Time</span>
+                <div className={styles.toggles} style={{ display: 'flex', gap: '8px', background: 'rgba(255,255,255,0.1)', padding: '2px', borderRadius: '12px' }}>
+                    <button
+                        onClick={() => setTimeframe('month')}
+                        style={{
+                            background: timeframe === 'month' ? 'rgba(255,255,255,0.2)' : 'transparent',
+                            color: timeframe === 'month' ? 'white' : '#aaa',
+                            border: 'none',
+                            padding: '4px 8px',
+                            borderRadius: '10px',
+                            fontSize: '0.75rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s'
+                        }}
+                    >
+                        This Month
+                    </button>
+                    <button
+                        onClick={() => setTimeframe('all')}
+                        style={{
+                            background: timeframe === 'all' ? 'rgba(255,255,255,0.2)' : 'transparent',
+                            color: timeframe === 'all' ? 'white' : '#aaa',
+                            border: 'none',
+                            padding: '4px 8px',
+                            borderRadius: '10px',
+                            fontSize: '0.75rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s'
+                        }}
+                    >
+                        All Time
+                    </button>
+                </div>
             </div>
 
             {/* PODIUM SECTION */}
@@ -88,13 +131,17 @@ export default function FanLeaderboard({ playlists, currentUserId, currentUserNa
                     </div>
                 )}
 
-                {top3[0] && (
+                {top3[0] ? (
                     <div className={`${styles.podiumPlace} ${styles.firstPlace}`}>
                         <div className={styles.crown}><Crown size={24} fill="#FFD700" color="#B8860B" /></div>
                         <div className={styles.avatarLarge}>{top3[0].avatar}</div>
                         <div className={styles.podiumRank}>1</div>
                         <div className={styles.podiumName}>{top3[0].name}</div>
                         <div className={styles.podiumScore}>{top3[0].score} pts</div>
+                    </div>
+                ) : (
+                    <div className="text-center py-8 text-white/40 italic w-full">
+                        No champions yet this month.<br />Create a mix to claim #1!
                     </div>
                 )}
 
@@ -128,7 +175,7 @@ export default function FanLeaderboard({ playlists, currentUserId, currentUserNa
             {/* STICKY FOOTER (If user not visible) */}
             {currentUserStats && !isUserInTop8 && (
                 <div className={styles.stickyFooter}>
-                    <div className={styles.stickyLabel}>Your Rank</div>
+                    <div className={styles.stickyLabel}>Your Rank {timeframe === 'month' ? '(This Month)' : ''}</div>
                     <div className={styles.stickyRow}>
                         <div className={styles.rank}>{currentUserStats.rank}</div>
                         <div className={styles.info}>
