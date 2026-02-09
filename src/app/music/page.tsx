@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { TrendingUp, Star, Clock, Grid, Crown } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import SongList from '@/components/music/SongList';
+import SongOracle from '@/components/fans/SongOracle';
 import AlbumOverlay from '@/components/music/AlbumOverlay';
 import Charts from '@/components/music/Charts';
 import styles from './page.module.css';
@@ -97,6 +98,7 @@ function MusicContent() {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [isVipOverlayOpen, setIsVipOverlayOpen] = useState(false);
     const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
+    const [autoPlayTrackId, setAutoPlayTrackId] = useState<string | null>(null);
 
     // derive VIP albums
     const vipAlbums = useMemo(() => {
@@ -320,6 +322,16 @@ function MusicContent() {
                     )}
                 </div>
 
+                <div className="max-w-2xl mx-auto w-full mt-8">
+                    <SongOracle
+                        compact
+                        onPlay={(track) => {
+                            const uid = track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
+                            setAutoPlayTrackId(uid);
+                        }}
+                    />
+                </div>
+
                 {/* Top Mixtape CTA - Only for Free Users (Insiders use Floating Box) */}
                 {selectedTracks.length > 0 && (
                     <div style={{
@@ -456,6 +468,7 @@ function MusicContent() {
                         selectedTracks={selectedTracks}
                         onToggleSelection={handleToggleSelection}
                         latestSingleUid={latestSingleUid}
+                        autoPlayTrackId={autoPlayTrackId}
                     />
                 </div>
 

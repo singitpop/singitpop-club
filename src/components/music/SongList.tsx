@@ -14,6 +14,7 @@ interface SongListProps {
     selectedTracks: string[];
     onToggleSelection: (id: string) => void;
     latestSingleUid?: string | null;
+    autoPlayTrackId?: string | null;
 }
 
 const MAX_MIXTAPE_TRACKS = 12;
@@ -21,7 +22,7 @@ const MAX_MIXTAPE_TRACKS = 12;
 // Helper to generate unique ID
 const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
 
-export default function SongList({ tracks, albums, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid }: SongListProps) {
+export default function SongList({ tracks, albums, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid, autoPlayTrackId }: SongListProps) {
     const { isPro, isInsider, isLabel, user, hasTrackAccess } = useAuth();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -148,6 +149,19 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         // Update ref for next comparison
         prevFilterModeRef.current = filterMode;
     }, [filterMode]);
+
+    // Handle Auto-Play from Props
+    useEffect(() => {
+        if (autoPlayTrackId) {
+            const track = tracks.find(t => getUniqueId(t) === autoPlayTrackId);
+            if (track) {
+                handlePlay(track);
+                // Scroll to it
+                const el = document.getElementById(`track-${track.id}`);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }, [autoPlayTrackId, tracks]);
 
     useEffect(() => {
         if (activeTrackId && audioRef.current && currentSignedUrl) {
@@ -369,6 +383,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                         return (
                             <div
                                 key={uniqueId}
+                                id={`track-${track.id}`}
                                 className={`${styles.row} ${isCurrentTrack ? styles.active : ''} ${isLocked ? styles.locked : ''}`}
                                 onClick={() => !isLocked && handlePlay(track)}
                                 style={{

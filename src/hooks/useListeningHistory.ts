@@ -17,15 +17,29 @@ export function useListeningHistory() {
     const [history, setHistory] = useState<PlayedTrack[]>([]);
     // Load from local storage
     useEffect(() => {
-        try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                const parsed = JSON.parse(stored);
-                setHistory(parsed);
+        const loadHistory = () => {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    setHistory(parsed);
+                }
+            } catch (e) {
+                console.error("Failed to load history", e);
             }
-        } catch (e) {
-            console.error("Failed to load history", e);
-        }
+        };
+
+        loadHistory();
+
+        // Listen for changes from other tabs/instances
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === STORAGE_KEY) {
+                loadHistory();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
 
     // Derived State
