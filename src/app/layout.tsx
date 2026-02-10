@@ -69,6 +69,10 @@ export const metadata: Metadata = {
     },
 };
 
+import VisitorTracker from '@/components/analytics/VisitorTracker';
+
+// ... (existing imports)
+
 export default function RootLayout({
     children,
 }: {
@@ -79,6 +83,7 @@ export default function RootLayout({
             <html lang="en" suppressHydrationWarning>
                 <body suppressHydrationWarning={true}>
                     <AuthProvider>
+                        <VisitorTracker />
                         <SkipLink />
                         <Header />
                         <main id="main-content" style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>

@@ -9,9 +9,10 @@ import { motion } from 'framer-motion';
 interface AnalyticsChartsProps {
     userData: any[];
     playlistData: any[];
+    visitData: Record<string, number>;
 }
 
-export default function AnalyticsCharts({ userData, playlistData }: AnalyticsChartsProps) {
+export default function AnalyticsCharts({ userData, playlistData, visitData }: AnalyticsChartsProps) {
 
     // Process Data for Charts
     // 1. Signups over time (last 7 days or grouped by date)
@@ -26,8 +27,52 @@ export default function AnalyticsCharts({ userData, playlistData }: AnalyticsCha
         signups: signupsByDate[date]
     })).slice(-7); // Last 7 entries
 
+    // 2. Visits Data
+    const visitChartData = Object.entries(visitData || {})
+        .map(([date, count]) => ({ date, count }))
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .slice(-14); // Last 14 days
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+
+            {/* Visitor Traffic Chart (New) */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white/5 border border-white/10 rounded-2xl p-6 lg:col-span-2"
+            >
+                <div className="flex justify-between items-end mb-6">
+                    <div>
+                        <h3 className="text-xl font-bold">Visitor Traffic</h3>
+                        <p className="text-white/40 text-sm">Unique sessions (S3 Analytics)</p>
+                    </div>
+                    <div className="text-3xl font-bold text-green-400">
+                        {visitChartData.reduce((acc, curr) => acc + curr.count, 0)}
+                        <span className="text-sm text-white/40 block font-normal">Last 14 Days</span>
+                    </div>
+                </div>
+                <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={visitChartData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
+                            <XAxis
+                                dataKey="date"
+                                stroke="#666"
+                                tick={{ fontSize: 12 }}
+                                tickFormatter={(val) => new Date(val).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                            />
+                            <YAxis stroke="#666" />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: '#111', border: '1px solid #333' }}
+                                itemStyle={{ color: '#4ade80' }}
+                                cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                            />
+                            <Bar dataKey="count" fill="#4ade80" radius={[4, 4, 0, 0]} name="Visitors" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            </motion.div>
 
             {/* Signups Chart */}
             <motion.div

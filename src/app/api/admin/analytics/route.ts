@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth, clerkClient } from '@clerk/nextjs/server';
 import { getCommunityPlaylists } from '@/lib/community-s3';
+import { getDailyVisits } from '@/lib/analytics-s3';
 
 export async function GET(req: Request) {
     try {
@@ -20,9 +21,13 @@ export async function GET(req: Request) {
         // 2. Fetch Playlists
         const playlists = await getCommunityPlaylists(100);
 
+        // 3. Fetch Visitor Stats (S3)
+        const visits = await getDailyVisits();
+
         return NextResponse.json({
             users: userList.data,
-            playlists: playlists
+            playlists: playlists,
+            visits: visits
         });
 
     } catch (error) {
