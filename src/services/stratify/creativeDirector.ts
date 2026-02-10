@@ -85,10 +85,20 @@ export const CreativeDirector = {
                 const isWide = i === 0 || i === lines.length - 1; // Start/End on Wide
                 const cameraMove = CAMERA_MOVES[Math.floor(Math.random() * CAMERA_MOVES.length)];
 
-                // Construct Action Prompt
-                const actionBase = isHighEnergy
-                    ? ACTIONS.performance[Math.floor(Math.random() * ACTIONS.performance.length)]
-                    : ACTIONS.narrative[Math.floor(Math.random() * ACTIONS.narrative.length)];
+                // Construct Action Prompt (Avoid Repeats)
+                const actionList = isHighEnergy ? ACTIONS.performance : ACTIONS.narrative;
+                let actionBase = actionList[Math.floor(Math.random() * actionList.length)];
+
+                // Simple retry if it matches the last one (we can store lastAction in a closure or verify against previous shot)
+                if (scene.shots.length > 0) {
+                    const lastShot = scene.shots[scene.shots.length - 1];
+                    // This is a naive check against the full string, but sufficient since we construct it plainly
+                    if (lastShot.action.includes(actionBase)) {
+                        // Pick a different one
+                        const filtered = actionList.filter(a => a !== actionBase);
+                        actionBase = filtered[Math.floor(Math.random() * filtered.length)];
+                    }
+                }
 
                 scene.shots.push({
                     shotId: uuidv4(),

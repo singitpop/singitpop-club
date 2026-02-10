@@ -92,17 +92,45 @@ export const CAMERA_MOVES = [
 
 export const ACTIONS = {
     performance: [
-        "passionate singing into vintage mic",
-        "energetic dancing with backup dancers",
-        "walking towards camera with swagger",
-        "emotional close-up looking at lens",
-        "headbanging/playing instrument aggressively"
+        "passionate singing into vintage mic with eyes closed",
+        "energetic dancing with backup dancers in synchronization",
+        "walking towards camera with swagger and confidence",
+        "emotional close-up looking directly into the lens",
+        "headbanging or playing instrument aggressively",
+        "sitting on a stool with acoustic guitar, intimate vibe",
+        "standing back-to-back with bandmate, playing solo",
+        "jumping in slow motion while performing",
+        "interacting with the crowd/camera, pointing fingers",
+        "silhouetted performance against bright backlight",
+        "lying on the floor singing upwards",
+        "leaning against a wall, cool and detached performance",
+        "walking away from camera while singing over shoulder",
+        "surrounded by fans/extras, chaotic energy",
+        "singing in the rain/water, dramatic performance",
+        "stylized posing with mic stand",
+        "playing piano/keyboard with intense focus",
+        "dynamic movement following the camera operator"
     ],
     narrative: [
-        "looking out window continuously",
-        "running through the location",
-        "driving a vintage car",
+        "looking out window continuously at the rain",
+        "running through the location as if chased",
+        "driving a vintage car down an empty road",
         "standing still while world moves fast (timelapse)",
-        "breaking something in slow motion"
+        "breaking a mirror or object in slow motion",
+        "walking alone through a crowded street",
+        "sitting at a table waiting for someone who never comes",
+        "writing a letter and then burning it",
+        "wandering through a forest looking lost",
+        "staring at a phone screen with a worried expression",
+        "laughing hysterically but with sad eyes",
+        "falling backwards onto a bed/surface",
+        "looking at an old photograph with nostalgia",
+        "running hand along a textured wall/surface",
+        "waking up suddenly from a dream",
+        "watching a sunset/sunrise with contemplation",
+        "arguing with an unseen partner (silent acting)",
+        "getting ready/dressing up in front of a mirror",
+        "walking into the ocean/water fully clothed",
+        "dancing alone in an empty room"
     ]
 };
