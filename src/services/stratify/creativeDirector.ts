@@ -1,7 +1,7 @@
 
 import { StratifyProject, Scene, Shot, LyricSection, Location, Character } from "@/types/stratify";
 import { v4 as uuidv4 } from 'uuid';
-import { LOCATIONS, LIGHTING_STYLES, CAMERA_MOVES, ACTIONS } from "./data/lexicon";
+import { LOCATIONS, LIGHTING_STYLES, CAMERA_MOVES, ACTIONS, KEYWORD_MAPPINGS } from "./data/lexicon";
 
 export const CreativeDirector = {
     /**
