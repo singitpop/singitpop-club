@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { StratifyProject } from "@/types/stratify";
 import { StratifyAI } from "@/services/stratify/stratifyAI";
 import ProjectSetup from "./ProjectSetup";
@@ -108,10 +108,10 @@ export default function DirectorWizard() {
                         <div
                             key={step}
                             className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${idx === currentStep
-                                    ? "bg-white/10 text-white"
-                                    : idx < currentStep
-                                        ? "text-white/40"
-                                        : "text-white/20"
+                                ? "bg-white/10 text-white"
+                                : idx < currentStep
+                                    ? "text-white/40"
+                                    : "text-white/20"
                                 }`}
                         >
                             <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] border ${idx === currentStep ? "border-violet-500 text-violet-400" : "border-white/10"
