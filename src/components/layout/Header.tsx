@@ -17,7 +17,7 @@ const navItems = [
   { name: 'Music', href: '/music' },
   { name: 'FanZone', href: '/fan-albums' },
   { name: 'Projects', href: '/projects' },
-  // { name: 'For Artists', href: '/releasio' }, // Hidden for now
+
 ];
 
 export default function Header() {

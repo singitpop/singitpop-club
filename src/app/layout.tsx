@@ -3,7 +3,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AuthProvider } from '@/context/AuthContext';
-import { BrandProvider } from '@/context/BrandContext';
+
 import MobileNav from '@/components/layout/MobileNav';
 import CookieConsent from '@/components/legal/CookieConsent';
 import SkipLink from '@/components/layout/SkipLink';
@@ -30,10 +30,8 @@ export default function RootLayout({
                         <SkipLink />
                         <Header />
                         <main id="main-content" style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
-                            <BrandProvider>
-                                {children}
-                                <MobileNav />
-                            </BrandProvider>
+                            {children}
+                            <MobileNav />
                         </main>
                         <Footer />
                         <CookieConsent />
