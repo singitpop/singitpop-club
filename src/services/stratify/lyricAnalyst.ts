@@ -1,15 +1,9 @@
 
-import { LyricSection, EmotionArcPoint, TimeRange } from "@/types/stratify";
+import { LyricSection, EmotionArcPoint } from "@/types/stratify";
 import { v4 as uuidv4 } from 'uuid';
+import { LOCATIONS, LIGHTING_STYLES } from "./data/lexicon";
 
-// Mock Sentiment Dictionary (In real app, use an NLP model or LLM)
-const SENTIMENT_KEYWORDS = {
-    romance: ["love", "heart", "kiss", "forever", "baby", "hold"],
-    energy: ["dance", "party", "run", "fast", "fire", "burn"],
-    melancholy: ["sad", "cry", "lonely", "tears", "gone", "miss"],
-    dark: ["night", "blood", "kill", "dark", "shadow", "fear"],
-    dreamy: ["sky", "cloud", "dream", "star", "fly", "float"]
-};
+
 
 export const LyricAnalyst = {
     /**
@@ -30,7 +24,7 @@ export const LyricAnalyst = {
             // Detect Section Headers
             if (lower.match(/^\[?(chorus|hook)/)) {
                 if (currentLines.length > 0) {
-                    sections.push(createSection(currentSectionType, currentLines, startLineIndex, bpm));
+                    sections.push(createSection(currentSectionType, currentLines, startLineIndex));
                     currentLines = [];
                 }
                 currentSectionType = 'chorus';
@@ -39,7 +33,7 @@ export const LyricAnalyst = {
             }
             if (lower.match(/^\[?(verse)/)) {
                 if (currentLines.length > 0) {
-                    sections.push(createSection(currentSectionType, currentLines, startLineIndex, bpm));
+                    sections.push(createSection(currentSectionType, currentLines, startLineIndex));
                     currentLines = [];
                 }
                 currentSectionType = 'verse';
@@ -48,7 +42,7 @@ export const LyricAnalyst = {
             }
             if (lower.match(/^\[?(bridge)/)) {
                 if (currentLines.length > 0) {
-                    sections.push(createSection(currentSectionType, currentLines, startLineIndex, bpm));
+                    sections.push(createSection(currentSectionType, currentLines, startLineIndex));
                     currentLines = [];
                 }
                 currentSectionType = 'bridge';
@@ -56,7 +50,7 @@ export const LyricAnalyst = {
                 return;
             }
 
-            // If it's just a bracketed header we missed
+            // Shield against simple brackets
             if (line.startsWith('[') && line.endsWith(']')) return;
 
             currentLines.push(line);
@@ -64,7 +58,7 @@ export const LyricAnalyst = {
 
         // Push final section
         if (currentLines.length > 0) {
-            sections.push(createSection(currentSectionType, currentLines, startLineIndex, bpm));
+            sections.push(createSection(currentSectionType, currentLines, startLineIndex));
         }
 
         return sections;
@@ -75,17 +69,16 @@ export const LyricAnalyst = {
         if (lower.includes("truck") && lower.includes("beer")) return "Country";
         if (lower.includes("love") && lower.includes("baby")) return "Pop";
         if (lower.includes("dark") && lower.includes("night")) return "Alternative";
+        if (lower.includes("flow") && lower.includes("money")) return "Hip Hop";
         return "Pop";
     }
 };
 
-function createSection(type: LyricSection['type'], lines: string[], startLine: number, bpm: number): LyricSection {
+function createSection(type: LyricSection['type'], lines: string[], startLine: number): LyricSection {
     const text = lines.join('\n');
-    const moodScore = analyzeSentiment(text);
+    const moodScore = analyzeVisualSentiment(text);
 
-    // Estimate Duration: Average 3 seconds per line? Or use BPM.
-    // At 120 BPM, a measure is 2s. A line is often 2-4 measures (4-8s).
-    // Let's est 4 seconds per line.
+    // Estimate Duration (approx 4s per line)
     const duration = lines.length * 4;
 
     return {
@@ -96,32 +89,56 @@ function createSection(type: LyricSection['type'], lines: string[], startLine: n
         text,
         emotion: moodScore,
         timeRange: {
-            startSec: 0, // Placeholder, needs sequential calc
+            startSec: 0,
             endSec: duration
         }
     };
 }
 
-function analyzeSentiment(text: string): EmotionArcPoint {
-    const lower = text.toLowerCase();
-    const scores: Record<string, number> = { romance: 0, energy: 0, melancholy: 0, dark: 0, dreamy: 0 };
+import { KEYWORD_MAPPINGS } from "./data/lexicon";
 
-    Object.entries(SENTIMENT_KEYWORDS).forEach(([key, words]) => {
-        words.forEach(w => {
-            if (lower.includes(w)) scores[key]++;
+function analyzeVisualSentiment(text: string): EmotionArcPoint {
+    const lower = text.toLowerCase();
+
+    // Scoring
+    const scores: Record<string, number> = {};
+    let maxScore = 0;
+    let dominantCategory = "cinematic"; // Default
+
+    Object.entries(KEYWORD_MAPPINGS).forEach(([category, data]) => {
+        let score = 0;
+        data.keywords.forEach(k => {
+            // Regex for whole word match to avoid "light" matching "flight"
+            const regex = new RegExp(`\\b${k}\\b`, 'i');
+            if (regex.test(lower)) score += 1;
+            // Also partial matches for flexibility? Maybe just stick to regex for now.
+            else if (lower.includes(k)) score += 0.5;
         });
+        scores[category] = score;
+        if (score > maxScore) {
+            maxScore = score;
+            dominantCategory = category;
+        }
     });
 
-    // Determine dominant mood labels
-    const labels = Object.entries(scores)
-        .filter(([_, score]) => score > 0)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 2)
-        .map(([k]) => k);
+    // Default Vibe
+    let labels: string[] = ["Cinematic"];
+    let lighting = "Cinematic Teal & Orange"; // Default
+    let intensity = 0.5;
+
+    if (maxScore > 0) {
+        // @ts-ignore
+        const match = KEYWORD_MAPPINGS[dominantCategory];
+        labels = [match.vibe];
+        lighting = match.lighting;
+        intensity = Math.min(1, maxScore * 0.3); // Cap at 1
+    }
 
     return {
-        valence: labels.includes('melancholy') || labels.includes('dark') ? -0.5 : 0.5,
-        arousal: labels.includes('energy') ? 0.8 : 0.4,
-        labels
+        valence: 0.5,
+        arousal: intensity,
+        labels,
+        // We're pivoting 'intensity' to store our suggest lighting style key for now
+        intensity // This will be passed to CreativeDirector
     };
 }

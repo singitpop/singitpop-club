@@ -63,18 +63,19 @@ export default function StoryboardEditor({ project, updateProject, onNext, onBac
                             key={scene.sceneId}
                             onClick={() => setSelectedSceneId(scene.sceneId)}
                             className={`w-full text-left p-3 rounded-lg border transition-all ${selectedSceneId === scene.sceneId
-                                    ? "bg-yellow-500/20 border-yellow-500/50 text-white"
-                                    : "bg-black/20 border-transparent text-white/60 hover:bg-white/5"
+                                ? "bg-yellow-500/20 border-yellow-500/50 text-white"
+                                : "bg-black/20 border-transparent text-white/60 hover:bg-white/5"
                                 }`}
                         >
+                            {/* Scene List Sidebar Item */}
                             <div className="flex justify-between items-start mb-1">
                                 <span className="text-xs font-bold uppercase tracking-wider opacity-70">Scene {idx + 1}</span>
                                 <span className="text-[10px] bg-black/40 px-1.5 rounded">{scene.shots.length} shots</span>
                             </div>
-                            <h3 className="font-semibold truncate">{scene.title}</h3>
+                            <h3 className="font-semibold truncate">{scene.title.split('@')[0]}</h3>
                             <div className="flex items-center gap-2 mt-2 text-[10px] opacity-50">
                                 <MapPin size={10} />
-                                <span className="truncate">Global Location</span>
+                                <span className="truncate">{scene.locationId}</span>
                             </div>
                         </button>
                     ))}
@@ -83,55 +84,65 @@ export default function StoryboardEditor({ project, updateProject, onNext, onBac
                 {/* Shot List (Main Content) */}
                 <div className="col-span-9 bg-black/30 border border-white/5 rounded-xl overflow-hidden flex flex-col">
                     {activeScene ? (
-                        <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+                        <div className="p-6 h-full flex flex-col">
 
                             {/* Scene Header */}
-                            <div className="bg-gradient-to-r from-yellow-900/20 to-transparent p-4 rounded-lg border border-yellow-500/10 mb-6">
+                            <div className="bg-gradient-to-r from-yellow-900/20 to-transparent p-4 rounded-lg border border-yellow-500/10 mb-6 flex-shrink-0">
                                 <h3 className="text-xl font-bold text-yellow-100 mb-1">{activeScene.title}</h3>
-                                <p className="text-sm text-yellow-200/60 italic">"{activeScene.mood?.keywords?.join(', ')}", {activeScene.mood?.lighting} lighting.</p>
+                                <div className="flex gap-4 text-sm text-yellow-200/60 mt-2">
+                                    <span className="flex items-center gap-1"><MapPin size={12} /> {activeScene.locationId}</span>
+                                    <span className="flex items-center gap-1"><Camera size={12} /> {activeScene.mood?.lighting} lighting</span>
+                                    <span className="italic opacity-50">"{activeScene.mood?.keywords?.join(', ')}"</span>
+                                </div>
                             </div>
 
-                            {/* Shots */}
-                            <div className="space-y-4">
+                            {/* Shots Container */}
+                            <div className="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-2">
                                 {activeScene.shots.map((shot, sIdx) => (
                                     <div key={shot.shotId} className="bg-white/5 border border-white/5 rounded-lg p-4 hover:border-white/20 transition-colors group">
                                         <div className="flex gap-4">
                                             {/* Shot Index */}
-                                            <div className="w-12 h-12 bg-black/50 rounded flex items-center justify-center font-mono text-xl text-white/30 font-bold shrink-0">
-                                                {sIdx + 1}
+                                            <div className="w-12 h-full min-h-[80px] bg-black/50 rounded flex flex-col items-center justify-center gap-1 font-mono shrink-0">
+                                                <span className="text-xl text-white/30 font-bold">{sIdx + 1}</span>
+                                                <span className="text-[10px] text-white/20">{shot.durationSec}s</span>
                                             </div>
 
                                             {/* Shot Details */}
                                             <div className="flex-1 space-y-3">
+                                                {/* Header Badges */}
                                                 <div className="flex justify-between items-start">
                                                     <div className="flex gap-2">
                                                         <span className="bg-blue-500/20 text-blue-300 text-xs px-2 py-0.5 rounded font-bold uppercase">{shot.shotType}</span>
                                                         <span className="bg-purple-500/20 text-purple-300 text-xs px-2 py-0.5 rounded font-bold uppercase">{shot.camera.movement}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-xs text-white/40">
-                                                        <Clock size={12} />
-                                                        {shot.durationSec}s
+                                                        <span className="bg-white/10 text-white/50 text-xs px-2 py-0.5 rounded uppercase">{shot.camera.angle}</span>
                                                     </div>
                                                 </div>
 
-                                                <textarea
-                                                    value={shot.action}
-                                                    onChange={(e) => updateShot(activeScene.sceneId, shot.shotId, 'action', e.target.value)}
-                                                    className="w-full bg-transparent text-sm text-white resize-none border-b border-transparent focus:border-white/30 outline-none leading-relaxed"
-                                                    rows={2}
-                                                />
+                                                {/* Visual Action Description */}
+                                                <div>
+                                                    <div className="text-[10px] uppercase tracking-wide text-white/30 mb-1">Visual Action</div>
+                                                    <textarea
+                                                        value={shot.action}
+                                                        onChange={(e) => updateShot(activeScene.sceneId, shot.shotId, 'action', e.target.value)}
+                                                        className="w-full bg-transparent text-sm text-white resize-none border-b border-transparent focus:border-white/30 outline-none leading-relaxed"
+                                                        rows={2}
+                                                    />
+                                                </div>
 
-                                                <div className="flex gap-4 text-xs text-white/40 pt-2 border-t border-white/5">
-                                                    <div className="flex items-center gap-1">
-                                                        <Camera size={12} />
-                                                        {shot.camera.angle}, {shot.camera.lensFeel}
-                                                    </div>
-                                                    {shot.audioSync?.mode !== 'none' && (
-                                                        <div className="flex items-center gap-1 text-green-400/70">
-                                                            <PlayCircle size={12} />
-                                                            Lip-Sync
+                                                {/* Lyric / Audio Sync */}
+                                                {shot.audioSync?.lineText && (
+                                                    <div className="bg-black/30 p-2 rounded border border-white/5">
+                                                        <div className="flex items-center gap-2 mb-1">
+                                                            <PlayCircle size={10} className="text-green-400" />
+                                                            <span className="text-[10px] uppercase text-green-400/70 font-bold">Lip Sync Line</span>
                                                         </div>
-                                                    )}
+                                                        <p className="text-sm text-white/80 italic font-serif">"{shot.audioSync.lineText}"</p>
+                                                    </div>
+                                                )}
+
+                                                <div className="flex gap-4 text-xs text-white/30 pt-2 border-t border-white/5">
+                                                    <span>Lens: {shot.camera.lensFeel}</span>
+                                                    <span>Style: {shot.promptIntent?.visualStyle}</span>
                                                 </div>
                                             </div>
                                         </div>
