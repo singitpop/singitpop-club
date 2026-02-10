@@ -13,8 +13,60 @@ import ReferralClaimer from '@/components/fans/ReferralClaimer';
 import { ClerkProvider } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
-    title: 'SingIt Pop | Artist Hub',
-    description: 'The official home of SingIt Pop. Listen to music, join the fan club, and get exclusive merch.',
+    metadataBase: new URL('https://singitpop.com'),
+    title: {
+        default: 'SingIt Pop | The Future of Pop Music',
+        template: '%s | SingIt Pop'
+    },
+    description: 'The official home of SingIt Pop. Experience the next generation of AI-infused pop music. Join the club for exclusive tracks, mix-tapes, and virtual merchandise.',
+    keywords: ['SingIt Pop', 'AI Music', 'Pop Music', 'Gary Birrell', 'Fan Club', 'Virtual Artist', 'Future Pop', 'Music NFT'],
+    authors: [{ name: 'Gary Birrell' }],
+    creator: 'Gary Birrell',
+    publisher: 'SingIt Pop',
+    formatDetection: {
+        email: false,
+        address: false,
+        telephone: false,
+    },
+    icons: {
+        icon: '/favicon.ico',
+        shortcut: '/favicon.ico',
+        apple: '/apple-icon.png',
+    },
+    openGraph: {
+        title: 'SingIt Pop | The Future of Pop Music',
+        description: 'Experience the next generation of AI-infused pop music. Join the club for exclusive tracks and virtual merch.',
+        url: 'https://singitpop.com',
+        siteName: 'SingIt Pop',
+        locale: 'en_GB',
+        type: 'website',
+        images: [
+            {
+                url: '/og-image.jpg', // Ensure this image exists in public/
+                width: 1200,
+                height: 630,
+                alt: 'SingIt Pop Official',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'SingIt Pop | The Future of Pop Music',
+        description: 'Experience the next generation of AI-infused pop music.',
+        creator: '@singitpop', // Replace with actual handle if different
+        images: ['/og-image.jpg'],
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
+    },
 };
 
 export default function RootLayout({

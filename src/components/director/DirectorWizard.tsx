@@ -18,7 +18,7 @@ const STEPS = ["Project Setup", "Casting", "Director Settings", "Storyboard", "P
 
 export default function DirectorWizard() {
     const { isLabel } = useAuth();
-    const { isLoaded: isLoading } = useUser();
+    const { isLoaded } = useUser();
     const router = useRouter();
 
     const [currentStep, setCurrentStep] = useState(0);
@@ -27,14 +27,14 @@ export default function DirectorWizard() {
 
     // 1. Initial Load & Auth Check
     useEffect(() => {
-        if (!isLoading) {
+        if (isLoaded) {
             if (!isLabel) {
                 router.push("/");
                 return;
             }
             initEmptyProject();
         }
-    }, [isLabel, isLoading, router]);
+    }, [isLabel, isLoaded, router]);
 
     const initEmptyProject = async () => {
         // Initialize a hollow project structure
@@ -81,7 +81,7 @@ export default function DirectorWizard() {
         }
     };
 
-    if (isLoading || isInitializing || !project) {
+    if (!isLoaded || isInitializing || !project) {
         return (
             <div className="h-screen w-full flex items-center justify-center bg-black text-white">
                 <div className="flex flex-col items-center gap-4">

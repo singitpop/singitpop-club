@@ -5,9 +5,12 @@ import TeaserPlayer from '@/components/home/TeaserPlayer';
 import VisualScroll from '@/components/home/VisualScroll';
 import RecommendationStrip from '@/components/home/RecommendationStrip';
 
+import JsonLd from '@/components/seo/JsonLd';
+
 export default function Home() {
     return (
         <>
+            <JsonLd />
             <RecommendationStrip />
             <Hero />
             <VisualScroll />
