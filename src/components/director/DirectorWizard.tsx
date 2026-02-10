@@ -16,7 +16,7 @@ import { Loader2 } from "lucide-react";
 const STEPS = ["Project Setup", "Casting", "Director Settings", "Storyboard", "Production"];
 
 export default function DirectorWizard() {
-    const { isAdmin, isLoading } = useAuthContext();
+    const { isAdmin, isLoading } = useAuth();
     const router = useRouter();
 
     const [currentStep, setCurrentStep] = useState(0);
