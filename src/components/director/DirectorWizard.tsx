@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 import { useAuth } from "@/context/AuthContext";
 import { StratifyProject } from "@/types/stratify";
 import { StratifyAI } from "@/services/stratify/stratifyAI";
@@ -16,7 +17,8 @@ import { Loader2 } from "lucide-react";
 const STEPS = ["Project Setup", "Casting", "Director Settings", "Storyboard", "Production"];
 
 export default function DirectorWizard() {
-    const { isAdmin, isLoading } = useAuth();
+    const { isLabel } = useAuth();
+    const { isLoaded: isLoading } = useUser();
     const router = useRouter();
 
     const [currentStep, setCurrentStep] = useState(0);
@@ -26,13 +28,13 @@ export default function DirectorWizard() {
     // 1. Initial Load & Auth Check
     useEffect(() => {
         if (!isLoading) {
-            if (!isAdmin) {
+            if (!isLabel) {
                 router.push("/");
                 return;
             }
             initEmptyProject();
         }
-    }, [isAdmin, isLoading, router]);
+    }, [isLabel, isLoading, router]);
 
     const initEmptyProject = async () => {
         // Initialize a hollow project structure
