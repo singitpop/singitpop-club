@@ -2,7 +2,7 @@
 import { StratifyProject, Scene, Shot, LyricSection, Location, Character, CameraMovement } from "@/types/stratify";
 // @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
-import { LOCATIONS, LIGHTING_STYLES, CAMERA_MOVES, ACTIONS, KEYWORD_MAPPINGS, VERB_MAPPINGS, PHYSICAL_CONTEXTS, ATMOSPHERIC_CONTEXTS } from "./data/lexicon";
+import { LOCATIONS, LIGHTING_STYLES, CAMERA_MOVES, ACTIONS, KEYWORD_MAPPINGS, VERB_MAPPINGS, PHYSICAL_CONTEXTS, ATMOSPHERIC_CONTEXTS, SCENE_TEMPLATES } from "./data/lexicon";
 
 export const CreativeDirector = {
     /**
@@ -88,13 +88,16 @@ export const CreativeDirector = {
                 const isWide = i === 0 || i === lines.length - 1; // Start/End on Wide
                 const cameraMove = CAMERA_MOVES[Math.floor(Math.random() * CAMERA_MOVES.length)] as CameraMovement;
 
-                // --- NARRATIVE ENGINE (V2) ---
-                let actionBase = "";
-                let contextSuffix = "";
+                // --- NARRATIVE ENGINE (V2 - RICH DIRECTOR) ---
+                let actionText = "";
+                let contextDescription = "";
 
                 // 1. Identify Contexts from Lyrics
                 let physicalContext: keyof typeof PHYSICAL_CONTEXTS | null = null;
                 let atmosphericContext: string | null = null;
+
+                // Track if we found a context to influence the vibe
+                let contextVibe = "";
 
                 if (section.narrative?.context) {
                     for (const ctx of section.narrative.context) {
@@ -103,89 +106,89 @@ export const CreativeDirector = {
                     }
                 }
 
-                // 2. Determine Action Base
+                // 2. Determine Core Action
+                let coreAction = "";
                 if (physicalContext) {
-                    // A. STRICT OVERRIDE: If we are in a car/bed/water, ONLY use actions safe for that environment
+                    // STRICT OVERRIDE: If in a physical context, MUST use safe actions
                     const safeActions = PHYSICAL_CONTEXTS[physicalContext].actions;
-                    actionBase = safeActions[Math.floor(Math.random() * safeActions.length)];
+                    coreAction = safeActions[Math.floor(Math.random() * safeActions.length)];
+                    contextDescription = PHYSICAL_CONTEXTS[physicalContext].description;
                 } else {
-                    // B. Default Verb Mapping (Standard)
+                    // Standard Verb Mapping
                     if (section.narrative?.verbs && section.narrative.verbs.length > 0) {
                         const verb = section.narrative.verbs[i % section.narrative.verbs.length];
                         const possibleActions = VERB_MAPPINGS[verb];
                         if (possibleActions) {
-                            actionBase = possibleActions[Math.floor(Math.random() * possibleActions.length)];
+                            coreAction = possibleActions[Math.floor(Math.random() * possibleActions.length)];
                         }
                     }
                 }
 
-                // 3. Fallback Action
-                if (!actionBase) {
+                // Fallback Action
+                if (!coreAction) {
                     const actionList = isHighEnergy ? ACTIONS.performance : ACTIONS.narrative;
-                    actionBase = actionList[Math.floor(Math.random() * actionList.length)];
+                    coreAction = actionList[Math.floor(Math.random() * actionList.length)];
                 }
 
-                // 4. Append Atmospheric Context (Safe Suffix)
+                // 3. Construct Rich Scene Description
+                // Select a template
+                const templates = SCENE_TEMPLATES;
+                const template = templates[Math.floor(Math.random() * templates.length)];
+
+                // Gather template variables
+                const t_location = location.name;
+                const t_time = lightingObj.name.toLowerCase().includes('night') ? 'NIGHT' : 'DAY';
+                const t_lighting = lightingObj.name;
+                const t_character = "The subject"; // Could use cast.lead.name if available
+                const t_action = coreAction;
+                const t_camera = cameraMove.toLowerCase();
+                const t_vibe = isHighEnergy ? "energetic" : "melancholic"; // Simple heuristic
+
+                // Fill Template
+                actionText = template
+                    .replace('{location}', t_location)
+                    .replace('{time}', t_time)
+                    .replace('{lighting}', t_lighting)
+                    .replace('{character}', t_character)
+                    .replace('{action}', t_action)
+                    .replace('{camera}', t_camera)
+                    .replace('{vibe}', t_vibe);
+
+                // Add Atmospheric Context if present
                 if (atmosphericContext) {
-                    contextSuffix = ` ${atmosphericContext}`;
-                }
-
-                // 5. Anti-Repetition
-                if (scene.shots.length > 0) {
-                    const lastShot = scene.shots[scene.shots.length - 1];
-                    // If we generated the exact same string, force a different random one or fallback
-                    if (lastShot.action.includes(actionBase)) {
-                        if (physicalContext) {
-                            const safeActions = PHYSICAL_CONTEXTS[physicalContext].actions;
-                            // Try to pick a different one
-                            const others = safeActions.filter(a => a !== actionBase);
-                            if (others.length > 0) actionBase = others[Math.floor(Math.random() * others.length)];
-                        } else {
+                    if (scene.shots.length > 0) {
+                        const lastShot = scene.shots[scene.shots.length - 1];
+                        if (lastShot.action.includes(actionBase)) {
+                            // If we are repetitive, force a generic performance shot
                             actionBase = ACTIONS.performance[Math.floor(Math.random() * ACTIONS.performance.length)];
                         }
                     }
-                }
 
-                // C. Fallback to Random Action if extracted verbs didn't produce a string
-                if (!actionBase) {
-                    const actionList = isHighEnergy ? ACTIONS.performance : ACTIONS.narrative;
-                    actionBase = actionList[Math.floor(Math.random() * actionList.length)];
-                }
+                    // Construct full action
+                    const finalAction = `${actionBase}${contextSuffix}.`;
 
-                // D. Anti-Repetition (for fallback or generated)
-                if (scene.shots.length > 0) {
-                    const lastShot = scene.shots[scene.shots.length - 1];
-                    if (lastShot.action.includes(actionBase)) {
-                        // If we are repetitive, force a generic performance shot
-                        actionBase = ACTIONS.performance[Math.floor(Math.random() * ACTIONS.performance.length)];
-                    }
-                }
-
-                // Construct full action
-                const finalAction = `${actionBase}${contextSuffix}.`;
-
-                scene.shots.push({
-                    shotId: uuidv4(),
-                    index: i + 1,
-                    durationSec: 4,
-                    shotType: isWide ? 'WS' : (Math.random() > 0.5 ? 'CU' : 'MS'),
-                    camera: {
-                        movement: cameraMove,
-                        angle: isWide ? 'eye-level' : 'low-angle',
-                        lensFeel: isWide ? 'wide' : 'telephoto'
-                    },
-                    subjects: [{ characterId: cast.lead.characterId, purpose: 'singing' }],
-                    action: finalAction,
-                    promptIntent: {
-                        visualStyle: `${lightingObj.name}, ${lightingObj.keyword}, 8k fidelity.`,
-                        sceneDescription: `${location?.name || "Scene"}: ${location?.visualNotes || "Atmospheric"}. ${finalAction}`
-                    },
-                    audioSync: {
-                        mode: 'lip-sync-lead',
-                        lineText: line // CRITICAL: Inject the actual lyric line for lip sync/context
-                    }
+                    scene.shots.push({
+                        shotId: uuidv4(),
+                        index: i + 1,
+                        durationSec: 4,
+                        shotType: isWide ? 'WS' : (Math.random() > 0.5 ? 'CU' : 'MS'),
+                        camera: {
+                            movement: cameraMove,
+                            angle: isWide ? 'eye-level' : 'low-angle',
+                            lensFeel: isWide ? 'wide' : 'telephoto'
+                        },
+                        subjects: [{ characterId: cast.lead.characterId, purpose: 'singing' }],
+                        action: finalAction,
+                        promptIntent: {
+                            visualStyle: `${lightingObj.name}, ${lightingObj.keyword}, 8k fidelity.`,
+                            sceneDescription: `${location?.name || "Scene"}: ${location?.visualNotes || "Atmospheric"}. ${finalAction}`
+                        },
+                        audioSync: {
+                            mode: 'lip-sync-lead',
+                            lineText: line // CRITICAL: Inject the actual lyric line for lip sync/context
+                        }
+                    });
                 });
-            });
 
             scenes.push(scene);
         });

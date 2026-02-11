@@ -160,79 +160,83 @@ export const VERB_MAPPINGS: Record<string, string[]> = {
     // PASSIVE
     sleep: ["lying on a bed", "waking up suddenly", "sleeping peacefully", "drifting in water"],
     wait: ["checking a watch", "leaning against a wall waiting", "looking down the street", "sitting alone at a table"],
-    think: ["staring into space", "looking contemplative", "rubbing temples", "lost in thought"]
-};
+    export const SCENE_TEMPLATES = [
+        "INT. {location} - {time}. The scene is bathed in {lighting} light. {character} is {action}. The camera {camera} to capture the emotion.",
+        "EXT. {location} - {time}. A {vibe} atmosphere surrounds {character} as they are {action}. {lighting} flares into the lens. The camera executes a {camera} move.",
+        "INT. {location} - {time}. Shadows lengthen across the room. {character} stands {action} while {lighting} creates a dramatic silhouette. We see a {camera} movement.",
+        "EXT. {location} - {time}. The world feels {vibe}. {character} is {action}, completely lost in the moment. The lighting is {lighting}, adding to the mood. {camera}.",
+        "INT. {location} - {time}. Close up on details. The texture of the environment is highlighted by {lighting}. {character} is {action}. The camera {camera}."
+    ];
 
-export const ATMOSPHERIC_CONTEXTS: Record<string, string> = {
-    rain: "in pouring rain",
-    sun: "under bright sunlight",
-    night: "at night",
-    snow: "in falling snow",
-    fog: "in heavy fog",
-    wind: "in a windstorm",
-    neon: "under neon lights"
+    export const ATMOSPHERIC_CONTEXTS: Record<string, string> = {
+        rain: "pouring rain, creating slick reflections",
+        sun: "bright, blinding sunlight",
+        night: "darkness, illuminated only by ambient city glow",
+        snow: "heavy snowfall, muffling all sound",
+        fog: "thick fog, obscuring the background",
+        wind: "gale-force winds whipping hair and clothes",
+        neon: "flickering neon signs reflecting on surfaces"
 };
 
 export const PHYSICAL_CONTEXTS: Record<string, { description: string, actions: string[] }> = {
     car: {
-        description: "inside a vehicle",
+        description: "inside a moving vehicle",
         actions: [
-            "driving with intense focus",
-            "looking out the passenger window",
-            "gripping the steering wheel",
-            "singing passionately from the driver's seat",
-            "checking the rearview mirror",
-            "resting head against the window"
+            "driving with intense focus, knuckles white on the wheel",
+            "gazing out the passenger window at the passing blur",
+            "gripping the steering wheel, singing to the radio",
+            "checking the rearview mirror with a worried expression",
+            "resting head against the cold glass of the window"
         ]
     },
     bed: {
-        description: "in a bedroom",
+        description: "in a dimly lit bedroom",
         actions: [
-            "laying back on the mattress",
-            "sitting on the edge of the bed",
-            "waking up suddenly",
-            "staring at the ceiling",
-            "curled up under covers"
+            "collapsing backward onto the mattress in slow motion",
+            "sitting on the edge of the bed, head in hands",
+            "waking up suddenly, gasping for air",
+            "staring up at the ceiling, lost in thought",
+            "curled up under the covers, hiding from the world"
         ]
     },
     water: {
-        description: "in water",
+        description: "submerged in water",
         actions: [
-            "wading through waist-deep water",
-            "floating on back",
-            "submerging head underwater",
-            "standing still in the water",
-            "splashing water violently"
+            "wading through waist-deep water, fighting the current",
+            "floating weightless on their back, looking at the sky",
+            "submerging fully, bubbles rising to the surface",
+            "standing still as waves crash around them",
+            "violently splashing the water in frustration"
         ]
     },
     mirror: {
-        description: "in front of a mirror",
+        description: "standing before a large mirror",
         actions: [
-            "staring at own reflection",
-            "touching the glass surface",
-            "fixing hair or makeup",
-            "looking away from reflection in shame",
-            "practicing a smile"
+            "staring intensely at their own reflection",
+            "reaching out to touch the cold glass surface",
+            "wiping away steam to reveal their face",
+            "looking away from their reflection in shame",
+            "practicing a smile that doesn't reach their eyes"
         ]
     },
     party: {
-        description: "at a crowded party",
+        description: "at a chaotic, crowded house party",
         actions: [
-            "moving through a dense crowd",
-            "dancing intimately with someone",
-            "standing alone in a chaotic room",
-            "holding a red cup and looking lost",
-            "laughing with a group of strangers"
+            "pushing through a dense crowd of dancing bodies",
+            "dancing intimately, oblivious to everyone else",
+            "standing alone in the corner, holding a red cup",
+            "laughing manicly with a group of strangers",
+            "stumbling slightly, overwhelmed by the noise"
         ]
     },
     street: {
-        description: "on a city street",
+        description: "on a gritty urban street",
         actions: [
-            "walking down the center line",
-            "leaning against a brick wall",
-            "running past streetlights",
-            "waiting at a crosswalk",
-            "looking up at skyscrapers"
+            "walking purposefully down the center line",
+            "leaning against a graffiti-covered brick wall",
+            "sprinting past blurring streetlights",
+            "waiting at a crosswalk, watching traffic pass",
+            "looking up at the towering skyscrapers above"
         ]
     }
 };
