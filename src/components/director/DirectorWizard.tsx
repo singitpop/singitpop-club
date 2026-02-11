@@ -65,10 +65,14 @@ export default function DirectorWizard() {
                 console.log("✅ AI Director Success:", json);
                 aiData = json;
             } else {
-                console.warn("⚠️ AI Director failed, falling back to procedural.");
+                const errContext = await res.text();
+                console.error("AI Director Failed:", errContext);
+                alert("AI Director Connection Failed. Falling back to template engine. Check API Key.");
+                // We intentionally let it fall through to procedural so they get *something*
             }
         } catch (e) {
             console.error("AI Error", e);
+            alert("AI Director Error: " + e);
         }
 
         // Initialize Project with optional AI Data
