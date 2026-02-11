@@ -41,8 +41,10 @@ const callLocalLLM = async (prompt: string): Promise<string | null> => {
 
 // Helper to call Cloud LLM (Google Gemini) via REST fallback
 const callCloudLLM = async (prompt: string): Promise<string | null> => {
-    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-    if (!apiKey) return "DEBUG: API Key is MISSING in Environment.";
+    // Security: Do not use client-side keys. Migrate to API route if needed.
+    // const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY; 
+    const apiKey = null;
+    if (!apiKey) return "DEBUG: Cloud AI Disabled (Security). Using Local/Mock.";
 
     try {
         console.log("[Releasio AI] Cloud Key Found! ☁️ Calling Gemini...");
@@ -51,7 +53,7 @@ const callCloudLLM = async (prompt: string): Promise<string | null> => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
         });
-        
+
         if (!response.ok) {
             const errData = await response.json();
             return `DEBUG: API Error ${response.status} - ${errData.error?.message || response.statusText}`;
