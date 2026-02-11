@@ -163,15 +163,76 @@ export const VERB_MAPPINGS: Record<string, string[]> = {
     think: ["staring into space", "looking contemplative", "rubbing temples", "lost in thought"]
 };
 
-export const CONTEXT_MAPPINGS: Record<string, string> = {
+export const ATMOSPHERIC_CONTEXTS: Record<string, string> = {
     rain: "in pouring rain",
     sun: "under bright sunlight",
     night: "at night",
-    car: "inside a vehicle",
-    bed: "in a bedroom",
-    mirror: "reflected in a mirror",
-    fire: "lit by firelight",
-    water: "submerged in water",
-    street: "on a city street",
-    party: "at a crowded party"
+    snow: "in falling snow",
+    fog: "in heavy fog",
+    wind: "in a windstorm",
+    neon: "under neon lights"
+};
+
+export const PHYSICAL_CONTEXTS: Record<string, { description: string, actions: string[] }> = {
+    car: {
+        description: "inside a vehicle",
+        actions: [
+            "driving with intense focus",
+            "looking out the passenger window",
+            "gripping the steering wheel",
+            "singing passionately from the driver's seat",
+            "checking the rearview mirror",
+            "resting head against the window"
+        ]
+    },
+    bed: {
+        description: "in a bedroom",
+        actions: [
+            "laying back on the mattress",
+            "sitting on the edge of the bed",
+            "waking up suddenly",
+            "staring at the ceiling",
+            "curled up under covers"
+        ]
+    },
+    water: {
+        description: "in water",
+        actions: [
+            "wading through waist-deep water",
+            "floating on back",
+            "submerging head underwater",
+            "standing still in the water",
+            "splashing water violently"
+        ]
+    },
+    mirror: {
+        description: "in front of a mirror",
+        actions: [
+            "staring at own reflection",
+            "touching the glass surface",
+            "fixing hair or makeup",
+            "looking away from reflection in shame",
+            "practicing a smile"
+        ]
+    },
+    party: {
+        description: "at a crowded party",
+        actions: [
+            "moving through a dense crowd",
+            "dancing intimately with someone",
+            "standing alone in a chaotic room",
+            "holding a red cup and looking lost",
+            "laughing with a group of strangers"
+        ]
+    },
+    street: {
+        description: "on a city street",
+        actions: [
+            "walking down the center line",
+            "leaning against a brick wall",
+            "running past streetlights",
+            "waiting at a crosswalk",
+            "looking up at skyscrapers"
+        ]
+    }
 };

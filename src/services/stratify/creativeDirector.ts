@@ -2,7 +2,7 @@
 import { StratifyProject, Scene, Shot, LyricSection, Location, Character, CameraMovement } from "@/types/stratify";
 // @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
-import { LOCATIONS, LIGHTING_STYLES, CAMERA_MOVES, ACTIONS, KEYWORD_MAPPINGS, VERB_MAPPINGS, CONTEXT_MAPPINGS } from "./data/lexicon";
+import { LOCATIONS, LIGHTING_STYLES, CAMERA_MOVES, ACTIONS, KEYWORD_MAPPINGS, VERB_MAPPINGS, PHYSICAL_CONTEXTS, ATMOSPHERIC_CONTEXTS } from "./data/lexicon";
 
 export const CreativeDirector = {
     /**
@@ -88,25 +88,61 @@ export const CreativeDirector = {
                 const isWide = i === 0 || i === lines.length - 1; // Start/End on Wide
                 const cameraMove = CAMERA_MOVES[Math.floor(Math.random() * CAMERA_MOVES.length)] as CameraMovement;
 
-                // --- NARRATIVE ENGINE ---
+                // --- NARRATIVE ENGINE (V2) ---
                 let actionBase = "";
                 let contextSuffix = "";
 
-                // A. Check Narrative Verbs (Dynamic Generation)
-                if (section.narrative?.verbs && section.narrative.verbs.length > 0) {
-                    // Pick a relevant verb from the section (cycle or random)
-                    const verb = section.narrative.verbs[i % section.narrative.verbs.length];
-                    const possibleActions = VERB_MAPPINGS[verb];
-                    if (possibleActions) {
-                        actionBase = possibleActions[Math.floor(Math.random() * possibleActions.length)];
+                // 1. Identify Contexts from Lyrics
+                let physicalContext: keyof typeof PHYSICAL_CONTEXTS | null = null;
+                let atmosphericContext: string | null = null;
+
+                if (section.narrative?.context) {
+                    for (const ctx of section.narrative.context) {
+                        if (PHYSICAL_CONTEXTS[ctx]) physicalContext = ctx;
+                        if (ATMOSPHERIC_CONTEXTS[ctx]) atmosphericContext = ATMOSPHERIC_CONTEXTS[ctx];
                     }
                 }
 
-                // B. Check Context (Rain, Night, etc)
-                if (section.narrative?.context && section.narrative.context.length > 0) {
-                    const ctx = section.narrative.context[0];
-                    if (CONTEXT_MAPPINGS[ctx]) {
-                        contextSuffix = ` ${CONTEXT_MAPPINGS[ctx]}`;
+                // 2. Determine Action Base
+                if (physicalContext) {
+                    // A. STRICT OVERRIDE: If we are in a car/bed/water, ONLY use actions safe for that environment
+                    const safeActions = PHYSICAL_CONTEXTS[physicalContext].actions;
+                    actionBase = safeActions[Math.floor(Math.random() * safeActions.length)];
+                } else {
+                    // B. Default Verb Mapping (Standard)
+                    if (section.narrative?.verbs && section.narrative.verbs.length > 0) {
+                        const verb = section.narrative.verbs[i % section.narrative.verbs.length];
+                        const possibleActions = VERB_MAPPINGS[verb];
+                        if (possibleActions) {
+                            actionBase = possibleActions[Math.floor(Math.random() * possibleActions.length)];
+                        }
+                    }
+                }
+
+                // 3. Fallback Action
+                if (!actionBase) {
+                    const actionList = isHighEnergy ? ACTIONS.performance : ACTIONS.narrative;
+                    actionBase = actionList[Math.floor(Math.random() * actionList.length)];
+                }
+
+                // 4. Append Atmospheric Context (Safe Suffix)
+                if (atmosphericContext) {
+                    contextSuffix = ` ${atmosphericContext}`;
+                }
+
+                // 5. Anti-Repetition
+                if (scene.shots.length > 0) {
+                    const lastShot = scene.shots[scene.shots.length - 1];
+                    // If we generated the exact same string, force a different random one or fallback
+                    if (lastShot.action.includes(actionBase)) {
+                        if (physicalContext) {
+                            const safeActions = PHYSICAL_CONTEXTS[physicalContext].actions;
+                            // Try to pick a different one
+                            const others = safeActions.filter(a => a !== actionBase);
+                            if (others.length > 0) actionBase = others[Math.floor(Math.random() * others.length)];
+                        } else {
+                            actionBase = ACTIONS.performance[Math.floor(Math.random() * ACTIONS.performance.length)];
+                        }
                     }
                 }
 

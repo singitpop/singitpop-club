@@ -72,7 +72,7 @@ export const LyricAnalyst = {
     }
 };
 
-import { KEYWORD_MAPPINGS, VERB_MAPPINGS, CONTEXT_MAPPINGS } from "./data/lexicon";
+import { KEYWORD_MAPPINGS, VERB_MAPPINGS, PHYSICAL_CONTEXTS, ATMOSPHERIC_CONTEXTS } from "./data/lexicon";
 
 function createSection(type: LyricSection['type'], lines: string[], startLine: number): LyricSection {
     const text = lines.join('\n');
@@ -112,7 +112,8 @@ function analyzeNarrative(text: string) {
     });
 
     // 2. Extract Context
-    const foundContext = Object.keys(CONTEXT_MAPPINGS).filter(ctx => lower.includes(ctx));
+    const allContexts = [...Object.keys(ATMOSPHERIC_CONTEXTS), ...Object.keys(PHYSICAL_CONTEXTS)];
+    const foundContext = allContexts.filter(ctx => lower.includes(ctx));
 
     // 3. Extract Subjects (Simple list)
     const possibleSubjects = ["i", "you", "we", "he", "she", "they", "it"];
