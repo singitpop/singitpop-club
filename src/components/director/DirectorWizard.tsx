@@ -43,6 +43,40 @@ export default function DirectorWizard() {
         setIsInitializing(false);
     };
 
+    const initAIProject = async (songTitle: string, lyrics: string, artistName: string) => {
+        setIsDirecting(true);
+        let aiData = null;
+
+        try {
+            console.log("🎬 Calling AI Director...");
+            const res = await fetch('/api/director/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    lyrics: lyrics,
+                    songTitle: songTitle,
+                    artistName: artistName || "Artist",
+                    cast: { lead: { name: artistName || "Lead" } }
+                })
+            });
+
+            if (res.ok) {
+                const json = await res.json();
+                console.log("✅ AI Director Success:", json);
+                aiData = json;
+            } else {
+                console.warn("⚠️ AI Director failed, falling back to procedural.");
+            }
+        } catch (e) {
+            console.error("AI Error", e);
+        }
+
+        // Initialize Project with optional AI Data
+        const newProject = await StratifyAI.initProject(songTitle, lyrics, artistName, aiData);
+        setProject(newProject);
+        setIsDirecting(false);
+    };
+
     // 2. Main Step Renderer
     const renderStep = () => {
         if (!project) return null;

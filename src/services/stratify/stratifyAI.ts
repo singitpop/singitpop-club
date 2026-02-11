@@ -1,5 +1,5 @@
 
-import { StratifyProject, ProjectMeta, Song, Cast, Location } from "@/types/stratify";
+import { StratifyProject, ProjectMeta, Song, Cast, Location, Scene } from "@/types/stratify";
 import { LyricAnalyst } from "./lyricAnalyst";
 import { CreativeDirector } from "./creativeDirector";
 import { PromptCompiler } from "./promptCompiler";
@@ -9,13 +9,13 @@ export const StratifyAI = {
     /**
      * Initialize a new project from Lyrics + Basics
      */
-    initProject: async (title: string, rawLyrics: string, artistName: string): Promise<StratifyProject> => {
+    initProject: async (title: string, rawLyrics: string, artistName: string, aiData?: any): Promise<StratifyProject> => {
 
-        // 1. Analyze Lyrics
+        // 1. Analyze Lyrics (Always needed for structure)
         const sections = LyricAnalyst.analyze(rawLyrics);
         const genre = LyricAnalyst.detectGenre(rawLyrics);
 
-        // 2. Default Cast (User will edit later)
+        // 2. Default Cast
         const leadId = uuidv4();
         const cast: Cast = {
             lead: {
@@ -28,9 +28,57 @@ export const StratifyAI = {
             band: []
         };
 
-        // 3. Creative Direction (Initial Pass)
-        const scenes = CreativeDirector.planScenes(sections, cast);
-        const locations = CreativeDirector.suggestLocations("General");
+        // 3. Creative Direction
+        let scenes: Scene[] = [];
+        let locations: Location[] = [];
+
+        if (aiData && aiData.scenes) {
+            // --- AI VISIONARY PATH ---
+            scenes = aiData.scenes.map((s: any, idx: number) => ({
+                sceneId: uuidv4(),
+                index: idx + 1,
+                title: s.title || `Scene ${idx + 1}`,
+                locationId: s.location, // Approximate mapping
+                mood: {
+                    keywords: [s.mood],
+                    lighting: s.lighting,
+                    colorGrade: "Cinematic"
+                },
+                shots: [
+                    {
+                        shotId: uuidv4(),
+                        index: 1,
+                        durationSec: 4,
+                        shotType: 'WS',
+                        camera: {
+                            movement: s.camera.toLowerCase().includes('track') ? 'tracking' : 'pan',
+                            angle: 'eye-level',
+                            lensFeel: 'wide'
+                        },
+                        subjects: [{ characterId: leadId, purpose: 'singing' }],
+                        action: s.action, // THE AI MAGIC TEXT
+                        promptIntent: {
+                            visualStyle: `Cinematic, ${s.lighting}, 8k fidelity`,
+                            sceneDescription: s.action
+                        },
+                        audioSync: { mode: 'none' }
+                    }
+                ]
+            }));
+
+            // Generate Locations from AI Scenes
+            locations = aiData.scenes.map((s: any) => ({
+                locationId: uuidv4(),
+                name: s.location,
+                type: 'exterior', // Default
+                visualNotes: s.location
+            }));
+
+        } else {
+            // --- PROCEDURAL FALLBACK ---
+            scenes = CreativeDirector.planScenes(sections, cast);
+            locations = CreativeDirector.suggestLocations("General");
+        }
 
         // 4. Build Project Object
         const project: StratifyProject = {
@@ -42,7 +90,7 @@ export const StratifyAI = {
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
                 directorProfile: {
-                    stylePreset: "Cinematic Blocked",
+                    stylePreset: aiData ? "AI Visionary" : "Cinematic Blocked",
                     coveragePreference: "standard",
                     cameraLanguage: {
                         allowedMovements: ['dolly-in', 'pan', 'handheld'],
