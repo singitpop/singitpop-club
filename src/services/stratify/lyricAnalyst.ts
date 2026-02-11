@@ -3,19 +3,6 @@ import { LyricSection, EmotionArcPoint } from "@/types/stratify";
 import { v4 as uuidv4 } from 'uuid';
 import { LOCATIONS, LIGHTING_STYLES } from "./data/lexicon";
 
-// ...
-
-return {
-    valence: 0.5,
-    arousal: intensity,
-    labels,
-    // We removed 'intensity' from here as it wasn't in the interface. 
-    // The Director logic uses the labels/arousal anyway.
-};
-}
-
-
-
 export const LyricAnalyst = {
     /**
      * Parses raw lyrics into structured sections with estimated timing and emotion.
