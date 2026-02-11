@@ -1,0 +1,268 @@
+.container {
+    background: #000;
+    min-height: 100vh;
+    color: white;
+    padding: 4rem 2rem;
+    font-family: var(--font-inter), sans-serif;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.backLink {
+    display: inline-block;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header p {
+    color: #94a3b8;
+}
+
+.demoInterface {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 2rem;
+    min-height: 500px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    padding-right: 2rem;
+}
+
+.tabBtn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: transparent;
+    border: none;
+    padding: 1rem;
+    color: #94a3b8;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s;
+    text-align: left;
+    font-weight: 600;
+}
+
+.tabBtn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.tabBtn.active {
+    background: rgba(99, 102, 241, 0.1);
+    color: #818cf8;
+}
+
+.chevron {
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.tabBtn.active .chevron {
+    opacity: 1;
+}
+
+.contentArea {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.fadeIn {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contentArea h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: #94a3b8;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.visualStage {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.startBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    color: black;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.startBtn:hover {
+    transform: translateY(-2px);
+}
+
+/* Feature Specific Visuals */
+.previewCard {
+    width: 100%;
+    max-width: 400px;
+}
+
+.chatBubble,
+.chatBubbleUser {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.chatBubble {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+}
+
+.chatBubble span {
+    color: #818cf8;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.chatBubbleUser {
+    background: rgba(99, 102, 241, 0.2);
+    text-align: right;
+    margin-left: auto;
+    width: fit-content;
+}
+
+.chatBubbleUser span {
+    color: white;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.statRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.adPreview {
+    background: linear-gradient(45deg, #4f46e5, #ec4899);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.adPreview strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.fakeBtn {
+    background: white;
+    color: black;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-top: 1rem;
+    display: inline-block;
+    font-size: 0.8rem;
+}
+
+.arMetric {
+    margin-bottom: 1.5rem;
+}
+
+.bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin: 0.5rem 0;
+    overflow: hidden;
+}
+
+.bar div {
+    height: 100%;
+    background: #10b981;
+}
+
+.tagList {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tagList span {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+    .demoInterface {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding-bottom: 1rem;
+        padding-right: 0;
+    }
+}

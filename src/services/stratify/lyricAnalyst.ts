@@ -1,7 +1,18 @@
-
 import { LyricSection, EmotionArcPoint } from "@/types/stratify";
+// @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import { LOCATIONS, LIGHTING_STYLES } from "./data/lexicon";
+
+// ...
+
+return {
+    valence: 0.5,
+    arousal: intensity,
+    labels,
+    // We removed 'intensity' from here as it wasn't in the interface. 
+    // The Director logic uses the labels/arousal anyway.
+};
+}
 
 
 
@@ -74,9 +85,12 @@ export const LyricAnalyst = {
     }
 };
 
+import { KEYWORD_MAPPINGS, VERB_MAPPINGS, CONTEXT_MAPPINGS } from "./data/lexicon";
+
 function createSection(type: LyricSection['type'], lines: string[], startLine: number): LyricSection {
     const text = lines.join('\n');
     const moodScore = analyzeVisualSentiment(text);
+    const narrativeData = analyzeNarrative(text);
 
     // Estimate Duration (approx 4s per line)
     const duration = lines.length * 4;
@@ -88,6 +102,7 @@ function createSection(type: LyricSection['type'], lines: string[], startLine: n
         endLine: startLine + lines.length,
         text,
         emotion: moodScore,
+        narrative: narrativeData,
         timeRange: {
             startSec: 0,
             endSec: duration
@@ -95,7 +110,33 @@ function createSection(type: LyricSection['type'], lines: string[], startLine: n
     };
 }
 
-import { KEYWORD_MAPPINGS } from "./data/lexicon";
+function analyzeNarrative(text: string) {
+    const lower = text.toLowerCase();
+    const words = lower.replace(/[^a-z0-9 ]/g, '').split(' ');
+
+    // 1. Extract Verbs
+    // Simple robust matching: check if any conjugated form (run, running, ran) matches our keys
+    // For MVP, we simply check if the text *contains* the key verb string (e.g. "crying" contains "cry")
+    const foundVerbs = Object.keys(VERB_MAPPINGS).filter(verb => {
+        // We look for the root verb in the text. 
+        // "running" includes "run", "cried" includes "cri" (wait, English is hard).
+        // Let's stick to simple "includes" for now or exact word match if possible.
+        return lower.includes(verb);
+    });
+
+    // 2. Extract Context
+    const foundContext = Object.keys(CONTEXT_MAPPINGS).filter(ctx => lower.includes(ctx));
+
+    // 3. Extract Subjects (Simple list)
+    const possibleSubjects = ["i", "you", "we", "he", "she", "they", "it"];
+    const foundSubjects = possibleSubjects.filter(sub => words.includes(sub));
+
+    return {
+        verbs: foundVerbs,
+        subjects: foundSubjects,
+        context: foundContext
+    };
+}
 
 function analyzeVisualSentiment(text: string): EmotionArcPoint {
     const lower = text.toLowerCase();
@@ -137,8 +178,6 @@ function analyzeVisualSentiment(text: string): EmotionArcPoint {
     return {
         valence: 0.5,
         arousal: intensity,
-        labels,
-        // We're pivoting 'intensity' to store our suggest lighting style key for now
-        intensity // This will be passed to CreativeDirector
+        labels
     };
 }

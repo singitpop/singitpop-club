@@ -88,6 +88,11 @@ export interface LyricSection {
     endLine: number;
     text: string;
     emotion?: EmotionArcPoint;
+    narrative?: {
+        verbs: string[];
+        subjects: string[];
+        context: string[];
+    };
     timeRange?: TimeRange;
 }
 

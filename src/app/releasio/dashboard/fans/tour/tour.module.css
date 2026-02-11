@@ -1,0 +1,288 @@
+.container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.header p {
+    color: var(--text-muted);
+}
+
+.intro {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 3rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mapGraphic {
+    width: 200px;
+    height: 120px;
+    margin: 0 auto 2rem;
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.pulsePoint {
+    width: 12px;
+    height: 12px;
+    background: #60a5fa;
+    border-radius: 50%;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.intro h2 {
+    margin-bottom: 0.5rem;
+}
+
+.intro p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 4rem;
+}
+
+.plane {
+    color: #60a5fa;
+    animation: fly 2s infinite ease-in-out;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes fly {
+    0% {
+        transform: translateY(0) rotate(0);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+}
+
+.results {
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.summaryCard {
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    padding: 2rem;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.summaryCard h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.tag {
+    background: rgba(96, 165, 250, 0.2);
+    color: #60a5fa;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
+
+.revenueBox {
+    text-align: right;
+}
+
+.revenueBox small {
+    display: block;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.revenueBox strong {
+    font-size: 1.8rem;
+    color: #10b981;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.stopCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    animation: fadeIn 0.4s ease-out backwards;
+}
+
+.connector {
+    position: absolute;
+    left: -2.35rem;
+    /* Adjust based on timeline line */
+    width: 16px;
+    height: 16px;
+    background: #000;
+    border: 3px solid #60a5fa;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.dateBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    min-width: 100px;
+    justify-content: center;
+}
+
+.stopContent {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.cityInfo h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.country {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.venueInfo {
+    display: flex;
+    gap: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.detail {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.statusBadge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+}
+
+.statusBadge.soldOut {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.secondaryBtn {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.secondaryBtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

@@ -134,3 +134,44 @@ export const ACTIONS = {
         "dancing alone in an empty room"
     ]
 };
+
+export const VERB_MAPPINGS: Record<string, string[]> = {
+    // MOTION
+    run: ["sprinting desperately", "running through the crowd", "fleeing from an unseen threat", "jogging with determination"],
+    walk: ["walking slowly", "wandering aimlessly", "striding with confidence", "pacing back and forth"],
+    drive: ["driving a vintage car", "gripping the steering wheel", "speeding down a highway", "sitting in a parked car"],
+    fly: ["floating in mid-air", "looking down from a height", "arms spread wide like wings", "ascending towards light"],
+    fall: ["falling backwards in slow motion", "collapsing to knees", "tripping and recovering", "descending into darkness"],
+    dance: ["dancing freely", "swaying to the rhythm", "spinning around", "performing choreography"],
+
+    // EMOTIONAL
+    cry: ["wiping away a tear", "face buried in hands", "looking up with glassy eyes", "crying in the rain"],
+    laugh: ["throwing head back laughing", "giggling with a friend", "manic laughter", "smiling warmly"],
+    scream: ["screaming into the void", "yelling silently (glass mute)", "shouting in anger", "mouth open in a silent scream"],
+    smile: ["subtle mysterious smile", "beaming with joy", "smirking confidently", "looking affectionately at camera"],
+
+    // INTERACTION
+    hold: ["holding a photograph", "clasping own hands", "reaching out to camera", "embracing invisible figure"],
+    touch: ["touching a window pane", "running hand through hair", "fingers tracing a wall", "feeling the rain on skin"],
+    break: ["smashing a mirror", "dropping a glass", "tearing up a letter", "punching a wall"],
+    write: ["writing in a journal", "scribbling furiously", "typing on a phone", "penning a letter"],
+    burn: ["watching a fire burn", "lighting a match", "burning a photo", "standing near flames"],
+
+    // PASSIVE
+    sleep: ["lying on a bed", "waking up suddenly", "sleeping peacefully", "drifting in water"],
+    wait: ["checking a watch", "leaning against a wall waiting", "looking down the street", "sitting alone at a table"],
+    think: ["staring into space", "looking contemplative", "rubbing temples", "lost in thought"]
+};
+
+export const CONTEXT_MAPPINGS: Record<string, string> = {
+    rain: "in pouring rain",
+    sun: "under bright sunlight",
+    night: "at night",
+    car: "inside a vehicle",
+    bed: "in a bedroom",
+    mirror: "reflected in a mirror",
+    fire: "lit by firelight",
+    water: "submerged in water",
+    street: "on a city street",
+    party: "at a crowded party"
+};
