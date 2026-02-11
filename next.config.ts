@@ -12,6 +12,20 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
 
+  async redirects() {
+    return [
+      {
+        source: '/signup',
+        destination: '/sign-up',
+        permanent: true,
+      },
+      {
+        source: '/signin',
+        destination: '/sign-in',
+        permanent: true,
+      },
+    ];
+  },
 } as any;
 
 export default nextConfig;
