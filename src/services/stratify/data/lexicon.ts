@@ -159,23 +159,25 @@ export const VERB_MAPPINGS: Record<string, string[]> = {
 
     // PASSIVE
     sleep: ["lying on a bed", "waking up suddenly", "sleeping peacefully", "drifting in water"],
-    wait: ["checking a watch", "leaning against a wall waiting", "looking down the street", "sitting alone at a table"],
-    export const SCENE_TEMPLATES = [
-        "INT. {location} - {time}. The scene is bathed in {lighting} light. {character} is {action}. The camera {camera} to capture the emotion.",
-        "EXT. {location} - {time}. A {vibe} atmosphere surrounds {character} as they are {action}. {lighting} flares into the lens. The camera executes a {camera} move.",
-        "INT. {location} - {time}. Shadows lengthen across the room. {character} stands {action} while {lighting} creates a dramatic silhouette. We see a {camera} movement.",
-        "EXT. {location} - {time}. The world feels {vibe}. {character} is {action}, completely lost in the moment. The lighting is {lighting}, adding to the mood. {camera}.",
-        "INT. {location} - {time}. Close up on details. The texture of the environment is highlighted by {lighting}. {character} is {action}. The camera {camera}."
-    ];
+    wait: ["checking a watch", "leaning against a wall waiting", "looking down the street", "sitting alone at a table"]
+};
 
-    export const ATMOSPHERIC_CONTEXTS: Record<string, string> = {
-        rain: "pouring rain, creating slick reflections",
-        sun: "bright, blinding sunlight",
-        night: "darkness, illuminated only by ambient city glow",
-        snow: "heavy snowfall, muffling all sound",
-        fog: "thick fog, obscuring the background",
-        wind: "gale-force winds whipping hair and clothes",
-        neon: "flickering neon signs reflecting on surfaces"
+export const SCENE_TEMPLATES = [
+    "INT. {location} - {time}. The scene is bathed in {lighting} light. {character} is {action}. The camera {camera} to capture the emotion.",
+    "EXT. {location} - {time}. A {vibe} atmosphere surrounds {character} as they are {action}. {lighting} flares into the lens. The camera executes a {camera} move.",
+    "INT. {location} - {time}. Shadows lengthen across the room. {character} stands {action} while {lighting} creates a dramatic silhouette. We see a {camera} movement.",
+    "EXT. {location} - {time}. The world feels {vibe}. {character} is {action}, completely lost in the moment. The lighting is {lighting}, adding to the mood. {camera}.",
+    "INT. {location} - {time}. Close up on details. The texture of the environment is highlighted by {lighting}. {character} is {action}. The camera {camera}."
+];
+
+export const ATMOSPHERIC_CONTEXTS: Record<string, string> = {
+    rain: "pouring rain, creating slick reflections",
+    sun: "bright, blinding sunlight",
+    night: "darkness, illuminated only by ambient city glow",
+    snow: "heavy snowfall, muffling all sound",
+    fog: "thick fog, obscuring the background",
+    wind: "gale-force winds whipping hair and clothes",
+    neon: "flickering neon signs reflecting on surfaces"
 };
 
 export const PHYSICAL_CONTEXTS: Record<string, { description: string, actions: string[] }> = {

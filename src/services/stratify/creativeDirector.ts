@@ -156,39 +156,31 @@ export const CreativeDirector = {
 
                 // Add Atmospheric Context if present
                 if (atmosphericContext) {
-                    if (scene.shots.length > 0) {
-                        const lastShot = scene.shots[scene.shots.length - 1];
-                        if (lastShot.action.includes(actionBase)) {
-                            // If we are repetitive, force a generic performance shot
-                            actionBase = ACTIONS.performance[Math.floor(Math.random() * ACTIONS.performance.length)];
-                        }
+                    actionText += ` The scene takes place ${atmosphericContext}.`;
+                }
+
+                scene.shots.push({
+                    shotId: uuidv4(),
+                    index: i + 1,
+                    durationSec: 4,
+                    shotType: isWide ? 'WS' : (Math.random() > 0.5 ? 'CU' : 'MS'),
+                    camera: {
+                        movement: cameraMove,
+                        angle: isWide ? 'eye-level' : 'low-angle',
+                        lensFeel: isWide ? 'wide' : 'telephoto'
+                    },
+                    subjects: [{ characterId: cast.lead.characterId, purpose: 'singing' }],
+                    action: actionText,
+                    promptIntent: {
+                        visualStyle: `${lightingObj.name}, ${lightingObj.keyword}, 8k fidelity.`,
+                        sceneDescription: `${location?.name || "Scene"}: ${location?.visualNotes || "Atmospheric"}. ${actionText}`
+                    },
+                    audioSync: {
+                        mode: 'lip-sync-lead',
+                        lineText: line // CRITICAL: Inject the actual lyric line for lip sync/context
                     }
-
-                    // Construct full action
-                    const finalAction = `${actionBase}${contextSuffix}.`;
-
-                    scene.shots.push({
-                        shotId: uuidv4(),
-                        index: i + 1,
-                        durationSec: 4,
-                        shotType: isWide ? 'WS' : (Math.random() > 0.5 ? 'CU' : 'MS'),
-                        camera: {
-                            movement: cameraMove,
-                            angle: isWide ? 'eye-level' : 'low-angle',
-                            lensFeel: isWide ? 'wide' : 'telephoto'
-                        },
-                        subjects: [{ characterId: cast.lead.characterId, purpose: 'singing' }],
-                        action: finalAction,
-                        promptIntent: {
-                            visualStyle: `${lightingObj.name}, ${lightingObj.keyword}, 8k fidelity.`,
-                            sceneDescription: `${location?.name || "Scene"}: ${location?.visualNotes || "Atmospheric"}. ${finalAction}`
-                        },
-                        audioSync: {
-                            mode: 'lip-sync-lead',
-                            lineText: line // CRITICAL: Inject the actual lyric line for lip sync/context
-                        }
-                    });
                 });
+            });
 
             scenes.push(scene);
         });
