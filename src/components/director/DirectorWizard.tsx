@@ -24,6 +24,7 @@ export default function DirectorWizard() {
     const [currentStep, setCurrentStep] = useState(0);
     const [project, setProject] = useState<StratifyProject | null>(null);
     const [isInitializing, setIsInitializing] = useState(true);
+    const [isDirecting, setIsDirecting] = useState(false);
 
     // 1. Initial Load & Auth Check
     useEffect(() => {
@@ -66,19 +67,25 @@ export default function DirectorWizard() {
                 aiData = json;
             } else {
                 const errContext = await res.text();
-                console.error("AI Director Failed:", errContext);
-                alert("AI Director Connection Failed. Falling back to template engine. Check API Key.");
-                // We intentionally let it fall through to procedural so they get *something*
+                // console.error("AI Director Failed:", errContext); 
+                // Don't alert if it's just a key missing, use fallback silently as user might not have key
+                if (errContext.includes("Gemini API Key")) {
+                    console.warn("Gemini Key missing, using procedural engine.");
+                } else {
+                    alert("AI Hub Connection Failed. Using backup engine. (" + errContext.substring(0, 50) + "...)");
+                }
             }
         } catch (e) {
             console.error("AI Error", e);
-            alert("AI Director Error: " + e);
+            // alert("AI Error: " + e);
         }
 
         // Initialize Project with optional AI Data
         const newProject = await StratifyAI.initProject(songTitle, lyrics, artistName, aiData);
+        // Preserve any manual edits if re-running (simplification)
         setProject(newProject);
         setIsDirecting(false);
+        setCurrentStep(1);
     };
 
     // 2. Main Step Renderer
@@ -91,18 +98,13 @@ export default function DirectorWizard() {
                     <ProjectSetup
                         project={project}
                         updateProject={setProject}
-                        onNext={async () => {
-                            // Run analysis only when moving from Step 1
-                            setIsInitializing(true);
-                            // Re-init with actual data which triggers the LyricAnalyst
-                            const enriched = await StratifyAI.initProject(project.project.title, project.song.lyrics.rawText, project.project.artistName || "Artist");
-                            // Preserve manual BPM/Genre edits if any
-                            enriched.song.bpm = project.song.bpm;
-                            if (project.song.genre) enriched.song.genre = project.song.genre;
-
-                            setProject(enriched);
-                            setIsInitializing(false);
-                            setCurrentStep(1);
+                        onNext={() => {
+                            // Trigger AI Director
+                            initAIProject(
+                                project.project.title,
+                                project.song.lyrics.rawText,
+                                project.project.artistName || "Artist"
+                            );
                         }}
                     />
                 );
@@ -119,12 +121,14 @@ export default function DirectorWizard() {
         }
     };
 
-    if (!isLoaded || isInitializing || !project) {
+    if (!isLoaded || isInitializing || !project || isDirecting) {
         return (
             <div className="h-screen w-full flex items-center justify-center bg-black text-white">
                 <div className="flex flex-col items-center gap-4">
                     <Loader2 className="animate-spin text-violet-500" size={48} />
-                    <span className="text-white/50 text-sm tracking-widest uppercase">Initializing Stratify Engine...</span>
+                    <span className="text-white/50 text-sm tracking-widest uppercase">
+                        {isDirecting ? "AI Director is dreaming..." : "Initializing Stratify Engine..."}
+                    </span>
                 </div>
             </div>
         );
