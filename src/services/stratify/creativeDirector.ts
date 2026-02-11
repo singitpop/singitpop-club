@@ -1,45 +1,8 @@
+
 import { StratifyProject, Scene, Shot, LyricSection, Location, Character, CameraMovement } from "@/types/stratify";
 // @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import { LOCATIONS, LIGHTING_STYLES, CAMERA_MOVES, ACTIONS, KEYWORD_MAPPINGS, VERB_MAPPINGS, CONTEXT_MAPPINGS } from "./data/lexicon";
-
-// ... inside planScenes ...
-
-// A. Try to match specific visual nouns first (Strongest Match)
-let location = LOCATIONS.find(l =>
-    l.name && l.visualNotes?.toLowerCase().split(' ').some(word => word.length > 3 && sectionText.includes(word))
-);
-
-// B. If no specific noun, match based on MOOD (from LyricAnalyst)
-if (!location) {
-    const mood = section.emotion?.labels?.[0]; // e.g. "Melancholic"
-    if (mood === "Melancholic" || mood === "Sad") location = LOCATIONS.find(l => l.name?.includes("Rain") || l.name?.includes("Misty"));
-    else if (mood === "Euphoric" || mood === "Happy") location = LOCATIONS.find(l => l.name?.includes("Field") || l.name?.includes("Penthouse"));
-    else if (mood === "Aggressive") location = LOCATIONS.find(l => l.name?.includes("Alley") || l.name?.includes("Bar"));
-    else if (mood === "High Energy") location = LOCATIONS.find(l => l.name?.includes("Studio") || l.name?.includes("Void"));
-}
-
-// ...
-
-// Ensure variety (don't use same location twice in a row if possible)
-if (scenes.length > 0 && scenes[scenes.length - 1].locationId === location.name) {
-    const currentIndex = LOCATIONS.indexOf(location);
-    // Safe wrap
-    const nextIndex = (currentIndex + 1) % LOCATIONS.length;
-    location = LOCATIONS[nextIndex];
-}
-
-// ...
-
-const cameraMove = CAMERA_MOVES[Math.floor(Math.random() * CAMERA_MOVES.length)] as CameraMovement;
-
-// ...
-
-promptIntent: {
-    visualStyle: `${lightingObj.name}, ${lightingObj.keyword}, 8k fidelity.`,
-        sceneDescription: `${location?.name || "Scene"}: ${location?.visualNotes || ""}. ${finalAction}`
-},
-// ...
 
 export const CreativeDirector = {
     /**
@@ -75,7 +38,9 @@ export const CreativeDirector = {
             // Ensure variety (don't use same location twice in a row if possible)
             if (scenes.length > 0 && scenes[scenes.length - 1].locationId === location.name) {
                 const idx = LOCATIONS.indexOf(location);
-                location = LOCATIONS[(idx + 1) % LOCATIONS.length];
+                // Safe wrap
+                const nextIndex = (idx + 1) % LOCATIONS.length;
+                location = LOCATIONS[nextIndex];
             }
 
             const isHighEnergy = section.type === 'chorus' || section.type === 'bridge' || section.emotion?.labels?.[0] === "High Energy";
@@ -127,10 +92,9 @@ export const CreativeDirector = {
                 let actionBase = "";
                 let contextSuffix = "";
 
-                // ... (abbreviated, keeping logic same) ...
-
                 // A. Check Narrative Verbs (Dynamic Generation)
                 if (section.narrative?.verbs && section.narrative.verbs.length > 0) {
+                    // Pick a relevant verb from the section (cycle or random)
                     const verb = section.narrative.verbs[i % section.narrative.verbs.length];
                     const possibleActions = VERB_MAPPINGS[verb];
                     if (possibleActions) {
@@ -138,7 +102,31 @@ export const CreativeDirector = {
                     }
                 }
 
-                // ...
+                // B. Check Context (Rain, Night, etc)
+                if (section.narrative?.context && section.narrative.context.length > 0) {
+                    const ctx = section.narrative.context[0];
+                    if (CONTEXT_MAPPINGS[ctx]) {
+                        contextSuffix = ` ${CONTEXT_MAPPINGS[ctx]}`;
+                    }
+                }
+
+                // C. Fallback to Random Action if extracted verbs didn't produce a string
+                if (!actionBase) {
+                    const actionList = isHighEnergy ? ACTIONS.performance : ACTIONS.narrative;
+                    actionBase = actionList[Math.floor(Math.random() * actionList.length)];
+                }
+
+                // D. Anti-Repetition (for fallback or generated)
+                if (scene.shots.length > 0) {
+                    const lastShot = scene.shots[scene.shots.length - 1];
+                    if (lastShot.action.includes(actionBase)) {
+                        // If we are repetitive, force a generic performance shot
+                        actionBase = ACTIONS.performance[Math.floor(Math.random() * ACTIONS.performance.length)];
+                    }
+                }
+
+                // Construct full action
+                const finalAction = `${actionBase}${contextSuffix}.`;
 
                 scene.shots.push({
                     shotId: uuidv4(),
