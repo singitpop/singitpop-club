@@ -23,6 +23,7 @@ export default function Page() {
                 <div className="glass-panel p-1 rounded-2xl overflow-hidden shadow-2xl shadow-cyan-900/10 border border-white/10">
                     <div className="bg-black/40 backdrop-blur-xl p-8 rounded-xl flex justify-center">
                         <SignUp
+                            signInUrl="/sign-in"
                             appearance={{
                                 elements: {
                                     rootBox: "w-full",
