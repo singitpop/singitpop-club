@@ -167,10 +167,23 @@ export default function DirectorWizard() {
                     ))}
                 </nav>
 
-                <div className="p-6 border-t border-white/5">
+                <div className="p-6 border-t border-white/5 space-y-4">
                     <div className="text-[10px] text-white/20 text-center">
                         Project: {project.project.projectId.substring(0, 8)}...
                     </div>
+
+                    <button
+                        onClick={() => {
+                            if (confirm("Are you sure? This will discard the current project.")) {
+                                setProject(null);
+                                setCurrentStep(0);
+                                initEmptyProject();
+                            }
+                        }}
+                        className="w-full py-2 text-xs text-red-400 hover:text-red-300 border border-red-500/20 hover:border-red-500/50 rounded transition-colors"
+                    >
+                        Start Over
+                    </button>
                 </div>
             </div>
 
