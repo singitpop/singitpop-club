@@ -4,23 +4,23 @@ import { NextResponse } from "next/server";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 export async function POST(req: Request) {
-    try {
-        const { lyrics, songTitle, artistName, cast } = await req.json();
+  try {
+    const { lyrics, songTitle, artistName, cast } = await req.json();
 
-        if (!process.env.GEMINI_API_KEY) {
-            return NextResponse.json(
-                { error: "Gemini API Key not configured" },
-                { status: 500 }
-            );
-        }
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        { error: "Gemini API Key not configured" },
+        { status: 500 }
+      );
+    }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-        const prompt = `
-      You are a visionary film director known for cinematic, emotionally resonant music videos.
-      
+    const prompt = `
+      You are a visionary film director (like Christopher Nolan or Wes Anderson). 
+      Analyse the song and create a stunning, cinematic music video shot list.
+
       Song: "${songTitle}" by ${artistName}
-      
       Lyrics:
       "${lyrics}"
       
@@ -28,19 +28,27 @@ export async function POST(req: Request) {
       Lead: ${cast.lead.name} (${cast.lead.lookSpec?.style || 'Realistic'})
       
       Task:
-      Direct a music video scene-by-scene. 
-      For each distinct section of the song (Intro, Verse, Chorus, etc.), create a VIVID, CINEMATIC scene description.
-      
+      1. Break the song into logical SCENES (e.g. Intro, Verse 1, Chorus).
+      2. For EACH Scene, create a sequence of SHOTS that visualize the lyrics.
+      3. BE SPECIFIC. No generic "singing". Describe the lighting, the lens, the camera move, and the specific action.
+      4. Use the specific lyrics provided to time the shots.
+
       Output MUST be valid JSON with this structure:
       {
         "scenes": [
           {
-            "title": "Scene Title",
+            "title": "Scene Title (e.g. Verse 1)",
             "location": "Detailed location name",
-            "lighting": "Lighting style (e.g. Neon Noir, Golden Hour)",
-            "camera": "Camera movement (e.g. Tracking Shot, Handheld)",
-            "action": "Full paragraph description of the action. Be poetic, visual, and specific. Include metaphors from the lyrics.",
-            "mood": "Emotional vibe"
+            "mood": "Emotional vibe",
+            "lighting": "Lighting style (e.g. Neon Noir)",
+            "shots": [
+              {
+                "shotType": "WS / MS / CU", 
+                "camera": "Camera move (e.g. Tracking Lateral)",
+                "action": "Detailed action description...", 
+                "timing": "Lyrics line this shot covers"
+              }
+            ]
           }
         ]
       }
@@ -48,21 +56,21 @@ export async function POST(req: Request) {
       Do not include markdown formatting like \`\`\`json. Just the raw JSON.
     `;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
 
-        // Clean up potential markdown code blocks if the model ignores instruction
-        const cleanJson = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    // Clean up potential markdown code blocks
+    const cleanJson = text.replace(/```json/g, "").replace(/```/g, "").trim();
 
-        const data = JSON.parse(cleanJson);
+    const data = JSON.parse(cleanJson);
 
-        return NextResponse.json(data);
-    } catch (error) {
-        console.error("AI Director Error:", error);
-        return NextResponse.json(
-            { error: "Failed to generate specific scenes" },
-            { status: 500 }
-        );
-    }
+    return NextResponse.json(data);
+  } catch (error: any) {
+    console.error("AI Director Error:", error);
+    return NextResponse.json(
+      { error: "Failed to generate scenes", details: error.message || String(error) },
+      { status: 500 }
+    );
+  }
 }
