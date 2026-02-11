@@ -34,37 +34,44 @@ export const StratifyAI = {
 
         if (aiData && aiData.scenes) {
             // --- AI VISIONARY PATH ---
-            scenes = aiData.scenes.map((s: any, idx: number) => ({
-                sceneId: uuidv4(),
-                index: idx + 1,
-                title: s.title || `Scene ${idx + 1}`,
-                locationId: s.location, // Approximate mapping
-                mood: {
-                    keywords: [s.mood],
-                    lighting: s.lighting,
-                    colorGrade: "Cinematic"
-                },
-                shots: [
-                    {
+            scenes = aiData.scenes.map((s: any, idx: number) => {
+                // Ensure shots exist, otherwise create a fallback shot from scene data if possible
+                const aiShots = Array.isArray(s.shots) && s.shots.length > 0 ? s.shots : [{
+                    action: s.action || "Visuals matching the lyrics",
+                    camera: "Static",
+                    lighting: s.lighting || "Natural"
+                }];
+
+                return {
+                    sceneId: uuidv4(),
+                    index: idx + 1,
+                    title: s.title || `Scene ${idx + 1}`,
+                    locationId: s.location, // Approximate mapping
+                    mood: {
+                        keywords: [s.mood || "Atmospheric"],
+                        lighting: s.lighting || "Cinematic",
+                        colorGrade: "Cinematic"
+                    },
+                    shots: aiShots.map((shot: any, sIdx: number) => ({
                         shotId: uuidv4(),
-                        index: 1,
-                        durationSec: 4,
-                        shotType: 'WS',
+                        index: sIdx + 1,
+                        durationSec: 4, // Default, could be calculated from timing
+                        shotType: (shot.shotType || 'WS').toUpperCase(),
                         camera: {
-                            movement: s.camera.toLowerCase().includes('track') ? 'tracking' : 'pan',
+                            movement: (shot.camera || "").toLowerCase().includes('track') ? 'tracking' : 'pan',
                             angle: 'eye-level',
                             lensFeel: 'wide'
                         },
                         subjects: [{ characterId: leadId, purpose: 'singing' }],
-                        action: s.action, // THE AI MAGIC TEXT
+                        action: shot.action || "Performance shot",
                         promptIntent: {
-                            visualStyle: `Cinematic, ${s.lighting}, 8k fidelity`,
-                            sceneDescription: s.action
+                            visualStyle: `Cinematic, ${s.lighting || "dramatic lighting"}, 8k fidelity`,
+                            sceneDescription: shot.action || "Performance"
                         },
                         audioSync: { mode: 'none' }
-                    }
-                ]
-            }));
+                    }))
+                };
+            });
 
             // Generate Locations from AI Scenes
             locations = aiData.scenes.map((s: any) => ({
