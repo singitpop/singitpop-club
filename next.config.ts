@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+// Forced rebuild for cleanup
+
 const nextConfig: NextConfig = {
   // Specify packages that should not be bundled by Next.js/Turbopack
   serverExternalPackages: [

@@ -75,17 +75,19 @@ export default function DirectorWizard() {
                     alert("AI Hub Connection Failed. Using backup engine. (" + errContext.substring(0, 50) + "...)");
                 }
             }
-        } catch (e) {
-            console.error("AI Error", e);
-            // alert("AI Error: " + e);
-        }
+            // Initialize Project with optional AI Data
+            const newProject = await StratifyAI.initProject(songTitle, lyrics, artistName, aiData);
 
-        // Initialize Project with optional AI Data
-        const newProject = await StratifyAI.initProject(songTitle, lyrics, artistName, aiData);
-        // Preserve any manual edits if re-running (simplification)
-        setProject(newProject);
-        setIsDirecting(false);
-        setCurrentStep(1);
+            // Preserve any manual edits if re-running (simplification)
+            setProject(newProject);
+            setCurrentStep(1);
+
+        } catch (e) {
+            console.error("AI/Project Error", e);
+            alert("Error initializing project: " + (e instanceof Error ? e.message : String(e)));
+        } finally {
+            setIsDirecting(false);
+        }
     };
 
     // 2. Main Step Renderer

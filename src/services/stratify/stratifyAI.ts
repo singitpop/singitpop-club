@@ -52,24 +52,30 @@ export const StratifyAI = {
                         lighting: s.lighting || "Cinematic",
                         colorGrade: "Cinematic"
                     },
-                    shots: aiShots.map((shot: any, sIdx: number) => ({
-                        shotId: uuidv4(),
-                        index: sIdx + 1,
-                        durationSec: 4, // Default, could be calculated from timing
-                        shotType: (shot.shotType || 'WS').toUpperCase(),
-                        camera: {
-                            movement: (shot.camera || "").toLowerCase().includes('track') ? 'tracking' : 'pan',
-                            angle: 'eye-level',
-                            lensFeel: 'wide'
-                        },
-                        subjects: [{ characterId: leadId, purpose: 'singing' }],
-                        action: shot.action || "Performance shot",
-                        promptIntent: {
-                            visualStyle: `Cinematic, ${s.lighting || "dramatic lighting"}, 8k fidelity`,
-                            sceneDescription: shot.action || "Performance"
-                        },
-                        audioSync: { mode: 'none' }
-                    }))
+                    shots: aiShots.map((shot: any, sIdx: number) => {
+                        // Defensive: Handling potential null shots from AI
+                        const safeShot = shot || {};
+                        const cameraMove = (safeShot.camera || "").toLowerCase();
+
+                        return {
+                            shotId: uuidv4(),
+                            index: sIdx + 1,
+                            durationSec: 4,
+                            shotType: (safeShot.shotType || 'WS').toUpperCase(),
+                            camera: {
+                                movement: cameraMove.includes('track') ? 'tracking' : 'pan',
+                                angle: 'eye-level',
+                                lensFeel: 'wide'
+                            },
+                            subjects: [{ characterId: leadId, purpose: 'singing' }],
+                            action: safeShot.action || "Performance shot",
+                            promptIntent: {
+                                visualStyle: `Cinematic, ${s.lighting || "dramatic lighting"}, 8k fidelity`,
+                                sceneDescription: safeShot.action || "Performance"
+                            },
+                            audioSync: { mode: 'none' }
+                        };
+                    })
                 };
             });
 
