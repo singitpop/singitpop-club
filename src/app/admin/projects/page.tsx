@@ -30,7 +30,14 @@ export default function AdminProjectsPage() {
             const res = await fetch('/api/projects');
             if (res.ok) {
                 const data = await res.json();
-                setProjects(data);
+                // Auto-repair missing IDs
+                const sanitized = data.map((p: any) => ({
+                    ...p,
+                    id: p.id || crypto.randomUUID()
+                }));
+                // If we found broken items, we should probably save the fixed versions immediately? 
+                // But safer to just let the user save/delete to trigger the write.
+                setProjects(sanitized);
             }
         } catch (error) {
             console.error("Failed to load projects", error);
