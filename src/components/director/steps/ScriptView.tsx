@@ -64,8 +64,8 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset }) => {
                         key={t}
                         onClick={() => setSelectedTool(t as any)}
                         className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${selectedTool === t
-                                ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
-                                : 'bg-transparent text-gray-500 hover:text-white'
+                            ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
+                            : 'bg-transparent text-gray-500 hover:text-white'
                             }`}
                     >
                         {t}
@@ -122,17 +122,33 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset }) => {
 
                                         {/* SHOT CONTENT (Middle) */}
                                         <div className="flex-grow space-y-3">
-                                            <p className="text-gray-200 leading-relaxed font-medium">
-                                                {shot.action}
-                                            </p>
-
-                                            {/* Subjects */}
-                                            <div className="flex gap-2 flex-wrap">
-                                                {shot.subjects.map((sub, idx) => (
-                                                    <span key={idx} className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded border border-gray-700">
-                                                        {sub.characterId} ({sub.purpose})
+                                            {/* Cinematic Details */}
+                                            <div className="grid grid-cols-2 gap-2 mb-3 bg-gray-900/50 p-3 rounded text-xs border border-gray-700">
+                                                <div>
+                                                    <span className="text-gray-500 block text-[10px] uppercase tracking-wider">Comp & Camera</span>
+                                                    <span className="text-emerald-400 font-mono">
+                                                        {shot.composition || 'Standard'} • {shot.camera.movement} ({shot.camera.angle})
                                                     </span>
-                                                ))}
+                                                </div>
+                                                <div>
+                                                    <span className="text-gray-500 block text-[10px] uppercase tracking-wider">Audio & Ambience</span>
+                                                    <span className="text-cyan-400">
+                                                        {shot.audioEnvironment || 'Room tone'}
+                                                    </span>
+                                                </div>
+                                                <div className="col-span-2 mt-2 pt-2 border-t border-gray-800">
+                                                    <span className="text-gray-500 block text-[10px] uppercase tracking-wider mb-1">Action Breakdown</span>
+                                                    <div className="text-gray-300">
+                                                        <span className="text-emerald-500 font-bold bg-emerald-950/30 px-1 rounded mr-2">FG</span>
+                                                        {shot.foregroundAction || shot.action}
+                                                    </div>
+                                                    {shot.backgroundAction && (
+                                                        <div className="text-gray-400 mt-1">
+                                                            <span className="text-blue-500 font-bold bg-blue-950/30 px-1 rounded mr-2">BG</span>
+                                                            {shot.backgroundAction}
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
 
                                             {/* Audio Sync */}
@@ -165,8 +181,8 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset }) => {
                                             <button
                                                 onClick={() => handleCopy(shot.toolPrompts?.[selectedTool] || "", shot.shotId)}
                                                 className={`mt-2 w-full py-2 rounded text-xs font-bold transition-colors flex items-center justify-center gap-2 ${copiedId === shot.shotId
-                                                        ? 'bg-green-500 text-black'
-                                                        : 'bg-gray-800 hover:bg-gray-700 text-white'
+                                                    ? 'bg-green-500 text-black'
+                                                    : 'bg-gray-800 hover:bg-gray-700 text-white'
                                                     }`}
                                             >
                                                 {copiedId === shot.shotId ? "✅ COPIED" : "📋 COPY PROMPT"}

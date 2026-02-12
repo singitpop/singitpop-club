@@ -107,6 +107,69 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                         />
                     </div>
 
+                    {/* Character Reference Image */}
+                    <div className="bg-gray-900 border border-gray-700 rounded p-4">
+                        <label className="block text-xs text-gray-500 mb-2 uppercase tracking-wider">Visual Reference (e.g. Album Cover)</label>
+                        <div className="flex gap-4 items-center">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={async (e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+
+                                    // 1. Show Preview (Optional, handled by simple text for now)
+                                    // 2. Upload/Analyze
+                                    const formData = new FormData();
+                                    formData.append("image", file);
+
+                                    try {
+                                        const btn = document.getElementById('analyze-btn') as HTMLButtonElement;
+                                        if (btn) btn.innerText = "Analyzing...";
+
+                                        const res = await fetch('/api/director/analyze-character', {
+                                            method: 'POST',
+                                            body: formData
+                                        });
+                                        const data = await res.json();
+
+                                        if (data.error) throw new Error(data.error);
+
+                                        // 3. Auto-Fill
+                                        updateProject({
+                                            ...project,
+                                            cast: {
+                                                ...project.cast,
+                                                lead: {
+                                                    ...project.cast.lead,
+                                                    ageRange: project.cast.lead.ageRange || data.face, // Fallback/Overwrite logic?
+                                                    wardrobeSignature: [data.wardrobe],
+                                                    lookSpec: { ...project.cast.lead.lookSpec, face: data.face, style: data.vibe },
+                                                    extractedVisuals: data
+                                                }
+                                            }
+                                        });
+                                        if (btn) btn.innerText = "✅ Look Extracted";
+
+                                    } catch (err) {
+                                        console.error(err);
+                                        alert("Failed to analyze image");
+                                    }
+                                }}
+                                className="text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-purple-900 file:text-purple-400 hover:file:bg-purple-800"
+                            />
+                            <button id="analyze-btn" disabled className="text-xs text-purple-400 font-mono">
+                                {project.cast.lead.extractedVisuals ? "✅ Look Extracted" : "Upload to Analyze"}
+                            </button>
+                        </div>
+                        {project.cast.lead.extractedVisuals && (
+                            <div className="mt-2 text-[10px] text-gray-500 bg-black/40 p-2 rounded border border-gray-800">
+                                <span className="text-purple-400 block mb-1">AI ANALYSIS:</span>
+                                {project.cast.lead.extractedVisuals.face} • {project.cast.lead.extractedVisuals.wardrobe}
+                            </div>
+                        )}
+                    </div>
+
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-xs text-gray-500 mb-1">Look / Style</label>
