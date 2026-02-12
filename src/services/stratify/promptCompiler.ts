@@ -1,88 +1,125 @@
 
-import { Shot, ProjectMeta, ToolPromptOverride } from "@/types/stratify";
-
-// --- PROMPT TEMPLATES ---
-
-const VEO_TEMPLATE = (s: Shot, ctx: PromptContext) => `
-TITLE/SHOT: Scene ${s.index}, Shot ${s.index}
-
-SUBJECTS:
-${ctx.subjectsText}
-
-LOCATION:
-${ctx.locationName}: ${ctx.locationVisuals}
-
-ACTION:
-${s.action}
-
-PERFORMANCE:
-${ctx.performanceNotes}. ${s.audioSync?.mode !== 'none' ? `Lead is singing: "${s.audioSync?.lineText}"` : ''}
-
-CAMERA:
-${s.camera.angle}, ${s.camera.lensFeel} lens. Movement: ${s.camera.movement} (${s.camera.movementSpeed}). Focus: ${s.camera.focus?.depthOfField}.
-
-LIGHTING / MOOD:
-${s.lighting?.timeOfDay}, ${s.lighting?.style}. Style: ${s.promptIntent.visualStyle}.
-
-STYLE:
-Cinematic, 8k, highly detailed, photorealistic.
-`.trim();
-
-const RUNWAY_TEMPLATE = (s: Shot, ctx: PromptContext) => `
-${s.camera.movement} of ${ctx.subjectsSummary}. ${ctx.locationName}, ${s.lighting?.timeOfDay}.
-${s.action}. ${s.promptIntent.visualStyle}.
-${s.camera.lensFeel} lens, ${s.camera.angle}.
-${s.audioSync?.mode !== 'none' ? `Character singing: "${s.audioSync?.lineText}"` : ''}
-`.trim();
-
-const PIKA_TEMPLATE = (s: Shot, ctx: PromptContext) => `
-${s.action}. ${ctx.subjectsSummary} at ${ctx.locationName}.
-${s.promptIntent.visualStyle}. ${s.lighting?.style}.
-Camera: ${s.camera.movement}, ${s.camera.angle}.
-`.trim();
-
-const LUMA_TEMPLATE = (s: Shot, ctx: PromptContext) => `
-${s.action}. Featuring ${ctx.subjectsSummary}.
-Location: ${ctx.locationName}.
-Mood: ${s.promptIntent.visualStyle}. Lighting: ${s.lighting?.style}.
-Cinematic, stable, 4k.
-`.trim();
-
-// --- TYPES ---
-
-interface PromptContext {
-    subjectsText: string;
-    subjectsSummary: string;
-    locationName: string;
-    locationVisuals: string;
-    performanceNotes: string;
-}
+import { Shot, StratifyProject } from "@/types/stratify";
 
 export const PromptCompiler = {
-    compile: (shot: Shot, projectDesc: string, tools: ('veo' | 'runway' | 'pika' | 'luma')[]) => {
-        const context: PromptContext = {
-            subjectsText: shot.subjects.map(sub => `Role: ${sub.purpose}`).join(', '),
-            subjectsSummary: "Band performing", // Placeholder - needs real character lookup
-            locationName: "Studio", // Placeholder
-            locationVisuals: "Dark void with neon lights",
-            performanceNotes: "Energetic performance"
-        };
-
+    compile: (project: StratifyProject, shot: Shot, tools: ('veo' | 'runway' | 'pika' | 'luma' | 'kling')[]) => {
         const results: Record<string, string> = {};
 
-        if (tools.includes('veo')) {
-            results.veo = shot.promptIntent.toolPromptOverrides?.veo?.promptText || VEO_TEMPLATE(shot, context);
-        }
-        if (tools.includes('runway')) {
-            results.runway = shot.promptIntent.toolPromptOverrides?.runway?.promptText || RUNWAY_TEMPLATE(shot, context);
-        }
-        if (tools.includes('pika')) {
-            results.pika = shot.promptIntent.toolPromptOverrides?.pika?.promptText || PIKA_TEMPLATE(shot, context);
-        }
-        if (tools.includes('luma')) {
-            results.luma = shot.promptIntent.toolPromptOverrides?.luma?.promptText || LUMA_TEMPLATE(shot, context);
-        }
+        // 1. Resolve Character Details
+        const characterContext = resolveCharacterContext(project, shot);
+
+        // 2. Resolve Audio/Lip Sync
+        const audioContext = resolveAudioContext(shot);
+
+        // 3. Resolve Environmental/Style Context
+        const styleContext = resolveStyleContext(project, shot);
+
+        if (tools.includes('veo')) results.veo = VeoAdapter.generate(shot, characterContext, audioContext, styleContext);
+        if (tools.includes('runway')) results.runway = RunwayAdapter.generate(shot, characterContext, audioContext, styleContext);
+        if (tools.includes('luma')) results.luma = LumaAdapter.generate(shot, characterContext, audioContext, styleContext);
+        if (tools.includes('kling')) results.kling = KlingAdapter.generate(shot, characterContext, audioContext, styleContext);
+        if (tools.includes('pika')) results.pika = PikaAdapter.generate(shot, characterContext, audioContext, styleContext);
 
         return results;
+    }
+};
+
+// --- HELPER FUNCTIONS ---
+
+const resolveCharacterContext = (project: StratifyProject, shot: Shot): string => {
+    // Find who is in the shot
+    const subjectIds = shot.subjects.map(s => s.characterId);
+    let descriptions: string[] = [];
+
+    if (subjectIds.includes('lead') || (project.cast.lead && subjectIds.includes(project.cast.lead.characterId))) {
+        const lead = project.cast.lead;
+        let desc = `The Lead Singer (${lead.name}, ${lead.ageRange}, ${lead.genderPresentation})`;
+        if (lead.lookSpec?.face) desc += `, ${lead.lookSpec.face}`;
+        if (lead.wardrobeSignature) desc += `, wearing ${lead.wardrobeSignature.join(', ')}`;
+        descriptions.push(desc);
+    }
+
+    project.cast.band.forEach(member => {
+        if (subjectIds.includes(member.characterId)) {
+            let desc = `${member.role} (${member.name})`;
+            if (member.lookSpec?.face) desc += `, ${member.lookSpec.face}`;
+            descriptions.push(desc);
+        }
+    });
+
+    if (descriptions.length === 0) return "A cinematic subject";
+    return descriptions.join(". Also visible: ");
+};
+
+const resolveAudioContext = (shot: Shot): string => {
+    if (shot.audioSync?.lyricLineText) {
+        return `The character is singing the line "${shot.audioSync.lyricLineText}", lips moving in perfect sync with the lyrics, passionate performance.`;
+    }
+    return "No speaking, natural expression.";
+};
+
+const resolveStyleContext = (project: StratifyProject, shot: Shot): string => {
+    // Director Dials could influence this further
+    const lighting = shot.lighting?.style || "dramatic lighting";
+    const lens = shot.camera.lensFeel || "50mm prime lens";
+    return `${lighting}. Shot on ${lens}. High fidelity, 8k, photorealistic textures, volumetric fog.`;
+};
+
+
+// --- ADAPTERS (STRICT RULES) ---
+
+const VeoAdapter = {
+    generate: (shot: Shot, charCtx: string, audioCtx: string, styleCtx: string): string => {
+        // Veo 3.1 "Master Prompt" Structure:
+        // [Medium/Shot Type] of [Subject + Visual DNA] [Action]. [Environment/Lighting]. [Camera Move]. [Technical Specs].
+
+        const cam = shot.camera;
+        let prompt = `${shot.shotType} of ${charCtx}. `;
+        prompt += `${shot.action}. `;
+
+        if (audioCtx.includes("singing")) {
+            prompt += `${audioCtx}. `; // Explicit lip sync instruction
+        }
+
+        prompt += `${styleCtx} `;
+
+        if (cam.movement !== 'locked') {
+            prompt += `Camera movement: ${cam.movement} ${cam.angle ? `at ${cam.angle}` : ''}. `;
+        }
+
+        return prompt.trim();
+    }
+};
+
+const RunwayAdapter = {
+    generate: (shot: Shot, charCtx: string, audioCtx: string, styleCtx: string): string => {
+        // Runway Gen-3 Structure:
+        // [Camera Move]: [Subject] [Action]. [Style].
+        const cam = shot.camera;
+        const move = cam.movement === 'locked' ? 'Static' :
+            cam.movement === 'pan' ? 'Pan' :
+                cam.movement === 'tilt' ? 'Tilt' :
+                    cam.movement === 'dolly-in' ? 'Zoom in' :
+                        cam.movement;
+
+        return `[${move}]: ${charCtx} performing ${shot.action}. ${audioCtx}. ${styleCtx}`;
+    }
+};
+
+const LumaAdapter = {
+    generate: (shot: Shot, charCtx: string, audioCtx: string, styleCtx: string): string => {
+        return `${charCtx} ${shot.action}. ${audioCtx}. ${shot.camera.movement} camera motion. ${styleCtx}`;
+    }
+};
+
+const KlingAdapter = {
+    generate: (shot: Shot, charCtx: string, audioCtx: string, styleCtx: string): string => {
+        return `High quality video, ${charCtx}, ${shot.action}, ${audioCtx}, ${shot.camera.movement}, ${styleCtx}`;
+    }
+};
+
+const PikaAdapter = {
+    generate: (shot: Shot, charCtx: string, audioCtx: string, styleCtx: string): string => {
+        return `${charCtx} ${shot.action}. ${audioCtx}. ${styleCtx}. Camera: ${shot.camera.movement}.`;
     }
 };

@@ -1,289 +1,179 @@
 
-// ==========================================
-// STRATIFY DIRECTOR - DATA MODEL (v1.0)
-// Implements JSON Schema 2020-12
-// ==========================================
+// CLEAN SLATE SCHEMA - STRATIFY DIRECTOR SWARM
+// Corresponds to User's 8-Point Plan - Step A
 
-export type UUID = string;
+export type AspectRatio = '16:9' | '9:16' | '21:9' | '4:3';
+export type ContentRating = 'family' | 'teen' | 'mature';
+export type VisualMode = 'realistic' | 'stylized' | 'animated';
+export type LipSyncMode = 'none' | 'lead' | 'backing' | 'group';
 
-// --- 1. Top Level Project ---
-
-export interface StratifyProject {
-    schemaVersion: string; // e.g. "1.0.0"
-    project: ProjectMeta;
-    song: Song;
-    cast: Cast;
-    locations: Location[];
-    scenes: Scene[];
-    timeline: Timeline;
-    exports?: ProjectExports;
+// 1. INFLUENCE DIALS (The 10 Cinematic Traits)
+export interface InfluenceDials {
+    blockingPrecision: number;   // 0-100: Staging & movement rigor
+    motivatedCamera: number;     // 0-100: Move only when story demands
+    wonderAndScale: number;      // 0-100: EWS + Drone reveals
+    intimateEmotion: number;     // 0-100: CU/ECU + Shallow DOF
+    rhythmicMontage: number;     // 0-100: Cut speed/patterns
+    naturalism: number;          // 0-100: Handheld realism
+    stylizedSymmetry: number;    // 0-100: Wes Anderson / Kubrick formal comp
+    highContrastMood: number;    // 0-100: Noir / Neon
+    longTakeConfidence: number;  // 0-100: 6-12s shots vs rapid cuts
+    iconicHeroFrames: number;    // 0-100: Poster-worthy chorus shots
 }
-
-export interface ProjectMeta {
-    projectId: UUID;
-    title: string;
-    artistName?: string;
-    createdAt: string; // ISO Date
-    updatedAt: string; // ISO Date
-    directorProfile: DirectorProfile;
-    brandRules?: BrandRules;
-    outputSpec: OutputSpec;
-    notes?: string;
-    tags?: string[];
-}
-
-// --- 2. Configuration & Profiles ---
 
 export interface DirectorProfile {
-    stylePreset: string; // "Cinematic Blocked", "Performance-Heavy", etc.
-    coveragePreference: 'minimal' | 'standard' | 'coverage-heavy';
-    cameraLanguage: {
-        allowedMovements: CameraMovement[];
-        defaultLensFeel: 'wide' | 'normal' | 'telephoto';
-        handheldIntensity?: 'none' | 'subtle' | 'medium' | 'aggressive';
+    influenceDials: InfluenceDials;
+    narrativePreference: 'performance-first' | 'story-first' | 'hybrid';
+    colorGrade?: string;
+    notes?: string;
+}
+
+// 2. CAST & CHARACTERS
+export interface Character {
+    characterId: string;
+    name: string;
+    role: 'lead' | 'band-member' | 'actor' | 'extra';
+    genderPresentation: 'male' | 'female' | 'non-binary';
+    ageRange: string;
+    lookSpec: {
+        hair?: string;
+        face?: string;
+        physique?: string;
+        style?: string; // e.g. "Punk Rock"
     };
+    wardrobeSignature: string[]; // e.g. ["Leather Jacket", "Sunglasses"]
+    instrument?: string;
 }
 
-export interface BrandRules {
-    noUnwantedTextArtifacts?: boolean;
-    avoidExtraCharacters?: boolean;
-    logoPolicy?: 'no-logo' | 'end-card-only' | 'subtle-watermark-allowed';
-    colorPalette?: string[]; // Hex codes
+export interface CastList {
+    lead: Character;
+    band: Character[];
+    principals: Character[]; // Non-musician actors
 }
 
-export interface OutputSpec {
-    aspectRatio: '16:9' | '9:16' | '1:1' | '21:9';
-    resolution: '720p' | '1080p' | '1440p' | '4k';
-    fps: 24 | 25 | 30 | 50 | 60;
-    clipSecondsOptions?: number[]; // e.g. [4, 6] for Veo
-    deliverables: ('director-pack-pdf' | 'shotlist-csv' | 'prompt-pack' | 'rough-cut-video' | 'edl-xml')[];
-}
-
-// --- 3. Music & Lyrics ---
-
-export interface Song {
-    songId: UUID;
+// 3. SONG DATA (Intake)
+export interface SongData {
     title: string;
-    language: string;
+    artist: string;
+    bpm: number;
     genre: string;
     subGenre?: string;
-    moodKeywords?: string[];
-    audio?: FileRef;
-    bpm?: number;
-    key?: string;
-    lyrics: Lyrics;
-    sections?: LyricSection[]; // Filled by Lyric Analyst
-}
-
-export interface Lyrics {
-    rawText: string;
-    normalizedText?: string;
-    explicitSectionTagsPresent?: boolean;
-}
-
-export interface LyricSection {
-    sectionId: UUID;
-    type: 'intro' | 'verse' | 'prechorus' | 'chorus' | 'bridge' | 'drop' | 'outro';
-    startLine: number;
-    endLine: number;
-    text: string;
-    emotion?: EmotionArcPoint;
-    narrative?: {
-        verbs: string[];
-        subjects: string[];
-        context: string[];
+    lyrics: {
+        rawText: string;
+        sections?: {
+            label: string; // Verse 1, Chorus
+            lines: { text: string; startSec: number; endSec: number }[];
+        }[];
     };
-    timeRange?: TimeRange;
+    moodKeywords: string[];
 }
 
-export interface EmotionArcPoint {
-    valence?: number; // -1 to 1
-    arousal?: number; // 0 to 1
-    labels?: string[];
+// 4. SHOT STRUCTURE (The Atomic Unit)
+export interface CameraSpec {
+    movement: 'locked' | 'pan' | 'tilt' | 'dolly-in' | 'dolly-out' | 'truck-left' | 'truck-right' | 'orbit' | 'crane-up' | 'crane-down' | 'handheld' | 'drone' | 'zoom-in' | 'zoom-out';
+    angle: 'eye-level' | 'low-angle' | 'high-angle' | 'dutch' | 'overhead';
+    lensFeel: 'wide' | 'normal' | 'telephoto' | 'macro' | 'fisheye';
+    motionSpeed?: 'slow' | 'normal' | 'fast';
 }
 
-export interface TimeRange {
+export interface ShotSubject {
+    characterId: string;
+    screenPosition: 'left' | 'center' | 'right' | 'background';
+    action: string;
+    purpose: 'singing' | 'acting' | 'reacting' | 'instrument';
+}
+
+export interface AudioSync {
+    mode: LipSyncMode;
+    lyricLineText?: string; // The exact line to sync
     startSec: number;
     endSec: number;
-}
-
-// --- 4. Cast & Visuals ---
-
-export interface Cast {
-    lead: Character;
-    band: Character[]; // Max 5
-}
-
-export interface Character {
-    characterId: UUID;
-    role: 'lead-singer' | 'guitarist' | 'bassist' | 'drummer' | 'keys' | 'dj' | 'backing-vocal' | 'other';
-    name: string;
-    genderPresentation?: 'male' | 'female' | 'androgynous' | 'unspecified';
-    ageRange?: 'teen' | '20s' | '30s' | '40s' | '50s+' | 'unspecified';
-    lookSpec?: LookSpec;
-    wardrobeSignature?: string[];
-    instrument?: string;
-    referenceImages?: FileRef[];
-    consistency?: ConsistencySpec;
-}
-
-export interface LookSpec {
-    face?: string; // Descriptive identity text
-    hair?: string;
-    skinTone?: string;
-    distinctiveFeatures?: string[];
-    style?: string; // "realistic", "stylized", "animated"
-}
-
-export interface ConsistencySpec {
-    strictness: 'low' | 'medium' | 'high' | 'locked';
-    lockFace?: boolean;
-    lockWardrobeMotif?: boolean;
-    lockHair?: boolean;
-}
-
-export interface Location {
-    locationId: UUID;
-    name: string;
-    type: 'interior' | 'exterior' | 'stage' | 'studio' | 'virtual';
-    visualNotes: string;
-    referenceFrames?: FileRef[];
-    continuityRules?: string[];
-}
-
-// --- 5. Scene & Shot Structure ---
-
-export interface Scene {
-    sceneId: UUID;
-    index: number;
-    title: string;
-    mappedSectionIds?: UUID[]; // Linked lyric sections
-    locationId: UUID;
-    mood?: {
-        keywords?: string[];
-        lighting?: string;
-        colorGrade?: string;
-    };
-    theme?: string;
-    blockingNotes?: string;
-    performanceNotes?: string;
-    shots: Shot[];
 }
 
 export interface Shot {
-    shotId: UUID;
+    shotId: string;
     index: number;
-    durationSec: number;
-    shotType: 'EWS' | 'WS' | 'MS' | 'CU' | 'ECU' | 'POV' | 'OTS' | 'insert' | 'montage';
+    sceneId: string;
+
+    // Core Visuals
+    shotType: 'EWS' | 'WS' | 'MS' | 'MCU' | 'CU' | 'ECU';
     camera: CameraSpec;
-    lighting?: LightingSpec;
-    subjects: SubjectInShot[];
-    action: string;
-    audioSync?: AudioSyncSpec;
-    promptIntent: PromptIntent; // The generic intent
-    toolRenders?: ToolRender[]; // The results
-}
+    lighting: { style: string; source?: string };
 
-export interface CameraSpec {
-    movement: CameraMovement;
-    movementSpeed?: 'very-slow' | 'slow' | 'medium' | 'fast' | 'snap';
-    angle: 'eye-level' | 'low-angle' | 'high-angle' | 'top-down' | 'dutch';
-    lensFeel: 'wide' | 'normal' | 'telephoto';
-    focalLengthMm?: number;
-    framing?: string;
-    focus?: {
-        depthOfField?: 'deep' | 'medium' | 'shallow';
-        rackFocus?: boolean;
-        rackFrom?: string;
-        rackTo?: string;
+    // Content
+    action: string; // The primary visual description
+    subjects: ShotSubject[];
+    basePrompt: string; // The neutral, tool-agnostic prompt
+
+    // Audio
+    durationSec: number;
+    audioSync: AudioSync;
+
+    // Tool-Specific Prompts (Generated by Compiler)
+    toolPrompts?: {
+        veo?: string;
+        runway?: string;
+        luma?: string;
+        kling?: string;
+        pika?: string;
     };
+
+    // QC Flags
+    qcIssues?: string[];
 }
 
-export type CameraMovement = 'locked' | 'pan' | 'tilt' | 'dolly-in' | 'dolly-out' | 'truck-left' | 'truck-right' | 'orbit' | 'crane-up' | 'crane-down' | 'handheld' | 'drone' | 'zoom-in' | 'zoom-out';
-
-export interface LightingSpec {
-    style?: string;
-    timeOfDay?: 'dawn' | 'day' | 'golden-hour' | 'dusk' | 'night' | 'interior-unknown';
-    practicals?: string[];
-}
-
-export interface SubjectInShot {
-    characterId: UUID;
-    purpose: 'singing' | 'playing' | 'reacting' | 'b-roll' | 'crowd' | 'story';
-    screenPosition?: 'left' | 'center' | 'right' | 'foreground' | 'background';
-    wardrobeOverride?: string;
-}
-
-export interface AudioSyncSpec {
-    mode: 'none' | 'lip-sync-lead' | 'lip-sync-background';
-    lineText?: string;
-    timeRange?: TimeRange;
-    phonemeHints?: string[];
-}
-
-export interface PromptIntent {
-    visualStyle: string;
-    sceneDescription: string;
-    constraints?: string[];
-    negatives?: string[];
-    toolPromptOverrides?: {
-        veo?: ToolPromptOverride;
-        runway?: ToolPromptOverride;
-        pika?: ToolPromptOverride;
-        luma?: ToolPromptOverride;
+// 5. SCENE STRUCTURE
+export interface Scene {
+    sceneId: string;
+    index: number;
+    title: string; // e.g. "Verse 1 - The Bedroom"
+    locationId: string;
+    mood: {
+        visual: string;
+        lighting: string;
+        color: string;
     };
+    narrativeBeat: string;
+    shots: Shot[];
 }
 
-export interface ToolPromptOverride {
-    promptText?: string;
-    negativeText?: string;
-    params?: Record<string, any>;
+export interface Location {
+    locationId: string;
+    name: string;
+    description: string;
+    timeOfDay: 'dawn' | 'day' | 'dusk' | 'night';
+    weather: 'clear' | 'cloudy' | 'rain' | 'storm' | 'fog';
 }
 
-export interface ToolRender {
-    tool: 'veo' | 'runway' | 'pika' | 'luma';
-    status: 'queued' | 'running' | 'succeeded' | 'failed';
-    renderedClip?: FileRef;
-    thumbnail?: FileRef;
-    seed?: string;
-    notes?: string;
-}
+// 6. MASTER PROJECT OBJECT
+export interface StratifyProject {
+    projectId: string;
+    version: number;
 
-// --- 6. Export & Timeline ---
+    // User Intents
+    song: SongData;
+    cast: CastList;
+    locations: Location[];
 
-export interface Timeline {
-    items: TimelineItem[];
-}
+    // Director Brain
+    project: {
+        summary: string;
+        notes?: string; // User's initial idea
+        directorProfile: DirectorProfile;
+        outputSpec: {
+            aspectRatio: AspectRatio;
+            resolution: '1080p' | '4k';
+            contentRating: ContentRating;
+            visualMode: VisualMode;
+        };
+    };
 
-export interface TimelineItem {
-    sceneId: UUID;
-    shotId: UUID;
-    startSec: number;
-    endSec: number;
-    transition?: 'cut' | 'fade' | 'dip-to-black' | 'match-cut' | 'whip-pan';
-}
+    // The Script
+    treatments?: { id: string; title: string; summary: string }[]; // Pitch phase
+    selectedTreatmentId?: string;
 
-export interface ProjectExports {
-    promptPacks?: PromptPackExport[];
-    edl?: EDLExport;
-    pdfDirectorPack?: FileRef;
-}
+    scenes: Scene[]; // The Sequence
 
-export interface PromptPackExport {
-    tool: 'veo' | 'runway' | 'pika' | 'luma';
-    generatedAt: string; // ISO
-    file: FileRef;
-}
-
-export interface EDLExport {
-    format: 'premiere-xml' | 'resolve-xml' | 'cmx3600';
-    file: FileRef;
-}
-
-// --- Shared Helpers ---
-
-export interface FileRef {
-    uri: string;
-    mimeType?: string;
-    sha256?: string;
+    // Export Data
+    edl?: any; // Edit Decision List structure
 }
