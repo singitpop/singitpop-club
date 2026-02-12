@@ -232,3 +232,42 @@ body.mobile-menu-open .header>div:not(.container) {
 .cl-formFieldInfoText {
   color: var(--text-muted) !important;
 }
+
+/* Additional Clerk text visibility fixes */
+.cl-identityPreview__emailAddress,
+.cl-identityPreview__identifier,
+.cl-otpCodeField__resendButton,
+.cl-formResendCodeLink,
+.cl-alternativeMethodsBlockButton,
+.cl-backLink,
+.cl-footerActionLink {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 500 !important;
+}
+
+/* Make "Didn't receive a code?" and similar links more visible */
+.cl-formFieldAction,
+.cl-formFieldAction__link,
+button[class*="resend"],
+a[class*="resend"] {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 600 !important;
+}
+
+/* Ensure all Clerk text is visible */
+.cl-internal-* {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Override any gray/muted colors */
+[class*="cl-"] {
+  color: inherit !important;
+}
+
+/* Specific fix for verification code screen */
+.cl-verificationCodeScreen .cl-identityPreview,
+.cl-verificationCodeScreen .cl-formFieldHintText,
+.cl-verificationCodeScreen .cl-formFieldAction {
+  color: rgba(255, 255, 255, 0.95) !important;
+  opacity: 1 !important;
+}
