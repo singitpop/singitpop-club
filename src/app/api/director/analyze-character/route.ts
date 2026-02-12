@@ -8,18 +8,22 @@ export async function POST(req: NextRequest) {
     }
 
     try {
+        console.log("Analyzing Character: Start");
         const formData = await req.formData();
         const file = formData.get("image") as File;
 
         if (!file) {
+            console.error("No file found in formData");
             return NextResponse.json({ error: "No image provided" }, { status: 400 });
         }
+
+        console.log(`File received: ${file.name} (${file.size} bytes, ${file.type})`);
 
         const buffer = Buffer.from(await file.arrayBuffer());
         const base64Image = buffer.toString("base64");
 
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-001" });
 
         const prompt = `
         Analyze this character image for a music video production.
@@ -36,17 +40,20 @@ export async function POST(req: NextRequest) {
         }
         `;
 
+        console.log("Calling Gemini...");
         const result = await model.generateContent([
             prompt,
             {
                 inlineData: {
                     data: base64Image,
-                    mimeType: file.type
+                    mimeType: file.type || 'image/jpeg'
                 }
             }
         ]);
 
         const responseText = result.response.text();
+        console.log("Gemini Response:", responseText);
+
         const jsonStr = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
         const data = JSON.parse(jsonStr);
 
@@ -54,6 +61,6 @@ export async function POST(req: NextRequest) {
 
     } catch (error: any) {
         console.error("Character Analysis Failed:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: error.message || "Unknown Error" }, { status: 500 });
     }
 }
