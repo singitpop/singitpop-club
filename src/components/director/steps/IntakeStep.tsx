@@ -85,14 +85,7 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                             />
                         </div>
                         <div className="col-span-2">
-                            <label className="block text-xs text-gray-500 mb-1">Audio Filename (for Veo Sync)</label>
-                            <input
-                                type="text"
-                                className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white placeholder-gray-600"
-                                placeholder="my-song.mp3 (Ensure you upload this file to Veo)"
-                                value={project.song.audioFile || ''}
-                                onChange={(e) => handleChange('audioFile', e.target.value)}
-                            />
+                            {/* Audio file is now auto-detected from Song Title via albumData.ts */}
                         </div>
                     </div>
                 </section>

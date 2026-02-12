@@ -25,6 +25,7 @@ const DIAL_CONFIG: { key: keyof InfluenceDials; label: string; desc: string }[] 
 
 export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext, onBack }) => {
 
+    const [isAnalyzing, setIsAnalyzing] = React.useState(false);
     const dials = project.project.directorProfile.influenceDials;
 
     const handleDialChange = (key: keyof InfluenceDials, val: number) => {
@@ -43,13 +44,58 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
         });
     };
 
+    const runAutoAnalysis = async () => {
+        setIsAnalyzing(true);
+        try {
+            const res = await fetch('/api/director/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    song: project.song,
+                    project: project.project
+                })
+            });
+            const suggestedDials = await res.json();
+
+            // Apply them all
+            updateProject({
+                ...project,
+                project: {
+                    ...project.project,
+                    directorProfile: {
+                        ...project.project.directorProfile,
+                        influenceDials: suggestedDials
+                    }
+                }
+            });
+        } catch (e) {
+            console.error("Analysis failed", e);
+            alert("Director is offline. Manual override engaged.");
+        } finally {
+            setIsAnalyzing(false);
+        }
+    };
+
     return (
         <div className="space-y-8 max-w-5xl mx-auto">
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-4">
                 <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">
                     Director's Influence Dials
                 </h2>
-                <p className="text-gray-400">Fine-tune the visual DNA of your music video.</p>
+                <p className="text-gray-400">Review the AI Director's vision. Tweak if you disagree.</p>
+
+                <button
+                    onClick={runAutoAnalysis}
+                    disabled={isAnalyzing}
+                    className="flex items-center gap-2 mx-auto px-6 py-2 bg-purple-900/50 hover:bg-purple-900 border border-purple-500 rounded-full text-purple-200 text-sm font-bold transition-all disabled:opacity-50"
+                >
+                    {isAnalyzing ? (
+                        <span className="animate-spin">⚡</span>
+                    ) : (
+                        <span>✨</span>
+                    )}
+                    {isAnalyzing ? "Director is Analyzing Song..." : "Ask Director to Set Dials"}
+                </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 p-8 bg-black/40 rounded-2xl border border-gray-800">
