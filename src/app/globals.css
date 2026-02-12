@@ -254,16 +254,6 @@ a[class*="resend"] {
   font-weight: 600 !important;
 }
 
-/* Ensure all Clerk text is visible */
-.cl-internal-* {
-  color: rgba(255, 255, 255, 0.9) !important;
-}
-
-/* Override any gray/muted colors */
-[class*="cl-"] {
-  color: inherit !important;
-}
-
 /* Specific fix for verification code screen */
 .cl-verificationCodeScreen .cl-identityPreview,
 .cl-verificationCodeScreen .cl-formFieldHintText,
