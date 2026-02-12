@@ -2,6 +2,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+// Increase body size limit for image uploads (10MB)
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb',
+        },
+    },
+};
+
 export async function POST(req: NextRequest) {
     if (!process.env.GEMINI_API_KEY) {
         return NextResponse.json({ error: "No Gemini API Key" }, { status: 500 });

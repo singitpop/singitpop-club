@@ -118,6 +118,14 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                                     const file = e.target.files?.[0];
                                     if (!file) return;
 
+                                    // Check file size (max 5MB)
+                                    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+                                    if (file.size > maxSize) {
+                                        alert(`Image too large! Please use an image smaller than 5MB.\n\nYour image: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+                                        e.target.value = ''; // Clear the input
+                                        return;
+                                    }
+
                                     // 1. Show Preview (Optional, handled by simple text for now)
                                     // 2. Upload/Analyze
                                     const formData = new FormData();
