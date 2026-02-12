@@ -25,20 +25,18 @@ export async function POST(req: NextRequest) {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-001" });
 
-        const prompt = `
-        Analyze this character image for a music video production.
-        Extract the following visual details strictly:
-        1. Face/Hair Description (detailed)
-        2. Wardrobe/Outfit (detailed)
-        3. General Vibe/Style (keywords)
+        const prompt = `You are a visual analysis AI. Analyze this image and extract character details.
 
-        Output strictly valid JSON:
-        {
-            "face": "string",
-            "wardrobe": "string",
-            "vibe": "string"
-        }
-        `;
+CRITICAL: Respond ONLY with valid JSON. No explanations, no markdown, no extra text.
+
+Required format:
+{
+    "face": "detailed description of face, hair, facial features",
+    "wardrobe": "detailed description of clothing, accessories, style",
+    "vibe": "overall aesthetic vibe in 3-5 keywords"
+}
+
+If no person is visible, use descriptive text like "Abstract design" or "No person visible".`;
 
         console.log("Calling Gemini...");
         const result = await model.generateContent([
@@ -54,8 +52,25 @@ export async function POST(req: NextRequest) {
         const responseText = result.response.text();
         console.log("Gemini Response:", responseText);
 
-        const jsonStr = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+        // More robust JSON extraction
+        let jsonStr = responseText.trim();
+
+        // Remove markdown code blocks
+        jsonStr = jsonStr.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+
+        // Try to find JSON object in the response
+        const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) {
+            throw new Error("No valid JSON found in response");
+        }
+
+        jsonStr = jsonMatch[0];
         const data = JSON.parse(jsonStr);
+
+        // Validate required fields
+        if (!data.face || !data.wardrobe || !data.vibe) {
+            throw new Error("Missing required fields in response");
+        }
 
         return NextResponse.json(data);
 
