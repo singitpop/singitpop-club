@@ -151,9 +151,14 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                                         });
                                         if (btn) btn.innerText = "✅ Look Extracted";
 
-                                    } catch (err) {
-                                        console.error(err);
-                                        alert("Failed to analyze image");
+                                    } catch (err: any) {
+                                        console.error("Image analysis error:", err);
+                                        const btn = document.getElementById('analyze-btn') as HTMLButtonElement;
+                                        if (btn) btn.innerText = "❌ Analysis Failed";
+
+                                        // Show specific error message
+                                        const errorMsg = err.message || "Unknown error occurred";
+                                        alert(`Failed to analyze image: ${errorMsg}\n\nPlease try again or use a different image.`);
                                     }
                                 }}
                                 className="text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-purple-900 file:text-purple-400 hover:file:bg-purple-800"
