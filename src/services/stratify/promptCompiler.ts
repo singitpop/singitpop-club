@@ -14,7 +14,7 @@ export const PromptCompiler = {
         // 3. Resolve Environmental/Style Context
         const styleContext = resolveStyleContext(project, shot);
 
-        if (tools.includes('veo')) results.veo = VeoAdapter.generate(shot, characterContext, audioContext, styleContext);
+        if (tools.includes('veo')) results.veo = VeoAdapter.generate(shot, characterContext, audioContext, styleContext, project);
         if (tools.includes('runway')) results.runway = RunwayAdapter.generate(shot, characterContext, audioContext, styleContext);
         if (tools.includes('luma')) results.luma = LumaAdapter.generate(shot, characterContext, audioContext, styleContext);
         if (tools.includes('kling')) results.kling = KlingAdapter.generate(shot, characterContext, audioContext, styleContext);
@@ -69,7 +69,7 @@ const resolveStyleContext = (project: StratifyProject, shot: Shot): string => {
 // --- ADAPTERS (STRICT RULES) ---
 
 const VeoAdapter = {
-    generate: (shot: Shot, charCtx: string, audioCtx: string, styleCtx: string): string => {
+    generate: (shot: Shot, charCtx: string, audioCtx: string, styleCtx: string, project?: StratifyProject): string => {
         // Veo 3.1 "Master Prompt" Structure:
         // [Medium/Shot Type] of [Subject + Visual DNA] [Action]. [Environment/Lighting]. [Camera Move]. [Technical Specs].
 
@@ -79,6 +79,9 @@ const VeoAdapter = {
 
         if (audioCtx.includes("singing")) {
             prompt += `${audioCtx}. `; // Explicit lip sync instruction
+            if (project?.song.audioFile) {
+                prompt += `[AUDIO REFERENCE: ${project.song.audioFile}] `;
+            }
         }
 
         prompt += `${styleCtx} `;

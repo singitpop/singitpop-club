@@ -58,6 +58,7 @@ export interface SongData {
     bpm: number;
     genre: string;
     subGenre?: string;
+    audioFile?: string; // Filename for Veo/Tool lip-sync
     lyrics: {
         rawText: string;
         sections?: {
