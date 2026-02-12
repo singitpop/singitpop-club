@@ -130,3 +130,105 @@ body.mobile-menu-open .header>div:not(.container) {
     display: none !important;
   }
 }
+
+/* Clerk MFA Code Input Overrides */
+/* Fix for barely visible MFA code boxes */
+.cl-formFieldInput[type="text"],
+.cl-formFieldInput[type="password"],
+.cl-formFieldInput__identifier,
+.cl-formFieldInput__phoneNumber,
+.cl-formFieldInput__verificationCode {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  font-size: 16px !important;
+  padding: 12px !important;
+  border-radius: 8px !important;
+}
+
+.cl-formFieldInput[type="text"]:focus,
+.cl-formFieldInput[type="password"]:focus,
+.cl-formFieldInput__identifier:focus,
+.cl-formFieldInput__phoneNumber:focus,
+.cl-formFieldInput__verificationCode:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+  outline: none !important;
+}
+
+/* Clerk OTP Input (One-Time Password / MFA Code) */
+.cl-otpCodeFieldInput,
+.cl-formFieldInput__otp {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  padding: 16px 8px !important;
+  border-radius: 8px !important;
+  min-width: 48px !important;
+  min-height: 56px !important;
+}
+
+.cl-otpCodeFieldInput:focus,
+.cl-formFieldInput__otp:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  outline: none !important;
+}
+
+/* Clerk Error States */
+.cl-formFieldInput[data-has-error="true"],
+.cl-formFieldInput__error {
+  border-color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Clerk Labels */
+.cl-formFieldLabel {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+  margin-bottom: 8px !important;
+}
+
+/* Clerk Buttons */
+.cl-formButtonPrimary {
+  background-color: var(--primary) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-full) !important;
+  padding: 12px 24px !important;
+  transition: all 0.3s ease !important;
+}
+
+.cl-formButtonPrimary:hover {
+  background-color: #7c3aed !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 0 20px var(--primary-glow) !important;
+}
+
+/* Clerk Card/Modal Background */
+.cl-card,
+.cl-modalContent,
+.cl-signIn-root,
+.cl-signUp-root {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+/* Clerk Text */
+.cl-headerTitle,
+.cl-headerSubtitle,
+.cl-socialButtonsBlockButton__text,
+.cl-formFieldLabel,
+.cl-footerActionText {
+  color: var(--text-main) !important;
+}
+
+.cl-formFieldHintText,
+.cl-formFieldInfoText {
+  color: var(--text-muted) !important;
+}
