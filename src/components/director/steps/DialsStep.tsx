@@ -47,6 +47,9 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
     const runAutoAnalysis = async () => {
         setIsAnalyzing(true);
         try {
+            console.log('[DialsStep] Starting auto-analysis...');
+            console.log('[DialsStep] Song:', project.song.title);
+
             const res = await fetch('/api/director/analyze', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -55,9 +58,31 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                     project: project.project
                 })
             });
+
+            console.log('[DialsStep] Response status:', res.status);
+
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error('[DialsStep] API Error:', errorText);
+                throw new Error(`API returned ${res.status}: ${errorText}`);
+            }
+
             const suggestedDials = await res.json();
+            console.log('[DialsStep] Received dials:', suggestedDials);
+
+            // Check if response has error property
+            if (suggestedDials.error) {
+                throw new Error(suggestedDials.error);
+            }
+
+            // Validate that we got actual dial values
+            if (typeof suggestedDials.blockingPrecision !== 'number') {
+                console.error('[DialsStep] Invalid response format:', suggestedDials);
+                throw new Error('Invalid response format - missing dial values');
+            }
 
             // Apply them all
+            console.log('[DialsStep] Applying dials to project...');
             updateProject({
                 ...project,
                 project: {
@@ -68,9 +93,10 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                     }
                 }
             });
-        } catch (e) {
-            console.error("Analysis failed", e);
-            alert("Director is offline. Manual override engaged.");
+            console.log('[DialsStep] Dials applied successfully!');
+        } catch (e: any) {
+            console.error("[DialsStep] Analysis failed:", e);
+            alert(`Director analysis failed: ${e.message}\n\nPlease check the console for details or set dials manually.`);
         } finally {
             setIsAnalyzing(false);
         }
