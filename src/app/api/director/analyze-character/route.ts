@@ -34,18 +34,20 @@ export async function POST(req: NextRequest) {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-001" });
 
-        const prompt = `You are a visual analysis AI. Analyze this image and extract character details.
+        const prompt = `Analyze this image and extract character visual details.
 
-CRITICAL: Respond ONLY with valid JSON. No explanations, no markdown, no extra text.
+RESPOND WITH ONLY THIS JSON FORMAT - NO OTHER TEXT:
 
-Required format:
 {
-    "face": "detailed description of face, hair, facial features",
-    "wardrobe": "detailed description of clothing, accessories, style",
-    "vibe": "overall aesthetic vibe in 3-5 keywords"
+    "face": "description of face, hair, facial features",
+    "wardrobe": "description of clothing, accessories, style",
+    "vibe": "aesthetic vibe in 3-5 keywords"
 }
 
-If no person is visible, use descriptive text like "Abstract design" or "No person visible".`;
+EXAMPLE VALID RESPONSE:
+{"face":"Young man, short dark hair, light beard, warm brown eyes","wardrobe":"Olive green jacket over beige tank top, white pants, gold chain necklace, bracelet","vibe":"Urban sophisticated, sunset rooftop, modern R&B aesthetic"}
+
+DO NOT include any text before or after the JSON. Start with { and end with }.`;
 
         console.log("Calling Gemini...");
         const result = await model.generateContent([
@@ -59,21 +61,24 @@ If no person is visible, use descriptive text like "Abstract design" or "No pers
         ]);
 
         const responseText = result.response.text();
-        console.log("Gemini Response:", responseText);
+        console.log("Gemini Response (raw):", responseText);
 
         // More robust JSON extraction
         let jsonStr = responseText.trim();
 
-        // Remove markdown code blocks
+        // Remove markdown code blocks if present
         jsonStr = jsonStr.replace(/```json\s*/g, '').replace(/```\s*/g, '');
 
         // Try to find JSON object in the response
         const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
         if (!jsonMatch) {
-            throw new Error("No valid JSON found in response");
+            console.error("Failed to extract JSON. Full response:", responseText);
+            throw new Error(`No valid JSON found. Gemini returned: ${responseText.substring(0, 200)}`);
         }
 
         jsonStr = jsonMatch[0];
+        console.log("Extracted JSON:", jsonStr);
+
         const data = JSON.parse(jsonStr);
 
         // Validate required fields
