@@ -118,18 +118,69 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                                     const file = e.target.files?.[0];
                                     if (!file) return;
 
-                                    // Check file size (max 5MB)
-                                    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
-                                    if (file.size > maxSize) {
-                                        alert(`Image too large! Please use an image smaller than 5MB.\n\nYour image: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
-                                        e.target.value = ''; // Clear the input
+                                    const btn = document.getElementById('analyze-btn') as HTMLButtonElement;
+
+                                    // Compress image to prevent 413 errors (Next.js has ~4.5MB limit)
+                                    const compressImage = async (file: File): Promise<Blob> => {
+                                        return new Promise((resolve, reject) => {
+                                            const reader = new FileReader();
+                                            reader.onload = (e) => {
+                                                const img = new Image();
+                                                img.onload = () => {
+                                                    // Resize to max 1200px (good quality, smaller file)
+                                                    const MAX_SIZE = 1200;
+                                                    let width = img.width;
+                                                    let height = img.height;
+
+                                                    if (width > height) {
+                                                        if (width > MAX_SIZE) {
+                                                            height = (height * MAX_SIZE) / width;
+                                                            width = MAX_SIZE;
+                                                        }
+                                                    } else {
+                                                        if (height > MAX_SIZE) {
+                                                            width = (width * MAX_SIZE) / height;
+                                                            height = MAX_SIZE;
+                                                        }
+                                                    }
+
+                                                    const canvas = document.createElement('canvas');
+                                                    canvas.width = width;
+                                                    canvas.height = height;
+                                                    const ctx = canvas.getContext('2d');
+                                                    ctx?.drawImage(img, 0, 0, width, height);
+
+                                                    canvas.toBlob(
+                                                        (blob) => blob ? resolve(blob) : reject(new Error('Compression failed')),
+                                                        'image/jpeg',
+                                                        0.85 // Good quality
+                                                    );
+                                                };
+                                                img.onerror = reject;
+                                                img.src = e.target?.result as string;
+                                            };
+                                            reader.onerror = reject;
+                                            reader.readAsDataURL(file);
+                                        });
+                                    };
+
+                                    if (btn) btn.innerText = "📸 Compressing...";
+
+                                    let imageBlob: Blob;
+                                    try {
+                                        imageBlob = await compressImage(file);
+                                        console.log(`Image compressed: ${(file.size / 1024).toFixed(0)}KB → ${(imageBlob.size / 1024).toFixed(0)}KB`);
+                                    } catch (err) {
+                                        console.error('Compression failed:', err);
+                                        alert('Failed to process image. Please try a different image.');
+                                        if (btn) btn.innerText = "🎬 Analyze Character";
+                                        e.target.value = '';
                                         return;
                                     }
 
-                                    // 1. Show Preview (Optional, handled by simple text for now)
-                                    // 2. Upload/Analyze
+                                    // Upload compressed image
                                     const formData = new FormData();
-                                    formData.append("image", file);
+                                    formData.append("image", imageBlob, file.name);
 
                                     try {
                                         const btn = document.getElementById('analyze-btn') as HTMLButtonElement;
