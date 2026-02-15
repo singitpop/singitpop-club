@@ -20,6 +20,7 @@ interface AuthContextType {
 
     isLabel: boolean;
     hasTrackAccess: (trackId: string) => boolean;
+    isLoaded: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -85,7 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isPro, isInsider, isLabel, hasTrackAccess }}>
+        <AuthContext.Provider value={{ user, login, logout, isPro, isInsider, isLabel, hasTrackAccess, isLoaded }}>
             {children}
         </AuthContext.Provider>
     );

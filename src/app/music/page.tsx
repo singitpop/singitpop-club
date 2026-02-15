@@ -24,7 +24,7 @@ const isReleased = (dateStr: string) => {
 
 
 function MusicContent() {
-    const { isPro, isLabel, isInsider } = useAuth();
+    const { isPro, isLabel, isInsider, isLoaded } = useAuth();
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -67,6 +67,7 @@ function MusicContent() {
     }, []);
 
     // Set initial Selected Album (Dynamic Logic)
+    // Set initial Selected Album (Dynamic Logic)
     useEffect(() => {
         // Initialize or Update Current Selection
         if (albums.length > 0) {
@@ -86,12 +87,27 @@ function MusicContent() {
 
             const topActiveId = activeAlbums.length > 0 ? activeAlbums[0].id : siteContent.musicPage.latestAlbumId;
 
-            // Update if no selection OR if current selection is invalid (e.g. future album)
-            if (!selectedAlbumId || !activeAlbums.some(a => a.id === selectedAlbumId)) {
+            // Update if no selection OR if current selection is invalid
+            // BUT: Allow VIPs/Labels to keep their selection if it's a valid unreleased album
+            if (!selectedAlbumId) {
                 setSelectedAlbumId(topActiveId);
+            } else {
+                // Wait for Auth to load before redirecting away from potential VIP content
+                if (!isLoaded) return;
+
+                const selectedAlbum = albums.find(a => a.id === selectedAlbumId);
+                if (selectedAlbum) {
+                    const hasAccess = isReleased(selectedAlbum.releaseDate) || isPro || isLabel;
+                    if (!hasAccess) {
+                        setSelectedAlbumId(topActiveId);
+                    }
+                } else {
+                    // Invalid ID
+                    setSelectedAlbumId(topActiveId);
+                }
             }
         }
-    }, [isLoading, albums, selectedAlbumId]);
+    }, [isLoading, albums, selectedAlbumId, isPro, isLabel, isLoaded]);
     // React to albums update
 
     const [filterMode, setFilterMode] = useState<'all' | 'trending' | 'favorites' | 'latest' | 'album'>('latest');
@@ -175,9 +191,11 @@ function MusicContent() {
             const album = albums.find(a => a.id === selectedAlbumId);
             const isReleasedAlbum = album ? isReleased(album.releaseDate) : false;
 
+            const hasAccess = isReleasedAlbum || isPro || isLabel;
+
             return {
-                tracks: (album && isReleasedAlbum) ? album.tracks.map(t => ({ ...t, albumId: album.id })) : [],
-                title: (album && !isReleasedAlbum) ? 'Coming Soon' : (album ? album.title : 'Album not found')
+                tracks: (album && hasAccess) ? album.tracks.map(t => ({ ...t, albumId: album.id })) : [],
+                title: (album && !hasAccess) ? 'Coming Soon' : (album ? album.title : 'Album not found')
             };
         }
 
