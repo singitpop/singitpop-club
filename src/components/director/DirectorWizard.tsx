@@ -23,6 +23,9 @@ const initialProject: Partial<StratifyProject> = {
         band: [],
         principals: []
     },
+    locations: [
+        { locationId: 'loc-1', name: 'Main Set', description: 'Primary performance area', timeOfDay: 'night', weather: 'clear' }
+    ],
     project: {
         summary: '',
         directorProfile: {
