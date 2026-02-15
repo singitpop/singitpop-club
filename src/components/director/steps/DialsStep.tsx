@@ -67,33 +67,37 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                 throw new Error(`API returned ${res.status}: ${errorText}`);
             }
 
-            const suggestedDials = await res.json();
-            console.log('[DialsStep] Received dials:', suggestedDials);
+            const data = await res.json();
+            console.log('[DialsStep] Received analysis data:', data);
 
             // Check if response has error property
-            if (suggestedDials.error) {
-                throw new Error(suggestedDials.error);
+            if (data.error) {
+                throw new Error(data.error);
             }
 
-            // Validate that we got actual dial values
-            if (typeof suggestedDials.blockingPrecision !== 'number') {
-                console.error('[DialsStep] Invalid response format:', suggestedDials);
+            // Validate response format
+            if (!data.dials || typeof data.dials.blockingPrecision !== 'number') {
+                console.error('[DialsStep] Invalid response format:', data);
                 throw new Error('Invalid response format - missing dial values');
             }
 
-            // Apply them all
-            console.log('[DialsStep] Applying dials to project...');
+            // Apply Dials, Themes, and Treatments
+            console.log('[DialsStep] Applying AI vision to project...');
+
             updateProject({
                 ...project,
+                treatments: data.treatments || [], // Save generated treatments
                 project: {
                     ...project.project,
                     directorProfile: {
                         ...project.project.directorProfile,
-                        influenceDials: suggestedDials
+                        influenceDials: data.dials,
+                        coreThemes: data.coreThemes || [] // Save extracted themes
                     }
                 }
             });
-            console.log('[DialsStep] Dials applied successfully!');
+            console.log('[DialsStep] Vision applied successfully!');
+
         } catch (e: any) {
             console.error("[DialsStep] Analysis failed:", e);
             alert(`Director analysis failed: ${e.message}\n\nPlease check the console for details or set dials manually.`);
@@ -122,6 +126,21 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                     )}
                     {isAnalyzing ? "Director is Analyzing Song..." : "Ask Director to Set Dials"}
                 </button>
+
+                {/* CORE THEMES DISPLAY */}
+                {project.project.directorProfile.coreThemes && project.project.directorProfile.coreThemes.length > 0 && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-4 flex flex-wrap justify-center gap-2"
+                    >
+                        {project.project.directorProfile.coreThemes.map((theme, i) => (
+                            <span key={i} className="px-3 py-1 bg-emerald-900/30 border border-emerald-500/30 text-emerald-300 text-xs rounded-full uppercase tracking-wider font-mono">
+                                {theme}
+                            </span>
+                        ))}
+                    </motion.div>
+                )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 p-8 bg-black/40 rounded-2xl border border-gray-800">

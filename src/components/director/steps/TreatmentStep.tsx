@@ -13,7 +13,8 @@ interface StepProps {
 export const TreatmentStep: React.FC<StepProps> = ({ project, updateProject, onNext, onBack }) => {
 
     // Fallback if no treatments exist (mock for MVP if API didn't return them yet)
-    const treatments = project.treatments || [
+    // Use AI-generated treatments if available, otherwise fallback to mocks
+    const treatments = (project.treatments && project.treatments.length > 0) ? project.treatments : [
         { id: 't1', title: 'Neon Noir', summary: 'A high-contrast, moody visual journey through a rain-slicked cyber city. Focus on isolation and reflection.' },
         { id: 't2', title: 'Golden Hour Dream', summary: 'Warm, nostalgic, and solar-flared. Handheld camera work capturing intimate moments in a wheat field at sunset.' },
         { id: 't3', title: 'Studio Performance', summary: 'Clean, high-fashion studio look. stark backgrounds, dynamic lighting changes synced to the beat. Performance heavy.' }
@@ -47,8 +48,8 @@ export const TreatmentStep: React.FC<StepProps> = ({ project, updateProject, onN
                         whileHover={{ scale: 1.02 }}
                         onClick={() => handleSelect(t.id)}
                         className={`p-6 rounded-xl border cursor-pointer transition-all h-full flex flex-col ${project.selectedTreatmentId === t.id
-                                ? 'bg-emerald-900/40 border-emerald-400 shadow-[0_0_30px_rgba(52,211,153,0.3)]'
-                                : 'bg-black/40 border-gray-800 hover:border-gray-600'
+                            ? 'bg-emerald-900/40 border-emerald-400 shadow-[0_0_30px_rgba(52,211,153,0.3)]'
+                            : 'bg-black/40 border-gray-800 hover:border-gray-600'
                             }`}
                     >
                         <h3 className={`text-xl font-bold mb-3 ${project.selectedTreatmentId === t.id ? 'text-emerald-400' : 'text-white'

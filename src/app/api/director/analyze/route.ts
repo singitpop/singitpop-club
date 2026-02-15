@@ -113,27 +113,41 @@ export async function POST(req: NextRequest) {
 
         // 3. Construct Prompt (Multimodal or Text)
         const promptText = `
-        Act as a World-Class Music Video Director.
+        Act as a World-Class Music Video Director (A24 / Hype Williams style).
         Analyze the ${filePart ? "attached audio file AND" : ""} details below.
-        Determine the 10 Cinematic Influence Dials (0-100) that best suit the vibe, genre, ${filePart ? "AUDIO CHARACTERISTICS (Tempo, Timbre, Energy)," : ""} and lyrics.
+
+        1. IDENTIFY 5 CORE THEMES: Abstract, emotional, or narrative themes hidden in the lyrics (e.g. "Healing as a Quiet Process", "Urban Isolation").
+        2. GENERATE 3 DISTINCT PITCH CONCEPTS (Treatments):
+           - Concept T1: Highly distinct visual direction (e.g. Neon Noir).
+           - Concept T2: A contrasting approach (e.g. Golden Hour Realism).
+           - Concept T3: An avant-garde or performance-focused approach.
+        3. SET 10 INFLUENCE DIALS (0-100): Based on the song's energy and the themes.
         
         Song: "${song.title}" by ${song.artist}
         Genre: ${song.genre}
-        Lyrics Snippet: "${song.lyrics.rawText?.substring(0, 300)}..."
+        Lyrics Snippet: "${song.lyrics.rawText?.substring(0, 1000)}..."
         Director's Note: ${project?.summary || "No specific notes."}
 
         Return ONLY a JSON object with this exact structure (no markdown):
         {
-            "blockingPrecision": number,
-            "motivatedCamera": number,
-            "wonderAndScale": number,
-            "intimateEmotion": number,
-            "rhythmicMontage": number,
-            "naturalism": number,
-            "stylizedSymmetry": number,
-            "highContrastMood": number,
-            "longTakeConfidence": number,
-            "iconicHeroFrames": number
+            "coreThemes": ["Theme 1", "Theme 2", "Theme 3", "Theme 4", "Theme 5"],
+            "treatments": [
+                { "id": "t1", "title": "Concept Title", "summary": "2-sentence visual pitch." },
+                { "id": "t2", "title": "Concept Title", "summary": "2-sentence visual pitch." },
+                { "id": "t3", "title": "Concept Title", "summary": "2-sentence visual pitch." }
+            ],
+            "dials": {
+                "blockingPrecision": number,
+                "motivatedCamera": number,
+                "wonderAndScale": number,
+                "intimateEmotion": number,
+                "rhythmicMontage": number,
+                "naturalism": number,
+                "stylizedSymmetry": number,
+                "highContrastMood": number,
+                "longTakeConfidence": number,
+                "iconicHeroFrames": number
+            }
         }
         `;
 
@@ -142,14 +156,18 @@ export async function POST(req: NextRequest) {
 
         const result = await model.generateContent(parts);
         const responseText = result.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
-        const dials = JSON.parse(responseText) as InfluenceDials;
+        const data = JSON.parse(responseText);
+
+        // Transform to expected frontend format (flattening if needed, but we'll return the whole object)
+        // Frontend expects just dials by default, but we'll send the enhanced object.
+        // We'll let the frontend destructure it.
 
         // Cleanup
         if (tempFilePath) {
             await unlink(tempFilePath).catch(err => console.error("Temp cleanup failed", err));
         }
 
-        return NextResponse.json(dials);
+        return NextResponse.json(data);
 
     } catch (error: any) {
         console.error("Director Analysis Failed:", error);

@@ -157,6 +157,12 @@ export interface Location {
     weather: 'clear' | 'cloudy' | 'rain' | 'storm' | 'fog';
 }
 
+export interface Treatment {
+    id: string;
+    title: string;
+    summary: string;
+}
+
 // 6. MASTER PROJECT OBJECT
 export interface StratifyProject {
     projectId: string;
@@ -171,7 +177,9 @@ export interface StratifyProject {
     project: {
         summary: string;
         notes?: string; // User's initial idea
-        directorProfile: DirectorProfile;
+        directorProfile: DirectorProfile & {
+            coreThemes?: string[]; // New: AI-detected themes
+        };
         outputSpec: {
             aspectRatio: AspectRatio;
             resolution: '1080p' | '4k';
@@ -181,7 +189,7 @@ export interface StratifyProject {
     };
 
     // The Script
-    treatments?: { id: string; title: string; summary: string }[]; // Pitch phase
+    treatments?: Treatment[]; // Pitch phase
     selectedTreatmentId?: string;
 
     scenes: Scene[]; // The Sequence
