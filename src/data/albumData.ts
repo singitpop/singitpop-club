@@ -1,7 +1,7 @@
 /**
  * Album Data
  * Auto-generated from Excel spreadsheet
- * Generated: 2026-02-05T18:21:02.896Z
+ * Generated: 2026-02-15T19:30:50.429Z
  * 
  * Source: /Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx
  * Albums folder: /Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE
@@ -9,183 +9,180 @@
  */
 
 export interface Track {
-  id: number;
-  title: string;
-  duration: string;
-  plays: string;
-  locked: boolean;
-  price: number;
-  genre: string;
-  highResUrl?: string;
-  audioUrl?: string;
-  albumId?: string;
-  sourceFolder?: string;
-  isSingle?: boolean;
+    id: number;
+    title: string;
+    duration: string;
+    plays: string;
+    locked: boolean;
+    price: number;
+    genre: string;
+    highResUrl?: string;
+    audioUrl?: string;
+    albumId?: string;
+    sourceFolder?: string;
+    isSingle?: boolean;
 }
 
 export interface Album {
-  id: string;
-  title: string;
-  year: number;
-  genre: string[];
-  coverArt: string;
-  tracks: Track[];
-  releaseDate: string;
-  description?: string;
-  featured?: boolean;
-  trending?: boolean;
-  folderPath?: string;
-  mp3Count?: number;
-  type?: 'studio' | 'live' | 'standard';
-  coverImageName?: string;
+    id: string;
+    title: string;
+    year: number;
+    genre: string[];
+    coverArt: string;
+    tracks: Track[];
+    releaseDate: string;
+    description?: string;
+    featured?: boolean;
+    trending?: boolean;
+    folderPath?: string;
+    mp3Count?: number;
+    type?: 'studio' | 'live' | 'standard';
 }
 
 export const albums: Album[] = [
   {
     "id": "may-in-motion-2026",
-    "title": "May in Motion",
+    "title": "May In Motion",
     "year": 2026,
     "genre": [
-      "Dance Pop"
+      "R&B"
     ],
     "coverArt": "/albums/artwork/may-in-motion-2026.jpg",
     "tracks": [
       {
         "id": 1,
-        "title": "Almost June",
+        "title": "Bloom Again",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Almost%20June/Almost%20June.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Almost%20June/Almost%20June.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Bloom%20Again.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Bloom%20Again.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
       },
       {
         "id": 2,
-        "title": "Bloom Again",
+        "title": "Almost June",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Bloom%20Again/Bloom%20Again.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Bloom%20Again/Bloom%20Again.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Almost%20June.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Almost%20June.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": true
       },
       {
         "id": 3,
-        "title": "Flowers Still Open",
+        "title": "Flowers Still Open ",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Flowers%20still%20open/Flowers%20Still%20Open.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Flowers%20still%20open/Flowers%20Still%20Open.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Flowers%20Still%20Open.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Flowers%20Still%20Open.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": true
       },
       {
         "id": 4,
-        "title": "Heatwave Texts",
+        "title": "We still know where we start",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Heatwave%20Texts/Heatwave%20Texts.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Heatwave%20Texts/Heatwave%20Texts.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/We%20still%20know%20where%20we%20start.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/We%20still%20know%20where%20we%20start.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
-        "isSingle": true
+        "isSingle": false
       },
       {
         "id": 5,
-        "title": "Late Checkout",
+        "title": "Soft Weather ",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Late%20Checkout/Late%20Checkout.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Late%20Checkout/Late%20Checkout.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Soft%20Weather.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Soft%20Weather.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
       },
       {
         "id": 6,
-        "title": "Only Green Lights",
+        "title": "Late Checkout",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Only%20Green%20Lights/Only%20Green%20Lights.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Only%20Green%20Lights/Only%20Green%20Lights.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Late%20Checkout.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Late%20Checkout.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
       },
       {
         "id": 7,
-        "title": "Soft Weather",
+        "title": "Green Lights Only ",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Soft%20Weather/Soft%20Weather.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Soft%20Weather/Soft%20Weather.mp3",
+        "genre": "R&B",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
       },
       {
         "id": 8,
-        "title": "Talk is Cheap",
+        "title": "Talk Is Cheap",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Talk%20is%20Cheap/Talk%20is%20Cheap.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Talk%20is%20Cheap/Talk%20is%20Cheap.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Talk%20Is%20Cheap.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Talk%20Is%20Cheap.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
       },
       {
         "id": 9,
-        "title": "We Still Know Where We Start",
+        "title": "Window Seat Feelings",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/We%20Still%20Know%20Where%20We%20Start/We%20Still%20Know%20Where%20We%20Start.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/We%20Still%20Know%20Where%20We%20Start/We%20Still%20Know%20Where%20We%20Start.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Window%20Seat%20Feelings.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Window%20Seat%20Feelings.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
       },
       {
         "id": 10,
-        "title": "Window Seat Feelings",
+        "title": "Heatwave Texts ",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Windows%20Seat%20Feelings/Window%20Seat%20Feelings.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Windows%20Seat%20Feelings/Window%20Seat%20Feelings.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Heatwave%20Texts.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Heatwave%20Texts.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
@@ -197,9 +194,9 @@ export const albums: Album[] = [
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/stay%20the%20night/Stay%20the%20Night.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/stay%20the%20night/Stay%20the%20Night.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Stay%20the%20Night.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Stay%20the%20Night.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
@@ -211,19 +208,19 @@ export const albums: Album[] = [
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Dance Pop",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/sunset%20on%20repeat/Sunset%20on%20Repeat.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/sunset%20on%20repeat/Sunset%20on%20Repeat.mp3",
+        "genre": "R&B",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Sunset%20on%20Repeat.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Sunset%20on%20Repeat.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
       }
     ],
-    "releaseDate": "2026-05-29",
+    "releaseDate": "2026-05-01",
     "folderPath": "May In Motion",
-    "mp3Count": 12,
+    "mp3Count": 24,
     "type": "standard",
-    "trending": true
+    "trending": false
   },
   {
     "id": "april-comes-soft-2026",
@@ -376,7 +373,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Let it Settle",
+        "title": "Let It Settle",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -518,7 +515,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Where the Light Comes in ",
+        "title": "Where the Light Comes In ",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -786,7 +783,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Still Winter in My Chest",
+        "title": "still winter in my chest",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -814,7 +811,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Petals in the Air",
+        "title": "Petals in the air",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -828,7 +825,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Awake Awake",
+        "title": "awake awake",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -842,7 +839,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Where the Colours Come From",
+        "title": "where the colours come from",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -854,7 +851,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "The Garden We Forgot",
+        "title": "the garden we forgot",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -868,7 +865,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Brighter Than the Breaking",
+        "title": "brighter than the breaking",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -882,7 +879,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "March Comes Carrying Light",
+        "title": "march comes carrying light",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -894,7 +891,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "What We Plant in Ourselves",
+        "title": "what we plant in ourselves",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -906,7 +903,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Bloom My Heart Again",
+        "title": "bloom my heart again",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -918,7 +915,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "The Shape of Joy Returning",
+        "title": "the shape of joy returning",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -932,7 +929,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Spring Begins in You Finale",
+        "title": "spring begins in you finale",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -974,7 +971,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Hold Me Like Home",
+        "title": "hold me like home",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -988,7 +985,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Sweet Tea Kisses",
+        "title": "sweet tea kisses",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1002,7 +999,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Love You Better Than Yesterday",
+        "title": "Love you better than yesterday",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1016,7 +1013,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Red Roses and Them Old Boots",
+        "title": "red roses and them old boots",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1028,7 +1025,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Two Heart One Highway",
+        "title": "two heart one highway",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1040,7 +1037,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Under the Valentine Moon",
+        "title": "under the valentine moon",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1054,7 +1051,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Closer Than the Stars",
+        "title": "closer than the stars",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1068,7 +1065,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "When You Call Me Yours",
+        "title": "when you call me yours",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1082,7 +1079,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Firelight and Forever",
+        "title": "firelight and forever",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1096,7 +1093,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Love You Like Sunday Morning",
+        "title": "love you like Sunday morning",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1110,7 +1107,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Forever Starts Tonight",
+        "title": "forever starts tonight",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1125,7 +1122,6 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2026-01-30",
     "folderPath": "Valentine Country",
-    "coverImageName": "Cover.png",
     "mp3Count": 36,
     "type": "standard",
     "trending": true
@@ -1141,7 +1137,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Slow Motion Love",
+        "title": "slow motion love",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1155,7 +1151,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Hold Me Closer Tonight",
+        "title": "hold me closer tonight",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1169,7 +1165,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "You Are My Valentine",
+        "title": "you are my valentine",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1183,7 +1179,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Unspoken Fire",
+        "title": "unspoken fire",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1197,7 +1193,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "The First Time I Saw You",
+        "title": "the first time I saw you",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1211,7 +1207,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Moonlit Hearts",
+        "title": "moonlit hearts",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1225,7 +1221,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Stay in Your Arms",
+        "title": "stay in your arms",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1237,7 +1233,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Roses and Reverie",
+        "title": "roses and reverie",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1251,7 +1247,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Breathless When You're Near",
+        "title": "breathless when you're near",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1263,7 +1259,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Falling for Forever",
+        "title": "falling for forever",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1277,7 +1273,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Strings of You",
+        "title": "strings of you",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1291,7 +1287,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "A Love That Never Ends",
+        "title": "a love that never ends",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1321,7 +1317,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "The Silent Conversation",
+        "title": "the silent conversation",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1335,7 +1331,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "In the Stillness We Speak",
+        "title": "in the stillness we speak",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1349,7 +1345,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "The Distance Between",
+        "title": "the distance between",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1363,7 +1359,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Voices on the Wind",
+        "title": "voices on the wind",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1377,7 +1373,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Signal to Noise",
+        "title": "signal to noise",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1391,7 +1387,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Falling Through Time",
+        "title": "falling through time",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1405,7 +1401,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "A Wall of Words",
+        "title": "a wall of words",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1418,7 +1414,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Reflections in the Rain",
+        "title": "reflections in the rain",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1432,7 +1428,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "The Divide",
+        "title": "the divide",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1446,7 +1442,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Voices Return",
+        "title": "voices return",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1460,7 +1456,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "The Light We Leve Behind",
+        "title": "the light we leve behind",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1472,7 +1468,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Whispers in the Sky",
+        "title": "whispers in the sky",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1486,7 +1482,7 @@ export const albums: Album[] = [
       },
       {
         "id": 13,
-        "title": "Beneath the Falling Sky",
+        "title": "beneath the falling sky",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1500,7 +1496,7 @@ export const albums: Album[] = [
       },
       {
         "id": 14,
-        "title": "The Silent Conversation Reprise",
+        "title": "the silent conversation reprise",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1521,7 +1517,7 @@ export const albums: Album[] = [
   },
   {
     "id": "desert-winds-and-open-roads-2026",
-    "title": "Desert Winds and Open Roads",
+    "title": "Desert Winds And Open Roads",
     "year": 2026,
     "genre": [
       "Country"
@@ -1530,7 +1526,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Riding Down the Line",
+        "title": "riding down the line",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1544,7 +1540,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Desert Winds",
+        "title": "desert winds",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1558,7 +1554,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Long Night at Silver Canyon",
+        "title": "long night at silver canyon",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1572,7 +1568,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Goodbye California",
+        "title": "goodbye california",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1586,7 +1582,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "One More Chance to Fly",
+        "title": "one more chance to fly",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1600,7 +1596,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Whiskey and Wild Horses",
+        "title": "whiskey and wild horses",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1614,7 +1610,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Stars over Highway 9",
+        "title": "stars over highway 9",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1626,7 +1622,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Hold on to the Light",
+        "title": "hold on to the light",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1640,7 +1636,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Hotel Starlight Blues",
+        "title": "hotel starlight blues",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1654,7 +1650,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Running Out of Tomorrows",
+        "title": "running out of tomorrows",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1668,7 +1664,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Empty Rooms and Open Skies",
+        "title": "empty rooms and open skies",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1682,7 +1678,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "The Last Sunset in Santa Fe",
+        "title": "the last sunset in santa fe",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1697,14 +1693,13 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2026-01-16",
     "folderPath": "Desert Winds And Open Roads",
-    "coverImageName": "Cover.png",
     "mp3Count": 33,
     "type": "standard",
     "trending": true
   },
   {
     "id": "step-into-the-light-2025",
-    "title": "Step into the Light",
+    "title": "Step Into the Light",
     "year": 2025,
     "genre": [
       "Country"
@@ -1713,7 +1708,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Golden Hour in the Valley",
+        "title": "golden hour in the valley",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1727,7 +1722,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Whisper of the Pines",
+        "title": "whisper of the pines",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1741,7 +1736,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Starlight Serenade",
+        "title": "starlight serenade",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1755,7 +1750,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Painted Skies",
+        "title": "painted skies",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1769,7 +1764,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Shine All Night",
+        "title": "shine all night",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1783,7 +1778,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Fields of Forever",
+        "title": "fields of forever",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1797,7 +1792,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "The Valley Sings",
+        "title": "the valley sings",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1811,7 +1806,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Valley of Dreams",
+        "title": "valley of dreams",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1825,7 +1820,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Heaven in the Hills",
+        "title": "heaven in the hills",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1837,7 +1832,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Harvest Moon Glow",
+        "title": "harvest moon glow",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1851,7 +1846,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Horizons Embrace",
+        "title": "horizons embrace",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1865,7 +1860,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Golden Hour Finale",
+        "title": "golden hour finale",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -1880,7 +1875,6 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-12-08",
     "folderPath": "Live Step Into the Light",
-    "coverImageName": "Cover.png",
     "mp3Count": 40,
     "type": "standard",
     "trending": false
@@ -1994,7 +1988,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Euphoria (let Go)",
+        "title": "Euphoria (Let Go)",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2080,7 +2074,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Caroling at the Feed Store",
+        "title": "caroling at the feed store",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2094,7 +2088,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Christmas Tree Farm Days",
+        "title": "christmas tree farm days",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2108,7 +2102,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Coal for Christmas",
+        "title": "coal for christmas",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2122,7 +2116,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Hot Cocoa and Honky Tonk",
+        "title": "hot cocoa and honky tonk",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2136,7 +2130,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Jingle Bell Rodeo",
+        "title": "jingle bell rodeo",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2150,7 +2144,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Letters in the Snow",
+        "title": "letters in the snow",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2164,7 +2158,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Merry in the Mountains",
+        "title": "merry in the mountains",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2178,7 +2172,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Midnight Mass in Nashville",
+        "title": "midnight mass in nashville",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2192,7 +2186,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "New Years Eve in the Barn",
+        "title": "new years eve in the barn",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2206,7 +2200,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Snowflakes on the Front Porch",
+        "title": "snowflakes on the front porch",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2220,7 +2214,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Stockings and Saddle Boots",
+        "title": "stockings and saddle boots",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2234,7 +2228,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "The Lights on Route 9",
+        "title": "the lights on route 9",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2262,7 +2256,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Candy Cane Crush",
+        "title": "candy cane crush",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2276,7 +2270,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Final Sparkle",
+        "title": "final sparkle",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2290,7 +2284,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Frostbyte Love",
+        "title": "frostbyte love",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2304,7 +2298,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Glitter and Ice",
+        "title": "glitter and ice",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2318,7 +2312,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Heart on Ice",
+        "title": "heart on ice",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2332,7 +2326,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Midnight Sleigh Ride",
+        "title": "midnight sleigh ride",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2346,7 +2340,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Mistletoe Mirage",
+        "title": "mistletoe mirage",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2360,7 +2354,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Neon Slowfall",
+        "title": "neon slowfall",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2372,7 +2366,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "North Pole Frequency",
+        "title": "north pole frequency",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2386,7 +2380,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Sleigh My Name",
+        "title": "Sleigh my name",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2400,7 +2394,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Sleighbells and Synths",
+        "title": "sleighbells and synths",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2412,7 +2406,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Starlight Carol",
+        "title": "starlight carol",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2580,7 +2574,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Flicker Through the Cold",
+        "title": "Flicker through the cold",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2636,7 +2630,7 @@ export const albums: Album[] = [
       },
       {
         "id": 15,
-        "title": "Dawn of Reverie",
+        "title": "Dawn Of Reverie",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2657,7 +2651,7 @@ export const albums: Album[] = [
   },
   {
     "id": "live-at-autumn-lights-2025",
-    "title": "Live at Autumn Lights",
+    "title": "Live At Autumn Lights",
     "year": 2025,
     "genre": [
       "Country"
@@ -2806,7 +2800,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Two-step in November",
+        "title": "Two-Step in November",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2864,7 +2858,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "City After Rain",
+        "title": "city after rain",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2892,7 +2886,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Glass Horizon",
+        "title": "glass horizon",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2906,7 +2900,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Autumn Skin",
+        "title": "autumn skin",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2920,7 +2914,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Winter Touch",
+        "title": "winter touch",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2934,7 +2928,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Last Leaves",
+        "title": "last leaves",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2948,7 +2942,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Midnight Ember",
+        "title": "midnight ember",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2962,7 +2956,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "The Streetlamp Song",
+        "title": "the streetlamp song",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2976,7 +2970,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Frostline",
+        "title": "frostline",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2990,7 +2984,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Between the Fog",
+        "title": "between the fog",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3004,7 +2998,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "The Last November",
+        "title": "the last november",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3019,7 +3013,6 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-11-01",
     "folderPath": "November Nights",
-    "coverImageName": "Cover.png",
     "mp3Count": 26,
     "type": "standard",
     "trending": false
@@ -3105,7 +3098,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Holding on to Yesterday",
+        "title": "Holding On to Yesterday",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3578,7 +3571,7 @@ export const albums: Album[] = [
   },
   {
     "id": "hallowave-dance-of-the-shadows-2025",
-    "title": "Hallowave Dance of the Shadows",
+    "title": "Hallowave Dance of the shadows",
     "year": 2025,
     "genre": [
       "Dance Pop",
@@ -3588,7 +3581,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Trick or Beat",
+        "title": "trick or beat",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3602,7 +3595,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Blood Moon Rising",
+        "title": "blood moon rising",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3616,7 +3609,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Cursed Mirror",
+        "title": "cursed mirror",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3642,7 +3635,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Midnight Mark",
+        "title": "midnight mark",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3656,7 +3649,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Room 13",
+        "title": "room 13",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3668,7 +3661,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Witching Hour",
+        "title": "witching hour",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3682,7 +3675,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Shadow Pulse",
+        "title": "shadow pulse",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3696,7 +3689,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Graveyard Bounce",
+        "title": "graveyard bounce",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3710,7 +3703,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "In the Fog",
+        "title": "in the fog",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3724,7 +3717,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Midnight Masquerade",
+        "title": "midnight masquerade",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3738,7 +3731,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Final Spell",
+        "title": "final spell",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3752,7 +3745,7 @@ export const albums: Album[] = [
       },
       {
         "id": 13,
-        "title": "Blood Moon Rising Dance Edit",
+        "title": "blood moon rising dance edit",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3766,7 +3759,7 @@ export const albums: Album[] = [
       },
       {
         "id": 14,
-        "title": "Midnight Masquerade Dance Edit",
+        "title": "midnight masquerade dance edit",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3780,7 +3773,7 @@ export const albums: Album[] = [
       },
       {
         "id": 15,
-        "title": "Final Spell Dance Edit",
+        "title": "final spell dance edit",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -3994,7 +3987,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Crossroads Calling",
+        "title": "Crossroads calling",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4008,7 +4001,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Echoes of Yesterday",
+        "title": "echoes of yesterday",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4036,7 +4029,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Open Horizons",
+        "title": "Open horizons",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4050,7 +4043,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Rivers Run Deep",
+        "title": "rivers run deep",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4064,7 +4057,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Signs Along the Way",
+        "title": "Signs along the way",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4078,7 +4071,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "The Compass in My Soal",
+        "title": "the compass in my soal",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4090,7 +4083,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "The Journey Within",
+        "title": "The Journey within",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4104,7 +4097,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "The Road We Make",
+        "title": "the road we make",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4118,7 +4111,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Turning Leaves",
+        "title": "turning leaves",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4132,7 +4125,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Winding Road Finale",
+        "title": "winding road finale",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4144,7 +4137,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Winding Roads",
+        "title": "winding roads",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4613,12 +4606,14 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Glitter & Chrome",
+        "title": "Glitter and Chrome",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Disco",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/Glitter%20and%20Chrome.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/Glitter%20and%20Chrome.mp3",
         "sourceFolder": "Midnight Motion",
         "albumId": "midnight-motion-2025",
         "isSingle": true
@@ -4725,7 +4720,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Built from the Ground",
+        "title": "built from the ground",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4739,7 +4734,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Diamonds in the Dust",
+        "title": "diamonds in the dust",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4753,7 +4748,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Dust and Diamonds",
+        "title": "dust and diamonds",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4767,7 +4762,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Dust on My Boots",
+        "title": "dust on my boots",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4781,7 +4776,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Fields of Fortune",
+        "title": "fields of fortune",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4795,7 +4790,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Hard Road to Heaven",
+        "title": "hard road to heaven",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4809,7 +4804,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Iron and Ember",
+        "title": "iron and ember",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4823,7 +4818,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Rough Hands Bright Dreeams",
+        "title": "rough hands bright dreeams",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4835,7 +4830,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Shine in the Struggle",
+        "title": "shine in the struggle",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4849,7 +4844,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "The Grind Keeps Turning",
+        "title": "the grind keeps turning",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4863,7 +4858,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "The Spark Beneath the Stone",
+        "title": "the spark beneath the stone",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4877,7 +4872,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Through the Ashes",
+        "title": "through the ashes",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4907,7 +4902,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Echos of the Night",
+        "title": "echos of the night",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4919,7 +4914,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Evening Serernade",
+        "title": "evening serernade",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4931,7 +4926,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Fading Glow",
+        "title": "fading glow",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4945,7 +4940,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Falling Light",
+        "title": "falling light",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4959,7 +4954,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Golden Light",
+        "title": "golden light",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4973,7 +4968,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Silent Breeze",
+        "title": "silent breeze",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -4987,7 +4982,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Silent Gold",
+        "title": "silent gold",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5001,7 +4996,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Soft Shadows",
+        "title": "soft shadows",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5015,7 +5010,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Timeless Glow",
+        "title": "timeless glow",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5029,7 +5024,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Twilight Glow",
+        "title": "twilight glow",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5043,7 +5038,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Velvet Skies",
+        "title": "velvet skies",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5057,7 +5052,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Whispered Nights",
+        "title": "whispered nights",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5223,7 +5218,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Two-step Devil",
+        "title": "Two-Step Devil",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5279,7 +5274,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Cowboy up Tonight",
+        "title": "Cowboy Up Tonight",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5293,7 +5288,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Dust and Dreams - Single",
+        "title": "Dust and Dreams - single",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5333,7 +5328,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Neon Boot Scooting - Single",
+        "title": "Neon Boot Scooting - single",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5373,7 +5368,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Turn it Loose ",
+        "title": "Turn It Loose ",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5387,7 +5382,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Two-steppin' Dreamer",
+        "title": "Two-Steppin' Dreamer",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5401,7 +5396,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Whiskey Slide - Single",
+        "title": "Whiskey Slide - single",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5443,7 +5438,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Beach Vibes Only",
+        "title": "beach vibes only",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5457,7 +5452,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Cherry Soda Pop",
+        "title": "cherry soda pop",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5471,7 +5466,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Endless Summer",
+        "title": "endless summer",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5485,7 +5480,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Glow Up",
+        "title": "glow up",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5499,7 +5494,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Golden Hour",
+        "title": "golden hour",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5513,7 +5508,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Heatwave High",
+        "title": "heatwave high",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5527,7 +5522,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Ice Cream Crush",
+        "title": "ice cream crush",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5541,7 +5536,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Party on the Boardwalk",
+        "title": "party on the boardwalk",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5555,7 +5550,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Poolside Groove",
+        "title": "poolside groove",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5569,7 +5564,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Summer Crush Anthem",
+        "title": "summer crush anthem",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5583,7 +5578,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Tides and Tramlines",
+        "title": "tides and tramlines",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5595,7 +5590,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Tropical Bliss",
+        "title": "tropical bliss",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5625,7 +5620,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Born to Run",
+        "title": "born to run",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5639,7 +5634,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Breaking Chains",
+        "title": "breaking chains",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5653,7 +5648,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Chasing Fire",
+        "title": "chasing fire",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5667,7 +5662,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Dare to Dream",
+        "title": "dare to dream",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5681,7 +5676,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Edge of the World",
+        "title": "edge of the world",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5695,7 +5690,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Forever Bold",
+        "title": "forever bold",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5723,7 +5718,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Rise Up",
+        "title": "rise up",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5737,7 +5732,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Skys the Limit",
+        "title": "skys the limit",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5751,7 +5746,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Stronger Now",
+        "title": "stronger now",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5765,7 +5760,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Take the Leap",
+        "title": "take the leap",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -5991,7 +5986,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Endless Sky",
+        "title": "endless sky",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6005,7 +6000,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Eternal Summer",
+        "title": "eternal summer",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6019,7 +6014,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Golden Horizon",
+        "title": "golden horizon",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6033,7 +6028,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Gravity",
+        "title": "gravity",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6047,7 +6042,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Infinite Love",
+        "title": "infinite love",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6061,7 +6056,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Into the Deep",
+        "title": "into the deep",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6075,7 +6070,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Midnight Waves",
+        "title": "midnight waves",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6089,7 +6084,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Neon Skyline",
+        "title": "neon skyline",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6103,7 +6098,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Neon Tides",
+        "title": "neon tides",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6117,7 +6112,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Starlit Dreams",
+        "title": "starlit dreams",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6131,7 +6126,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Summers Last Dance",
+        "title": "summers last dance",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6145,7 +6140,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Sunburst Horizon",
+        "title": "sunburst horizon",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6175,7 +6170,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "After the Rain",
+        "title": "After the rain",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6203,7 +6198,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Endless Summer",
+        "title": "endless summer",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6217,7 +6212,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Evening Glow",
+        "title": "evening glow",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6231,7 +6226,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Fleeting Moments",
+        "title": "fleeting moments",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6245,7 +6240,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Forever Bright",
+        "title": "forever bright",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6273,7 +6268,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Golden Hour",
+        "title": "golden hour",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6287,7 +6282,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Hearts in Bloom",
+        "title": "hearts in bloom",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6301,7 +6296,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "In Your Orbit",
+        "title": "In your orbit",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6315,7 +6310,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Shadows and Light",
+        "title": "shadows and light",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6329,7 +6324,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "When We Were Young",
+        "title": "When we were young",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6344,7 +6339,6 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-06-01",
     "folderPath": "Golden Hour",
-    "coverImageName": "Cover.png",
     "mp3Count": 28,
     "type": "standard",
     "trending": false
@@ -6360,7 +6354,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Bridge to You",
+        "title": "bridge to you",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6374,7 +6368,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Echoes of Us",
+        "title": "echoes of us",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6400,7 +6394,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Fading Echoes",
+        "title": "fading echoes",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6414,7 +6408,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Heartbeat in Time",
+        "title": "heartbeat in time",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6428,7 +6422,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Lost and Found",
+        "title": "lost and found",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6442,7 +6436,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "One Voice",
+        "title": "one voice",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6456,7 +6450,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Silent Stars",
+        "title": "silent stars",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6470,7 +6464,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Throught the Mirror",
+        "title": "Throught the mirror",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6482,7 +6476,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Together Alone",
+        "title": "together alone",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6496,7 +6490,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Unspoken Words",
+        "title": "unspoken words",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6510,7 +6504,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Where We Begin",
+        "title": "where we begin",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6540,7 +6534,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Sweet Tea and Summer Nights",
+        "title": "Sweet tea and summer nights",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6568,7 +6562,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Porch Swing Love",
+        "title": "Porch swing love",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6582,7 +6576,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Home Fires Burning",
+        "title": "Home fires burning",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6610,7 +6604,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Roots Run Deep",
+        "title": "Roots run deep",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6624,7 +6618,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Small Town Saturday Nights",
+        "title": "Small town Saturday nights",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6636,7 +6630,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Hometown Heros",
+        "title": "hometown heros",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6662,7 +6656,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Dirtroads and Day Dreams",
+        "title": "dirtroads and day dreams",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6674,7 +6668,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Backyard Barbecue",
+        "title": "backyard barbecue",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6688,7 +6682,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Where I Belong",
+        "title": "Where I belong",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6718,7 +6712,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Aurora over Aviemore",
+        "title": "Aurora Over Aviemore",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6900,7 +6894,7 @@ export const albums: Album[] = [
       },
       {
         "id": 14,
-        "title": "The Spirit of Alba",
+        "title": "The spirit of Alba",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6919,7 +6913,7 @@ export const albums: Album[] = [
   },
   {
     "id": "empire-under-lights-2025",
-    "title": "Empire under Lights",
+    "title": "Empire Under lights",
     "year": 2025,
     "genre": [
       "EDM"
@@ -6984,7 +6978,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "From the Block",
+        "title": "From The Block",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7110,7 +7104,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "A New Dawn",
+        "title": "A new Dawn",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7124,7 +7118,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Baskets and Blessings",
+        "title": "baskets and blessings",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7138,7 +7132,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Butterflies and Dreams",
+        "title": "butterflies and dreams",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7152,7 +7146,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Easter Parade",
+        "title": "easter parade",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7166,7 +7160,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Fields of Bloom",
+        "title": "fields of bloom",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7180,7 +7174,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Golden Sunrise",
+        "title": "Golden sunrise",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7208,7 +7202,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Light in the Sky",
+        "title": "light in the sky",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7222,7 +7216,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Rise Up",
+        "title": "rise up",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7236,7 +7230,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Spring Awakening",
+        "title": "spring awakening",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7250,7 +7244,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Spring in My Step",
+        "title": "spring in my step",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7264,7 +7258,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "The Promise",
+        "title": "the promise",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7294,7 +7288,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Echos of Us",
+        "title": "Echos Of Us",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7336,7 +7330,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Hold on Tight",
+        "title": "Hold On Tight",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7420,7 +7414,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Say it Again",
+        "title": "Say It Again",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7478,7 +7472,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Dancing in the Stars",
+        "title": "dancing in the stars",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7492,7 +7486,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Beyond the Horizon",
+        "title": "beyond the horizon",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7506,7 +7500,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Cosmic Vibes",
+        "title": "cosmic vibes",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7534,7 +7528,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Glactic Dreams",
+        "title": "glactic dreams",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7546,7 +7540,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Gravity and Light",
+        "title": "gravity and light",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7560,7 +7554,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Light Years Away",
+        "title": "light years away",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7574,7 +7568,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Lost in Orbit",
+        "title": "lost in orbit",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7588,7 +7582,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "May the Fourth Remind Us",
+        "title": "May The Fourth Remind Us",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7600,7 +7594,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Solar Winds",
+        "title": "solar winds",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7614,7 +7608,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Starlight Frequencies",
+        "title": "starlight frequencies",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7628,7 +7622,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Through the Nebula",
+        "title": "through the nebula",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7649,7 +7643,7 @@ export const albums: Album[] = [
   },
   {
     "id": "love-in-bloom-2025",
-    "title": "Love in Bloom",
+    "title": "Love In Bloom",
     "year": 2025,
     "genre": [
       "Romantic"
@@ -7672,7 +7666,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Dancing with You",
+        "title": "Dancing With You",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7686,7 +7680,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Forever Kind of Love",
+        "title": "Forever Kind Of Love",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7811,7 +7805,6 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2025-02-01",
     "folderPath": "Love in Bloom",
-    "coverImageName": "Cover.png",
     "mp3Count": 28,
     "type": "standard",
     "trending": false
@@ -8024,7 +8017,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Every Day I Miss You",
+        "title": "Every day I miss you",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8037,7 +8030,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Forever Yours Joyce",
+        "title": "Forever yours joyce",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8050,7 +8043,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Mamas Heart",
+        "title": "mamas heart",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8063,7 +8056,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "My Brave Boy",
+        "title": "my brave boy",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8076,7 +8069,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Our Forever Starts Today New",
+        "title": "Our Forever Starts Today NEW",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8088,7 +8081,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Roots Run Deep",
+        "title": "roots run deep",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8127,7 +8120,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Until the Last Goodbye",
+        "title": "until the last goodbye",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8153,7 +8146,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Where the Heart Is",
+        "title": "where the heart is",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8182,7 +8175,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Chasing the Wind",
+        "title": "chasing the wind",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8196,7 +8189,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Echos of Yesterday",
+        "title": "Echos of yesterday",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8208,7 +8201,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Fading in Your Love",
+        "title": "fading in your love",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8222,7 +8215,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Long Way Back to You",
+        "title": "Long way back to you",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8236,7 +8229,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "No Turning Back",
+        "title": "No turning back",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8250,7 +8243,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Roll with the Thunder",
+        "title": "roll with the thunder",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8264,7 +8257,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Run Wild",
+        "title": "run wild",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8306,7 +8299,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Waiting for Your Heart",
+        "title": "waiting for your heart",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8320,7 +8313,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Waiting on a Heartbeat",
+        "title": "waiting on a heartbeat",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8334,7 +8327,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Where We Used to Be",
+        "title": "where we used to be",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8348,7 +8341,7 @@ export const albums: Album[] = [
       },
       {
         "id": 13,
-        "title": "Whispers in the Night",
+        "title": "whispers in the night",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8362,7 +8355,7 @@ export const albums: Album[] = [
       },
       {
         "id": 14,
-        "title": "Wild Open Road",
+        "title": "wild open road",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8406,7 +8399,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Distant Sky",
+        "title": "distant sky",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8420,7 +8413,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Pedal to the Metal",
+        "title": "Pedal to the metal",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8433,7 +8426,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Waiting for a Girl Like You",
+        "title": "waiting for a girl like you",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8447,7 +8440,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Say it Again",
+        "title": "say it again",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8461,7 +8454,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Bridge over Troubled Water",
+        "title": "bridge over troubled water",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8474,7 +8467,6 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2024-12-01",
     "folderPath": "Singles",
-    "coverImageName": "Boundless Love/cover.png",
     "mp3Count": 13,
     "type": "standard",
     "trending": false
@@ -8491,7 +8483,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "Breeze of the Waves",
+        "title": "breeze of the waves",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8504,7 +8496,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Calm of the Tide",
+        "title": "calm of the tide",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8569,7 +8561,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Lost in the Grove",
+        "title": "Lost in the grove",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8620,7 +8612,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Sway with the Tide",
+        "title": "Sway with the tide",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8688,7 +8680,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "My Sweet Joyce",
+        "title": "My sweet Joyce",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8702,7 +8694,7 @@ export const albums: Album[] = [
       },
       {
         "id": 2,
-        "title": "Boots on the Dance Floor",
+        "title": "boots on the dance floor",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8716,7 +8708,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Chasing the Sunset",
+        "title": "chasing the sunset",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8730,7 +8722,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "Dancin' in the Moonlight",
+        "title": "dancin' in the moonlight",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8742,7 +8734,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Good Times Roll",
+        "title": "good times roll",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8768,7 +8760,7 @@ export const albums: Album[] = [
       },
       {
         "id": 7,
-        "title": "Jukebox Jumpin",
+        "title": "jukebox jumpin",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8782,7 +8774,7 @@ export const albums: Album[] = [
       },
       {
         "id": 8,
-        "title": "Kickin' up Dust",
+        "title": "Kickin' Up Dust",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8794,7 +8786,7 @@ export const albums: Album[] = [
       },
       {
         "id": 9,
-        "title": "Kickin' up Some Fun",
+        "title": "kickin' Up some fun",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8806,7 +8798,7 @@ export const albums: Album[] = [
       },
       {
         "id": 10,
-        "title": "Last Call at Joe's",
+        "title": "last call at joe's",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8832,7 +8824,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "Texas State of Mind",
+        "title": "texas state of mind",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8904,7 +8896,7 @@ export const albums: Album[] = [
       },
       {
         "id": 4,
-        "title": "In This Perfect Night",
+        "title": "In this Perfect Night",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -8932,7 +8924,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "The Call of the Sea",
+        "title": "The call of the sea",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9000,7 +8992,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Whistle While We Dream",
+        "title": "Whistle while we Dream",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9101,7 +9093,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "Snow is All Around Us",
+        "title": "Snow is all Around Us",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9198,14 +9190,13 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2024-11-19",
     "folderPath": "Pop Star Winter Wonderland",
-    "coverImageName": "Album cover.png",
     "mp3Count": 26,
     "type": "standard",
     "trending": false
   },
   {
     "id": "forever-starts-today-country-music-for-weddings-2024",
-    "title": "Forever Starts Today (country Music for Weddings)",
+    "title": "Forever Starts Today (Country Music for Weddings)",
     "year": 2024,
     "genre": [
       "Country",
@@ -9215,7 +9206,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "With You by My Side",
+        "title": "With You By My Side",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9269,7 +9260,7 @@ export const albums: Album[] = [
       },
       {
         "id": 5,
-        "title": "Dancing into Forever",
+        "title": "Dancing Into Forever",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9394,7 +9385,6 @@ export const albums: Album[] = [
     ],
     "releaseDate": "2024-11-17",
     "folderPath": "Forever Starts Today - Country Album",
-    "coverImageName": "Cover.png",
     "mp3Count": 36,
     "type": "standard",
     "trending": false
@@ -9410,7 +9400,7 @@ export const albums: Album[] = [
     "tracks": [
       {
         "id": 1,
-        "title": "All Night Long",
+        "title": "All night long",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9438,7 +9428,7 @@ export const albums: Album[] = [
       },
       {
         "id": 3,
-        "title": "Flying Through the Sky",
+        "title": "Flying through the sky",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9480,7 +9470,7 @@ export const albums: Album[] = [
       },
       {
         "id": 6,
-        "title": "In the Groove Tonight",
+        "title": "In the groove tonight",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9550,7 +9540,7 @@ export const albums: Album[] = [
       },
       {
         "id": 11,
-        "title": "Shine Like the Stars",
+        "title": "Shine like the stars",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9564,7 +9554,7 @@ export const albums: Album[] = [
       },
       {
         "id": 12,
-        "title": "The Magic in the Air",
+        "title": "The Magic in the air",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -9615,57 +9605,57 @@ export const albums: Album[] = [
 
 // Helper functions
 export function getAlbumById(id: string): Album | undefined {
-  return albums.find(album => album.id === id);
+    return albums.find(album => album.id === id);
 }
 
 export function getAlbumsByGenre(genre: string): Album[] {
-  return albums.filter(album =>
-    album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
-  );
+    return albums.filter(album => 
+        album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
+    );
 }
 
 export function getAlbumsByYear(year: number): Album[] {
-  return albums.filter(album => album.year === year);
+    return albums.filter(album => album.year === year);
 }
 
 export function searchAlbums(query: string): Album[] {
-  const lowerQuery = query.toLowerCase();
-  return albums.filter(album =>
-    album.title.toLowerCase().includes(lowerQuery) ||
-    album.tracks.some(track => track.title.toLowerCase().includes(lowerQuery))
-  );
+    const lowerQuery = query.toLowerCase();
+    return albums.filter(album =>
+        album.title.toLowerCase().includes(lowerQuery) ||
+        album.tracks.some(track => track.title.toLowerCase().includes(lowerQuery))
+    );
 }
 
 export function getAllGenres(): string[] {
-  const genres = new Set<string>();
-  albums.forEach(album => {
-    album.genre.forEach(g => genres.add(g));
-  });
-  return Array.from(genres).sort();
+    const genres = new Set<string>();
+    albums.forEach(album => {
+        album.genre.forEach(g => genres.add(g));
+    });
+    return Array.from(genres).sort();
 }
 
 export function getAllYears(): number[] {
-  const years = new Set<number>();
-  albums.forEach(album => years.add(album.year));
-  return Array.from(years).sort((a, b) => b - a);
+    const years = new Set<number>();
+    albums.forEach(album => years.add(album.year));
+    return Array.from(years).sort((a, b) => b - a);
 }
 
 // Latest Release Helpers
 export function getLatestStudioAlbum(): Album | undefined {
-  // Filter for type 'studio', fallback to 'standard' if none found
-  // Sort by year descending, then by releaseDate if available
-  const studioAlbums = albums.filter(a => a.type === 'studio');
-  return studioAlbums.length > 0 ? studioAlbums[0] : albums[0];
+    // Filter for type 'studio', fallback to 'standard' if none found
+    // Sort by year descending, then by releaseDate if available
+    const studioAlbums = albums.filter(a => a.type === 'studio');
+    return studioAlbums.length > 0 ? studioAlbums[0] : albums[0];
 }
 
 export function getLatestSingle(): Track | undefined {
-  // Find the latest album that contains a single
-  // Then find the specific track marked as single
-  for (const album of albums) {
-    const singleTrack = album.tracks.find(t => t.isSingle);
-    if (singleTrack) {
-      return singleTrack;
+    // Find the latest album that contains a single
+    // Then find the specific track marked as single
+    for (const album of albums) {
+        const singleTrack = album.tracks.find(t => t.isSingle);
+        if (singleTrack) {
+            return singleTrack;
+        }
     }
-  }
-  return undefined;
+    return undefined;
 }

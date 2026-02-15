@@ -1,7 +1,7 @@
 {
-  "generated": "2026-02-05T18:21:02.899Z",
-  "totalAlbums": 51,
-  "totalTracks": 621,
+  "generated": "2026-02-15T19:30:50.432Z",
+  "totalAlbums": 52,
+  "totalTracks": 633,
   "genres": [
     "Christmas",
     "Country",
@@ -24,6 +24,17 @@
     2024
   ],
   "albums": [
+    {
+      "id": "may-in-motion-2026",
+      "title": "May In Motion",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "R&B"
+      ],
+      "folderPath": "May In Motion",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/"
+    },
     {
       "id": "april-comes-soft-2026",
       "title": "April Comes Soft",
