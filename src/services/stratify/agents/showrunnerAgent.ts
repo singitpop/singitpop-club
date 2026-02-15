@@ -50,16 +50,19 @@ export class ShowrunnerAgent implements DirectorAgent {
             // Map to Schema
             const scenes: Scene[] = generatedScenes.map((s, i) => {
                 // Find matching location ID
-                const loc = project.locations.find(l =>
+                const locations = project.locations || [];
+                const loc = locations.find(l =>
                     l.name.toLowerCase() === s.locationId.toLowerCase() ||
                     l.locationId === s.locationId
                 );
+
+                const defaultLocationId = (locations.length > 0 && locations[0]) ? locations[0].locationId : "loc-1";
 
                 return {
                     sceneId: crypto.randomUUID(),
                     index: i + 1,
                     title: s.title,
-                    locationId: loc ? loc.locationId : (project.locations[0]?.locationId || "loc-1"),
+                    locationId: loc ? loc.locationId : defaultLocationId,
                     narrativeBeat: s.narrativeBeat,
                     mood: {
                         visual: s.mood.visual,
@@ -88,7 +91,7 @@ export class ShowrunnerAgent implements DirectorAgent {
                 sceneId: crypto.randomUUID(),
                 index: 1,
                 title: "Opening Scene",
-                locationId: project.locations[0]?.locationId || "loc-1",
+                locationId: (project.locations && project.locations[0]) ? project.locations[0].locationId : "loc-1",
                 mood: { visual: "Atmospheric", lighting: "Dim", color: "Blue", ambience: "Quiet" },
                 narrativeBeat: "Introduction",
                 shots: []

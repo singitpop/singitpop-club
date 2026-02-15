@@ -16,6 +16,16 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const project = body.project as StratifyProject;
 
+    // SANITIZATION: Ensure critical arrays exist
+    if (!project.locations || !Array.isArray(project.locations)) {
+      project.locations = [
+        { locationId: 'loc-1', name: 'Main Set', description: 'Default Set', timeOfDay: 'night', weather: 'clear' }
+      ];
+    }
+    if (!project.cast) {
+      project.cast = { lead: { characterId: 'lead', name: 'Artist', role: 'lead', genderPresentation: 'female', ageRange: '20s', lookSpec: {}, wardrobeSignature: [] }, band: [], principals: [] };
+    }
+
     // --- EXECUTE THE 8-AGENT SWARM ---
     const orchestrator = new StratifyOrchestrator(project);
     const updatedProject = await orchestrator.runPipeline();
