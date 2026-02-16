@@ -147,6 +147,11 @@ export const DirectorWizard: React.FC = () => {
                                     "ACTION!"
                                 )}
                             </button>
+                            <div className="mt-6">
+                                <button onClick={handleBack} className="text-gray-500 hover:text-white underline text-sm">
+                                    Back to Treatment
+                                </button>
+                            </div>
                         </div>
                     )}
 

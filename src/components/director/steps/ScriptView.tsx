@@ -10,7 +10,7 @@ interface StepProps {
 
 export const ScriptView: React.FC<StepProps> = ({ project, onReset }) => {
 
-    const [selectedTool, setSelectedTool] = useState<'veo' | 'runway' | 'luma' | 'kling' | 'pika'>('veo');
+    const [selectedTool, setSelectedTool] = useState<'veo' | 'veo3' | 'imagen3' | 'runway' | 'luma' | 'kling' | 'pika'>('veo3');
     const [copiedId, setCopiedId] = useState<string | null>(null);
 
     const handleCopy = (text: string, id: string) => {
@@ -49,17 +49,21 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset }) => {
                         💾 Download Project JSON
                     </button>
                     <button
-                        onClick={onReset}
+                        onClick={() => {
+                            if (confirm("Are you sure? This will DELETE your current project and script.")) {
+                                onReset();
+                            }
+                        }}
                         className="px-6 py-2 bg-red-900/40 hover:bg-red-900/60 text-red-400 rounded-lg text-sm font-bold border border-red-900/50 transition-colors"
                     >
-                        New Project
+                        🗑️ Delete Project & Start Over
                     </button>
                 </div>
             </div>
 
             {/* TOOL SELECTOR (Global) */}
             <div className="flex justify-center gap-2 sticky top-4 z-10 bg-black/80 backdrop-blur-md p-2 rounded-xl border border-gray-800 w-fit mx-auto shadow-2xl">
-                {['veo', 'runway', 'luma', 'kling', 'pika'].map((t) => (
+                {['veo3', 'imagen3', 'runway', 'luma', 'kling'].map((t) => (
                     <button
                         key={t}
                         onClick={() => setSelectedTool(t as any)}
@@ -68,7 +72,7 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset }) => {
                             : 'bg-transparent text-gray-500 hover:text-white'
                             }`}
                     >
-                        {t}
+                        {t === 'veo3' ? 'Veo 3.1' : t === 'imagen3' ? 'Imagen 3 (Flow)' : t}
                     </button>
                 ))}
             </div>
