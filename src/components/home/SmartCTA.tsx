@@ -72,8 +72,8 @@ export default function SmartCTA() {
                     </div>
                     <ul className={styles.features}>
                         <li>✅ Vote on Next Single 🗳️</li>
-                        <li>✅ Stream Public Singles 🎵</li>
-                        <li>✅ Newsletter Updates 📧</li>
+                        <li>✅ Stream Current Single 🎵</li>
+                        <li>✅ 30s Previews of All Tracks ⏱️</li>
                         <li>✅ Access to Merch Shop 🛍️</li>
                     </ul>
                     <button
@@ -95,10 +95,10 @@ export default function SmartCTA() {
                     </div>
                     <ul className={styles.features}>
                         <li>✅ <strong>Everything in Fan</strong></li>
-                        <li>✅ Unlock Full Catalog 🔓</li>
-                        <li>✅ MP3 Downloads 🎧</li>
-                        <li>✅ <strong>Create 3 Mixtapes / Month</strong> 📼</li>
-                        <li>✅ Insider Profile Badge 🛡️</li>
+                        <li>✅ Full Current Release Catalog 🔓</li>
+                        <li>✅ Create 3 Mixtapes / Month 📼</li>
+                        <li>✅ Compile Playlists in Fanzone 🎧</li>
+                        <li>✅ MP3 Downloads ⬇️</li>
                     </ul>
                     <button
                         className={styles.glowBtn}
@@ -121,9 +121,8 @@ export default function SmartCTA() {
                         <li>✅ <strong>Everything in Insider</strong></li>
                         <li>✅ <strong>Create 10 Mixtapes / Month</strong> 📼</li>
                         <li>✅ Lossless WAV Downloads 💎</li>
-                        <li>✅ 20% Shop Discount 🏷️</li>
+                        <li>✅ 20% Discount in Shop 🏷️</li>
                         <li>✅ Exclusive Radio Stations 📻</li>
-                        <li>✅ Early Access to New Releases 🚀</li>
                     </ul>
                     <button
                         className={styles.outlineBtn}
