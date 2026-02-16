@@ -10,20 +10,40 @@ import knowledgeBase from '@/data/knowledge.json';
 const findAnswer = (query: string) => {
     const q = query.toLowerCase();
 
-    // 1. Direct FAQ Match
+    // 1. Guides Match (Priority)
+    const guideMatch = knowledgeBase.guides?.find(g =>
+        q.includes(g.feature.toLowerCase()) ||
+        g.feature.toLowerCase().includes(q)
+    );
+
+    if (guideMatch) {
+        const stepsHtml = guideMatch.steps.map(s => `<li>${s}</li>`).join('');
+        const imageHtml = guideMatch.image ? `<img src="${guideMatch.image}" class="w-full h-auto rounded-lg mb-2 border border-white/10" alt="${guideMatch.feature}" />` : '';
+
+        return `
+            <div class="space-y-2">
+                ${imageHtml}
+                <p><strong>Here is how to use ${guideMatch.feature}:</strong></p>
+                <p class="text-xs opacity-75">Access: ${guideMatch.tier} | Device: ${guideMatch.devices?.join(', ')}</p>
+                <ol class="list-decimal pl-4 space-y-1 text-sm">${stepsHtml}</ol>
+            </div>
+        `;
+    }
+
+    // 2. Direct FAQ Match
     const faqMatch = knowledgeBase.faq.find(f => f.q.toLowerCase().includes(q) || q.includes(f.q.toLowerCase()));
     if (faqMatch) return faqMatch.a;
 
-    // 2. Page Match
+    // 3. Page Match
     const pageMatch = knowledgeBase.pages.find(p => q.includes(p.name.toLowerCase()) || p.desc.toLowerCase().includes(q));
     if (pageMatch) return `You can find that on our ${pageMatch.name} page: <a href="${pageMatch.url}" class="text-pink-400 underline">${pageMatch.name}</a>. ${pageMatch.desc}`;
 
-    // 3. Album Match
+    // 4. Album Match
     const albumMatch = knowledgeBase.albums.find(a => q.includes(a.title.toLowerCase()));
     if (albumMatch) return `That's one of our releases! "${albumMatch.title}" is a ${albumMatch.type}. You can listen to it <a href="${albumMatch.url}" class="text-pink-400 underline">here</a>.`;
 
-    // 4. Default Fallback
-    return "I'm not sure about that yet. Try asking about 'VIP', 'Shop', 'Music', or 'Contact'.";
+    // 5. Default Fallback
+    return "I'm not sure about that. Try asking 'How do I download?', 'How to play music?', or 'Shop'.";
 };
 
 export default function ChatWidget() {

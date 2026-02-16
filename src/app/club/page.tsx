@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check, CreditCard, ChevronRight, Settings, Lock, Loader2 } from "lucide-react";
+import { Check, CreditCard, ChevronRight, Settings, Lock, Loader2, Crown } from "lucide-react";
 import UserBadge from "@/components/ui/UserBadge";
+import { BADGES } from "@/data/badges";
 
 export default function ClubPage() {
     const { user: clerkUser, isLoaded } = useUser();
@@ -139,6 +140,67 @@ export default function ClubPage() {
                                 Manage Subscription
                             </button>
                         </Link>
+                    </motion.div>
+
+                    {/* Badge Collection / Progression */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 }}
+                        className="bg-black/40 rounded-3xl p-6 border border-white/10"
+                    >
+                        <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                            <Crown size={18} className="text-yellow-500" /> Badge Collection
+                        </h3>
+
+                        <div className="space-y-6">
+                            {/* Render badges for each tier group */}
+                            {['INSIDER', 'VIP', 'LIFETIME'].map((displayTier) => {
+                                // Filter badges for this tier
+                                const tierBadges = BADGES.filter(b => b.tier === displayTier);
+                                const isTierUnlocked = (tierName === 'LIFETIME') ||
+                                    (tierName === 'VIP' && displayTier !== 'LIFETIME') ||
+                                    (tierName === 'INSIDER' && displayTier === 'INSIDER');
+
+                                return (
+                                    <div key={displayTier} className={`relative p-4 rounded-2xl border ${isTierUnlocked ? 'bg-white/5 border-white/10' : 'bg-transparent border-white/5'}`}>
+                                        <h4 className="text-xs font-bold uppercase text-white/40 mb-3">{displayTier} Tier</h4>
+                                        <div className="grid grid-cols-3 gap-4">
+                                            {tierBadges.map(badge => {
+                                                const isUnlocked = isTierUnlocked && badge.type === 'IDENTITY';
+                                                // Simplified Unlock: Identity is unlocked if Tier is reached.
+                                                // Tenure/Action are mocked locked (grayed out) until logic is fully implemented.
+
+                                                return (
+                                                    <div key={badge.id} className="flex flex-col items-center gap-2 text-center group">
+                                                        <div className={`relative transition-all duration-300 ${!isUnlocked ? 'opacity-30 grayscale blur-[1px] group-hover:blur-0' : 'scale-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]'}`}>
+                                                            <UserBadge tier={displayTier} size="lg" badgeId={badge.id} showLabel={false} />
+                                                            {!isUnlocked && (
+                                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                                    <Lock size={12} className="text-white drop-shadow-md" />
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <div>
+                                                            <div className={`text-[10px] font-bold uppercase ${isUnlocked ? 'text-white' : 'text-white/40'}`}>
+                                                                {badge.name}
+                                                            </div>
+                                                            <div className="text-[9px] text-white/30 leading-tight mt-0.5 px-2">
+                                                                {badge.type === 'IDENTITY' ? 'Unlocked' : badge.requirement}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <p className="text-xs text-center text-white/40 mt-6">
+                            Badges are accrued automatically as you hit milestones.
+                        </p>
                     </motion.div>
 
                     {/* Quick Links Card */}

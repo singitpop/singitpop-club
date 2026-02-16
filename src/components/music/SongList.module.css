@@ -500,11 +500,55 @@
     /* Hide floating box on mobile or adjust it to bottom */
     .floatingMixtapeBox {
         top: auto;
-        bottom: 20px;
-        left: 20px;
-        right: 20px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
         width: auto;
         animation: slideInUp 0.4s ease-out;
+        padding: 0.75rem;
+        border-radius: 12px;
+        /* Compact layout for mobile */
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .floatingHeader {
+        margin-bottom: 0;
+        font-size: 0.75rem;
+    }
+
+    .floatingContent {
+        margin-bottom: 0;
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .floatingContent strong {
+        font-size: 0.9rem;
+        display: inline-block;
+        margin-right: 0.5rem;
+    }
+
+    .floatingContent p {
+        display: none;
+        /* Hide detailed claim info on mobile to save space */
+    }
+
+    /* Stack buttons tightly or side-by-side */
+    .floatingMixtapeBox .claimBtn {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        width: auto;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    .floatingMixtapeBox .reviewBtn {
+        display: none;
+        /* Hide review button on mobile if empty, or make it icon only? Let's hide it to save space and rely on Claim modal to review */
     }
 
     .row {
