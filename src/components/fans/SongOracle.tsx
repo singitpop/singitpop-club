@@ -32,10 +32,10 @@ export default function SongOracle({ compact = false, onPlay }: SongOracleProps)
         return (
             <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center max-w-2xl mx-auto">
                 <Lock size={48} className="mx-auto text-white/20 mb-4" />
-                <h3 className="text-xl font-bold mb-2">Universe Oracle Locked 🔐</h3>
-                <p className="text-white/60 mb-6">Suggestions from the Oracle are reserved for <strong>Insider</strong> and <strong>VIP</strong> members. Join the club to unlock daily vibe checks!</p>
+                <h3 className="text-xl font-bold mb-2">Ryan Locked 🔐</h3>
+                <p className="text-white/60 mb-6">Suggestions from <strong>Ryan</strong> are reserved for <strong>Insider</strong> and <strong>VIP</strong> members. Join the club to unlock daily vibe checks!</p>
                 <a href="/club" className="inline-block px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-full font-bold transition-all">
-                    Unlock the Oracle
+                    Unlock Ryan
                 </a>
             </div>
         );
@@ -69,7 +69,7 @@ export default function SongOracle({ compact = false, onPlay }: SongOracleProps)
                         <Sparkles size={20} />
                     </div>
                     <div>
-                        <h4 className="text-sm font-bold m-0 tracking-tight">Vibe Oracle</h4>
+                        <h4 className="text-sm font-bold m-0 tracking-tight">Ask Ryan</h4>
                         <p className="text-xs text-white/50 m-0">Ask for a random track</p>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ export default function SongOracle({ compact = false, onPlay }: SongOracleProps)
                             onClick={spinOracle}
                             className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-full text-xs font-bold transition-all hover:scale-105"
                         >
-                            ASK ORACLE
+                            ASK RYAN
                         </button>
                     ) : isSpinning ? (
                         <div className="flex items-center gap-2 text-purple-400 text-xs font-medium px-4">
@@ -129,10 +129,10 @@ export default function SongOracle({ compact = false, onPlay }: SongOracleProps)
                         <span>Daily Vibe Check</span>
                     </motion.div>
                     <h2 className="text-3xl md:text-5xl font-black mb-4 bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                        The Song Oracle
+                        Ask Ryan
                     </h2>
                     <p className="text-white/60 text-lg max-w-2xl mx-auto">
-                        Not sure what to listen to? Let the universe decide your soundtrack for today.
+                        Not sure what to listen to? Let Ryan decide your soundtrack for today.
                     </p>
                 </div>
 
@@ -155,7 +155,7 @@ export default function SongOracle({ compact = false, onPlay }: SongOracleProps)
                                 className="relative z-10 w-40 h-40 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm flex flex-col items-center justify-center gap-2 transition-all hover:scale-105 group"
                             >
                                 <Sparkles size={32} className="text-pink-400 group-hover:rotate-12 transition-transform" />
-                                <span className="font-bold tracking-wide">ASK ORACLE</span>
+                                <span className="font-bold tracking-wide">ASK RYAN</span>
                             </motion.button>
                         ) : isSpinning ? (
                             <motion.div
@@ -166,7 +166,7 @@ export default function SongOracle({ compact = false, onPlay }: SongOracleProps)
                                 className="relative z-10 text-center"
                             >
                                 <RefreshCw size={48} className="text-purple-400 animate-spin mb-4 mx-auto" />
-                                <p className="text-lg font-medium animate-pulse">Consulting the stars...</p>
+                                <p className="text-lg font-medium animate-pulse">Ryan is choosing...</p>
                             </motion.div>
                         ) : (
                             <motion.div
@@ -175,7 +175,7 @@ export default function SongOracle({ compact = false, onPlay }: SongOracleProps)
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="relative z-10 text-center p-8 w-full"
                             >
-                                <div className="text-xs uppercase tracking-widest text-pink-400 mb-2 font-bold">The Universe Chooses</div>
+                                <div className="text-xs uppercase tracking-widest text-pink-400 mb-2 font-bold">Ryan Chooses</div>
                                 <h3 className="text-2xl md:text-3xl font-black mb-2">{suggestion.title}</h3>
                                 <p className="text-white/60 mb-6">{suggestion.duration} • {suggestion.genre}</p>
 
