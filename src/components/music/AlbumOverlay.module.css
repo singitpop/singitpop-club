@@ -172,19 +172,21 @@
 }
 
 
-.header,
-.searchContainer,
-.gridScroll {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-}
+@media (max-width: 768px) {
 
-.title {
-    font-size: 1.5rem;
-}
+    .header,
+    .searchContainer,
+    .gridScroll {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
 
-.grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
 }
