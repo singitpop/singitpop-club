@@ -71,9 +71,10 @@ export default function SmartCTA() {
                         <span className={styles.price}>Free</span>
                     </div>
                     <ul className={styles.features}>
-                        <li>✅ Vote on Next Single</li>
-                        <li>✅ Stream Public Singles</li>
-                        <li>✅ Newsletter Updates</li>
+                        <li>✅ Vote on Next Single 🗳️</li>
+                        <li>✅ Stream Public Singles 🎵</li>
+                        <li>✅ Newsletter Updates 📧</li>
+                        <li>✅ Access to Merch Shop 🛍️</li>
                     </ul>
                     <button
                         className={styles.outlineBtn}
@@ -93,9 +94,11 @@ export default function SmartCTA() {
                         <span className={styles.price}>£3.99<small>/mo</small></span>
                     </div>
                     <ul className={styles.features}>
-                        <li>✅ <strong>Unlock Full Catalog</strong></li>
-                        <li>✅ Stream Full Albums</li>
-                        <li>✅ MP3 Downloads</li>
+                        <li>✅ <strong>Everything in Fan</strong></li>
+                        <li>✅ Unlock Full Catalog 🔓</li>
+                        <li>✅ MP3 Downloads 🎧</li>
+                        <li>✅ <strong>Create 3 Mixtapes / Month</strong> 📼</li>
+                        <li>✅ Insider Profile Badge 🛡️</li>
                     </ul>
                     <button
                         className={styles.glowBtn}
@@ -115,10 +118,12 @@ export default function SmartCTA() {
                         <span className={styles.price}>£8.99<small>/mo</small></span>
                     </div>
                     <ul className={styles.features}>
-                        <li>✅ <strong>Lossless WAV Downloads</strong></li>
-                        <li>✅ 20% Shop Discount</li>
-                        <li>✅ VIP Radio Stations 📻</li>
-                        <li>✅ Exclusive Future Album Content</li>
+                        <li>✅ <strong>Everything in Insider</strong></li>
+                        <li>✅ <strong>Create 10 Mixtapes / Month</strong> 📼</li>
+                        <li>✅ Lossless WAV Downloads 💎</li>
+                        <li>✅ 20% Shop Discount 🏷️</li>
+                        <li>✅ Exclusive Radio Stations 📻</li>
+                        <li>✅ Early Access to New Releases 🚀</li>
                     </ul>
                     <button
                         className={styles.outlineBtn}

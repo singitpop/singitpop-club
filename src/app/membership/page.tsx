@@ -10,28 +10,51 @@ const tiers = [
     {
         name: "The Fan",
         price: "Free",
-        features: ["Vote on Next Single 🗳️", "Stream Public Singles 🎵", "Newsletter Updates 📧", "Access to Shop 🛍️"],
+        features: [
+            "Vote on Next Single 🗳️",
+            "Stream Public Singles 🎵",
+            "Newsletter Updates 📧",
+            "Access to Shop 🛍️"
+        ],
         highlight: false,
         action: "Join"
     },
     {
         name: "The Insider",
         price: "£3.99/mo",
-        features: ["Unlock ALL Tracks 🔓", "Stream Full Albums 💿", "MP3 Downloads 🎧", "Insider Profile Badge 🛡️"],
+        features: [
+            "Everything in Fan",
+            "Unlock Full Catalog 🔓",
+            "MP3 Downloads 🎧",
+            "Create 3 Mixtapes / Month 📼",
+            "Insider Profile Badge 🛡️"
+        ],
         highlight: true,
         action: "Upgrade"
     },
     {
         name: "The VIP",
         price: "£8.99/mo",
-        features: ["Everything in Insider ✨", "Lossless WAV Downloads 💎", "20% Shop Discount 🏷️", "Exclusive Future Album Content 🎹"],
+        features: [
+            "Everything in Insider",
+            "Create 10 Mixtapes / Month 📼",
+            "Lossless WAV Downloads 💎",
+            "20% Shop Discount 🏷️",
+            "Exclusive Radio Stations 📻",
+            "Early Access to New Releases 🚀"
+        ],
         highlight: false,
         action: "Upgrade"
     },
     {
         name: "Lifetime VIP",
         price: "£299",
-        features: ["One-time payment 💸", "Forever VIP Access ♾️", "Special 'Lifetime' Badge 🏅", "All Future Perks Included 🚀"],
+        features: [
+            "One-time payment 💸",
+            "Forever VIP Access ♾️",
+            "Special 'Lifetime' Badge 🏅",
+            "All Future Perks Included 🚀"
+        ],
         highlight: true,
         action: "Buy Once"
     }
