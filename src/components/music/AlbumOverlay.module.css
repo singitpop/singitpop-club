@@ -58,21 +58,133 @@
     color: rgba(255, 255, 255, 0.5);
 }
 
-@media (max-width: 768px) {
+.closeBtn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
 
-    .header,
-    .searchContainer,
-    .gridScroll {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
+.closeBtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
 
-    .title {
-        font-size: 1.5rem;
-    }
+.searchContainer {
+    padding: 0 4rem 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
+.searchInput {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+.searchInput:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+}
+
+.gridScroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 4rem 4rem;
+    /* Custom Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.gridScroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.gridScroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.gridScroll::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    group: card;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cover {
+    aspect-ratio: 1;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .cover img {
+    transform: scale(1.05);
+}
+
+.albumInfo {
+    padding: 1.25rem;
+}
+
+
+.header,
+.searchContainer,
+.gridScroll {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.title {
+    font-size: 1.5rem;
+}
+
+.grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
 }
