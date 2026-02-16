@@ -2,14 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Increase body size limit for image uploads (10MB)
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '10mb',
-        },
-    },
-};
+// Config removed: Not supported in App Router. Body size is handled by runtime/platform limits.
 
 export async function POST(req: NextRequest) {
     if (!process.env.GEMINI_API_KEY) {
