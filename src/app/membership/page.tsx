@@ -12,9 +12,9 @@ const tiers = [
         price: "Free",
         features: [
             "Vote on Next Single 🗳️",
-            "Stream Public Singles 🎵",
-            "Newsletter Updates 📧",
-            "Access to Shop 🛍️"
+            "Stream Current Single 🎵",
+            "30s Previews of All Tracks ⏱️",
+            "Access to Merch Shop 🛍️"
         ],
         highlight: false,
         action: "Join"
@@ -24,10 +24,10 @@ const tiers = [
         price: "£3.99/mo",
         features: [
             "Everything in Fan",
-            "Unlock Full Catalog 🔓",
-            "MP3 Downloads 🎧",
-            "Create 3 Mixtapes / Month 📼",
-            "Insider Profile Badge 🛡️"
+            "Full Current Release Catalog 🔓",
+            "Create 3 Mixtapes / Month",
+            "Compile Playlists in Fanzone 🎧",
+            "MP3 Downloads ⬇️"
         ],
         highlight: true,
         action: "Upgrade"
@@ -37,11 +37,10 @@ const tiers = [
         price: "£8.99/mo",
         features: [
             "Everything in Insider",
-            "Create 10 Mixtapes / Month 📼",
+            "Create 10 Mixtapes / Month",
             "Lossless WAV Downloads 💎",
-            "20% Shop Discount 🏷️",
-            "Exclusive Radio Stations 📻",
-            "Early Access to New Releases 🚀"
+            "20% Discount in Shop 🏷️",
+            "Exclusive Radio Stations 📻"
         ],
         highlight: false,
         action: "Upgrade"

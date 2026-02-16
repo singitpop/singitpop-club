@@ -45,18 +45,19 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
 
             <div className={styles.menu}>
                 <h4 className={styles.menuTitle}>Library</h4>
-                <div onClick={() => {
-                    if (!user) {
-                        router.push('/sign-in');
-                    } else {
-                        router.push('/fan-albums/create');
-                    }
-                }} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
-                    <button className={styles.navItem}>
-                        <PlusCircle size={20} color="#FF0080" />
-                        <span style={{ color: '#FF0080', fontWeight: 'bold' }}>Create Playlist</span>
-                    </button>
-                </div>
+                <button
+                    className={styles.navItem}
+                    onClick={() => {
+                        if (!user) {
+                            router.push('/sign-in');
+                        } else {
+                            router.push('/fan-albums/create');
+                        }
+                    }}
+                >
+                    <PlusCircle size={20} color="#FF0080" />
+                    <span style={{ color: '#FF0080', fontWeight: 'bold' }}>Create Playlist</span>
+                </button>
             </div>
 
             <div className={styles.footer}>

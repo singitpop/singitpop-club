@@ -12,47 +12,49 @@ import WelcomeOverlay from './WelcomeOverlay';
 
 export default function Hero() {
     const [showVideo, setShowVideo] = useState(false);
-    const [heroData, setHeroData] = useState(LATEST_RELEASES.HERO_VIDEO);
-    const [bgImage, setBgImage] = useState('/images/hero-desert.jpg');
+    const [heroData, setHeroData] = useState({
+        HERO_TITLE: '',
+        BUTTON_TEXT: '', // Start empty
+        VIDEO_URL: ''
+    });
+    const [bgImage, setBgImage] = useState<string | null>(null); // Start null
     const [showWelcome, setShowWelcome] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         // ... (existing fetch logic remains same)
         fetch('/api/content/latest')
             .then(res => res.json())
             .then(data => {
+                // ... logic to set data ...
+                let newHeroData: any = {};
+
                 if (data.latestVideoId) {
-                    setHeroData(prev => ({
-                        ...prev,
-                        VIDEO_URL: `https://www.youtube.com/watch?v=${data.latestVideoId}`
-                    }));
+                    newHeroData.VIDEO_URL = `https://www.youtube.com/watch?v=${data.latestVideoId}`;
                 }
 
                 // Use custom video title if available, otherwise fall back to single title
                 const titleToUse = data.latestVideoTitle || data.latestSingleTitle;
                 if (titleToUse) {
-                    setHeroData(prev => ({
-                        ...prev,
-                        HERO_TITLE: titleToUse,
-                        BUTTON_TEXT: "WATCH VIDEO"
-                    }));
+                    newHeroData.HERO_TITLE = titleToUse;
+                    newHeroData.BUTTON_TEXT = "WATCH VIDEO";
                 }
 
+                setHeroData(prev => ({ ...prev, ...newHeroData }));
+
                 // Prioritize video-specific cover (backgroundCoverArt)
-                // If not found, fall back to default (generic) image to avoid mismatching the video title with the single's cover.
                 if (data.backgroundCoverArt) {
-                    console.log("[Hero] Using backgroundCoverArt:", data.backgroundCoverArt);
                     setBgImage(data.backgroundCoverArt);
                 } else {
-                    console.log("[Hero] Using default fallback image");
-                    // Fallback to default hero image
-                    setBgImage('/images/hero-desert.jpg');
+                    setBgImage('/images/hero-desert.jpg'); // Valid Fallback
                 }
             })
             .catch(err => {
                 console.error("Failed to fetch hero data", err);
-                setBgImage('/images/hero-desert.jpg'); // Fallback on error
-            });
+                setHeroData(LATEST_RELEASES.HERO_VIDEO); // Fallback to config
+                setBgImage('/images/hero-desert.jpg');
+            })
+            .finally(() => setIsLoading(false));
     }, []);
 
     // Simple helper to extract ID from various YouTube URL formats
@@ -74,43 +76,52 @@ export default function Hero() {
         <section className={styles.heroImmersive}>
             <div className={styles.videoBackground}>
                 {/* Simulating video with the atmospheric image and slow zoom */}
-                <div className={styles.zoomImage} style={{ backgroundImage: `url(${bgImage})` }} />
+                {bgImage && <div className={styles.zoomImage} style={{ backgroundImage: `url(${bgImage})`, opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease-in' }} />}
                 <div className={styles.overlay} />
+                {isLoading && (
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
+                        {/* Optional Spinner or just empty black */}
+                    </div>
+                )}
             </div>
 
             {/* NEW: Integrated Welcome Overlay */}
             <AnimatePresence>
-                {showWelcome && !showVideo && (
+                {showWelcome && !showVideo && !isLoading && (
                     <WelcomeOverlay onDismiss={() => setShowWelcome(false)} />
                 )}
             </AnimatePresence>
 
-            <div className={styles.centerStage}>
-                <motion.button
-                    className={styles.giantPlayBtn}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    onClick={handleshowVideo}
-                >
-                    <Play size={48} fill="currentColor" />
-                    <div className={styles.pulseRing} />
-                </motion.button>
-                <span className={styles.watchText}>{heroData.BUTTON_TEXT}</span>
-            </div>
+            {!isLoading && (
+                <div className={styles.centerStage}>
+                    <motion.button
+                        className={styles.giantPlayBtn}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        onClick={handleshowVideo}
+                    >
+                        <Play size={48} fill="currentColor" />
+                        <div className={styles.pulseRing} />
+                    </motion.button>
+                    <span className={styles.watchText}>{heroData.BUTTON_TEXT}</span>
+                </div>
+            )}
 
             {/* Title Section - Top Left */}
-            <motion.div
-                className={styles.titleContainer}
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: heroData.HERO_TITLE ? 1 : 0, x: heroData.HERO_TITLE ? 0 : -30 }}
-                transition={{ delay: 1, duration: 0.8 }}
-            >
-                <span className={styles.artistName}>SingIt Pop</span>
-                {heroData.HERO_TITLE && <h1 className={styles.songTitle}>{heroData.HERO_TITLE}</h1>}
-            </motion.div>
+            {!isLoading && (
+                <motion.div
+                    className={styles.titleContainer}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: heroData.HERO_TITLE ? 1 : 0, x: heroData.HERO_TITLE ? 0 : -30 }}
+                    transition={{ delay: 1, duration: 0.8 }}
+                >
+                    <span className={styles.artistName}>SingIt Pop</span>
+                    {heroData.HERO_TITLE && <h1 className={styles.songTitle}>{heroData.HERO_TITLE}</h1>}
+                </motion.div>
+            )}
 
             {/* Video Modal */}
             <AnimatePresence>

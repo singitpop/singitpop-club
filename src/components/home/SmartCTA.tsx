@@ -96,7 +96,7 @@ export default function SmartCTA() {
                     <ul className={styles.features}>
                         <li>✅ <strong>Everything in Fan</strong></li>
                         <li>✅ Full Current Release Catalog 🔓</li>
-                        <li>✅ Create 3 Mixtapes / Month 📼</li>
+                        <li>✅ Create 3 Mixtapes / Month</li>
                         <li>✅ Compile Playlists in Fanzone 🎧</li>
                         <li>✅ MP3 Downloads ⬇️</li>
                     </ul>
@@ -119,7 +119,7 @@ export default function SmartCTA() {
                     </div>
                     <ul className={styles.features}>
                         <li>✅ <strong>Everything in Insider</strong></li>
-                        <li>✅ <strong>Create 10 Mixtapes / Month</strong> 📼</li>
+                        <li>✅ <strong>Create 10 Mixtapes / Month</strong></li>
                         <li>✅ Lossless WAV Downloads 💎</li>
                         <li>✅ 20% Discount in Shop 🏷️</li>
                         <li>✅ Exclusive Radio Stations 📻</li>

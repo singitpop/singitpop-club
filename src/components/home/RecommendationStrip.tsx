@@ -8,11 +8,13 @@ import { capitalizeTitle } from '@/utils/formatters';
 import { LATEST_RELEASES } from '@/config/latestReleases';
 
 export default function RecommendationStrip() {
-    const [latestSingleTitle, setLatestSingleTitle] = useState(LATEST_RELEASES.SINGLE.TITLE);
+    const [latestSingleTitle, setLatestSingleTitle] = useState('');
     const [latestSingleCover, setLatestSingleCover] = useState<string | null>(null);
-    const [latestAlbumTitle, setLatestAlbumTitle] = useState(LATEST_RELEASES.ALBUM_CARD.TITLE);
+    const [latestAlbumTitle, setLatestAlbumTitle] = useState('');
     const [latestAlbumCover, setLatestAlbumCover] = useState<string | null>(null);
-    const [topTrendingTitle, setTopTrendingTitle] = useState('Whiskey Slide'); // Fallback
+    const [topTrendingTitle, setTopTrendingTitle] = useState(''); // Fallback
+
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch('/api/content/latest')
@@ -41,23 +43,24 @@ export default function RecommendationStrip() {
                     setTopTrendingTitle(data.topTrendingTrack);
                 }
             })
-            .catch(err => console.error("Failed to fetch latest content", err));
+            .catch(err => console.error("Failed to fetch latest content", err))
+            .finally(() => setIsLoading(false));
     }, []);
 
     const recommendations = [
         {
             id: 1,
-            title: capitalizeTitle(latestSingleTitle),
+            title: isLoading ? "Loading..." : capitalizeTitle(latestSingleTitle),
             reason: '🔥 Latest Single',
             icon: latestSingleCover || '/images/icons/music-note-clean.png'
         },
         {
             id: 2,
-            title: capitalizeTitle(latestAlbumTitle),
+            title: isLoading ? "Loading..." : capitalizeTitle(latestAlbumTitle),
             reason: '🎵 Latest Album',
             icon: latestAlbumCover || '/images/icons/music-note-clean.png'
         },
-        { id: 3, title: capitalizeTitle(topTrendingTitle), reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
+        { id: 3, title: isLoading ? "Loading..." : capitalizeTitle(topTrendingTitle), reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
         { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },
     ];
 
@@ -71,22 +74,28 @@ export default function RecommendationStrip() {
                 <div className={styles.items}>
                     {loopItems.map((item, index) => (
                         <div key={`${item.id}-${index}`} className={styles.item}>
-                            <div style={{ width: '45px', height: '45px', position: 'relative', flexShrink: 0 }}>
-                                <img
-                                    src={item.icon}
-                                    alt=""
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'contain',
-                                        filter: 'drop-shadow(0 0 8px rgba(100, 100, 255, 0.4))'
-                                    }}
-                                />
-                            </div>
-                            <div>
-                                <span className={styles.title} style={{ display: 'block', lineHeight: '1' }}>{item.title}</span>
-                                <span className={styles.reason} style={{ fontSize: '0.75rem', opacity: 0.8 }}>{item.reason}</span>
-                            </div>
+                            {isLoading ? (
+                                <div style={{ width: '150px', height: '45px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}></div>
+                            ) : (
+                                <>
+                                    <div style={{ width: '45px', height: '45px', position: 'relative', flexShrink: 0 }}>
+                                        <img
+                                            src={item.icon}
+                                            alt=""
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                objectFit: 'contain',
+                                                filter: 'drop-shadow(0 0 8px rgba(100, 100, 255, 0.4))'
+                                            }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <span className={styles.title} style={{ display: 'block', lineHeight: '1' }}>{item.title}</span>
+                                        <span className={styles.reason} style={{ fontSize: '0.75rem', opacity: 0.8 }}>{item.reason}</span>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     ))}
                 </div>
