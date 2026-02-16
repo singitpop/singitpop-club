@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import styles from './RecommendationStrip.module.css';
 
+import { capitalizeTitle } from '@/utils/formatters';
+
 import { LATEST_RELEASES } from '@/config/latestReleases';
 
 export default function RecommendationStrip() {
@@ -45,17 +47,17 @@ export default function RecommendationStrip() {
     const recommendations = [
         {
             id: 1,
-            title: latestSingleTitle,
+            title: capitalizeTitle(latestSingleTitle),
             reason: '🔥 Latest Single',
             icon: latestSingleCover || '/images/icons/music-note-clean.png'
         },
         {
             id: 2,
-            title: latestAlbumTitle,
+            title: capitalizeTitle(latestAlbumTitle),
             reason: '🎵 Latest Album',
             icon: latestAlbumCover || '/images/icons/music-note-clean.png'
         },
-        { id: 3, title: topTrendingTitle, reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
+        { id: 3, title: capitalizeTitle(topTrendingTitle), reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
         { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },
     ];
 
