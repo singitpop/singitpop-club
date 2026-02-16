@@ -133,6 +133,18 @@
     min-width: 0;
 }
 
+.header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #FF0080, #7928CA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: capitalize;
+}
+
+/* ... existing styles ... */
+
 .title {
     font-size: 0.95rem;
     font-weight: 600;
@@ -142,6 +154,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     transition: color 0.3s ease;
+    text-transform: capitalize;
 }
 
 .card:hover .title {

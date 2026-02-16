@@ -163,6 +163,7 @@
     font-size: 1.1rem;
     color: white;
     margin-bottom: 0.25rem;
+    text-transform: capitalize;
 }
 
 .meta {

@@ -27,6 +27,11 @@
     gap: 1rem;
 }
 
+.trackTitle {
+    margin: 0;
+    text-transform: capitalize;
+}
+
 .coverArt {
     width: 48px;
     height: 48px;

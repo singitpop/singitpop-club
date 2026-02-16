@@ -122,7 +122,7 @@ export default function TeaserPlayer() {
                         style={coverUrl ? { backgroundImage: `url(${coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
                     />
                     <div>
-                        <h5>{track.title}</h5>
+                        <h5 className={styles.trackTitle}>{track.title}</h5>
                         <span className={styles.badge} style={{ background: '#ffd700', color: 'black' }}>{track.badge}</span>
                     </div>
                 </div>

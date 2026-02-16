@@ -65,18 +65,18 @@ function CheckoutContent() {
 
     useEffect(() => {
         // Force download type
-        const trackIds = searchParams.get('tracks')?.split(',').filter(Boolean) || [];
+        const trackIds = searchParams?.get('tracks')?.split(',').filter(Boolean) || [];
         setSelectedTrackIds(trackIds);
 
         // Handle Stripe Return
-        if (searchParams.get('success')) {
+        if (searchParams?.get('success')) {
             setOrderPlaced(true);
-            const returnedEmail = searchParams.get('customer_email');
+            const returnedEmail = searchParams?.get('customer_email');
             if (returnedEmail) {
                 setFormData(prev => ({ ...prev, email: returnedEmail }));
             }
         }
-        if (searchParams.get('canceled')) {
+        if (searchParams?.get('canceled')) {
             console.log("Order canceled");
         }
     }, [searchParams]);
@@ -242,7 +242,7 @@ function CheckoutContent() {
                         ) : (
                             selectedTrackDetails.map(track => (
                                 <div key={track.id} className={styles.trackItem}>
-                                    <span>{track.title}</span>
+                                    <span className={styles.trackTitle}>{track.title}</span>
                                     <span>{track.duration}</span>
                                 </div>
                             ))
