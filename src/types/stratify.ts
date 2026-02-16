@@ -44,6 +44,7 @@ export interface Character {
     wardrobeSignature: string[]; // e.g. ["Leather Jacket", "Sunglasses"]
     instrument?: string;
     referenceImage?: string; // URL/Path to uploaded image
+    consistencyMode?: boolean; // Force this face/look across all shots
     extractedVisuals?: {     // AI-Analyzed details
         face: string;
         wardrobe: string;
@@ -65,6 +66,8 @@ export interface SongData {
     genre: string;
     subGenre?: string;
     audioFile?: string; // Filename for Veo/Tool lip-sync
+    audioFileOverride?: string; // Manual URL/Filename override
+    lipSyncEnabled?: boolean; // User toggle
     lyrics: {
         rawText: string;
         sections?: {

@@ -84,8 +84,30 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                                 onChange={(e) => handleChange('bpm', parseInt(e.target.value))}
                             />
                         </div>
-                        <div className="col-span-2">
-                            {/* Audio file is now auto-detected from Song Title via albumData.ts */}
+                        <div className="col-span-2 space-y-3 pt-2 border-t border-gray-800">
+                            <div className="flex items-center justify-between">
+                                <label className="text-xs font-bold text-emerald-400">Lip Sync Support</label>
+                                <div className={`w-10 h-6 rounded-full p-1 cursor-pointer transition-colors ${project.song.lipSyncEnabled ? 'bg-emerald-500' : 'bg-gray-700'}`}
+                                    onClick={() => handleChange('lipSyncEnabled', !project.song.lipSyncEnabled)}>
+                                    <div className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${project.song.lipSyncEnabled ? 'translate-x-4' : 'translate-x-0'}`} />
+                                </div>
+                            </div>
+
+                            {project.song.lipSyncEnabled && (
+                                <div>
+                                    <label className="block text-xs text-gray-500 mb-1">Audio File Override (Optional)</label>
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white text-xs"
+                                        placeholder="e.g. https://s3.../song.mp3 or 'song_v2.mp3'"
+                                        value={project.song.audioFileOverride || ''}
+                                        onChange={(e) => handleChange('audioFileOverride', e.target.value)}
+                                    />
+                                    <p className="text-[10px] text-gray-500 mt-1">
+                                        *Referencing the exact audio file ensures best lip-sync results with Veo.
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
@@ -232,6 +254,18 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                                 {project.cast.lead.extractedVisuals.face} • {project.cast.lead.extractedVisuals.wardrobe}
                             </div>
                         )}
+                    </div>
+
+                    {/* CONSISTENCY MODE TOGGLE */}
+                    <div className="flex items-center gap-3 bg-gray-900 border border-gray-700 p-3 rounded-lg">
+                        <div className={`w-10 h-6 rounded-full p-1 cursor-pointer transition-colors ${project.cast.lead.consistencyMode ? 'bg-purple-500' : 'bg-gray-700'}`}
+                            onClick={() => handleCastChange('consistencyMode', !project.cast.lead.consistencyMode)}>
+                            <div className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${project.cast.lead.consistencyMode ? 'translate-x-4' : 'translate-x-0'}`} />
+                        </div>
+                        <div>
+                            <span className="text-xs font-bold text-gray-300 block">Consistency Mode</span>
+                            <span className="text-[10px] text-gray-500 block">Force this specific face/look across every shot (for Veo/Imagen).</span>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">

@@ -266,6 +266,8 @@ export default function CreatePlaylistPage() {
                                             </motion.div>
                                         );
                                     })}
+                                    {/* Spacer for fixed footer */}
+                                    <div className="h-40 md:h-24"></div>
                                 </div>
                             </motion.div>
                         )}
@@ -280,21 +282,29 @@ export default function CreatePlaylistPage() {
                         initial={{ y: 100 }}
                         animate={{ y: 0 }}
                         exit={{ y: 100 }}
-                        className="fixed bottom-0 inset-x-0 bg-black/80 backdrop-blur-2xl border-t border-white/10 p-6 z-50 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]"
+                        className="fixed bottom-0 inset-x-0 bg-black/90 backdrop-blur-xl border-t border-white/10 p-4 md:p-6 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]"
                     >
-                        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8">
-                            <div className="flex-shrink-0 flex items-center gap-4">
-                                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex flex-col items-center justify-center p-2 shadow-lg shadow-purple-500/20">
-                                    <span className="text-2xl font-black leading-none">{selectedTracks.length}</span>
-                                    <span className="text-[10px] uppercase font-black tracking-widest opacity-60">Tracks</span>
+                        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                            <div className="flex-shrink-0 flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl md:rounded-2xl flex flex-col items-center justify-center p-2 shadow-lg shadow-purple-500/20">
+                                        <span className="text-xl md:text-2xl font-black leading-none">{selectedTracks.length}</span>
+                                        <span className="text-[8px] md:text-[10px] uppercase font-black tracking-widest opacity-60">Tracks</span>
+                                    </div>
+                                    <div className="block md:hidden text-sm font-bold text-white">
+                                        Your Selection
+                                    </div>
+                                    <div className="hidden md:block">
+                                        <h3 className="font-bold text-white mb-1">Your Playlist Selection</h3>
+                                        <p className="text-xs text-white/40 uppercase tracking-widest font-black">20 max per playlist</p>
+                                    </div>
                                 </div>
-                                <div className="hidden sm:block">
-                                    <h3 className="font-bold text-white mb-1">Your Playlist Selection</h3>
-                                    <p className="text-xs text-white/40 uppercase tracking-widest font-black">20 max per playlist</p>
+                                <div className="block md:hidden text-xs text-white/40 font-bold uppercase tracking-wider">
+                                    {selectedTracks.length}/20
                                 </div>
                             </div>
 
-                            <div className="flex-1 flex gap-2 overflow-x-auto no-scrollbar pb-2 mask-fade-right">
+                            <div className="flex-1 flex gap-2 overflow-x-auto no-scrollbar pb-2 mask-fade-right w-full">
                                 {selectedTracks.map(uid => {
                                     const track = allTracks.find(t => t.uniqueId === uid);
                                     return (
@@ -324,23 +334,25 @@ export default function CreatePlaylistPage() {
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         placeholder="Name your masterpiece..."
-                                        className="w-full bg-white/10 border border-white/10 rounded-2xl px-6 py-4 focus:border-purple-500 outline-none transition-all font-bold placeholder:italic placeholder:font-normal placeholder:opacity-50"
+                                        className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-purple-500 outline-none transition-all font-bold placeholder:italic placeholder:font-normal placeholder:opacity-50"
                                     />
                                 </div>
-                                <button
-                                    onClick={handleCreate}
-                                    disabled={isSubmitting || !title.trim()}
-                                    className="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 disabled:opacity-50 disabled:grayscale text-white px-10 py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-purple-600/20"
-                                >
-                                    {isSubmitting ? <><div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> Publishing...</> : <><Save size={20} /> Publish Playlist</>}
-                                </button>
-                                <button
-                                    onClick={() => setSelectedTracks([])}
-                                    className="p-4 text-white/20 hover:text-red-500 transition-colors"
-                                    title="Reset Selection"
-                                >
-                                    <Trash2 size={20} />
-                                </button>
+                                <div className="flex w-full sm:w-auto gap-2">
+                                    <button
+                                        onClick={handleCreate}
+                                        disabled={isSubmitting || !title.trim()}
+                                        className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-500 disabled:opacity-50 disabled:grayscale text-white px-6 py-3 rounded-xl font-bold uppercase tracking-tight text-sm flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-purple-600/20"
+                                    >
+                                        {isSubmitting ? <><div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> Publishing...</> : <><Save size={16} /> Publish</>}
+                                    </button>
+                                    <button
+                                        onClick={() => setSelectedTracks([])}
+                                        className="p-3 bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-500 transition-colors rounded-xl border border-white/5"
+                                        title="Reset Selection"
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
