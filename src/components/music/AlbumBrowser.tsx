@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Disc, ChevronRight } from 'lucide-react';
 import styles from './AlbumBrowser.module.css';
 
+import { capitalizeTitle } from '@/utils/formatters';
+
 import { Album } from '@/data/albumData';
 
 interface AlbumBrowserProps {
@@ -39,7 +41,7 @@ export default function AlbumBrowser({ albums, activeAlbumId, onSelectAlbum }: A
                             )}
                         </div>
                         <div className={styles.info}>
-                            <h4 className={styles.title}>{album.title}</h4>
+                            <h4 className={styles.title}>{capitalizeTitle(album.title)}</h4>
                             <span className={styles.year}>{album.year}</span>
                         </div>
                         {activeAlbumId === album.id && <ChevronRight size={16} className={styles.indicator} />}

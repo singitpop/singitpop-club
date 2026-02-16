@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { X, Search, Disc } from 'lucide-react';
+import { X, Search, Disc, Calendar } from 'lucide-react';
 import styles from './AlbumOverlay.module.css';
+import { capitalizeTitle } from '@/utils/formatters';
 import { Album } from '@/data/albumData';
 
 interface AlbumOverlayProps {
@@ -98,8 +99,8 @@ export default function AlbumOverlay({ isOpen, onClose, albums, onSelectAlbum, t
                                 )}
                             </div>
                             <div className={styles.albumInfo}>
-                                <h3>{album.title}</h3>
-                                <span className={styles.year}>{album.year} • {album.tracks.length} Tracks</span>
+                                <h3>{capitalizeTitle(album.title)}</h3>
+                                <div className={styles.year}>{new Date(album.releaseDate).getFullYear()} • {album.genre} • {album.tracks.length} Tracks</div>
                                 {album.description && (
                                     <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#ccc', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                                         {album.description}

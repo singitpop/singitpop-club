@@ -7,6 +7,8 @@ import { Play, Pause, SkipForward, Volume2, Radio, Square } from 'lucide-react';
 import styles from './StationView.module.css';
 import { albums } from '@/data/albumData';
 
+import { capitalizeTitle } from '@/utils/formatters';
+
 interface StationViewProps {
     currentTrackId: string | number | null;
     isPlaying: boolean;
@@ -226,7 +228,7 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
                 </div>
 
                 <div className={styles.trackInfo}>
-                    <h2 className={styles.trackTitle}>{displayTrack.title}</h2>
+                    <h2 className={styles.trackTitle}>{capitalizeTitle(displayTrack.title)}</h2>
                     <p className={styles.artistName}>
                         {displayTrack.artist || (currentTrack ? "SingIt Pop" : "Tune In Now")}
                     </p>

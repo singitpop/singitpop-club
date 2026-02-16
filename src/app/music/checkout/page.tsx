@@ -8,6 +8,7 @@ import styles from './page.module.css';
 import { Track, Album } from '@/data/albumData';
 import { siteContent } from '@/config/siteContent';
 import { useAuth } from '@/context/AuthContext';
+import { capitalizeTitle } from '@/utils/formatters';
 
 const PRODUCT_TYPES = {
     download: {
@@ -242,7 +243,7 @@ function CheckoutContent() {
                         ) : (
                             selectedTrackDetails.map(track => (
                                 <div key={track.id} className={styles.trackItem}>
-                                    <span className={styles.trackTitle}>{track.title}</span>
+                                    <span className={styles.trackTitle}>{capitalizeTitle(track.title)}</span>
                                     <span>{track.duration}</span>
                                 </div>
                             ))

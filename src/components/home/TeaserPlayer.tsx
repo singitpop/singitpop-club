@@ -5,6 +5,8 @@ import { Play, Pause, Lock } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 import styles from './TeaserPlayer.module.css';
 
+import { capitalizeTitle } from '@/utils/formatters';
+
 export default function TeaserPlayer() {
     const { isSignedIn } = useUser();
     const [isPlaying, setIsPlaying] = useState(false);
@@ -122,7 +124,7 @@ export default function TeaserPlayer() {
                         style={coverUrl ? { backgroundImage: `url(${coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
                     />
                     <div>
-                        <h5 className={styles.trackTitle}>{track.title}</h5>
+                        <h5 className={styles.trackTitle}>{capitalizeTitle(track.title)}</h5>
                         <span className={styles.badge} style={{ background: '#ffd700', color: 'black' }}>{track.badge}</span>
                     </div>
                 </div>

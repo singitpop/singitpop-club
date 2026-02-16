@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import styles from './SongList.module.css';
 import { Track, Album } from '@/data/albumData'; // Just types
+import { capitalizeTitle } from '@/utils/formatters';
 
 interface SongListProps {
     tracks: Track[];
@@ -426,7 +427,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     </button>
                                     <div>
                                         <div className={styles.trackTitle}>
-                                            {track.title}
+                                            {capitalizeTitle(track.title)}
                                             {isPreRelease && <span className={styles.badge} style={{ marginLeft: '8px', fontSize: '0.6rem', background: 'var(--accent)', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>EARLY ACCESS</span>}
                                             {isPreview && <span className={styles.badge} style={{ marginLeft: '8px', fontSize: '0.6rem', background: '#666', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>PREVIEW</span>}
                                         </div>
@@ -686,7 +687,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                             style={{ justifyContent: 'space-between', fontSize: '0.9rem', flex: 1 }}
                                         >
                                             <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                <Download size={16} /> {link.title}
+                                                <Download size={16} /> {capitalizeTitle(link.title)}
                                             </span>
                                         </a>
                                         <button
@@ -761,7 +762,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                 if (!track) return null;
                                 return (
                                     <div key={id} className={styles.reviewItem}>
-                                        <span className={styles.reviewItemTitle}>{track.title}</span>
+                                        <span className={styles.reviewItemTitle}>{capitalizeTitle(track.title)}</span>
                                         <button
                                             className={styles.removeBtn}
                                             onClick={() => toggleSelection(id)}

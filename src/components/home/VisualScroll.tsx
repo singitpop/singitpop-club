@@ -11,6 +11,8 @@ import { siteContent } from '@/config/siteContent';
 
 const items = siteContent.hero.cards;
 
+import { capitalizeTitle } from '@/utils/formatters';
+
 export default function VisualScroll() {
     const [showModal, setShowModal] = useState(false);
     const [dynamicItems, setDynamicItems] = useState(items);
@@ -94,7 +96,7 @@ export default function VisualScroll() {
 
                             <div className={styles.content}>
                                 <span className={styles.subtitle}>{isLoading ? "" : item.subtitle}</span>
-                                <h3 className={styles.title}>{isLoading ? "" : item.title}</h3>
+                                <h3 className={styles.title}>{isLoading ? "" : capitalizeTitle(item.title)}</h3>
                                 {isLoading ? null : (
                                     item.action === 'modal' ? (
                                         <button
