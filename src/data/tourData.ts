@@ -18,7 +18,7 @@ export interface Accommodation {
 
 export interface Attraction {
     name: string;
-    type: 'Castle' | 'Nature' | 'Activity' | 'History' | 'Shopping' | 'Viewpoint';
+    type: 'Castle' | 'Nature' | 'Activity' | 'History' | 'Shopping' | 'Viewpoint' | 'Travel';
     listOwner?: 'Joyce' | 'Jackie' | 'Both' | 'Gary'; // Gary for hidden gems/logistics
     bookingLink?: string;
     price?: string;

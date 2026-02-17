@@ -2,7 +2,7 @@
 
 import { TOUR_ITINERARY, TourStop, Accommodation, Attraction } from "@/data/tourData";
 import { format } from "date-fns";
-import { MapPin, Calendar, ExternalLink, Tent, Castle, Info, Navigation, ArrowRight, ShieldCheck, Star, Lightbulb, Zap, Accessibility, ParkingCircle, Eye } from "lucide-react";
+import { MapPin, Calendar, ExternalLink, Tent, Castle, Info, Navigation, ArrowRight, ShieldCheck, Star, Lightbulb, Zap, Accessibility, ParkingCircle, Eye, Camera, Wheelchair } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function GrandTourPage() {
