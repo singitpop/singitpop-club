@@ -49,7 +49,8 @@ export interface TourStop {
     accommodation?: Accommodation;
     attractions: Attraction[];
     distance?: string;
-    driveTime?: string; // "Total driving: 3h"
+    driveTime?: string;
+    coordinates: [number, number]; // [Lat, Lng]
     status: 'Planned' | 'Booked' | 'Completed';
     dailyTip?: string;
 }
@@ -63,6 +64,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         type: "Travel",
         distance: "120 miles total",
         driveTime: "2h 30m total driving",
+        coordinates: [55.9006, -3.1833], // Mortonhall (Evening stop)
         status: "Planned",
         dailyTip: "We are heading straight to Kelso to start the tour at Floors Castle. It's the grand opening!",
         accommodation: {
@@ -101,6 +103,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "Edinburgh: The Royal Mile",
         location: "Edinburgh",
         type: "Explore",
+        coordinates: [55.9486, -3.1999], // Edinburgh Castle
         status: "Planned",
         dailyTip: "Edinburgh is hilly! Take it slow. We can grab a taxi to the Castle esplanade to save the big walk up.",
         accommodation: { name: "Mortonhall Caravan & Camping Park", type: "Campsite" },
@@ -159,6 +162,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "Edinburgh: Leith & Legends",
         location: "Edinburgh",
         type: "Explore",
+        coordinates: [55.9533, -3.1883], // Edinburgh
         status: "Planned",
         accommodation: { name: "Mortonhall Caravan & Camping Park", type: "Campsite" },
         attractions: [
@@ -203,6 +207,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "Engineering & Kings",
         location: "Perth / Scone",
         type: "Explore",
+        coordinates: [56.4239, -3.4357], // Scone
         status: "Planned",
         dailyTip: "We'll park right at the Kelpies for a quick, flat walk. The view is instant.",
         accommodation: {
@@ -266,6 +271,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "Royal Deeside & The Glens",
         location: "Balmoral",
         type: "Travel",
+        coordinates: [57.0494, -3.0365], // Ballater
         status: "Planned",
         dailyTip: "The drive over Cairnwell Pass is high! We can stop at the ski centre for a toilet break/coffee with a view.",
         accommodation: {
@@ -315,6 +321,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "The Monster Hunt",
         location: "Loch Ness",
         type: "Explore",
+        coordinates: [57.2796, -4.4533], // Loch Ness Shores
         status: "Planned",
         dailyTip: "Urquhart Castle has many stairs, but the Visitor Centre balcony has the BEST view of the Loch without walking down.",
         accommodation: {
@@ -355,6 +362,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "Waterfalls & The West",
         location: "Isle of Skye",
         type: "Travel",
+        coordinates: [57.4125, -6.1960], // Portree
         status: "Planned",
         dailyTip: "Victoria Falls is a short walk from the car park. We can take our time.",
         accommodation: {
@@ -395,6 +403,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "Skye to Mull",
         location: "Tobermory",
         type: "Travel",
+        coordinates: [56.6212, -6.0716], // Tobermory
         status: "Planned",
         dailyTip: "Ferry day! Stay in the car or use the lift to the lounge. Great views of the islands.",
         accommodation: {
@@ -424,6 +433,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "Return to the Mainland",
         location: "Fort William",
         type: "Travel",
+        coordinates: [56.8043, -5.0744], // Glen Nevis
         status: "Planned",
         accommodation: {
             name: "Glen Nevis Caravan & Camping Park",
@@ -464,6 +474,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "The Harry Potter Train",
         location: "Fort William",
         type: "Activity",
+        coordinates: [56.8187, -5.1069], // Fort William Station area
         status: "Planned",
         dailyTip: "We are booked in First Class (hopefully!) for comfy seats and tea. Sit on the LEFT for the best view of the viaduct.",
         accommodation: { name: "Glen Nevis Caravan & Camping Park", type: "Campsite" },
@@ -494,6 +505,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "Glencoe & The Bonny Banks",
         location: "Loch Lomond",
         type: "Travel",
+        coordinates: [56.1264, -4.4326], // Cobleland (Aberfoyle)
         status: "Planned",
         dailyTip: "We'll stop at the 'Meeting of Three Waters' in Glencoe. It's right by the road, amazing photo, no walking needed.",
         accommodation: {
@@ -534,6 +546,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "City Chic & Clifftop Castles",
         location: "Ayrshire",
         type: "Explore",
+        coordinates: [55.3551, -4.7938], // Culzean
         status: "Planned",
         accommodation: {
             name: "Culzean Castle Camping Site",
@@ -567,6 +580,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "The Homeward Leg",
         location: "Galloway / Gretna",
         type: "Travel",
+        coordinates: [54.9964, -3.0642], // Gretna
         status: "Planned",
         accommodation: { name: "Stopover near Gretna", type: "Mobile Stopover" },
         attractions: [
@@ -590,6 +604,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         type: "Travel",
         distance: "End of Tour",
         driveTime: "2 hours",
+        coordinates: [54.9667, -1.5039], // Approx NE31 2PL
         status: "Completed",
         accommodation: { name: "Home", type: "Hotel" },
         attractions: []

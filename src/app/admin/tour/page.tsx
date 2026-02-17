@@ -1,9 +1,6 @@
-"use client";
-
-import { TOUR_ITINERARY, TourStop, Accommodation, Attraction } from "@/data/tourData";
-import { format } from "date-fns";
 import { MapPin, Calendar, ExternalLink, Tent, Castle, Info, Navigation, ArrowRight, ShieldCheck, Star, Lightbulb, Zap, Accessibility, ParkingCircle, Eye, Camera, Car, Bus, Ship, Footprints, Clock } from "lucide-react";
 import { motion } from "framer-motion";
+import TourMapWrapper from "@/components/tour/TourMapWrapper";
 
 export default function GrandTourPage() {
     return (
@@ -20,6 +17,11 @@ export default function GrandTourPage() {
                     </div>
                     <p className="text-white/60">April 20th - May 3rd, 2026 • 14 Days • The Bucket List Run</p>
                 </header>
+
+                {/* Map Section */}
+                <div className="mb-8">
+                    <TourMapWrapper />
+                </div>
 
                 {/* Timeline */}
                 <div className="space-y-6 relative">
