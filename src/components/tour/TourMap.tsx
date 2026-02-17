@@ -115,14 +115,83 @@ export default function TourMap() {
                 {/* Day Markers */}
                 {TOUR_ITINERARY.map((stop, idx) => (
                     <Marker key={idx} position={stop.coordinates}>
-                        <Popup>
-                            <div className="text-black text-xs">
-                                <strong>Day {stop.day}: {stop.location}</strong><br />
-                                {stop.title}
+                        <Popup className="custom-popup">
+                            <div className="text-slate-900 min-w-[200px]">
+                                <div className="border-b border-slate-200 pb-2 mb-2">
+                                    <strong className="text-sm block text-slate-800">Day {stop.day}: {stop.location}</strong>
+                                    <span className="text-xs text-slate-500">{stop.title}</span>
+                                </div>
+
+                                <div className="space-y-2 text-xs">
+                                    {stop.accommodation && (
+                                        <div className="flex items-start gap-1.5">
+                                            <span className="text-blue-500 font-bold">🏨</span>
+                                            <span className="text-slate-600">{stop.accommodation.name}</span>
+                                        </div>
+                                    )}
+                                    {stop.driveTime && (
+                                        <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded">
+                                            <span className="text-slate-400">🚗</span>
+                                            <span className="font-mono text-slate-700">{stop.driveTime}</span>
+                                        </div>
+                                    )}
+                                    {stop.distance && (
+                                        <div className="text-slate-400 pl-5">
+                                            ({stop.distance})
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </Popup>
                     </Marker>
                 ))}
+
+                {/* Attraction Markers (Purple) */}
+                {TOUR_ITINERARY.flatMap(stop => stop.attractions).map((attr, idx) => {
+                    if (!attr.coordinates) return null;
+
+                    // Create a custom icon for attractions
+                    // (Using a hue-rotate filter on the default marker for now, or we could import a different colored one)
+                    // For simplicity in this environment, we'll use the default marker but maybe distinguish in popup
+                    // A better approach in production would be a separate L.Icon instance with a purple marker image.
+
+                    const AttractionIcon = L.icon({
+                        iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png",
+                        shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                    });
+
+                    return (
+                        <Marker key={`attr-${idx}`} position={attr.coordinates} icon={AttractionIcon}>
+                            <Popup className="custom-popup">
+                                <div className="text-slate-900 min-w-[200px]">
+                                    <div className="border-b border-purple-200 pb-2 mb-2">
+                                        <strong className="text-sm block text-purple-900">{attr.name}</strong>
+                                        <span className="text-[10px] text-purple-600 uppercase font-bold tracking-wider">{attr.type}</span>
+                                    </div>
+
+                                    <div className="space-y-2 text-xs">
+                                        {attr.price && (
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="text-slate-400">💷</span>
+                                                <span className="text-slate-700">{attr.price}</span>
+                                            </div>
+                                        )}
+                                        {attr.logistics?.timeAtSite && (
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="text-slate-400">⏳</span>
+                                                <span className="text-slate-700">{attr.logistics.timeAtSite}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </Popup>
+                        </Marker>
+                    );
+                })}
             </MapContainer>
         </div>
     );

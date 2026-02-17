@@ -8,7 +8,7 @@ import AnalyticsCharts from '@/components/admin/AnalyticsCharts';
 
 export default function AnalyticsPage() {
     const { isLabel } = useAuth();
-    const [data, setData] = useState<{ users: any[], playlists: any[], visits: Record<string, number> } | null>(null);
+    const [data, setData] = useState<{ users: any[], playlists: any[], playlistStats: number[], visits: Record<string, number> } | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -62,6 +62,7 @@ export default function AnalyticsPage() {
             <AnalyticsCharts
                 userData={data.users}
                 playlistData={data.playlists}
+                playlistStats={data.playlistStats}
                 visitData={data.visits}
             />
         </div>

@@ -36,6 +36,7 @@ export interface Attraction {
     };
     logistics?: Logistics;
     notes?: string;
+    coordinates?: [number, number];
 }
 
 export interface TourStop {
@@ -235,6 +236,7 @@ export const TOUR_ITINERARY: TourStop[] = [
                 description: "30-meter-high horse-head sculptures. Mythical and massive.",
                 price: "Free (Tours £7.50)",
                 openingTimes: "24/7 (Visitor Centre 09:30-17:00)",
+                coordinates: [56.0191, -3.7553],
                 accessibility: {
                     rating: 'Easy',
                     blueBadge: true,
@@ -255,6 +257,7 @@ export const TOUR_ITINERARY: TourStop[] = [
                 description: "Rotating boat lift. Access to the visitor centre is easy.",
                 price: "Free (Boat Trip £14.50)",
                 openingTimes: "10:00 - 17:30",
+                coordinates: [56.0004, -3.8415],
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Dedicated Blue Badge spaces near Visitor Centre entrance." },
                 logistics: {
                     driveTime: "15 mins from Kelpies",
@@ -268,6 +271,7 @@ export const TOUR_ITINERARY: TourStop[] = [
                 description: "Scotland's finest stately home. Grand architecture and deer park.",
                 price: "£13.50",
                 openingTimes: "10:30 - 17:00",
+                coordinates: [55.9956, -3.4699],
                 accessibility: {
                     rating: 'Easy',
                     blueBadge: true,
