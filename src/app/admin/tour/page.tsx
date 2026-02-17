@@ -190,10 +190,62 @@ function AttractionCard({ attr }: { attr: Attraction }) {
                 )}
             </div>
 
+            {/* Price & Opening Times */}
+            {(attr.price || attr.openingTimes) && (
+                <div className="flex gap-4 text-xs text-white/50 border-t border-white/5 pt-2">
+                    {attr.price && (
+                        <div className="flex items-center gap-1.5">
+                            <span className="text-white/30">💷</span> {attr.price}
+                        </div>
+                    )}
+                    {attr.openingTimes && (
+                        <div className="flex items-center gap-1.5">
+                            <Clock size={12} className="text-white/30" /> {attr.openingTimes}
+                        </div>
+                    )}
+                </div>
+            )}
+
             {/* Description & Detailed Infos */}
-            <div className="mt-1 space-y-2 pt-2 border-t border-white/5">
+            <div className="space-y-2">
                 {attr.description && (
-                    <p className="text-xs text-white/70">{attr.description}</p>
+                    <p className="text-xs text-white/70 mt-1">{attr.description}</p>
+                )}
+
+                {/* Logistics */}
+                {attr.logistics && (
+                    <div className="grid grid-cols-2 gap-2 text-[10px] text-white/50 bg-white/5 p-2 rounded border border-white/5 mt-2">
+                        {attr.logistics.driveTime && (
+                            <div className="flex items-center gap-1.5">
+                                <Car size={12} className="text-blue-400" />
+                                <span>{attr.logistics.driveTime}</span>
+                            </div>
+                        )}
+                        {attr.logistics.transferTime && (
+                            <div className="flex items-center gap-1.5">
+                                <Bus size={12} className="text-blue-400" />
+                                <span>{attr.logistics.transferTime}</span>
+                            </div>
+                        )}
+                        {attr.logistics.ferryDuration && (
+                            <div className="flex items-center gap-1.5">
+                                <Ship size={12} className="text-blue-400" />
+                                <span>{attr.logistics.ferryDuration}</span>
+                            </div>
+                        )}
+                        {attr.logistics.parkAndWalk && (
+                            <div className="flex items-center gap-1.5 col-span-2">
+                                <Footprints size={12} className="text-green-400" />
+                                <span>{attr.logistics.parkAndWalk}</span>
+                            </div>
+                        )}
+                        {attr.logistics.timeAtSite && (
+                            <div className="flex items-center gap-1.5 col-span-2 border-t border-white/5 pt-1 mt-1">
+                                <Clock size={12} className="text-orange-400" />
+                                <span className="text-orange-200/70">Allow: {attr.logistics.timeAtSite}</span>
+                            </div>
+                        )}
+                    </div>
                 )}
 
                 {/* Scenic Guide */}
@@ -219,9 +271,6 @@ function AttractionCard({ attr }: { attr: Attraction }) {
                                 <Accessibility size={14} className="mt-0.5 shrink-0 text-blue-400" />
                                 <span className="italic">{attr.accessibility.mobilityInfo}</span>
                             </div>
-                        )}
-                        {attr.accessibility.toilets && (
-                            <div className="ml-6 text-[10px] border px-1 rounded border-blue-500/20 text-blue-400 w-fit">Acc. Toilets</div>
                         )}
                     </div>
                 )}

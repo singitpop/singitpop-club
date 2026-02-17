@@ -24,6 +24,7 @@ export async function DELETE(req: Request) {
 
         // 2. Verified Owner or Admin
         let isAllowed = false;
+        let isAdminAction = false;
 
         if (playlist.userId === userId) {
             isAllowed = true;
@@ -34,18 +35,22 @@ export async function DELETE(req: Request) {
             const role = user.publicMetadata.role as string; // 'admin'
             if (role === 'admin') {
                 isAllowed = true;
+                isAdminAction = true;
             }
         }
 
         if (!isAllowed) {
+            console.warn(`⛔ Forbidden delete attempt by user ${userId} on playlist ${id}`);
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
         }
 
         // 3. Delete
         const success = await deleteCommunityPlaylist(id);
         if (success) {
+            console.log(`✅ Playlist ${id} deleted by ${isAdminAction ? 'ADMIN' : 'Owner'} (${userId})`);
             return NextResponse.json({ success: true });
         } else {
+            console.error(`❌ Failed to delete playlist ${id} (S3 error)`);
             return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
         }
 

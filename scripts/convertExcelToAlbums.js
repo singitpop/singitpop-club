@@ -1,19 +1,3 @@
-#!/usr/bin/env node
-
-/**
- * Script to convert Excel spreadsheet to album data structure
- * Scans actual album folders and MP3 files
- * Generates AWS S3 URLs for audio files
- * 
- * Excel columns:
- * A: Track title
- * B: Genre
- * D: Album/single (Type)
- * F: Track number
- * G: Album Title
- * I: Release Date
- */
-
 const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
@@ -22,320 +6,340 @@ const ALBUMS_SOURCE_DIR = '/Users/garybirrell/Desktop/Singitpop/READY FOR WEBSIT
 const EXCEL_PATH = '/Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx';
 const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
 
-console.log('🎵 Starting album data conversion...\n');
+// Wrap in async function to use await
+(async () => {
+    console.log('🎵 Starting album data conversion...\n');
 
-// Read the Excel file
-console.log('📖 Reading Excel file...');
-const workbook = XLSX.readFile(EXCEL_PATH);
-const sheetName = 'Songs';
-const worksheet = workbook.Sheets[sheetName];
+    // Dynamic import for ESM module
+    const { parseFile } = await import('music-metadata');
 
-// Convert to JSON
-const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-console.log(`   Found ${data.length} rows in '${sheetName}' sheet\n`);
+    // Read the Excel file
+    console.log('📖 Reading Excel file...');
+    const workbook = XLSX.readFile(EXCEL_PATH);
+    const sheetName = 'Songs';
+    const worksheet = workbook.Sheets[sheetName];
 
-// Scan album folders
-console.log('📁 Scanning album folders...');
-const albumFolders = fs.readdirSync(ALBUMS_SOURCE_DIR)
-    .filter(name => {
-        const fullPath = path.join(ALBUMS_SOURCE_DIR, name);
-        try {
-            return fs.statSync(fullPath).isDirectory() &&
-                name !== 'website' &&
-                name !== 'untitled folder' &&
-                !name.startsWith('.');
-        } catch (e) {
-            return false;
-        }
-    });
-console.log(`   Found ${albumFolders.length} album folders\n`);
+    // Convert to JSON
+    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    console.log(`   Found ${data.length} rows in '${sheetName}' sheet\n`);
 
-// Process Excel data
-const albums = {};
-const tracksByAlbum = {};
-
-for (let i = 1; i < data.length; i++) {
-    const row = data[i];
-
-    const trackTitle = row[0]; // Column A: Song Title
-    const genre = row[1];      // Column B: Genre
-    const singleType = row[3] ? String(row[3]).trim().toLowerCase() : ''; // Column D: Single marker (all singles)
-    let albumName = row[6];  // Column G: Album Title
-
-    // Fix known typos in Excel
-    if (albumName === 'Aplril Comes Soft') albumName = 'April Comes Soft';
-
-    const trackNumber = row[5]; // Column F: Track No
-    const releaseDate = row[8]; // Column I: Release Date (Excel date number)
-    const latestMarker = row[11] ? String(row[11]).trim().toLowerCase() : ''; // Column L: Trending/Latest
-    const isTrendingMarker = latestMarker.includes('trend') || latestMarker.includes('trand');
-    const playsRaw = row[12]; // Column M: Plays
-
-
-    // Skip empty rows
-    if (!trackTitle || !albumName) continue;
-
-    // Convert Excel date to full date string (YYYY-MM-DD)
-    let year = new Date().getFullYear();
-    let fullDateStr = `${year}-01-01`; // Default
-
-    if (releaseDate) {
-        let date;
-        if (typeof releaseDate === 'number') {
-            // Excel dates are days since 1900-01-01
-            const excelEpoch = new Date(1900, 0, 1);
-            date = new Date(excelEpoch.getTime() + (releaseDate - 2) * 24 * 60 * 60 * 1000);
-        } else if (typeof releaseDate === 'string') {
-            // Check for UK date format DD/MM/YYYY
-            if (releaseDate.includes('/')) {
-                const parts = releaseDate.split('/');
-                if (parts.length === 3) {
-                    // Assume DD/MM/YYYY
-                    const day = parseInt(parts[0], 10);
-                    const month = parseInt(parts[1], 10) - 1; // Months are 0-indexed in JS
-                    const yearVal = parseInt(parts[2], 10);
-                    date = new Date(yearVal, month, day);
-                }
-            }
-
-            if (!date || isNaN(date.getTime())) {
-                // Try standard parsing
-                date = new Date(releaseDate);
-            }
-        }
-
-        if (date && !isNaN(date.getTime())) {
-            year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            fullDateStr = `${year}-${month}-${day}`;
-        }
-    }
-
-    // Store track info by album name
-    if (!tracksByAlbum[albumName]) {
-        tracksByAlbum[albumName] = [];
-    }
-
-    tracksByAlbum[albumName].push({
-        title: trackTitle,
-        genre: genre || 'Pop',
-        trackNumber: trackNumber || tracksByAlbum[albumName].length + 1,
-        year: year,
-        releaseDate: fullDateStr, // Store full date
-        singleType: singleType,
-        latestMarker: latestMarker,
-        plays: playsRaw
-    });
-}
-
-console.log('🔍 Matching albums with folders and MP3 files...\n');
-
-// Match albums with folders
-const folderMappings = {
-    "Aplril Comes Soft": "April Comes Soft", // Typo in Excel
-    "Heartland Rhythms": "Heartland Rythms", // Typo in folder
-    "Echoes of Us": "Echos Of Us", // Typo in folder
-    "Forever Starts Today (Country Music for Weddings)": "Forever Starts Today - Country Album", // Different formatting
-    "Night Drive: 80s Beats & Ballads": "Night Drive - 80s Beats & Ballads", // Different separator
-    "Popstar Winter Wonderland": "Pop Star Winter Wonderland", // Spacing difference
-    "Summer Fever": "Summer fever" // Case difference (though search is case-insensitive, explicit mapping is safe)
-};
-
-for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
-    // Find matching folder (case-insensitive, flexible matching) or use manual mapping
-    let matchingFolder = folderMappings[albumName];
-
-    if (!matchingFolder) {
-        matchingFolder = albumFolders.find(folder =>
-            folder.toLowerCase().includes(albumName.toLowerCase()) ||
-            albumName.toLowerCase().includes(folder.toLowerCase()) ||
-            folder.toLowerCase().replace(/[^a-z0-9]/g, '') === albumName.toLowerCase().replace(/[^a-z0-9]/g, '')
-        );
-    }
-
-    if (!matchingFolder) {
-        console.log(`   ⚠️  No folder found for album: "${albumName}"`);
-        continue;
-    }
-
-    const folderPath = path.join(ALBUMS_SOURCE_DIR, matchingFolder);
-    const year = tracks[0]?.year || new Date().getFullYear();
-    const releaseDate = tracks[0]?.releaseDate || `${year}-01-01`; // Use full date from first track
-
-    // Create album slug
-    const albumSlug = `${albumName}-${year}`
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
-
-    // Get Audio files from folder for matching (MP3 or WAV)
-    let audioFiles = [];
-    try {
-        // Recursive function to find all audio files
-        function getAudioFiles(dirPath) {
-            let results = [];
-            let list = [];
+    // Scan album folders
+    console.log('📁 Scanning album folders...');
+    const albumFolders = fs.readdirSync(ALBUMS_SOURCE_DIR)
+        .filter(name => {
+            const fullPath = path.join(ALBUMS_SOURCE_DIR, name);
             try {
-                list = fs.readdirSync(dirPath);
+                return fs.statSync(fullPath).isDirectory() &&
+                    name !== 'website' &&
+                    name !== 'untitled folder' &&
+                    !name.startsWith('.');
             } catch (e) {
-                return [];
+                return false;
             }
+        });
+    console.log(`   Found ${albumFolders.length} album folders\n`);
 
-            list.forEach(file => {
-                const filePath = path.join(dirPath, file);
-                const stat = fs.statSync(filePath);
-                if (stat && stat.isDirectory()) {
-                    results = results.concat(getAudioFiles(filePath));
-                } else {
-                    if (file.toLowerCase().endsWith('.wav') || file.toLowerCase().endsWith('.mp3')) {
-                        results.push(filePath); // Store full path for now
+    // Process Excel data
+    const albums = {};
+    const tracksByAlbum = {};
+
+    for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+
+        const trackTitle = row[0]; // Column A: Song Title
+        const genre = row[1];      // Column B: Genre
+        const singleType = row[3] ? String(row[3]).trim().toLowerCase() : ''; // Column D: Single marker (all singles)
+        let albumName = row[6];  // Column G: Album Title
+
+        // Fix known typos in Excel
+        if (albumName === 'Aplril Comes Soft') albumName = 'April Comes Soft';
+
+        const trackNumber = row[5]; // Column F: Track No
+        const releaseDate = row[8]; // Column I: Release Date (Excel date number)
+        const latestMarker = row[11] ? String(row[11]).trim().toLowerCase() : ''; // Column L: Trending/Latest
+        const isTrendingMarker = latestMarker.includes('trend') || latestMarker.includes('trand');
+        const playsRaw = row[12]; // Column M: Plays
+
+
+        // Skip empty rows
+        if (!trackTitle || !albumName) continue;
+
+        // Convert Excel date to full date string (YYYY-MM-DD)
+        let year = new Date().getFullYear();
+        let fullDateStr = `${year}-01-01`; // Default
+
+        if (releaseDate) {
+            let date;
+            if (typeof releaseDate === 'number') {
+                // Excel dates are days since 1900-01-01
+                const excelEpoch = new Date(1900, 0, 1);
+                date = new Date(excelEpoch.getTime() + (releaseDate - 2) * 24 * 60 * 60 * 1000);
+            } else if (typeof releaseDate === 'string') {
+                // Check for UK date format DD/MM/YYYY
+                if (releaseDate.includes('/')) {
+                    const parts = releaseDate.split('/');
+                    if (parts.length === 3) {
+                        // Assume DD/MM/YYYY
+                        const day = parseInt(parts[0], 10);
+                        const month = parseInt(parts[1], 10) - 1; // Months are 0-indexed in JS
+                        const yearVal = parseInt(parts[2], 10);
+                        date = new Date(yearVal, month, day);
                     }
                 }
-            });
-            return results;
+
+                if (!date || isNaN(date.getTime())) {
+                    // Try standard parsing
+                    date = new Date(releaseDate);
+                }
+            }
+
+            if (date && !isNaN(date.getTime())) {
+                year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                fullDateStr = `${year}-${month}-${day}`;
+            }
         }
 
-        const fullAlbumPath = path.join(ALBUMS_SOURCE_DIR, matchingFolder);
-        const allFilePaths = getAudioFiles(fullAlbumPath);
+        // Store track info by album name
+        if (!tracksByAlbum[albumName]) {
+            tracksByAlbum[albumName] = [];
+        }
 
-        // Map to filenames for matching logic, but now we know they exist
-        audioFiles = allFilePaths
-            .map(filePath => path.basename(filePath))
-            .filter(file => {
-                const ext = file.toLowerCase();
-
-                // Exclude version numbers like "song-2.wav", "song 2.wav", "song(1).wav"
-                const baseName = path.parse(file).name;
-                const hasVersionNumber = /[- ]\d+$/.test(baseName) || /\(\d+\)$/.test(baseName);
-
-                if (hasVersionNumber) return false;
-
-                return true;
-            })
-            .sort();
-    } catch (e) {
-        console.log(`   ⚠️  Could not read folder: ${matchingFolder}`);
+        tracksByAlbum[albumName].push({
+            title: trackTitle,
+            genre: genre || 'Pop',
+            trackNumber: trackNumber || tracksByAlbum[albumName].length + 1,
+            year: year,
+            releaseDate: fullDateStr, // Store full date
+            singleType: singleType,
+            latestMarker: latestMarker,
+            plays: playsRaw
+        });
     }
 
-    // Create clean slug for S3 folder name (must match upload script logic)
-    const s3FolderSlug = matchingFolder
-        .toLowerCase()
-        .replace(/[^a-z0-9 ]/g, '')  // Remove special chars except spaces
-        .replace(/ /g, '-');         // Replace spaces with hyphens
+    console.log('🔍 Matching albums with folders and MP3 files...\n');
 
-    // Get genres from tracks
-    const genres = [...new Set(tracks.map(t => t.genre))];
-
-    // Determine Album Type (Studio, Live, or Standard)
-    // If ANY track is marked Studio/Live in Column K, the whole album gets that tag
-    // Determine Album Type (Studio, Live, or Standard)
-    let albumType = 'standard';
-    const hasStudioTag = tracks.some(t => t.latestMarker && t.latestMarker.toLowerCase().includes('studio'));
-    const hasLiveTag = tracks.some(t => t.latestMarker && t.latestMarker.toLowerCase().includes('live'));
-
-    // Priority: Live > Studio > Standard (default)
-    if (hasLiveTag) albumType = 'live';
-    else if (hasStudioTag) albumType = 'studio';
-
-    const isTrending = tracks.some(t => {
-        const marker = (t.latestMarker || '').toLowerCase();
-        return marker.includes('trend') || marker.includes('trand');
-    });
-
-    // Initialize album
-    albums[albumSlug] = {
-        id: albumSlug,
-        title: albumName,
-        year: year,
-        genre: genres,
-        coverArt: `/albums/artwork/${albumSlug}.jpg`,
-        tracks: [],
-        releaseDate: releaseDate, // Use full date
-        folderPath: matchingFolder,
-        mp3Count: audioFiles.length,
-        type: albumType,
-        trending: isTrending
+    // Match albums with folders
+    const folderMappings = {
+        "Aplril Comes Soft": "April Comes Soft", // Typo in Excel
+        "Heartland Rhythms": "Heartland Rythms", // Typo in folder
+        "Echoes of Us": "Echos Of Us", // Typo in folder
+        "Forever Starts Today (Country Music for Weddings)": "Forever Starts Today - Country Album", // Different formatting
+        "Night Drive: 80s Beats & Ballads": "Night Drive - 80s Beats & Ballads", // Different separator
+        "Popstar Winter Wonderland": "Pop Star Winter Wonderland", // Spacing difference
+        "Summer Fever": "Summer fever" // Case difference (though search is case-insensitive, explicit mapping is safe)
     };
 
-    // Add tracks
-    tracks.forEach((track, index) => {
-        const trackSlug = track.title
+    // Helper to format duration
+    const formatDuration = (seconds) => {
+        if (!seconds) return '3:30'; // Fallback
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
+        // Find matching folder (case-insensitive, flexible matching) or use manual mapping
+        let matchingFolder = folderMappings[albumName];
+
+        if (!matchingFolder) {
+            matchingFolder = albumFolders.find(folder =>
+                folder.toLowerCase().includes(albumName.toLowerCase()) ||
+                albumName.toLowerCase().includes(folder.toLowerCase()) ||
+                folder.toLowerCase().replace(/[^a-z0-9]/g, '') === albumName.toLowerCase().replace(/[^a-z0-9]/g, '')
+            );
+        }
+
+        if (!matchingFolder) {
+            console.log(`   ⚠️  No folder found for album: "${albumName}"`);
+            continue;
+        }
+
+        const folderPath = path.join(ALBUMS_SOURCE_DIR, matchingFolder);
+        const year = tracks[0]?.year || new Date().getFullYear();
+        const releaseDate = tracks[0]?.releaseDate || `${year}-01-01`; // Use full date from first track
+
+        // Create album slug
+        const albumSlug = `${albumName}-${year}`
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/^-|-$/g, '');
 
-        const trackNum = String(track.trackNumber || index + 1).padStart(2, '0');
+        // Get Audio files from folder for matching (MP3 or WAV)
+        let audioFiles = [];
+        try {
+            // Recursive function to find all audio files
+            function getAudioFiles(dirPath) {
+                let results = [];
+                let list = [];
+                try {
+                    list = fs.readdirSync(dirPath);
+                } catch (e) {
+                    return [];
+                }
 
-        // Default filenames
-        let mp3Filename = `${trackNum}-${trackSlug}.mp3`;
-        let wavFilename = `${trackNum}-${trackSlug}.wav`;
-        let foundMp3 = false;
-        let foundWav = false;
-
-        // Try to find matching files in physical folder
-        if (audioFiles.length > 0) {
-            // Find MP3
-            const mp3Match = audioFiles.find(f =>
-                f.toLowerCase().endsWith('.mp3') && (
-                    f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
-                    f.toLowerCase().includes(track.title.toLowerCase()) ||
-                    f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
-                )
-            );
-
-            // Find WAV
-            const wavMatch = audioFiles.find(f =>
-                f.toLowerCase().endsWith('.wav') && (
-                    f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
-                    f.toLowerCase().includes(track.title.toLowerCase()) ||
-                    f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
-                )
-            );
-
-            if (mp3Match) {
-                mp3Filename = mp3Match;
-                foundMp3 = true;
+                list.forEach(file => {
+                    const filePath = path.join(dirPath, file);
+                    const stat = fs.statSync(filePath);
+                    if (stat && stat.isDirectory()) {
+                        results = results.concat(getAudioFiles(filePath));
+                    } else {
+                        if (file.toLowerCase().endsWith('.wav') || file.toLowerCase().endsWith('.mp3')) {
+                            results.push(filePath); // Store full path for now
+                        }
+                    }
+                });
+                return results;
             }
-            if (wavMatch) {
-                wavFilename = wavMatch;
-                foundWav = true;
-            }
+
+            const fullAlbumPath = path.join(ALBUMS_SOURCE_DIR, matchingFolder);
+            const allFilePaths = getAudioFiles(fullAlbumPath);
+
+            // Map to filenames for matching logic, but now we know they exist
+            audioFiles = allFilePaths
+                .sort(); // Sorting helps ensure consistency
+        } catch (e) {
+            console.log(`   ⚠️  Could not read folder: ${matchingFolder}`);
         }
 
-        albums[albumSlug].tracks.push({
-            id: index + 1,
-            title: track.title,
-            duration: '3:30',
-            plays: track.plays ? String(track.plays) : '0', // From spreadsheet
-            locked: false, // Lock logic handled by client component based on tier
-            price: 0.99,
-            genre: track.genre,
-            // WAV for VIPs only (if exists)
-            highResUrl: foundWav ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(wavFilename)}` : undefined,
-            // MP3 for everyone else (streaming)
-            audioUrl: foundMp3 ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(mp3Filename)}` : undefined,
-            sourceFolder: matchingFolder,
-            albumId: albumSlug,
-            isSingle: !!(track.singleType && track.singleType.includes('single')) // Column D marks all singles
+        // Create clean slug for S3 folder name (must match upload script logic)
+        const s3FolderSlug = matchingFolder
+            .toLowerCase()
+            .replace(/[^a-z0-9 ]/g, '')  // Remove special chars except spaces
+            .replace(/ /g, '-');         // Replace spaces with hyphens
+
+        // Get genres from tracks
+        const genres = [...new Set(tracks.map(t => t.genre))];
+
+        // Determine Album Type (Studio, Live, or Standard)
+        let albumType = 'standard';
+        const hasStudioTag = tracks.some(t => t.latestMarker && t.latestMarker.toLowerCase().includes('studio'));
+        const hasLiveTag = tracks.some(t => t.latestMarker && t.latestMarker.toLowerCase().includes('live'));
+
+        // Priority: Live > Studio > Standard (default)
+        if (hasLiveTag) albumType = 'live';
+        else if (hasStudioTag) albumType = 'studio';
+
+        const isTrending = tracks.some(t => {
+            const marker = (t.latestMarker || '').toLowerCase();
+            return marker.includes('trend') || marker.includes('trand');
         });
+
+        // Initialize album
+        albums[albumSlug] = {
+            id: albumSlug,
+            title: albumName,
+            year: year,
+            genre: genres,
+            coverArt: `/albums/artwork/${albumSlug}.jpg`,
+            tracks: [],
+            releaseDate: releaseDate, // Use full date
+            folderPath: matchingFolder,
+            mp3Count: audioFiles.length,
+            type: albumType,
+            trending: isTrending
+        };
+
+        // Add tracks (Sequentially to allow await)
+        for (let index = 0; index < tracks.length; index++) {
+            const track = tracks[index];
+            const trackSlug = track.title
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$/g, '');
+
+            const trackNum = String(track.trackNumber || index + 1).padStart(2, '0');
+
+            // Default filenames
+            let mp3Filename = `${trackNum}-${trackSlug}.mp3`;
+            let wavFilename = `${trackNum}-${trackSlug}.wav`;
+            let foundMp3 = false;
+            let foundWav = false;
+            let duration = '3:30'; // Default
+            let durationSec = 210;
+            let foundFilePath = null;
+
+            // Try to find matching files in physical folder
+            if (audioFiles.length > 0) {
+                // Find MP3
+                const mp3Match = audioFiles.find(fPath => {
+                    const f = path.basename(fPath);
+                    return f.toLowerCase().endsWith('.mp3') && (
+                        f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
+                        f.toLowerCase().includes(track.title.toLowerCase()) ||
+                        f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
+                    );
+                });
+
+                // Find WAV
+                const wavMatch = audioFiles.find(fPath => {
+                    const f = path.basename(fPath);
+                    return f.toLowerCase().endsWith('.wav') && (
+                        f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
+                        f.toLowerCase().includes(track.title.toLowerCase()) ||
+                        f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
+                    );
+                });
+
+                if (mp3Match) {
+                    mp3Filename = path.basename(mp3Match);
+                    foundMp3 = true;
+                    foundFilePath = mp3Match;
+                }
+                if (wavMatch) {
+                    wavFilename = path.basename(wavMatch);
+                    foundWav = true;
+                    if (!foundFilePath) foundFilePath = wavMatch; // Prefer MP3 for duration speed, but WAV works too
+                }
+
+                // Extract Metadata if file found
+                if (foundFilePath) {
+                    try {
+                        const metadata = await parseFile(foundFilePath);
+                        if (metadata && metadata.format && metadata.format.duration) {
+                            durationSec = metadata.format.duration;
+                            duration = formatDuration(durationSec);
+                        }
+                    } catch (e) {
+                        console.warn(`    ⚠️ Failed to parse metadata for ${foundFilePath}: ${e.message}`);
+                    }
+                }
+            }
+
+            albums[albumSlug].tracks.push({
+                id: index + 1,
+                title: track.title,
+                duration: duration,
+                plays: track.plays ? String(track.plays) : '0', // From spreadsheet
+                locked: false, // Lock logic handled by client component based on tier
+                price: 0.99,
+                genre: track.genre,
+                // WAV for VIPs only (if exists)
+                highResUrl: foundWav ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(wavFilename)}` : undefined,
+                // MP3 for everyone else (streaming)
+                audioUrl: foundMp3 ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(mp3Filename)}` : undefined,
+                sourceFolder: matchingFolder,
+                albumId: albumSlug,
+                isSingle: !!(track.singleType && track.singleType.includes('single')) // Column D marks all singles
+            });
+        } // End tracks loop
+
+        console.log(`   ✅ ${albumName} (${year}) - ${tracks.length} tracks`);
+    }
+
+    // Convert to array and sort by Release Date (newest first)
+    const albumsArray = Object.values(albums).sort((a, b) => {
+        const dateA = new Date(a.releaseDate).getTime();
+        const dateB = new Date(b.releaseDate).getTime();
+        if (dateB !== dateA) return dateB - dateA;
+        return b.year - a.year; // Fallback
     });
 
-    console.log(`   ✅ ${albumName} (${year}) - ${tracks.length} tracks, ${audioFiles.length} Audio Files`);
-}
+    console.log(`\n✨ Processed ${albumsArray.length} albums successfully!\n`);
 
-// Convert to array and sort by Release Date (newest first)
-const albumsArray = Object.values(albums).sort((a, b) => {
-    const dateA = new Date(a.releaseDate).getTime();
-    const dateB = new Date(b.releaseDate).getTime();
-    if (dateB !== dateA) return dateB - dateA;
-    return b.year - a.year; // Fallback
-});
-
-console.log(`\n✨ Processed ${albumsArray.length} albums successfully!\n`);
-
-// Generate TypeScript file
-const tsContent = `/**
+    // Generate TypeScript file
+    const tsContent = `/**
  * Album Data
  * Auto-generated from Excel spreadsheet
  * Generated: ${new Date().toISOString()}
@@ -436,62 +440,63 @@ export function getLatestSingle(): Track | undefined {
 }
 `;
 
-// Write to file
-const outputPath = path.join(__dirname, '../src/data/albumData.ts');
-fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-fs.writeFileSync(outputPath, tsContent);
+    // Write to file
+    const outputPath = path.join(__dirname, '../src/data/albumData.ts');
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(outputPath, tsContent);
 
-// Generate summary
-const totalTracks = albumsArray.reduce((sum, album) => sum + album.tracks.length, 0);
-const allGenres = getAllGenres();
-const allYears = getAllYears();
+    // Generate summary
+    const totalTracks = albumsArray.reduce((sum, album) => sum + album.tracks.length, 0);
+    const allGenres = getAllGenres();
+    const allYears = getAllYears();
 
-console.log('📊 Statistics:');
-console.log(`   - Total albums: ${albumsArray.length}`);
-console.log(`   - Total tracks: ${totalTracks}`);
-console.log(`   - Genres: ${allGenres.join(', ')}`);
-console.log(`   - Year range: ${Math.min(...allYears)} - ${Math.max(...allYears)}`);
-console.log(`\n📁 Output: ${outputPath}\n`);
+    console.log('📊 Statistics:');
+    console.log(`   - Total albums: ${albumsArray.length}`);
+    console.log(`   - Total tracks: ${totalTracks}`);
+    console.log(`   - Genres: ${allGenres.join(', ')}`);
+    console.log(`   - Year range: ${Math.min(...allYears)} - ${Math.max(...allYears)}`);
+    console.log(`\n📁 Output: ${outputPath}\n`);
 
-// Generate a summary JSON for review
-// Generate a summary JSON for review
-const summaryPath = path.join(__dirname, '../src/data/albumSummary.json');
-const summary = {
-    generated: new Date().toISOString(),
-    totalAlbums: albumsArray.length,
-    totalTracks: totalTracks,
-    genres: allGenres,
-    years: allYears,
-    albums: albumsArray.map(album => ({
-        id: album.id,
-        title: album.title,
-        year: album.year,
-        trackCount: album.tracks.length,
-        genres: album.genre,
-        folderPath: album.folderPath,
-        s3Url: `${S3_BUCKET_URL}/albums/${album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-')}/`
-    }))
-};
-fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
-console.log(`📋 Summary: ${summaryPath}\n`);
+    // Generate a summary JSON for review
+    const summaryPath = path.join(__dirname, '../src/data/albumSummary.json');
+    const summary = {
+        generated: new Date().toISOString(),
+        totalAlbums: albumsArray.length,
+        totalTracks: totalTracks,
+        genres: allGenres,
+        years: allYears,
+        albums: albumsArray.map(album => ({
+            id: album.id,
+            title: album.title,
+            year: album.year,
+            trackCount: album.tracks.length,
+            genres: album.genre,
+            folderPath: album.folderPath,
+            s3Url: `${S3_BUCKET_URL}/albums/${album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-')}/`
+        }))
+    };
+    fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
+    console.log(`📋 Summary: ${summaryPath}\n`);
 
-// NEW: Generate full albums.json for S3 Metadata (Admin Dashboard Source)
-const fullJsonPath = path.join(__dirname, '../src/data/albums.json');
-fs.writeFileSync(fullJsonPath, JSON.stringify(albumsArray, null, 2));
-console.log(`📄 Full Metadata: ${fullJsonPath} (Ready for S3 Upload)\n`);
+    // NEW: Generate full albums.json for S3 Metadata (Admin Dashboard Source)
+    const fullJsonPath = path.join(__dirname, '../src/data/albums.json');
+    fs.writeFileSync(fullJsonPath, JSON.stringify(albumsArray, null, 2));
+    console.log(`📄 Full Metadata: ${fullJsonPath} (Ready for S3 Upload)\n`);
 
-function getAllGenres() {
-    const genres = new Set();
-    albumsArray.forEach(album => {
-        album.genre.forEach(g => genres.add(g));
-    });
-    return Array.from(genres).sort();
-}
+    function getAllGenres() {
+        const genres = new Set();
+        albumsArray.forEach(album => {
+            album.genre.forEach(g => genres.add(g));
+        });
+        return Array.from(genres).sort();
+    }
 
-function getAllYears() {
-    const years = new Set();
-    albumsArray.forEach(album => years.add(album.year));
-    return Array.from(years).sort((a, b) => b - a);
-}
+    function getAllYears() {
+        const years = new Set();
+        albumsArray.forEach(album => years.add(album.year));
+        return Array.from(years).sort((a, b) => b - a);
+    }
 
-console.log('✅ Done!\n');
+    console.log('✅ Done!\n');
+
+})();

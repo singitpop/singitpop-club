@@ -2,7 +2,7 @@
 
 import { X, Heart, Play, Pause, Share2, MoreHorizontal, Clock, Music, Trash2 } from 'lucide-react';
 import styles from './PlaylistViewer.module.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import { albums } from '@/data/albumData'; // Import data to resolve tracks
 
@@ -48,6 +48,27 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
         setResolvedTracks(tracks);
     }, [playlist]);
 
+    // Calculate total duration
+    const totalDuration = useMemo(() => {
+        if (!resolvedTracks.length) return "0 min";
+        let totalSeconds = 0;
+        resolvedTracks.forEach(t => {
+            if (t.duration) {
+                const parts = t.duration.split(':');
+                if (parts.length === 2) {
+                    totalSeconds += parseInt(parts[0]) * 60 + parseInt(parts[1]);
+                }
+            } else {
+                totalSeconds += 210; // Default 3:30
+            }
+        });
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+        if (hours > 0) return `${hours} hr ${minutes} min`;
+        return `${minutes} min`;
+    }, [resolvedTracks]);
+
     // Close on escape
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -91,6 +112,10 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
                             <span>{playlist.likes} Likes</span>
                             <span>•</span>
                             <span>{resolvedTracks.length} Tracks</span>
+                            <span>•</span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <Clock size={14} /> {totalDuration}
+                            </span>
                         </div>
 
                         <div className={styles.actions}>
