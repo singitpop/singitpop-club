@@ -32,8 +32,10 @@ export interface Attraction {
         blueBadge: boolean;
         parkingInfo?: string;
         mobilityInfo?: string; // Terrain, steps, lifts
+        toilets?: boolean;
     };
     logistics?: Logistics;
+    notes?: string;
 }
 
 export interface TourStop {
@@ -381,6 +383,26 @@ export const TOUR_ITINERARY: TourStop[] = [
         },
         attractions: [
             {
+                name: "Urquhart Castle",
+                type: "Castle",
+                listOwner: "Both",
+                description: "The iconic ruins overlooking Loch Ness. Visitor centre with cinema.",
+                price: "£14.50",
+                openingTimes: "09:30 - 18:00",
+                accessibility: {
+                    rating: 'Moderate',
+                    blueBadge: true,
+                    parkingInfo: "Dedicated Blue Badge spaces near Visitor Centre.",
+                    mobilityInfo: "Visitor Centre fully accessible. Steep path down to ruins (though visible from terrace)."
+                },
+                logistics: {
+                    driveTime: "1h 30m from Ballater",
+                    timeAtSite: "1h 30m",
+                    parkAndWalk: "Car park on site (Can be busy)."
+                },
+                scenicGuide: "The view from the Grant Tower is the definitive Loch Ness panorama."
+            },
+            {
                 name: "Cawdor Castle",
                 type: "Castle",
                 listOwner: "Joyce",
@@ -389,7 +411,7 @@ export const TOUR_ITINERARY: TourStop[] = [
                 openingTimes: "10:00 - 17:30",
                 accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Gardens are the highlight and mostly flat/accessible." },
                 logistics: {
-                    driveTime: "1h 15m from Ballater (via A939 - steep hills!)",
+                    driveTime: "40 mins from Urquhart Castle (via Inverness)",
                     timeAtSite: "1h 30m"
                 }
             },
