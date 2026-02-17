@@ -156,7 +156,6 @@ function AccessibilityBadge({ tier }: { tier: 'Easy' | 'Moderate' | 'Hard' }) {
 function AttractionCard({ attr }: { attr: Attraction }) {
     const isJoyce = attr.listOwner === 'Joyce' || attr.listOwner === 'Both';
     const isJackie = attr.listOwner === 'Jackie' || attr.listOwner === 'Both';
-    const isGary = attr.listOwner === 'Gary';
 
     return (
         <div className="bg-white/5 rounded-lg p-3 flex flex-col gap-2 group hover:bg-white/10 transition-colors">
@@ -173,7 +172,6 @@ function AttractionCard({ attr }: { attr: Attraction }) {
                     <div className="flex flex-wrap gap-1 mt-1.5">
                         {isJoyce && <span className="text-[10px] bg-pink-500/20 text-pink-300 px-1.5 rounded border border-pink-500/20">Joyce's List</span>}
                         {isJackie && <span className="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 rounded border border-purple-500/20">Jackie's List</span>}
-                        {isGary && <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 rounded border border-indigo-500/20">Gary's Choice</span>}
 
                         {attr.accessibility && <AccessibilityBadge tier={attr.accessibility.rating} />}
                     </div>

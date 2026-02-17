@@ -19,7 +19,7 @@ export interface Accommodation {
 export interface Attraction {
     name: string;
     type: 'Castle' | 'Nature' | 'Activity' | 'History' | 'Shopping' | 'Viewpoint' | 'Travel';
-    listOwner?: 'Joyce' | 'Jackie' | 'Both'; // Gary removed as per request
+    listOwner?: 'Joyce' | 'Jackie' | 'Both';
     bookingLink?: string;
     price?: string;
     openingTimes?: string;
