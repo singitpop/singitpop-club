@@ -26,7 +26,7 @@ export default function AnalyticsCharts({ userData, playlistData, playlistStats,
     };
 
     // 1. Signups Data
-    const signupStats = groupByDate(userData.map((u: any) => u.created_at || u.createdAt)); // Handle Clerk format
+    const signupStats = groupByDate(userData.map((u: any) => u.createdAt)); // Handle Clerk format
     const signupChartData = Object.keys(signupStats).map(date => ({
         date,
         count: signupStats[date]
@@ -50,7 +50,7 @@ export default function AnalyticsCharts({ userData, playlistData, playlistStats,
 
     // 4. Recent Users
     const recentUsers = [...userData]
-        .sort((a, b) => new Date(b.created_at || b.createdAt).getTime() - new Date(a.created_at || a.createdAt).getTime())
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .slice(0, 5);
 
     return (
@@ -166,20 +166,20 @@ export default function AnalyticsCharts({ userData, playlistData, playlistStats,
                         {recentUsers.map(user => (
                             <div key={user.id} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
                                 <img
-                                    src={user.image_url || `https://api.dicebear.com/7.x/initials/svg?seed=${user.first_name}`}
-                                    alt={user.first_name}
+                                    src={user.imageUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${user.firstName}`}
+                                    alt={user.firstName}
                                     className="w-10 h-10 rounded-full bg-slate-800 object-cover"
                                 />
                                 <div className="flex-1 min-w-0">
-                                    <div className="font-bold text-sm truncate">{user.first_name || 'User'} {user.last_name || ''}</div>
-                                    <div className="text-xs text-white/40 truncate">{user.email_addresses?.[0]?.email_address || user.email || 'No Email'}</div>
+                                    <div className="font-bold text-sm truncate">{user.firstName || 'User'} {user.lastName || ''}</div>
+                                    <div className="text-xs text-white/40 truncate">{user.emailAddresses?.[0]?.emailAddress || user.email || 'No Email'}</div>
                                 </div>
                                 <div className="text-right">
-                                    <span className={`text-[10px] px-1.5 py-0.5 rounded border ${(user.public_metadata?.tier === 'VIP') ? 'bg-amber-500/20 text-amber-300 border-amber-500/20' :
-                                            (user.public_metadata?.tier === 'INSIDER') ? 'bg-purple-500/20 text-purple-300 border-purple-500/20' :
-                                                'bg-slate-500/20 text-slate-300 border-slate-500/20'
+                                    <span className={`text-[10px] px-1.5 py-0.5 rounded border ${(user.publicMetadata?.tier === 'VIP') ? 'bg-amber-500/20 text-amber-300 border-amber-500/20' :
+                                        (user.publicMetadata?.tier === 'INSIDER') ? 'bg-purple-500/20 text-purple-300 border-purple-500/20' :
+                                            'bg-slate-500/20 text-slate-300 border-slate-500/20'
                                         }`}>
-                                        {user.public_metadata?.tier || 'FAN'}
+                                        {user.publicMetadata?.tier || 'FAN'}
                                     </span>
                                 </div>
                             </div>
