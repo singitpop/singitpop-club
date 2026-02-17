@@ -19,7 +19,7 @@ export interface Accommodation {
 export interface Attraction {
     name: string;
     type: 'Castle' | 'Nature' | 'Activity' | 'History' | 'Shopping' | 'Viewpoint' | 'Travel';
-    listOwner?: 'Joyce' | 'Jackie' | 'Both' | 'Gary'; // Gary for hidden gems/logistics
+    listOwner?: 'Joyce' | 'Jackie' | 'Both'; // Gary removed as per request
     bookingLink?: string;
     price?: string;
     openingTimes?: string;
@@ -114,7 +114,7 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Grassmarket",
                 type: "Shopping",
-                listOwner: "Gary",
+                listOwner: "Both",
                 description: "Historic market place with great pubs and views of the castle from below.",
                 scenicGuide: "Stand near the Vennel steps for the 'Harry Potter' style view of the castle looming above.",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "On-street parking or Castle Terrace multi-storey nearby." }
@@ -188,7 +188,7 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Falkirk Wheel",
                 type: "Activity",
-                listOwner: "Gary",
+                listOwner: "Both",
                 description: "Rotating boat lift. Access to the visitor centre is easy.",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Dedicated Blue Badge spaces near Visitor Centre entrance." }
             },
@@ -295,7 +295,7 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Victoria Falls (Wester Ross)",
                 type: "Nature",
-                listOwner: "Gary",
+                listOwner: "Both",
                 description: "A beautiful waterfall right off the road along Loch Maree.",
                 accessibility: { rating: 'Easy', blueBadge: false, mobilityInfo: "Viewing platform is a short walk from the car." }
             },
@@ -347,7 +347,14 @@ export const TOUR_ITINERARY: TourStop[] = [
             notes: "Top rated site. Restaurant on-site means no cooking tonight!"
         },
         attractions: [
-            { name: "Ferry Crossing", type: "Travel", listOwner: "Gary", description: "Scenic crossing back to Oban/Lochaline." }
+            { name: "Ferry Crossing", type: "Travel", listOwner: "Both", description: "Scenic crossing back to Oban/Lochaline." },
+            {
+                name: "Fort William Town Centre",
+                type: "Shopping",
+                listOwner: "Both",
+                description: "Explore the High Street, Cameron Square, and the Old Fort ruins.",
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "West End Car Park usually has spaces." }
+            }
         ]
     },
     {
@@ -393,7 +400,7 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Glencoe Visitor Centre",
                 type: "Nature",
-                listOwner: "Gary",
+                listOwner: "Both",
                 description: "The most dramatic valley in Scotland.",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Large accessible car park." },
                 scenicGuide: "Stop at the 'Three Sisters' viewpoint car park (A82) for the most famous mountain view."
