@@ -163,6 +163,10 @@ export default function AdminPage() {
                         <LockIcon size={18} />
                         Club Manager
                     </Link>
+                    <Link href="/admin/tour" className={`${styles.btn} from-blue-900/40 to-cyan-900/40 border-blue-500/30 hover:border-blue-400`}>
+                        <span className="text-xl">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
+                        Grand Tour
+                    </Link>
                 </div>
             </div>
 
