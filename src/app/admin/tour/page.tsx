@@ -62,12 +62,6 @@ function DayCard({ stop }: { stop: TourStop }) {
                             <MapPin size={14} /> {stop.location}
                         </div>
                     </div>
-
-                    {stop.type === 'Gig' && (
-                        <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs font-bold border border-purple-500/30">
-                            GIG DAY
-                        </span>
-                    )}
                 </div>
 
                 <div className="p-4 space-y-4">

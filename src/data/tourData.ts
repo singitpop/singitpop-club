@@ -33,7 +33,7 @@ export interface TourStop {
     date: string;
     title: string;
     location: string;
-    type: 'Travel' | 'Explore' | 'Gig' | 'Rest';
+    type: 'Travel' | 'Explore' | 'Rest';
     accommodation?: Accommodation;
     attractions: Attraction[];
     distance?: string;
