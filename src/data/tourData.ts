@@ -555,6 +555,30 @@ export const TOUR_ITINERARY: TourStop[] = [
         },
         attractions: [
             {
+                name: "Ayrshire Coast",
+                type: "Viewpoint",
+                listOwner: "Both",
+                description: "Enjoying the sunset over looking Arran and Ailsa Craig.",
+                accessibility: { rating: 'Easy', blueBadge: true },
+                logistics: {
+                    driveTime: "1h 30m from Loch Lomond",
+                    timeAtSite: "Evening Relax"
+                }
+            }
+        ]
+    },
+    {
+        day: 13,
+        date: "Sat May 2",
+        title: "The Final Leg: Culzean to Home",
+        location: "Culzean -> NE31 2PL",
+        type: "Travel",
+        coordinates: [54.9667, -1.5039], // Home (Approx)
+        status: "Planned",
+        dailyTip: "Enjoy the castle in the morning, then it's a straight run down the road home!",
+        accommodation: { name: "Home", type: "Hotel" },
+        attractions: [
+            {
                 name: "Culzean Castle",
                 type: "Castle",
                 listOwner: "Joyce",
@@ -567,46 +591,21 @@ export const TOUR_ITINERARY: TourStop[] = [
                 },
                 scenicGuide: "The view across the firth to Ailsa Craig (the 'Paddy's Milestone' rock) is stunning from the castle terrace.",
                 logistics: {
-                    driveTime: "1h 30m from Loch Lomond",
+                    driveTime: "Morning at Castle",
                     timeAtSite: "2-3 hours",
                     parkAndWalk: "Parking at Home Farm. 10 min walk or buggy to Castle."
                 }
-            }
-        ]
-    },
-    {
-        day: 13,
-        date: "Sat May 2",
-        title: "The Homeward Leg",
-        location: "Galloway / Gretna",
-        type: "Travel",
-        coordinates: [54.9964, -3.0642], // Gretna
-        status: "Planned",
-        accommodation: { name: "Stopover near Gretna", type: "Mobile Stopover" },
-        attractions: [
+            },
             {
-                name: "Gretna Green",
-                type: "Shopping",
-                listOwner: "Joyce",
-                description: "Famous Blacksmith shop and outlet village.",
+                name: "Journey Home",
+                type: "Travel",
+                listOwner: "Both",
+                description: "The final drive.",
                 logistics: {
-                    driveTime: "1h 45m from Culzean",
-                    timeAtSite: "1 hour"
+                    driveTime: "3h 30m from Culzean to Home",
+                    timeAtSite: "Arrive late afternoon"
                 }
             }
         ]
-    },
-    {
-        day: 14,
-        date: "Sun May 3",
-        title: "Home Sweet Home",
-        location: "NE31 2PL",
-        type: "Travel",
-        distance: "End of Tour",
-        driveTime: "2 hours",
-        coordinates: [54.9667, -1.5039], // Approx NE31 2PL
-        status: "Completed",
-        accommodation: { name: "Home", type: "Hotel" },
-        attractions: []
     }
 ];
