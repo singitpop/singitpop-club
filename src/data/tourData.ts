@@ -45,7 +45,7 @@ export interface TourStop {
     date: string;
     title: string;
     location: string;
-    type: 'Travel' | 'Explore' | 'Rest';
+    type: 'Travel' | 'Explore' | 'Rest' | 'Activity';
     accommodation?: Accommodation;
     attractions: Attraction[];
     distance?: string;
