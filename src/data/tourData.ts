@@ -1,29 +1,21 @@
-export interface AccessibilityInfo {
-    rating: 'Easy' | 'Moderate' | 'Hard';
-    blueBadge: boolean;
-    parkingInfo?: string; // "Park on the Esplanade (must book)"
-    mobilityInfo?: string; // "Mobility car available"
-    toilets?: boolean;
-}
+import { LucideIcon } from "lucide-react";
 
 export interface Logistics {
-    driveTime?: string; // "2h 30m"
-    ferryDuration?: string; // "45m crossing + 30m check-in"
-    parkAndWalk?: string; // "10 min walk from West End Car Park"
-    busOption?: string; // "Bus #31 from campsite to Princes St (30 mins)"
-    timeAtSite?: string; // "Recommended: 2 hours"
-    transferTime?: string; // "15 min taxi"
+    driveTime?: string;
+    ferryDuration?: string;
+    parkAndWalk?: string;
+    timeAtSite?: string;
+    transferTime?: string;
 }
 
 export interface Accommodation {
     name: string;
-    type: 'Campsite' | 'Hotel' | 'Mobile Stopover' | 'Ferry';
+    type: 'Hotel' | 'Campsite' | 'Mobile Stopover';
     price?: string;
     bookingLink?: string;
     facilities?: string[];
-    coordinates?: string;
     notes?: string;
-    commute?: string; // "Bus 11 stops outside (20 mins to city)"
+    commute?: string; // Distance/Time from city centre/attraction
 }
 
 export interface Attraction {
@@ -31,12 +23,16 @@ export interface Attraction {
     type: 'Castle' | 'Nature' | 'Activity' | 'History' | 'Shopping' | 'Viewpoint' | 'Travel';
     listOwner?: 'Joyce' | 'Jackie' | 'Both';
     bookingLink?: string;
+    description: string;
+    scenicGuide?: string; // Tips for the best view/photo
     price?: string;
     openingTimes?: string;
-    description?: string;
-    accessibility?: AccessibilityInfo;
-    scenicGuide?: string;
-    notes?: string;
+    accessibility?: {
+        rating: 'Easy' | 'Moderate' | 'Hard';
+        blueBadge: boolean;
+        parkingInfo?: string;
+        mobilityInfo?: string; // Terrain, steps, lifts
+    };
     logistics?: Logistics;
 }
 
@@ -45,14 +41,14 @@ export interface TourStop {
     date: string;
     title: string;
     location: string;
-    type: 'Travel' | 'Explore' | 'Rest' | 'Activity';
-    accommodation?: Accommodation;
-    attractions: Attraction[];
+    type: 'Travel' | 'Explore' | 'Activity';
     distance?: string;
     driveTime?: string;
     coordinates: [number, number]; // [Lat, Lng]
     status: 'Planned' | 'Booked' | 'Completed';
-    dailyTip?: string;
+    dailyTip?: string; // "Start early to miss crowds" etc.
+    accommodation: Accommodation;
+    attractions: Attraction[];
 }
 
 export const TOUR_ITINERARY: TourStop[] = [
@@ -665,9 +661,9 @@ export const TOUR_ITINERARY: TourStop[] = [
                 name: "Journey Home",
                 type: "Travel",
                 listOwner: "Both",
-                description: "The final drive.",
                 price: "N/A",
                 openingTimes: "N/A",
+                description: "The final drive.",
                 logistics: {
                     driveTime: "3h 30m from Culzean to Home",
                     timeAtSite: "Arrive late afternoon"
