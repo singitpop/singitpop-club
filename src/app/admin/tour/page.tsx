@@ -2,7 +2,7 @@
 
 import { TOUR_ITINERARY, TourStop, Accommodation, Attraction } from "@/data/tourData";
 import { format } from "date-fns";
-import { MapPin, Calendar, ExternalLink, Tent, Castle, Info, Navigation, ArrowRight, ShieldCheck, Star, Lightbulb, Zap, Accessibility, ParkingCircle, Eye, Camera, Wheelchair, Car, Bus, Ship, Footprints, Clock } from "lucide-react";
+import { MapPin, Calendar, ExternalLink, Tent, Castle, Info, Navigation, ArrowRight, ShieldCheck, Star, Lightbulb, Zap, Accessibility, ParkingCircle, Eye, Camera, Car, Bus, Ship, Footprints, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function GrandTourPage() {
@@ -210,7 +210,7 @@ function AttractionCard({ attr }: { attr: Attraction }) {
                         </div>
                         {attr.accessibility.mobilityInfo && (
                             <div className="flex gap-2 mt-1">
-                                <Wheelchair size={14} className="mt-0.5 shrink-0 text-blue-400" />
+                                <Accessibility size={14} className="mt-0.5 shrink-0 text-blue-400" />
                                 <span className="italic">{attr.accessibility.mobilityInfo}</span>
                             </div>
                         )}
