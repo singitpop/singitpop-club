@@ -180,3 +180,34 @@ export async function getActiveChallenge(): Promise<WeeklyChallenge | null> {
     }
     return null;
 }
+
+export async function getPlaylistStats(limit = 1000): Promise<number[]> {
+    try {
+        const listCmd = new ListObjectsV2Command({
+            Bucket: BUCKET,
+            Prefix: PREFIX,
+            MaxKeys: limit
+        });
+
+        const listRes = await s3Client.send(listCmd);
+
+        if (!listRes.Contents) return [];
+
+        // Extract timestamps from filenames: "timestamp-userid-random.json"
+        // Also fallback to LastModified if filename parsing fails
+        const stats = listRes.Contents.map(file => {
+            const filename = file.Key?.replace(PREFIX, '') || '';
+            const parts = filename.split('-');
+            if (parts.length >= 3) {
+                const ts = parseInt(parts[0]);
+                if (!isNaN(ts)) return ts;
+            }
+            return file.LastModified?.getTime() || 0;
+        }).filter(ts => ts > 0);
+
+        return stats.sort((a, b) => a - b); // Oldest first
+    } catch (error) {
+        console.error("Error fetching playlist stats:", error);
+        return [];
+    }
+}
