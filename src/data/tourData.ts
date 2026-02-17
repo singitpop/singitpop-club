@@ -1,9 +1,18 @@
 export interface AccessibilityInfo {
     rating: 'Easy' | 'Moderate' | 'Hard';
     blueBadge: boolean;
-    parkingInfo?: string; // e.g. "Park on the Esplanade (must book)"
-    mobilityInfo?: string; // e.g. "Mobility car available to crown square"
+    parkingInfo?: string; // "Park on the Esplanade (must book)"
+    mobilityInfo?: string; // "Mobility car available"
     toilets?: boolean;
+}
+
+export interface Logistics {
+    driveTime?: string; // "2h 30m"
+    ferryDuration?: string; // "45m crossing + 30m check-in"
+    parkAndWalk?: string; // "10 min walk from West End Car Park"
+    busOption?: string; // "Bus #31 from campsite to Princes St (30 mins)"
+    timeAtSite?: string; // "Recommended: 2 hours"
+    transferTime?: string; // "15 min taxi"
 }
 
 export interface Accommodation {
@@ -14,6 +23,7 @@ export interface Accommodation {
     facilities?: string[];
     coordinates?: string;
     notes?: string;
+    commute?: string; // "Bus 11 stops outside (20 mins to city)"
 }
 
 export interface Attraction {
@@ -23,10 +33,11 @@ export interface Attraction {
     bookingLink?: string;
     price?: string;
     openingTimes?: string;
-    description?: string; // What to expect
+    description?: string;
     accessibility?: AccessibilityInfo;
-    scenicGuide?: string; // "Stop at the third layby on A82..."
+    scenicGuide?: string;
     notes?: string;
+    logistics?: Logistics;
 }
 
 export interface TourStop {
@@ -38,8 +49,9 @@ export interface TourStop {
     accommodation?: Accommodation;
     attractions: Attraction[];
     distance?: string;
+    driveTime?: string; // "Total driving: 3h"
     status: 'Planned' | 'Booked' | 'Completed';
-    dailyTip?: string; // Special touch / Romantic idea
+    dailyTip?: string;
 }
 
 export const TOUR_ITINERARY: TourStop[] = [
@@ -49,7 +61,8 @@ export const TOUR_ITINERARY: TourStop[] = [
         title: "The Border Run: Kelso First",
         location: "Kelso (Floors Castle) -> Edinburgh",
         type: "Travel",
-        distance: "120 miles from NE31 2PL",
+        distance: "120 miles total",
+        driveTime: "2h 30m total driving",
         status: "Planned",
         dailyTip: "We are heading straight to Kelso to start the tour at Floors Castle. It's the grand opening!",
         accommodation: {
@@ -58,7 +71,8 @@ export const TOUR_ITINERARY: TourStop[] = [
             price: "£35/night approx",
             bookingLink: "https://www.meadowhead.co.uk/parks/mortonhall/",
             facilities: ["EHU", "Water", "Waste", "Bus to City"],
-            notes: "Great base. We arrive here after the castle."
+            notes: "Great base. We arrive here after the castle.",
+            commute: "Bus #11 stops right outside the gate. 25 mins to Princes Street."
         },
         attractions: [
             {
@@ -71,6 +85,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                     blueBadge: true,
                     parkingInfo: "Designated parking near the front door.",
                     mobilityInfo: "Passenger lift accesses the Castle State Rooms. Gardens have hard gravel paths."
+                },
+                logistics: {
+                    driveTime: "1h 30m from Home to Kelso",
+                    timeAtSite: "2 hours",
+                    parkAndWalk: "Parking is on-site. 2 min walk to entrance."
                 },
                 scenicGuide: "Walk to the Millennium Garden for the classic view of the castle turrets against the river."
             },
@@ -98,6 +117,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                     parkingInfo: "LIMITED availability on the Esplanade (MUST book in advance via email).",
                     mobilityInfo: "Mobility vehicle often runs from entrance to Crown Square (steep otherwise)."
                 },
+                logistics: {
+                    transferTime: "30 mins (Bus #11) -> Walk up Mound OR Taxi to Esplanade",
+                    timeAtSite: "2-3 hours",
+                    parkAndWalk: "If driving: Castle Terrace NCP (expensive, 10 min uphill walk)."
+                },
                 scenicGuide: "The Battery (Argyle & Mills Mount) gives the famous panoramic view over the New Town."
             },
             {
@@ -109,6 +133,10 @@ export const TOUR_ITINERARY: TourStop[] = [
                     rating: 'Hard',
                     blueBadge: false,
                     mobilityInfo: "Historical site with many steps. Not suitable for wheelchairs. Virtual tour available."
+                },
+                logistics: {
+                    timeAtSite: "1 hour (Guided Tour)",
+                    parkAndWalk: "Opposite St Giles Cathedral (Pedestrian zone)."
                 }
             },
             {
@@ -117,7 +145,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                 listOwner: "Both",
                 description: "Historic market place with great pubs and views of the castle from below.",
                 scenicGuide: "Stand near the Vennel steps for the 'Harry Potter' style view of the castle looming above.",
-                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "On-street parking or Castle Terrace multi-storey nearby." }
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "On-street parking or Castle Terrace multi-storey nearby." },
+                logistics: {
+                    timeAtSite: "1 hour (Lunch?)",
+                    parkAndWalk: "5 min walk down from Royal Mile."
+                }
             }
         ]
     },
@@ -141,6 +173,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                     parkingInfo: "Level 2 of Ocean Terminal Car Park (Blue Zone). Walkway to Visitor Centre.",
                     mobilityInfo: "Fully accessible via lifts and ramps globally praised."
                 },
+                logistics: {
+                    transferTime: "40 mins (Bus #11 -> Change to #22 or Taxi)",
+                    timeAtSite: "2 hours",
+                    parkAndWalk: "Free parking in Ocean Terminal multi-storey."
+                },
                 scenicGuide: "The Royal Deck Tea Room offers stunning views over the Firth of Forth."
             },
             {
@@ -152,6 +189,10 @@ export const TOUR_ITINERARY: TourStop[] = [
                     rating: 'Easy',
                     blueBadge: false,
                     mobilityInfo: "Located on Royal Mile. Lifts to all floors."
+                },
+                logistics: {
+                    timeAtSite: "45 mins",
+                    parkAndWalk: "On Royal Mile (Pedestrian heavy)."
                 }
             }
         ]
@@ -183,6 +224,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                     parkingInfo: "Kelpies Car Park (closest). Do not park at Helix Park main car park (too far).",
                     mobilityInfo: "Flat tarmac paths all round."
                 },
+                logistics: {
+                    driveTime: "45 mins from Edinburgh",
+                    timeAtSite: "45 mins",
+                    parkAndWalk: "Car park is right next to the sculptures."
+                },
                 scenicGuide: "Walk INTO the sculptures if open, but the best photo is from the pool side reflecting the heads."
             },
             {
@@ -190,7 +236,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Activity",
                 listOwner: "Both",
                 description: "Rotating boat lift. Access to the visitor centre is easy.",
-                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Dedicated Blue Badge spaces near Visitor Centre entrance." }
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Dedicated Blue Badge spaces near Visitor Centre entrance." },
+                logistics: {
+                    driveTime: "15 mins from Kelpies",
+                    timeAtSite: "1 hour (Watching the rotation)"
+                }
             },
             {
                 name: "Scone Palace",
@@ -202,6 +252,10 @@ export const TOUR_ITINERARY: TourStop[] = [
                     blueBadge: true,
                     parkingInfo: "Parking near entrance.",
                     mobilityInfo: "Ground floor fully accessible. Gardens have firm paths."
+                },
+                logistics: {
+                    driveTime: "1h from Falkirk",
+                    timeAtSite: "1h 30m"
                 }
             }
         ]
@@ -230,6 +284,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                     rating: 'Moderate',
                     blueBadge: true,
                     mobilityInfo: "Ground floor / Dining / Shops accessible. Upper floors via stairs only."
+                },
+                logistics: {
+                    driveTime: "40 mins from Scone",
+                    timeAtSite: "2 hours",
+                    parkAndWalk: "Approx 400m walk from car park (shuttle sometimes available)."
                 }
             },
             {
@@ -242,6 +301,10 @@ export const TOUR_ITINERARY: TourStop[] = [
                     blueBadge: true,
                     parkingInfo: "Main car park 500 yards away - ASK staff for buggy shuttle or permission to drive closer.",
                     mobilityInfo: "Ballroom is accessible. Gardens have gravel paths."
+                },
+                logistics: {
+                    driveTime: "1h 10m from Glamis (Scenic drive!)",
+                    timeAtSite: "1h 30m"
                 }
             }
         ]
@@ -266,7 +329,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Castle",
                 listOwner: "Joyce",
                 description: "Romantic castle with beautiful walled gardens.",
-                accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Gardens are the highlight and mostly flat/accessible." }
+                accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Gardens are the highlight and mostly flat/accessible." },
+                logistics: {
+                    driveTime: "1h 15m from Ballater (via A939 - steep hills!)",
+                    timeAtSite: "1h 30m"
+                }
             },
             {
                 name: "Loch Ness (Dores Beach)",
@@ -274,7 +341,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                 listOwner: "Both",
                 description: "The classic view down the Loch. Pebble beach.",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Parking at Dores Inn. Short flat walk to shore." },
-                scenicGuide: "The best view is from the pebbled Dores beach looking straight down the Great Glen."
+                scenicGuide: "The best view is from the pebbled Dores beach looking straight down the Great Glen.",
+                logistics: {
+                    driveTime: "30 mins from Cawdor",
+                    timeAtSite: "30 mins (Photos)"
+                }
             }
         ]
     },
@@ -297,7 +368,12 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Nature",
                 listOwner: "Both",
                 description: "A beautiful waterfall right off the road along Loch Maree.",
-                accessibility: { rating: 'Easy', blueBadge: false, mobilityInfo: "Viewing platform is a short walk from the car." }
+                accessibility: { rating: 'Easy', blueBadge: false, mobilityInfo: "Viewing platform is a short walk from the car." },
+                logistics: {
+                    driveTime: "1h 30m from Loch Ness",
+                    timeAtSite: "20 mins",
+                    parkAndWalk: "Car park is directly adjacent to the path."
+                }
             },
             {
                 name: "Portree Harbour",
@@ -305,7 +381,11 @@ export const TOUR_ITINERARY: TourStop[] = [
                 listOwner: "Both",
                 description: "The famous colourful houses.",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Public car park at the quay (get there early or late)." },
-                scenicGuide: "The classic photo is taken from 'The Lump' (steep) OR simply from the harbour wall looking back at the houses."
+                scenicGuide: "The classic photo is taken from 'The Lump' (steep) OR simply from the harbour wall looking back at the houses.",
+                logistics: {
+                    driveTime: "1h 30m from Victoria Falls (crossing Skye Bridge)",
+                    timeAtSite: "1 hour (Fish & Chips?)"
+                }
             }
         ]
     },
@@ -329,7 +409,12 @@ export const TOUR_ITINERARY: TourStop[] = [
                 listOwner: "Joyce",
                 description: "Balamory! Cute shops and chocolate factory.",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Parking on the main pier. Main street is flat." },
-                scenicGuide: "Walk to the far end of the pier for the full sweep of colourful buildings."
+                scenicGuide: "Walk to the far end of the pier for the full sweep of colourful buildings.",
+                logistics: {
+                    driveTime: "Drive south to Armadale Ferry, then Mallaig to Oban/Mull. LONG DAY.",
+                    ferryDuration: "Armadale-Mallaig (45m) + Drive + Oban-Craignure (50m)",
+                    timeAtSite: "Evening stroll"
+                }
             }
         ]
     },
@@ -344,16 +429,32 @@ export const TOUR_ITINERARY: TourStop[] = [
             name: "Glen Nevis Caravan & Camping Park",
             type: "Campsite",
             facilities: ["EHU", "Shop", "Restaurant", "Views of Ben Nevis"],
-            notes: "Top rated site. Restaurant on-site means no cooking tonight!"
+            notes: "Top rated site. Restaurant on-site means no cooking tonight!",
+            commute: "Bus or short taxi (5 mins) into Fort William town centre."
         },
         attractions: [
-            { name: "Ferry Crossing", type: "Travel", listOwner: "Both", description: "Scenic crossing back to Oban/Lochaline." },
+            {
+                name: "Ferry Crossing (Fishnish - Lochaline)",
+                type: "Travel",
+                listOwner: "Both",
+                description: "The short crossing back to the mainland (Morvern).",
+                logistics: {
+                    driveTime: "25 mins from Tobermory to Fishnish Slip",
+                    ferryDuration: "15 min crossing (Turn up and go)",
+                    timeAtSite: "Allow 30 mins buffer"
+                }
+            },
             {
                 name: "Fort William Town Centre",
                 type: "Shopping",
                 listOwner: "Both",
                 description: "Explore the High Street, Cameron Square, and the Old Fort ruins.",
-                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "West End Car Park usually has spaces." }
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "West End Car Park usually has spaces." },
+                logistics: {
+                    driveTime: "45 mins from Lochaline (via Corran Ferry £10)",
+                    parkAndWalk: "West End Car Park -> High St (Flat, 5 mins).",
+                    timeAtSite: "2 hours"
+                }
             }
         ]
     },
@@ -378,7 +479,12 @@ export const TOUR_ITINERARY: TourStop[] = [
                     blueBadge: true,
                     mobilityInfo: "Ramps available. Staff are excellent at assisting boarding."
                 },
-                notes: "CRITICAL BOOKING."
+                notes: "CRITICAL BOOKING.",
+                logistics: {
+                    driveTime: "10 mins from Campsite to Station",
+                    timeAtSite: "6 hours (Round trip is 10:15 - 16:00 approx)",
+                    parkAndWalk: "Morrisons Car Park allows long stay (check signs) or dedicated sprawling lots nearby."
+                }
             }
         ]
     },
@@ -403,14 +509,22 @@ export const TOUR_ITINERARY: TourStop[] = [
                 listOwner: "Both",
                 description: "The most dramatic valley in Scotland.",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Large accessible car park." },
-                scenicGuide: "Stop at the 'Three Sisters' viewpoint car park (A82) for the most famous mountain view."
+                scenicGuide: "Stop at the 'Three Sisters' viewpoint car park (A82) for the most famous mountain view.",
+                logistics: {
+                    driveTime: "30 mins from Fort William",
+                    timeAtSite: "1 hour (Visitor Centre + Photos)"
+                }
             },
             {
                 name: "Loch Lomond Shores",
                 type: "Shopping",
                 listOwner: "Joyce",
                 description: "Upmarket shopping mall with balcony views over the Loch.",
-                accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Fully accessible. Lifts and flat paths." }
+                accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Fully accessible. Lifts and flat paths." },
+                logistics: {
+                    driveTime: "1h 15m from Glencoe",
+                    timeAtSite: "1h 30m"
+                }
             }
         ]
     },
@@ -438,7 +552,12 @@ export const TOUR_ITINERARY: TourStop[] = [
                     parkingInfo: "Blue badge bays at Home Farm (Visitor Centre).",
                     mobilityInfo: "Shuttle buggy often runs from Visitor Centre to Castle. Lift in Castle."
                 },
-                scenicGuide: "The view across the firth to Ailsa Craig (the 'Paddy's Milestone' rock) is stunning from the castle terrace."
+                scenicGuide: "The view across the firth to Ailsa Craig (the 'Paddy's Milestone' rock) is stunning from the castle terrace.",
+                logistics: {
+                    driveTime: "1h 30m from Loch Lomond",
+                    timeAtSite: "2-3 hours",
+                    parkAndWalk: "Parking at Home Farm. 10 min walk or buggy to Castle."
+                }
             }
         ]
     },
@@ -451,7 +570,16 @@ export const TOUR_ITINERARY: TourStop[] = [
         status: "Planned",
         accommodation: { name: "Stopover near Gretna", type: "Mobile Stopover" },
         attractions: [
-            { name: "Gretna Green", type: "Shopping", listOwner: "Joyce", description: "Famous Blacksmith shop and outlet village." }
+            {
+                name: "Gretna Green",
+                type: "Shopping",
+                listOwner: "Joyce",
+                description: "Famous Blacksmith shop and outlet village.",
+                logistics: {
+                    driveTime: "1h 45m from Culzean",
+                    timeAtSite: "1 hour"
+                }
+            }
         ]
     },
     {
@@ -461,6 +589,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         location: "NE31 2PL",
         type: "Travel",
         distance: "End of Tour",
+        driveTime: "2 hours",
         status: "Completed",
         accommodation: { name: "Home", type: "Hotel" },
         attractions: []
