@@ -82,6 +82,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Castle",
                 listOwner: "Joyce",
                 description: "Scotland's largest inhabited castle. Stunning gardens and grand rooms.",
+                price: "£15.00",
+                openingTimes: "10:30 - 16:00",
                 accessibility: {
                     rating: 'Easy',
                     blueBadge: true,
@@ -114,6 +116,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 listOwner: "Joyce",
                 bookingLink: "https://www.edinburghcastle.scot/",
                 description: "The Crown Jewels and Stone of Destiny.",
+                price: "£19.50 (Concession)",
+                openingTimes: "09:30 - 18:00",
                 accessibility: {
                     rating: 'Moderate',
                     blueBadge: true,
@@ -132,6 +136,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "History",
                 listOwner: "Joyce",
                 description: "Underground streets frozen in time from the 17th century.",
+                price: "£21.00",
+                openingTimes: "10:00 - 17:00",
                 accessibility: {
                     rating: 'Hard',
                     blueBadge: false,
@@ -147,6 +153,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Shopping",
                 listOwner: "Both",
                 description: "Historic market place with great pubs and views of the castle from below.",
+                price: "Free",
+                openingTimes: "Anytime",
                 scenicGuide: "Stand near the Vennel steps for the 'Harry Potter' style view of the castle looming above.",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "On-street parking or Castle Terrace multi-storey nearby." },
                 logistics: {
@@ -171,6 +179,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "History",
                 listOwner: "Joyce",
                 description: "The Queen's former floating palace. See the bedrooms and engine room.",
+                price: "£18.50",
+                openingTimes: "10:00 - 16:30",
                 accessibility: {
                     rating: 'Easy',
                     blueBadge: true,
@@ -189,6 +199,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "History",
                 listOwner: "Joyce",
                 description: "Nostalgia overload! Toys from every decade.",
+                price: "Free",
+                openingTimes: "10:00 - 17:00",
                 accessibility: {
                     rating: 'Easy',
                     blueBadge: false,
@@ -219,13 +231,22 @@ export const TOUR_ITINERARY: TourStop[] = [
         },
         attractions: [
             {
-                name: "The Three Bridges (Queensferry Crossing)",
-                type: "Travel",
-                listOwner: "Both",
-                description: "We cross the Forth via the spectacular new Queensferry Crossing, with views of the iconic Rail Bridge.",
+                name: "Hopetoun House",
+                type: "History",
+                listOwner: "Joyce",
+                description: "Scotland's finest stately home. Grand architecture and deer park.",
+                price: "£13.50",
+                openingTimes: "10:30 - 17:00",
+                accessibility: {
+                    rating: 'Easy',
+                    blueBadge: true,
+                    parkingInfo: "Parking available near the house.",
+                    mobilityInfo: "Step-free access to ground floor. Lift to upper floors."
+                },
                 logistics: {
                     driveTime: "30 mins from Edinburgh",
-                    timeAtSite: "Drive-by view"
+                    timeAtSite: "2 hours",
+                    parkAndWalk: "Car park on site."
                 }
             },
             {
@@ -233,6 +254,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Viewpoint",
                 listOwner: "Both",
                 description: "30-meter-high horse-head sculptures. Mythical and massive.",
+                price: "Free (Tours £7.50)",
+                openingTimes: "24/7 (Visitor Centre 09:30-17:00)",
                 accessibility: {
                     rating: 'Easy',
                     blueBadge: true,
@@ -240,7 +263,7 @@ export const TOUR_ITINERARY: TourStop[] = [
                     mobilityInfo: "Flat tarmac paths all round."
                 },
                 logistics: {
-                    driveTime: "45 mins from Edinburgh",
+                    driveTime: "25 mins from Hopetoun",
                     timeAtSite: "45 mins",
                     parkAndWalk: "Car park is right next to the sculptures."
                 },
@@ -251,6 +274,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Activity",
                 listOwner: "Both",
                 description: "Rotating boat lift. Access to the visitor centre is easy.",
+                price: "Free (Boat Trip £14.50)",
+                openingTimes: "10:00 - 17:30",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Dedicated Blue Badge spaces near Visitor Centre entrance." },
                 logistics: {
                     driveTime: "15 mins from Kelpies",
@@ -262,6 +287,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Castle",
                 listOwner: "Joyce",
                 description: "Where Kings of Scots were crowned correctly.",
+                price: "£17.50",
+                openingTimes: "10:00 - 17:00",
                 accessibility: {
                     rating: 'Easy',
                     blueBadge: true,
@@ -296,6 +323,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Castle",
                 listOwner: "Joyce",
                 description: "Childhood home of the Queen Mother. Fairytale turrets.",
+                price: "£17.00",
+                openingTimes: "10:00 - 17:00",
                 accessibility: {
                     rating: 'Moderate',
                     blueBadge: true,
@@ -312,6 +341,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Castle",
                 listOwner: "Joyce",
                 description: "The King's Highland home. Ballroom exhibition.",
+                price: "£17.50",
+                openingTimes: "10:00 - 17:00",
                 accessibility: {
                     rating: 'Moderate',
                     blueBadge: true,
@@ -346,6 +377,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Castle",
                 listOwner: "Joyce",
                 description: "Romantic castle with beautiful walled gardens.",
+                price: "£14.50",
+                openingTimes: "10:00 - 17:30",
                 accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Gardens are the highlight and mostly flat/accessible." },
                 logistics: {
                     driveTime: "1h 15m from Ballater (via A939 - steep hills!)",
@@ -357,6 +390,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Viewpoint",
                 listOwner: "Both",
                 description: "The classic view down the Loch. Pebble beach.",
+                price: "Free",
+                openingTimes: "Anytime",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Parking at Dores Inn. Short flat walk to shore." },
                 scenicGuide: "The best view is from the pebbled Dores beach looking straight down the Great Glen.",
                 logistics: {
@@ -386,6 +421,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Nature",
                 listOwner: "Both",
                 description: "A beautiful waterfall right off the road along Loch Maree.",
+                price: "Free",
+                openingTimes: "Anytime",
                 accessibility: { rating: 'Easy', blueBadge: false, mobilityInfo: "Viewing platform is a short walk from the car." },
                 logistics: {
                     driveTime: "1h 30m from Loch Ness",
@@ -398,6 +435,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Viewpoint",
                 listOwner: "Both",
                 description: "The famous colourful houses.",
+                price: "Free",
+                openingTimes: "Anytime",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Public car park at the quay (get there early or late)." },
                 scenicGuide: "The classic photo is taken from 'The Lump' (steep) OR simply from the harbour wall looking back at the houses.",
                 logistics: {
@@ -427,6 +466,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Shopping",
                 listOwner: "Joyce",
                 description: "Balamory! Cute shops and chocolate factory.",
+                price: "Free",
+                openingTimes: "Shops ~09:00 - 17:00",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Parking on the main pier. Main street is flat." },
                 scenicGuide: "Walk to the far end of the pier for the full sweep of colourful buildings.",
                 logistics: {
@@ -458,6 +499,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Travel",
                 listOwner: "Both",
                 description: "The short crossing back to the mainland (Morvern).",
+                price: "£15.00 (Vehicle)",
+                openingTimes: "Every 45 mins",
                 logistics: {
                     driveTime: "25 mins from Tobermory to Fishnish Slip",
                     ferryDuration: "15 min crossing (Turn up and go)",
@@ -469,6 +512,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Shopping",
                 listOwner: "Both",
                 description: "Explore the High Street, Cameron Square, and the Old Fort ruins.",
+                price: "Free",
+                openingTimes: "Anytime",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "West End Car Park usually has spaces." },
                 logistics: {
                     driveTime: "45 mins from Lochaline (via Corran Ferry £10)",
@@ -495,6 +540,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 listOwner: "Both",
                 bookingLink: "https://westcoastrailways.co.uk/jacobite/steam-train",
                 description: "The world's greatest railway journey. 84 miles round trip.",
+                price: "£65.00 (Standard)",
+                openingTimes: "Depart 10:15 or 12:50",
                 accessibility: {
                     rating: 'Easy',
                     blueBadge: true,
@@ -530,6 +577,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Nature",
                 listOwner: "Both",
                 description: "The most dramatic valley in Scotland.",
+                price: "Free (Parking £4)",
+                openingTimes: "09:30 - 17:00",
                 accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Large accessible car park." },
                 scenicGuide: "Stop at the 'Three Sisters' viewpoint car park (A82) for the most famous mountain view.",
                 logistics: {
@@ -542,6 +591,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Shopping",
                 listOwner: "Joyce",
                 description: "Upmarket shopping mall with balcony views over the Loch.",
+                price: "Free",
+                openingTimes: "10:00 - 17:30",
                 accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Fully accessible. Lifts and flat paths." },
                 logistics: {
                     driveTime: "1h 15m from Glencoe",
@@ -569,6 +620,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Viewpoint",
                 listOwner: "Both",
                 description: "Enjoying the sunset over looking Arran and Ailsa Craig.",
+                price: "Free",
+                openingTimes: "Anytime",
                 accessibility: { rating: 'Easy', blueBadge: true },
                 logistics: {
                     driveTime: "1h 30m from Loch Lomond",
@@ -593,6 +646,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Castle",
                 listOwner: "Joyce",
                 description: "Eisenhower's apartment is here. Perched on a cliff.",
+                price: "£18.50 (Concession)",
+                openingTimes: "10:30 - 16:30",
                 accessibility: {
                     rating: 'Moderate',
                     blueBadge: true,
@@ -611,6 +666,8 @@ export const TOUR_ITINERARY: TourStop[] = [
                 type: "Travel",
                 listOwner: "Both",
                 description: "The final drive.",
+                price: "N/A",
+                openingTimes: "N/A",
                 logistics: {
                     driveTime: "3h 30m from Culzean to Home",
                     timeAtSite: "Arrive late afternoon"
