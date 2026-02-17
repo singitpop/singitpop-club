@@ -227,25 +227,6 @@ export const TOUR_ITINERARY: TourStop[] = [
         },
         attractions: [
             {
-                name: "Hopetoun House",
-                type: "History",
-                listOwner: "Joyce",
-                description: "Scotland's finest stately home. Grand architecture and deer park.",
-                price: "£13.50",
-                openingTimes: "10:30 - 17:00",
-                accessibility: {
-                    rating: 'Easy',
-                    blueBadge: true,
-                    parkingInfo: "Parking available near the house.",
-                    mobilityInfo: "Step-free access to ground floor. Lift to upper floors."
-                },
-                logistics: {
-                    driveTime: "30 mins from Edinburgh",
-                    timeAtSite: "2 hours",
-                    parkAndWalk: "Car park on site."
-                }
-            },
-            {
                 name: "The Kelpies (Helix Park)",
                 type: "Viewpoint",
                 listOwner: "Both",
@@ -259,7 +240,7 @@ export const TOUR_ITINERARY: TourStop[] = [
                     mobilityInfo: "Flat tarmac paths all round."
                 },
                 logistics: {
-                    driveTime: "25 mins from Hopetoun",
+                    driveTime: "45 mins from Edinburgh",
                     timeAtSite: "45 mins",
                     parkAndWalk: "Car park is right next to the sculptures."
                 },
@@ -279,6 +260,37 @@ export const TOUR_ITINERARY: TourStop[] = [
                 }
             },
             {
+                name: "Hopetoun House",
+                type: "History",
+                listOwner: "Joyce",
+                description: "Scotland's finest stately home. Grand architecture and deer park.",
+                price: "£13.50",
+                openingTimes: "10:30 - 17:00",
+                accessibility: {
+                    rating: 'Easy',
+                    blueBadge: true,
+                    parkingInfo: "Parking available near the house.",
+                    mobilityInfo: "Step-free access to ground floor. Lift to upper floors."
+                },
+                logistics: {
+                    driveTime: "25 mins from Falkirk (Back East)",
+                    timeAtSite: "2 hours",
+                    parkAndWalk: "Car park on site."
+                }
+            },
+            {
+                name: "Queensferry Crossing (The Bridge)",
+                type: "Travel",
+                listOwner: "Both",
+                description: "Crossing the Forth in style involves a slight detour back, but gives great views of the Rail Bridge.",
+                price: "Free",
+                openingTimes: "24/7",
+                logistics: {
+                    driveTime: "5 mins from Hopetoun",
+                    timeAtSite: "Drive-over"
+                }
+            },
+            {
                 name: "Scone Palace",
                 type: "Castle",
                 listOwner: "Joyce",
@@ -292,7 +304,7 @@ export const TOUR_ITINERARY: TourStop[] = [
                     mobilityInfo: "Ground floor fully accessible. Gardens have firm paths."
                 },
                 logistics: {
-                    driveTime: "1h from Falkirk",
+                    driveTime: "45 mins from Bridge (M90)",
                     timeAtSite: "1h 30m"
                 }
             }
