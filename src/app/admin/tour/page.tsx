@@ -1,3 +1,5 @@
+"use client";
+
 import { TOUR_ITINERARY, TourStop, Accommodation, Attraction } from "@/data/tourData";
 import { format } from "date-fns";
 import { MapPin, Calendar, ExternalLink, Tent, Castle, Info, Navigation, ArrowRight, ShieldCheck, Star, Lightbulb, Zap, Accessibility, ParkingCircle, Eye, Camera, Car, Bus, Ship, Footprints, Clock } from "lucide-react";
