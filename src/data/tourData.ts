@@ -219,6 +219,16 @@ export const TOUR_ITINERARY: TourStop[] = [
         },
         attractions: [
             {
+                name: "The Three Bridges (Queensferry Crossing)",
+                type: "Travel",
+                listOwner: "Both",
+                description: "We cross the Forth via the spectacular new Queensferry Crossing, with views of the iconic Rail Bridge.",
+                logistics: {
+                    driveTime: "30 mins from Edinburgh",
+                    timeAtSite: "Drive-by view"
+                }
+            },
+            {
                 name: "The Kelpies (Helix Park)",
                 type: "Viewpoint",
                 listOwner: "Both",
