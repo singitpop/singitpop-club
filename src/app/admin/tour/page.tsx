@@ -154,8 +154,9 @@ function AccessibilityBadge({ tier }: { tier: 'Easy' | 'Moderate' | 'Hard' }) {
 }
 
 function AttractionCard({ attr }: { attr: Attraction }) {
-    const isWife = attr.bucketListOwner === 'Wife' || attr.bucketListOwner === 'Both';
-    const isGary = attr.bucketListOwner === 'Gary' || attr.bucketListOwner === 'Both';
+    const isJoyce = attr.listOwner === 'Joyce' || attr.listOwner === 'Both';
+    const isJackie = attr.listOwner === 'Jackie' || attr.listOwner === 'Both';
+    const isGary = attr.listOwner === 'Gary';
 
     return (
         <div className="bg-white/5 rounded-lg p-3 flex flex-col gap-2 group hover:bg-white/10 transition-colors">
@@ -170,19 +171,11 @@ function AttractionCard({ attr }: { attr: Attraction }) {
                     </div>
 
                     <div className="flex flex-wrap gap-1 mt-1.5">
-                        {isWife && <span className="text-[10px] bg-pink-500/20 text-pink-300 px-1.5 rounded border border-pink-500/20">Wife's List</span>}
-                        {isGary && <span className="text-[10px] bg-green-500/20 text-green-300 px-1.5 rounded border border-green-500/20">Gary's List</span>}
+                        {isJoyce && <span className="text-[10px] bg-pink-500/20 text-pink-300 px-1.5 rounded border border-pink-500/20">Joyce's List</span>}
+                        {isJackie && <span className="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 rounded border border-purple-500/20">Jackie's List</span>}
+                        {isGary && <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 rounded border border-indigo-500/20">Gary's Choice</span>}
+
                         {attr.accessibility && <AccessibilityBadge tier={attr.accessibility.rating} />}
-                        {attr.accessibility?.blueBadge && (
-                            <span className="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 rounded border border-blue-500/20 flex items-center gap-1">
-                                <ParkingCircle size={10} /> Blue Badge
-                            </span>
-                        )}
-                        {attr.scenicNote && (
-                            <span className="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 rounded border border-purple-500/20 flex items-center gap-1">
-                                <Eye size={10} /> Scenic View
-                            </span>
-                        )}
                     </div>
                 </div>
 
@@ -193,28 +186,42 @@ function AttractionCard({ attr }: { attr: Attraction }) {
                 )}
             </div>
 
-            {/* Description & Tourist Info */}
-            {(attr.description || attr.accessibility?.notes || attr.scenicNote) && (
-                <div className="mt-1 space-y-1.5 pt-2 border-t border-white/5">
-                    {attr.description && (
-                        <p className="text-xs text-white/70">{attr.description}</p>
-                    )}
+            {/* Description & Detailed Infos */}
+            <div className="mt-1 space-y-2 pt-2 border-t border-white/5">
+                {attr.description && (
+                    <p className="text-xs text-white/70">{attr.description}</p>
+                )}
 
-                    {attr.scenicNote && (
-                        <div className="flex gap-2 items-start text-xs text-purple-200/70">
-                            <Eye size={12} className="mt-0.5 shrink-0" />
-                            <span>{attr.scenicNote}</span>
-                        </div>
-                    )}
+                {/* Scenic Guide */}
+                {attr.scenicGuide && (
+                    <div className="flex gap-2 items-start text-xs text-purple-200/80 bg-purple-500/5 p-2 rounded">
+                        <Camera size={14} className="mt-0.5 shrink-0 text-purple-400" />
+                        <span><strong className="text-purple-300">Viewpoint:</strong> {attr.scenicGuide}</span>
+                    </div>
+                )}
 
-                    {attr.accessibility?.notes && (
-                        <div className="flex gap-2 items-start text-xs text-blue-200/70 italic">
-                            <Accessibility size={12} className="mt-0.5 shrink-0" />
-                            <span>{attr.accessibility.notes}</span>
+                {/* Detailed Accessibility */}
+                {attr.accessibility && (
+                    <div className="flex flex-col gap-1 text-xs text-blue-200/80 bg-blue-500/5 p-2 rounded">
+                        <div className="flex gap-2">
+                            <ParkingCircle size={14} className="mt-0.5 shrink-0 text-blue-400" />
+                            <span>
+                                <strong className="text-blue-300">Blue Badge:</strong> {attr.accessibility.blueBadge ? 'Yes' : 'No'}.
+                                {attr.accessibility.parkingInfo && <span className="italic"> {attr.accessibility.parkingInfo}</span>}
+                            </span>
                         </div>
-                    )}
-                </div>
-            )}
+                        {attr.accessibility.mobilityInfo && (
+                            <div className="flex gap-2 mt-1">
+                                <Wheelchair size={14} className="mt-0.5 shrink-0 text-blue-400" />
+                                <span className="italic">{attr.accessibility.mobilityInfo}</span>
+                            </div>
+                        )}
+                        {attr.accessibility.toilets && (
+                            <div className="ml-6 text-[10px] border px-1 rounded border-blue-500/20 text-blue-400 w-fit">Acc. Toilets</div>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

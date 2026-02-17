@@ -1,8 +1,9 @@
 export interface AccessibilityInfo {
     rating: 'Easy' | 'Moderate' | 'Hard';
-    blueBadge: boolean; // Parking available?
-    walkingTime?: string; // "10 mins flat" or "20 mins steep"
-    notes?: string; // "Use lift for access"
+    blueBadge: boolean;
+    parkingInfo?: string; // e.g. "Park on the Esplanade (must book)"
+    mobilityInfo?: string; // e.g. "Mobility car available to crown square"
+    toilets?: boolean;
 }
 
 export interface Accommodation {
@@ -18,13 +19,13 @@ export interface Accommodation {
 export interface Attraction {
     name: string;
     type: 'Castle' | 'Nature' | 'Activity' | 'History' | 'Shopping' | 'Viewpoint';
-    bucketListOwner?: 'Gary' | 'Wife' | 'Both';
+    listOwner?: 'Joyce' | 'Jackie' | 'Both' | 'Gary'; // Gary for hidden gems/logistics
     bookingLink?: string;
     price?: string;
     openingTimes?: string;
     description?: string; // What to expect
     accessibility?: AccessibilityInfo;
-    scenicNote?: string; // "Amazing view of..."
+    scenicGuide?: string; // "Stop at the third layby on A82..."
     notes?: string;
 }
 
@@ -63,10 +64,15 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Floors Castle",
                 type: "Castle",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Scotland's largest inhabited castle. Stunning gardens and grand rooms.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Blue badge parking near front door. Lift to upper floors." },
-                scenicNote: "View over the River Tweed is spectacular."
+                accessibility: {
+                    rating: 'Easy',
+                    blueBadge: true,
+                    parkingInfo: "Designated parking near the front door.",
+                    mobilityInfo: "Passenger lift accesses the Castle State Rooms. Gardens have hard gravel paths."
+                },
+                scenicGuide: "Walk to the Millennium Garden for the classic view of the castle turrets against the river."
             },
         ]
     },
@@ -83,25 +89,35 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Edinburgh Castle",
                 type: "Castle",
-                bucketListOwner: "Both",
+                listOwner: "Joyce",
                 bookingLink: "https://www.edinburghcastle.scot/",
                 description: "The Crown Jewels and Stone of Destiny.",
-                accessibility: { rating: 'Moderate', blueBadge: true, notes: "Cobbles are rough, but mobility vehicle usually available to take you to the top (Crown Square)." }
+                accessibility: {
+                    rating: 'Moderate',
+                    blueBadge: true,
+                    parkingInfo: "LIMITED availability on the Esplanade (MUST book in advance via email).",
+                    mobilityInfo: "Mobility vehicle often runs from entrance to Crown Square (steep otherwise)."
+                },
+                scenicGuide: "The Battery (Argyle & Mills Mount) gives the famous panoramic view over the New Town."
             },
             {
                 name: "The Real Mary King's Close",
                 type: "History",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Underground streets frozen in time from the 17th century.",
-                accessibility: { rating: 'Hard', blueBadge: false, notes: "Many original steps. Not fully accessible but they offer a virtual tour if walking is too much." }
+                accessibility: {
+                    rating: 'Hard',
+                    blueBadge: false,
+                    mobilityInfo: "Historical site with many steps. Not suitable for wheelchairs. Virtual tour available."
+                }
             },
             {
                 name: "Grassmarket",
                 type: "Shopping",
-                bucketListOwner: "Gary",
+                listOwner: "Gary",
                 description: "Historic market place with great pubs and views of the castle from below.",
-                scenicNote: "Best photo spot of the Castle looming above.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Flat paved area, easy for walking." }
+                scenicGuide: "Stand near the Vennel steps for the 'Harry Potter' style view of the castle looming above.",
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "On-street parking or Castle Terrace multi-storey nearby." }
             }
         ]
     },
@@ -117,17 +133,26 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Royal Yacht Britannia",
                 type: "History",
-                bucketListOwner: "Both",
+                listOwner: "Joyce",
                 description: "The Queen's former floating palace. See the bedrooms and engine room.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Fully accessible via lifts and ramps. Very wheelchair/cane friendly." },
-                scenicNote: "View of the bridge and harbour from the deck."
+                accessibility: {
+                    rating: 'Easy',
+                    blueBadge: true,
+                    parkingInfo: "Level 2 of Ocean Terminal Car Park (Blue Zone). Walkway to Visitor Centre.",
+                    mobilityInfo: "Fully accessible via lifts and ramps globally praised."
+                },
+                scenicGuide: "The Royal Deck Tea Room offers stunning views over the Firth of Forth."
             },
             {
                 name: "The Museum of Childhood",
                 type: "History",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Nostalgia overload! Toys from every decade.",
-                accessibility: { rating: 'Easy', blueBadge: false, notes: "Located on Royal Mile. mostly flat inside." }
+                accessibility: {
+                    rating: 'Easy',
+                    blueBadge: false,
+                    mobilityInfo: "Located on Royal Mile. Lifts to all floors."
+                }
             }
         ]
     },
@@ -150,24 +175,34 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "The Kelpies (Helix Park)",
                 type: "Viewpoint",
-                bucketListOwner: "Both",
+                listOwner: "Both",
                 description: "30-meter-high horse-head sculptures. Mythical and massive.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Flat tarmac paths. Parking very close." },
-                scenicNote: "Incredible scale. Perfect for a special photo."
+                accessibility: {
+                    rating: 'Easy',
+                    blueBadge: true,
+                    parkingInfo: "Kelpies Car Park (closest). Do not park at Helix Park main car park (too far).",
+                    mobilityInfo: "Flat tarmac paths all round."
+                },
+                scenicGuide: "Walk INTO the sculptures if open, but the best photo is from the pool side reflecting the heads."
             },
             {
                 name: "Falkirk Wheel",
                 type: "Activity",
-                bucketListOwner: "Gary",
+                listOwner: "Gary",
                 description: "Rotating boat lift. Access to the visitor centre is easy.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Fully accessible visitor centre." }
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Dedicated Blue Badge spaces near Visitor Centre entrance." }
             },
             {
                 name: "Scone Palace",
                 type: "Castle",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Where Kings of Scots were crowned correctly.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Ground floor is accessible. Gardens are extensive but have firm paths." }
+                accessibility: {
+                    rating: 'Easy',
+                    blueBadge: true,
+                    parkingInfo: "Parking near entrance.",
+                    mobilityInfo: "Ground floor fully accessible. Gardens have firm paths."
+                }
             }
         ]
     },
@@ -189,16 +224,25 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Glamis Castle",
                 type: "Castle",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Childhood home of the Queen Mother. Fairytale turrets.",
-                accessibility: { rating: 'Moderate', blueBadge: true, notes: "Some stairs inside, but ground floor and gardens are accessible." }
+                accessibility: {
+                    rating: 'Moderate',
+                    blueBadge: true,
+                    mobilityInfo: "Ground floor / Dining / Shops accessible. Upper floors via stairs only."
+                }
             },
             {
                 name: "Balmoral Castle",
                 type: "Castle",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "The King's Highland home. Ballroom exhibition.",
-                accessibility: { rating: 'Moderate', blueBadge: true, notes: "Parking is a bit of a walk, but they sometimes offer shuttles. Paths are gravel." }
+                accessibility: {
+                    rating: 'Moderate',
+                    blueBadge: true,
+                    parkingInfo: "Main car park 500 yards away - ASK staff for buggy shuttle or permission to drive closer.",
+                    mobilityInfo: "Ballroom is accessible. Gardens have gravel paths."
+                }
             }
         ]
     },
@@ -220,17 +264,17 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Cawdor Castle",
                 type: "Castle",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Romantic castle with beautiful walled gardens.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Gardens are the highlight and mostly flat/accessible." }
+                accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Gardens are the highlight and mostly flat/accessible." }
             },
             {
                 name: "Loch Ness (Dores Beach)",
                 type: "Viewpoint",
-                bucketListOwner: "Both",
+                listOwner: "Both",
                 description: "The classic view down the Loch. Pebble beach.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Park at the Dores Inn. Short walk to the shore." },
-                scenicNote: "Perfect spot for a sunset."
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Parking at Dores Inn. Short flat walk to shore." },
+                scenicGuide: "The best view is from the pebbled Dores beach looking straight down the Great Glen."
             }
         ]
     },
@@ -251,16 +295,17 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Victoria Falls (Wester Ross)",
                 type: "Nature",
-                bucketListOwner: "Gary",
+                listOwner: "Gary",
                 description: "A beautiful waterfall right off the road along Loch Maree.",
-                accessibility: { rating: 'Easy', blueBadge: false, notes: "Viewing platform is a short walk from the car." }
+                accessibility: { rating: 'Easy', blueBadge: false, mobilityInfo: "Viewing platform is a short walk from the car." }
             },
             {
                 name: "Portree Harbour",
                 type: "Viewpoint",
-                bucketListOwner: "Both",
+                listOwner: "Both",
                 description: "The famous colourful houses.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Parking at the quay. Flat walking area." }
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Public car park at the quay (get there early or late)." },
+                scenicGuide: "The classic photo is taken from 'The Lump' (steep) OR simply from the harbour wall looking back at the houses."
             }
         ]
     },
@@ -281,9 +326,10 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Tobermory Main Street",
                 type: "Shopping",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Balamory! Cute shops and chocolate factory.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Parking on the pier. Main street is flat pavement." }
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Parking on the main pier. Main street is flat." },
+                scenicGuide: "Walk to the far end of the pier for the full sweep of colourful buildings."
             }
         ]
     },
@@ -301,7 +347,7 @@ export const TOUR_ITINERARY: TourStop[] = [
             notes: "Top rated site. Restaurant on-site means no cooking tonight!"
         },
         attractions: [
-            { name: "Ferry Crossing", type: "Travel", bucketListOwner: "Gary", description: "Scenic crossing back to Oban/Lochaline." }
+            { name: "Ferry Crossing", type: "Travel", listOwner: "Gary", description: "Scenic crossing back to Oban/Lochaline." }
         ]
     },
     {
@@ -317,10 +363,14 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "The Jacobite Steam Train",
                 type: "Activity",
-                bucketListOwner: "Both",
+                listOwner: "Both",
                 bookingLink: "https://westcoastrailways.co.uk/jacobite/steam-train",
                 description: "The world's greatest railway journey. 84 miles round trip.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Ramp access to train available. Assistance provided by staff." },
+                accessibility: {
+                    rating: 'Easy',
+                    blueBadge: true,
+                    mobilityInfo: "Ramps available. Staff are excellent at assisting boarding."
+                },
                 notes: "CRITICAL BOOKING."
             }
         ]
@@ -343,16 +393,17 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Glencoe Visitor Centre",
                 type: "Nature",
-                bucketListOwner: "Gary",
+                listOwner: "Gary",
                 description: "The most dramatic valley in Scotland.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Modern accessible visitor centre with great views." }
+                accessibility: { rating: 'Easy', blueBadge: true, parkingInfo: "Large accessible car park." },
+                scenicGuide: "Stop at the 'Three Sisters' viewpoint car park (A82) for the most famous mountain view."
             },
             {
                 name: "Loch Lomond Shores",
                 type: "Shopping",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Upmarket shopping mall with balcony views over the Loch.",
-                accessibility: { rating: 'Easy', blueBadge: true, notes: "Fully accessible. Lifts and flat paths." }
+                accessibility: { rating: 'Easy', blueBadge: true, mobilityInfo: "Fully accessible. Lifts and flat paths." }
             }
         ]
     },
@@ -372,10 +423,15 @@ export const TOUR_ITINERARY: TourStop[] = [
             {
                 name: "Culzean Castle",
                 type: "Castle",
-                bucketListOwner: "Wife",
+                listOwner: "Joyce",
                 description: "Eisenhower's apartment is here. Perched on a cliff.",
-                accessibility: { rating: 'Moderate', blueBadge: true, notes: "Lift available inside. Gardens are huge but have golf cart shuttles sometimes." },
-                scenicNote: "View across to Ailsa Craig and Arran."
+                accessibility: {
+                    rating: 'Moderate',
+                    blueBadge: true,
+                    parkingInfo: "Blue badge bays at Home Farm (Visitor Centre).",
+                    mobilityInfo: "Shuttle buggy often runs from Visitor Centre to Castle. Lift in Castle."
+                },
+                scenicGuide: "The view across the firth to Ailsa Craig (the 'Paddy's Milestone' rock) is stunning from the castle terrace."
             }
         ]
     },
@@ -388,7 +444,7 @@ export const TOUR_ITINERARY: TourStop[] = [
         status: "Planned",
         accommodation: { name: "Stopover near Gretna", type: "Mobile Stopover" },
         attractions: [
-            { name: "Gretna Green", type: "Shopping", bucketListOwner: "Wife", description: "Famous Blacksmith shop and outlet village." }
+            { name: "Gretna Green", type: "Shopping", listOwner: "Joyce", description: "Famous Blacksmith shop and outlet village." }
         ]
     },
     {
