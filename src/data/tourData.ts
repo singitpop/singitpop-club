@@ -45,19 +45,19 @@ export const TOUR_ITINERARY: TourStop[] = [
     {
         day: 1,
         date: "Mon Apr 20",
-        title: "The Departure & The Borders",
-        location: "Edinburgh",
+        title: "The Border Run: Kelso First",
+        location: "Kelso (Floors Castle) -> Edinburgh",
         type: "Travel",
         distance: "120 miles from NE31 2PL",
         status: "Planned",
-        dailyTip: "Stop at the Scottish Border sign for a photo. It's the start of the adventure!",
+        dailyTip: "We are heading straight to Kelso to start the tour at Floors Castle. It's the grand opening!",
         accommodation: {
             name: "Mortonhall Caravan & Camping Park (Edinburgh)",
             type: "Campsite",
             price: "£35/night approx",
             bookingLink: "https://www.meadowhead.co.uk/parks/mortonhall/",
             facilities: ["EHU", "Water", "Waste", "Bus to City"],
-            notes: "Great base. Bus stop right outside (No. 11) takes you straight to Royal Mile."
+            notes: "Great base. We arrive here after the castle."
         },
         attractions: [
             {
