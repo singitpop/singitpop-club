@@ -2,7 +2,7 @@
 import { Shot, StratifyProject } from "@/types/stratify";
 
 export const PromptCompiler = {
-    compile: (project: StratifyProject, shot: Shot, tools: ('veo' | 'runway' | 'pika' | 'luma' | 'kling')[]) => {
+    compile: (project: StratifyProject, shot: Shot, tools: ('veo' | 'veo3' | 'imagen3' | 'runway' | 'pika' | 'luma' | 'kling')[]) => {
         const results: Record<string, string> = {};
 
         // 1. Resolve Character Details
@@ -21,6 +21,8 @@ export const PromptCompiler = {
         const actionContext = resolveActionContext(shot);
 
         if (tools.includes('veo')) results.veo = VeoAdapter.generate(shot, characterContext, actionContext, audioContext, styleContext, composition, project);
+        if (tools.includes('veo3')) results.veo3 = VeoAdapter.generate(shot, characterContext, actionContext, audioContext, styleContext, composition, project);
+        if (tools.includes('imagen3')) results.imagen3 = ImagenAdapter.generate(shot, characterContext, actionContext, audioContext, styleContext, composition);
         if (tools.includes('runway')) results.runway = RunwayAdapter.generate(shot, characterContext, actionContext, audioContext, styleContext, composition);
         if (tools.includes('luma')) results.luma = LumaAdapter.generate(shot, characterContext, actionContext, audioContext, styleContext, composition);
         if (tools.includes('kling')) results.kling = KlingAdapter.generate(shot, characterContext, actionContext, audioContext, styleContext, composition);
@@ -172,5 +174,12 @@ const KlingAdapter = {
 const PikaAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
         return `${charCtx} ${actionCtx}. ${compCtx}. ${styleCtx}. ${audioCtx}. Camera: ${shot.camera.movement}.`;
+    }
+};
+
+const ImagenAdapter = {
+    generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
+        // Imagen 3 Structure: Natural language, descriptive, flow-based
+        return `A photorealistic shot of ${charCtx}. ${actionCtx}. The scene features ${styleCtx}. ${compCtx}. Captured with high dynamic range and sharp focus.`;
     }
 };

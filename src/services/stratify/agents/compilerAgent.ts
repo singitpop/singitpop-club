@@ -14,7 +14,7 @@ export class CompilerAgent implements DirectorAgent {
         log.push("💾 [Compiler] Generating Tool-Specific Prompt Packs...");
 
         let promptCount = 0;
-        const tools = ['veo', 'runway', 'luma', 'kling', 'pika'] as const;
+        const tools = ['veo3', 'imagen3', 'runway', 'luma', 'kling', 'pika'] as const;
 
         if (project.scenes) {
             project.scenes.forEach(s => {
