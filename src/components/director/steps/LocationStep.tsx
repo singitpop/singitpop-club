@@ -107,7 +107,8 @@ export const LocationStep: React.FC<StepProps> = ({ project, updateProject, onNe
                             const loc = locations.find(l => l.locationId === editingId);
                             if (!loc) return null;
                             return (
-                                <div className="space-y-6">
+                                <div className="space-y-8">
+                                    {/* HEADER */}
                                     <div className="flex justify-between items-center border-b border-gray-800 pb-4">
                                         <input
                                             type="text"
@@ -118,75 +119,130 @@ export const LocationStep: React.FC<StepProps> = ({ project, updateProject, onNe
                                         />
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-6">
-                                        {/* Time of Day */}
-                                        <div className="space-y-2">
-                                            <label className="text-xs text-gray-500 uppercase">Time of Day</label>
-                                            <div className="flex gap-2">
-                                                {['dawn', 'day', 'dusk', 'night'].map(t => (
-                                                    <button
-                                                        key={t}
-                                                        onClick={() => handleUpdateLocation(loc.locationId, 'timeOfDay', t)}
-                                                        className={`flex-1 py-2 text-xs font-bold rounded border ${loc.timeOfDay === t
-                                                            ? 'bg-emerald-500 text-black border-emerald-500'
-                                                            : 'bg-gray-900 text-gray-500 border-gray-700 hover:border-gray-500'
-                                                            }`}
-                                                    >
-                                                        {t.toUpperCase()}
-                                                    </button>
-                                                ))}
+                                    {/* 1. ACTING & STAGING (Blocking / Extras) */}
+                                    <div className="space-y-4">
+                                        <h4 className="flex items-center gap-2 text-emerald-400 font-bold text-sm uppercase tracking-wider">
+                                            <span className="bg-emerald-500/20 px-2 py-0.5 rounded text-[10px]">1. Acting</span>
+                                            Staging & Background
+                                        </h4>
+                                        <div className="grid grid-cols-1 gap-4">
+                                            <div>
+                                                <label className="block text-xs text-gray-500 mb-1">Blocking (Actor Movement)</label>
+                                                <textarea
+                                                    value={loc.blocking || ''}
+                                                    onChange={(e) => handleUpdateLocation(loc.locationId, 'blocking', e.target.value)}
+                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white text-sm focus:border-emerald-500 outline-none h-16"
+                                                    placeholder="e.g. Lead begins seated, rises on chorus, moves to window."
+                                                />
                                             </div>
-                                        </div>
-
-                                        {/* Weather */}
-                                        <div className="space-y-2">
-                                            <label className="text-xs text-gray-500 uppercase">Weather</label>
-                                            <select
-                                                value={loc.weather}
-                                                onChange={(e) => handleUpdateLocation(loc.locationId, 'weather', e.target.value)}
-                                                className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white text-sm"
-                                            >
-                                                <option value="clear">☀️ Clear</option>
-                                                <option value="cloudy">☁️ Cloudy</option>
-                                                <option value="rain">🌧️ Rain</option>
-                                                <option value="storm">⚡ Storm</option>
-                                                <option value="fog">🌫️ Fog</option>
-                                            </select>
+                                            <div>
+                                                <label className="block text-xs text-gray-500 mb-1">Extras & Atmosphere</label>
+                                                <input
+                                                    type="text"
+                                                    value={loc.extras || ''}
+                                                    onChange={(e) => handleUpdateLocation(loc.locationId, 'extras', e.target.value)}
+                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white text-sm focus:border-emerald-500 outline-none"
+                                                    placeholder="e.g. Crowd of 50 teens, Solitary figure, Background dancers"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
 
-                                    {/* VISUAL STYLE */}
-                                    <div className="space-y-4 pt-4 border-t border-gray-800">
-                                        <h4 className="text-emerald-400 font-bold text-sm">Visual Style</h4>
-
+                                    {/* 2. DECOR & WORLD (Art / Time / Weather) */}
+                                    <div className="space-y-4">
+                                        <h4 className="flex items-center gap-2 text-purple-400 font-bold text-sm uppercase tracking-wider">
+                                            <span className="bg-purple-500/20 px-2 py-0.5 rounded text-[10px]">2. Decor</span>
+                                            Art Direction & World
+                                        </h4>
                                         <div className="grid grid-cols-2 gap-4">
+                                            <div className="col-span-2">
+                                                <label className="block text-xs text-gray-500 mb-1">Set Design & Props</label>
+                                                <textarea
+                                                    value={loc.artDirection || ''}
+                                                    onChange={(e) => handleUpdateLocation(loc.locationId, 'artDirection', e.target.value)}
+                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white text-sm focus:border-purple-500 outline-none h-16"
+                                                    placeholder="e.g. Vintage microphone, Broken mirror, Fog machine."
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-xs text-gray-500">Time of Day</label>
+                                                <div className="flex gap-1">
+                                                    {['dawn', 'day', 'dusk', 'night'].map(t => (
+                                                        <button
+                                                            key={t}
+                                                            onClick={() => handleUpdateLocation(loc.locationId, 'timeOfDay', t)}
+                                                            className={`flex-1 py-2 text-[10px] font-bold rounded border uppercase ${loc.timeOfDay === t
+                                                                ? 'bg-purple-500 text-white border-purple-500'
+                                                                : 'bg-gray-900 text-gray-500 border-gray-700 hover:border-gray-500'
+                                                                }`}
+                                                        >
+                                                            {t}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-xs text-gray-500">Weather</label>
+                                                <select
+                                                    value={loc.weather}
+                                                    onChange={(e) => handleUpdateLocation(loc.locationId, 'weather', e.target.value)}
+                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white text-sm"
+                                                >
+                                                    <option value="clear">☀️ Clear</option>
+                                                    <option value="cloudy">☁️ Cloudy</option>
+                                                    <option value="rain">🌧️ Rain</option>
+                                                    <option value="storm">⚡ Storm</option>
+                                                    <option value="fog">🌫️ Fog</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* 3. CINEMATOGRAPHY (Light / Color / Camera) */}
+                                    <div className="space-y-4">
+                                        <h4 className="flex items-center gap-2 text-blue-400 font-bold text-sm uppercase tracking-wider">
+                                            <span className="bg-blue-500/20 px-2 py-0.5 rounded text-[10px]">3. Cinematography</span>
+                                            Light, Color & Camera
+                                        </h4>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="col-span-2">
+                                                <label className="block text-xs text-gray-500 mb-1">Color Palette (60:30:10 Rule)</label>
+                                                <input
+                                                    type="text"
+                                                    value={loc.colorPalette || ''}
+                                                    onChange={(e) => handleUpdateLocation(loc.locationId, 'colorPalette', e.target.value)}
+                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white text-sm focus:border-blue-500 outline-none"
+                                                    placeholder="e.g. 60% Midnight Blue, 30% Magenta, 10% White"
+                                                />
+                                            </div>
                                             <div>
-                                                <label className="block text-xs text-gray-500 mb-1">Lighting</label>
+                                                <label className="block text-xs text-gray-500 mb-1">Lighting Design</label>
                                                 <input
                                                     type="text"
                                                     value={loc.lighting || ''}
                                                     onChange={(e) => handleUpdateLocation(loc.locationId, 'lighting', e.target.value)}
-                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white text-sm focus:border-emerald-500 outline-none"
+                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white text-sm focus:border-blue-500 outline-none"
                                                     placeholder="e.g. Neon Noir, Soft Natural"
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-xs text-gray-500 mb-1">Camera Vibe</label>
+                                                <label className="block text-xs text-gray-500 mb-1">Camera Movement</label>
                                                 <input
                                                     type="text"
                                                     value={loc.cameraVibe || ''}
                                                     onChange={(e) => handleUpdateLocation(loc.locationId, 'cameraVibe', e.target.value)}
-                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white text-sm focus:border-emerald-500 outline-none"
-                                                    placeholder="e.g. Handheld, Steady"
+                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white text-sm focus:border-blue-500 outline-none"
+                                                    placeholder="e.g. Handheld Tracking, Crane Up"
                                                 />
                                             </div>
                                             <div className="col-span-2">
-                                                <label className="block text-xs text-gray-500 mb-1">Art Direction / Props</label>
-                                                <textarea
-                                                    value={loc.artDirection || ''}
-                                                    onChange={(e) => handleUpdateLocation(loc.locationId, 'artDirection', e.target.value)}
-                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white text-sm focus:border-emerald-500 outline-none h-20"
-                                                    placeholder="e.g. Minimalist concrete room with a single red chair."
+                                                <label className="block text-xs text-gray-500 mb-1">Audio Environment</label>
+                                                <input
+                                                    type="text"
+                                                    value={loc.audioEnvironment || ''}
+                                                    onChange={(e) => handleUpdateLocation(loc.locationId, 'audioEnvironment', e.target.value)}
+                                                    className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white text-sm focus:border-blue-500 outline-none"
+                                                    placeholder="e.g. Heavy rain, distant sirens"
                                                 />
                                             </div>
                                         </div>
@@ -196,8 +252,8 @@ export const LocationStep: React.FC<StepProps> = ({ project, updateProject, onNe
                         })()
                     ) : (
                         <div className="h-full flex flex-col items-center justify-center text-gray-600">
-                            <span className="text-4xl mb-4">📍</span>
-                            <p>Select a location to edit details.</p>
+                            <span className="text-4xl mb-4">🎬</span>
+                            <p>Select a location to configure layout, lighting, and action.</p>
                         </div>
                     )}
                 </div>

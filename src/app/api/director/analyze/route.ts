@@ -117,10 +117,23 @@ export async function POST(req: NextRequest) {
         Analyze the ${filePart ? "attached audio file AND" : ""} details below.
 
         1. IDENTIFY 5 CORE THEMES: Abstract, emotional, or narrative themes hidden in the lyrics.
-        2. GENERATE 3 DISTINCT PITCH CONCEPTS (Treatments):
-           - Concept T1: Highly distinct visual direction (e.g. Neon Noir).
-           - Concept T2: A contrasting approach (e.g. Golden Hour Realism).
-           - Concept T3: An avant-garde or performance-focused approach.
+        2. GENERATE           FOR EACH LOCATION, YOU MUST DEFINE THE "MISE-EN-SCÈNE" (The Total Visual World):
+           1. ART DIRECTION (Set & Props): Detailed physical environment. (e.g. "Vintage microphone, Fog machine, Broken mirror").
+           2. LIGHTING & COLOR: Specific film lighting style AND the 60-30-10 COLOR RULE (e.g. "60% Deep Navy, 30% Neon Pink, 10% White").
+           3. BLOCKING (Actor Staging): Where they move, how they interact with the space.
+           4. EXTRAS / ATMOSPHERE: Background action (e.g. "Crowd of 50 people", "Solitary figure") and SOUNDSCAPE (audioEnvironment).
+           5. CAMERA VIBE: Specific movement (e.g. "Slow Dolly In", "Handheld Tracking").
+
+           Fill these JSON fields:
+           - lighting: ...
+           - colorPalette: ...
+           - cameraVibe: ...
+           - artDirection: ...
+           - extras: ...
+           - blocking: ...
+           - audioEnvironment: ...
+           - timeOfDay: ...
+           - weather: ...erformance-focused approach.
         3. SET 10 INFLUENCE DIALS (0-100): Based on the song's energy and the themes.
         
         STRICT CONSTRAINT: The Lead Artist IS the protagonist. Usage of "he/him" or "she/her" MUST match the artist's gender presentation.

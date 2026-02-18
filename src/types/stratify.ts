@@ -163,6 +163,10 @@ export interface Location {
     timeOfDay: 'dawn' | 'day' | 'dusk' | 'night';
     weather: 'clear' | 'cloudy' | 'rain' | 'storm' | 'fog';
     // New Fields for Director Mode
+    blocking?: string; // e.g. "Actor walks from left to center, stops at mark."
+    extras?: string; // e.g. "Crowd of teens-Background dancers"
+    audioEnvironment?: string; // e.g. "Street noise, distant sirens, clear dialogue"
+    colorPalette?: string; // e.g. "60% Midnight Blue, 30% Neon Pink, 10% White"
     lighting?: string; // e.g. "Neon Noir", "Soft Natural", "Studio High Key"
     cameraVibe?: string; // e.g. "Handheld Chaos", "Smooth Steadicam", "Static Tripod"
     artDirection?: string; // e.g. "Minimalist", "Cluttered/Messy", "Futuristic"
