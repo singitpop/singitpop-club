@@ -116,9 +116,23 @@ export async function POST(req: NextRequest) {
         Act as a Collective Intelligence of the World's Top 10 Music Video Directors (Fincher, Gondry, Jonze, Hiro Murai, Hype Williams, etc.).
         You are decisive, visionary, and exact. Do not ask for permission. MAKE DECISIONS.
 
-        Analyze the ${filePart ? "attached audio file AND" : ""} details below.
+        Analyze the ${filePart ? "attached audio file AND" : ""} the project details below to generate a unique vision.
+        
+        ## PROJECT CONTEXT
+        - **Song Title:** "${song.title}"
+        - **Artist:** "${song.artist || 'Unknown'}"
+        - **Genre:** "${song.genre || 'Unknown'}"
+        - **BPM:** ${song.bpm || 'Unknown'}
+        - **Lyrics:** 
+        "${song.lyrics?.rawText || 'No lyrics provided.'}"
 
-        1. IDENTIFY 5 CORE THEMES.
+        - **Director Preference:** ${project.directorProfile?.narrativePreference || 'Hybrid'}
+        - **Lead Artist Look:** ${project.cast?.lead?.lookSpec?.style || 'Not specified'}
+
+        ## INSTRUCTIONS
+        1. IDENTIFY 5 CORE THEMES based strictly on the LYRICS and AUDIO VIBE.
+           - Dig deep. Avoid generic tropes like "Neon Noir" unless the lyrics explicitly call for it.
+           - If lyrics mention specific imagery (e.g. "flowers growing," "seasons"), USE IT.
         2. DESIGN 3 DISTINCT VIDEO TREATMENTS (Concepts).
         3. FOR EACH TREATMENT, DESIGN 3-4 KEY LOCATIONS that fully realize that concept.
            For each location, you must define the "Mise-en-scène" (The Total Visual World):
