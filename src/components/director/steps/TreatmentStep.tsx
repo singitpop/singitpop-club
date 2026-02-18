@@ -15,19 +15,81 @@ export const TreatmentStep: React.FC<StepProps> = ({ project, updateProject, onN
     // Fallback if no treatments exist (mock for MVP if API didn't return them yet)
     // Use AI-generated treatments if available, otherwise fallback to mocks
     const treatments = (project.treatments && project.treatments.length > 0) ? project.treatments : [
-        { id: 't1', title: 'Neon Noir', summary: 'A high-contrast, moody visual journey through a rain-slicked cyber city. Focus on isolation and reflection.' },
-        { id: 't2', title: 'Golden Hour Dream', summary: 'Warm, nostalgic, and solar-flared. Handheld camera work capturing intimate moments in a wheat field at sunset.' },
-        { id: 't3', title: 'Studio Performance', summary: 'Clean, high-fashion studio look. stark backgrounds, dynamic lighting changes synced to the beat. Performance heavy.' }
+        {
+            id: 't1',
+            title: 'Neon Noir',
+            summary: 'A high-contrast, moody visual journey through a rain-slicked cyber city. Focus on isolation and reflection.',
+            locations: [
+                {
+                    locationId: 'loc-mock-1',
+                    name: 'Rain-Slicked Alley',
+                    description: 'Narrow urban canyon with neon signs reflecting in puddles.',
+                    timeOfDay: 'night',
+                    weather: 'rain',
+                    blocking: 'Artist walks towards camera, silhouetted against headlights.',
+                    extras: 'None. Complete isolation.',
+                    artDirection: 'Trash can fire, flickering neon "OPEN" sign.',
+                    audioEnvironment: 'Heavy rain, distant sirens, footsteps splashing.',
+                    lighting: 'Side-lit cyan and magenta. 60% Black, 30% Cyan, 10% Magenta.',
+                    cameraVibe: 'Handheld tracking, slightly unstable.'
+                }
+            ]
+        },
+        {
+            id: 't2',
+            title: 'Golden Hour Dream',
+            summary: 'Warm, nostalgic, and solar-flared. Handheld camera work capturing intimate moments in a wheat field at sunset.',
+            locations: [
+                {
+                    locationId: 'loc-mock-2',
+                    name: 'Wheat Field at Sunset',
+                    description: 'Endless horizon of golden grain.',
+                    timeOfDay: 'dusk',
+                    weather: 'clear',
+                    blocking: 'Artist runs hand through wheat, spins slowly.',
+                    extras: 'None.',
+                    artDirection: 'Vintage lens flare, dust motes dancing.',
+                    audioEnvironment: 'Wind rustling, cicadas, soft acoustic guitar.',
+                    lighting: 'Backlit by sun. 60% Gold, 30% Warm White, 10% Deep Brown.',
+                    cameraVibe: 'Flowing Steadicam, circling the subject.'
+                }
+            ]
+        },
+        {
+            id: 't3',
+            title: 'Studio Performance',
+            summary: 'Clean, high-fashion studio look. stark backgrounds, dynamic lighting changes synced to the beat. Performance heavy.',
+            locations: [
+                {
+                    locationId: 'loc-mock-3',
+                    name: 'Infinity Cyclorama',
+                    description: 'White void that changes color with lights.',
+                    timeOfDay: 'night', // Studio effectively
+                    weather: 'clear',
+                    blocking: 'Choreographed dance routine with 4 backup dancers.',
+                    extras: '4 Backup Dancers in matching silhouettes.',
+                    artDirection: 'Minimalist. Just the artist and the light.',
+                    audioEnvironment: 'Studio silence, playback blaring.',
+                    lighting: 'Strobe effects. 60% White, 30% Red, 10% Black.',
+                    cameraVibe: 'Technocrane swoops and quick zooms.'
+                }
+            ]
+        }
     ];
 
     const handleSelect = (id: string) => {
+        const selectedTreatment = treatments.find(t => t.id === id);
+
         updateProject({
             ...project,
             selectedTreatmentId: id,
-            // In a real flow, we might copy the selected treatment summary to project.project.summary
+            // Auto-fill locations from the selected treatment (if available)
+            locations: selectedTreatment?.locations && selectedTreatment.locations.length > 0
+                ? selectedTreatment.locations
+                : project.locations,
             project: {
                 ...project.project,
-                summary: treatments.find(t => t.id === id)?.summary || ''
+                summary: selectedTreatment?.summary || ''
             }
         });
     };

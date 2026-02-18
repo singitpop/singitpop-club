@@ -176,6 +176,7 @@ export interface Treatment {
     id: string;
     title: string;
     summary: string;
+    locations?: Location[];
 }
 
 // 6. MASTER PROJECT OBJECT
