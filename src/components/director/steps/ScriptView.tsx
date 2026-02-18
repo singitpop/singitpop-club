@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import { StratifyProject, Scene, Shot } from '@/types/stratify';
 import { motion } from 'framer-motion';
 
+// ... imports
+
 interface StepProps {
     project: StratifyProject;
     onReset: () => void;
+    onBack: () => void;
 }
 
-export const ScriptView: React.FC<StepProps> = ({ project, onReset }) => {
+export const ScriptView: React.FC<StepProps> = ({ project, onReset, onBack }) => {
 
     const [selectedTool, setSelectedTool] = useState<'veo' | 'veo3' | 'imagen3' | 'runway' | 'luma' | 'kling' | 'pika'>('veo3');
     const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -34,6 +37,14 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset }) => {
             {/* HEADER ACTIONS */}
             <div className="flex justify-between items-end border-b border-gray-800 pb-6">
                 <div>
+                    <div className="flex items-center gap-4 mb-2">
+                        <button
+                            onClick={onBack}
+                            className="text-gray-500 hover:text-white flex items-center gap-2 text-sm font-bold transition-colors"
+                        >
+                            ← Back to Director
+                        </button>
+                    </div>
                     <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">
                         Production Script
                     </h2>

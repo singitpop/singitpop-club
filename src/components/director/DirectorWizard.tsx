@@ -172,6 +172,7 @@ export const DirectorWizard: React.FC = () => {
                                 setStep(1);
                                 setProject(initialProject);
                             }}
+                            onBack={() => setStep(5)}
                         />
                     )}
                 </motion.div>
