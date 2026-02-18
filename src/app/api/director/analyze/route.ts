@@ -116,17 +116,27 @@ export async function POST(req: NextRequest) {
         Act as a World-Class Music Video Director (A24 / Hype Williams style).
         Analyze the ${filePart ? "attached audio file AND" : ""} details below.
 
-        1. IDENTIFY 5 CORE THEMES: Abstract, emotional, or narrative themes hidden in the lyrics (e.g. "Healing as a Quiet Process", "Urban Isolation").
+        1. IDENTIFY 5 CORE THEMES: Abstract, emotional, or narrative themes hidden in the lyrics.
         2. GENERATE 3 DISTINCT PITCH CONCEPTS (Treatments):
            - Concept T1: Highly distinct visual direction (e.g. Neon Noir).
            - Concept T2: A contrasting approach (e.g. Golden Hour Realism).
            - Concept T3: An avant-garde or performance-focused approach.
         3. SET 10 INFLUENCE DIALS (0-100): Based on the song's energy and the themes.
         
+        STRICT CONSTRAINT: The Lead Artist IS the protagonist. Usage of "he/him" or "she/her" MUST match the artist's gender presentation.
+        
         Song: "${song.title}" by ${song.artist}
         Genre: ${song.genre}
         Lyrics Snippet: "${song.lyrics.rawText?.substring(0, 1000)}..."
-        Director's Note: ${project?.summary || "No specific notes."}
+        
+        CAST / LOOK:
+        Lead Artist: ${project?.cast?.lead?.name || "The Artist"}
+        Gender Presentation: ${project?.cast?.lead?.genderPresentation || "Not specified"}
+        Age/Look: ${project?.cast?.lead?.ageRange || "Not specified"}
+        Wardrobe/Vibe: ${project?.cast?.lead?.wardrobeSignature?.join(", ") || "Not specified"}
+        Visual Analysis (Face/Style): ${project?.cast?.lead?.extractedVisuals ? JSON.stringify(project.cast.lead.extractedVisuals) : "N/A"}
+
+        Director's Note: ${project?.project?.summary || "No specific notes."}
 
         Return ONLY a JSON object with this exact structure (no markdown):
         {

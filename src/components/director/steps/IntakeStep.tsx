@@ -130,15 +130,29 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                         🎥 The Vision & Cast
                     </h3>
 
-                    <div>
-                        <label className="block text-xs text-gray-500 mb-1">Lead Artist Name</label>
-                        <input
-                            type="text"
-                            className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white focus:border-purple-500 outline-none transition-colors"
-                            placeholder="e.g. The Weeknd"
-                            value={project.cast.lead?.name}
-                            onChange={(e) => handleCastChange('name', e.target.value)}
-                        />
+                    <div className="flex gap-4">
+                        <div className="w-2/3">
+                            <label className="block text-xs text-gray-500 mb-1">Lead Artist Name</label>
+                            <input
+                                type="text"
+                                className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white focus:border-purple-500 outline-none transition-colors"
+                                placeholder="e.g. The Weeknd"
+                                value={project.cast.lead?.name}
+                                onChange={(e) => handleCastChange('name', e.target.value)}
+                            />
+                        </div>
+                        <div className="w-1/3">
+                            <label className="block text-xs text-gray-500 mb-1">Gender</label>
+                            <select
+                                className="w-full bg-gray-900 border border-gray-700 rounded p-3 text-white focus:border-purple-500 outline-none transition-colors appearance-none"
+                                value={project.cast.lead?.genderPresentation || 'non-binary'}
+                                onChange={(e) => handleCastChange('genderPresentation', e.target.value)}
+                            >
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="non-binary">Non-Binary</option>
+                            </select>
+                        </div>
                     </div>
 
                     {/* Character Reference Image */}
