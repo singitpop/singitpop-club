@@ -10,9 +10,20 @@ interface StepProps {
 }
 
 const DEFAULT_LOCATIONS: Location[] = [
-    { locationId: 'loc-1', name: 'Main Set', description: 'Primary performance area', timeOfDay: 'night', weather: 'clear', lighting: 'Studio High Key', cameraVibe: 'Smooth Steadicam', artDirection: 'Minimalist' },
-    { locationId: 'loc-2', name: 'Alleyway', description: 'Gritty urban exterior', timeOfDay: 'night', weather: 'rain', lighting: 'Neon Noir', cameraVibe: 'Handheld Chaos', artDirection: 'Cyberpunk' },
-    { locationId: 'loc-3', name: 'Void', description: 'Abstract black or white space', timeOfDay: 'day', weather: 'clear', lighting: 'Soft Natural', cameraVibe: 'Static Tripod', artDirection: 'Surreal' }
+    {
+        locationId: 'loc-1',
+        name: 'The Void (Example)',
+        description: 'Abstract performance space',
+        timeOfDay: 'night',
+        weather: 'clear',
+        lighting: 'High Contrast Strobe',
+        cameraVibe: 'Smooth Steadicam Orbit',
+        artDirection: 'Minimalist white floor, single hanging bulb.',
+        blocking: 'Artist stands dead center. Camera orbits 360 degrees. Artist sings directly to lens.',
+        extras: 'None. Focus is solitary.',
+        colorPalette: '60% Black, 30% White, 10% Gold',
+        audioEnvironment: 'Complete silence backing the track.'
+    }
 ];
 
 export const LocationStep: React.FC<StepProps> = ({ project, updateProject, onNext, onBack }) => {

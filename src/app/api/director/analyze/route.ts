@@ -113,63 +113,62 @@ export async function POST(req: NextRequest) {
 
         // 3. Construct Prompt (Multimodal or Text)
         const promptText = `
-        Act as a World-Class Music Video Director (A24 / Hype Williams style).
+        Act as a Collective Intelligence of the World's Top 10 Music Video Directors (Fincher, Gondry, Jonze, Hiro Murai, Hype Williams, etc.).
+        You are decisive, visionary, and exact. Do not ask for permission. MAKE DECISIONS.
+
         Analyze the ${filePart ? "attached audio file AND" : ""} details below.
 
-        1. IDENTIFY 5 CORE THEMES: Abstract, emotional, or narrative themes hidden in the lyrics.
-        2. GENERATE           FOR EACH LOCATION, YOU MUST DEFINE THE "MISE-EN-SCÈNE" (The Total Visual World):
-           1. ART DIRECTION (Set & Props): Detailed physical environment. (e.g. "Vintage microphone, Fog machine, Broken mirror").
-           2. LIGHTING & COLOR: Specific film lighting style AND the 60-30-10 COLOR RULE (e.g. "60% Deep Navy, 30% Neon Pink, 10% White").
-           3. BLOCKING (Actor Staging): Where they move, how they interact with the space.
-           4. EXTRAS / ATMOSPHERE: Background action (e.g. "Crowd of 50 people", "Solitary figure") and SOUNDSCAPE (audioEnvironment).
-           5. CAMERA VIBE: Specific movement (e.g. "Slow Dolly In", "Handheld Tracking").
+        1. IDENTIFY 5 CORE THEMES.
+        2. DESIGN 3 DISTINCT VIDEO TREATMENTS (Concepts).
+        3. FOR EACH TREATMENT, DESIGN 3-4 KEY LOCATIONS that fully realize that concept.
+           For each location, you must define the "Mise-en-scène" (The Total Visual World):
+           - blocking: Specific actor movement (e.g. "Lead enters from shadow...").
+           - extras: Background action (e.g. "Crowd of 50 people", "Solitary figure").
+           - artDirection: Set & Props (e.g. "Vintage microphone", "Fog machine").
+           - audioEnvironment: Soundscape (e.g. "Heavy rain", "City noise").
+           - lighting: Lighting style (e.g. "Neon Noir").
+           - colorPalette: 60-30-10 Rule (e.g. "60% Black, 30% Red, 10% White").
+           - cameraVibe: Camera movement (e.g. "Handheld Tracking").
+           - timeOfDay: (dawn/day/dusk/night).
+           - weather: (clear/cloudy/rain/storm/fog).
 
-           Fill these JSON fields:
-           - lighting: ...
-           - colorPalette: ...
-           - cameraVibe: ...
-           - artDirection: ...
-           - extras: ...
-           - blocking: ...
-           - audioEnvironment: ...
-           - timeOfDay: ...
-           - weather: ...erformance-focused approach.
-        3. SET 10 INFLUENCE DIALS (0-100): Based on the song's energy and the themes.
-        
-        STRICT CONSTRAINT: The Lead Artist IS the protagonist. Usage of "he/him" or "she/her" MUST match the artist's gender presentation.
-        
-        Song: "${song.title}" by ${song.artist}
-        Genre: ${song.genre}
-        Lyrics Snippet: "${song.lyrics.rawText?.substring(0, 1000)}..."
-        
-        CAST / LOOK:
-        Lead Artist: ${project?.cast?.lead?.name || "The Artist"}
-        Gender Presentation: ${project?.cast?.lead?.genderPresentation || "Not specified"}
-        Age/Look: ${project?.cast?.lead?.ageRange || "Not specified"}
-        Wardrobe/Vibe: ${project?.cast?.lead?.wardrobeSignature?.join(", ") || "Not specified"}
-        Visual Analysis (Face/Style): ${project?.cast?.lead?.extractedVisuals ? JSON.stringify(project.cast.lead.extractedVisuals) : "N/A"}
-
-        Director's Note: ${project?.project?.summary || "No specific notes."}
-
-        Return ONLY a JSON object with this exact structure (no markdown):
+        Return ONLY a JSON object with this exact structure:
         {
-            "coreThemes": ["Theme 1", "Theme 2", "Theme 3", "Theme 4", "Theme 5"],
+            "coreThemes": ["Theme 1", "..."],
             "treatments": [
-                { "id": "t1", "title": "Concept Title", "summary": "2-sentence visual pitch." },
-                { "id": "t2", "title": "Concept Title", "summary": "2-sentence visual pitch." },
-                { "id": "t3", "title": "Concept Title", "summary": "2-sentence visual pitch." }
+                {
+                    "id": "t1",
+                    "title": "Concept Title",
+                    "summary": "Visual pitch.",
+                    "locations": [
+                        {
+                            "locationId": "l1",
+                            "name": "Location Name (e.g. The Void)",
+                            "description": "Brief desc.",
+                            "timeOfDay": "night",
+                            "weather": "rain",
+                            "blocking": "...",
+                            "extras": "...",
+                            "artDirection": "...",
+                            "audioEnvironment": "...",
+                            "lighting": "...",
+                            "colorPalette": "...",
+                            "cameraVibe": "..."
+                        }
+                    ]
+                }
             ],
             "dials": {
-                "blockingPrecision": number,
-                "motivatedCamera": number,
-                "wonderAndScale": number,
-                "intimateEmotion": number,
-                "rhythmicMontage": number,
-                "naturalism": number,
-                "stylizedSymmetry": number,
-                "highContrastMood": number,
-                "longTakeConfidence": number,
-                "iconicHeroFrames": number
+                "blockingPrecision": 80,
+                "motivatedCamera": 90,
+                "wonderAndScale": 70,
+                "intimateEmotion": 60,
+                "rhythmicMontage": 50,
+                "naturalism": 40,
+                "stylizedSymmetry": 30,
+                "highContrastMood": 90,
+                "longTakeConfidence": 20,
+                "iconicHeroFrames": 80
             }
         }
         `;
