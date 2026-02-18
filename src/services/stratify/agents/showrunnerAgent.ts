@@ -23,23 +23,39 @@ export class ShowrunnerAgent implements DirectorAgent {
 
         try {
             const prompt = `
-            ACT AS A MUSIC VIDEO SHOWRUNNER.
+            ACT AS A MUSIC VIDEO SHOWRUNNER constructing a scene breakdown.
+            
+            CONTEXT:
             Song: "${song.title}" (${song.genre}).
-            Lyrics: "${song.lyrics.rawText?.substring(0, 500)}..."
-            Locations Available: ${JSON.stringify(project.locations.map(l => l.name))}
+            Duration: ${song.duration || "Standard"}
+            Lyrics: "${song.lyrics.rawText?.substring(0, 1500)}..."
             Director Note: ${project.project.summary}
+            
+            AVAILABLE LOCATIONS (You MUST use these specific IDs and Names):
+            ${JSON.stringify(project.locations.map(l => ({
+                id: l.locationId,
+                name: l.name,
+                time: l.timeOfDay,
+                lighting: l.lighting, // e.g. Neon Noir
+                camera: l.cameraVibe, // e.g. Handheld
+                style: l.artDirection
+            })))}
 
-            TASK: Breakdown the song into 3-5 Distinct Scenes.
+            TASK: 
+            1. Analyze the lyrics for the EMOTIONAL ARC (e.g. rising tension, melancholic reflection, explosive release).
+            2. Breakdown the song into 3-5 Distinct Scenes that map to this arc.
+            3. ASSIGN the most appropriate Location from the list above to each scene.
+            4. INCORPORATE the User's defined Lighting/Camera styles for that location into the mood description.
             
             OUTPUT STRICT JSON ARRAY of Scene objects:
             [{
-                "title": "Verse 1 - The Bedroom",
-                "locationId": "must match one of the available location names or IDs perfectly",
-                "narrativeBeat": "Introduction of the lonely protagonist",
+                "title": "Verse 1 - The Setup",
+                "locationId": "loc-1", // MUST match a provided ID exactly
+                "narrativeBeat": "Introduction of the protagonist in a moment of solitude.",
                 "mood": {
-                    "visual": "Melancholic",
-                    "lighting": "Blue hour, dim practicals",
-                    "color": "Cool Teals",
+                    "visual": "Melancholic and isolated, matching the 'Neon Noir' lighting setting.",
+                    "lighting": "Deep shadows with harsh neon rim light (User Preference: Neon Noir)",
+                    "color": "Cool Teals and Magentas",
                     "ambience": "Rain against window, distant city traffic"
                 }
             }]

@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { IntakeStep } from './steps/IntakeStep';
 import { DialsStep } from './steps/DialsStep';
 import { TreatmentStep } from './steps/TreatmentStep';
+import { LocationStep } from './steps/LocationStep';
 import { ScriptView } from './steps/ScriptView';
 
 // DEFAULT STATE
@@ -72,7 +73,7 @@ export const DirectorWizard: React.FC = () => {
             const data = await res.json();
             if (data.error) throw new Error(data.error);
             setProject(data);
-            setStep(5); // Move to Results (Step 5 now)
+            setStep(6); // Move to Results (Step 6 now)
         } catch (e) {
             console.error("Director Failed", e);
             alert("Director Swarm Failed. Check console.");
@@ -88,7 +89,7 @@ export const DirectorWizard: React.FC = () => {
                     DIRECTOR MODE <span className="text-xs text-gray-500 font-mono align-top ml-2">v8.0 SWARM</span>
                 </h1>
                 <div className="flex gap-2">
-                    {[1, 2, 3, 4, 5].map(s => (
+                    {[1, 2, 3, 4, 5, 6].map(s => (
                         <div key={s} className={`h-2 w-8 rounded-full transition-colors ${step >= s ? 'bg-emerald-500' : 'bg-gray-800'}`} />
                     ))}
                 </div>
@@ -129,6 +130,15 @@ export const DirectorWizard: React.FC = () => {
                     )}
 
                     {step === 4 && (
+                        <LocationStep
+                            project={project as StratifyProject}
+                            updateProject={setProject}
+                            onNext={handleNext}
+                            onBack={handleBack}
+                        />
+                    )}
+
+                    {step === 5 && (
                         <div className="text-center p-20">
                             <h2 className="text-3xl font-bold text-white mb-4">Roll Camera?</h2>
                             <p className="text-gray-400 mb-8 max-w-md mx-auto">
@@ -149,13 +159,13 @@ export const DirectorWizard: React.FC = () => {
                             </button>
                             <div className="mt-6">
                                 <button onClick={handleBack} className="text-gray-500 hover:text-white underline text-sm">
-                                    Back to Treatment
+                                    Back to Scene Setup
                                 </button>
                             </div>
                         </div>
                     )}
 
-                    {step === 5 && (
+                    {step === 6 && (
                         <ScriptView
                             project={project as StratifyProject}
                             onReset={() => {

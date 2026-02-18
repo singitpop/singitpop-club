@@ -65,6 +65,7 @@ export interface SongData {
     bpm: number;
     genre: string;
     subGenre?: string;
+    duration?: string; // e.g. "3:30"
     audioFile?: string; // Filename for Veo/Tool lip-sync
     audioFileOverride?: string; // Manual URL/Filename override
     lipSyncEnabled?: boolean; // User toggle
@@ -132,6 +133,7 @@ export interface Shot {
         luma?: string;
         kling?: string;
         pika?: string;
+        ue5?: string;
     };
 
     // QC Flags
@@ -160,6 +162,10 @@ export interface Location {
     description: string;
     timeOfDay: 'dawn' | 'day' | 'dusk' | 'night';
     weather: 'clear' | 'cloudy' | 'rain' | 'storm' | 'fog';
+    // New Fields for Director Mode
+    lighting?: string; // e.g. "Neon Noir", "Soft Natural", "Studio High Key"
+    cameraVibe?: string; // e.g. "Handheld Chaos", "Smooth Steadicam", "Static Tripod"
+    artDirection?: string; // e.g. "Minimalist", "Cluttered/Messy", "Futuristic"
 }
 
 export interface Treatment {

@@ -58,7 +58,7 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                         <label className="block text-xs text-gray-500 mb-1">Lyrics (Paste Full Text)</label>
                         <textarea
                             className="w-full h-40 bg-gray-900 border border-gray-700 rounded p-3 text-white focus:border-emerald-500 outline-none transition-colors font-mono text-sm"
-                            placeholder="Verse 1..."
+                            placeholder="Paste your lyrics here. The Showrunner Agent will analyze them for emotional beats and narrative structure..."
                             value={project.song.lyrics.rawText}
                             onChange={(e) => handleChange('lyrics', { rawText: e.target.value })}
                         />
@@ -75,14 +75,26 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                                 onChange={(e) => handleChange('genre', e.target.value)}
                             />
                         </div>
-                        <div>
-                            <label className="block text-xs text-gray-500 mb-1">BPM</label>
-                            <input
-                                type="number"
-                                className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white"
-                                value={project.song.bpm}
-                                onChange={(e) => handleChange('bpm', parseInt(e.target.value))}
-                            />
+                        <div className="flex gap-2">
+                            <div className="w-1/2">
+                                <label className="block text-xs text-gray-500 mb-1">BPM</label>
+                                <input
+                                    type="number"
+                                    className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white"
+                                    value={project.song.bpm}
+                                    onChange={(e) => handleChange('bpm', parseInt(e.target.value))}
+                                />
+                            </div>
+                            <div className="w-1/2">
+                                <label className="block text-xs text-gray-500 mb-1">Duration</label>
+                                <input
+                                    type="text"
+                                    className="w-full bg-gray-900 border border-gray-700 rounded p-2 text-white placeholder-gray-600"
+                                    placeholder="3:30"
+                                    value={project.song.duration || ''}
+                                    onChange={(e) => handleChange('duration', e.target.value)}
+                                />
+                            </div>
                         </div>
                         <div className="col-span-2 space-y-3 pt-2 border-t border-gray-800">
                             <div className="flex items-center justify-between">
