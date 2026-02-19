@@ -172,7 +172,6 @@ const resolveVeoTemplateKeywords = (template: string): string => {
         case 'Memo': return "Documentary style, natural lighting, handheld feel, raw texture, authentic";
         case 'Glam': return "High fashion, studio lighting, soft focus, elegant, luxurious, beauty shot";
         case 'Crochet': return "Wool texture, knitted, stop-motion animation style, soft lighting, tactile";
-        case 'Cyberpunk': return "Neon lights, rain, high tech, futuristic city, dark atmosphere, vibrant colors";
         case 'Video game': return "CGI render, game engine aesthetic, dynamic lighting, digital art";
         case 'Cosmos': return "Deep space, nebula, starlight, cinematic sci-fi, vast scale, ethereal";
         case 'Action hero': return "Blockbuster movie look, dramatic angles, high intensity, sharp focus, explosive energy";

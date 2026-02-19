@@ -202,7 +202,7 @@ export interface StratifyProject {
             resolution: '1080p' | '4k';
             contentRating: ContentRating;
             visualMode: VisualMode;
-            veoTemplate?: 'Civilisation' | 'Metallic' | 'Memo' | 'Glam' | 'Crochet' | 'Cyberpunk' | 'Video game' | 'Cosmos' | 'Action hero';
+            veoTemplate?: 'Civilisation' | 'Metallic' | 'Memo' | 'Glam' | 'Crochet' | 'Video game' | 'Cosmos' | 'Action hero';
         };
     };
 

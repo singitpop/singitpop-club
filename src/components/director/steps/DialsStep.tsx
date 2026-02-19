@@ -133,7 +133,7 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                         Veo visual style template
                     </h3>
                     <div className="flex flex-wrap justify-center gap-2">
-                        {['Civilisation', 'Metallic', 'Memo', 'Glam', 'Crochet', 'Cyberpunk', 'Video game', 'Cosmos', 'Action hero'].map((t) => (
+                        {['Civilisation', 'Metallic', 'Memo', 'Glam', 'Crochet', 'Video game', 'Cosmos', 'Action hero'].map((t) => (
                             <button
                                 key={t}
                                 onClick={() => updateProject({
