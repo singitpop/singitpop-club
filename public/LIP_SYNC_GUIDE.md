@@ -50,10 +50,11 @@ We have provided a free, local Python script to help you use Wav2Lip without com
     - Run: `pip install librosa opencv-python torch torchvision torchaudio numpy`
 
 2.  **Running the Tool**:
-    Open your terminal in the project folder and run:
+    Open your terminal. You can run this command from anywhere:
     ```bash
-    python scripts/lipsync_runner.py --video "path/to/video.mp4" --audio "path/to/audio.mp3"
+    python /Users/garybirrell/Desktop/Singitpop/website/scripts/lipsync_runner.py --video "/Users/garybirrell/Desktop/Singitpop/website/videos/input.mp4" --audio "/Users/garybirrell/Desktop/Singitpop/website/audio/input.mp3"
     ```
+    *(Note: Replace the video/audio paths with the actual location of your files. You can drag and drop files into the terminal to get their full path.)*
 
 3.  **First Run**: The script will ask to download the "Wav2Lip" model automatically. Follow the on-screen prompts.
 
