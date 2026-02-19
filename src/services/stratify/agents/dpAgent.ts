@@ -41,12 +41,14 @@ export class DPAgent implements DirectorAgent {
                         - Ambience: ${scene.mood.ambience || "Natural"}
                         - Narrative Beat: ${scene.narrativeBeat}
                         - Cast: ${project.cast.lead.name} (Lead) + Band
+                        - LYRICS FOR THIS SCENE: ${JSON.stringify(scene.lyrics || [])}
 
                         TASK:
-                        Create a sequence of 3-6 cinematic shots for this scene.
-                        CRITICAL: detailed visual breakdown. Separate Foreground vs Background action.
-                        
-                        OUTPUT STRICT JSON ARRAY of Shot objects:
+                        Create a Cinematic Shot for EVERY line of lyrics provided above.
+                        Strict Rule: 1 Lyric Line = 1 Shot.
+                        The shot action must reflect the emotion/content of that specific line.
+
+                        OUTPUT STRICT JSON ARRAY of Shot objects (One per lyric line):
                         [{
                             "shotType": "EWS"|"WS"|"MS"|"MCU"|"CU"|"ECU",
                             "camera": { 
@@ -55,12 +57,13 @@ export class DPAgent implements DirectorAgent {
                                 "angle": "eye-level"|"low-angle"|"high-angle"
                             },
                             "lighting": { "style": "string" },
-                            "foregroundAction": "detailed action of subject",
+                            "foregroundAction": "detailed action of subject syncing to line",
                             "backgroundAction": "detailed bg action/environment",
                             "composition": "rule of thirds, center, etc",
                             "audioEnvironment": "ambience/sfx",
-                            "subjects": [{ "characterId": "lead"|"band", "action": "string", "period": "string" }],
-                            "durationSec": number,
+                            "subjects": [{ "characterId": "lead"|"band", "action": "Singing line...", "period": "string" }],
+                            "durationSec": number, // Approx 4s or based on line length
+                            "lyricLineText": "The specific lyric line this shot covers",
                             "basePrompt": "summary string"
                         }]
                         `;
@@ -83,7 +86,12 @@ export class DPAgent implements DirectorAgent {
                             basePrompt: s.basePrompt || `${s.shotType} of action`,
                             durationSec: s.durationSec || 4,
                             audioEnvironment: s.audioEnvironment || "Room tone",
-                            audioSync: { mode: 'none', startSec: 0, endSec: s.durationSec || 4 }
+                            audioSync: {
+                                mode: s.lyricLineText ? 'lead' : 'none',
+                                lyricLineText: s.lyricLineText,
+                                startSec: 0,
+                                endSec: s.durationSec || 4
+                            }
                         }));
 
                         log.push(`     ✅ Generated ${scene.shots.length} shots.`);

@@ -153,6 +153,7 @@ export interface Scene {
         ambience: string; // Sound/Vibe
     };
     narrativeBeat: string;
+    lyrics?: string[]; // Array of lyric lines for this scene
     shots: Shot[];
 }
 

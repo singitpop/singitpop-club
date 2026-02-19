@@ -111,9 +111,21 @@ const resolveStyleContext = (project: StratifyProject, shot: Shot): string => {
 };
 
 const resolveActionContext = (shot: Shot): string => {
-    const fg = shot.foregroundAction || shot.action || "Standard action";
+    let action = shot.foregroundAction || shot.action || "Standard action";
+
+    // START CHANGE: Append specific subject actions (e.g., "Singing passionately")
+    const subjectActions = shot.subjects
+        .filter(s => s.action)
+        .map(s => `${s.purpose === 'singing' ? 'The singer is ' : ''}${s.action}`)
+        .join(". ");
+
+    if (subjectActions) {
+        action += `. ${subjectActions}`;
+    }
+    // END CHANGE
+
     const bg = shot.backgroundAction ? `Background action: ${shot.backgroundAction}` : "";
-    return `${fg}. ${bg}`.trim();
+    return `${action}. ${bg}`.trim();
 };
 
 
@@ -180,6 +192,7 @@ const PikaAdapter = {
 const ImagenAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
         // Imagen 3 Structure: Natural language, descriptive, flow-based
-        return `A photorealistic shot of ${charCtx}. ${actionCtx}. The scene features ${styleCtx}. ${compCtx}. Captured with high dynamic range and sharp focus.`;
+        // UPDATE: Now includes audioCtx for lyrics context
+        return `A photorealistic shot of ${charCtx}. ${actionCtx}. The scene features ${styleCtx}. ${compCtx}. ${audioCtx}. Captured with high dynamic range and sharp focus.`;
     }
 };

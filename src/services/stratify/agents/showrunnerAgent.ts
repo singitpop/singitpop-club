@@ -44,14 +44,16 @@ export class ShowrunnerAgent implements DirectorAgent {
             TASK: 
             1. Analyze the lyrics for the EMOTIONAL ARC (e.g. rising tension, melancholic reflection, explosive release).
             2. Breakdown the song into 3-5 Distinct Scenes that map to this arc.
-            3. ASSIGN the most appropriate Location from the list above to each scene.
-            4. INCORPORATE the User's defined Lighting/Camera styles for that location into the mood description.
+            3. DISTRIBUTE the lyrics across these scenes. Every line of the song must be assigned to a scene.
+            4. ASSIGN the most appropriate Location from the list above to each scene.
+            5. INCORPORATE the User's defined Lighting/Camera styles for that location into the mood description.
             
             OUTPUT STRICT JSON ARRAY of Scene objects:
             [{
                 "title": "Verse 1 - The Setup",
                 "locationId": "loc-1", // MUST match a provided ID exactly
                 "narrativeBeat": "Introduction of the protagonist in a moment of solitude.",
+                "lyrics": ["Line 1 of verse", "Line 2 of verse"], // The specific lyric lines for this scene
                 "mood": {
                     "visual": "Melancholic and isolated, matching the 'Neon Noir' lighting setting.",
                     "lighting": "Deep shadows with harsh neon rim light (User Preference: Neon Noir)",
@@ -86,6 +88,7 @@ export class ShowrunnerAgent implements DirectorAgent {
                         color: s.mood.color,
                         ambience: s.mood.ambience || "Natural room tone"
                     },
+                    lyrics: s.lyrics || [],
                     shots: [] // Emptyshots, DP will fill
                 };
             });
