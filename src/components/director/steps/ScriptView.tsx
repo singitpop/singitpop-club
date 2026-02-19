@@ -48,9 +48,19 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset, onBack }) =>
                     <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">
                         Production Script
                     </h2>
-                    <p className="text-gray-400 mt-2">
-                        {project.scenes?.length || 0} Scenes • {project.project.outputSpec.resolution} • {project.project.outputSpec.aspectRatio}
-                    </p>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        <span className="bg-gray-800 text-gray-400 px-2 py-1 rounded text-xs font-mono border border-gray-700">
+                            {project.scenes?.length || 0} Scenes
+                        </span>
+                        <span className="bg-gray-800 text-gray-400 px-2 py-1 rounded text-xs font-mono border border-gray-700">
+                            {project.project.outputSpec.resolution} • {project.project.outputSpec.aspectRatio}
+                        </span>
+                        {project.project.outputSpec.veoTemplate && (
+                            <span className="bg-gradient-to-r from-purple-900 to-indigo-900 text-white px-2 py-1 rounded text-xs font-bold border border-purple-500 shadow-sm shadow-purple-500/20">
+                                🎬 VEO TEMPLATE: {project.project.outputSpec.veoTemplate.toUpperCase()}
+                            </span>
+                        )}
+                    </div>
                 </div>
                 <div className="flex gap-4">
                     <button

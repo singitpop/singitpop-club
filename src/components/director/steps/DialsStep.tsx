@@ -127,6 +127,36 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                     {isAnalyzing ? "Director is Analyzing Song..." : "Ask Director to Set Dials"}
                 </button>
 
+                {/* VEO TEMPLATE SELECTOR */}
+                <div className="mt-8 mb-4">
+                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">
+                        Veo visual style template
+                    </h3>
+                    <div className="flex flex-wrap justify-center gap-2">
+                        {['Civilisation', 'Metallic', 'Memo', 'Glam', 'Crochet', 'Cyberpunk', 'Video game', 'Cosmos', 'Action hero'].map((t) => (
+                            <button
+                                key={t}
+                                onClick={() => updateProject({
+                                    ...project,
+                                    project: {
+                                        ...project.project,
+                                        outputSpec: {
+                                            ...project.project.outputSpec,
+                                            veoTemplate: t as any
+                                        }
+                                    }
+                                })}
+                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${project.project.outputSpec.veoTemplate === t
+                                    ? 'bg-emerald-500 text-black border-emerald-400 shadow-lg shadow-emerald-500/20'
+                                    : 'bg-gray-900/50 text-gray-400 border-gray-700 hover:border-gray-500 hover:text-white'
+                                    }`}
+                            >
+                                {t}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                 {/* CORE THEMES DISPLAY */}
                 {project.project.directorProfile.coreThemes && project.project.directorProfile.coreThemes.length > 0 && (
                     <motion.div

@@ -134,10 +134,19 @@ const resolveActionContext = (shot: Shot): string => {
 const VeoAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string, project?: StratifyProject): string => {
         // Veo 3.1 "Master Prompt" Structure (Enhanced):
-        // [Shot Type] of [Subject] [Action FG/BG]. [Composition]. [Environment/Weather]. [Camera Move]. [Audio].
+        // [Template Style]. [Shot Type] of [Subject] [Action FG/BG]. [Composition]. [Environment/Weather]. [Camera Move]. [Audio].
 
         const cam = shot.camera;
-        let prompt = `Cinematic ${shot.shotType} of ${charCtx}. `;
+        let prompt = "";
+
+        // NEW: Inject Template Keywords
+        if (project?.project.outputSpec.veoTemplate) {
+            const template = project.project.outputSpec.veoTemplate;
+            const keywords = resolveVeoTemplateKeywords(template);
+            prompt += `Style: ${template} (${keywords}). `;
+        }
+
+        prompt += `Cinematic ${shot.shotType} of ${charCtx}. `;
         prompt += `${actionCtx}. `; // Includes FG and BG
         prompt += `${compCtx}. `;
         prompt += `${styleCtx} `; // Includes Weather/Ambience
@@ -153,6 +162,21 @@ const VeoAdapter = {
         }
 
         return prompt.trim();
+    }
+};
+
+const resolveVeoTemplateKeywords = (template: string): string => {
+    switch (template) {
+        case 'Civilisation': return "Epic scale, historical grandeur, detailed architecture, atmospheric lighting";
+        case 'Metallic': return "Chrome, polished surfaces, high contrast, sleek, futuristic industrial, cool tones";
+        case 'Memo': return "Documentary style, natural lighting, handheld feel, raw texture, authentic";
+        case 'Glam': return "High fashion, studio lighting, soft focus, elegant, luxurious, beauty shot";
+        case 'Crochet': return "Wool texture, knitted, stop-motion animation style, soft lighting, tactile";
+        case 'Cyberpunk': return "Neon lights, rain, high tech, futuristic city, dark atmosphere, vibrant colors";
+        case 'Video game': return "CGI render, game engine aesthetic, dynamic lighting, digital art";
+        case 'Cosmos': return "Deep space, nebula, starlight, cinematic sci-fi, vast scale, ethereal";
+        case 'Action hero': return "Blockbuster movie look, dramatic angles, high intensity, sharp focus, explosive energy";
+        default: return "";
     }
 };
 
