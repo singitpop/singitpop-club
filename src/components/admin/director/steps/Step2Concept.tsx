@@ -37,9 +37,9 @@ export const Step2Concept: React.FC<Step2Props> = ({ track, prompt, onNext, onBa
             id: 'noir',
             title: 'Neon Noir Detective',
             description: 'A moody, rain-soaked visual narrative. High contrast lights reflecting on wet pavement.',
-            visualStyle: 'Cyberpunk, High Contrast, Rain, Neon Signs',
+            visualStyle: 'Neo-Noir, High Contrast, Rain, Neon Signs',
             colorPalette: ['#FF0080', '#00FFFF', '#000000'],
-            vibe: 'Cyberpunk'
+            vibe: 'Neo-Noir'
         },
         {
             id: 'abstract',

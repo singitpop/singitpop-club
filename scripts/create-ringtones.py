@@ -1,241 +1,141 @@
 #!/usr/bin/env python3
 """
-Automated Ringtone Creation System (v2)
-Uses albumData.ts to find singles with isSingle: true
-Downloads from existing S3 URLs, extracts clips, creates M4R/MP3
+Create Ringtones from Singles
+1. Reads src/data/albums.json
+2. Finds tracks marked as isSingle: true
+3. Uses ffmpeg to create 29s clips (MP3 & M4R)
+4. Updates ringtones_manifest.json
 """
 
-import os
-import sys
 import json
-import re
-import boto3
+import os
+import subprocess
 from pathlib import Path
-from pydub import AudioSegment
-from urllib.parse import unquote
 
-# Configuration
-ALBUM_DATA_PATH = "/Users/garybirrell/Desktop/Singitpop/website/src/data/albumData.ts"
-S3_BUCKET = "singitpop-music"
-S3_RINGTONES_PREFIX = "ringtones/"
-RINGTONE_DURATION = 20  # seconds
-RINGTONE_PRICE = 3.00  # GBP
+# Paths
+BASE_DIR = Path(__file__).parent.parent
+ALBUMS_JSON = BASE_DIR / "src/data/albums.json"
+RINGTONES_DIR = BASE_DIR / "public/ringtones"
+MANIFEST_PATH = BASE_DIR / "scripts/ringtones_manifest.json"
+SOURCE_DIR = Path("/Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE")
 
-def extract_singles_from_album_data():
-    """Parse albumData.ts and extract all tracks with isSingle: true"""
-    print("📊 Loading singles from albumData.ts...")
-    
-    with open(ALBUM_DATA_PATH, 'r') as f:
-        content = f.read()
-    
-    # Find all track objects with isSingle: true
-    singles = []
-    
-    # Find tracks with isSingle: true and capture title, audioUrl, and genre
-    track_pattern = r'\{[^}]*"title":\s*"([^"]+)"[^}]*"genre":\s*"([^"]+)"[^}]*"audioUrl":\s*"([^"]+)"[^}]*"isSingle":\s*true[^}]*\}'
-    
-    for match in re.finditer(track_pattern, content, re.DOTALL):
-        title = match.group(1)
-        genre = match.group(2)
-        audio_url = match.group(3)
-        
-        singles.append({
-            'title': title,
-            'genre': genre,
-            'audioUrl': audio_url
-        })
-    
-    print(f"✅ Found {len(singles)} singles with isSingle: true")
-    return singles
+def load_albums():
+    with open(ALBUMS_JSON, 'r') as f:
+        return json.load(f)
 
-def download_track_from_s3(s3_client, url, output_path):
-    """Download track from S3 using boto3 (handles private buckets)"""
-    print(f"📥 Downloading from S3...")
+def ensure_ffmpeg():
     try:
-        # Parse S3 URL to extract bucket and key
-        # Format: https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/...
-        parts = url.replace('https://', '').split('/')
-        bucket = parts[0].split('.')[0]  # Extract bucket name
-        key = unquote('/'.join(parts[1:]))  # Decode URL-encoded characters
-        
-        print(f"   Bucket: {bucket}")
-        print(f"   Key: {key}")
-        
-        s3_client.download_file(bucket, key, str(output_path))
-        print(f"✅ Downloaded successfully")
+        subprocess.run(["ffmpeg", "-version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except FileNotFoundError:
+        print("❌ FFmpeg not found! Please install it: brew install ffmpeg")
+        exit(1)
+
+def create_ringtone(source_path, slug, title, artist):
+    """Generates MP3 and M4R ringtones"""
+    base_name = slug
+    mp3_path = RINGTONES_DIR / f"{base_name}.mp3"
+    m4r_path = RINGTONES_DIR / f"{base_name}.m4r"
+    
+    # Skip if exists (optional: force overwrite logic?)
+    if mp3_path.exists() and m4r_path.exists():
+        print(f"   ⏩ Skipping {title} (already exists)")
         return True
-    except Exception as e:
-        print(f"❌ Download failed: {e}")
+
+    print(f"   🎵 Converting {title}...")
+
+    # Create 29s clip (safe for iOS < 30s)
+    # Fade in 0.5s, Fade out 2s
+    
+    # 1. MP3
+    cmd_mp3 = [
+        "ffmpeg", "-y", "-i", str(source_path),
+        "-ss", "00:00:00", "-t", "29",
+        "-af", "afade=t=in:ss=0:d=0.5,afade=t=out:st=27:d=2",
+        "-b:a", "192k",
+        str(mp3_path)
+    ]
+    
+    # 2. M4R (AAC)
+    cmd_m4r = [
+        "ffmpeg", "-y", "-i", str(source_path),
+        "-ss", "00:00:00", "-t", "29",
+        "-af", "afade=t=in:ss=0:d=0.5,afade=t=out:st=27:d=2",
+        "-c:a", "aac", "-b:a", "192k", "-f", "ipod",
+        str(m4r_path)
+    ]
+
+    try:
+        subprocess.run(cmd_mp3, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(cmd_m4r, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"   ❌ FFmpeg failed for {title}: {e}")
         return False
 
-def extract_chorus_segment(audio_path, duration=20):
-    """Extract the most energetic segment (likely chorus) from the track"""
-    print(f"🎵 Analyzing audio...")
-    audio = AudioSegment.from_mp3(audio_path)
+def find_source_file(folder_name, track_title):
+    """Finds the source MP3/WAV file in the READY FOR WEBSITE folder"""
+    album_path = SOURCE_DIR / folder_name
     
-    # Calculate segment position (typically chorus is 1/3 to 1/2 through the song)
-    total_duration = len(audio) / 1000  # Convert to seconds
-    
-    if total_duration < duration:
-        # If track is shorter than desired duration, use the whole track
-        return audio
-    
-    # Start at 1/3 of the song (where chorus typically begins)
-    start_time = int((total_duration / 3) * 1000)  # Convert to milliseconds
-    end_time = start_time + (duration * 1000)
-    
-    # Extract segment
-    segment = audio[start_time:end_time]
-    
-    # Apply fade in/out for smooth ringtone
-    segment = segment.fade_in(500).fade_out(500)
-    
-    return segment
-
-def create_ringtone_files(segment, output_base_path):
-    """Create both M4R (iPhone) and MP3 (Android) versions"""
-    mp3_path = f"{output_base_path}.mp3"
-    m4r_path = f"{output_base_path}.m4r"
-    
-    # Export MP3
-    segment.export(mp3_path, format="mp3", bitrate="192k")
-    print(f"✅ Created MP3: {mp3_path}")
-    
-    # Export M4R (iPhone ringtone format - just AAC with .m4r extension)
-    segment.export(m4r_path, format="ipod", bitrate="192k")
-    print(f"✅ Created M4R: {m4r_path}")
-    
-    return mp3_path, m4r_path
-
-def upload_to_s3(s3_client, local_path, s3_key):
-    """Upload ringtone to S3"""
-    try:
-        content_type = 'audio/mpeg' if s3_key.endswith('.mp3') else 'audio/x-m4a'
-        s3_client.upload_file(
-            local_path,
-            S3_BUCKET,
-            s3_key,
-            ExtraArgs={'ContentType': content_type}
-        )
-        print(f"✅ Uploaded to S3: {s3_key}")
-        return True
-    except Exception as e:
-        print(f"❌ Upload failed: {e}")
-        return False
-
-def process_single(s3_client, single, temp_dir):
-    """Process a single track to create ringtone"""
-    title = single['title']
-    audio_url = single['audioUrl']
-    
-    print(f"\n{'='*60}")
-    print(f"Processing: {title}")
-    print(f"{'='*60}")
-    
-    # Download track
-    local_track = temp_dir / f"{title}.mp3"
-    if not download_track_from_s3(s3_client, audio_url, str(local_track)):
+    if not album_path.exists():
         return None
+
+    # Search for files containing track title
+    # Normalize title for fewer mismatches
+    clean_title = track_title.lower().replace("'", "").replace("?", "")
     
-    # Extract chorus segment
-    try:
-        segment = extract_chorus_segment(str(local_track), RINGTONE_DURATION)
-    except Exception as e:
-        print(f"❌ Audio processing failed: {e}")
-        local_track.unlink()
-        return None
-    
-    # Create ringtone files
-    output_base = temp_dir / f"{title}_ringtone"
-    try:
-        mp3_path, m4r_path = create_ringtone_files(segment, str(output_base))
-    except Exception as e:
-        print(f"❌ Ringtone creation failed: {e}")
-        local_track.unlink()
-        return None
-    
-    # Upload to S3
-    ringtone_key_base = f"{S3_RINGTONES_PREFIX}{title.lower().replace(' ', '-')}"
-    mp3_uploaded = upload_to_s3(s3_client, mp3_path, f"{ringtone_key_base}.mp3")
-    m4r_uploaded = upload_to_s3(s3_client, m4r_path, f"{ringtone_key_base}.m4r")
-    
-    # Cleanup local files
-    local_track.unlink()
-    Path(mp3_path).unlink()
-    Path(m4r_path).unlink()
-    
-    if mp3_uploaded and m4r_uploaded:
-        return {
-            'title': title,
-            'genre': single['genre'],
-            'mp3_key': f"{ringtone_key_base}.mp3",
-            'm4r_key': f"{ringtone_key_base}.m4r",
-            'price': RINGTONE_PRICE,
-            'duration': RINGTONE_DURATION
-        }
-    
+    for file in album_path.rglob("*"):
+        if file.suffix.lower() in ['.mp3', '.wav']:
+            if clean_title in file.stem.lower():
+                return file
     return None
 
 def main():
-    print("🎵 Automated Ringtone Creation System v2")
-    print("=" * 60)
+    print("🔔 Starting Ringtone Generation...")
+    ensure_ffmpeg()
     
-    # Check for ffmpeg
-    try:
-        import subprocess
-        subprocess.run(['ffmpeg', '-version'], capture_output=True, check=True)
-    except:
-        print("❌ ffmpeg not found! Install with: brew install ffmpeg")
-        sys.exit(1)
+    RINGTONES_DIR.mkdir(parents=True, exist_ok=True)
     
-    # Setup
-    s3_client = boto3.client('s3')
-    temp_dir = Path("/tmp/ringtones")
-    temp_dir.mkdir(exist_ok=True)
+    albums = load_albums()
+    manifest = []
     
-    # Load singles
-    singles = extract_singles_from_album_data()
+    count = 0
     
-    if not singles:
-        print("❌ No singles found in albumData.ts")
-        sys.exit(1)
-    
-    # Ask user how many to process
-    print(f"\nFound {len(singles)} singles total.")
-    choice = input("Process ALL singles or just a TEST batch? (all/test): ").lower()
-    
-    if choice == 'test':
-        singles = singles[:5]  # Process first 5 for testing
-        print(f"📝 Processing {len(singles)} singles for testing...")
-    else:
-        confirm = input(f"⚠️  This will process ALL {len(singles)} singles. Continue? (yes/no): ")
-        if confirm.lower() != 'yes':
-            print("❌ Cancelled")
-            return
-    
-    # Process each single
-    ringtones_created = []
-    for i, single in enumerate(singles, 1):
-        print(f"\n[{i}/{len(singles)}]")
-        result = process_single(s3_client, single, temp_dir)
-        if result:
-            ringtones_created.append(result)
-    
-    # Save manifest
-    manifest_path = Path(__file__).parent / "ringtones_manifest.json"
-    with open(manifest_path, 'w') as f:
-        json.dump(ringtones_created, f, indent=2)
-    
-    print(f"\n{'='*60}")
-    print(f"✅ Created {len(ringtones_created)} ringtones")
-    print(f"📄 Manifest saved to: {manifest_path}")
-    print(f"{'='*60}")
-    
-    # Cleanup
-    try:
-        temp_dir.rmdir()
-    except:
-        pass
+    for album in albums:
+        for track in album.get('tracks', []):
+            if track.get('isSingle'):
+                print(f"🔍 Found Single: {track['title']} (Album: {album['title']})")
+                
+                # Find source file
+                source_file = find_source_file(album['folderPath'], track['title'])
+                
+                if not source_file:
+                    print(f"   ⚠️  Source file not found for: {track['title']}")
+                    continue
+                
+                # Create filename slug
+                slug = track['title'].lower().replace(" ", "-").replace("'", "").replace("(", "").replace(")", "")
+                
+                if create_ringtone(source_file, slug, track['title'], album.get('artist', 'Gary')):
+                    count += 1
+                    # Basic date lookup - assuming album release date applies to track if not specified
+                    r_date = album.get('releaseDate', '2025-01-01')
+                    
+                    manifest.append({
+                        "title": track['title'],
+                        "price": 0.99,
+                        "duration": 29,
+                        "genre": track['genre'],
+                        "mp3_key": f"ringtones/{slug}.mp3",
+                        "m4r_key": f"ringtones/{slug}.m4r",
+                        "release_date": r_date
+                    })
+
+    # write manifest
+    with open(MANIFEST_PATH, 'w') as f:
+        json.dump(manifest, f, indent=4)
+        
+    print(f"\n✨ Generated {count} ringtones.")
+    print(f"📄 Manifest saved to {MANIFEST_PATH}")
 
 if __name__ == "__main__":
     main()

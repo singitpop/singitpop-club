@@ -127,6 +127,7 @@ export async function POST(req: NextRequest) {
         "${song.lyrics?.rawText || 'No lyrics provided.'}"
 
         - **Director Preference:** ${project.directorProfile?.narrativePreference || 'Hybrid'}
+        - **Director Notes:** "${project.directorProfile?.notes || ''}"
         - **Lead Artist Look:** ${project.cast?.lead?.lookSpec?.style || 'Not specified'}
 
         ## INSTRUCTIONS

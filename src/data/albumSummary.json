@@ -1,7 +1,7 @@
 {
-  "generated": "2026-02-17T13:44:49.681Z",
-  "totalAlbums": 52,
-  "totalTracks": 633,
+  "generated": "2026-02-19T15:04:56.061Z",
+  "totalAlbums": 53,
+  "totalTracks": 645,
   "genres": [
     "Christmas",
     "Country",
@@ -24,6 +24,17 @@
     2024
   ],
   "albums": [
+    {
+      "id": "before-the-light-2026",
+      "title": "Before the Light",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Dance Pop"
+      ],
+      "folderPath": "Before the Light",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/before-the-light/"
+    },
     {
       "id": "may-in-motion-2026",
       "title": "May In Motion",

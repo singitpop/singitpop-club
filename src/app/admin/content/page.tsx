@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
-import { ArrowLeft, Star, Calendar, Music, Sparkles, Crown, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Star, Calendar, Music, Sparkles, Crown, RefreshCw, Upload } from 'lucide-react';
 import { useNotification } from '@/hooks/useNotification';
 import Notification from '@/components/ui/Notification';
 import styles from './Content.module.css';
@@ -42,6 +42,8 @@ function extractVideoId(url: string | null) {
 
 import ConfirmModal from '@/components/ui/ConfirmModal';
 
+import AlbumUploadModal from '@/components/admin/content/AlbumUploadModal';
+
 export default function ContentPage() {
     const { isLabel } = useAuth();
     const { showNotification, removeNotification, notifications } = useNotification();
@@ -53,6 +55,7 @@ export default function ContentPage() {
     const [currentLatestVideoTitle, setCurrentLatestVideoTitle] = useState<string>("");
     const [currentLatestVideoAlbum, setCurrentLatestVideoAlbum] = useState<string>("");
     const [isLoading, setIsLoading] = useState(true);
+    const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
     // Modal State
     const [modalConfig, setModalConfig] = useState<{
@@ -218,6 +221,15 @@ export default function ContentPage() {
                 onCancel={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
             />
 
+            <AlbumUploadModal
+                isOpen={isUploadModalOpen}
+                onClose={() => setIsUploadModalOpen(false)}
+                onSuccess={() => {
+                    showNotification("Album Uploaded Successfully", "success");
+                    fetchData();
+                }}
+            />
+
             {notifications.map(notif => (
                 <Notification
                     key={notif.id}
@@ -233,52 +245,78 @@ export default function ContentPage() {
                 </Link>
 
                 <div className={styles.header}>
-                    <h1>Content Management</h1>
-                    <p className={styles.subtitle}>Automated album selection based on release dates</p>
+                    <div>
+                        <h1>Content Management</h1>
+                        <p className={styles.subtitle}>Automated album selection based on release dates</p>
+                    </div>
 
-                    <button
-                        onClick={() => {
-                            openConfirm(
-                                "Sync Content?",
-                                "Start content sync? This runs the local Excel/Folder script. It may take a few seconds.",
-                                async () => {
-                                    setIsLoading(true);
-                                    try {
-                                        const res = await fetch('/api/admin/sync', { method: 'POST' });
-                                        const data = await res.json();
-                                        if (res.ok) {
-                                            showNotification("Sync Successful!", "success");
-                                            // setTimeout(() => window.location.reload(), 1500); // Optional reload if needed
-                                            fetchData(); // Refresh data without reload
-                                        } else {
-                                            showNotification("Sync Failed: " + (data.error || "Unknown"), "error");
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                        <button
+                            onClick={() => setIsUploadModalOpen(true)}
+                            className={styles.syncBtn}
+                            style={{
+                                marginTop: '1rem',
+                                background: '#FF0080',
+                                border: 'none',
+                                padding: '0.5rem 1rem',
+                                borderRadius: '8px',
+                                color: 'white',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                fontSize: '0.9rem',
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            <Upload size={16} />
+                            Upload Album
+                        </button>
+
+                        <button
+                            onClick={() => {
+                                openConfirm(
+                                    "Sync Content?",
+                                    "Start content sync? This runs the local Excel/Folder script. It may take a few seconds.",
+                                    async () => {
+                                        setIsLoading(true);
+                                        try {
+                                            const res = await fetch('/api/admin/sync', { method: 'POST' });
+                                            const data = await res.json();
+                                            if (res.ok) {
+                                                showNotification("Sync Successful!", "success");
+                                                // setTimeout(() => window.location.reload(), 1500); // Optional reload if needed
+                                                fetchData(); // Refresh data without reload
+                                            } else {
+                                                showNotification("Sync Failed: " + (data.error || "Unknown"), "error");
+                                            }
+                                        } catch (e) {
+                                            showNotification("Sync Request Failed", "error");
+                                        } finally {
+                                            setIsLoading(false);
                                         }
-                                    } catch (e) {
-                                        showNotification("Sync Request Failed", "error");
-                                    } finally {
-                                        setIsLoading(false);
                                     }
-                                }
-                            );
-                        }}
-                        className={styles.syncBtn}
-                        style={{
-                            marginTop: '1rem',
-                            background: 'rgba(255, 255, 255, 0.1)',
-                            border: '1px solid rgba(255, 255, 255, 0.2)',
-                            padding: '0.5rem 1rem',
-                            borderRadius: '8px',
-                            color: 'white',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            fontSize: '0.9rem'
-                        }}
-                    >
-                        <RefreshCw size={16} className={isLoading ? "spin" : ""} />
-                        {isLoading ? "Syncing..." : "Sync Local Content"}
-                    </button>
+                                );
+                            }}
+                            className={styles.syncBtn}
+                            style={{
+                                marginTop: '1rem',
+                                background: 'rgba(255, 255, 255, 0.1)',
+                                border: '1px solid rgba(255, 255, 255, 0.2)',
+                                padding: '0.5rem 1rem',
+                                borderRadius: '8px',
+                                color: 'white',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                fontSize: '0.9rem'
+                            }}
+                        >
+                            <RefreshCw size={16} className={isLoading ? "spin" : ""} />
+                            {isLoading ? "Syncing..." : "Sync Local Content"}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Automatic Latest Albums */}

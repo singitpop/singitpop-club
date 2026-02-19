@@ -27,6 +27,7 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
 
     const [isAnalyzing, setIsAnalyzing] = React.useState(false);
     const dials = project.project.directorProfile.influenceDials;
+    const [directorNote, setDirectorNote] = React.useState(project.project.directorProfile.notes || "");
 
     const handleDialChange = (key: keyof InfluenceDials, val: number) => {
         updateProject({
@@ -39,6 +40,21 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                         ...dials,
                         [key]: val
                     }
+                }
+            }
+        });
+    };
+
+    // Update project when note changes (debounced or on blur/submit)
+    const updateDirectorNote = (note: string) => {
+        setDirectorNote(note);
+        updateProject({
+            ...project,
+            project: {
+                ...project.project,
+                directorProfile: {
+                    ...project.project.directorProfile,
+                    notes: note
                 }
             }
         });
@@ -114,6 +130,23 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                 </h2>
                 <p className="text-gray-400">Review the AI Director's vision. Tweak if you disagree.</p>
 
+                {/* DIRECTOR'S NOTE INPUT */}
+                <div className="mb-6 w-full max-w-2xl mx-auto">
+                    <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wide">
+                        Director's Note (Optional)
+                    </label>
+                    <textarea
+                        className="w-full bg-gray-900/50 border border-gray-700 rounded-lg p-3 text-white text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-gray-600"
+                        placeholder="e.g. 'A 90s grunge performance in a garage', 'Neon chases in heavy rain', 'Quiet emotional close-ups in black and white'..."
+                        rows={3}
+                        value={directorNote}
+                        onChange={(e) => updateDirectorNote(e.target.value)}
+                    />
+                    <p className="text-xs text-gray-500 mt-1 text-right">
+                        Give the AI a specific vision to guide the treatments.
+                    </p>
+                </div>
+
                 <button
                     onClick={runAutoAnalysis}
                     disabled={isAnalyzing}
@@ -124,7 +157,7 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                     ) : (
                         <span>✨</span>
                     )}
-                    {isAnalyzing ? "Director is Analyzing Song..." : "Ask Director to Set Dials"}
+                    {isAnalyzing ? "Director is Analyzing Song..." : "Ask Director to Generate Treatments"}
                 </button>
 
                 {/* VEO TEMPLATE SELECTOR */}

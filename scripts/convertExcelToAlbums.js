@@ -341,13 +341,12 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
     // Generate TypeScript file
     const tsContent = `/**
  * Album Data
- * Auto-generated from Excel spreadsheet
+ * Auto-generated from Excel spreadsheet OR Admin Uploads
+ * Source of Truth: src/data/albums.json
  * Generated: ${new Date().toISOString()}
- * 
- * Source: ${EXCEL_PATH}
- * Albums folder: ${ALBUMS_SOURCE_DIR}
- * S3 Bucket: ${S3_BUCKET_URL}
  */
+
+import albumsData from './albums.json';
 
 export interface Track {
     id: number;
@@ -380,7 +379,8 @@ export interface Album {
     type?: 'studio' | 'live' | 'standard';
 }
 
-export const albums: Album[] = ${JSON.stringify(albumsArray, null, 2)};
+// Cast the imported JSON to the Album[] type
+export const albums: Album[] = albumsData as unknown as Album[];
 
 // Helper functions
 export function getAlbumById(id: string): Album | undefined {

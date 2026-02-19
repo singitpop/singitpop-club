@@ -90,7 +90,7 @@ export const Step1Briefing: React.FC<Step1Props> = ({ onNext, tracks }) => {
                     <Sparkles size={20} color="#0070f3" /> Director's Brief
                 </h3>
                 <textarea
-                    placeholder="Describe the vibe, story, or visual theme. E.g., 'A cyberpunk detective story in rain' or 'Abstract geometric shapes dancing to the beat'"
+                    placeholder="Describe the vibe, story, or visual theme. E.g., 'A neon detective story in rain' or 'Abstract geometric shapes dancing to the beat'"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     style={{

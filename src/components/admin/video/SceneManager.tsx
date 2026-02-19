@@ -126,7 +126,7 @@ export default function SceneManager({ syncedLyrics, vibe, scenes, onScenesUpdat
         // 3. Vibe Styles (Expanded)
         const styles: any = {
             // Base Styles
-            'Cyberpunk': 'cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation',
+            'Neo-Noir': 'neo-noir city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation',
             'Neon': 'abstract neon shapes, glowing lines, dark background, synthwave style, vibrant colors',
             'Retro': 'vintage 80s style, vhs glitch, warm colors, grain, nostalgic, lo-fi aesthetic',
             'Nature': 'beautiful landscape, mountains, cinematic lighting, photorealistic, 8k, serene atmosphere',

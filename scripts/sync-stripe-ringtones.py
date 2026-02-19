@@ -9,6 +9,7 @@ import sys
 import json
 import stripe
 from pathlib import Path
+from datetime import datetime
 
 # Configuration
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
@@ -91,10 +92,22 @@ def main():
     ringtones = load_manifest()
     print(f"📄 Loaded {len(ringtones)} ringtones from manifest")
     
+    today = datetime.now().date()
+    
     # Sync each ringtone
     synced_products = []
     for ringtone in ringtones:
         try:
+            r_date_str = ringtone.get('release_date', '2000-01-01')
+            try:
+                r_date = datetime.strptime(r_date_str, '%Y-%m-%d').date()
+            except:
+                r_date = today # Fallback if parsing fails
+            
+            if r_date > today:
+                print(f"⏳ Skipping {ringtone['title']} (Future Release: {r_date_str})")
+                continue
+
             result = create_or_update_stripe_product(ringtone)
             synced_products.append(result)
         except Exception as e:
