@@ -177,9 +177,11 @@
     ],
     "releaseDate": "2026-05-15",
     "folderPath": "Before the Light",
-    "mp3Count": 36,
+    "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": true,
+    "accessTier": "vip"
   },
   {
     "id": "may-in-motion-2026",
@@ -361,7 +363,9 @@
     "folderPath": "May In Motion",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": true,
+    "accessTier": "vip"
   },
   {
     "id": "april-comes-soft-2026",
@@ -545,7 +549,9 @@
     "folderPath": "April Comes Soft",
     "mp3Count": 48,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": true,
+    "accessTier": "vip"
   },
   {
     "id": "through-the-glass-2026",
@@ -729,7 +735,9 @@
     "folderPath": "Through The Glass",
     "mp3Count": 71,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": true,
+    "accessTier": "vip"
   },
   {
     "id": "heart-of-the-sky-drums-2026",
@@ -911,7 +919,9 @@
     "folderPath": "Heart of the Sky Drums",
     "mp3Count": 68,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": true,
+    "accessTier": "vip"
   },
   {
     "id": "spring-begins-inside-you-2026",
@@ -1085,7 +1095,9 @@
     "folderPath": "Spring Begins Inside You",
     "mp3Count": 48,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": true,
+    "accessTier": "vip"
   },
   {
     "id": "valentine-country-2026",
@@ -1265,7 +1277,9 @@
     "folderPath": "Valentine Country",
     "mp3Count": 48,
     "type": "standard",
-    "trending": true
+    "trending": true,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "a-love-that-never-ends-2026",
@@ -1445,7 +1459,9 @@
     "folderPath": "A Love That Never Ends",
     "mp3Count": 50,
     "type": "standard",
-    "trending": true
+    "trending": true,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "echoes-of-light-2026",
@@ -1654,7 +1670,9 @@
     "folderPath": "Echoes Of Light",
     "mp3Count": 56,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "desert-winds-and-open-roads-2026",
@@ -1838,7 +1856,9 @@
     "folderPath": "Desert Winds And Open Roads",
     "mp3Count": 48,
     "type": "standard",
-    "trending": true
+    "trending": true,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "step-into-the-light-2025",
@@ -2020,7 +2040,9 @@
     "folderPath": "Live Step Into the Light",
     "mp3Count": 54,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "new-year-s-odyssey-2025",
@@ -2204,7 +2226,9 @@
     "folderPath": "New Year’s Odyssey",
     "mp3Count": 56,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "snowfall-and-steel-strings-2025",
@@ -2388,7 +2412,9 @@
     "folderPath": "Snowfall and Steel Strings",
     "mp3Count": 36,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "electric-sleigh-2025",
@@ -2568,7 +2594,9 @@
     "folderPath": "Electric Sleigh",
     "mp3Count": 43,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "shadows-and-fires-2025",
@@ -2792,7 +2820,9 @@
     "folderPath": "Shadows and Fires",
     "mp3Count": 57,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "live-at-autumn-lights-2025",
@@ -2976,7 +3006,9 @@
     "folderPath": "Live at Autumn Lights Festival",
     "mp3Count": 77,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "november-nights-2025",
@@ -3160,7 +3192,9 @@
     "folderPath": "November Nights",
     "mp3Count": 36,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "echoes-in-the-firelight-2025",
@@ -3344,7 +3378,9 @@
     "folderPath": "Echoes in the Firelight ",
     "mp3Count": 37,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "the-long-way-home-2025",
@@ -3528,7 +3564,9 @@
     "folderPath": "The Long Way Home",
     "mp3Count": 39,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "october-boots-and-fall-roots-2025",
@@ -3712,7 +3750,9 @@
     "folderPath": "October Boots and Fall Roots",
     "mp3Count": 50,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "hallowave-dance-of-the-shadows-2025",
@@ -3937,7 +3977,9 @@
     "folderPath": "Hallowave Dance of the shadows",
     "mp3Count": 48,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "falling-for-october-2025",
@@ -4121,7 +4163,9 @@
     "folderPath": "Falling for October ",
     "mp3Count": 37,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "winding-roads-2025",
@@ -4301,7 +4345,9 @@
     "folderPath": "Winding Roads",
     "mp3Count": 72,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "september-moves-2025",
@@ -4485,7 +4531,9 @@
     "folderPath": "September Moves",
     "mp3Count": 36,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "southern-lights-2025",
@@ -4669,7 +4717,9 @@
     "folderPath": "Southern Lights",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "midnight-motion-2025",
@@ -4854,7 +4904,9 @@
     "folderPath": "Midnight Motion",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "dust-and-diamonds-2025",
@@ -5036,7 +5088,9 @@
     "folderPath": "Dust and Diamonds ",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "endless-glow-2025",
@@ -5216,7 +5270,9 @@
     "folderPath": "Endless Glow",
     "mp3Count": 45,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "wildcards-and-whiskey-2025",
@@ -5394,7 +5450,9 @@
     "folderPath": "Wildcards and Whiskey",
     "mp3Count": 26,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "line-dancing-after-dark-2025",
@@ -5572,7 +5630,9 @@
     "folderPath": "Line Dancing After Dark",
     "mp3Count": 36,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "summer-fever-2025",
@@ -5754,7 +5814,9 @@
     "folderPath": "Summer fever",
     "mp3Count": 27,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "limitless-2025",
@@ -5938,7 +6000,9 @@
     "folderPath": "Limitless",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "glass-bloom-2025",
@@ -6120,7 +6184,9 @@
     "folderPath": "Glass Bloom",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "eternal-summer-2025",
@@ -6304,7 +6370,9 @@
     "folderPath": "Eternal Summer",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "golden-hour-2025",
@@ -6488,7 +6556,9 @@
     "folderPath": "Golden Hour",
     "mp3Count": 28,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "echoes-of-us-2025",
@@ -6668,7 +6738,9 @@
     "folderPath": "Echos Of Us",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "heartland-rhythms-2025",
@@ -6846,7 +6918,9 @@
     "folderPath": "Heartland Rythms",
     "mp3Count": 28,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "ethereal-highlands-2025",
@@ -7056,7 +7130,9 @@
     "folderPath": "Ethereal Highlands",
     "mp3Count": 28,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "empire-under-lights-2025",
@@ -7238,7 +7314,9 @@
     "folderPath": "Empire Under Lights",
     "mp3Count": 28,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "spring-awakening-2025",
@@ -7422,7 +7500,9 @@
     "folderPath": "Spring Awakening",
     "mp3Count": 30,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "heartlines-2025",
@@ -7606,7 +7686,9 @@
     "folderPath": "Heartlines",
     "mp3Count": 42,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "starlight-frequencies-2025",
@@ -7786,7 +7868,9 @@
     "folderPath": "Starlight Frequencies",
     "mp3Count": 32,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "love-in-bloom-2025",
@@ -7954,7 +8038,9 @@
     "folderPath": "Love in Bloom",
     "mp3Count": 28,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "neon-dreams-2025",
@@ -8138,7 +8224,9 @@
     "folderPath": "Neon Dreams",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "whispers-of-the-heart-country-ballads-for-the-soul-2024",
@@ -8309,7 +8397,9 @@
     "folderPath": "Whispers of the Heart Country Ballads for the Soul",
     "mp3Count": 13,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "highways-of-the-heart-2024",
@@ -8517,7 +8607,9 @@
     "folderPath": "Highways of the Heart",
     "mp3Count": 28,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "singles-2024",
@@ -8616,7 +8708,9 @@
     "folderPath": "Singles",
     "mp3Count": 14,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "waves-of-tranquility-deep-house-reflections-2024",
@@ -8814,7 +8908,9 @@
     "folderPath": "Waves of Tranquility Deep House Reflections",
     "mp3Count": 16,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "boots-and-beats-country-line-dance-anthems-2024",
@@ -8988,7 +9084,9 @@
     "folderPath": "Boots and Beats Country Line Dance Anthems",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "happily-ever-after-dreams-2024",
@@ -9156,7 +9254,9 @@
     "folderPath": "Happily Ever After Dreams",
     "mp3Count": 24,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "popstar-winter-wonderland-2024",
@@ -9339,7 +9439,9 @@
     "folderPath": "Pop Star Winter Wonderland",
     "mp3Count": 26,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "forever-starts-today-country-music-for-weddings-2024",
@@ -9534,7 +9636,9 @@
     "folderPath": "Forever Starts Today - Country Album",
     "mp3Count": 36,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   },
   {
     "id": "night-drive-80s-beats-ballads-2024",
@@ -9746,6 +9850,8 @@
     "folderPath": "Night Drive - 80s Beats & Ballads",
     "mp3Count": 28,
     "type": "standard",
-    "trending": false
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
   }
 ]

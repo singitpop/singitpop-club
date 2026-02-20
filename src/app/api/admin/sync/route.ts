@@ -1,59 +1,28 @@
-
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
+import { spawn } from 'child_process';
 import path from 'path';
-
-const LYRICS_DIR = path.join(process.cwd(), 'src', 'data', 'lyrics');
-
-// Ensure directory exists
-if (!fs.existsSync(LYRICS_DIR)) {
-    fs.mkdirSync(LYRICS_DIR, { recursive: true });
-}
 
 export async function POST(req: NextRequest) {
     try {
-        const { trackId, lyrics, scenes } = await req.json();
+        const scriptPath = path.join(process.cwd(), 'scripts', 'sync-music.js');
 
-        if (!trackId || !lyrics) {
-            return new NextResponse("Missing trackId or lyrics", { status: 400 });
-        }
+        // Run detached so the frontend doesn't timeout waiting for 100+ ringtones
+        const child = spawn('node', [scriptPath], {
+            stdio: 'ignore', // Ignore output to prevent buffering issues
+            cwd: process.cwd(),
+            detached: true
+        });
 
-        const filePath = path.join(LYRICS_DIR, `${trackId}.json`);
-        const data = {
-            trackId,
-            lastModified: new Date().toISOString(),
-            lyrics,
-            scenes: scenes || []
-        };
+        // Unref to allow the Node process to exit independently of this child
+        child.unref();
 
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+        return NextResponse.json({
+            success: true,
+            message: "Sync started in the background. It may take a few minutes to complete depending on the number of new ringtones.",
+        });
 
-        return NextResponse.json({ success: true, path: filePath });
     } catch (e: any) {
-        console.error("Save Sync Error:", e);
-        return new NextResponse(e.message, { status: 500 });
-    }
-}
-
-export async function GET(req: NextRequest) {
-    const { searchParams } = new URL(req.url);
-    const trackId = searchParams.get('trackId');
-
-    if (!trackId) {
-        return new NextResponse("Missing trackId", { status: 400 });
-    }
-
-    try {
-        const filePath = path.join(LYRICS_DIR, `${trackId}.json`);
-
-        if (fs.existsSync(filePath)) {
-            const fileContent = fs.readFileSync(filePath, 'utf-8');
-            return NextResponse.json(JSON.parse(fileContent));
-        }
-
-        return NextResponse.json({ lyrics: null, scenes: [] }); // No file exists
-    } catch (e: any) {
-        console.error("Load Sync Error:", e);
-        return new NextResponse(e.message, { status: 500 });
+        console.error("Sync Trigger Error:", e);
+        return NextResponse.json({ success: false, error: e.message }, { status: 500 });
     }
 }

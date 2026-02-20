@@ -226,6 +226,10 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
             return marker.includes('trend') || marker.includes('trand');
         });
 
+        const releaseDateObj = new Date(releaseDate);
+        const now = new Date();
+        const isFutureRelease = releaseDateObj > now;
+
         // Initialize album
         albums[albumSlug] = {
             id: albumSlug,
@@ -238,7 +242,9 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
             folderPath: matchingFolder,
             mp3Count: audioFiles.length,
             type: albumType,
-            trending: isTrending
+            trending: isTrending,
+            exclusive: isFutureRelease,
+            accessTier: isFutureRelease ? 'vip' : 'free'
         };
 
         // Add tracks (Sequentially to allow await)
@@ -377,6 +383,8 @@ export interface Album {
     folderPath?: string;
     mp3Count?: number;
     type?: 'studio' | 'live' | 'standard';
+    exclusive?: boolean;
+    accessTier?: 'vip' | 'free' | string;
 }
 
 // Cast the imported JSON to the Album[] type

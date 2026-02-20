@@ -10,6 +10,7 @@ Create Ringtones from Singles
 import json
 import os
 import subprocess
+import re
 from pathlib import Path
 
 # Paths
@@ -39,7 +40,7 @@ def create_ringtone(source_path, slug, title, artist):
     # Skip if exists (optional: force overwrite logic?)
     if mp3_path.exists() and m4r_path.exists():
         print(f"   ⏩ Skipping {title} (already exists)")
-        return True
+        return "SKIPPED"
 
     print(f"   🎵 Converting {title}...")
 
@@ -52,6 +53,7 @@ def create_ringtone(source_path, slug, title, artist):
         "-ss", "00:00:00", "-t", "29",
         "-af", "afade=t=in:ss=0:d=0.5,afade=t=out:st=27:d=2",
         "-b:a", "192k",
+        "-vn", # Drop video track if exists (e.g. album art)
         str(mp3_path)
     ]
     
@@ -61,16 +63,32 @@ def create_ringtone(source_path, slug, title, artist):
         "-ss", "00:00:00", "-t", "29",
         "-af", "afade=t=in:ss=0:d=0.5,afade=t=out:st=27:d=2",
         "-c:a", "aac", "-b:a", "192k", "-f", "ipod",
+        "-vn", # Drop video track if exists (e.g. album art)
         str(m4r_path)
     ]
 
     try:
         subprocess.run(cmd_mp3, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         subprocess.run(cmd_m4r, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        return True
+        return "CREATED"
     except subprocess.CalledProcessError as e:
         print(f"   ❌ FFmpeg failed for {title}: {e}")
-        return False
+        return "FAILED"
+
+def normalize_name(name):
+    # Remove all non-alphanumeric characters
+    clean = re.sub(r'[^a-z0-9]', '', name.lower())
+    # Replace common trailing 'in' with 'ing' for words ending in 'in' (like dancin -> dancing, kickin -> kicking)
+    # Since we removed spaces, we just replace 'in' with 'ing' at the end of the string or before another word (heuristic)
+    # A safer approach is to do this before stripping spaces:
+    spaced = re.sub(r'[^a-z0-9\s]', '', name.lower())
+    spaced = re.sub(r'\bin\b', 'ing', spaced) # Replace word 'in' with 'ing' (handles dancin' -> dancing if tokenized)
+    
+    # Actually, a simpler robust way for 'dancin' vs 'dancing' without regex nightmare:
+    # Just strip 'g' entirely from both strings when comparing them!
+    # And strip 's' just in case of plural mismatches like 'dream' vs 'dreams'
+    super_clean = re.sub(r'[^a-z0-9]', '', name.lower()).replace('g', '').replace('s', '')
+    return super_clean
 
 def find_source_file(folder_name, track_title):
     """Finds the source MP3/WAV file in the READY FOR WEBSITE folder"""
@@ -81,11 +99,11 @@ def find_source_file(folder_name, track_title):
 
     # Search for files containing track title
     # Normalize title for fewer mismatches
-    clean_title = track_title.lower().replace("'", "").replace("?", "")
+    clean_title = normalize_name(track_title)
     
     for file in album_path.rglob("*"):
         if file.suffix.lower() in ['.mp3', '.wav']:
-            if clean_title in file.stem.lower():
+            if clean_title in normalize_name(file.stem):
                 return file
     return None
 
@@ -115,7 +133,8 @@ def main():
                 # Create filename slug
                 slug = track['title'].lower().replace(" ", "-").replace("'", "").replace("(", "").replace(")", "")
                 
-                if create_ringtone(source_file, slug, track['title'], album.get('artist', 'Gary')):
+                status = create_ringtone(source_file, slug, track['title'], album.get('artist', 'Gary'))
+                if status == "CREATED":
                     count += 1
                     # Basic date lookup - assuming album release date applies to track if not specified
                     r_date = album.get('releaseDate', '2025-01-01')
@@ -129,6 +148,9 @@ def main():
                         "m4r_key": f"ringtones/{slug}.m4r",
                         "release_date": r_date
                     })
+                elif status == "SKIPPED":
+                    # Do not append to manifest to prevent Stripe API spam
+                    continue
 
     # write manifest
     with open(MANIFEST_PATH, 'w') as f:

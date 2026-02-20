@@ -113,5 +113,35 @@ async function scanAndUpload(dir) {
     }
 }
 
-console.log("🚀 Starting S3 Upload Script (Node.js)");
-scanAndUpload(SOURCE_DIR);
+async function uploadRingtones() {
+    const ringtonesDir = path.join(__dirname, '../public/ringtones');
+    if (!fs.existsSync(ringtonesDir)) {
+        console.log(`Directory not found: ${ringtonesDir}. Skipping ringtones.`);
+        return;
+    }
+
+    console.log(`\n📂 Processing Ringtones: ${ringtonesDir}`);
+    const s3Prefix = `ringtones/`;
+    const existingKeys = await getExistingFiles(s3Prefix);
+
+    const items = fs.readdirSync(ringtonesDir);
+    for (const filename of items) {
+        if (!filename.endsWith('.mp3') && !filename.endsWith('.m4r')) continue;
+
+        const key = `${s3Prefix}${filename}`;
+        if (existingKeys.has(key)) {
+            continue;
+        }
+
+        console.log(`   Uploading ringtone ${filename}...`);
+        await uploadFile(path.join(ringtonesDir, filename), key);
+    }
+}
+
+async function run() {
+    console.log("🚀 Starting S3 Upload Script (Node.js)");
+    await scanAndUpload(SOURCE_DIR);
+    await uploadRingtones();
+}
+
+run();

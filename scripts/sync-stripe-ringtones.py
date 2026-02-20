@@ -10,6 +10,11 @@ import json
 import stripe
 from pathlib import Path
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load Environment Variables from Next.js .env.local
+env_path = Path(__file__).parent.parent / ".env.local"
+load_dotenv(dotenv_path=env_path)
 
 # Configuration
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
@@ -83,7 +88,7 @@ def main():
     # Check for Stripe API key
     if not STRIPE_SECRET_KEY:
         print("❌ STRIPE_SECRET_KEY environment variable not set!")
-        print("Set it with: export STRIPE_SECRET_KEY='sk_test_...'")
+        print("Make sure it is set in .env.local with: STRIPE_SECRET_KEY='sk_live_...'")
         sys.exit(1)
     
     stripe.api_key = STRIPE_SECRET_KEY

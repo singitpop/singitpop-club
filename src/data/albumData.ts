@@ -2,7 +2,7 @@
  * Album Data
  * Auto-generated from Excel spreadsheet OR Admin Uploads
  * Source of Truth: src/data/albums.json
- * Generated: 2026-02-19T15:04:56.056Z
+ * Generated: 2026-02-20T09:43:41.278Z
  */
 
 import albumsData from './albums.json';
@@ -36,6 +36,8 @@ export interface Album {
     folderPath?: string;
     mp3Count?: number;
     type?: 'studio' | 'live' | 'standard';
+    exclusive?: boolean;
+    accessTier?: 'vip' | 'free' | string;
 }
 
 // Cast the imported JSON to the Album[] type
