@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 import { getAlbums } from '@/lib/data';
 import { getSignedFileUrl } from '@/lib/s3';
 
-export const dynamic = 'force-dynamic';
-
 export async function GET() {
     try {
         const albums = await getAlbums();
@@ -16,7 +14,9 @@ export async function GET() {
             // Data file points to /albums/artwork/ but files are actually in albums/{folderPath}/cover.png
             if (album.folderPath) {
                 const filename = album.coverImageName || 'cover.png';
-                const correctedKey = `albums/${album.folderPath}/${filename}`;
+                // Slugify the folderPath to match what upload-s3.js uses as the S3 key
+                const sluggedFolder = album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-');
+                const correctedKey = `albums/${sluggedFolder}/${filename}`;
                 signedCover = await getSignedFileUrl(correctedKey);
             } else if (album.coverArt && !album.coverArt.startsWith('http')) {
                 // ... legacy/fallback logic ...
