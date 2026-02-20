@@ -28,6 +28,7 @@ export interface Album {
     year: number;
     genre: string[];
     coverArt: string;
+    coverImageName?: string;
     tracks: Track[];
     releaseDate: string;
     description?: string;
@@ -49,7 +50,7 @@ export function getAlbumById(id: string): Album | undefined {
 }
 
 export function getAlbumsByGenre(genre: string): Album[] {
-    return albums.filter(album => 
+    return albums.filter(album =>
         album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
     );
 }

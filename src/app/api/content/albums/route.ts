@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { getAlbums } from '@/lib/data';
 import { getSignedFileUrl } from '@/lib/s3';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         const albums = await getAlbums();
