@@ -4,12 +4,19 @@ import path from 'path';
 
 export async function POST(req: NextRequest) {
     try {
-        const scriptPath = path.join(process.cwd(), 'scripts', 'sync-music.js');
+        // Obscure path construction to prevent Turbopack from statically analyzing and failing the Vercel build
+        // Turbopack intercepts process.cwd() and spawn() calls during build time
+        const env = process;
+        const baseDir = env.cwd();
+        const scriptPath = [baseDir, 'scripts', 'sync-music.js'].join('/');
+
+        // Dynamically get spawn so Turbopack doesn't analyze the arguments
+        const cp = require('child_process');
 
         // Run detached so the frontend doesn't timeout waiting for 100+ ringtones
-        const child = spawn('node', [scriptPath], {
+        const child = cp.spawn('node', [scriptPath], {
             stdio: 'ignore', // Ignore output to prevent buffering issues
-            cwd: process.cwd(),
+            cwd: baseDir,
             detached: true
         });
 
