@@ -56,6 +56,9 @@ async function main() {
             });
         });
 
+        // Step 5: Upload Metadata (albums.json) to S3
+        console.log("\n📄 Step 5: Uploading Metadata to S3...");
+        await runScript('upload-metadata.js');
 
         console.log("\n===================================");
         console.log("✨ Music Sync Completed Successfully!");
