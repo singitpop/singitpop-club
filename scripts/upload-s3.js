@@ -109,6 +109,17 @@ async function scanAndUpload(dir) {
                 console.log(`   Uploading ${filename}...`);
                 await uploadFile(filePath, key);
             }
+
+            // Upload cover image if present at root of the album folder
+            const topLevelFiles = fs.readdirSync(albumPath);
+            const coverFile = topLevelFiles.find(f => /^cover\.(png|jpg|webp)$/i.test(f));
+            if (coverFile) {
+                const coverKey = `albums/${slug}/cover.png`;
+                if (!existingKeys.has(coverKey)) {
+                    console.log(`   Uploading cover image...`);
+                    await uploadFile(path.join(albumPath, coverFile), coverKey);
+                }
+            }
         }
     }
 }
