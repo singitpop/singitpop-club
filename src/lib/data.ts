@@ -18,10 +18,10 @@ export async function getAlbums(): Promise<Album[]> {
     }
 
     try {
-        const fetchUrl = `${S3_DATA_URL}?t=${now}`;
-        console.log(`Fetching albums from S3: ${fetchUrl}`);
-        const res = await fetch(fetchUrl, {
-            cache: 'no-store' // Ensure we get fresh data, circumventing Next.js fetch cache aggressiveness
+        console.log(`Fetching albums from S3: ${S3_DATA_URL}`);
+        const res = await fetch(S3_DATA_URL, {
+            next: { revalidate: 60 }, // Next.js specific caching mechanism
+            cache: 'no-store' // Ensure we get fresh data or manage via Revalidate
         });
 
         if (!res.ok) {

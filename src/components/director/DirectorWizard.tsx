@@ -168,6 +168,7 @@ export const DirectorWizard: React.FC = () => {
                     {step === 6 && (
                         <ScriptView
                             project={project as StratifyProject}
+                            updateProject={setProject}
                             onReset={() => {
                                 setStep(1);
                                 setProject(initialProject);

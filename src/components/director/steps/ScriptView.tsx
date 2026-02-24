@@ -7,11 +7,12 @@ import { motion } from 'framer-motion';
 
 interface StepProps {
     project: StratifyProject;
+    updateProject?: (p: any) => void;
     onReset: () => void;
     onBack: () => void;
 }
 
-export const ScriptView: React.FC<StepProps> = ({ project, onReset, onBack }) => {
+export const ScriptView: React.FC<StepProps> = ({ project, updateProject, onReset, onBack }) => {
 
     const [selectedTool, setSelectedTool] = useState<'veo' | 'veo3' | 'imagen3' | 'runway' | 'luma' | 'kling' | 'pika'>('veo3');
     const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -30,6 +31,17 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset, onBack }) =>
         document.body.appendChild(downloadAnchorNode);
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
+    };
+
+    const handleEffectChange = (sceneId: string, value: string) => {
+        if (!updateProject) return;
+        const updatedScenes = project.scenes.map(s =>
+            s.sceneId === sceneId ? { ...s, visualEffect: value as any } : s
+        );
+        updateProject({
+            ...project,
+            scenes: updatedScenes
+        });
     };
 
     return (
@@ -118,8 +130,30 @@ export const ScriptView: React.FC<StepProps> = ({ project, onReset, onBack }) =>
                                     {scene.locationId} • {scene.mood.visual} • {scene.mood.lighting}
                                 </p>
                             </div>
-                            <div className="bg-black/50 px-4 py-2 rounded text-xs font-mono text-gray-500">
-                                {scene.shots.length} SHOTS
+                            <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                    <label className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Visual Effect</label>
+                                    <select
+                                        value={scene.visualEffect || 'none'}
+                                        onChange={(e) => handleEffectChange(scene.sceneId, e.target.value)}
+                                        className="bg-black/50 border border-gray-700 text-xs font-mono text-gray-300 rounded px-2 py-1 outline-none focus:border-emerald-500"
+                                    >
+                                        <option value="none">None</option>
+                                        <option value="dust">Dust</option>
+                                        <option value="pulse">Pulse</option>
+                                        <option value="flash">Flash</option>
+                                        <option value="grain">Grain</option>
+                                        <option value="vhs">VHS</option>
+                                        <option value="chromatic">Chromatic</option>
+                                        <option value="bloom">Bloom</option>
+                                        <option value="shake">Shake</option>
+                                        <option value="film-damage">Film Damage</option>
+                                        <option value="light-leak">Light Leak</option>
+                                    </select>
+                                </div>
+                                <div className="bg-black/50 px-4 py-2 rounded text-xs font-mono text-gray-500">
+                                    {scene.shots.length} SHOTS
+                                </div>
                             </div>
                         </div>
 

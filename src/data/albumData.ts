@@ -28,7 +28,6 @@ export interface Album {
     year: number;
     genre: string[];
     coverArt: string;
-    coverImageName?: string;
     tracks: Track[];
     releaseDate: string;
     description?: string;

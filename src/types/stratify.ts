@@ -155,6 +155,7 @@ export interface Scene {
     narrativeBeat: string;
     lyrics?: string[]; // Array of lyric lines for this scene
     shots: Shot[];
+    visualEffect?: 'none' | 'dust' | 'pulse' | 'flash' | 'grain' | 'vhs' | 'chromatic' | 'bloom' | 'shake' | 'film-damage' | 'light-leak';
 }
 
 export interface Location {

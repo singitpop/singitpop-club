@@ -45,7 +45,7 @@ const cssKeyframes = `
     }
 `;
 
-import { DustOverlay } from '../../video/components/DustOverlay';
+import { VisualEffectsOverlay } from '../../components/director/VisualEffectsOverlay';
 
 export type AnimationType = 'fade' | 'push' | 'slide' | 'kinetic' | 'typewriter' | 'karaoke';
 export type FontType = 'Inter' | 'Montserrat' | 'Bebas Neue' | 'Playfair Display' | 'Roboto Mono';
@@ -231,17 +231,8 @@ export const LyricVideo: React.FC<LyricVideoProps> = ({
                 )}
             </AbsoluteFill>
 
-            {/* Dust & Atmosphere (Conditional) */}
-            {(visualEffect === 'dust' || visualEffect === 'grain') && <DustOverlay />}
-
-            {/* Flash Effect Overlay */}
-            {visualEffect === 'flash' && (
-                <div style={{
-                    position: 'absolute', inset: 0, background: 'white',
-                    opacity: (frame % 5 === 0) ? 0.2 : 0,
-                    pointerEvents: 'none', zIndex: 6
-                }} />
-            )}
+            {/* Visual Effects Overlay */}
+            <VisualEffectsOverlay effect={visualEffect} frame={frame} />
 
             {/* Lyric Layer */}
             <div style={{ zIndex: 10, textAlign: 'center', maxWidth: '80%', padding: '2rem' }}>

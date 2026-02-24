@@ -73,7 +73,7 @@ interface PreviewPlayerProps {
     blendMode?: 'normal' | 'lighten' | 'overlay';
 }
 
-import { DustOverlay } from '../../../video/components/DustOverlay';
+import { VisualEffectsOverlay } from '../../director/VisualEffectsOverlay';
 import { useBpmPulse } from '@/hooks/useBpmPulse';
 
 export const PreviewPlayer: React.FC<PreviewPlayerProps> = ({
@@ -246,26 +246,8 @@ export const PreviewPlayer: React.FC<PreviewPlayerProps> = ({
                 </div>
             </div>
 
-            {/* Visual Effects (Manual Implementation) */}
-            {visualEffect === 'dust' && <DustOverlay />}
-            {visualEffect === 'flash' && (
-                <div style={{ position: 'absolute', inset: 0, background: 'white', animation: 'flash 0.5s infinite', opacity: 0.1, pointerEvents: 'none', zIndex: 6 }} />
-            )}
-            {visualEffect === 'vhs' && (
-                <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 5, background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))', backgroundSize: '100% 2px, 3px 100%' }} />
-            )}
-            {visualEffect === 'chromatic' && (
-                <div style={{ position: 'absolute', inset: 0, boxShadow: 'inset 5px 0 0 rgba(255,0,0,0.2), inset -5px 0 0 rgba(0,255,255,0.2)', pointerEvents: 'none', zIndex: 5 }} />
-            )}
-            {visualEffect === 'film-damage' && (
-                <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle, transparent 50%, black 120%)', pointerEvents: 'none', zIndex: 5 }} />
-            )}
-            {visualEffect === 'bloom' && (
-                <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)', filter: 'blur(20px)', mixBlendMode: 'screen', pointerEvents: 'none', zIndex: 5 }} />
-            )}
-            {visualEffect === 'light-leak' && (
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, transparent, rgba(255,200,100,0.2), transparent)', mixBlendMode: 'screen', pointerEvents: 'none', zIndex: 5 }} />
-            )}
+            {/* Visual Effects */}
+            <VisualEffectsOverlay effect={visualEffect} frame={0} />
 
             {/* Lyric Layer */}
             <div style={{ zIndex: 10, textAlign: 'center', maxWidth: '90%', padding: '2rem', position: 'relative' }}>
