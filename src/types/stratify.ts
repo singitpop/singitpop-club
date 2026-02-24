@@ -82,7 +82,7 @@ export interface SongData {
 
 // 4. SHOT STRUCTURE (The Atomic Unit)
 export interface CameraSpec {
-    movement: 'locked' | 'pan' | 'tilt' | 'dolly-in' | 'dolly-out' | 'truck-left' | 'truck-right' | 'orbit' | 'crane-up' | 'crane-down' | 'handheld' | 'drone' | 'zoom-in' | 'zoom-out';
+    movement: 'locked' | 'dolly-in' | 'dolly-out' | 'fast-dolly-in' | 'pan-left' | 'pan-right' | 'tilt-up' | 'tilt-down' | 'truck-left' | 'truck-right' | 'pedestal-up' | 'orbit-180' | 'orbit-360' | 'slow-cinematic-arc' | 'crane-up' | 'crane-down' | 'crane-overhead' | 'smooth-zoom-in' | 'smooth-zoom-out' | 'crash-zoom-in' | 'crash-zoom-out' | 'rack-focus' | 'reveal-from-blur' | 'drone-flyover' | 'epic-drone-reveal' | 'large-aerial-orbit' | 'overhead-top-down' | 'fpv-drone' | 'aerial-pullback' | 'leading-shot' | 'following-shot' | 'side-tracking' | 'pov-walk' | 'dolly-zoom' | 'through-shot' | 'reveal-from-behind' | 'dutch-angle' | 'whip-pan' | 'handheld-documentary';
     angle: 'eye-level' | 'low-angle' | 'high-angle' | 'dutch' | 'overhead';
     lensFeel: 'wide' | 'normal' | 'telephoto' | 'macro' | 'fisheye';
     motionSpeed?: 'slow' | 'normal' | 'fast';

@@ -152,7 +152,8 @@ const VeoAdapter = {
         prompt += `${styleCtx} `; // Includes Weather/Ambience
 
         if (cam.movement !== 'locked') {
-            prompt += `Camera movement: ${cam.movement} ${cam.angle ? `at ${cam.angle}` : ''}. `;
+            const cameraDesc = resolveCameraMovementContext(cam.movement);
+            prompt += `${cameraDesc} ${cam.angle !== 'eye-level' ? `Shot at ${cam.angle}` : ''}. `;
         }
 
         // Specific Audio Header for Veo
@@ -181,41 +182,81 @@ const resolveVeoTemplateKeywords = (template: string): string => {
 
 const RunwayAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
-        // Runway Gen-3 Structure:
-        // [Camera Move]: [Subject] [Action]. [Env].
-        const cam = shot.camera;
-        const move = cam.movement === 'locked' ? 'Static' :
-            cam.movement === 'pan' ? 'Pan' :
-                cam.movement === 'tilt' ? 'Tilt' :
-                    cam.movement === 'dolly-in' ? 'Zoom in' :
-                        cam.movement;
-
-        return `[${move}]: ${charCtx} performing ${actionCtx}. ${compCtx}. ${styleCtx}. ${audioCtx}`;
+        const moveCtx = resolveCameraMovementContext(shot.camera.movement);
+        return `${moveCtx} ${charCtx} performing ${actionCtx}. ${compCtx}. ${styleCtx}. ${audioCtx}`;
     }
 };
 
 const LumaAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
-        return `${charCtx} ${actionCtx}. ${compCtx}. ${styleCtx}. ${audioCtx}. ${shot.camera.movement} camera motion.`;
+        return `${charCtx} ${actionCtx}. ${compCtx}. ${styleCtx}. ${resolveCameraMovementContext(shot.camera.movement)}. ${audioCtx}.`;
     }
 };
 
 const KlingAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
-        return `High quality video, ${charCtx}, ${actionCtx}, ${compCtx}, ${styleCtx}, ${audioCtx}, ${shot.camera.movement}`;
+        return `High quality video, ${charCtx}, ${actionCtx}, ${compCtx}, ${styleCtx}, ${audioCtx}, ${resolveCameraMovementContext(shot.camera.movement)}`;
     }
 };
 
 const PikaAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
-        return `${charCtx} ${actionCtx}. ${compCtx}. ${styleCtx}. ${audioCtx}. Camera: ${shot.camera.movement}.`;
+        return `${charCtx} ${actionCtx}. ${compCtx}. ${styleCtx}. ${audioCtx}. ${resolveCameraMovementContext(shot.camera.movement)}.`;
     }
 };
 
 const ImagenAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
-        // Imagen 3 Structure: Natural language, descriptive, flow-based
-        // UPDATE: Now includes audioCtx for lyrics context
-        return `A photorealistic shot of ${charCtx}. ${actionCtx}. The scene features ${styleCtx}. ${compCtx}. ${audioCtx}. Captured with high dynamic range and sharp focus.`;
+        return `A photorealistic shot of ${charCtx}. ${actionCtx}. The scene features ${styleCtx}. ${compCtx}. ${resolveCameraMovementContext(shot.camera.movement)}. ${audioCtx}. Captured with high dynamic range and sharp focus.`;
+    }
+};
+
+const resolveCameraMovementContext = (movement: Shot['camera']['movement']): string => {
+    switch (movement) {
+        // Foundation
+        case 'dolly-in': return "The camera slowly dollies forward toward the subject, cinematic lighting, shallow depth of field.";
+        case 'dolly-out': return "The camera slowly dollies backward away from the subject, revealing more of the environment.";
+        case 'fast-dolly-in': return "The camera rushes quickly forward toward the subject, creating urgency and intensity.";
+        case 'pan-left': return "The camera pans slowly to the left while keeping the subject centered in frame.";
+        case 'pan-right': return "The camera pans slowly to the right while keeping the subject centered in frame.";
+        case 'tilt-up': return "The camera tilts upward from the subject's feet to their face.";
+        case 'tilt-down': return "The camera tilts downward from above, moving from the subject's face to their feet.";
+        case 'truck-left': return "The camera slides laterally to the left with strong parallax between subject and background.";
+        case 'truck-right': return "The camera slides laterally to the right with strong parallax between subject and background.";
+        case 'pedestal-up': return "The camera rises vertically from waist level to eye level.";
+        // Orbital
+        case 'orbit-180': return "The camera orbits 180 degrees around the subject, shifting from a front view to a side profile.";
+        case 'orbit-360': return "The camera circles a full 360 degrees around the subject.";
+        case 'slow-cinematic-arc': return "The camera moves in a wide, slow arc around the subject in a smooth curved motion.";
+        case 'crane-up': return "The camera cranes upward while tilting down to keep the subject framed, revealing the full environment.";
+        case 'crane-down': return "The camera descends from a high angle down to eye level.";
+        case 'crane-overhead': return "The camera sweeps upward and over the subject's head in a continuous arc, ending in a top-down view.";
+        // Zoom
+        case 'smooth-zoom-in': return "The camera remains static while slowly zooming in on the subject, background stays compressed.";
+        case 'smooth-zoom-out': return "The camera remains static while slowly zooming out to reveal the full environment.";
+        case 'crash-zoom-in': return "A sudden fast zoom into the subject's face with motion blur.";
+        case 'crash-zoom-out': return "A rapid zoom out from close-up to wide shot in a fraction of a second.";
+        case 'rack-focus': return "The shot begins with the subject in focus, then focus shifts to the background.";
+        case 'reveal-from-blur': return "The frame starts heavily out of focus and gradually sharpens until the subject is crystal clear.";
+        // Aerial
+        case 'drone-flyover': return "A high-altitude aerial shot moving forward over the landscape, cinematic scale.";
+        case 'epic-drone-reveal': return "The camera rises upward from behind an obstacle while tilting down to reveal the full scene.";
+        case 'large-aerial-orbit': return "A wide aerial orbit around the environment from high altitude.";
+        case 'overhead-top-down': return "The camera is positioned directly overhead looking straight down, slowly rotating.";
+        case 'fpv-drone': return "Fast first-person drone movement diving forward and weaving through obstacles at high speed.";
+        case 'aerial-pullback': return "The camera pulls backward and upward, making the subject shrink within the expanding landscape.";
+        // Subject Tracking
+        case 'leading-shot': return "The subject walks toward the camera while the camera moves backward at the same pace, maintaining distance.";
+        case 'following-shot': return "The subject walks away from the camera while the camera follows behind at the same speed.";
+        case 'side-tracking': return "The subject moves forward while the camera tracks alongside from the side with background motion blur.";
+        case 'pov-walk': return "First-person walking motion with natural handheld bobbing, moving forward toward the subject.";
+        // Creative
+        case 'dolly-zoom': return "The camera moves backward while simultaneously zooming in, keeping the subject the same size while the background stretches.";
+        case 'through-shot': return "The camera moves forward through a foreground object to reveal the scene behind it.";
+        case 'reveal-from-behind': return "The camera slides sideways from behind an obstacle, gradually revealing the subject.";
+        case 'dutch-angle': return "The camera is tilted diagonally on its axis, creating a tense, off-balance composition.";
+        case 'whip-pan': return "The camera whips rapidly to the side with heavy motion blur, transitioning to a new subject.";
+        case 'handheld-documentary': return "Natural handheld camera shake and subtle human movement while following the subject.";
+        default: return "Static locked-off camera.";
     }
 };

@@ -44,6 +44,14 @@ export class DPAgent implements DirectorAgent {
                         - LYRICS FOR THIS SCENE: ${JSON.stringify(scene.lyrics || [])}
                         - SYNCED LYRICS DATA: ${song.syncedLyrics ? JSON.stringify(song.syncedLyrics.filter(sl => scene.lyrics?.includes(sl.text))) : "None provided. Estimate duration based on BPM."}
 
+                        AVAILABLE CAMERA MOVEMENTS:
+                        Foundation: "dolly-in", "dolly-out", "fast-dolly-in", "pan-left", "pan-right", "tilt-up", "tilt-down", "truck-left", "truck-right", "pedestal-up"
+                        Orbital & Crane: "orbit-180", "orbit-360", "slow-cinematic-arc", "crane-up", "crane-down", "crane-overhead"
+                        Zoom & Lens: "smooth-zoom-in", "smooth-zoom-out", "crash-zoom-in", "crash-zoom-out", "rack-focus", "reveal-from-blur"
+                        Aerial & Drone: "drone-flyover", "epic-drone-reveal", "large-aerial-orbit", "overhead-top-down", "fpv-drone", "aerial-pullback"
+                        Subject Tracking: "leading-shot", "following-shot", "side-tracking", "pov-walk"
+                        Creative & Advanced: "dolly-zoom", "through-shot", "reveal-from-behind", "dutch-angle", "whip-pan", "handheld-documentary", "locked"
+
                         TASK:
                         Create a Cinematic Shot for EVERY line of lyrics provided above.
                         Strict Rule: 1 Lyric Line = 1 Shot.
@@ -53,7 +61,7 @@ export class DPAgent implements DirectorAgent {
                         [{
                             "shotType": "EWS"|"WS"|"MS"|"MCU"|"CU"|"ECU",
                             "camera": { 
-                                "movement": "locked"|"pan"|"tilt"|"dolly-in"|"dolly-out"|"truck-left"|"truck-right"|"orbit"|"handheld"|"drone"|"zoom-in", 
+                                "movement": "<Must be EXACTLY ONE of the string values from AVAILABLE CAMERA MOVEMENTS>", 
                                 "lensFeel": "wide"|"normal"|"telephoto",
                                 "angle": "eye-level"|"low-angle"|"high-angle"
                             },
