@@ -113,7 +113,7 @@ export const DirectorWizard: React.FC = () => {
                     )}
 
                     {step === 2 && (
-                        <DialsStep
+                        <SyncStep
                             project={project as StratifyProject}
                             updateProject={setProject}
                             onNext={handleNext}
@@ -122,7 +122,7 @@ export const DirectorWizard: React.FC = () => {
                     )}
 
                     {step === 3 && (
-                        <TreatmentStep
+                        <DialsStep
                             project={project as StratifyProject}
                             updateProject={setProject}
                             onNext={handleNext}
@@ -131,7 +131,7 @@ export const DirectorWizard: React.FC = () => {
                     )}
 
                     {step === 4 && (
-                        <LocationStep
+                        <TreatmentStep
                             project={project as StratifyProject}
                             updateProject={setProject}
                             onNext={handleNext}
@@ -140,7 +140,7 @@ export const DirectorWizard: React.FC = () => {
                     )}
 
                     {step === 5 && (
-                        <SyncStep
+                        <LocationStep
                             project={project as StratifyProject}
                             updateProject={setProject}
                             onNext={handleNext}
@@ -169,7 +169,7 @@ export const DirectorWizard: React.FC = () => {
                             </button>
                             <div className="mt-6">
                                 <button onClick={handleBack} className="text-gray-500 hover:text-white underline text-sm">
-                                    Back to Sync Setup
+                                    Back to Location Setup
                                 </button>
                             </div>
                         </div>

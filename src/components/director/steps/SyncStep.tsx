@@ -50,7 +50,7 @@ export const SyncStep: React.FC<StepProps> = ({ project, updateProject, onNext, 
                     onClick={onBack}
                     className="text-gray-500 hover:text-white flex items-center gap-2 text-sm font-bold transition-colors"
                 >
-                    ← Back to Location setup
+                    ← Back to Intake
                 </button>
             </div>
 

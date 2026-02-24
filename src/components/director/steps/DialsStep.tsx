@@ -236,7 +236,7 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                     onClick={onBack}
                     className="px-6 py-3 text-gray-400 hover:text-white font-bold"
                 >
-                    ← Back to Intake
+                    ← Back to Sync Setup
                 </button>
                 <button
                     onClick={onNext}
