@@ -76,6 +76,7 @@ export interface SongData {
             lines: { text: string; startSec: number; endSec: number }[];
         }[];
     };
+    syncedLyrics?: { text: string; timestamp: number }[]; // Added for manual sync
     moodKeywords: string[];
 }
 

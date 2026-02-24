@@ -42,6 +42,7 @@ export class DPAgent implements DirectorAgent {
                         - Narrative Beat: ${scene.narrativeBeat}
                         - Cast: ${project.cast.lead.name} (Lead) + Band
                         - LYRICS FOR THIS SCENE: ${JSON.stringify(scene.lyrics || [])}
+                        - SYNCED LYRICS DATA: ${song.syncedLyrics ? JSON.stringify(song.syncedLyrics.filter(sl => scene.lyrics?.includes(sl.text))) : "None provided. Estimate duration based on BPM."}
 
                         TASK:
                         Create a Cinematic Shot for EVERY line of lyrics provided above.
@@ -62,8 +63,10 @@ export class DPAgent implements DirectorAgent {
                             "composition": "rule of thirds, center, etc",
                             "audioEnvironment": "ambience/sfx",
                             "subjects": [{ "characterId": "lead"|"band", "action": "Singing line...", "period": "string" }],
-                            "durationSec": number, // Approx 4s or based on line length
+                            "durationSec": number, // Approx 4s or exact based on SYNCED LYRICS DATA
                             "lyricLineText": "The specific lyric line this shot covers",
+                            "startSec": number, // Output exact timestamp if SYNCED LYRICS DATA is available, else 0
+                            "endSec": number, // startSec + durationSec
                             "basePrompt": "summary string"
                         }]
                         `;
@@ -89,8 +92,8 @@ export class DPAgent implements DirectorAgent {
                             audioSync: {
                                 mode: s.lyricLineText ? 'lead' : 'none',
                                 lyricLineText: s.lyricLineText,
-                                startSec: 0,
-                                endSec: s.durationSec || 4
+                                startSec: s.startSec || 0,
+                                endSec: s.endSec || (s.startSec || 0) + (s.durationSec || 4)
                             }
                         }));
 
