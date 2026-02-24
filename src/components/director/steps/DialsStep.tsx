@@ -116,7 +116,11 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
 
         } catch (e: any) {
             console.error("[DialsStep] Analysis failed:", e);
-            alert(`Director analysis failed: ${e.message}\n\nPlease check the console for details or set dials manually.`);
+            if (e.message?.includes('429')) {
+                alert(`The Director AI is currently experiencing high traffic (Error 429: Too Many Requests).\n\nYou can bypass this error! Simply scroll down and click the 'Generate Treatments →' button at the bottom of the page to proceed using our fallback presets.`);
+            } else {
+                alert(`Director analysis failed: ${e.message}\n\nPlease check the console for details or set dials manually.`);
+            }
         } finally {
             setIsAnalyzing(false);
         }
