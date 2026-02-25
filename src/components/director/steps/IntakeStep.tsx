@@ -31,12 +31,19 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
 
     const handleImportPackage = () => {
         try {
-            // Attempt to parse the raw JSON (could be a single object or array)
-            // Sometimes users paste an array of blocks, sometimes one big object.
-            // We'll wrap it in array brackets if it looks like multiple separate JSON blocks glued together.
             let cleanRaw = importRaw.trim();
-            if (cleanRaw.split('}{').length > 1) {
-                cleanRaw = `[${cleanRaw.replace(/}{/g, '},{')}]`;
+
+            // 1. Strip markdown formatting if pasted directly from ChatGPT
+            cleanRaw = cleanRaw.replace(/```json/gi, '').replace(/```/g, '').trim();
+
+            // 2. Handle multiple objects pasted back-to-back e.g. } \n\n {
+            if (cleanRaw.match(/}\s*\{/g)) {
+                cleanRaw = cleanRaw.replace(/}\s*\{/g, '},{');
+            }
+
+            // 3. If there are multiple objects now separated by commas but missing array brackets, wrap them
+            if (cleanRaw.startsWith('{') && cleanRaw.endsWith('}') && cleanRaw.includes('},{')) {
+                cleanRaw = `[${cleanRaw}]`;
             }
 
             const parsed = JSON.parse(cleanRaw);
