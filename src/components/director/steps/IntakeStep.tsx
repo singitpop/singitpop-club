@@ -87,7 +87,7 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                 const genre = projObj.genre || projObj.style;
                 const mood = projObj.emotional_state || projObj.mood || projObj.moodKeywords;
 
-                if (title || artist || genre || mood || projObj.visual_style || projObj.narrative_preference || projObj.visual_mode) {
+                if (title || artist || genre || mood || projObj.visual_style || projObj.narrative_preference || projObj.visual_mode || b.global_style) {
                     extractedDataCount++;
                     newProject.song = {
                         ...newProject.song,
@@ -97,7 +97,7 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                         moodKeywords: mood || newProject.song.moodKeywords || []
                     };
 
-                    if (projObj.visual_style || projObj.narrative_preference || projObj.visual_mode) {
+                    if (projObj.visual_style || projObj.narrative_preference || projObj.visual_mode || b.global_style) {
                         newProject.project = {
                             ...newProject.project,
                             directorProfile: {
@@ -106,7 +106,7 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                             },
                             outputSpec: {
                                 ...newProject.project?.outputSpec,
-                                visualMode: projObj.visual_mode || projObj.visual_style || newProject.project?.outputSpec?.visualMode || 'realistic'
+                                visualMode: projObj.visual_mode || projObj.visual_style || b.global_style?.vfx_style || newProject.project?.outputSpec?.visualMode || 'realistic'
                             }
                         };
                     }
@@ -115,22 +115,22 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                 // 2. Character Profile
                 const cName = charObj.name || charObj.character_name;
                 const cGender = charObj.gender || charObj.genderPresentation;
-                const cWardrobe = charObj.wardrobe?.style || charObj.style || charObj.wardrobeSignature || charObj.outfit || charObj.wardrobe;
+                const cWardrobe = charObj.wardrobe?.style || charObj.style || charObj.wardrobeSignature || charObj.outfit || charObj.wardrobe || (b.global_style ? (b.global_style.color_palette?.join(', ') || 'Styled') : '');
 
                 if (cName || cGender || cWardrobe) {
                     extractedDataCount++;
-                    const paletteArr = charObj.wardrobe?.palette || charObj.palette || [];
+                    const paletteArr = charObj.wardrobe?.palette || charObj.palette || b.global_style?.color_palette || [];
                     const combinedWardrobe = cWardrobe ? [cWardrobe, ...paletteArr] : (newProject.cast?.lead?.wardrobeSignature || []);
 
                     const face = charObj.facial_expression || charObj.expression || charObj.face || newProject.cast?.lead?.extractedVisuals?.face || 'calm';
-                    const vibe = charObj.performance_style || charObj.vibe || newProject.cast?.lead?.extractedVisuals?.vibe || 'restrained';
+                    const vibe = charObj.performance_style || charObj.vibe || b.global_style?.texture || newProject.cast?.lead?.extractedVisuals?.vibe || 'restrained';
 
                     newProject.cast = {
                         ...newProject.cast,
                         lead: {
                             ...newProject.cast?.lead,
                             name: cName || newProject.cast?.lead?.name || 'Lead Singer',
-                            genderPresentation: cGender || newProject.cast?.lead?.genderPresentation || 'female',
+                            genderPresentation: cGender || newProject.cast?.lead?.genderPresentation || 'Unknown',
                             wardrobeSignature: combinedWardrobe,
                             extractedVisuals: {
                                 face,
@@ -142,22 +142,36 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                 }
 
                 // 3. Locations
+                const gStyle = b.global_style;
                 if (locArr && Array.isArray(locArr) && locArr.length > 0) {
                     const firstLoc = locArr[0];
-                    if (firstLoc.location_id || firstLoc.name || firstLoc.title || firstLoc.lighting || firstLoc.description || firstLoc.timeOfDay) {
+                    if (firstLoc.location_id || firstLoc.name || firstLoc.title || firstLoc.lighting || firstLoc.description || firstLoc.timeOfDay || firstLoc.section || firstLoc.visual) {
                         extractedDataCount++;
                         const mappedLocations: Location[] = locArr.map((loc: any, idx: number) => ({
                             locationId: `loc-${idx + 1}`,
-                            name: loc.location_id || loc.name || loc.title || `Location ${idx + 1}`,
-                            description: loc.role || loc.description || '',
-                            timeOfDay: (loc.lighting && loc.lighting.toLowerCase().includes('day')) ? 'day' : (loc.timeOfDay || 'night'),
+                            name: loc.location_id || loc.name || loc.title || loc.section || `Location ${idx + 1}`,
+                            description: loc.role || loc.description || loc.visual || '',
+                            timeOfDay: (loc.lighting && loc.lighting.toLowerCase().includes('day')) ? 'day' : (loc.timeOfDay || (gStyle?.time_of_day?.includes('day') ? 'day' : 'night')),
                             weather: loc.weather || 'clear',
-                            lighting: loc.lighting || '',
-                            cameraVibe: loc.camera_bias || loc.camera || loc.cameraVibe || '',
-                            artDirection: Array.isArray(loc.motion_elements) ? loc.motion_elements.join(', ') : (loc.motion_elements || loc.artDirection || '')
+                            lighting: loc.lighting || gStyle?.lighting || '',
+                            cameraVibe: loc.camera_bias || loc.camera || loc.cameraVibe || gStyle?.camera_style || '',
+                            artDirection: Array.isArray(loc.motion_elements) ? loc.motion_elements.join(', ') : (loc.motion_elements || loc.artDirection || gStyle?.location || gStyle?.texture || '')
                         }));
                         newProject.locations = mappedLocations;
                     }
+                } else if (gStyle) {
+                    // Fallback if there are no locations but there is a global style
+                    extractedDataCount++;
+                    newProject.locations = [{
+                        locationId: `loc-1`,
+                        name: gStyle.location || `Main Location`,
+                        description: gStyle.texture || '',
+                        timeOfDay: gStyle.time_of_day?.includes('day') ? 'day' : 'night',
+                        weather: 'clear',
+                        lighting: gStyle.lighting || '',
+                        cameraVibe: gStyle.camera_style || '',
+                        artDirection: gStyle.vfx_style || ''
+                    }];
                 }
             });
 
