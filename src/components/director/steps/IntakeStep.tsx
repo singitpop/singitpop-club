@@ -87,14 +87,14 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                 const genre = projObj.genre || projObj.style;
                 const mood = projObj.emotional_state || projObj.mood || projObj.moodKeywords;
 
-                if (title || artist || genre || mood) {
+                if (title || artist || genre || mood || projObj.visual_style || projObj.narrative_preference || projObj.visual_mode) {
                     extractedDataCount++;
                     newProject.song = {
                         ...newProject.song,
-                        title: title || newProject.song.title,
-                        artist: artist || newProject.song.artist,
-                        genre: genre || newProject.song.genre,
-                        moodKeywords: mood || newProject.song.moodKeywords
+                        title: title || newProject.song.title || '',
+                        artist: artist || newProject.song.artist || '',
+                        genre: genre || newProject.song.genre || '',
+                        moodKeywords: mood || newProject.song.moodKeywords || []
                     };
 
                     if (projObj.visual_style || projObj.narrative_preference || projObj.visual_mode) {
@@ -102,11 +102,11 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                             ...newProject.project,
                             directorProfile: {
                                 ...newProject.project?.directorProfile,
-                                narrativePreference: projObj.narrative_preference || 'hybrid',
+                                narrativePreference: projObj.narrative_preference || newProject.project?.directorProfile?.narrativePreference || 'hybrid',
                             },
                             outputSpec: {
                                 ...newProject.project?.outputSpec,
-                                visualMode: projObj.visual_mode || projObj.visual_style || 'realistic'
+                                visualMode: projObj.visual_mode || projObj.visual_style || newProject.project?.outputSpec?.visualMode || 'realistic'
                             }
                         };
                     }
@@ -120,21 +120,21 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                 if (cName || cGender || cWardrobe) {
                     extractedDataCount++;
                     const paletteArr = charObj.wardrobe?.palette || charObj.palette || [];
-                    const combinedWardrobe = cWardrobe ? [cWardrobe, ...paletteArr] : newProject.cast?.lead?.wardrobeSignature;
+                    const combinedWardrobe = cWardrobe ? [cWardrobe, ...paletteArr] : (newProject.cast?.lead?.wardrobeSignature || []);
 
-                    const face = charObj.facial_expression || charObj.expression || charObj.face || 'calm';
-                    const vibe = charObj.performance_style || charObj.vibe || 'restrained';
+                    const face = charObj.facial_expression || charObj.expression || charObj.face || newProject.cast?.lead?.extractedVisuals?.face || 'calm';
+                    const vibe = charObj.performance_style || charObj.vibe || newProject.cast?.lead?.extractedVisuals?.vibe || 'restrained';
 
                     newProject.cast = {
                         ...newProject.cast,
                         lead: {
                             ...newProject.cast?.lead,
-                            name: cName || newProject.cast?.lead?.name,
-                            genderPresentation: cGender || newProject.cast?.lead?.genderPresentation,
+                            name: cName || newProject.cast?.lead?.name || 'Lead Singer',
+                            genderPresentation: cGender || newProject.cast?.lead?.genderPresentation || 'female',
                             wardrobeSignature: combinedWardrobe,
                             extractedVisuals: {
                                 face,
-                                wardrobe: cWardrobe || 'refined',
+                                wardrobe: cWardrobe || newProject.cast?.lead?.extractedVisuals?.wardrobe || 'refined',
                                 vibe
                             }
                         }
