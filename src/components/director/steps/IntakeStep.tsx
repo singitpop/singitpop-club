@@ -1,6 +1,6 @@
-
-import React from 'react';
-import { StratifyProject } from '@/types/stratify';
+import React, { useState } from 'react';
+import { StratifyProject, Location } from '@/types/stratify';
+import { Upload, X, Code } from 'lucide-react';
 
 interface StepProps {
     project: StratifyProject;
@@ -9,6 +9,8 @@ interface StepProps {
 }
 
 export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext }) => {
+    const [importMode, setImportMode] = useState(false);
+    const [importRaw, setImportRaw] = useState('');
 
     const handleChange = (field: string, value: any) => {
         updateProject({
@@ -27,14 +29,127 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
         });
     };
 
+    const handleImportPackage = () => {
+        try {
+            // Attempt to parse the raw JSON (could be a single object or array)
+            // Sometimes users paste an array of blocks, sometimes one big object.
+            // We'll wrap it in array brackets if it looks like multiple separate JSON blocks glued together.
+            let cleanRaw = importRaw.trim();
+            if (cleanRaw.split('}{').length > 1) {
+                cleanRaw = `[${cleanRaw.replace(/}{/g, '},{')}]`;
+            }
+
+            const parsed = JSON.parse(cleanRaw);
+            const blocks = Array.isArray(parsed) ? parsed : [parsed];
+
+            let newProject = { ...project };
+
+            blocks.forEach((block: any) => {
+                // 1. Project Metadata
+                if (block.project) {
+                    newProject.song = {
+                        ...newProject.song,
+                        title: block.project.title || newProject.song.title,
+                        artist: block.project.artist || newProject.song.artist,
+                        genre: block.project.genre || newProject.song.genre,
+                        moodKeywords: block.project.emotional_state || newProject.song.moodKeywords
+                    };
+
+                    if (block.project.visual_style) {
+                        newProject.project = {
+                            ...newProject.project,
+                            directorProfile: {
+                                ...newProject.project?.directorProfile,
+                                narrativePreference: 'hybrid', // default for cinematic
+                            },
+                            outputSpec: {
+                                ...newProject.project?.outputSpec,
+                                visualMode: 'realistic'
+                            }
+                        };
+                    }
+                }
+
+                // 2. Character Profile
+                if (block.character_profile) {
+                    newProject.cast = {
+                        ...newProject.cast,
+                        lead: {
+                            ...newProject.cast?.lead,
+                            name: block.character_profile.name || newProject.cast?.lead?.name,
+                            genderPresentation: block.character_profile.gender || newProject.cast?.lead?.genderPresentation,
+                            wardrobeSignature: block.character_profile.wardrobe ?
+                                [block.character_profile.wardrobe.style, ...(block.character_profile.wardrobe.palette || [])]
+                                : newProject.cast?.lead?.wardrobeSignature,
+                            extractedVisuals: {
+                                face: block.character_profile.facial_expression || 'calm',
+                                wardrobe: block.character_profile.wardrobe?.style || 'refined',
+                                vibe: block.character_profile.performance_style || 'restrained'
+                            }
+                        }
+                    };
+                }
+
+                // 3. Locations Array
+                if (block.locations && Array.isArray(block.locations)) {
+                    const mappedLocations: Location[] = block.locations.map((loc: any, idx: number) => ({
+                        locationId: `loc-${idx + 1}`,
+                        name: loc.location_id || `Location ${idx + 1}`,
+                        description: loc.role || '',
+                        timeOfDay: (loc.lighting && loc.lighting.includes('day')) ? 'day' : 'night',
+                        weather: 'clear',
+                        lighting: loc.lighting || '',
+                        cameraVibe: loc.camera_bias || '',
+                        artDirection: (loc.motion_elements || []).join(', ')
+                    }));
+                    newProject.locations = mappedLocations;
+                }
+            });
+
+            updateProject(newProject);
+            setImportMode(false);
+            setImportRaw('');
+            alert('Antigravity Package Successfully Imported! Review your Intake & Cast settings.');
+        } catch (e) {
+            console.error("Failed to parse Antigravity Package", e);
+            alert("Invalid JSON format. Please ensure you copied the exact code blocks.");
+        }
+    };
+
     return (
         <div className="space-y-8 max-w-4xl mx-auto">
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-2 relative">
                 <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
                     The Producer's Office
                 </h2>
                 <p className="text-gray-400">Let's get the basics down before we bring in the creative team.</p>
+
+                <button
+                    onClick={() => setImportMode(!importMode)}
+                    className="absolute right-0 top-0 text-xs flex items-center gap-1 bg-purple-900/30 text-purple-400 border border-purple-800 hover:bg-purple-800/50 hover:text-white px-3 py-1.5 rounded transition-colors"
+                >
+                    <Code size={14} /> Import Antigravity Package
+                </button>
             </div>
+
+            {importMode && (
+                <div className="bg-gray-900/80 border border-purple-800 rounded-xl p-6 relative shadow-2xl shadow-purple-900/20 backdrop-blur-md animate-fade-in">
+                    <button onClick={() => setImportMode(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white"><X size={18} /></button>
+                    <h3 className="text-purple-400 font-bold mb-2 flex items-center gap-2"><Upload size={16} /> Import Package JSON</h3>
+                    <p className="text-xs text-gray-400 mb-4">Paste the Complete Implementation Package JSON block(s) generated by ChatGPT or Claude. The Director will automatically parse your constraints, character, and locations.</p>
+                    <textarea
+                        className="w-full h-48 bg-black border border-gray-700 rounded p-3 text-emerald-400 font-mono text-xs focus:border-purple-500 outline-none"
+                        placeholder="Paste JSON here..."
+                        value={importRaw}
+                        onChange={(e) => setImportRaw(e.target.value)}
+                    />
+                    <div className="flex justify-end mt-4">
+                        <button onClick={handleImportPackage} className="px-6 py-2 bg-purple-600 text-white font-bold rounded hover:bg-purple-500 transition-colors">
+                            Map to Director →
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* SONG DATA */}
