@@ -17,7 +17,8 @@ const navItems = [
   { name: 'Music', href: '/music' },
   { name: 'FanZone', href: '/fan-albums' },
   { name: 'Projects', href: '/projects' },
-
+  { name: 'Shop', href: '/shop' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {
