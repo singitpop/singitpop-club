@@ -173,6 +173,7 @@ export interface Location {
     lighting?: string; // e.g. "Neon Noir", "Soft Natural", "Studio High Key"
     cameraVibe?: string; // e.g. "Handheld Chaos", "Smooth Steadicam", "Static Tripod"
     artDirection?: string; // e.g. "Minimalist", "Cluttered/Messy", "Futuristic"
+    referenceImage?: string; // User-uploaded reference visual
 }
 
 export interface Treatment {

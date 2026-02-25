@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StratifyProject, Location } from '@/types/stratify';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Upload, Image as ImageIcon } from 'lucide-react';
 
 interface StepProps {
     project: StratifyProject;
@@ -67,6 +68,33 @@ export const LocationStep: React.FC<StepProps> = ({ project, updateProject, onNe
             l.locationId === id ? { ...l, [field]: value } : l
         );
         updateLocations(newLocs);
+    };
+
+    const handleImageUpload = async (locationId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Optimistic UI update
+        const previewUrl = URL.createObjectURL(file);
+        handleUpdateLocation(locationId, 'referenceImage', previewUrl);
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const res = await fetch("/api/admin/upload-image", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!res.ok) throw new Error("Upload failed");
+            const data = await res.json();
+
+            handleUpdateLocation(locationId, 'referenceImage', data.url);
+        } catch (err) {
+            console.error(err);
+            alert("Failed to upload reference image. Please try again.");
+        }
     };
 
     return (
@@ -257,6 +285,38 @@ export const LocationStep: React.FC<StepProps> = ({ project, updateProject, onNe
                                                 />
                                             </div>
                                         </div>
+                                    </div>
+
+                                    {/* 4. REFERENCE VISUAL */}
+                                    <div className="space-y-4 pt-4 border-t border-gray-800">
+                                        <h4 className="flex items-center gap-2 text-pink-400 font-bold text-sm uppercase tracking-wider">
+                                            <span className="bg-pink-500/20 px-2 py-0.5 rounded text-[10px]">4. Vision</span>
+                                            Reference Image
+                                        </h4>
+                                        <label style={{ cursor: 'pointer', width: '100%', display: 'flex', alignItems: 'center', gap: '1rem', background: '#1a1a1a', padding: '0.8rem', borderRadius: '6px', border: loc.referenceImage ? '1px solid #555' : '2px dashed #444', transition: 'all 0.2s' }}
+                                            className="hover:border-pink-500 group"
+                                        >
+                                            <div style={{ width: '80px', height: '80px', background: loc.referenceImage ? `url(${loc.referenceImage}) center/cover` : '#222', borderRadius: '4px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                {!loc.referenceImage && <ImageIcon size={24} color="#555" />}
+                                            </div>
+                                            <div style={{ flex: 1 }}>
+                                                <div className={`font-bold mb-1 ${loc.referenceImage ? 'text-white' : 'text-gray-500'}`}>
+                                                    {loc.referenceImage ? 'Reference Uploaded' : 'Upload Location Concept Art'}
+                                                </div>
+                                                <div className="text-xs text-gray-500">
+                                                    {loc.referenceImage ? 'Click to replace image' : 'Drag & drop or click to browse'}
+                                                </div>
+                                            </div>
+                                            <div className="bg-gray-800 p-3 rounded-full text-white group-hover:bg-pink-600 transition-colors">
+                                                <Upload size={18} />
+                                            </div>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(e) => handleImageUpload(loc.locationId, e)}
+                                                style={{ display: 'none' }}
+                                            />
+                                        </label>
                                     </div>
                                 </div>
                             );

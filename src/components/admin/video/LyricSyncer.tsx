@@ -25,12 +25,35 @@ export default function LyricSyncer({ audioUrl, rawLyrics, onSyncComplete }: Lyr
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    // Initial Split
+    // Initial Split & Load Cache
     useEffect(() => {
         if (rawLyrics) {
-            setLines(rawLyrics.split('\n').filter(l => l.trim() !== ''));
+            const parsedLines = rawLyrics.split('\n').filter(l => l.trim() !== '');
+            setLines(parsedLines);
+
+            // Check Cache
+            try {
+                const cached = localStorage.getItem(`director_sync_${audioUrl}`);
+                if (cached) {
+                    const parsed = JSON.parse(cached);
+                    // Only restore if lengths match (so if they edited lyrics, it restarts)
+                    if (parsed && Array.isArray(parsed) && parsed.length <= parsedLines.length) {
+                        setSyncedData(parsed);
+                        setCurrentIndex(parsed.length);
+                    }
+                }
+            } catch (e) {
+                console.warn("Cleared corrupted sync cache");
+            }
         }
-    }, [rawLyrics]);
+    }, [rawLyrics, audioUrl]);
+
+    // Save Cache automatically as we type/sync
+    useEffect(() => {
+        if (syncedData.length > 0) {
+            localStorage.setItem(`director_sync_${audioUrl}`, JSON.stringify(syncedData));
+        }
+    }, [syncedData, audioUrl]);
 
     // Keyboard Handler (Spacebar + Backspace)
     useEffect(() => {
@@ -120,6 +143,7 @@ export default function LyricSyncer({ audioUrl, rawLyrics, onSyncComplete }: Lyr
         setCurrentIndex(0);
         setSyncedData([]);
         setCurrentTime(0);
+        localStorage.removeItem(`director_sync_${audioUrl}`);
     };
 
     // Update time for UI
@@ -136,10 +160,17 @@ export default function LyricSyncer({ audioUrl, rawLyrics, onSyncComplete }: Lyr
 
     return (
         <div style={{ background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
-            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                <Music size={20} color="#FF0080" />
-                Tap-to-Sync Engine
-            </h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+                    <Music size={20} color="#FF0080" />
+                    Tap-to-Sync Engine
+                </h3>
+                {syncedData.length > 0 && (
+                    <span style={{ fontSize: '0.8rem', color: '#4ade80', background: '#4ade8020', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                        Auto-saved
+                    </span>
+                )}
+            </div>
 
             {/* Waveform Visualization */}
             <Waveform
