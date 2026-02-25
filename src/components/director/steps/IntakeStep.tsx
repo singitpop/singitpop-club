@@ -34,41 +34,42 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
             const raw = importRaw.trim();
             if (!raw) throw new Error("Input is empty.");
 
-            // Extract all standalone JSON objects by matching {} braces
             const blocks: any[] = [];
-            let startIndex = -1;
-            let braceCount = 0;
 
-            for (let i = 0; i < raw.length; i++) {
-                if (raw[i] === '{') {
-                    if (braceCount === 0) startIndex = i;
-                    braceCount++;
-                } else if (raw[i] === '}') {
-                    braceCount--;
-                    if (braceCount === 0 && startIndex !== -1) {
-                        const jsonStr = raw.substring(startIndex, i + 1);
+            // 1. Try to extract Markdown ```json ... ``` blocks
+            const markdownRegex = /```(?:json)?\s*([\s\S]*?)\s*```/gi;
+            let match;
+            while ((match = markdownRegex.exec(raw)) !== null) {
+                try {
+                    blocks.push(JSON.parse(match[1].trim()));
+                } catch (e) { console.warn("Failed parsing markdown block"); }
+            }
+
+            // 2. Fallback: If no markdown blocks, try parsing the whole string 
+            if (blocks.length === 0) {
+                let cleanRaw = raw.replace(/```json/gi, '').replace(/```/g, '').trim();
+                if (cleanRaw.match(/}\s*\{/g)) cleanRaw = cleanRaw.replace(/}\s*\{/g, '},{');
+                if (cleanRaw.startsWith('{') && cleanRaw.endsWith('}') && cleanRaw.includes('},{')) {
+                    cleanRaw = `[${cleanRaw}]`;
+                }
+                try {
+                    const parsed = JSON.parse(cleanRaw);
+                    if (Array.isArray(parsed)) blocks.push(...parsed);
+                    else blocks.push(parsed);
+                } catch (fallbackErr) {
+                    // 3. Ultra Fallback: Just regex extract the first { ... } globally
+                    const braceRegex = /\{[\s\S]*\}/g;
+                    const bMatch = raw.match(braceRegex);
+                    if (bMatch) {
                         try {
-                            blocks.push(JSON.parse(jsonStr));
-                        } catch (err) {
-                            console.warn("Found JSON-like block but failed to parse:", jsonStr);
-                        }
-                        startIndex = -1;
+                            blocks.push(JSON.parse(bMatch[0]));
+                        } catch (e) { console.warn("Failed ultra fallback"); }
                     }
                 }
             }
 
             if (blocks.length === 0) {
-                // Fallback attempt: maybe it's an array wrapped in []?
-                try {
-                    const fallback = JSON.parse(raw.replace(/```json/gi, '').replace(/```/g, '').trim());
-                    if (Array.isArray(fallback)) {
-                        blocks.push(...fallback);
-                    } else {
-                        blocks.push(fallback);
-                    }
-                } catch (fallbackErr) {
-                    throw new Error("Could not find any valid JSON blocks in the text.");
-                }
+                throw new Error("Could not find any valid JSON. Make sure you copied the exact code blocks.");
             }
 
             let newProject = { ...project };
@@ -76,22 +77,27 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
 
             blocks.forEach((b: any) => {
                 // Determine root object if ChatGPT nested it differently
-                const projObj = b.project || b.project_metadata || b.metadata || b;
-                const charObj = b.character_profile || b.character || b.lead || b;
-                const locArr = b.locations || b.scenes || (Array.isArray(b) ? b : null);
+                const projObj = b.song || b.songData || b.project || b.project_metadata || b.metadata || b;
+                const charObj = b.character_profile || b.character || b.lead || b.cast || b;
+                const locArr = b.locations || b.scenes || b.settings || (Array.isArray(b) ? b : null);
 
                 // 1. Project Metadata
-                if (projObj && (projObj.title || projObj.artist || projObj.genre || projObj.emotional_state)) {
+                const title = projObj.title || projObj.song_title || projObj.name;
+                const artist = projObj.artist || projObj.lead_artist;
+                const genre = projObj.genre || projObj.style;
+                const mood = projObj.emotional_state || projObj.mood || projObj.moodKeywords;
+
+                if (title || artist || genre || mood) {
                     extractedDataCount++;
                     newProject.song = {
                         ...newProject.song,
-                        title: projObj.title || newProject.song.title,
-                        artist: projObj.artist || newProject.song.artist,
-                        genre: projObj.genre || newProject.song.genre,
-                        moodKeywords: projObj.emotional_state || projObj.mood || newProject.song.moodKeywords
+                        title: title || newProject.song.title,
+                        artist: artist || newProject.song.artist,
+                        genre: genre || newProject.song.genre,
+                        moodKeywords: mood || newProject.song.moodKeywords
                     };
 
-                    if (projObj.visual_style || projObj.narrative_preference) {
+                    if (projObj.visual_style || projObj.narrative_preference || projObj.visual_mode) {
                         newProject.project = {
                             ...newProject.project,
                             directorProfile: {
@@ -100,54 +106,63 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                             },
                             outputSpec: {
                                 ...newProject.project?.outputSpec,
-                                visualMode: projObj.visual_mode || 'realistic'
+                                visualMode: projObj.visual_mode || projObj.visual_style || 'realistic'
                             }
                         };
                     }
                 }
 
                 // 2. Character Profile
-                if (charObj && (charObj.name || charObj.gender || charObj.wardrobe)) {
+                const cName = charObj.name || charObj.character_name;
+                const cGender = charObj.gender || charObj.genderPresentation;
+                const cWardrobe = charObj.wardrobe?.style || charObj.style || charObj.wardrobeSignature || charObj.outfit || charObj.wardrobe;
+
+                if (cName || cGender || cWardrobe) {
                     extractedDataCount++;
-                    const wardrobeStr = charObj.wardrobe?.style || charObj.style || '';
                     const paletteArr = charObj.wardrobe?.palette || charObj.palette || [];
-                    const combinedWardrobe = wardrobeStr ? [wardrobeStr, ...paletteArr] : newProject.cast?.lead?.wardrobeSignature;
+                    const combinedWardrobe = cWardrobe ? [cWardrobe, ...paletteArr] : newProject.cast?.lead?.wardrobeSignature;
+
+                    const face = charObj.facial_expression || charObj.expression || charObj.face || 'calm';
+                    const vibe = charObj.performance_style || charObj.vibe || 'restrained';
 
                     newProject.cast = {
                         ...newProject.cast,
                         lead: {
                             ...newProject.cast?.lead,
-                            name: charObj.name || newProject.cast?.lead?.name,
-                            genderPresentation: charObj.gender || newProject.cast?.lead?.genderPresentation,
+                            name: cName || newProject.cast?.lead?.name,
+                            genderPresentation: cGender || newProject.cast?.lead?.genderPresentation,
                             wardrobeSignature: combinedWardrobe,
                             extractedVisuals: {
-                                face: charObj.facial_expression || charObj.expression || 'calm',
-                                wardrobe: wardrobeStr || 'refined',
-                                vibe: charObj.performance_style || charObj.vibe || 'restrained'
+                                face,
+                                wardrobe: cWardrobe || 'refined',
+                                vibe
                             }
                         }
                     };
                 }
 
-                // 3. Locations Array (Check if array exists and has location fields)
-                if (locArr && Array.isArray(locArr) && locArr.length > 0 && (locArr[0].location_id || locArr[0].name || locArr[0].lighting)) {
-                    extractedDataCount++;
-                    const mappedLocations: Location[] = locArr.map((loc: any, idx: number) => ({
-                        locationId: `loc-${idx + 1}`,
-                        name: loc.location_id || loc.name || `Location ${idx + 1}`,
-                        description: loc.role || loc.description || '',
-                        timeOfDay: (loc.lighting && loc.lighting.toLowerCase().includes('day')) ? 'day' : 'night',
-                        weather: 'clear',
-                        lighting: loc.lighting || '',
-                        cameraVibe: loc.camera_bias || loc.camera || '',
-                        artDirection: Array.isArray(loc.motion_elements) ? loc.motion_elements.join(', ') : (loc.motion_elements || '')
-                    }));
-                    newProject.locations = mappedLocations;
+                // 3. Locations
+                if (locArr && Array.isArray(locArr) && locArr.length > 0) {
+                    const firstLoc = locArr[0];
+                    if (firstLoc.location_id || firstLoc.name || firstLoc.title || firstLoc.lighting || firstLoc.description || firstLoc.timeOfDay) {
+                        extractedDataCount++;
+                        const mappedLocations: Location[] = locArr.map((loc: any, idx: number) => ({
+                            locationId: `loc-${idx + 1}`,
+                            name: loc.location_id || loc.name || loc.title || `Location ${idx + 1}`,
+                            description: loc.role || loc.description || '',
+                            timeOfDay: (loc.lighting && loc.lighting.toLowerCase().includes('day')) ? 'day' : (loc.timeOfDay || 'night'),
+                            weather: loc.weather || 'clear',
+                            lighting: loc.lighting || '',
+                            cameraVibe: loc.camera_bias || loc.camera || loc.cameraVibe || '',
+                            artDirection: Array.isArray(loc.motion_elements) ? loc.motion_elements.join(', ') : (loc.motion_elements || loc.artDirection || '')
+                        }));
+                        newProject.locations = mappedLocations;
+                    }
                 }
             });
 
             if (extractedDataCount === 0) {
-                alert("Warning: JSON was parsed but no matching fields (Project, Character, Locations) were found. Please check the JSON structure.");
+                alert("Warning: JSON was parsed but no matching fields (Title, Character Name, Locations) were found. The fields in the JSON may be named differently than expected.");
             } else {
                 updateProject(newProject);
                 setImportMode(false);
