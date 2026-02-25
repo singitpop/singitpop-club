@@ -23,10 +23,10 @@ export const MERCH_PRODUCTS: Product[] = [
         description: "The 'Director's Cut' Vinyl Edit. Curated audiophile master on 180g vinyl. Includes high-res digital download of the vinyl master.",
         imageColor: "linear-gradient(45deg, #000, #222)",
         category: "vinyl",
-        link: "https://www.diggersfactory.com/vinyl/331968", // Live Project Link
-        badge: "Crowdfunding Now",
+        link: "#", // Project was deleted by Diggers Factory, needs recreation
+        badge: "Coming Soon",
         image: "/images/shop/vinyl-sleeve.png",
-        inStock: true
+        inStock: false
     },
     {
         id: "hoodie-midnight",
