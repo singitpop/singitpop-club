@@ -14,7 +14,6 @@ interface StepProps {
 
 export const ScriptView: React.FC<StepProps> = ({ project, updateProject, onReset, onBack }) => {
 
-    const [selectedTool, setSelectedTool] = useState<'veo' | 'veo3' | 'imagen3' | 'runway' | 'luma' | 'kling' | 'pika'>('veo3');
     const [copiedId, setCopiedId] = useState<string | null>(null);
 
     const handleCopy = (text: string, id: string) => {
@@ -94,21 +93,7 @@ export const ScriptView: React.FC<StepProps> = ({ project, updateProject, onRese
                 </div>
             </div>
 
-            {/* TOOL SELECTOR (Global) */}
-            <div className="flex justify-center gap-2 sticky top-4 z-10 bg-black/80 backdrop-blur-md p-2 rounded-xl border border-gray-800 w-fit mx-auto shadow-2xl">
-                {['veo3', 'imagen3', 'runway', 'luma', 'kling'].map((t) => (
-                    <button
-                        key={t}
-                        onClick={() => setSelectedTool(t as any)}
-                        className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${selectedTool === t
-                            ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
-                            : 'bg-transparent text-gray-500 hover:text-white'
-                            }`}
-                    >
-                        {t === 'veo3' ? 'Veo 3.1' : t === 'imagen3' ? 'Imagen 3 (Flow)' : t}
-                    </button>
-                ))}
-            </div>
+            {/* TOOL SELECTOR (Global) REMOVED FOR PIPELINE VIEW */}
 
             {/* SCENE LIST */}
             <div className="space-y-12">
@@ -224,28 +209,43 @@ export const ScriptView: React.FC<StepProps> = ({ project, updateProject, onRese
                                             )}
                                         </div>
 
-                                        {/* PROMPT BOX (Right) */}
-                                        <div className="w-1/3 flex-shrink-0 relative">
-                                            <div className="absolute -top-3 right-0">
-                                                {/* Tool Badge */}
-                                                <span className="text-[10px] font-bold uppercase bg-gray-800 text-gray-400 px-2 py-1 rounded-b">
-                                                    {selectedTool} PROMPT
-                                                </span>
+                                        {/* PIPELINE PROMPTS (Right) */}
+                                        <div className="w-1/3 flex-shrink-0 flex flex-col gap-4">
+                                            {/* Step 1: Imagen 3 */}
+                                            <div className="relative border border-emerald-900/50 bg-black rounded-lg p-3">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-[10px] font-bold uppercase text-emerald-500 bg-emerald-900/20 px-2 py-0.5 rounded">
+                                                        Step 1: Imagen 3 (First Frame)
+                                                    </span>
+                                                    <button
+                                                        onClick={() => handleCopy(shot.toolPrompts?.imagen3 || shot.imagenPrompt || "", `${shot.shotId}-img`)}
+                                                        className={`text-[10px] px-2 py-0.5 rounded font-bold transition-colors ${copiedId === `${shot.shotId}-img` ? 'bg-green-500 text-black' : 'bg-gray-800 text-gray-400 hover:text-white'}`}
+                                                    >
+                                                        {copiedId === `${shot.shotId}-img` ? "COPIED" : "COPY"}
+                                                    </button>
+                                                </div>
+                                                <div className="text-[11px] text-gray-400 font-mono h-24 overflow-y-auto">
+                                                    {shot.toolPrompts?.imagen3 || shot.imagenPrompt || "No image prompt generated."}
+                                                </div>
                                             </div>
 
-                                            <div className="bg-black border border-gray-800 rounded-lg p-3 text-xs text-gray-400 font-mono h-full max-h-40 overflow-y-auto mt-2">
-                                                {shot.toolPrompts?.[selectedTool] || "No unique prompt generated."}
+                                            {/* Step 2: Veo 3.1 */}
+                                            <div className="relative border border-purple-900/50 bg-black rounded-lg p-3">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-[10px] font-bold uppercase text-purple-400 bg-purple-900/20 px-2 py-0.5 rounded">
+                                                        Step 2: Veo 3.1 (Motion)
+                                                    </span>
+                                                    <button
+                                                        onClick={() => handleCopy(shot.toolPrompts?.veo3 || shot.veoPrompt || "", `${shot.shotId}-veo`)}
+                                                        className={`text-[10px] px-2 py-0.5 rounded font-bold transition-colors ${copiedId === `${shot.shotId}-veo` ? 'bg-green-500 text-black' : 'bg-gray-800 text-gray-400 hover:text-white'}`}
+                                                    >
+                                                        {copiedId === `${shot.shotId}-veo` ? "COPIED" : "COPY"}
+                                                    </button>
+                                                </div>
+                                                <div className="text-[11px] text-gray-400 font-mono h-24 overflow-y-auto">
+                                                    {shot.toolPrompts?.veo3 || shot.veoPrompt || "No motion prompt generated."}
+                                                </div>
                                             </div>
-
-                                            <button
-                                                onClick={() => handleCopy(shot.toolPrompts?.[selectedTool] || "", shot.shotId)}
-                                                className={`mt-2 w-full py-2 rounded text-xs font-bold transition-colors flex items-center justify-center gap-2 ${copiedId === shot.shotId
-                                                    ? 'bg-green-500 text-black'
-                                                    : 'bg-gray-800 hover:bg-gray-700 text-white'
-                                                    }`}
-                                            >
-                                                {copiedId === shot.shotId ? "✅ COPIED" : "📋 COPY PROMPT"}
-                                            </button>
                                         </div>
 
                                     </div>

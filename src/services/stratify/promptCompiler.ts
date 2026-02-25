@@ -133,30 +133,25 @@ const resolveActionContext = (shot: Shot): string => {
 
 const VeoAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string, project?: StratifyProject): string => {
-        // Veo 3.1 "Master Prompt" Structure (Enhanced):
-        // [Template Style]. [Shot Type] of [Subject] [Action FG/BG]. [Composition]. [Environment/Weather]. [Camera Move]. [Audio].
-
-        const cam = shot.camera;
         let prompt = "";
 
-        // NEW: Inject Template Keywords
         if (project?.project.outputSpec.veoTemplate) {
             const template = project.project.outputSpec.veoTemplate;
             const keywords = resolveVeoTemplateKeywords(template);
             prompt += `Style: ${template} (${keywords}). `;
         }
 
-        prompt += `Cinematic ${shot.shotType} of ${charCtx}. `;
-        prompt += `${actionCtx}. `; // Includes FG and BG
-        prompt += `${compCtx}. `;
-        prompt += `${styleCtx} `; // Includes Weather/Ambience
-
-        if (cam.movement !== 'locked') {
-            const cameraDesc = resolveCameraMovementContext(cam.movement);
-            prompt += `${cameraDesc} ${cam.angle !== 'eye-level' ? `Shot at ${cam.angle}` : ''}. `;
+        if (shot.veoPrompt) {
+            prompt += `${shot.veoPrompt} `;
+        } else {
+            prompt += `Cinematic ${shot.shotType} of ${charCtx}. ${actionCtx}. ${compCtx}. ${styleCtx} `;
+            const cam = shot.camera;
+            if (cam.movement !== 'locked') {
+                const cameraDesc = resolveCameraMovementContext(cam.movement);
+                prompt += `${cameraDesc} ${cam.angle !== 'eye-level' ? `Shot at ${cam.angle}` : ''}. `;
+            }
         }
 
-        // Specific Audio Header for Veo
         prompt += `\n[AUDIO]: ${audioCtx}`;
         if (project?.song.audioFile) {
             prompt += ` [REFERENCE: ${project.song.audioFile}]`;
@@ -207,6 +202,9 @@ const PikaAdapter = {
 
 const ImagenAdapter = {
     generate: (shot: Shot, charCtx: string, actionCtx: string, audioCtx: string, styleCtx: string, compCtx: string): string => {
+        if (shot.imagenPrompt) {
+            return `${shot.imagenPrompt} High dynamic range, sharp focus.`.replace(/\.\./g, '.');
+        }
         return `A photorealistic shot of ${charCtx}. ${actionCtx}. The scene features ${styleCtx}. ${compCtx}. ${resolveCameraMovementContext(shot.camera.movement)}. ${audioCtx}. Captured with high dynamic range and sharp focus.`;
     }
 };

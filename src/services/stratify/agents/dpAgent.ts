@@ -75,7 +75,9 @@ export class DPAgent implements DirectorAgent {
                             "lyricLineText": "The specific lyric line this shot covers",
                             "startSec": number, // Output exact timestamp if SYNCED LYRICS DATA is available, else 0
                             "endSec": number, // startSec + durationSec
-                            "basePrompt": "summary string"
+                            "basePrompt": "summary string",
+                            "imagenPrompt": "hyper-specific image generation prompt describing ONLY the visual composition, lighting, characters, and environment of the very first frame of this shot. DO NOT describe motion. MUST be incredibly detailed.",
+                            "veoPrompt": "hyper-specific motion control prompt. Start by describing the exact camera movement, then describe the subject's animation/performance. DO NOT describe the environment if it doesn't move. Focus strictly on kinetics."
                         }]
                         `;
 
@@ -95,6 +97,8 @@ export class DPAgent implements DirectorAgent {
                             backgroundAction: s.backgroundAction || "Background texture",
                             composition: s.composition || "Cinematic framing",
                             basePrompt: s.basePrompt || `${s.shotType} of action`,
+                            imagenPrompt: s.imagenPrompt || `Cinematic ${s.shotType}, ${scene.mood.lighting} lighting, ${s.composition}.`,
+                            veoPrompt: s.veoPrompt || `Camera ${s.camera?.movement || 'locked'}, ${s.foregroundAction}`,
                             durationSec: s.durationSec || 4,
                             audioEnvironment: s.audioEnvironment || "Room tone",
                             audioSync: {

@@ -119,6 +119,8 @@ export interface Shot {
     subjects: ShotSubject[];
     composition: string; // e.g. "Rule of thirds", "Center framed"
     basePrompt: string; // The neutral, tool-agnostic prompt
+    imagenPrompt?: string; // High-fidelity visual prompt for the first frame
+    veoPrompt?: string; // Motion control prompt for the video generation
 
     // Audio
     durationSec: number;
