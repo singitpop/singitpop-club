@@ -31,23 +31,45 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
 
     const handleImportPackage = () => {
         try {
-            let cleanRaw = importRaw.trim();
+            const raw = importRaw.trim();
+            if (!raw) throw new Error("Input is empty.");
 
-            // 1. Strip markdown formatting if pasted directly from ChatGPT
-            cleanRaw = cleanRaw.replace(/```json/gi, '').replace(/```/g, '').trim();
+            // Extract all standalone JSON objects by matching {} braces
+            const blocks: any[] = [];
+            let startIndex = -1;
+            let braceCount = 0;
 
-            // 2. Handle multiple objects pasted back-to-back e.g. } \n\n {
-            if (cleanRaw.match(/}\s*\{/g)) {
-                cleanRaw = cleanRaw.replace(/}\s*\{/g, '},{');
+            for (let i = 0; i < raw.length; i++) {
+                if (raw[i] === '{') {
+                    if (braceCount === 0) startIndex = i;
+                    braceCount++;
+                } else if (raw[i] === '}') {
+                    braceCount--;
+                    if (braceCount === 0 && startIndex !== -1) {
+                        const jsonStr = raw.substring(startIndex, i + 1);
+                        try {
+                            blocks.push(JSON.parse(jsonStr));
+                        } catch (err) {
+                            console.warn("Found JSON-like block but failed to parse:", jsonStr);
+                        }
+                        startIndex = -1;
+                    }
+                }
             }
 
-            // 3. If there are multiple objects now separated by commas but missing array brackets, wrap them
-            if (cleanRaw.startsWith('{') && cleanRaw.endsWith('}') && cleanRaw.includes('},{')) {
-                cleanRaw = `[${cleanRaw}]`;
+            if (blocks.length === 0) {
+                // Fallback attempt: maybe it's an array wrapped in []?
+                try {
+                    const fallback = JSON.parse(raw.replace(/```json/gi, '').replace(/```/g, '').trim());
+                    if (Array.isArray(fallback)) {
+                        blocks.push(...fallback);
+                    } else {
+                        blocks.push(fallback);
+                    }
+                } catch (fallbackErr) {
+                    throw new Error("Could not find any valid JSON blocks in the text.");
+                }
             }
-
-            const parsed = JSON.parse(cleanRaw);
-            const blocks = Array.isArray(parsed) ? parsed : [parsed];
 
             let newProject = { ...project };
 
@@ -117,9 +139,9 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
             setImportMode(false);
             setImportRaw('');
             alert('Antigravity Package Successfully Imported! Review your Intake & Cast settings.');
-        } catch (e) {
+        } catch (e: any) {
             console.error("Failed to parse Antigravity Package", e);
-            alert("Invalid JSON format. Please ensure you copied the exact code blocks.");
+            alert(`Import Failed: ${e.message}\n\nPlease ensure you copied the exact code blocks.`);
         }
     };
 
