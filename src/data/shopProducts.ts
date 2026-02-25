@@ -16,18 +16,20 @@ export interface Product {
 
 
 export const MERCH_PRODUCTS: Product[] = [
-    {
-        id: "vinyl-limited",
-        name: "Limited Edition Vinyl",
-        price: 25.00,
-        description: "The 'Director's Cut' Vinyl Edit. Curated audiophile master on 180g vinyl. Includes high-res digital download of the vinyl master.",
-        imageColor: "linear-gradient(45deg, #000, #222)",
-        category: "vinyl",
-        link: "#", // Project was deleted by Diggers Factory, needs recreation
-        badge: "Coming Soon",
-        image: "/images/shop/vinyl-sleeve.png",
-        inStock: false
-    },
+    /*
+        {
+            id: "vinyl-limited",
+            name: "Limited Edition Vinyl",
+            price: 25.00,
+            description: "The 'Director's Cut' Vinyl Edit. Curated audiophile master on 180g vinyl. Includes high-res digital download of the vinyl master.",
+            imageColor: "linear-gradient(45deg, #000, #222)",
+            category: "vinyl",
+            link: "#", // Project was deleted by Diggers Factory, needs recreation
+            badge: "Coming Soon",
+            image: "/images/shop/vinyl-sleeve.png",
+            inStock: false
+        },
+    */
     {
         id: "hoodie-midnight",
         name: "Midnight Hoodie",
