@@ -72,73 +72,88 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
             }
 
             let newProject = { ...project };
+            let extractedDataCount = 0;
 
-            blocks.forEach((block: any) => {
+            blocks.forEach((b: any) => {
+                // Determine root object if ChatGPT nested it differently
+                const projObj = b.project || b.project_metadata || b.metadata || b;
+                const charObj = b.character_profile || b.character || b.lead || b;
+                const locArr = b.locations || b.scenes || (Array.isArray(b) ? b : null);
+
                 // 1. Project Metadata
-                if (block.project) {
+                if (projObj && (projObj.title || projObj.artist || projObj.genre || projObj.emotional_state)) {
+                    extractedDataCount++;
                     newProject.song = {
                         ...newProject.song,
-                        title: block.project.title || newProject.song.title,
-                        artist: block.project.artist || newProject.song.artist,
-                        genre: block.project.genre || newProject.song.genre,
-                        moodKeywords: block.project.emotional_state || newProject.song.moodKeywords
+                        title: projObj.title || newProject.song.title,
+                        artist: projObj.artist || newProject.song.artist,
+                        genre: projObj.genre || newProject.song.genre,
+                        moodKeywords: projObj.emotional_state || projObj.mood || newProject.song.moodKeywords
                     };
 
-                    if (block.project.visual_style) {
+                    if (projObj.visual_style || projObj.narrative_preference) {
                         newProject.project = {
                             ...newProject.project,
                             directorProfile: {
                                 ...newProject.project?.directorProfile,
-                                narrativePreference: 'hybrid', // default for cinematic
+                                narrativePreference: projObj.narrative_preference || 'hybrid',
                             },
                             outputSpec: {
                                 ...newProject.project?.outputSpec,
-                                visualMode: 'realistic'
+                                visualMode: projObj.visual_mode || 'realistic'
                             }
                         };
                     }
                 }
 
                 // 2. Character Profile
-                if (block.character_profile) {
+                if (charObj && (charObj.name || charObj.gender || charObj.wardrobe)) {
+                    extractedDataCount++;
+                    const wardrobeStr = charObj.wardrobe?.style || charObj.style || '';
+                    const paletteArr = charObj.wardrobe?.palette || charObj.palette || [];
+                    const combinedWardrobe = wardrobeStr ? [wardrobeStr, ...paletteArr] : newProject.cast?.lead?.wardrobeSignature;
+
                     newProject.cast = {
                         ...newProject.cast,
                         lead: {
                             ...newProject.cast?.lead,
-                            name: block.character_profile.name || newProject.cast?.lead?.name,
-                            genderPresentation: block.character_profile.gender || newProject.cast?.lead?.genderPresentation,
-                            wardrobeSignature: block.character_profile.wardrobe ?
-                                [block.character_profile.wardrobe.style, ...(block.character_profile.wardrobe.palette || [])]
-                                : newProject.cast?.lead?.wardrobeSignature,
+                            name: charObj.name || newProject.cast?.lead?.name,
+                            genderPresentation: charObj.gender || newProject.cast?.lead?.genderPresentation,
+                            wardrobeSignature: combinedWardrobe,
                             extractedVisuals: {
-                                face: block.character_profile.facial_expression || 'calm',
-                                wardrobe: block.character_profile.wardrobe?.style || 'refined',
-                                vibe: block.character_profile.performance_style || 'restrained'
+                                face: charObj.facial_expression || charObj.expression || 'calm',
+                                wardrobe: wardrobeStr || 'refined',
+                                vibe: charObj.performance_style || charObj.vibe || 'restrained'
                             }
                         }
                     };
                 }
 
-                // 3. Locations Array
-                if (block.locations && Array.isArray(block.locations)) {
-                    const mappedLocations: Location[] = block.locations.map((loc: any, idx: number) => ({
+                // 3. Locations Array (Check if array exists and has location fields)
+                if (locArr && Array.isArray(locArr) && locArr.length > 0 && (locArr[0].location_id || locArr[0].name || locArr[0].lighting)) {
+                    extractedDataCount++;
+                    const mappedLocations: Location[] = locArr.map((loc: any, idx: number) => ({
                         locationId: `loc-${idx + 1}`,
-                        name: loc.location_id || `Location ${idx + 1}`,
-                        description: loc.role || '',
-                        timeOfDay: (loc.lighting && loc.lighting.includes('day')) ? 'day' : 'night',
+                        name: loc.location_id || loc.name || `Location ${idx + 1}`,
+                        description: loc.role || loc.description || '',
+                        timeOfDay: (loc.lighting && loc.lighting.toLowerCase().includes('day')) ? 'day' : 'night',
                         weather: 'clear',
                         lighting: loc.lighting || '',
-                        cameraVibe: loc.camera_bias || '',
-                        artDirection: (loc.motion_elements || []).join(', ')
+                        cameraVibe: loc.camera_bias || loc.camera || '',
+                        artDirection: Array.isArray(loc.motion_elements) ? loc.motion_elements.join(', ') : (loc.motion_elements || '')
                     }));
                     newProject.locations = mappedLocations;
                 }
             });
 
-            updateProject(newProject);
-            setImportMode(false);
-            setImportRaw('');
-            alert('Antigravity Package Successfully Imported! Review your Intake & Cast settings.');
+            if (extractedDataCount === 0) {
+                alert("Warning: JSON was parsed but no matching fields (Project, Character, Locations) were found. Please check the JSON structure.");
+            } else {
+                updateProject(newProject);
+                setImportMode(false);
+                setImportRaw('');
+                alert('Antigravity Package Successfully Imported! Review your Intake & Cast settings.');
+            }
         } catch (e: any) {
             console.error("Failed to parse Antigravity Package", e);
             alert(`Import Failed: ${e.message}\n\nPlease ensure you copied the exact code blocks.`);
