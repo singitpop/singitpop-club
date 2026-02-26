@@ -22,13 +22,18 @@ export default function LyricSyncer({ audioUrl, rawLyrics, onSyncComplete }: Lyr
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [playbackRate, setPlaybackRate] = useState(1);
+    const [cacheLoaded, setCacheLoaded] = useState<number | null>(null); // lines restored from cache
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     // Initial Split & Load Cache
     useEffect(() => {
         if (rawLyrics) {
-            const parsedLines = rawLyrics.split('\n').filter(l => l.trim() !== '');
+            // Split on newlines AND the ' / ' separator ChatGPT uses within scene lyrics
+            const parsedLines = rawLyrics
+                .split(/\n|\/(?=\s)| \/ /)
+                .map(l => l.trim())
+                .filter(l => l !== '');
             setLines(parsedLines);
 
             // Check Cache
@@ -40,6 +45,7 @@ export default function LyricSyncer({ audioUrl, rawLyrics, onSyncComplete }: Lyr
                     if (parsed && Array.isArray(parsed) && parsed.length <= parsedLines.length) {
                         setSyncedData(parsed);
                         setCurrentIndex(parsed.length);
+                        setCacheLoaded(parsed.length);
                     }
                 }
             } catch (e) {
@@ -143,6 +149,7 @@ export default function LyricSyncer({ audioUrl, rawLyrics, onSyncComplete }: Lyr
         setCurrentIndex(0);
         setSyncedData([]);
         setCurrentTime(0);
+        setCacheLoaded(null);
         localStorage.removeItem(`director_sync_${audioUrl}`);
     };
 
@@ -165,12 +172,20 @@ export default function LyricSyncer({ audioUrl, rawLyrics, onSyncComplete }: Lyr
                     <Music size={20} color="#FF0080" />
                     Tap-to-Sync Engine
                 </h3>
-                {syncedData.length > 0 && (
+                {syncedData.length > 0 && cacheLoaded === null && (
                     <span style={{ fontSize: '0.8rem', color: '#4ade80', background: '#4ade8020', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
                         Auto-saved
                     </span>
                 )}
             </div>
+
+            {/* Cache Restored Banner */}
+            {cacheLoaded !== null && currentIndex < lines.length && (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#052e16', border: '1px solid #4ade80', borderRadius: '8px', padding: '0.6rem 1rem', marginBottom: '1rem', fontSize: '0.85rem' }}>
+                    <span style={{ color: '#4ade80' }}>✅ Previous sync restored — <strong>{cacheLoaded}/{lines.length}</strong> lines already timed. Resume from where you left off, or Reset to start over.</span>
+                    <button onClick={reset} style={{ marginLeft: '1rem', background: 'transparent', border: '1px solid #4ade80', color: '#4ade80', padding: '0.2rem 0.6rem', borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>Clear &amp; Reset</button>
+                </div>
+            )}
 
             {/* Waveform Visualization */}
             <Waveform
@@ -264,7 +279,7 @@ export default function LyricSyncer({ audioUrl, rawLyrics, onSyncComplete }: Lyr
 
             <div style={{ textAlign: 'center', marginBottom: '1rem', color: '#666', fontSize: '0.8rem' }}>
                 <kbd style={{ background: '#333', padding: '0.2rem 0.5rem', borderRadius: '4px', color: 'white' }}>SPACE</kbd> = Mark Line &nbsp;|&nbsp;
-                <kbd style={{ background: '#333', padding: '0.2rem 0.5rem', borderRadius: '4px', color: 'white' }}>BACKSPACE</kbd> = Undo & Rewind
+                <kbd style={{ background: '#333', padding: '0.2rem 0.5rem', borderRadius: '4px', color: 'white' }}>BACKSPACE</kbd> = Undo &amp; Rewind
             </div>
 
             {/* Result Area */}
