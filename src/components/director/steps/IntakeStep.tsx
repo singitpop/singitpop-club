@@ -83,18 +83,27 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
 
                 // 1. Project Metadata
                 const title = projObj.title || projObj.song_title || projObj.name;
-                const artist = projObj.artist || projObj.lead_artist;
-                const genre = projObj.genre || projObj.style;
+                const artist = projObj.artist || projObj.lead_artist || b.artist;
+                const genre = projObj.genre || projObj.style || projObj.musical_style || b.genre;
                 const mood = projObj.emotional_state || projObj.mood || projObj.moodKeywords;
 
-                // Lyrics - check many common field names ChatGPT might use
+                // Lyrics: check top-level fields first, then concatenate from scenes[].lyrics
                 const rawLyrics = projObj.lyrics?.rawText || projObj.lyrics?.text || projObj.lyrics
                     || b.lyrics?.rawText || b.lyrics?.text || b.lyrics
                     || projObj.full_lyrics || projObj.song_lyrics || projObj.text;
-                const lyricsStr = typeof rawLyrics === 'string' ? rawLyrics : null;
+                const scenesArr = b.scenes || b.scene_breakdown || b.structure?.scenes;
+                const sceneLyrics = Array.isArray(scenesArr)
+                    ? scenesArr.filter((s: any) => typeof s.lyrics === 'string').map((s: any) => s.lyrics).join('\n') || null
+                    : null;
+                const lyricsStr = (typeof rawLyrics === 'string' ? rawLyrics : null) || sceneLyrics;
 
                 const bpm = projObj.bpm || projObj.tempo || b.bpm;
-                const duration = projObj.duration || b.duration;
+                // Support duration as seconds (e.g. 172) or formatted string (e.g. "2:52")
+                const rawDuration = projObj.duration || b.duration;
+                const durationSec = projObj.duration_seconds || b.duration_seconds;
+                const duration = rawDuration || (durationSec
+                    ? `${Math.floor(durationSec / 60)}:${String(Math.round(durationSec % 60)).padStart(2, '0')}`
+                    : null);
 
                 if (title || artist || genre || mood || lyricsStr || bpm || duration || projObj.visual_style || projObj.narrative_preference || projObj.visual_mode || b.global_style) {
                     extractedDataCount++;
