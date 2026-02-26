@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { StratifyProject, Scene, Shot } from '@/types/stratify';
 import { motion } from 'framer-motion';
+import { compileMasterPrompt } from '@/services/stratify/promptCompiler';
 
 // ... imports
 
@@ -211,6 +212,31 @@ export const ScriptView: React.FC<StepProps> = ({ project, updateProject, onRese
 
                                         {/* PIPELINE PROMPTS (Right) */}
                                         <div className="w-1/3 flex-shrink-0 flex flex-col gap-4">
+
+                                            {/* MASTER PROMPT */}
+                                            <div className="relative border border-cyan-500/40 bg-cyan-950/20 rounded-lg p-3">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-[10px] font-bold uppercase text-cyan-300 tracking-wider">
+                                                        🎯 Master Prompt · Google Flow / Gemini
+                                                    </span>
+                                                    <button
+                                                        onClick={() => {
+                                                            const master = compileMasterPrompt(project, shot);
+                                                            handleCopy(master, `${shot.shotId}-master`);
+                                                        }}
+                                                        className={`text-[10px] px-3 py-1 rounded font-bold transition-all ${copiedId === `${shot.shotId}-master`
+                                                                ? 'bg-cyan-400 text-black scale-95'
+                                                                : 'bg-cyan-700 hover:bg-cyan-500 text-white'
+                                                            }`}
+                                                    >
+                                                        {copiedId === `${shot.shotId}-master` ? '✓ COPIED!' : 'COPY ALL'}
+                                                    </button>
+                                                </div>
+                                                <div className="text-[11px] text-cyan-100/70 font-mono h-28 overflow-y-auto leading-relaxed">
+                                                    {compileMasterPrompt(project, shot)}
+                                                </div>
+                                            </div>
+
                                             {/* Step 1: Imagen 3 */}
                                             <div className="relative border border-emerald-900/50 bg-black rounded-lg p-3">
                                                 <div className="flex justify-between items-center mb-2">

@@ -1,6 +1,7 @@
 
 import { Shot, StratifyProject } from "@/types/stratify";
 
+
 export const PromptCompiler = {
     compile: (project: StratifyProject, shot: Shot, tools: ('veo' | 'veo3' | 'imagen3' | 'runway' | 'pika' | 'luma' | 'kling')[]) => {
         const results: Record<string, string> = {};
@@ -257,4 +258,34 @@ const resolveCameraMovementContext = (movement: Shot['camera']['movement']): str
         case 'handheld-documentary': return "Natural handheld camera shake and subtle human movement while following the subject.";
         default: return "Static locked-off camera.";
     }
+};
+
+// --- MASTER PROMPT (for Google Flow / Gemini) ---
+// Placed after all helpers to avoid temporal dead zone with const declarations
+export const compileMasterPrompt = (project: StratifyProject, shot: Shot): string => {
+    const characterContext = resolveCharacterContext(project, shot);
+    const audioContext = resolveAudioContext(project, shot);
+    const styleContext = resolveStyleContext(project, shot);
+    const composition = shot.composition || "Cinematic composition";
+    const actionContext = resolveActionContext(shot);
+    const cameraMovement = resolveCameraMovementContext(shot.camera.movement);
+
+    const parts: string[] = [];
+
+    parts.push(`Cinematic ${shot.shotType} of ${characterContext}.`);
+    parts.push(actionContext + '.');
+    parts.push(`${composition}.`);
+    if (shot.camera.movement !== 'locked') parts.push(cameraMovement);
+    if (shot.camera.angle && shot.camera.angle !== 'eye-level') parts.push(`Shot at ${shot.camera.angle}.`);
+    parts.push(styleContext + '.');
+
+    if (project.project.outputSpec.veoTemplate) {
+        const keywords = resolveVeoTemplateKeywords(project.project.outputSpec.veoTemplate);
+        parts.push(`Visual Style: ${project.project.outputSpec.veoTemplate} — ${keywords}.`);
+    }
+
+    parts.push(`[AUDIO]: ${audioContext}`);
+    if (project.song.audioFile) parts.push(`[REFERENCE: ${project.song.audioFile}]`);
+
+    return parts.filter(Boolean).join(' ').replace(/\.\s*\./g, '.').trim();
 };
