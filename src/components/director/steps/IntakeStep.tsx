@@ -87,14 +87,26 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                 const genre = projObj.genre || projObj.style;
                 const mood = projObj.emotional_state || projObj.mood || projObj.moodKeywords;
 
-                if (title || artist || genre || mood || projObj.visual_style || projObj.narrative_preference || projObj.visual_mode || b.global_style) {
+                // Lyrics - check many common field names ChatGPT might use
+                const rawLyrics = projObj.lyrics?.rawText || projObj.lyrics?.text || projObj.lyrics
+                    || b.lyrics?.rawText || b.lyrics?.text || b.lyrics
+                    || projObj.full_lyrics || projObj.song_lyrics || projObj.text;
+                const lyricsStr = typeof rawLyrics === 'string' ? rawLyrics : null;
+
+                const bpm = projObj.bpm || projObj.tempo || b.bpm;
+                const duration = projObj.duration || b.duration;
+
+                if (title || artist || genre || mood || lyricsStr || bpm || duration || projObj.visual_style || projObj.narrative_preference || projObj.visual_mode || b.global_style) {
                     extractedDataCount++;
                     newProject.song = {
                         ...newProject.song,
                         title: title || newProject.song.title || '',
                         artist: artist || newProject.song.artist || '',
                         genre: genre || newProject.song.genre || '',
-                        moodKeywords: mood || newProject.song.moodKeywords || []
+                        moodKeywords: mood || newProject.song.moodKeywords || [],
+                        ...(lyricsStr ? { lyrics: { rawText: lyricsStr } } : {}),
+                        ...(bpm ? { bpm: parseInt(bpm) } : {}),
+                        ...(duration ? { duration } : {}),
                     };
 
                     if (projObj.visual_style || projObj.narrative_preference || projObj.visual_mode || b.global_style) {
@@ -113,11 +125,14 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                 }
 
                 // 2. Character Profile
-                const cName = charObj.name || charObj.character_name;
+                const cName = charObj.name || charObj.character_name || b.artist || b.lead_artist;
                 const cGender = charObj.gender || charObj.genderPresentation;
                 const cWardrobe = charObj.wardrobe?.style || charObj.style || charObj.wardrobeSignature || charObj.outfit || charObj.wardrobe || (b.global_style ? (b.global_style.color_palette?.join(', ') || 'Styled') : '');
 
-                if (cName || cGender || cWardrobe) {
+                // Also populate cast if artist name was found even without a character block
+                const effectiveName = cName || artist;
+
+                if (effectiveName || cGender || cWardrobe) {
                     extractedDataCount++;
                     const paletteArr = charObj.wardrobe?.palette || charObj.palette || b.global_style?.color_palette || [];
                     const combinedWardrobe = cWardrobe ? [cWardrobe, ...paletteArr] : (newProject.cast?.lead?.wardrobeSignature || []);
@@ -129,7 +144,7 @@ export const IntakeStep: React.FC<StepProps> = ({ project, updateProject, onNext
                         ...newProject.cast,
                         lead: {
                             ...newProject.cast?.lead,
-                            name: cName || newProject.cast?.lead?.name || 'Lead Singer',
+                            name: effectiveName || newProject.cast?.lead?.name || '',
                             genderPresentation: cGender || newProject.cast?.lead?.genderPresentation || 'Unknown',
                             wardrobeSignature: combinedWardrobe,
                             extractedVisuals: {
