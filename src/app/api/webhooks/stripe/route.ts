@@ -76,6 +76,8 @@ export async function POST(req: Request) {
             }
 
             // CHECK FOR MEMBERSHIP TIERS
+            let grantedTier: string | null = null;
+
             for (const item of lineItems.data) {
                 const priceId = item.price?.id;
 
@@ -84,18 +86,74 @@ export async function POST(req: Request) {
                     await clerkClient.users.updateUser(clerkUserId, {
                         publicMetadata: { tier: 'LIFETIME' }
                     });
+                    grantedTier = 'LIFETIME VIP';
                 } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_VIP) {
                     console.log("🌟 VIP Subscription Active!");
                     await clerkClient.users.updateUser(clerkUserId, {
                         publicMetadata: { tier: 'VIP' }
                     });
+                    grantedTier = 'VIP';
                 } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER) {
                     console.log("💿 Insider Subscription Active!");
                     await clerkClient.users.updateUser(clerkUserId, {
                         publicMetadata: { tier: 'INSIDER' }
                     });
+                    grantedTier = 'INSIDER';
                 }
             }
+
+            // NOTIFY OWNER OF NEW MEMBERSHIP
+            if (grantedTier) {
+                const ownerEmail = process.env.OWNER_EMAIL || 'garybirrell@gmail.com';
+                const memberName = session.customer_details?.name || 'Unknown';
+                const memberEmail = customerEmail || 'Unknown';
+                const amountPaid = session.amount_total
+                    ? `£${(session.amount_total / 100).toFixed(2)}`
+                    : 'Unknown';
+
+                try {
+                    await resend.emails.send({
+                        from: 'SingIt Pop <orders@singitpop.com>',
+                        to: [ownerEmail],
+                        subject: `🎉 New ${grantedTier} Member: ${memberName}`,
+                        html: `
+                            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px;">
+                                <h1 style="color: #10b981; margin-bottom: 4px;">New Member Joined! 🎉</h1>
+                                <p style="color: #6b7280; margin-top: 0;">SingIt Pop Membership Notification</p>
+                                <div style="background: #1a1a1a; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #10b981;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #9ca3af; width: 40%;">Tier</td>
+                                            <td style="padding: 8px 0; color: #fff; font-weight: bold;">${grantedTier}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #9ca3af;">Name</td>
+                                            <td style="padding: 8px 0; color: #fff;">${memberName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #9ca3af;">Email</td>
+                                            <td style="padding: 8px 0; color: #fff;">${memberEmail}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #9ca3af;">Amount Paid</td>
+                                            <td style="padding: 8px 0; color: #10b981; font-weight: bold;">${amountPaid}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #9ca3af;">Date</td>
+                                            <td style="padding: 8px 0; color: #fff;">${new Date().toUTCString()}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <p style="color: #6b7280; font-size: 13px;">You can view all members in the <a href="https://singitpop.com/admin" style="color: #10b981;">Admin Dashboard</a>.</p>
+                            </div>
+                        `
+                    });
+                    console.log(`✅ Owner notified of new ${grantedTier} member: ${memberEmail}`);
+                } catch (notifyErr) {
+                    console.error('❌ Failed to send owner membership notification:', notifyErr);
+                }
+            }
+
         }
 
         if (!customerEmail) {
