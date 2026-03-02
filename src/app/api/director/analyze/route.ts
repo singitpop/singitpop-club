@@ -36,7 +36,10 @@ export async function POST(req: NextRequest) {
         // 1. Setup Gemini
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
         const fileManager = new GoogleAIFileManager(process.env.GEMINI_API_KEY!);
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        const model = genAI.getGenerativeModel({
+            model: "gemini-2.5-pro-exp-03-25",
+            generationConfig: { temperature: 0.8, maxOutputTokens: 8192 }
+        });
 
         // 2. Lookup Audio File from Trusted Data (albumData.ts)
         let audioUri: string | null = null;
