@@ -104,7 +104,7 @@ export async function POST(req: Request) {
 
             // NOTIFY OWNER OF NEW MEMBERSHIP
             if (grantedTier) {
-                const ownerEmail = process.env.OWNER_EMAIL || 'garybirrell@gmail.com';
+                const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
                 const memberName = session.customer_details?.name || 'Unknown';
                 const memberEmail = customerEmail || 'Unknown';
                 const amountPaid = session.amount_total
