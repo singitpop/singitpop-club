@@ -111,57 +111,96 @@ export async function POST(req: NextRequest) {
             console.warn(`[Director Analysis] Track not found in albumData or missing audioUrl.`);
         }
 
-        // 3. Construct Prompt (Multimodal or Text)
-        const promptText = `
-        Act as a Collective Intelligence of the World's Top 10 Music Video Directors (Fincher, Gondry, Jonze, Hiro Murai, Hype Williams, etc.).
-        You are decisive, visionary, and exact. Do not ask for permission. MAKE DECISIONS.
+        // 3. Determine if Director has a specific vision locked in
+        const directorNotes = project.directorProfile?.notes?.trim() || '';
+        const hasDirectorVision = directorNotes.length > 50; // Meaningful notes, not just a word
 
-        Analyze the ${filePart ? "attached audio file AND" : ""} the project details below to generate a unique vision.
+        // 4. Construct Prompt (Multimodal or Text)
+        const promptText = `
+        You are a Collective Intelligence of the World's Top Music Video Directors (Fincher, Gondry, Jonze, Hiro Murai, Hype Williams).
+        You are decisive, visionary, and exact. You do not invent generic concepts. You EXECUTE the director's vision.
+
+        ${hasDirectorVision ? `
+        ╔══════════════════════════════════════════════════════════╗
+        ║  🔴 DIRECTOR'S VISION — LOCKED CREATIVE MANDATE 🔴       ║
+        ╚══════════════════════════════════════════════════════════╝
         
-        ## PROJECT CONTEXT
+        The director has provided a SPECIFIC, DETAILED CREATIVE BRIEF. This is NOT a suggestion — it is a LOCKED mandate.
+        You MUST base ALL 3 treatments on this visual world. Do NOT deviate into generic concepts.
+        
+        DIRECTOR'S BRIEF:
+        "${directorNotes}"
+        
+        TREATMENT RULES WHEN DIRECTOR VISION IS SET:
+        - Treatment 1 (id: "t1"): DIRECT, FAITHFUL interpretation of exactly what the director described.
+          Execute it precisely as written — same setting, same visual language, same camera logic.
+        - Treatment 2 (id: "t2"): BOLD VARIATION within the same visual world. Same tone and aesthetics, 
+          but push one element further (e.g. earlier in the same scene, a different emotional beat).
+        - Treatment 3 (id: "t3"): UNEXPECTED ANGLE on the same concept — what if the same visual world 
+          was filmed from a completely different perspective or time? Stay within the established aesthetics.
+        
+        ⛔ FORBIDDEN: Do NOT generate treatments about flowers, seasons, digital landscapes, 
+        abstract algorithms, or any concept not present in the Director's Brief above.
+        ` : `
+        ╔══════════════════════════════════════════════════════════╗
+        ║  OPEN BRIEF — DERIVE VISION FROM LYRICS & AUDIO          ║
+        ╚══════════════════════════════════════════════════════════╝
+        
+        No specific director vision has been set. You must derive the visual world STRICTLY from the lyrics and audio.
+        
+        ⛔ FORBIDDEN CLICHÉS (Never use these unless lyrics explicitly demand them):
+        - Generic "flowers blooming" or "seasons changing" imagery
+        - Clichéd "neon city streets at night" 
+        - Abstract "digital landscape" or "algorithm" concepts
+        - Generic "time-lapse" nature footage
+        - "Black and white flashbacks"
+        - "Running through fields"
+        
+        You MUST find something SPECIFIC to this song's world. What does THIS song smell like? Sound like to touch?
+        `}
+
+        ## PROJECT DETAILS
         - **Song Title:** "${song.title}"
         - **Artist:** "${song.artist || 'Unknown'}"
         - **Genre:** "${song.genre || 'Unknown'}"
         - **BPM:** ${song.bpm || 'Unknown'}
+        - **Director Style Preference:** ${project.directorProfile?.narrativePreference || 'Hybrid'}
+        - **Lead Artist Look:** ${project.cast?.lead?.lookSpec?.style || 'Not specified'}
         - **Lyrics:** 
         "${song.lyrics?.rawText || 'No lyrics provided.'}"
 
-        - **Director Preference:** ${project.directorProfile?.narrativePreference || 'Hybrid'}
-        - **Director Notes:** "${project.directorProfile?.notes || ''}"
-        - **Lead Artist Look:** ${project.cast?.lead?.lookSpec?.style || 'Not specified'}
-
-        ## INSTRUCTIONS
-        1. IDENTIFY 5 CORE THEMES based strictly on the LYRICS and AUDIO VIBE.
-           - Dig deep. Avoid generic tropes like "Neon Noir" unless the lyrics explicitly call for it.
-           - If lyrics mention specific imagery (e.g. "flowers growing," "seasons"), USE IT.
-        2. DESIGN 3 DISTINCT VIDEO TREATMENTS (Concepts).
-        3. FOR EACH TREATMENT, DESIGN 3-4 KEY LOCATIONS that fully realize that concept.
-           For each location, you must define the "Mise-en-scène" (The Total Visual World):
-           - blocking: Specific actor movement (e.g. "Lead enters from shadow...").
-           - extras: Background action (e.g. "Crowd of 50 people", "Solitary figure").
-           - artDirection: Set & Props (e.g. "Vintage microphone", "Fog machine").
-           - audioEnvironment: Soundscape (e.g. "Heavy rain", "City noise").
-           - lighting: Lighting style (e.g. "Neon Noir").
-           - colorPalette: 60-30-10 Rule (e.g. "60% Black, 30% Red, 10% White").
-           - cameraVibe: Camera movement (e.g. "Handheld Tracking").
+        ## YOUR TASK
+        ${filePart ? "Analyze the attached audio file AND the project details above." : "Analyze the project details above."}
+        
+        1. IDENTIFY 5 CORE THEMES strictly from the LYRICS and the Director's Brief (if set).
+        2. DESIGN 3 DISTINCT VIDEO TREATMENTS following the rules above.
+        3. FOR EACH TREATMENT, design 3-4 KEY LOCATIONS. For each location define:
+           - blocking: Specific actor movement (e.g. "He steps forward, crossing the invisible frame boundary").
+           - extras: Background action (e.g. "Empty rooftop. Wind only.").
+           - artDirection: Set & Props (e.g. "Minimalist square canopy, flowing white linen curtains").
+           - audioEnvironment: Soundscape (e.g. "City ambience at golden hour, soft wind").
+           - lighting: Lighting style (e.g. "Warm amber backlight, soft rim glow").
+           - colorPalette: 60-30-10 Rule (e.g. "60% Beige/Cream, 30% Sage Green, 10% Gold").
+           - cameraVibe: Camera movement (e.g. "Ultra-slow push-in, 35mm to 50mm lens transition").
            - timeOfDay: (dawn/day/dusk/night).
            - weather: (clear/cloudy/rain/storm/fog).
+        4. CALIBRATE the influence dials to match the visual language of your chosen treatments.
 
-        Return ONLY a JSON object with this exact structure:
+        Return ONLY a valid JSON object with this exact structure (no markdown, no explanation):
         {
-            "coreThemes": ["Theme 1", "..."],
+            "coreThemes": ["Theme 1", "Theme 2", "Theme 3", "Theme 4", "Theme 5"],
             "treatments": [
                 {
                     "id": "t1",
-                    "title": "Concept Title",
-                    "summary": "Visual pitch.",
+                    "title": "Specific, Evocative Title (not generic)",
+                    "summary": "2-3 sentence visual pitch. Be specific about imagery, not abstract.",
                     "locations": [
                         {
                             "locationId": "l1",
-                            "name": "Location Name (e.g. The Void)",
-                            "description": "Brief desc.",
-                            "timeOfDay": "night",
-                            "weather": "rain",
+                            "name": "Location Name",
+                            "description": "Brief specific desc.",
+                            "timeOfDay": "dusk",
+                            "weather": "clear",
                             "blocking": "...",
                             "extras": "...",
                             "artDirection": "...",

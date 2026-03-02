@@ -132,23 +132,38 @@ export const DialsStep: React.FC<StepProps> = ({ project, updateProject, onNext,
                 <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">
                     Director's Influence Dials
                 </h2>
-                <p className="text-gray-400">Review the AI Director's vision. Tweak if you disagree.</p>
+                <p className="text-gray-400">Set your vision below — the AI will build all 3 treatments around it.</p>
 
-                {/* DIRECTOR'S NOTE INPUT */}
-                <div className="mb-6 w-full max-w-2xl mx-auto">
-                    <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wide">
-                        Director's Note (Optional)
+                {/* YOUR VISION INPUT — PRIMARY CREATIVE DRIVER */}
+                <div className="mt-4 w-full max-w-2xl mx-auto">
+                    <label className="block text-sm font-bold text-emerald-400 mb-2 uppercase tracking-wide">
+                        🎬 Your Vision / Google Flow Prompt
                     </label>
+                    {directorNote.trim().length < 50 && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mb-2 px-3 py-2 bg-amber-900/30 border border-amber-500/40 rounded-lg text-amber-300 text-xs text-left flex items-start gap-2"
+                        >
+                            <span>⚠️</span>
+                            <span>
+                                <strong>No vision set.</strong> The AI will improvise generic concepts.
+                                Paste your Google Flow prompt or describe the visual world here for far better results.
+                            </span>
+                        </motion.div>
+                    )}
                     <textarea
                         className="w-full bg-gray-900/50 border border-gray-700 rounded-lg p-3 text-white text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-gray-600"
-                        placeholder="e.g. 'A 90s grunge performance in a garage', 'Neon chases in heavy rain', 'Quiet emotional close-ups in black and white'..."
-                        rows={3}
+                        placeholder={`Paste your Google Flow prompt or describe the look you want...\n\nExample: "Modern rooftop at golden hour. Young man in sage green shirt standing completely frozen like album artwork. Then a subtle wind starts — he blinks, steps forward, breaking through the album cover frame. 35mm → 50mm lens push-in. Warm amber and beige palette."`}
+                        rows={8}
                         value={directorNote}
                         onChange={(e) => updateDirectorNote(e.target.value)}
                     />
-                    <p className="text-xs text-gray-500 mt-1 text-right">
-                        Give the AI a specific vision to guide the treatments.
-                    </p>
+                    {directorNote.trim().length >= 50 && (
+                        <p className="text-xs text-emerald-500 mt-1 text-right">
+                            ✅ Vision locked — all 3 treatments will be built around this brief.
+                        </p>
+                    )}
                 </div>
 
                 <button

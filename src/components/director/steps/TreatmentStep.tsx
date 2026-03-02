@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { StratifyProject } from '@/types/stratify';
 import { motion } from 'framer-motion';
 
@@ -12,7 +12,44 @@ interface StepProps {
 
 export const TreatmentStep: React.FC<StepProps> = ({ project, updateProject, onNext, onBack }) => {
 
-    // Fallback if no treatments exist (mock for MVP if API didn't return them yet)
+    const [isRegenerating, setIsRegenerating] = useState(false);
+
+    const handleRegenerate = async () => {
+        setIsRegenerating(true);
+        try {
+            const res = await fetch('/api/director/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    song: project.song,
+                    project: project.project
+                })
+            });
+            if (!res.ok) throw new Error(`API ${res.status}`);
+            const data = await res.json();
+            if (data.error) throw new Error(data.error);
+            if (data.treatments && data.treatments.length > 0) {
+                updateProject({
+                    ...project,
+                    treatments: data.treatments,
+                    selectedTreatmentId: undefined,
+                    project: {
+                        ...project.project,
+                        directorProfile: {
+                            ...project.project.directorProfile,
+                            influenceDials: data.dials || project.project.directorProfile.influenceDials,
+                            coreThemes: data.coreThemes || project.project.directorProfile.coreThemes
+                        }
+                    }
+                });
+            }
+        } catch (e: any) {
+            alert(`Regeneration failed: ${e.message}`);
+        } finally {
+            setIsRegenerating(false);
+        }
+    };
+
     // Use AI-generated treatments if available, otherwise fallback to mocks
     const treatments = (project.treatments && project.treatments.length > 0) ? project.treatments : [
         {
@@ -94,13 +131,36 @@ export const TreatmentStep: React.FC<StepProps> = ({ project, updateProject, onN
         });
     };
 
+    const directorVision = project.project.directorProfile.notes?.trim() || '';
+
     return (
         <div className="space-y-8 max-w-6xl mx-auto">
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-3">
                 <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">
                     Pitch Treatments
                 </h2>
-                <p className="text-gray-400">The Showrunner has developed 3 concepts based on your brief.</p>
+                <p className="text-gray-400">
+                    {directorVision.length >= 50
+                        ? '3 concepts built from your vision. Choose one or regenerate for variations.'
+                        : 'The Showrunner has developed 3 concepts based on your brief.'}
+                </p>
+                {directorVision.length >= 50 && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="mx-auto max-w-2xl px-4 py-2 bg-emerald-900/20 border border-emerald-500/30 rounded-lg text-emerald-300 text-xs text-left"
+                    >
+                        <span className="font-bold">🔒 Vision locked:</span> {directorVision.slice(0, 140)}{directorVision.length > 140 ? '...' : ''}
+                    </motion.div>
+                )}
+                <button
+                    onClick={handleRegenerate}
+                    disabled={isRegenerating}
+                    className="flex items-center gap-2 mx-auto px-5 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-full text-gray-300 text-sm font-bold transition-all disabled:opacity-50"
+                >
+                    {isRegenerating ? <span className="animate-spin">⚡</span> : <span>🔄</span>}
+                    {isRegenerating ? 'Regenerating...' : 'Regenerate Treatments'}
+                </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

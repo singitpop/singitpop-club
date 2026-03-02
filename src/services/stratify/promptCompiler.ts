@@ -260,32 +260,108 @@ const resolveCameraMovementContext = (movement: Shot['camera']['movement']): str
     }
 };
 
-// --- MASTER PROMPT (for Google Flow / Gemini) ---
+// --- MASTER PROMPT (for Google Flow / Veo) ---
 // Placed after all helpers to avoid temporal dead zone with const declarations
+
+const resolveLensFeel = (shotType: Shot['shotType']): string => {
+    switch (shotType) {
+        case 'EWS': return '24mm wide cinematic lens, full environmental depth';
+        case 'WS': return '35mm cinematic lens, shallow depth of field';
+        case 'MS': return '50mm portrait lens, soft background bokeh';
+        case 'MCU': return '50mm portrait lens, shallow depth of field, creamy bokeh';
+        case 'CU': return '85mm portrait lens, very shallow depth of field, subject isolated';
+        case 'ECU': return '100mm+ macro-portrait lens, extreme shallow depth, skin detail visible';
+        default: return '50mm cinematic lens';
+    }
+};
+
+const resolveFaceProminence = (shotType: Shot['shotType']): 'high' | 'medium' | 'low' => {
+    if (shotType === 'CU' || shotType === 'ECU') return 'high';
+    if (shotType === 'MCU' || shotType === 'MS') return 'medium';
+    return 'low';
+};
+
+const resolveFlowMode = (shotType: Shot['shotType'], hasLipSync: boolean): string => {
+    const prominence = resolveFaceProminence(shotType);
+    if (prominence === 'high') return '🔴 USE QUALITY MODE — close face + lip sync visible';
+    if (prominence === 'medium' && hasLipSync) return '🟡 USE QUALITY MODE — lips partially visible';
+    if (prominence === 'medium') return '🟡 FAST OK — medium shot, face stable';
+    return '🟢 FAST OK — wide/profile shot, face not dominant';
+};
+
 export const compileMasterPrompt = (project: StratifyProject, shot: Shot): string => {
     const characterContext = resolveCharacterContext(project, shot);
     const audioContext = resolveAudioContext(project, shot);
     const styleContext = resolveStyleContext(project, shot);
-    const composition = shot.composition || "Cinematic composition";
+    const composition = shot.composition || 'Cinematic composition';
     const actionContext = resolveActionContext(shot);
     const cameraMovement = resolveCameraMovementContext(shot.camera.movement);
+    const lensFeel = resolveLensFeel(shot.shotType);
+    const hasLipSync = !!shot.audioSync?.lyricLineText;
+    const bpm = (project.song as any).bpm as number | undefined;
 
     const parts: string[] = [];
 
+    // ── Flow mode hint (not part of the prompt text, shown separately) ──
+    const flowModeHint = resolveFlowMode(shot.shotType, hasLipSync);
+
+    // ── Subject + action ──
     parts.push(`Cinematic ${shot.shotType} of ${characterContext}.`);
     parts.push(actionContext + '.');
+
+    // ── Performance direction ──
+    const prominence = resolveFaceProminence(shot.shotType);
+    if (hasLipSync && shot.audioSync?.lyricLineText) {
+        const bpmLine = bpm ? ` in a slow ${bpm} BPM R&B rhythm with long natural breath spacing between phrases` : '';
+        parts.push(
+            `He sings${bpmLine}: "${shot.audioSync.lyricLineText}". ` +
+            `Natural lip movement, ${prominence === 'high' ? 'minimal head movement, restrained jaw, soft eyes' : 'mouth partially visible — prioritise mood over lip precision'}.`
+        );
+    } else {
+        parts.push(`Mouth closed. No lip movement. No dialogue. Calm, grounded expression.`);
+    }
+
+    // ── Camera movement ──
+    if (shot.camera.movement !== 'locked') {
+        parts.push(cameraMovement);
+    } else {
+        parts.push(`Camera: locked-off tripod shot. No zoom. No orbit. No auto-reframing.`);
+    }
+    // Always add camera lock guard against AI over-animation
+    parts.push(`No zoom oscillation. No pull-back zoom. No automatic reframing. No handheld shake unless specified.`);
+
+    if (shot.camera.angle && shot.camera.angle !== 'eye-level') {
+        parts.push(`Camera angle: ${shot.camera.angle}.`);
+    }
+
+    // ── Lens ──
+    parts.push(`Lens: ${lensFeel}.`);
+
+    // ── Composition ──
     parts.push(`${composition}.`);
-    if (shot.camera.movement !== 'locked') parts.push(cameraMovement);
-    if (shot.camera.angle && shot.camera.angle !== 'eye-level') parts.push(`Shot at ${shot.camera.angle}.`);
+
+    // ── Style / environment ──
     parts.push(styleContext + '.');
 
+    // ── Veo template ──
     if (project.project.outputSpec.veoTemplate) {
         const keywords = resolveVeoTemplateKeywords(project.project.outputSpec.veoTemplate);
         parts.push(`Visual Style: ${project.project.outputSpec.veoTemplate} — ${keywords}.`);
     }
 
+    // ── Audio ──
     parts.push(`[AUDIO]: ${audioContext}`);
     if (project.song.audioFile) parts.push(`[REFERENCE: ${project.song.audioFile}]`);
 
-    return parts.filter(Boolean).join(' ').replace(/\.\s*\./g, '.').trim();
+    // ── Global artifact prevention (always last) ──
+    parts.push(
+        `Cinematic realism, 24fps motion cadence, natural skin texture, smooth motion. ` +
+        `No facial warping. No extra limbs. No morphing artifacts. ` +
+        `No text, no logos, no watermark, no branding marks, no overlays, no captions, no subtitles anywhere in the frame.`
+    );
+
+    const promptText = parts.filter(Boolean).join(' ').replace(/\.\s*\./g, '.').trim();
+
+    // Prepend the Flow mode hint as a header line
+    return `${flowModeHint}\n\n${promptText}`;
 };
