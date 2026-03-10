@@ -188,14 +188,14 @@ export default function AlbumUploadModal({ isOpen, onClose, onSuccess }: AlbumUp
                                 {/* Cover Art Upload */}
                                 <div className={styles.uploadSection}>
                                     <label>Cover Artwork</label>
-                                    <div
+                                    <label
+                                        htmlFor="coverArtInput"
                                         className={styles.dropzone}
-                                        onClick={() => fileInputRef.current?.click()}
-                                        style={{ borderColor: coverArt ? '#4ade80' : '#333' }}
+                                        style={{ borderColor: coverArt ? '#4ade80' : '#333', cursor: 'pointer' }}
                                     >
                                         {coverArt ? (
                                             <div className={styles.fileSelected}>
-                                                <ImageIcon size={24} className="text-green-400" />
+                                                <ImageIcon size={24} />
                                                 <span>{coverArt.name}</span>
                                             </div>
                                         ) : (
@@ -204,14 +204,14 @@ export default function AlbumUploadModal({ isOpen, onClose, onSuccess }: AlbumUp
                                                 <span>Click to upload cover art (JPG/PNG)</span>
                                             </>
                                         )}
-                                        <input
-                                            type="file"
-                                            ref={fileInputRef}
-                                            onChange={handleCoverArtChange}
-                                            accept="image/*"
-                                            hidden
-                                        />
-                                    </div>
+                                    </label>
+                                    <input
+                                        id="coverArtInput"
+                                        type="file"
+                                        onChange={handleCoverArtChange}
+                                        accept="image/*"
+                                        style={{ display: 'none' }}
+                                    />
                                 </div>
 
                                 {/* Track List */}
