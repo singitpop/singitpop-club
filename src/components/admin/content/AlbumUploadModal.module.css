@@ -27,6 +27,7 @@
     overflow: hidden;
 }
 
+
 .closeBtn {
     position: absolute;
     top: 1rem;
@@ -66,7 +67,10 @@
     padding: 1.5rem;
     overflow-y: auto;
     flex: 1;
+    min-height: 0;
+    /* Critical: allows flex child to scroll */
 }
+
 
 .grid {
     display: grid;
@@ -101,6 +105,23 @@
     outline: none;
     border-color: #FF0080;
 }
+
+.field select {
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 0.7rem;
+    color: white;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    appearance: auto;
+}
+
+.field select:focus {
+    outline: none;
+    border-color: #FF0080;
+}
+
 
 .uploadSection {
     margin-bottom: 1.5rem;
