@@ -276,8 +276,8 @@ export default function ContentPage() {
                         <button
                             onClick={() => {
                                 openConfirm(
-                                    "Sync Content?",
-                                    "Start content sync? This runs the local Excel/Folder script. It may take a few seconds.",
+                                    "Sync Local Content?",
+                                    "This runs the Excel/Folder sync script and requires the local dev server to be running.",
                                     async () => {
                                         setIsLoading(true);
                                         try {
@@ -285,8 +285,7 @@ export default function ContentPage() {
                                             const data = await res.json();
                                             if (res.ok) {
                                                 showNotification("Sync Successful!", "success");
-                                                // setTimeout(() => window.location.reload(), 1500); // Optional reload if needed
-                                                fetchData(); // Refresh data without reload
+                                                fetchData();
                                             } else {
                                                 showNotification("Sync Failed: " + (data.error || "Unknown"), "error");
                                             }
@@ -298,22 +297,20 @@ export default function ContentPage() {
                                     }
                                 );
                             }}
-                            className={styles.syncBtn}
+                            title="Legacy: Sync from local Excel file (requires dev server)"
                             style={{
                                 marginTop: '1rem',
-                                background: 'rgba(255, 255, 255, 0.1)',
-                                border: '1px solid rgba(255, 255, 255, 0.2)',
-                                padding: '0.5rem 1rem',
-                                borderRadius: '8px',
-                                color: 'white',
+                                background: 'transparent',
+                                border: 'none',
+                                color: '#555',
                                 cursor: 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '8px',
-                                fontSize: '0.9rem'
+                                gap: '6px',
+                                fontSize: '0.75rem',
                             }}
                         >
-                            <RefreshCw size={16} className={isLoading ? "spin" : ""} />
+                            <RefreshCw size={12} className={isLoading ? "spin" : ""} />
                             {isLoading ? "Syncing..." : "Sync Local Content"}
                         </button>
                     </div>
