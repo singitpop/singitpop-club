@@ -1,21 +1,51 @@
-
 import { NextRequest, NextResponse } from 'next/server';
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import fs from 'fs';
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import Stripe from 'stripe';
 import path from 'path';
-import { Album, Track } from '@/data/albumData'; // Import types
+import { Album, Track } from '@/data/albumData';
 
-// Initialize S3 Client
-const s3Client = new S3Client({
-    region: process.env.AWS_REGION || "eu-north-1",
+const s3 = new S3Client({
+    region: process.env.AWS_REGION || 'eu-north-1',
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
     },
 });
 
-const S3_BUCKET = process.env.AWS_S3_BUCKET || "singitpop-music";
-const ALBUMS_JSON_PATH = path.join(process.cwd(), 'src/data/albums.json');
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
+
+const S3_BUCKET = process.env.AWS_S3_BUCKET || 'singitpop-music';
+const ALBUMS_S3_KEY = 'data/albums.json';
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+function slugify(str: string) {
+    return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+async function fetchAlbumsFromS3(): Promise<Album[]> {
+    try {
+        const res = await s3.send(new GetObjectCommand({ Bucket: S3_BUCKET, Key: ALBUMS_S3_KEY }));
+        const body = await res.Body?.transformToString();
+        return body ? JSON.parse(body) : [];
+    } catch (err: any) {
+        if (err.name === 'NoSuchKey') return [];
+        throw err;
+    }
+}
+
+async function saveAlbumsToS3(albums: Album[]) {
+    albums.sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+    await s3.send(new PutObjectCommand({
+        Bucket: S3_BUCKET,
+        Key: ALBUMS_S3_KEY,
+        Body: JSON.stringify(albums, null, 2),
+        ContentType: 'application/json',
+        CacheControl: 'no-cache',
+    }));
+}
+
+// ─── Route ──────────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
     try {
@@ -24,111 +54,167 @@ export async function POST(req: NextRequest) {
         const year = parseInt(formData.get('year') as string);
         const genre = formData.get('genre') as string;
         const releaseDate = formData.get('releaseDate') as string;
+        const albumType = (formData.get('albumType') as string) || 'standard';
         const coverArtFile = formData.get('coverArt') as File;
 
-        // 1. Basic Validation
         if (!title || !year || !genre || !releaseDate || !coverArtFile) {
-            return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        const albumSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-        console.log(`🎵 Processing Upload: ${title} (${albumSlug})`);
+        const albumSlug = slugify(title);
+        const isVipOnly = new Date(releaseDate) > new Date(); // Future date = VIP early access
 
-        // 2. Upload Cover Art to S3
-        const coverArtBuffer = Buffer.from(await coverArtFile.arrayBuffer());
-        const coverArtKey = `albums/artwork/${albumSlug}.jpg`; // Standardization: always save as jpg for now or keep original ext
+        console.log(`🎵 Processing: ${title} (${albumSlug}) | VIP: ${isVipOnly}`);
 
-        await s3Client.send(new PutObjectCommand({
+        // ── 1. Upload Cover Art ───────────────────────────────────────────
+        const coverExt = coverArtFile.name.split('.').pop() || 'jpg';
+        const coverKey = `albums/artwork/${albumSlug}.${coverExt}`;
+        await s3.send(new PutObjectCommand({
             Bucket: S3_BUCKET,
-            Key: coverArtKey,
-            Body: coverArtBuffer,
-            ContentType: coverArtFile.type
+            Key: coverKey,
+            Body: Buffer.from(await coverArtFile.arrayBuffer()),
+            ContentType: coverArtFile.type,
         }));
-        console.log(`✅ Cover Art Uploaded: ${coverArtKey}`);
+        console.log(`✅ Cover art → ${coverKey}`);
 
-        // 3. Process Tracks
-        const tracks: Track[] = [];
-        let trackIndex = 0;
-
-        // Iterate through formData entries to find tracks
-        // Frontend should send tracks as `track_0_title`, `track_0_file`, `track_1_title`, etc.
+        // ── 2. Upload Tracks ─────────────────────────────────────────────
         const entries = Array.from(formData.entries());
-        const trackCount = entries.filter(e => e[0].startsWith('track_') && e[0].endsWith('_title')).length;
+        const trackCount = entries.filter(([k]) => k.startsWith('track_') && k.endsWith('_title')).length;
+        const tracks: Track[] = [];
+        const stripeSingleResults: { title: string; stripeProductId: string; stripePriceId: string }[] = [];
 
         for (let i = 0; i < trackCount; i++) {
             const trackTitle = formData.get(`track_${i}_title`) as string;
             const trackFile = formData.get(`track_${i}_file`) as File;
             const isSingle = formData.get(`track_${i}_isSingle`) === 'true';
+            if (!trackTitle || !trackFile) continue;
 
-            if (trackTitle && trackFile) {
-                const trackSlug = trackTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                // Standardize filename: 01-track-title.mp3
-                const trackNum = (i + 1).toString().padStart(2, '0');
-                const fileName = `${trackNum}-${trackSlug}${path.extname(trackFile.name)}`;
-                const s3Key = `albums/${albumSlug}/${fileName}`;
+            const trackSlug = slugify(trackTitle);
+            const trackNum = (i + 1).toString().padStart(2, '0');
+            const ext = trackFile.name.split('.').pop() || 'mp3';
+            const s3Key = `albums/${albumSlug}/${trackNum}-${trackSlug}.${ext}`;
 
-                // Upload Track
-                const fileBuffer = Buffer.from(await trackFile.arrayBuffer());
-                await s3Client.send(new PutObjectCommand({
-                    Bucket: S3_BUCKET,
-                    Key: s3Key,
-                    Body: fileBuffer,
-                    ContentType: trackFile.type
-                }));
+            await s3.send(new PutObjectCommand({
+                Bucket: S3_BUCKET,
+                Key: s3Key,
+                Body: Buffer.from(await trackFile.arrayBuffer()),
+                ContentType: trackFile.type,
+            }));
+            console.log(`   ✅ Track → ${s3Key}`);
 
-                // Add to Track List
-                tracks.push({
-                    id: i + 1,
-                    title: trackTitle,
-                    duration: "3:30", // Placeholder - could use music-metadata on server if needed
-                    plays: "0",
-                    locked: false,
-                    price: 0.99,
-                    genre: genre,
-                    audioUrl: `https://${S3_BUCKET}.s3.${process.env.AWS_REGION || "eu-north-1"}.amazonaws.com/${s3Key}`,
-                    albumId: albumSlug,
-                    sourceFolder: albumSlug, // Logical folder name
-                    isSingle: isSingle
-                });
-                console.log(`   ✅ Track Uploaded: ${s3Key}`);
+            tracks.push({
+                id: i + 1,
+                title: trackTitle,
+                duration: '3:30',
+                plays: '0',
+                locked: isVipOnly,          // Lock if future release
+                price: 0.99,
+                genre,
+                audioUrl: `https://${S3_BUCKET}.s3.${process.env.AWS_REGION || 'eu-north-1'}.amazonaws.com/${s3Key}`,
+                albumId: albumSlug,
+                sourceFolder: albumSlug,
+                isSingle,
+            });
+
+            // ── 3. Stripe: Create product for singles ────────────────────
+            if (isSingle && process.env.STRIPE_SECRET_KEY) {
+                try {
+                    const ringtoneSlug = trackSlug;
+                    const productName = `${trackTitle} - Ringtone`;
+
+                    const product = await stripe.products.create({
+                        name: productName,
+                        description: `29s ringtone from '${trackTitle}' — available in MP3 & M4R`,
+                        active: !isVipOnly, // Hide from shop until released
+                        metadata: {
+                            type: 'ringtone',
+                            singleName: trackTitle,
+                            albumId: albumSlug,
+                            releaseDate,
+                            mp3_key: `ringtones/${ringtoneSlug}.mp3`,
+                            m4r_key: `ringtones/${ringtoneSlug}.m4r`,
+                        },
+                    });
+
+                    const price = await stripe.prices.create({
+                        product: product.id,
+                        unit_amount: 99, // £0.99
+                        currency: 'gbp',
+                    });
+
+                    stripeSingleResults.push({
+                        title: trackTitle,
+                        stripeProductId: product.id,
+                        stripePriceId: price.id,
+                    });
+                    console.log(`   💳 Stripe product created for: ${trackTitle}`);
+                } catch (stripeErr: any) {
+                    console.error(`   ⚠️ Stripe failed for ${trackTitle}:`, stripeErr.message);
+                }
             }
         }
 
-        // 4. Update albums.json
-        let albumsData: Album[] = [];
-        if (fs.existsSync(ALBUMS_JSON_PATH)) {
-            const fileContent = fs.readFileSync(ALBUMS_JSON_PATH, 'utf-8');
-            albumsData = JSON.parse(fileContent);
-        }
+        // ── 4. Update albums.json on S3 ───────────────────────────────────
+        const albumsData = await fetchAlbumsFromS3();
 
         const newAlbum: Album = {
             id: albumSlug,
-            title: title,
-            year: year,
+            title,
+            year,
             genre: [genre],
-            coverArt: `/albums/artwork/${albumSlug}.jpg`, // Local path style for frontend
-            tracks: tracks,
-            releaseDate: releaseDate,
+            coverArt: `https://${S3_BUCKET}.s3.${process.env.AWS_REGION || 'eu-north-1'}.amazonaws.com/${coverKey}`,
+            tracks,
+            releaseDate,
             folderPath: albumSlug,
             mp3Count: tracks.length,
-            type: 'standard', // Default
-            trending: false
+            type: albumType as Album['type'],
+            trending: false,
+            accessTier: isVipOnly ? 'vip' : 'free', // Lock to VIP if future release date
         };
 
-        // Remove existing if overwriting
-        albumsData = albumsData.filter(a => a.id !== newAlbum.id);
-        albumsData.push(newAlbum);
+        const updated = [...albumsData.filter(a => a.id !== newAlbum.id), newAlbum];
+        await saveAlbumsToS3(updated);
+        console.log(`💾 albums.json saved to S3 (${updated.length} albums total)`);
 
-        // Sort by Release Date (Newest First)
-        albumsData.sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+        // ── 5. Spawn ringtone generation for singles (background, detached) ──
+        // Works when called from local dev server (npm run dev).
+        // The script fetches the audio from S3 so it doesn't need the original file.
+        const singlesWithS3Keys = tracks
+            .filter(t => t.isSingle)
+            .map(t => ({
+                trackSlug: slugify(t.title),
+                s3Key: t.audioUrl?.split('.amazonaws.com/')[1] || '',
+            }))
+            .filter(t => t.s3Key);
 
-        fs.writeFileSync(ALBUMS_JSON_PATH, JSON.stringify(albumsData, null, 2));
-        console.log(`💾 albums.json updated`);
+        const ringtoneJobsCount = singlesWithS3Keys.length;
+        if (ringtoneJobsCount > 0) {
+            const cp = require('child_process');
+            const scriptPath = [process.cwd(), 'scripts', 'generate-ringtones-from-s3.js'].join('/');
+            for (const { trackSlug, s3Key } of singlesWithS3Keys) {
+                const child = cp.spawn('node', [scriptPath, albumSlug, trackSlug, s3Key], {
+                    stdio: 'ignore',
+                    cwd: process.cwd(),
+                    detached: true,
+                });
+                child.unref();
+                console.log(`🔔 Ringtone job spawned: ${trackSlug}`);
+            }
+        }
 
-        return NextResponse.json({ success: true, album: newAlbum });
+        return NextResponse.json({
+            success: true,
+            album: newAlbum,
+            isVipOnly,
+            stripeProducts: stripeSingleResults,
+            ringtonesQueued: ringtoneJobsCount,
+            note: ringtoneJobsCount > 0
+                ? `${ringtoneJobsCount} ringtone(s) are being generated in the background.`
+                : undefined,
+        });
 
     } catch (error: any) {
-        console.error("❌ Upload Failed:", error);
-        return NextResponse.json({ error: error.message || "Upload failed" }, { status: 500 });
+        console.error('❌ Upload Failed:', error);
+        return NextResponse.json({ error: error.message || 'Upload failed' }, { status: 500 });
     }
 }

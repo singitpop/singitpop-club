@@ -22,6 +22,7 @@ export default function AlbumUploadModal({ isOpen, onClose, onSuccess }: AlbumUp
     const [title, setTitle] = useState('');
     const [year, setYear] = useState(new Date().getFullYear());
     const [genre, setGenre] = useState('Pop');
+    const [albumType, setAlbumType] = useState('standard');
     const [releaseDate, setReleaseDate] = useState(new Date().toISOString().split('T')[0]);
     const [coverArt, setCoverArt] = useState<File | null>(null);
     const [tracks, setTracks] = useState<TrackInput[]>([{ id: '1', title: '', file: null, isSingle: false }]);
@@ -73,6 +74,7 @@ export default function AlbumUploadModal({ isOpen, onClose, onSuccess }: AlbumUp
             formData.append('title', title);
             formData.append('year', year.toString());
             formData.append('genre', genre);
+            formData.append('albumType', albumType);
             formData.append('releaseDate', releaseDate);
             formData.append('coverArt', coverArt);
 
@@ -167,6 +169,15 @@ export default function AlbumUploadModal({ isOpen, onClose, onSuccess }: AlbumUp
                                     <div className={styles.field}>
                                         <label>Genre</label>
                                         <input type="text" value={genre} onChange={e => setGenre(e.target.value)} placeholder="e.g. Pop" required />
+                                    </div>
+                                    <div className={styles.field}>
+                                        <label>Album Type</label>
+                                        <select value={albumType} onChange={e => setAlbumType(e.target.value)}>
+                                            <option value="standard">Standard</option>
+                                            <option value="studio">Studio</option>
+                                            <option value="country">Country</option>
+                                            <option value="live">Live</option>
+                                        </select>
                                     </div>
                                     <div className={styles.field}>
                                         <label>Release Date</label>

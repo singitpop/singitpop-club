@@ -35,7 +35,7 @@ export interface Album {
     trending?: boolean;
     folderPath?: string;
     mp3Count?: number;
-    type?: 'studio' | 'live' | 'standard';
+    type?: 'studio' | 'live' | 'standard' | 'country';
     exclusive?: boolean;
     accessTier?: 'vip' | 'free' | string;
 }
