@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
-import Stripe from 'stripe';
-import path from 'path';
 import { Album, Track } from '@/data/albumData';
 
 const s3 = new S3Client({
@@ -12,10 +10,16 @@ const s3 = new S3Client({
     },
 });
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
-
 const S3_BUCKET = process.env.AWS_S3_BUCKET || 'singitpop-music';
 const ALBUMS_S3_KEY = 'data/albums.json';
+
+// Lazy Stripe init — avoids crash if STRIPE_SECRET_KEY is not set
+function getStripe() {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) return null;
+    const Stripe = require('stripe');
+    return new Stripe(key);
+}
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -119,35 +123,38 @@ export async function POST(req: NextRequest) {
             // ── 3. Stripe: Create product for singles ────────────────────
             if (isSingle && process.env.STRIPE_SECRET_KEY) {
                 try {
-                    const ringtoneSlug = trackSlug;
-                    const productName = `${trackTitle} - Ringtone`;
+                    const stripeClient = getStripe();
+                    if (stripeClient) {
+                        const ringtoneSlug = trackSlug;
+                        const productName = `${trackTitle} - Ringtone`;
 
-                    const product = await stripe.products.create({
-                        name: productName,
-                        description: `29s ringtone from '${trackTitle}' — available in MP3 & M4R`,
-                        active: !isVipOnly, // Hide from shop until released
-                        metadata: {
-                            type: 'ringtone',
-                            singleName: trackTitle,
-                            albumId: albumSlug,
-                            releaseDate,
-                            mp3_key: `ringtones/${ringtoneSlug}.mp3`,
-                            m4r_key: `ringtones/${ringtoneSlug}.m4r`,
-                        },
-                    });
+                        const product = await stripeClient.products.create({
+                            name: productName,
+                            description: `29s ringtone from '${trackTitle}' — available in MP3 & M4R`,
+                            active: !isVipOnly,
+                            metadata: {
+                                type: 'ringtone',
+                                singleName: trackTitle,
+                                albumId: albumSlug,
+                                releaseDate,
+                                mp3_key: `ringtones/${ringtoneSlug}.mp3`,
+                                m4r_key: `ringtones/${ringtoneSlug}.m4r`,
+                            },
+                        });
 
-                    const price = await stripe.prices.create({
-                        product: product.id,
-                        unit_amount: 99, // £0.99
-                        currency: 'gbp',
-                    });
+                        const price = await stripeClient.prices.create({
+                            product: product.id,
+                            unit_amount: 99,
+                            currency: 'gbp',
+                        });
 
-                    stripeSingleResults.push({
-                        title: trackTitle,
-                        stripeProductId: product.id,
-                        stripePriceId: price.id,
-                    });
-                    console.log(`   💳 Stripe product created for: ${trackTitle}`);
+                        stripeSingleResults.push({
+                            title: trackTitle,
+                            stripeProductId: product.id,
+                            stripePriceId: price.id,
+                        });
+                        console.log(`   💳 Stripe product created for: ${trackTitle}`);
+                    }
                 } catch (stripeErr: any) {
                     console.error(`   ⚠️ Stripe failed for ${trackTitle}:`, stripeErr.message);
                 }
