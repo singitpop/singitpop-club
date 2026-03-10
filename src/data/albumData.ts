@@ -2,7 +2,7 @@
  * Album Data
  * Auto-generated from Excel spreadsheet OR Admin Uploads
  * Source of Truth: src/data/albums.json
- * Generated: 2026-02-20T09:43:41.278Z
+ * Generated: 2026-03-10T19:27:16.671Z
  */
 
 import albumsData from './albums.json';
@@ -35,7 +35,7 @@ export interface Album {
     trending?: boolean;
     folderPath?: string;
     mp3Count?: number;
-    type?: 'studio' | 'live' | 'standard' | 'country';
+    type?: 'studio' | 'live' | 'standard';
     exclusive?: boolean;
     accessTier?: 'vip' | 'free' | string;
 }
@@ -49,7 +49,7 @@ export function getAlbumById(id: string): Album | undefined {
 }
 
 export function getAlbumsByGenre(genre: string): Album[] {
-    return albums.filter(album =>
+    return albums.filter(album => 
         album.genre.some(g => g.toLowerCase() === genre.toLowerCase())
     );
 }

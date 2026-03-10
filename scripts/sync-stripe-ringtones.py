@@ -31,7 +31,7 @@ def load_manifest():
     with open(MANIFEST_PATH, 'r') as f:
         return json.load(f)
 
-def create_or_update_stripe_product(ringtone):
+def create_or_update_stripe_product(ringtone, active=True):
     """Create or update a Stripe product for a ringtone"""
     title = ringtone['title']
     price_pence = int(ringtone['price'] * 100)  # Convert to pence
@@ -51,6 +51,7 @@ def create_or_update_stripe_product(ringtone):
         product = stripe.Product.create(
             name=f"{title} Ringtone",
             description=f"{ringtone['duration']}s ringtone from '{title}' - Available in MP3 and M4R formats",
+            active=active,
             metadata={
                 'type': 'ringtone',
                 'genre': ringtone['genre'],
@@ -58,7 +59,7 @@ def create_or_update_stripe_product(ringtone):
                 'm4r_key': ringtone['m4r_key']
             }
         )
-        print(f"✅ Created product: {product.id}")
+        print(f"✅ Created product ({'inactive' if not active else 'active'}): {product.id}")
     
     # Create or update price
     prices = stripe.Price.list(product=product.id, active=True)
@@ -109,11 +110,11 @@ def main():
             except:
                 r_date = today # Fallback if parsing fails
             
-            if r_date > today:
-                print(f"⏳ Skipping {ringtone['title']} (Future Release: {r_date_str})")
-                continue
+            is_future = r_date > today
+            if is_future:
+                print(f"⏳ Pre-creating {ringtone['title']} as inactive (Release: {r_date_str})")
 
-            result = create_or_update_stripe_product(ringtone)
+            result = create_or_update_stripe_product(ringtone, active=not is_future)
             synced_products.append(result)
         except Exception as e:
             print(f"❌ Error syncing {ringtone['title']}: {e}")

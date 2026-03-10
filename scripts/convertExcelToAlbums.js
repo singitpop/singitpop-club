@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ALBUMS_SOURCE_DIR = '/Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE';
-const EXCEL_PATH = '/Users/garybirrell/Desktop/Singitpop/SingIt Pop Music Tracker 26-10-25.xlsx';
+const EXCEL_PATH = '/Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE/SingIt Pop Music Tracker 26-10-25.xlsx';
 const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
 
 // Wrap in async function to use await
