@@ -16,6 +16,7 @@ interface StationViewProps {
     currentTrack?: any;
     onNext?: () => void;
     onStop?: () => void;
+    onStationChange?: (genre: string) => void;
 }
 
 const STATIONS = [
@@ -83,7 +84,7 @@ const getStationTracks = (stationGenre: string, isVip: boolean) => {
     });
 };
 
-export default function StationView({ currentTrackId, isPlaying, onPlayTrack, currentTrack, onNext, onStop }: StationViewProps) {
+export default function StationView({ currentTrackId, isPlaying, onPlayTrack, currentTrack, onNext, onStop, onStationChange }: StationViewProps) {
     const { isPro } = useAuth();
     const [visualizerBars, setVisualizerBars] = useState<number[]>([]);
     const [activeStation, setActiveStation] = useState(STATIONS[0]);
@@ -134,6 +135,7 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
     // Auto-switch station logic
     const handleStationChange = (station: any) => {
         setActiveStation(station);
+        onStationChange?.(station.genre);
         // We trigger a play immediately with new station context
         setTimeout(() => {
             playRandomForStation(station);
