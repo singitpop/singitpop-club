@@ -72,8 +72,9 @@ const getStationTracks = (stationGenre: string, isVip: boolean) => {
 
         // Strict genre matching to prevent cross-contamination
         if (s === 'pop') {
-            // Pop ONLY - exclude rock, dance, country, folk
-            return g.includes('pop') && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk');
+            // Pop + R&B/Soul - exclude rock, dance, country, folk
+            return (g.includes('pop') || g.includes('r&b') || g.includes('soul') || g.includes('funk') || g.includes('rhythm'))
+                && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk');
         }
         if (s === 'rock') return g.includes('rock') || g.includes('alternative') || g.includes('metal') || g.includes('grunge');
         if (s === 'country') return g.includes('country') || g.includes('americana');
@@ -115,21 +116,16 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
     // Handle "Start Radio"
     const handleStartRadio = () => {
         let filtered = getStationTracks(activeStation.genre, isPro);
-
         if (filtered.length === 0) filtered = getStationTracks('All', isPro);
-
         const randomTrack = filtered[Math.floor(Math.random() * filtered.length)];
-
-        // Find album for artwork
+        // Use albumId for lookup to avoid numeric ID collisions across albums
         const album = albums.find(a => a.id === randomTrack.albumId);
-
-        const trackToPlay = {
+        onPlayTrack({
             ...randomTrack,
             uniqueId: `${album?.id}-${randomTrack.id}`,
+            albumTitle: randomTrack.albumTitle || album?.title,
             coverArt: album?.coverArt
-        };
-
-        onPlayTrack(trackToPlay);
+        });
     };
 
     // Auto-switch station logic
@@ -144,17 +140,14 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
 
     const playRandomForStation = (station: any) => {
         let filtered = getStationTracks(station.genre, isPro);
-
-        if (filtered.length === 0) {
-            // Fallback to all tracks if no specific genre tracks are found
-            filtered = getStationTracks('All', isPro);
-        }
-
+        if (filtered.length === 0) filtered = getStationTracks('All', isPro);
         const randomTrack = filtered[Math.floor(Math.random() * filtered.length)];
+        // Use albumId for lookup to avoid numeric ID collisions across albums
         const album = albums.find(a => a.id === randomTrack.albumId);
         onPlayTrack({
             ...randomTrack,
             uniqueId: `${album?.id}-${randomTrack.id}`,
+            albumTitle: randomTrack.albumTitle || album?.title,
             coverArt: album?.coverArt
         });
     };

@@ -43,6 +43,7 @@ export default function CommunityHubPage() {
     const [currentTrackId, setCurrentTrackId] = useState<number | string | null>(null);
     const [currentTrackData, setCurrentTrackData] = useState<any>(null);
     const [activeStationGenre, setActiveStationGenre] = useState<string>('All');
+    const activeStationGenreRef = useRef<string>('All'); // Ref to avoid stale closure in callbacks
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
@@ -82,20 +83,22 @@ export default function CommunityHubPage() {
     // Extracted Shuffle Logic — respects the active station genre
     const playNextRadioTrack = () => {
         const now = new Date();
-        const genre = activeStationGenre;
+        const genre = activeStationGenreRef.current; // Use ref to avoid stale closure
 
         const allTracks = albums.flatMap(a => {
             if (!isVIP && new Date(a.releaseDate) > now) return [];
             return a.tracks
                 .filter(t => t.audioUrl && t.id !== currentTrackId)
+                // albumId/albumTitle already set here — no secondary lookup needed
                 .map(t => ({ ...t, albumId: a.id, albumTitle: a.title, albumGenre: a.genre, genre: t.genre || a.genre || 'Pop' }));
         });
 
-        // Genre filter (mirrors StationView logic)
+        // Genre filter (mirrors StationView logic, including R&B in Pop)
         const matchesGenre = (t: any) => {
             const g = Array.isArray(t.genre) ? t.genre.map((x: string) => x.toLowerCase()).join(' ') : (t.genre || '').toLowerCase();
             if (genre === 'All') return true;
-            if (genre === 'Pop') return g.includes('pop') && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk');
+            if (genre === 'Pop') return (g.includes('pop') || g.includes('r&b') || g.includes('soul') || g.includes('funk'))
+                && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk');
             if (genre === 'Rock') return g.includes('rock') || g.includes('alternative') || g.includes('metal') || g.includes('grunge');
             if (genre === 'Country') return g.includes('country') || g.includes('americana');
             if (genre === 'Folk') return g.includes('folk') || g.includes('acoustic') || g.includes('singer-songwriter');
@@ -107,22 +110,17 @@ export default function CommunityHubPage() {
         if (filtered.length === 0) filtered = allTracks; // Fallback to all if no genre match
 
         if (filtered.length === 0) {
-            console.error("No valid tracks found for radio");
+            console.error('No valid tracks found for radio');
             return;
         }
 
         const randomTrack = filtered[Math.floor(Math.random() * filtered.length)];
-        const album = albums.find(a => a.tracks.some(t => t.id === randomTrack.id));
-
-        console.log(`📻 Auto-skipping to: ${randomTrack.title} [${genre}]`);
+        // randomTrack.albumId is already correctly set from the map above — no secondary lookup
+        console.log(`📻 Auto-skipping to: ${randomTrack.title} [${genre}] – ${randomTrack.albumTitle}`);
 
         handleTrackPlay({
             ...randomTrack,
-            id: randomTrack.id,
-            uniqueId: `${album?.id}-${randomTrack.id}`,
-            albumId: album?.id,
-            albumTitle: album?.title,
-            audioUrl: randomTrack.audioUrl
+            uniqueId: `${randomTrack.albumId}-${randomTrack.id}`,
         });
     };
 
@@ -564,7 +562,7 @@ export default function CommunityHubPage() {
                                 currentTrack={currentTrackData ?? undefined}
                                 onNext={playNextRadioTrack}
                                 onStop={() => setIsPlaying(false)}
-                                onStationChange={(genre) => setActiveStationGenre(genre)}
+                                onStationChange={(genre) => { activeStationGenreRef.current = genre; setActiveStationGenre(genre); }}
                             />
                         ) : (
                             <div className="flex flex-col items-center justify-center h-[60vh] text-center p-8 bg-white/5 rounded-3xl border border-white/10">
