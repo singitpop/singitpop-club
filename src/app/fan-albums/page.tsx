@@ -655,17 +655,18 @@ export default function CommunityHubPage() {
             {/* Viewer Modal */}
             {
                 selectedPlaylist && (
-                    <PlaylistViewer
-                        playlist={selectedPlaylist}
-                        onClose={() => setSelectedPlaylist(null)}
-                        onPlayTrack={handleTrackPlay}
-                        currentTrackId={currentTrackId}
-                        isPlaying={isPlaying}
-                        onLike={() => handleLike(selectedPlaylist.id)}
-                        hasLiked={selectedPlaylist.likedBy?.includes(userId)}
-                        onDelete={() => handleDeletePlaylist(selectedPlaylist.id)}
-                        canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin'}
-                    />
+                        <PlaylistViewer
+                            playlist={selectedPlaylist}
+                            onClose={() => setSelectedPlaylist(null)}
+                            onPlayTrack={handleTrackPlay}
+                            currentTrackId={currentTrackId}
+                            isPlaying={isPlaying}
+                            onLike={() => handleLike(selectedPlaylist.id)}
+                            hasLiked={selectedPlaylist.likedBy?.includes(userId)}
+                            onDelete={() => handleDeletePlaylist(selectedPlaylist.id)}
+                            canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin'}
+                            isVIP={isVIP}
+                        />
                 )
             }
 

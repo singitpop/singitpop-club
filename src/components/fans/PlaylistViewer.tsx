@@ -16,31 +16,48 @@ interface PlaylistViewerProps {
     hasLiked?: boolean;
     onDelete?: () => void;
     canDelete?: boolean;
+    isVIP?: boolean;
 }
 
-export default function PlaylistViewer({ playlist, onClose, onPlayTrack, currentTrackId, isPlaying, onLike, hasLiked, onDelete, canDelete }: PlaylistViewerProps) {
+export default function PlaylistViewer({ playlist, onClose, onPlayTrack, currentTrackId, isPlaying, onLike, hasLiked, onDelete, canDelete, isVIP = false }: PlaylistViewerProps) {
     const [resolvedTracks, setResolvedTracks] = useState<any[]>([]);
 
     // Resolve tracks on mount or playlist change
     useEffect(() => {
         if (!playlist || !playlist.tracks) return;
 
+        const now = new Date();
+
         const tracks = playlist.tracks.map((tId: string | number) => {
             // Logic to find track from albumData
             const parts = String(tId).split('-');
             const uniqueId = `track-${tId}`; // Prefix to avoid collision with playlist ID
+            let album: any = null;
+            let track: any = null;
+
             if (parts.length >= 2) {
                 const aId = parts.slice(0, -1).join('-');
                 const trId = parseInt(parts[parts.length - 1]);
-                const album = albums.find(a => a.id === aId);
-                const track = album?.tracks.find(t => t.id === trId);
-                if (track) return { ...track, uniqueId: uniqueId, id: uniqueId, originalId: trId, albumTitle: album?.title, coverArt: album?.coverArt };
+                album = albums.find(a => a.id === aId);
+                track = album?.tracks.find((t: any) => t.id === trId);
             } else {
                 const idNum = parseInt(String(tId));
-                for (const album of albums) {
-                    const match = album.tracks.find(t => t.id === idNum);
-                    if (match) return { ...match, uniqueId: uniqueId, id: uniqueId, originalId: idNum, albumTitle: album.title, coverArt: album.coverArt };
+                for (const a of albums) {
+                    const match = a.tracks.find((t: any) => t.id === idNum);
+                    if (match) {
+                        album = a;
+                        track = match;
+                        break;
+                    }
                 }
+            }
+
+            if (album && track) {
+                // If it's a future release and the user isn't VIP, completely hide the track
+                if (!isVIP && album.releaseDate && new Date(album.releaseDate) > now) {
+                    return null;
+                }
+                return { ...track, uniqueId: uniqueId, id: uniqueId, originalId: track.id, albumTitle: album.title, coverArt: album.coverArt };
             }
             return null;
         }).filter(Boolean);
