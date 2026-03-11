@@ -41,6 +41,7 @@ export default function CommunityHubPage() {
 
     const [selectedPlaylist, setSelectedPlaylist] = useState<any>(null);
     const [currentTrackId, setCurrentTrackId] = useState<number | string | null>(null);
+    const [currentTrackData, setCurrentTrackData] = useState<any>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
@@ -105,6 +106,7 @@ export default function CommunityHubPage() {
             id: randomTrack.id, // Original ID
             uniqueId: `${album?.id}-${randomTrack.id}`,
             albumId: album?.id,
+            albumTitle: album?.title,
             audioUrl: randomTrack.audioUrl
         });
     };
@@ -293,6 +295,7 @@ export default function CommunityHubPage() {
         setIsLoading(true);
         setIsPlaying(false); // Stop previous
         setCurrentTrackId(track.id);
+        setCurrentTrackData(track); // Store full track for display
 
         try {
             // Sign URL
@@ -543,18 +546,7 @@ export default function CommunityHubPage() {
                                 currentTrackId={currentTrackId}
                                 isPlaying={isPlaying}
                                 onPlayTrack={handleTrackPlay}
-                                currentTrack={(() => {
-                                    if (!currentTrackId) return undefined;
-                                    const parts = String(currentTrackId).split('-');
-                                    if (parts.length >= 2) {
-                                        const aId = parts.slice(0, -1).join('-');
-                                        const tId = parseInt(parts[parts.length - 1]);
-                                        const album = albums.find(a => a.id === aId);
-                                        const t = album?.tracks.find(tr => tr.id === tId);
-                                        return t ? { ...t, coverArt: album?.coverArt } : undefined;
-                                    }
-                                    return undefined;
-                                })()}
+                                currentTrack={currentTrackData ?? undefined}
                                 onNext={playNextRadioTrack}
                                 onStop={() => setIsPlaying(false)}
                             />
@@ -616,33 +608,26 @@ export default function CommunityHubPage() {
                     <div className={styles.nowPlayingWidget}>
                         <h4>Now Playing</h4>
                         <div className={styles.nowPlayingTrack}>
-                            {currentTrackId ? (() => {
-                                // Resolve current track title from albums data
-                                let trackTitle = 'Playing...';
-                                let trackArtist = '';
-                                const parts = String(currentTrackId).split('-');
-                                if (parts.length >= 2) {
-                                    const aId = parts.slice(0, -1).join('-');
-                                    const tId = parseInt(parts[parts.length - 1]);
-                                    const album = albums.find(a => a.id === aId);
-                                    const t = album?.tracks.find(tr => tr.id === tId);
-                                    if (t) { trackTitle = t.title; trackArtist = album?.title || ''; }
-                                }
-                                return (
-                                    <>
-                                        <div className={styles.waveVisual}>
-                                            <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
-                                            <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
-                                            <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
-                                        </div>
-                                        <div style={{ minWidth: 0 }}>
-                                            <p style={{ fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{trackTitle}</p>
-                                            {trackArtist && <p style={{ fontSize: '0.75rem', color: '#aaa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{trackArtist}</p>}
-                                            <p style={{ fontSize: '0.8rem', color: '#888' }}>{isPlaying ? 'Playing' : 'Paused'}</p>
-                                        </div>
-                                    </>
-                                );
-                            })() : (
+                            {currentTrackData ? (
+                                <>
+                                    <div className={styles.waveVisual}>
+                                        <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
+                                        <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
+                                        <div className={`${styles.bar} ${!isPlaying ? styles.paused : ''}`}></div>
+                                    </div>
+                                    <div style={{ minWidth: 0 }}>
+                                        <p style={{ fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                            {currentTrackData.title || 'Playing...'}
+                                        </p>
+                                        {currentTrackData.albumTitle && (
+                                            <p style={{ fontSize: '0.75rem', color: '#aaa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                {currentTrackData.albumTitle}
+                                            </p>
+                                        )}
+                                        <p style={{ fontSize: '0.8rem', color: '#888' }}>{isPlaying ? 'Playing' : 'Paused'}</p>
+                                    </div>
+                                </>
+                            ) : (
                                 <p style={{ fontSize: '0.8rem', color: '#666', fontStyle: 'italic' }}>Nothing playing...</p>
                             )}
                         </div>
