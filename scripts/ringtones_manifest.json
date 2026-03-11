@@ -1,38 +1,47 @@
 [
     {
-        "title": "winding road finale",
+        "title": "Broadway Boots",
         "price": 0.99,
         "duration": 29,
         "genre": "Country",
-        "mp3_key": "ringtones/winding-road-finale.mp3",
-        "m4r_key": "ringtones/winding-road-finale.m4r",
-        "release_date": "2025-09-21"
+        "mp3_key": "ringtones/broadway-boots.mp3",
+        "m4r_key": "ringtones/broadway-boots.m4r",
+        "release_date": "2026-06-05"
     },
     {
-        "title": "hometown heros",
+        "title": "Nashville in June",
         "price": 0.99,
         "duration": 29,
         "genre": "Country",
-        "mp3_key": "ringtones/hometown-heros.mp3",
-        "m4r_key": "ringtones/hometown-heros.m4r",
-        "release_date": "2025-05-12"
+        "mp3_key": "ringtones/nashville-in-june.mp3",
+        "m4r_key": "ringtones/nashville-in-june.m4r",
+        "release_date": "2026-06-05"
     },
     {
-        "title": "dancin' in the moonlight",
+        "title": "Barstool Halo",
         "price": 0.99,
         "duration": 29,
         "genre": "Country",
-        "mp3_key": "ringtones/dancin-in-the-moonlight.mp3",
-        "m4r_key": "ringtones/dancin-in-the-moonlight.m4r",
-        "release_date": "2024-11-29"
+        "mp3_key": "ringtones/barstool-halo.mp3",
+        "m4r_key": "ringtones/barstool-halo.m4r",
+        "release_date": "2026-06-05"
     },
     {
-        "title": "kickin' Up some fun",
+        "title": "June Didn\u2019t End\u00a0",
         "price": 0.99,
         "duration": 29,
         "genre": "Country",
-        "mp3_key": "ringtones/kickin-up-some-fun.mp3",
-        "m4r_key": "ringtones/kickin-up-some-fun.m4r",
-        "release_date": "2024-11-29"
+        "mp3_key": "ringtones/june-didn\u2019t-end\u00a0.mp3",
+        "m4r_key": "ringtones/june-didn\u2019t-end\u00a0.m4r",
+        "release_date": "2026-06-05"
+    },
+    {
+        "title": "Bridge Over Troubed Water mix",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Pop",
+        "mp3_key": "ringtones/bridge-over-troubed-water-mix.mp3",
+        "m4r_key": "ringtones/bridge-over-troubed-water-mix.m4r",
+        "release_date": "2024-12-01"
     }
 ]

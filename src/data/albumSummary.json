@@ -1,7 +1,7 @@
 {
-  "generated": "2026-02-20T09:43:41.279Z",
-  "totalAlbums": 53,
-  "totalTracks": 645,
+  "generated": "2026-03-10T19:27:16.672Z",
+  "totalAlbums": 54,
+  "totalTracks": 656,
   "genres": [
     "Christmas",
     "Country",
@@ -24,6 +24,17 @@
     2024
   ],
   "albums": [
+    {
+      "id": "nashville-in-june-2026",
+      "title": "Nashville in June",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Nashville in June",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/"
+    },
     {
       "id": "before-the-light-2026",
       "title": "Before the Light",
@@ -91,17 +102,6 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/"
     },
     {
-      "id": "valentine-country-2026",
-      "title": "Valentine Country",
-      "year": 2026,
-      "trackCount": 12,
-      "genres": [
-        "Country"
-      ],
-      "folderPath": "Valentine Country",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/"
-    },
-    {
       "id": "a-love-that-never-ends-2026",
       "title": "A Love That Never Ends",
       "year": 2026,
@@ -111,6 +111,17 @@
       ],
       "folderPath": "A Love That Never Ends",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/"
+    },
+    {
+      "id": "valentine-country-2026",
+      "title": "Valentine Country",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Valentine Country",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/"
     },
     {
       "id": "echoes-of-light-2026",
@@ -306,8 +317,8 @@
       "year": 2025,
       "trackCount": 12,
       "genres": [
-        "Country",
-        "Disco"
+        "Disco",
+        "Country"
       ],
       "folderPath": "Midnight Motion",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/"
@@ -357,17 +368,6 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/line-dancing-after-dark/"
     },
     {
-      "id": "summer-fever-2025",
-      "title": "Summer Fever ",
-      "year": 2025,
-      "trackCount": 12,
-      "genres": [
-        "Dance Pop"
-      ],
-      "folderPath": "Summer fever",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/"
-    },
-    {
       "id": "limitless-2025",
       "title": "Limitless",
       "year": 2025,
@@ -377,6 +377,17 @@
       ],
       "folderPath": "Limitless",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/limitless/"
+    },
+    {
+      "id": "summer-fever-2025",
+      "title": "Summer Fever ",
+      "year": 2025,
+      "trackCount": 12,
+      "genres": [
+        "Dance Pop"
+      ],
+      "folderPath": "Summer fever",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/"
     },
     {
       "id": "glass-bloom-2025",
@@ -546,18 +557,6 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/"
     },
     {
-      "id": "waves-of-tranquility-deep-house-reflections-2024",
-      "title": "Waves of Tranquility Deep House Reflections",
-      "year": 2024,
-      "trackCount": 14,
-      "genres": [
-        "Trance",
-        "Dance Pop"
-      ],
-      "folderPath": "Waves of Tranquility Deep House Reflections",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/"
-    },
-    {
       "id": "boots-and-beats-country-line-dance-anthems-2024",
       "title": "Boots and Beats Country Line Dance Anthems",
       "year": 2024,
@@ -567,6 +566,18 @@
       ],
       "folderPath": "Boots and Beats Country Line Dance Anthems",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems/"
+    },
+    {
+      "id": "waves-of-tranquility-deep-house-reflections-2024",
+      "title": "Waves of Tranquility Deep House Reflections",
+      "year": 2024,
+      "trackCount": 14,
+      "genres": [
+        "Dance Pop",
+        "Trance"
+      ],
+      "folderPath": "Waves of Tranquility Deep House Reflections",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/"
     },
     {
       "id": "happily-ever-after-dreams-2024",
@@ -585,8 +596,8 @@
       "year": 2024,
       "trackCount": 12,
       "genres": [
-        "Christmas",
-        "Country"
+        "Country",
+        "Christmas"
       ],
       "folderPath": "Pop Star Winter Wonderland",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/"
@@ -595,10 +606,9 @@
       "id": "forever-starts-today-country-music-for-weddings-2024",
       "title": "Forever Starts Today (Country Music for Weddings)",
       "year": 2024,
-      "trackCount": 13,
+      "trackCount": 12,
       "genres": [
-        "Country",
-        "Christmas"
+        "Country"
       ],
       "folderPath": "Forever Starts Today - Country Album",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/forever-starts-today--country-album/"

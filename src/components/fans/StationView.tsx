@@ -225,6 +225,14 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
                         />
                         <div className={styles.centerHole} />
                     </div>
+                    {currentTrack && (
+                        <div className={styles.diskTrackInfo}>
+                            <p className={styles.diskTrackTitle}>{capitalizeTitle(displayTrack.title)}</p>
+                            {displayTrack.artist && (
+                                <p className={styles.diskTrackArtist}>{displayTrack.artist}</p>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.trackInfo}>
