@@ -291,17 +291,16 @@
 .visualizer {
     display: flex;
     align-items: flex-end;
+    justify-content: center;
     gap: 4px;
-    height: 60px;
+    height: 80px;
+    width: 100%;
     margin-top: 1rem;
-    z-index: 5;
-    /* Lower than buttons but visible */
-    pointer-events: none;
-    /* Click through */
-    position: absolute;
-    /* Float it */
-    bottom: 80px;
-    /* Above controls */
+    z-index: 1; /* Behind controls */
+    pointer-events: none; /* Click through */
+    position: absolute; /* Float it */
+    bottom: 0px; /* Aligned with the bottom area where controls are */
+    opacity: 0.5; /* Act as a background texture */
 }
 
 .bar {
@@ -309,7 +308,6 @@
     background: var(--accent, #FF0080);
     border-radius: 4px;
     transition: height 0.1s ease;
-    /* Ensure transition exists */
     min-height: 4px;
 }
 
