@@ -236,9 +236,13 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
                 </div>
 
                 <div className={styles.trackInfo}>
-                    <h2 className={styles.trackTitle}>{capitalizeTitle(displayTrack.title)}</h2>
+                    <h2 className={styles.trackTitle}>
+                        {currentTrack
+                            ? capitalizeTitle(currentTrack.albumTitle || activeStation.name)
+                            : capitalizeTitle(displayTrack.title)}
+                    </h2>
                     <p className={styles.artistName}>
-                        {displayTrack.artist || (currentTrack ? "SingIt Pop" : "Tune In Now")}
+                        {currentTrack ? activeStation.name : 'Tune In Now'}
                     </p>
                 </div>
 
