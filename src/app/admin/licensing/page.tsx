@@ -74,17 +74,17 @@ export default async function AdminLicensingDashboard() {
 
                 <div className="bg-gradient-to-br from-pink-900/20 to-rose-900/10 border border-pink-500/20 rounded-3xl p-8 backdrop-blur-xl">
                     <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-pink-400">
-                        <ShieldAlert size={20} /> ASCAP / Rights Protection
+                        <ShieldAlert size={20} /> Rights & Metadata Guide
                     </h2>
                     <ul className="space-y-4 text-sm text-white/70 leading-relaxed">
                         <li>
-                            <strong className="text-white">The ISRC Code:</strong> You get this from TuneCore after distribution. It is the "Fingerprint" for your track.
+                            <strong className="text-white">Excel/Mood Update:</strong> To change mood mapping, edit the <code>moodMapping</code> object in <code>scripts/convertExcelToAlbums.js</code> and run <code>node scripts/convertExcelToAlbums.js</code> in your terminal.
                         </li>
                         <li>
-                            <strong className="text-white">ASCAP Registration:</strong> Log into ASCAP → "Register a Work" → Enter Title + Writers (Gary Birrell 100%) + ISRC. This ensures you collect performance royalties.
+                            <strong className="text-white">PDF Certificates:</strong> Ensure <code>RESEND_API_KEY</code> is set in <strong>Vercel &gt; Settings &gt; Environment Variables</strong>. This is required to email license PDFs to customers.
                         </li>
                         <li>
-                            <strong className="text-white">Copyright:</strong> Technical copyright exists the moment you finish the song, but the PDF license our system generates defines the *permission* you are giving the customer.
+                            <strong className="text-white">ASCAP Registration:</strong> Log into ASCAP &rarr; "Register a Work" &rarr; Enter Title + Writers (Gary Birrell 100%) + ISRC. This ensures you collect performance royalties.
                         </li>
                     </ul>
                 </div>
