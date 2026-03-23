@@ -46,7 +46,7 @@ export default async function LicensingPage() {
                     </div>
                     <div className={styles.heroActions}>
                         <a href="#library" className={styles.primaryButton}>Explore Catalog</a>
-                        <a href="#calculator" className={styles.secondaryButton}>Get a Custom Quote</a>
+                        <a href="/contact?subject=Custom+Quote" className={styles.secondaryButton}>Get a Custom Quote</a>
                     </div>
                 </div>
             </section>
