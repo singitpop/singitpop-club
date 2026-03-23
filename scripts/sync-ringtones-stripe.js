@@ -43,7 +43,7 @@ async function createMissingStripeProducts() {
             // 2. Create Price
             const price = await stripe.prices.create({
                 product: product.id,
-                unit_amount: 300, // £3.00
+                unit_amount: 99, // £0.99
                 currency: 'gbp',
             });
 

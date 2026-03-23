@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-10T19:27:16.672Z",
-  "totalAlbums": 54,
-  "totalTracks": 656,
+  "generated": "2026-03-11T15:32:08.889Z",
+  "totalAlbums": 55,
+  "totalTracks": 668,
   "genres": [
     "Christmas",
     "Country",
@@ -24,6 +24,17 @@
     2024
   ],
   "albums": [
+    {
+      "id": "solstice-2026",
+      "title": "Solstice",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Trance"
+      ],
+      "folderPath": "Solstice",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/"
+    },
     {
       "id": "nashville-in-june-2026",
       "title": "Nashville in June",

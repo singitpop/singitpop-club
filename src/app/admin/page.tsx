@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail, Clapperboard, FolderOpen, Lock as LockIcon } from 'lucide-react';
+import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail, Clapperboard, FolderOpen, Lock as LockIcon, Briefcase } from 'lucide-react';
 // ... inside component ...
 <Link href="/admin/club" className={styles.btn}>
     <LockIcon size={18} />
@@ -158,6 +158,10 @@ export default function AdminPage() {
                     <Link href="/admin/projects" className={styles.btn}>
                         <FolderOpen size={18} />
                         Projects
+                    </Link>
+                    <Link href="/admin/licensing" className={styles.btn}>
+                        <Briefcase size={18} />
+                        Licensing Hub
                     </Link>
                     <Link href="/admin/club" className={styles.btn}>
                         <LockIcon size={18} />

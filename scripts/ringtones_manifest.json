@@ -1,47 +1,38 @@
 [
     {
-        "title": "Broadway Boots",
+        "title": "Solstice\u00a0",
         "price": 0.99,
         "duration": 29,
-        "genre": "Country",
-        "mp3_key": "ringtones/broadway-boots.mp3",
-        "m4r_key": "ringtones/broadway-boots.m4r",
-        "release_date": "2026-06-05"
+        "genre": "Trance",
+        "mp3_key": "ringtones/solstice\u00a0.mp3",
+        "m4r_key": "ringtones/solstice\u00a0.m4r",
+        "release_date": "2026-06-19"
     },
     {
-        "title": "Nashville in June",
+        "title": "Afterglow Pulse",
         "price": 0.99,
         "duration": 29,
-        "genre": "Country",
-        "mp3_key": "ringtones/nashville-in-june.mp3",
-        "m4r_key": "ringtones/nashville-in-june.m4r",
-        "release_date": "2026-06-05"
+        "genre": "Trance",
+        "mp3_key": "ringtones/afterglow-pulse.mp3",
+        "m4r_key": "ringtones/afterglow-pulse.m4r",
+        "release_date": "2026-06-19"
     },
     {
-        "title": "Barstool Halo",
+        "title": "Higher than the Sun",
         "price": 0.99,
         "duration": 29,
-        "genre": "Country",
-        "mp3_key": "ringtones/barstool-halo.mp3",
-        "m4r_key": "ringtones/barstool-halo.m4r",
-        "release_date": "2026-06-05"
+        "genre": "Trance",
+        "mp3_key": "ringtones/higher-than-the-sun.mp3",
+        "m4r_key": "ringtones/higher-than-the-sun.m4r",
+        "release_date": "2026-06-19"
     },
     {
-        "title": "June Didn\u2019t End\u00a0",
+        "title": "Infinite Rise",
         "price": 0.99,
         "duration": 29,
-        "genre": "Country",
-        "mp3_key": "ringtones/june-didn\u2019t-end\u00a0.mp3",
-        "m4r_key": "ringtones/june-didn\u2019t-end\u00a0.m4r",
-        "release_date": "2026-06-05"
-    },
-    {
-        "title": "Bridge Over Troubed Water mix",
-        "price": 0.99,
-        "duration": 29,
-        "genre": "Pop",
-        "mp3_key": "ringtones/bridge-over-troubed-water-mix.mp3",
-        "m4r_key": "ringtones/bridge-over-troubed-water-mix.m4r",
-        "release_date": "2024-12-01"
+        "genre": "Trance",
+        "mp3_key": "ringtones/infinite-rise.mp3",
+        "m4r_key": "ringtones/infinite-rise.m4r",
+        "release_date": "2026-06-19"
     }
 ]
