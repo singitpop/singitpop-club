@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail, Clapperboard, FolderOpen, Lock as LockIcon, Briefcase } from 'lucide-react';
+import { Shield, Search, RefreshCw, Eye, Ban, BarChart3, Music2, Vote, Mail, Clapperboard, FolderOpen, Lock as LockIcon, Briefcase, Calculator } from 'lucide-react';
 // ... inside component ...
 <Link href="/admin/club" className={styles.btn}>
     <LockIcon size={18} />
@@ -166,6 +166,10 @@ export default function AdminPage() {
                     <Link href="/admin/club" className={styles.btn}>
                         <LockIcon size={18} />
                         Club Manager
+                    </Link>
+                    <Link href="/admin/calculator" className={`${styles.btn} border-pink-500/30 hover:border-pink-400`}>
+                        <Calculator size={18} className="text-pink-400" />
+                        Quote Calculator
                     </Link>
                     <Link href="/admin/tour" className={`${styles.btn} from-blue-900/40 to-cyan-900/40 border-blue-500/30 hover:border-blue-400`}>
                         <span className="text-xl">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
