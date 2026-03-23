@@ -39,22 +39,6 @@ const CUSTOM_SONG_TIERS = [
 
 export default function CustomSongsPage() {
     const { user } = useAuth();
-    const [selectedTier, setSelectedTier] = useState<string | null>(null);
-    const [customSongForm, setCustomSongForm] = useState({
-        name: "",
-        email: "",
-        occasion: "",
-        details: ""
-    });
-
-    const handleCustomSongSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        // TODO: Submit to API
-        console.log("Custom song order:", { tier: selectedTier, ...customSongForm });
-        alert("Order submitted! We'll contact you within 24 hours.");
-        setCustomSongForm({ name: "", email: "", occasion: "", details: "" });
-        setSelectedTier(null);
-    };
 
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-16 px-4">
@@ -88,11 +72,7 @@ export default function CustomSongsPage() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                                onClick={() => setSelectedTier(tier.id)}
-                                className={`relative bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border cursor-pointer transition-all ${selectedTier === tier.id
-                                    ? "border-pink-500 shadow-2xl shadow-pink-500/20 scale-105"
-                                    : "border-white/10 hover:border-white/30"
-                                    }`}
+                                className="relative bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-white/30 transition-all hover:shadow-xl hover:shadow-pink-500/10 hover:-translate-y-1"
                             >
                                 {tier.popular && (
                                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full text-xs font-bold">
@@ -119,87 +99,18 @@ export default function CustomSongsPage() {
                                     ))}
                                 </ul>
 
-                                <button
-                                    className={`w-full py-3 rounded-xl font-semibold transition-all ${selectedTier === tier.id
-                                        ? `bg-gradient-to-r ${tier.gradient} text-white`
-                                        : "bg-white/10 hover:bg-white/20"
-                                        }`}
+                                <Link
+                                    href={`/contact?category=custom_songs&subject=Order:+${encodeURIComponent(tier.name)}`}
+                                    className={`block text-center w-full py-3 rounded-xl font-bold transition-all bg-gradient-to-r ${tier.gradient} text-white hover:scale-[1.02] shadow-lg`}
                                 >
-                                    {selectedTier === tier.id ? "Selected" : "Select"}
-                                </button>
+                                    Select Package
+                                </Link>
                             </motion.div>
                         );
                     })}
                 </div>
 
-                {/* Order Form */}
-                <AnimatePresence>
-                    {selectedTier && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-pink-500/20"
-                        >
-                            <h3 className="text-2xl font-bold mb-6">Order Details</h3>
-                            <form onSubmit={handleCustomSongSubmit} className="space-y-4">
-                                <div className="grid md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-semibold mb-2">Your Name</label>
-                                        <input
-                                            type="text"
-                                            required
-                                            value={customSongForm.name}
-                                            onChange={(e) => setCustomSongForm({ ...customSongForm, name: e.target.value })}
-                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white"
-                                            placeholder="John Doe"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold mb-2">Email</label>
-                                        <input
-                                            type="email"
-                                            required
-                                            value={customSongForm.email}
-                                            onChange={(e) => setCustomSongForm({ ...customSongForm, email: e.target.value })}
-                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white"
-                                            placeholder="john@example.com"
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-semibold mb-2">Occasion</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={customSongForm.occasion}
-                                        onChange={(e) => setCustomSongForm({ ...customSongForm, occasion: e.target.value })}
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white"
-                                        placeholder="e.g., Wedding, Birthday, Anniversary"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-semibold mb-2">Tell me about your vision</label>
-                                    <textarea
-                                        required
-                                        rows={5}
-                                        value={customSongForm.details}
-                                        onChange={(e) => setCustomSongForm({ ...customSongForm, details: e.target.value })}
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white resize-none"
-                                        placeholder="Share details about the person, story, mood, or any specific lyrics you'd like included..."
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="w-full py-4 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-pink-500/20"
-                                >
-                                    Submit Order
-                                    <ArrowRight size={20} />
-                                </button>
-                            </form>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                {/* The form has been moved entirely to the /contact page for unified processing. */}
             </div>
         </div>
     );
