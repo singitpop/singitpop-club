@@ -12,7 +12,7 @@ const CUSTOM_SONG_TIERS = [
         name: "30-Second Jingle",
         price: 50,
         duration: "30 seconds",
-        features: ["Perfect for birthdays", "Anniversaries", "Special occasions", "MP3 delivery"],
+        features: ["Perfect for birthdays", "Anniversaries", "Special occasions", "Personal Use Only"],
         icon: Music,
         gradient: "from-pink-500 to-rose-500"
     },
@@ -21,17 +21,17 @@ const CUSTOM_SONG_TIERS = [
         name: "Full Song",
         price: 200,
         duration: "2-3 minutes",
-        features: ["Weddings", "Proposals", "Celebrations", "Full production", "MP3 + WAV delivery"],
+        features: ["Weddings", "Proposals", "Celebrations", "Personal Use Only"],
         icon: Heart,
         gradient: "from-purple-500 to-pink-500",
         popular: true
     },
     {
         id: "premium",
-        name: "Premium Package",
+        name: "Premium Commercial",
         price: 500,
         duration: "4+ minutes",
-        features: ["Full song", "Music video", "Behind-the-scenes", "All formats", "Priority delivery"],
+        features: ["Commercial Campaigns", "Custom Audio Edits", "Commercial Rights Included", "Priority delivery"],
         icon: Sparkles,
         gradient: "from-cyan-500 to-purple-500"
     }
@@ -109,6 +109,21 @@ export default function CustomSongsPage() {
                         );
                     })}
                 </div>
+
+                {/* Important Note on Usage Rights */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="mt-12 p-8 bg-blue-500/10 border border-blue-500/20 rounded-3xl text-center"
+                >
+                    <h3 className="text-xl font-bold mb-4 text-blue-400">Important Note on Usage Rights</h3>
+                    <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
+                        Our <strong>Jingle</strong> and <strong>Full Song</strong> packages are priced exclusively for <strong>Personal Use</strong> (e.g., birthdays, private events, personal gifts). They cannot be used in monetized content, advertisements, or broadcast.
+                        <br/><br/>
+                        If you need music for a commercial project, film, or YouTube channel, you have two options: commission a custom track via our <strong>Premium Commercial</strong> package above, or <Link href="/licensing" className="text-blue-400 font-bold hover:text-blue-300 underline transition-colors">browse our Licensing Catalog</Link> to instantly license one of our existing hit tracks!
+                    </p>
+                </motion.div>
 
                 {/* The form has been moved entirely to the /contact page for unified processing. */}
             </div>

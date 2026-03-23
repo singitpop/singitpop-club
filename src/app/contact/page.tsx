@@ -71,10 +71,19 @@ export default function ContactPage() {
         }
     };
     
-    // Auto-select "Custom Songs" if arriving from Licensing portal
+    // Auto-select category and subject if passed via URL
     useEffect(() => {
-        if (typeof window !== 'undefined' && window.location.search.includes('Custom+Quote')) {
-            setFormData(prev => ({ ...prev, category: 'custom_songs', subject: 'Custom Quote Inquiry' }));
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const categoryParam = params.get('category');
+            const subjectParam = params.get('subject');
+            
+            if (categoryParam === 'custom_songs') {
+                setFormData(prev => ({ ...prev, category: 'custom_songs', subject: subjectParam || 'Custom Quote Inquiry' }));
+            } else if (window.location.search.includes('Custom+Quote')) {
+                // fallback for the licensing hero button
+                setFormData(prev => ({ ...prev, category: 'custom_songs', subject: 'Custom Quote Inquiry' }));
+            }
         }
     }, []);
 
