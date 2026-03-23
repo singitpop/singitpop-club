@@ -1,7 +1,7 @@
 'use client';
 
 import { Mail, Instagram, Youtube, Send, MessageSquare, Briefcase, Newspaper, Users, Heart, CheckCircle, Loader, Music, ShoppingBag, Laptop, AlertCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const CATEGORIES = [
@@ -23,6 +23,62 @@ export default function ContactPage() {
     });
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [statusMessage, setStatusMessage] = useState('');
+
+    const getCategoryDetails = (category: string) => {
+        switch (category) {
+            case 'custom_songs':
+                return {
+                    subjectLabel: 'Project Name / Artist Name',
+                    subjectPlaceholder: 'e.g. Pop track needed for new album...',
+                    messageLabel: 'Project Details & Budget',
+                    messagePlaceholder: 'Tell us about the custom song you want to create (style, mood, vocal references, timeline, and budget)...'
+                };
+            case 'shop':
+                return {
+                    subjectLabel: 'Order Number / Item Name',
+                    subjectPlaceholder: 'e.g. Order #12345 or T-Shirt Sizing',
+                    messageLabel: 'How can we help?',
+                    messagePlaceholder: 'Please describe your shop inquiry...'
+                };
+            case 'fanmail':
+                return {
+                    subjectLabel: 'Subject',
+                    subjectPlaceholder: 'e.g. I love your music!',
+                    messageLabel: 'Your Message',
+                    messagePlaceholder: 'Send some love, feedback, or just say hi...'
+                };
+            case 'complaint':
+                return {
+                    subjectLabel: 'Issue Summary',
+                    subjectPlaceholder: 'e.g. Problem with my download',
+                    messageLabel: 'Description of the Problem',
+                    messagePlaceholder: 'Please explain exactly what went wrong so we can fix it immediately...'
+                };
+            case 'refund':
+                return {
+                    subjectLabel: 'Order Number',
+                    subjectPlaceholder: 'Must include your Order Number',
+                    messageLabel: 'Reason for Refund',
+                    messagePlaceholder: 'Please explain why you are requesting a refund so we can process it...'
+                };
+            default: // general
+                return {
+                    subjectLabel: 'Subject',
+                    subjectPlaceholder: "What's this about?",
+                    messageLabel: 'Message',
+                    messagePlaceholder: 'Tell us more...'
+                };
+        }
+    };
+    
+    // Auto-select "Custom Songs" if arriving from Licensing portal
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.location.search.includes('Custom+Quote')) {
+            setFormData(prev => ({ ...prev, category: 'custom_songs', subject: 'Custom Quote Inquiry' }));
+        }
+    }, []);
+
+    const fields = getCategoryDetails(formData.category);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -161,27 +217,27 @@ export default function ContactPage() {
 
                                     {/* Subject */}
                                     <div>
-                                        <label className="block text-sm font-semibold mb-2 text-white/80">Subject</label>
+                                        <label className="block text-sm font-semibold mb-2 text-white/80">{fields.subjectLabel}</label>
                                         <input
                                             type="text"
                                             value={formData.subject}
                                             onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                             required
                                             className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 outline-none transition-all text-white"
-                                            placeholder="What's this about?"
+                                            placeholder={fields.subjectPlaceholder}
                                         />
                                     </div>
 
                                     {/* Message */}
                                     <div>
-                                        <label className="block text-sm font-semibold mb-2 text-white/80">Message</label>
+                                        <label className="block text-sm font-semibold mb-2 text-white/80">{fields.messageLabel}</label>
                                         <textarea
                                             value={formData.message}
                                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                             required
                                             rows={6}
                                             className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 outline-none transition-all resize-none text-white"
-                                            placeholder="Tell us more..."
+                                            placeholder={fields.messagePlaceholder}
                                         />
                                     </div>
 
