@@ -29,8 +29,8 @@ const CUSTOM_SONG_TIERS = [
     {
         id: "premium",
         name: "Premium Commercial",
-        price: 500,
-        duration: "4+ minutes",
+        price: "Custom",
+        duration: "Bespoke",
         features: ["Commercial Campaigns", "Custom Audio Edits", "Commercial Rights Included", "Priority delivery"],
         icon: Sparkles,
         gradient: "from-cyan-500 to-purple-500"
@@ -86,8 +86,10 @@ export default function CustomSongsPage() {
 
                                 <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
                                 <div className="text-4xl font-bold mb-4">
-                                    £{tier.price}
-                                    <span className="text-lg text-white/40 font-normal ml-2">{tier.duration}</span>
+                                    {typeof tier.price === 'number' ? `£${tier.price}` : tier.price}
+                                    {tier.duration && tier.duration !== 'Bespoke' && (
+                                        <span className="text-lg text-white/40 font-normal ml-2">{tier.duration}</span>
+                                    )}
                                 </div>
 
                                 <ul className="space-y-3 mb-6">
