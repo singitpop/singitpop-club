@@ -17,6 +17,7 @@ export default function Footer() {
                         <Link href="/about">About</Link>
                         <Link href="/music">Music</Link>
                         <Link href="/fan-albums">FanZone</Link>
+                        <Link href="/licensing">Licensing</Link>
                         <Link href="/projects">Projects</Link>
                         <Link href="/shop">Shop</Link>
                         <Link href="/contact">Contact</Link>
