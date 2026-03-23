@@ -12,6 +12,42 @@ interface TrackLibraryProps {
 export default function TrackLibrary({ tracks }: TrackLibraryProps) {
     const [selectedTrack, setSelectedTrack] = useState<any | null>(null);
     const [visibleCount, setVisibleCount] = useState(12);
+    const [genreFilter, setGenreFilter] = useState('All Genres');
+    const [moodFilter, setMoodFilter] = useState('All Moods');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Extract unique genres from tracks
+    const dynamicGenres = React.useMemo(() => {
+        const set = new Set<string>();
+        tracks.forEach(t => {
+            if (t.genre) set.add(t.genre);
+        });
+        return Array.from(set).sort();
+    }, [tracks]);
+
+    // Extract unique moods from tracks
+    const dynamicMoods = React.useMemo(() => {
+        const set = new Set<string>();
+        tracks.forEach(t => {
+            if (t.mood) set.add(t.mood);
+        });
+        return Array.from(set).sort();
+    }, [tracks]);
+
+    // Filtering logic
+    const filteredTracks = React.useMemo(() => {
+        return tracks.filter(track => {
+            const matchesGenre = genreFilter === 'All Genres' || track.genre === genreFilter;
+            const matchesMood = moodFilter === 'All Moods' || track.mood === moodFilter; 
+            const matchesSearch = track.title.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesGenre && matchesMood && matchesSearch;
+        });
+    }, [tracks, genreFilter, moodFilter, searchQuery]);
+
+    // Reset visible count when filters change
+    React.useEffect(() => {
+        setVisibleCount(12);
+    }, [genreFilter, moodFilter, searchQuery]);
 
     return (
         <section id="library" className={styles.librarySection}>
@@ -19,30 +55,35 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
             <div className={styles.filtersBar}>
                 <div className={styles.filterGroup}>
                     <label>Genre</label>
-                    <select>
-                        <option>All Genres</option>
-                        <option>Pop</option>
-                        <option>Country</option>
-                        <option>EDM</option>
+                    <select value={genreFilter} onChange={(e) => setGenreFilter(e.target.value)}>
+                        <option value="All Genres">All Genres</option>
+                        {dynamicGenres.map(g => (
+                            <option key={g} value={g}>{g}</option>
+                        ))}
                     </select>
                 </div>
                 <div className={styles.filterGroup}>
                     <label>Mood</label>
-                    <select>
-                        <option>All Moods</option>
-                        <option>Upbeat</option>
-                        <option>Energetic</option>
-                        <option>Cinematic</option>
+                    <select value={moodFilter} onChange={(e) => setMoodFilter(e.target.value)}>
+                        <option value="All Moods">All Moods</option>
+                        {dynamicMoods.map(m => (
+                            <option key={m} value={m}>{m}</option>
+                        ))}
                     </select>
                 </div>
                 <div className={styles.filterGroup}>
                     <label>Search</label>
-                    <input type="text" placeholder="Search track title..." />
+                    <input 
+                        type="text" 
+                        placeholder="Search track title..." 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </div>
             </div>
 
             <div className={styles.trackGrid}>
-                {tracks.slice(0, visibleCount).map((track, i) => (
+                {filteredTracks.slice(0, visibleCount).map((track, i) => (
                     <div key={i} className={styles.trackListCard}>
                         <div className={styles.trackImageWrapper}>
                             {track.coverArt ? (
@@ -53,7 +94,7 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
                         </div>
                         <div className={styles.trackMeta}>
                             <h4>{track.title}</h4>
-                            <p>{track.albumTitle} &bull; {track.genre}</p>
+                            <p>{track.albumTitle} &bull; {track.genre} &bull; {track.mood}</p>
                         </div>
                         <div className={styles.trackActions}>
                             <button 
@@ -67,10 +108,10 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
                 ))}
             </div>
             
-            {visibleCount < tracks.length && (
+            {visibleCount < filteredTracks.length && (
                 <div className={styles.centerAction}>
                     <button className={styles.loadMoreBtn} onClick={() => setVisibleCount(v => v + 12)}>
-                        Load More Tracks
+                        Load More Tracks ({filteredTracks.length - visibleCount} remaining)
                     </button>
                 </div>
             )}

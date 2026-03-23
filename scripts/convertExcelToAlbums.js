@@ -139,6 +139,37 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
+    // Mood Mapping Table (Industry Standard Moods based on SingIt Pop Genres)
+    const moodMapping = {
+        "Pop": "Upbeat",
+        "Country": "Acoustic",
+        "Christmas": "Festive",
+        "R&B": "Smooth",
+        "Disco": "Energetic",
+        "EDM": "High-Energy",
+        "Trance": "Pulsating",
+        "Dance": "Club",
+        "Classical": "Sophisticated",
+        "Scottish": "Traditional",
+        "Folk": "Rootsy",
+        "Electronic": "Futuristic",
+        "Romantic": "Gentle",
+        "Instrumental": "Underscore",
+        "Disney": "Magical",
+        "Space": "Ambient",
+        "Rock": "Powerful",
+        "Halloween": "Spooky",
+        "New Year": "Celebratory",
+        "Worldbeat": "Tribal",
+        "Dance Pop": "Upbeat"
+    };
+
+    const getMoodForGenre = (genre) => {
+        if (!genre) return "Atmospheric";
+        const trimmed = String(genre).trim();
+        return moodMapping[trimmed] || "Atmospheric";
+    };
+
     for (const [albumName, tracks] of Object.entries(tracksByAlbum)) {
         // Find matching folder (case-insensitive, flexible matching) or use manual mapping
         let matchingFolder = folderMappings[albumName];
@@ -321,6 +352,7 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
                 locked: false, // Lock logic handled by client component based on tier
                 price: 0.99,
                 genre: track.genre,
+                mood: getMoodForGenre(track.genre),
                 // WAV for VIPs only (if exists)
                 highResUrl: foundWav ? `${S3_BUCKET_URL}/albums/${s3FolderSlug}/${encodeURIComponent(wavFilename)}` : undefined,
                 // MP3 for everyone else (streaming)
