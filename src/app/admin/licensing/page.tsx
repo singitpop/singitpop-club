@@ -2,7 +2,7 @@ import React from 'react';
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle2, FileText, AlertCircle, PlayCircle, DollarSign } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, FileText, AlertCircle, PlayCircle, DollarSign, ShieldAlert } from 'lucide-react';
 import styles from './page.module.css';
 
 // Read JSON DBs natively on the server
@@ -50,6 +50,43 @@ export default async function AdminLicensingDashboard() {
                     <PlayCircle size={24} className={styles.statIcon} style={{color: '#ef4444'}} />
                     <h3>YouTube Disputes</h3>
                     <div className={styles.statValue}>{whitelists.filter((w: any) => w.status === 'pending').length}</div>
+                </div>
+            </div>
+
+            {/* LICENSING CHEAT SHEET */}
+            <div className="mb-12 grid md:grid-cols-2 gap-6">
+                <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/10 border border-blue-500/20 rounded-3xl p-8 backdrop-blur-xl">
+                    <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-blue-400">
+                        <PlayCircle size={20} /> YouTube & TuneCore Guide
+                    </h2>
+                    <ul className="space-y-4 text-sm text-white/70 leading-relaxed">
+                        <li>
+                            <strong className="text-white">Whitelisting:</strong> TuneCore does NOT allow per-video whitelisting. It only whitelists entire channels. 
+                        </li>
+                        <li>
+                            <strong className="text-white">Handling Claims:</strong> Tell the licensee to hit <strong>"Dispute"</strong> on YouTube and upload the PDF certificate we sent them. You can then release the claim in your TuneCore "Disputes" section.
+                        </li>
+                        <li>
+                            <strong className="text-white">The Clean Strategy:</strong> For high-value tracks you sell often, consider disabling "YouTube Monetization" for that track in TuneCore entirely to avoid buyer headaches.
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="bg-gradient-to-br from-pink-900/20 to-rose-900/10 border border-pink-500/20 rounded-3xl p-8 backdrop-blur-xl">
+                    <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-pink-400">
+                        <ShieldAlert size={20} /> ASCAP / Rights Protection
+                    </h2>
+                    <ul className="space-y-4 text-sm text-white/70 leading-relaxed">
+                        <li>
+                            <strong className="text-white">The ISRC Code:</strong> You get this from TuneCore after distribution. It is the "Fingerprint" for your track.
+                        </li>
+                        <li>
+                            <strong className="text-white">ASCAP Registration:</strong> Log into ASCAP → "Register a Work" → Enter Title + Writers (Gary Birrell 100%) + ISRC. This ensures you collect performance royalties.
+                        </li>
+                        <li>
+                            <strong className="text-white">Copyright:</strong> Technical copyright exists the moment you finish the song, but the PDF license our system generates defines the *permission* you are giving the customer.
+                        </li>
+                    </ul>
                 </div>
             </div>
 

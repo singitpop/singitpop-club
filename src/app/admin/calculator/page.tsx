@@ -13,13 +13,26 @@ export default function QuoteCalculatorPage() {
     const [dailyRate, setDailyRate] = useState(400);
     const [days, setDays] = useState(3);
     
+    // Creative Factors
+    const [includeVocals, setIncludeVocals] = useState(false);
+    const [includeStems, setIncludeStems] = useState(false);
+    const [revisions, setRevisions] = useState(1);
+
+    // License Factors
     const [term, setTerm] = useState(1.0);
     const [territory, setTerritory] = useState(1.0);
     const [media, setMedia] = useState(1.0);
     const [exclusivity, setExclusivity] = useState(1.0);
 
     // Totals
-    const creativeFee = dailyRate * days;
+    const baseDays = Number(days);
+    const vocalFee = includeVocals ? 300 : 0; // Flat fee for vocal hiring/tracking
+    const stemLabor = includeStems ? 0.5 : 0; // Stems take half a day
+    const revisionLabor = revisions * 0.5; // Each revision takes half a day
+    
+    const totalLaborDays = baseDays + stemLabor + revisionLabor;
+    const creativeFee = (totalLaborDays * dailyRate) + vocalFee;
+
     const rawMultiplier = term + territory + media + exclusivity - 3;
     const finalMultiplier = Math.max(0.25, rawMultiplier); // Floor it at 0.25x so it never goes negative
     const licenseFee = creativeFee * finalMultiplier;
@@ -78,7 +91,7 @@ export default function QuoteCalculatorPage() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm text-white/60 mb-2">Estimated Days to Produce</label>
+                                    <label className="block text-sm text-white/60 mb-2">Base Production Days (Writing/Arranging)</label>
                                     <input 
                                         type="range" 
                                         min="1" max="14" step="0.5"
@@ -87,6 +100,38 @@ export default function QuoteCalculatorPage() {
                                         className="w-full accent-pink-500"
                                     />
                                     <div className="text-right font-bold mt-1 text-pink-400">{days} Days</div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
+                                    <label className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                        <input 
+                                            type="checkbox" 
+                                            checked={includeVocals}
+                                            onChange={(e) => setIncludeVocals(e.target.checked)}
+                                            className="w-5 h-5 accent-pink-500"
+                                        />
+                                        <div className="text-xs font-bold">Include Vocals (+£300)</div>
+                                    </label>
+                                    <label className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                        <input 
+                                            type="checkbox" 
+                                            checked={includeStems}
+                                            onChange={(e) => setIncludeStems(e.target.checked)}
+                                            className="w-5 h-5 accent-pink-500"
+                                        />
+                                        <div className="text-xs font-bold">Stem Delivery (+0.5 Days)</div>
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm text-white/60 mb-2">Revision Rounds (+0.5 Days each)</label>
+                                    <input 
+                                        type="number" 
+                                        min="0" max="10"
+                                        value={revisions} 
+                                        onChange={(e) => setRevisions(Number(e.target.value))}
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2 outline-none focus:border-pink-500"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -186,7 +231,7 @@ export default function QuoteCalculatorPage() {
                                 <div className="flex justify-between items-end pb-4 border-b border-white/10">
                                     <div>
                                         <div className="font-bold text-lg">Creative Fee</div>
-                                        <div className="text-sm text-white/40">{days} Days @ £{dailyRate}/day</div>
+                                        <div className="text-sm text-white/40">{totalLaborDays.toFixed(1)} Total Labor Days @ £{dailyRate}/day {includeVocals ? '+ Vocals' : ''}</div>
                                     </div>
                                     <div className="text-2xl font-bold">£{creativeFee.toLocaleString()}</div>
                                 </div>
@@ -217,12 +262,16 @@ export default function QuoteCalculatorPage() {
 
                             <button 
                                 onClick={() => {
-                                    navigator.clipboard.writeText(`Custom Song Quote:\nCreative Fee: £${creativeFee}\nUsage License: £${Math.round(licenseFee)}\nTotal: £${Math.round(totalQuote)}`);
+                                    const summary = `Custom Song Quote Breakdown:\n` +
+                                        `- Creative Fee: £${creativeFee.toLocaleString()} (${totalLaborDays.toFixed(1)} days @ £${dailyRate})\n` +
+                                        `- License Fee: £${Math.round(licenseFee).toLocaleString()} (Multiplier: ${finalMultiplier.toFixed(2)}x)\n` +
+                                        `- Total Quote: £${Math.round(totalQuote).toLocaleString()}`;
+                                    navigator.clipboard.writeText(summary);
                                     alert('Quote summary copied to clipboard!');
                                 }}
                                 className="w-full mt-6 py-4 bg-white/10 hover:bg-white/20 rounded-xl font-bold transition-colors"
                             >
-                                Copy to Clipboard
+                                Copy Detailed Breakdown
                             </button>
                         </motion.div>
                     </div>
