@@ -123,7 +123,7 @@ export default function CustomSongsPage() {
                     <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
                         Our <strong>Jingle</strong> and <strong>Full Song</strong> packages are priced exclusively for <strong>Personal Use</strong> (e.g., birthdays, private events, personal gifts). They cannot be used in monetized content, advertisements, or broadcast.
                         <br/><br/>
-                        If you need music for a commercial project, film, or YouTube channel, you have two options: commission a custom track via our <strong>Premium Commercial</strong> package above, or <Link href="/licensing" className="text-blue-400 font-bold hover:text-blue-300 underline transition-colors">browse our Licensing Catalog</Link> to instantly license one of our existing hit tracks!
+                        If you need music for a commercial project, film, YouTube, or social media campaign, you have two options: commission a custom track via our <strong>Premium Commercial</strong> package above, or <Link href="/licensing" className="text-blue-400 font-bold hover:text-blue-300 underline transition-colors">browse our Licensing Catalog</Link> to instantly license one of our existing hit tracks!
                     </p>
                 </motion.div>
 
