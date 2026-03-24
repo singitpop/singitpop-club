@@ -97,6 +97,17 @@
       ]
     },
     {
+      "feature": "Executive Producer Sponsorship",
+      "tier": "All",
+      "devices": ["PC", "Mobile"],
+      "steps": [
+        "Go to the Licensing or Music page.",
+        "Look for the 'Become Executive Producer' link on your favorite track.",
+        "Complete the £50 sponsorship payment via Stripe.",
+        "Your name instantly appears as a gold 'Executive Producer' badge on that song permanently!"
+      ]
+    },
+    {
       "feature": "Creating a Mix",
       "tier": "Insider, VIP",
       "devices": ["PC", "Mobile"],
