@@ -1,251 +1,110 @@
 {
   "faq": [
     {
+      "q": "Who is Gary / SingIt Pop?",
+      "a": "Gary is the artist behind SingIt Pop. He's a prolific creator who uses music as therapy and expression. Despite being deaf in one ear and his other ear fading, he continues to 'Keep Singing It POP', blending pop, country, and EDM."
+    },
+    {
       "q": "How do I become a VIP?",
-      "a": "You can become a VIP by visiting the Membership page and selecting the VIP tier. It costs £9.99/month or £299 for Lifetime access."
+      "a": "Visit the <a href='/membership' class='text-pink-400 underline'>Membership page</a>. The VIP tier costs £8.99/month or you can opt for Lifetime access."
     },
     {
-      "q": "What is included in the VIP membership?",
-      "a": "VIP members get 20% off merch, FLAC downloads, exclusive pre-releases, and access to the 'Inside the Studio' blog."
+      "q": "What are the Membership Tiers?",
+      "a": "<strong>Fan</strong> (Free), <strong>Insider</strong> (£3.99/mo), and <strong>VIP</strong> (£8.99/mo). Insiders get MP3 downloads and playlists. VIPs get 20% off merch, Lossless WAV downloads, and exclusive Radio stations."
     },
     {
-      "q": "How do I download music?",
-      "a": "If you are a VIP or have purchased the track, go to the Album page. You will see a 'Download' button next to the track."
-    },
-    {
-      "q": "Can I buy a single track?",
-      "a": "Yes! You can buy individual tracks for £0.99 each directly from the music player."
-    },
-    {
-      "q": "Where is my order?",
-      "a": "You should receive an email confirmation from Stripe/Printful. If not, contact support via the Contact page."
-    },
-    {
-      "q": "Do you have a Discord?",
-      "a": "We decided not to launch a Discord to focus on making this website the best place for fans!"
-    },
-    {
-      "q": "How do I contact support?",
-      "a": "You can use the Contact page form for specific inquiries."
-    },
-    {
-      "q": "What do the badges mean?",
-      "a": "Badges represent your status and journey. Insiders evolve from Amethyst to Plasma energy. VIPs build from Obsidian to Black Diamond. Lifetime members hold the Legacy metals (Bronze, Silver, Gold)."
-    },
-    {
-      "q": "How do I upgrade my badge?",
-      "a": "First, upgrade your Membership Tier to unlock the path (e.g., become a VIP to unlock Obsidian). Then, active users will automatically evolve their badge by maintaining their streak, creating playlists, or downloading tracks."
+      "q": "What is the 20% Merch Discount?",
+      "a": "VIP and Label members automatically get 20% off all physical merch. Use the code <strong>VIP20</strong> at checkout on our fourthwall shop."
     },
     {
       "q": "How do I license music for my project?",
-      "a": "Visit our <a href='/licensing' class='text-pink-400 underline'>Licensing Page</a> to browse our catalog. We offer Creator (£49), Commercial (£199), and Extended (£1,000+) licenses to fit any project size."
+      "a": "Visit our <a href='/licensing' class='text-pink-400 underline'>Licensing Page</a>. We offer Creator (£49), Commercial (£199), and Extended (£1,000+) licenses to fit any project size."
     },
     {
       "q": "Do Custom Songs include commercial rights?",
       "a": "Standard 'Jingle' and 'Full Song' packages are for <strong>Personal Use only</strong>. For commercial campaigns, please select the 'Premium Commercial' tier or use our <a href='/licensing' class='text-pink-400 underline'>Licensing Catalog</a>."
     },
     {
-      "q": "What is the difference between Creator and Commercial licenses?",
-      "a": "Creator License is for individuals and organic content (YouTube/Social). Commercial License is for businesses and paid promotional campaigns."
-    }
-  ],
-  "albums": [
-    {
-      "title": "Neon Dreams",
-      "price": "£9.99",
-      "type": "Studio Album",
-      "url": "/music"
+      "q": "What merch do you sell?",
+      "a": "We have the Midnight Hoodie, Signature Heavy Tee, Studio Cuffed Beanie, Vinyl Carrier Tote, Studio Dad Hat, and Midnight Coffee Mugs. All available in the <a href='/shop' class='text-pink-400 underline'>Shop</a>."
     },
     {
-      "title": "Midnight Memories",
-      "price": "£9.99",
-      "type": "Studio Album",
-      "url": "/music"
+      "q": "How do I download music?",
+      "a": "If you are an Insider or VIP, go to any Album page. You will see 'MP3' or 'WAV' download icons next to the tracks."
     },
     {
-      "title": "Acoustic Sessions",
-      "price": "£9.99",
-      "type": "Live Album",
-      "url": "/music"
+      "q": "What is the FanZone?",
+      "a": "The FanZone is where you can create your own Mixes (Playlists) and enter community contests. Insiders can publish their own mixes directly to the site!"
+    },
+    {
+      "q": "What are the Radio Stations?",
+      "a": "We have several stations including Main, Deep Cuts, Demos, and Live. VIPs get access to all stations for the ultimate 'Inside the Studio' experience."
     }
   ],
   "pages": [
     {
+      "name": "About",
+      "url": "/about",
+      "desc": "The story of Gary, his journey with hearing loss, and the mission of SingIt Pop."
+    },
+    {
       "name": "Shop",
       "url": "/shop",
-      "desc": "Buy merch, vinyls, and apparel."
-    },
-    {
-      "name": "Membership",
-      "url": "/membership",
-      "desc": "Join the club and upgrade your tier."
-    },
-    {
-      "name": "Music",
-      "url": "/music",
-      "desc": "Listen to all albums and singles."
-    },
-    {
-      "name": "Contact",
-      "url": "/contact",
-      "desc": "Get in touch with the team."
-    },
-    {
-      "name": "FanZone",
-      "url": "/fanzone",
-      "desc": "Community hub for contests and news."
+      "desc": "Merch, Vinyl, Ringtones, and Custom Song commissions."
     },
     {
       "name": "Licensing",
       "url": "/licensing",
-      "desc": "Browse and license high-quality tracks for your video projects and ads."
+      "desc": "Professional music licensing for YouTube, Social Media, Ads, and Film."
+    },
+    {
+      "name": "Music",
+      "url": "/music",
+      "desc": "Our full discography including 600+ tracks across multiple genres."
+    },
+    {
+      "name": "Membership",
+      "url": "/membership",
+      "desc": "Join the inner circle as an Insider or VIP."
+    },
+    {
+      "name": "FanZone",
+      "url": "/fanzone",
+      "desc": "Community mixes, leaderboards, and news."
     }
   ],
   "guides": [
     {
-      "feature": "Music Player",
+      "feature": "Custom Song Commissions",
       "tier": "All",
-      "devices": [
-        "PC",
-        "Mobile"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/guide_music_player_1771266304224.png",
+      "devices": ["PC", "Mobile"],
       "steps": [
-        "Click the Play button on any track or album.",
-        "Use the floating player at the bottom to Pause, Skip, or Scrub.",
-        "Click the queue icon (three lines) to see what's next."
-      ]
-    },
-    {
-      "feature": "Downloads",
-      "tier": "Insider, VIP",
-      "devices": [
-        "PC"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/guide_downloads_1771266317312.png",
-      "steps": [
-        "Go to any Album page.",
-        "Insiders: Look for the 'MP3' download icon next to tracks.",
-        "VIPs: You will see both 'MP3' and 'WAV' (Lossless) options.",
-        "Click to download directly to your device."
-      ]
-    },
-    {
-      "feature": "Create Playlist",
-      "tier": "Insider, VIP",
-      "devices": [
-        "Mobile"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/guide_playlist_1771266341322.png",
-      "steps": [
-        "Tap the 'FanZone' icon in the bottom menu.",
-        "Tap the '+' icon or 'New Playlist'.",
-        "Select an album to browse tracks.",
-        "Tap tracks to add them (max 20).",
-        "Tap 'Publish' at the bottom to save your mix."
-      ]
-    },
-    {
-      "feature": "Create Playlist",
-      "tier": "Insider, VIP",
-      "devices": [
-        "PC"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/guide_playlist_1771266341322.png",
-      "steps": [
-        "Go to the 'FanZone' via the sidebar.",
-        "Click 'Create Mix' in the top right.",
-        "Select tracks from the album view.",
-        "Name your mix and click 'Publish Playlist'."
-      ]
-    },
-    {
-      "feature": "Shop / Merch",
-      "tier": "All",
-      "devices": [
-        "PC",
-        "Mobile"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/guide_shop_1771266355341.png",
-      "steps": [
-        "Visit the 'Shop' page from the menu.",
-        "Browse Vinyls, Apparel, and Digital items.",
-        "VIPs automatically get 20% off at checkout.",
-        "Click 'Buy Now' to purchase securely via Stripe."
-      ]
-    },
-    {
-      "feature": "Membership Upgrade",
-      "tier": "Fan",
-      "devices": [
-        "PC",
-        "Mobile"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/guide_membership_1771266375465.png",
-      "steps": [
-        "Go to the 'Membership' page.",
-        "Choose 'Insider' (£3.99) or 'VIP' (£8.99).",
-        "Click 'Upgrade' to unlock downloads and playlists immediately."
-      ]
-    },
-    {
-      "feature": "Radio Stations",
-      "tier": "All (Station 1) / VIP (Stations 2-4)",
-      "devices": [
-        "PC",
-        "Mobile"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/guide_radio_v2_1771266650316.png",
-      "steps": [
-        "Go to the 'Radio' tab in the Music section.",
-        "Click a station to start listening.",
-        "VIPs get access to 'Deep Cuts', 'Demos', and 'Live' stations.",
-        "Troubleshooting: If a track fails to play, press the STOP button, wait a second, then press PLAY again to reset the stream."
-      ]
-    },
-    {
-      "feature": "FanZone",
-      "tier": "All (View) / Insider+ (Create)",
-      "devices": [
-        "PC",
-        "Mobile"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/guide_fanzone_1771266560771.png",
-      "steps": [
-        "The FanZone is the community hub for playlists and contests.",
-        "Fans: Can start listening to the 'Weekly Challenge' playlist.",
-        "Insiders/VIPs: Can CREATE their own playlists and enter contests.",
-        "Tap 'New Playlist' or 'Create Mix' to start building your own collection."
-      ]
-    },
-    {
-      "feature": "Badge Progression",
-      "tier": "All",
-      "devices": [
-        "PC",
-        "Mobile"
-      ],
-      "image": "/Users/garybirrell/.gemini/antigravity/brain/29f0ee41-bcf9-499d-83c4-8d18b307e1a5/badge_vip_diamond_v2_1771269298399_transparent.png",
-      "steps": [
-        "Badges are digital collectibles that track your journey.",
-        "Insider Path: Amethyst (Raw) -> Crystal (Focused) -> Plasma (Pure).",
-        "VIP Path: Obsidian (Stone) -> Carbon (Structure) -> Diamond (Pinnacle).",
-        "Lifetime Path: Bronze -> Silver -> Gold Masterpiece.",
-        "Unlock them by upgrading your tier and hitting milestones (Time Active, Playlists Created, etc)."
+        "Go to Shop > Custom Songs.",
+        "Choose between a 30-Second Jingle or a Full Song.",
+        "Fill out the brief on the contact page with your story and details.",
+        "Gary will write and produce a unique track just for you!"
       ]
     },
     {
       "feature": "Music Licensing",
       "tier": "All",
-      "devices": [
-        "PC",
-        "Mobile"
-      ],
+      "devices": ["PC", "Mobile"],
       "steps": [
-        "Go to the 'Licensing' page from the footer or main menu.",
-        "Use filters to find tracks by Genre or Mood (e.g., Upbeat, Cinematic).",
-        "Select a track and use the pricing calculator to choose your license tier.",
-        "Complete checkout to receive your PDF license certificate via email instantly."
+        "Go to the Licensing page.",
+        "Filter by Genre (Pop, Country, EDM) or Mood (Upbeat, Cinematic).",
+        "Select your License Tier (Creator, Commercial, etc.).",
+        "Checkout to receive your legal PDF certificate via email."
+      ]
+    },
+    {
+      "feature": "Creating a Mix",
+      "tier": "Insider, VIP",
+      "devices": ["PC", "Mobile"],
+      "steps": [
+        "Go to the FanZone.",
+        "Click 'Create Mix' or 'New Playlist'.",
+        "Select tracks from the discography.",
+        "Name your mix and click Publish to show it on the site!"
       ]
     }
   ]
