@@ -41,3 +41,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# harvester temp files
+SingItPop_CreatorPack_v*.zip
+/creator_pack_volumes/
+/temp_harvest/

@@ -163,6 +163,54 @@ export async function POST(req: Request) {
 
         console.log(`📦 Processing order for: ${customerEmail}`);
 
+        // 2. Handle Creator Pack Purchases
+        if (session.metadata?.type === "creator-pack") {
+            const volume = session.metadata.volume || "1";
+            const zipKey = `shop/SingItPop_CreatorPack_v${volume}.zip`;
+            console.log(`🎬 Creator Pack Purchase: Volume ${volume}`);
+
+            try {
+                // Generate secure link (24h)
+                const downloadUrl = await getSignedFileUrl(zipKey, 24 * 60 * 60, true);
+
+                // Send Delivery Email
+                await resend.emails.send({
+                    from: 'SingIt Pop <orders@singitpop.com>',
+                    to: [customerEmail],
+                    subject: `Your Digital Creator Pack Download (Volume ${volume})`,
+                    html: `
+                        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 40px; border-radius: 20px; border: 1px solid #22d3ee;">
+                            <h1 style="color: #22d3ee; margin-bottom: 20px;">Your Sound Pack is Ready! 🎬</h1>
+                            <p style="font-size: 16px; line-height: 1.6; color: #d1d5db;">
+                                Thanks for grabbing <strong>SingIt Pop: Digital Creator Pack Vol ${volume}</strong>. 
+                                Your professional 192Khz WAV assets are ready for download.
+                            </p>
+                            
+                            <div style="background: rgba(34, 211, 238, 0.1); padding: 30px; border-radius: 15px; margin: 30px 0; border: 1px solid rgba(34, 211, 238, 0.2); text-align: center;">
+                                <p style="color: #22d3ee; font-weight: bold; margin-bottom: 20px;">Volume ${volume} Contents:</p>
+                                <ul style="list-style: none; padding: 0; color: #9ca3af; font-size: 14px; margin-bottom: 25px;">
+                                    <li>⚡ 10x High-Impact Transitions</li>
+                                    <li>🌊 5x Cinematic Atmos Loops</li>
+                                    <li>🎼 5x Narrative Stingers</li>
+                                </ul>
+                                <a href="${downloadUrl}" style="background: #22d3ee; color: #000; padding: 15px 30px; text-decoration: none; border-radius: 12px; display: inline-block; font-weight: bold; font-size: 18px;">Download ZIP Collection</a>
+                            </div>
+
+                            <p style="font-size: 13px; color: #6b7280; margin-top: 30px;">
+                                * This link is valid for 24 hours. If you need help, just reply to this email.
+                            </p>
+                            <p style="color: #22adbe; font-size: 14px; margin-top: 20px; font-weight: bold;">
+                                Keep Creating,<br/>SingIt Pop
+                            </p>
+                        </div>
+                    `
+                });
+                console.log(`✅ Creator Pack v${volume} delivered to ${customerEmail}`);
+            } catch (err) {
+                console.error("❌ Failed to deliver Creator Pack:", err);
+            }
+        }
+
         for (const item of lineItems.data) {
             const product = item.price?.product as Stripe.Product;
 

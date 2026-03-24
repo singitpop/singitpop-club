@@ -11,6 +11,7 @@ import Link from 'next/link';
 export default function ShopPage() {
     const { user } = useAuth();
 
+    const [selectedVolume, setSelectedVolume] = useState(1);
     const [isProcessing, setIsProcessing] = useState(false);
 
     const handleCreatorPackCheckout = async () => {
@@ -18,7 +19,8 @@ export default function ShopPage() {
             setIsProcessing(true);
             const res = await fetch('/api/shop/creator-pack/checkout', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ volume: selectedVolume })
             });
             const { url, error } = await res.json();
             if (url) window.location.href = url;
@@ -29,6 +31,14 @@ export default function ShopPage() {
         } finally {
             setIsProcessing(false);
         }
+    };
+
+    const volumeMockups: Record<number, string> = {
+        1: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol1_corrected_v3_1774313516692.png',
+        2: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol2_corrected_v3_1774313530950.png',
+        3: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol3_corrected_v3_1774313544881.png',
+        4: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol4_corrected_v3_1774313558112.png',
+        5: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol5_corrected_v3_1774313572659.png'
     };
 
     return (
@@ -89,18 +99,38 @@ export default function ShopPage() {
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/20 rounded-full text-cyan-400 text-sm font-bold mb-6 border border-cyan-500/30">
                                 <Sparkles size={14} /> NEW FOR CREATORS
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-bold mb-6">Digital Creator Video Pack <span className="text-cyan-400">v1</span></h2>
+                            <h2 className="text-4xl md:text-5xl font-bold mb-6">Digital Creator Video Pack <span className="text-cyan-400">v{selectedVolume}</span></h2>
                             <p className="text-xl text-white/70 mb-8 leading-relaxed">
                                 Elevate your videos with Gary's professional audio toolkit. 
-                                <strong> 15+ high-quality assets</strong> including Transitions, Cinematic Atmos Loops, and Ending Stingers.
+                                <strong className="text-white"> 20+ high-quality assets</strong> in every pack: 10x Impact Transitions, 5x Cinematic Atmos Loops, and 5x Narrative Stingers.
                             </p>
                             
-                            <ul className="grid grid-cols-2 gap-4 mb-10 text-left">
-                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 10x Impact Transitions</li>
-                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 5x Ambient Atmos Loops</li>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 text-left">
+                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 10x High-Impact Transitions</li>
+                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 5x Cinematic Atmos Loops</li>
                                 <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 5x Narrative Stingers</li>
                                 <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> Commercial Rights Included</li>
                             </ul>
+
+                            {/* Volume Selector */}
+                            <div className="mb-10">
+                                <p className="text-xs text-white/40 uppercase tracking-widest mb-4">Select Volume</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {[1,2,3,4,5,6,7,8,9,10].map((v) => (
+                                        <button
+                                            key={v}
+                                            onClick={() => setSelectedVolume(v)}
+                                            className={`w-10 h-10 rounded-lg font-bold border transition-all ${
+                                                selectedVolume === v 
+                                                ? 'bg-cyan-500 border-cyan-400 text-black shadow-[0_0_15px_rgba(6,182,212,0.4)]' 
+                                                : 'bg-white/5 border-white/10 text-white/60 hover:border-white/30'
+                                            }`}
+                                        >
+                                            {v}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
 
                             <div className="flex flex-col sm:flex-row items-center gap-6">
                                 <button 
@@ -108,7 +138,7 @@ export default function ShopPage() {
                                     disabled={isProcessing}
                                     className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-2xl transition-all flex items-center gap-3 text-lg disabled:opacity-50"
                                 >
-                                    {isProcessing ? 'Loading Checkout...' : 'Buy Creator Pack — £20.00'}
+                                    {isProcessing ? 'Loading Checkout...' : `Buy Volume ${selectedVolume} — £20.00`}
                                     {!isProcessing && <ArrowRight size={20} />}
                                 </button>
                                 <span className="text-white/40 text-sm">Instant S3 Download via Email</span>
@@ -118,10 +148,18 @@ export default function ShopPage() {
                         <div className="w-full md:w-auto flex-shrink-0">
                             <div className="relative w-64 h-64 mx-auto">
                                 <div className="absolute inset-0 bg-cyan-500/20 blur-3xl rounded-full animate-pulse" />
-                                <div className="relative z-10 w-full h-full bg-black/40 border border-white/10 rounded-3xl flex items-center justify-center backdrop-blur-md">
-                                    <div className="text-cyan-400">
-                                        <Music size={80} strokeWidth={1.5} />
-                                    </div>
+                                <div className="relative z-10 w-full h-full bg-black/40 border border-white/10 rounded-3xl flex items-center justify-center backdrop-blur-md overflow-hidden">
+                                    {volumeMockups[selectedVolume] ? (
+                                        <img 
+                                            src={volumeMockups[selectedVolume]} 
+                                            alt={`Volume ${selectedVolume}`} 
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        <div className="text-cyan-400">
+                                            <Music size={80} strokeWidth={1.5} />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -97,6 +97,18 @@
       ]
     },
     {
+      "feature": "Digital Creator Video Pack (v1)",
+      "tier": "All",
+      "devices": ["PC", "Mobile"],
+      "description": "A £20 professional audio toolkit for video editors and YouTubers.",
+      "contents": [
+        "10x High-Impact Transitions (Whooshes, Risers, Impacts)",
+        "5x Cinematic Atmos Loops (No-drum ambient textures for background talking)",
+        "5x Narrative Stingers (5-15 second musical endings or section breaks)",
+        "Commercial Usage Rights for all assets included"
+      ]
+    },
+    {
       "feature": "Executive Producer Sponsorship",
       "tier": "All",
       "devices": ["PC", "Mobile"],

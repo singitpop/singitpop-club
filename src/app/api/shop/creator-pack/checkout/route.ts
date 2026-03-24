@@ -7,6 +7,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
 
 export async function POST(req: Request) {
     try {
+        const { volume = 1 } = await req.json();
+        
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             line_items: [
@@ -14,9 +16,9 @@ export async function POST(req: Request) {
                     price_data: {
                         currency: "gbp",
                         product_data: {
-                            name: "SingIt Pop Digital Creator Pack (v1)",
-                            description: "A professional audio toolkit for video creators. Includes 15+ high-quality Transitions, Atmos Loops, and Stingers.",
-                            images: ["/images/shop/creator-pack-thumb.png"], // Optional image
+                            name: `SingIt Pop Digital Creator Pack (v${volume})`,
+                            description: `A professional audio toolkit for video creators. Includes 20+ high-quality Transitions, Atmos Loops, and Stingers.`,
+                            images: ["https://singitpop-music.s3.eu-north-1.amazonaws.com/visuals/creator-pack-v1-thumb.png"], 
                         },
                         unit_amount: 2000, // £20.00
                     },
@@ -24,10 +26,11 @@ export async function POST(req: Request) {
                 },
             ],
             mode: "payment",
-            success_url: `${process.env.NEXT_PUBLIC_APP_URL}/shop?purchase=success&item=creator-pack`,
+            success_url: `${process.env.NEXT_PUBLIC_APP_URL}/shop?purchase=success&item=creator-pack&vol=${volume}`,
             cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/shop`,
             metadata: {
                 type: "creator-pack",
+                volume: volume.toString()
             },
         });
 
