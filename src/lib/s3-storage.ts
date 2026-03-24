@@ -1,0 +1,51 @@
+import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION || "eu-north-1",
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+    },
+});
+
+const BUCKET = process.env.AWS_S3_BUCKET || "singitpop-music";
+const SPONSORSHIPS_KEY = "data/sponsorships.json";
+
+export async function getSponsorships(): Promise<Record<string, string>> {
+    try {
+        const command = new GetObjectCommand({
+            Bucket: BUCKET,
+            Key: SPONSORSHIPS_KEY,
+        });
+
+        const response = await s3Client.send(command);
+        const content = await response.Body?.transformToString();
+        return content ? JSON.parse(content) : {};
+    } catch (error: any) {
+        if (error.name === "NoSuchKey") {
+            return {};
+        }
+        console.error("Error fetching sponsorships from S3:", error);
+        return {};
+    }
+}
+
+export async function saveSponsorship(trackId: string, sponsorName: string): Promise<boolean> {
+    try {
+        const currentSponsorships = await getSponsorships();
+        currentSponsorships[trackId] = sponsorName;
+
+        const command = new PutObjectCommand({
+            Bucket: BUCKET,
+            Key: SPONSORSHIPS_KEY,
+            Body: JSON.stringify(currentSponsorships, null, 2),
+            ContentType: "application/json",
+        });
+
+        await s3Client.send(command);
+        return true;
+    } catch (error) {
+        console.error("Error saving sponsorship to S3:", error);
+        return false;
+    }
+}

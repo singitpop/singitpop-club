@@ -49,6 +49,40 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
         setVisibleCount(12);
     }, [genreFilter, moodFilter, searchQuery]);
 
+    const [sponsorships, setSponsorships] = useState<Record<string, string>>({});
+    const [isSponsoring, setIsSponsoring] = useState<string | null>(null);
+
+    // Fetch sponsorships on mount
+    React.useEffect(() => {
+        fetch('/api/shop/sponsorships')
+            .then(res => res.json())
+            .then(data => setSponsorships(data))
+            .catch(err => console.error('Error loading sponsorships:', err));
+    }, []);
+
+    // Handle Sponsorship Checkout
+    const handleSponsorClick = async (track: any) => {
+        try {
+            setIsSponsoring(track.id);
+            const res = await fetch('/api/shop/sponsorship/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    trackId: track.id,
+                    trackTitle: track.title
+                })
+            });
+            const { url, error } = await res.json();
+            if (url) window.location.href = url;
+            else alert(error || 'Failed to start checkout. Please try again.');
+        } catch (err) {
+            console.error('Sponsorship error:', err);
+            alert('Something went wrong. Please try again.');
+        } finally {
+            setIsSponsoring(null);
+        }
+    };
+
     return (
         <section id="library" className={styles.librarySection}>
             <h2 className={styles.sectionHeading}>Browse Licensable Tracks</h2>
@@ -93,7 +127,14 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
                             )}
                         </div>
                         <div className={styles.trackMeta}>
-                            <h4>{track.title}</h4>
+                            <div className="flex items-center gap-3">
+                                <h4 className="m-0">{track.title}</h4>
+                                {sponsorships[track.id] && (
+                                    <div className={styles.sponsorBadge} title={`Sponsored by ${sponsorships[track.id]}`}>
+                                        Executive Producer: {sponsorships[track.id]}
+                                    </div>
+                                )}
+                            </div>
                             <p>{track.albumTitle} &bull; {track.genre} &bull; {track.mood}</p>
                         </div>
                         <div className={styles.trackActions}>
@@ -103,6 +144,16 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
                             >
                                 License Track
                             </button>
+                            
+                            {!sponsorships[track.id] && (
+                                <button 
+                                    className={styles.sponsorBtn}
+                                    onClick={() => handleSponsorClick(track)}
+                                    disabled={isSponsoring === track.id}
+                                >
+                                    {isSponsoring === track.id ? 'Loading...' : 'Become Executive Producer'}
+                                </button>
+                            )}
                         </div>
                     </div>
                 ))}

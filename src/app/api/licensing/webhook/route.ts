@@ -4,6 +4,7 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Resend } from 'resend';
 import fs from 'fs';
 import path from 'path';
+import { saveSponsorship } from '@/lib/s3-storage';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock', {
     apiVersion: '2026-01-28.clover',
@@ -47,7 +48,45 @@ export async function POST(req: Request) {
         const session = event.data.object as Stripe.Checkout.Session;
         const meta = session.metadata;
 
-        if (!meta || !meta.trackTitle) {
+        if (!meta) {
+            return NextResponse.json({ received: true });
+        }
+
+        // Handle Song Sponsorship
+        if (meta.type === 'sponsorship') {
+            const { trackId, trackTitle } = meta;
+            const buyerName = session.customer_details?.name || 'Anonymous Fan';
+            const buyerEmail = session.customer_details?.email || '';
+
+            console.log(`Processing sponsorship for: ${buyerName} - ${trackTitle}`);
+
+            // 1. Save to S3 (Persistent)
+            await saveSponsorship(trackId, buyerName);
+
+            // 2. Send "Welcome Executive Producer" Email
+            const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
+            await resend.emails.send({
+                from: 'SingIt Pop <orders@singitpop.com>',
+                to: [buyerEmail],
+                bcc: [ownerEmail],
+                subject: `Welcome, Executive Producer of '${trackTitle}'!`,
+                html: `
+                    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px; border: 1px solid #FFD700;">
+                        <h1 style="color: #FFD700;">You are now an Executive Producer!</h1>
+                        <p>Hi ${buyerName},</p>
+                        <p>Thank you for sponsoring <strong>${trackTitle}</strong>. Your name is now permanently displayed on the track page as an Executive Producer.</p>
+                        <p>This contribution directly supports the creation of new music and keeps the beat alive at SingIt Pop.</p>
+                        <hr style="border-color: #333; margin: 20px 0;" />
+                        <p>Head over to the <a href="${process.env.NEXT_PUBLIC_APP_URL}/music" style="color: #FFD700;">Music Library</a> to see your gold badge!</p>
+                        <p>Keep Singing It POP,<br/>Gary & The Team</p>
+                    </div>
+                `
+            });
+
+            return NextResponse.json({ received: true, success: true });
+        }
+
+        if (!meta.trackTitle) {
             return NextResponse.json({ received: true });
         }
 
