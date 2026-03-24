@@ -11,6 +11,26 @@ import Link from 'next/link';
 export default function ShopPage() {
     const { user } = useAuth();
 
+    const [isProcessing, setIsProcessing] = useState(false);
+
+    const handleCreatorPackCheckout = async () => {
+        try {
+            setIsProcessing(true);
+            const res = await fetch('/api/shop/creator-pack/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const { url, error } = await res.json();
+            if (url) window.location.href = url;
+            else alert(error || 'Failed to start checkout');
+        } catch (err) {
+            console.error('Creator pack error:', err);
+            alert('Something went wrong');
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-16 px-4">
             {/* Hero */}
@@ -53,6 +73,61 @@ export default function ShopPage() {
                     </motion.div>
                 </div>
             ) : null}
+
+            {/* Digital Creator Pack - NEW FEATURED SECTION */}
+            <div className="max-w-6xl mx-auto mb-24">
+                <motion.div 
+                    className="bg-gradient-to-r from-cyan-900/40 via-blue-900/20 to-black border border-cyan-500/30 rounded-3xl p-8 md:p-12 relative overflow-hidden group"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                >
+                    <div className="absolute top-0 right-0 p-64 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
+                    
+                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                        <div className="flex-1 text-center md:text-left">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/20 rounded-full text-cyan-400 text-sm font-bold mb-6 border border-cyan-500/30">
+                                <Sparkles size={14} /> NEW FOR CREATORS
+                            </div>
+                            <h2 className="text-4xl md:text-5xl font-bold mb-6">Digital Creator Video Pack <span className="text-cyan-400">v1</span></h2>
+                            <p className="text-xl text-white/70 mb-8 leading-relaxed">
+                                Elevate your videos with Gary's professional audio toolkit. 
+                                <strong> 15+ high-quality assets</strong> including Transitions, Cinematic Atmos Loops, and Ending Stingers.
+                            </p>
+                            
+                            <ul className="grid grid-cols-2 gap-4 mb-10 text-left">
+                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 10x Impact Transitions</li>
+                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 5x Ambient Atmos Loops</li>
+                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 5x Narrative Stingers</li>
+                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> Commercial Rights Included</li>
+                            </ul>
+
+                            <div className="flex flex-col sm:flex-row items-center gap-6">
+                                <button 
+                                    onClick={handleCreatorPackCheckout}
+                                    disabled={isProcessing}
+                                    className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-2xl transition-all flex items-center gap-3 text-lg disabled:opacity-50"
+                                >
+                                    {isProcessing ? 'Loading Checkout...' : 'Buy Creator Pack — £20.00'}
+                                    {!isProcessing && <ArrowRight size={20} />}
+                                </button>
+                                <span className="text-white/40 text-sm">Instant S3 Download via Email</span>
+                            </div>
+                        </div>
+                        
+                        <div className="w-full md:w-auto flex-shrink-0">
+                            <div className="relative w-64 h-64 mx-auto">
+                                <div className="absolute inset-0 bg-cyan-500/20 blur-3xl rounded-full animate-pulse" />
+                                <div className="relative z-10 w-full h-full bg-black/40 border border-white/10 rounded-3xl flex items-center justify-center backdrop-blur-md">
+                                    <div className="text-cyan-400">
+                                        <Music size={80} strokeWidth={1.5} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
 
             {/* Navigation Cards */}
             <div className="max-w-6xl mx-auto mb-24 grid md:grid-cols-2 gap-6">

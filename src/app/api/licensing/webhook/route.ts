@@ -5,12 +5,22 @@ import { Resend } from 'resend';
 import fs from 'fs';
 import path from 'path';
 import { saveSponsorship } from '@/lib/s3-storage';
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock', {
     apiVersion: '2026-01-28.clover',
 });
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION || "eu-north-1",
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+    },
+});
 
 // Vercel has a read-only filesystem except for /tmp
 const DATA_DIR = process.env.VERCEL ? '/tmp' : path.join(process.cwd(), 'src', 'data');
@@ -79,6 +89,50 @@ export async function POST(req: Request) {
                         <hr style="border-color: #333; margin: 20px 0;" />
                         <p>Head over to the <a href="${process.env.NEXT_PUBLIC_APP_URL}/music" style="color: #FFD700;">Music Library</a> to see your gold badge!</p>
                         <p>Keep Singing It POP,<br/>Gary & The Team</p>
+                    </div>
+                `
+            });
+
+            return NextResponse.json({ received: true, success: true });
+        }
+
+        // Handle Digital Creator Pack Purchase
+        if (meta.type === 'creator-pack') {
+            const buyerName = session.customer_details?.name || 'Friend';
+            const buyerEmail = session.customer_details?.email || '';
+
+            console.log(`Processing Creator Pack purchase for: ${buyerEmail}`);
+
+            // 1. Generate Presigned URL (Valid for 24 hours)
+            const bucket = process.env.AWS_S3_BUCKET || "singitpop-music";
+            const key = "shop/SingItPop_CreatorPack_v1.zip";
+            
+            const command = new GetObjectCommand({ Bucket: bucket, Key: key });
+            const downloadUrl = await getSignedUrl(s3Client, command, { expiresIn: 86400 });
+
+            // 2. Send Download Email
+            const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
+            await resend.emails.send({
+                from: 'SingIt Pop <orders@singitpop.com>',
+                to: [buyerEmail],
+                bcc: [ownerEmail],
+                subject: "Your SingIt Pop Digital Creator Pack is ready!",
+                html: `
+                    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px; border: 1px solid #00D1FF;">
+                        <h1 style="color: #00D1FF;">Download Successful ✓</h1>
+                        <p>Hi ${buyerName},</p>
+                        <p>Your <strong>SingIt Pop Digital Creator Pack (v1)</strong> is ready for download!</p>
+                        <p>Click the button below to get your 15+ high-quality audio assets (Transitions, Atmos Loops, and Stingers).</p>
+                        
+                        <div style="text-align: center; margin: 40px 0;">
+                            <a href="${downloadUrl}" style="background: #00D1FF; color: #000; padding: 15px 30px; border-radius: 99px; text-decoration: none; font-weight: bold; font-size: 18px;">
+                                DOWNLOAD PACK (ZIP)
+                            </a>
+                        </div>
+                        
+                        <p style="color: #888; font-size: 13px;">*This link is secure and will expire in 24 hours.</p>
+                        <hr style="border-color: #333; margin: 20px 0;" />
+                        <p>Thanks for supporting the music,<br/>Gary & The SingIt Pop Team</p>
                     </div>
                 `
             });
