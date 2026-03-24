@@ -58,7 +58,7 @@ selected_tracks = all_tracks[:TOTAL_TRACKS_NEEDED]
 print(f"Total tracks in library: {len(all_tracks)}")
 print(f"Selected {len(selected_tracks)} tracks for {PACKS_COUNT} volumes.")
 
-for v in range(2, PACKS_COUNT):
+for v in range(PACKS_COUNT):
     vol_num = v + 1
     vol_dir = os.path.join(OUTPUT_BASE, f"SingItPop_CreatorPack_v{vol_num}")
     os.makedirs(vol_dir, exist_ok=True)
@@ -110,15 +110,34 @@ for v in range(2, PACKS_COUNT):
         
         track_index += 1
 
+    # 11b. Generate Preview Montage (60 seconds: 15s Transition + 30s Atmos + 15s Stinger)
+    preview_name = f"SingItPop_CreatorPack_v{vol_num}_Preview.mp3"
+    print(f"  Generating Preview Montage for Volume {vol_num}...")
+    
+    # We'll just take the first track of each category for the preview
+    p_trans = os.path.join(vol_dir, [f for f in os.listdir(vol_dir) if "Transition" in f][0])
+    p_atmos = os.path.join(vol_dir, [f for f in os.listdir(vol_dir) if "Atmos_Loop" in f][0])
+    p_sting = os.path.join(vol_dir, [f for f in os.listdir(vol_dir) if "Stinger" in f][0])
+    
+    # Mix them together into one mp3 (using ffmpeg concat filter)
+    # -i p_trans -i p_atmos -i p_sting -filter_complex "[0:a][1:a][2:a]concat=n=3:v=0:a=1[outa]" -map "[outa]"
+    subprocess.run([
+        "ffmpeg", "-i", p_trans, "-i", p_atmos, "-i", p_sting,
+        "-filter_complex", "[0:a][1:a][2:a]concat=n=3:v=0:a=1[outa]",
+        "-map", "[outa]", "-y", os.path.join(OUTPUT_BASE, preview_name)
+    ], capture_output=True)
+
     # Zip Volume
     zip_name = f"SingItPop_CreatorPack_v{vol_num}.zip"
     print(f"  Zipping Volume {vol_num}...")
     subprocess.run(["zip", "-r", zip_name, f"SingItPop_CreatorPack_v{vol_num}"], cwd=OUTPUT_BASE, capture_output=True)
     
     # Upload to S3
-    print(f"  Uploading Volume {vol_num} to S3...")
+    print(f"  Uploading Volume {vol_num} + Preview to S3...")
     s3.upload_file(os.path.join(OUTPUT_BASE, zip_name), BUCKET, f"shop/{zip_name}")
+    s3.upload_file(os.path.join(OUTPUT_BASE, preview_name), BUCKET, f"shop/{preview_name}")
 
 print("\n--- ALL 10 VOLUMES COMPLETE! ---")
+print(f"Files are available for review on your Mac at: {os.path.abspath(OUTPUT_BASE)}")
 shutil.rmtree(TEMP_DIR)
-shutil.rmtree(OUTPUT_BASE)
+# shutil.rmtree(OUTPUT_BASE) # Keeping local files as requested by Gary for review

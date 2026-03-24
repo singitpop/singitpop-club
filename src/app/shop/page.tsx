@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from '@/context/AuthContext';
 import { motion } from 'framer-motion';
-import { ShoppingBag, Lock, ExternalLink, Music, Heart, Sparkles, Smartphone, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Lock, ExternalLink, Music, Heart, Sparkles, Smartphone, ArrowRight, Play, Pause, Volume2 } from 'lucide-react';
 import VinylCard from '@/components/shop/VinylCard';
 import { MERCH_PRODUCTS } from "@/data/shopProducts";
 import Link from 'next/link';
@@ -13,6 +13,33 @@ export default function ShopPage() {
 
     const [selectedVolume, setSelectedVolume] = useState(1);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [isPlayingPreview, setIsPlayingPreview] = useState(false);
+    const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+
+    const togglePreview = () => {
+        if (isPlayingPreview) {
+            audio?.pause();
+            setIsPlayingPreview(false);
+        } else {
+            if (audio) audio.pause();
+            const previewUrl = `https://singitpop-music.s3.eu-north-1.amazonaws.com/shop/SingItPop_CreatorPack_v${selectedVolume}_Preview.mp3`;
+            const newAudio = new Audio(previewUrl);
+            newAudio.onended = () => setIsPlayingPreview(false);
+            setAudio(newAudio);
+            newAudio.play();
+            setIsPlayingPreview(true);
+        }
+    };
+
+    // Cleanup audio on volume change or unmount
+    useEffect(() => {
+        return () => {
+            if (audio) {
+                audio.pause();
+                setIsPlayingPreview(false);
+            }
+        };
+    }, [selectedVolume, audio]);
 
     const handleCreatorPackCheckout = async () => {
         try {
@@ -140,6 +167,22 @@ export default function ShopPage() {
                                 >
                                     {isProcessing ? 'Loading Checkout...' : `Buy Volume ${selectedVolume} — £20.00`}
                                     {!isProcessing && <ArrowRight size={20} />}
+                                </button>
+                                <button
+                                    onClick={togglePreview}
+                                    className="flex items-center gap-3 px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all group"
+                                >
+                                    <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/30">
+                                        {isPlayingPreview ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
+                                    </div>
+                                    <div className="text-left">
+                                        <div className="text-sm font-bold text-white leading-tight">
+                                            {isPlayingPreview ? 'Playing Samples' : 'Listen to Samples'}
+                                        </div>
+                                        <div className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">
+                                            60s High-Res Preview
+                                        </div>
+                                    </div>
                                 </button>
                                 <span className="text-white/40 text-sm">Instant S3 Download via Email</span>
                             </div>
