@@ -57,6 +57,7 @@ export default async function LicensingPage() {
                 <div className={styles.tiersGrid}>
                     <div className={styles.tierCard}>
                         <h3>Creator License</h3>
+                        <p className={styles.tierDescription}>Perfect for individual content creators, YouTubers, and podcasters. Ideal for non-promoted, organic social media content.</p>
                         <p className={styles.tierPrice}>From £49</p>
                         <ul>
                             <li>YouTube & Social Media</li>
@@ -67,6 +68,7 @@ export default async function LicensingPage() {
                     </div>
                     <div className={styles.tierCard}>
                         <h3>Commercial License</h3>
+                        <p className={styles.tierDescription}>For small to medium businesses and brand marketing. Covers paid ad campaigns and promoted social media posts.</p>
                         <p className={styles.tierPrice}>From £199</p>
                         <ul>
                             <li>Businesses & Brands</li>
@@ -77,6 +79,7 @@ export default async function LicensingPage() {
                     </div>
                     <div className={styles.tierCard}>
                         <h3>Extended License</h3>
+                        <p className={styles.tierDescription}>Comprehensive coverage for large-scale media, including broadcast TV, radio, apps, and video games.</p>
                         <p className={styles.tierPrice}>From £1,000</p>
                         <ul>
                             <li>Apps & Games</li>
@@ -87,6 +90,7 @@ export default async function LicensingPage() {
                     </div>
                     <div className={`${styles.tierCard} ${styles.exclusiveCard}`}>
                         <h3>Exclusive License</h3>
+                        <p className={styles.tierDescription}>The ultimate protection. Includes full media exclusivity and custom edits tailored to your specific campaign.</p>
                         <p className={styles.tierPrice}>Custom</p>
                         <ul>
                             <li>Full Campaign Negotiation</li>

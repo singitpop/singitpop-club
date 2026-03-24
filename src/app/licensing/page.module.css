@@ -134,6 +134,13 @@
   color: var(--text-main);
 }
 
+.tierDescription {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #888;
+  margin-bottom: 20px;
+}
+
 .tierPrice {
   font-size: 1.2rem;
   color: var(--primary);
