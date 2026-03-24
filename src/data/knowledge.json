@@ -35,6 +35,18 @@
     {
       "q": "How do I upgrade my badge?",
       "a": "First, upgrade your Membership Tier to unlock the path (e.g., become a VIP to unlock Obsidian). Then, active users will automatically evolve their badge by maintaining their streak, creating playlists, or downloading tracks."
+    },
+    {
+      "q": "How do I license music for my project?",
+      "a": "Visit our <a href='/licensing' class='text-pink-400 underline'>Licensing Page</a> to browse our catalog. We offer Creator (£49), Commercial (£199), and Extended (£1,000+) licenses to fit any project size."
+    },
+    {
+      "q": "Do Custom Songs include commercial rights?",
+      "a": "Standard 'Jingle' and 'Full Song' packages are for <strong>Personal Use only</strong>. For commercial campaigns, please select the 'Premium Commercial' tier or use our <a href='/licensing' class='text-pink-400 underline'>Licensing Catalog</a>."
+    },
+    {
+      "q": "What is the difference between Creator and Commercial licenses?",
+      "a": "Creator License is for individuals and organic content (YouTube/Social). Commercial License is for businesses and paid promotional campaigns."
     }
   ],
   "albums": [
@@ -82,6 +94,11 @@
       "name": "FanZone",
       "url": "/fanzone",
       "desc": "Community hub for contests and news."
+    },
+    {
+      "name": "Licensing",
+      "url": "/licensing",
+      "desc": "Browse and license high-quality tracks for your video projects and ads."
     }
   ],
   "guides": [
@@ -215,6 +232,20 @@
         "VIP Path: Obsidian (Stone) -> Carbon (Structure) -> Diamond (Pinnacle).",
         "Lifetime Path: Bronze -> Silver -> Gold Masterpiece.",
         "Unlock them by upgrading your tier and hitting milestones (Time Active, Playlists Created, etc)."
+      ]
+    },
+    {
+      "feature": "Music Licensing",
+      "tier": "All",
+      "devices": [
+        "PC",
+        "Mobile"
+      ],
+      "steps": [
+        "Go to the 'Licensing' page from the footer or main menu.",
+        "Use filters to find tracks by Genre or Mood (e.g., Upbeat, Cinematic).",
+        "Select a track and use the pricing calculator to choose your license tier.",
+        "Complete checkout to receive your PDF license certificate via email instantly."
       ]
     }
   ]
