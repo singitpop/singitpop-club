@@ -302,21 +302,29 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
             if (audioFiles.length > 0) {
                 // Find MP3
                 const mp3Match = audioFiles.find(fPath => {
-                    const f = path.basename(fPath);
-                    return f.toLowerCase().endsWith('.mp3') && (
-                        f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
-                        f.toLowerCase().includes(track.title.toLowerCase()) ||
-                        f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
+                    const f = path.basename(fPath).toLowerCase();
+                    const cleanFileName = f.replace(/\.mp3$/, '').replace(/[^a-z0-9]/g, '').replace('live', '');
+                    const cleanTitle = track.title.toLowerCase().replace(/[^a-z0-9]/g, '').replace('live', '');
+                    
+                    return f.endsWith('.mp3') && (
+                        f.includes(track.title.toLowerCase()) ||
+                        cleanFileName === cleanTitle ||
+                        cleanFileName.includes(cleanTitle) ||
+                        cleanTitle.includes(cleanFileName)
                     );
                 });
 
                 // Find WAV
                 const wavMatch = audioFiles.find(fPath => {
-                    const f = path.basename(fPath);
-                    return f.toLowerCase().endsWith('.wav') && (
-                        f.toLowerCase().startsWith(track.title.toLowerCase() + '.') ||
-                        f.toLowerCase().includes(track.title.toLowerCase()) ||
-                        f.toLowerCase().includes(trackSlug.replace(/-/g, ' '))
+                    const f = path.basename(fPath).toLowerCase();
+                    const cleanFileName = f.replace(/\.wav$/, '').replace(/[^a-z0-9]/g, '').replace('live', '');
+                    const cleanTitle = track.title.toLowerCase().replace(/[^a-z0-9]/g, '').replace('live', '');
+                    
+                    return f.endsWith('.wav') && (
+                        f.includes(track.title.toLowerCase()) ||
+                        cleanFileName === cleanTitle ||
+                        cleanFileName.includes(cleanTitle) ||
+                        cleanTitle.includes(cleanFileName)
                     );
                 });
 
