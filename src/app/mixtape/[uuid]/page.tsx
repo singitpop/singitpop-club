@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { notFound } from 'next/navigation';
 import { Mixtape, getMixtape } from '@/lib/mixtape-s3';
 import albumsData from '@/data/albums.json';
-import { Play, Pause, SkipForward, SkipBack, Heart, Music, Gift, Share2, Volume2 } from 'lucide-react';
+import { Play, Pause, SkipForward, SkipBack, Heart, Music, Gift, Share2, Volume2, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function MixtapePlaybackPage({ params }: { params: { uuid: string } }) {
@@ -261,7 +261,7 @@ export default function MixtapePlaybackPage({ params }: { params: { uuid: string
                             ))}
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
 
             {/* Audio Element */}
