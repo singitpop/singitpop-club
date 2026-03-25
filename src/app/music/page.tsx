@@ -124,11 +124,17 @@ function MusicContent() {
         return albums.filter(a => new Date(a.releaseDate) > today);
     }, [albums]);
 
-    // Derived Discography (Admins see everything, others see released)
+    // Derived Discography (Admins see everything, others see released content)
     const discographyAlbums = useMemo(() => {
+        // If auth is still loading, show static releases as a baseline
+        if (!isLoaded) return albums.filter(a => isReleased(a.releaseDate));
+        
+        // Admins/Label always see the full catalog
         if (isLabel) return albums;
+        
+        // Fixed: Ensure Solstice and other upcoming content is ONLY in the Vault for regular VIPs
         return albums.filter(a => isReleased(a.releaseDate));
-    }, [albums, isLabel]);
+    }, [albums, isLabel, isLoaded]);
 
 
     // Auto-Add Track Logic (Wait for albums to load)
