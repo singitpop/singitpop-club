@@ -19,6 +19,7 @@ const isReleased = (dateStr: string) => {
     const today = new Date();
     // Normalize to midnight for fair comparison
     today.setHours(0, 0, 0, 0);
+    // If releaseDate is Today or in the past, it's released
     return releaseDate <= today;
 };
 
@@ -116,10 +117,18 @@ function MusicContent() {
     const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
     const [autoPlayTrackId, setAutoPlayTrackId] = useState<string | null>(null);
 
-    // derive VIP albums
+    // derive VIP albums (Available now for early access)
     const vipAlbums = useMemo(() => {
-        return albums.filter(a => new Date(a.releaseDate) > new Date());
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return albums.filter(a => new Date(a.releaseDate) > today);
     }, [albums]);
+
+    // Derived Discography (Admins see everything, others see released)
+    const discographyAlbums = useMemo(() => {
+        if (isLabel) return albums;
+        return albums.filter(a => isReleased(a.releaseDate));
+    }, [albums, isLabel]);
 
 
     // Auto-Add Track Logic (Wait for albums to load)
@@ -317,9 +326,9 @@ function MusicContent() {
             <AlbumOverlay
                 isOpen={isOverlayOpen}
                 onClose={() => setIsOverlayOpen(false)}
-                albums={albums} // All albums for standard discography
+                albums={discographyAlbums} // Admins/Label see full catalog, others see released
                 onSelectAlbum={handleSelectAlbum}
-                title="Explore Discography"
+                title={isLabel ? "Full Discography (Admin View)" : "Explore Discography"}
             />
             <AlbumOverlay
                 isOpen={isVipOverlayOpen}

@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { useAuth } from '@/context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Lock, ExternalLink, Music, Heart, Sparkles, Smartphone, ArrowRight, Play, Pause, Volume2, Gift, CheckCircle } from 'lucide-react';
+import { ShoppingBag, Lock, ExternalLink, Music, Heart, Sparkles, Smartphone, ArrowRight, Play, Pause, Volume2, Gift, CheckCircle, BookOpen } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import VinylCard from '@/components/shop/VinylCard';
-import DigitalBookstore from '@/components/shop/DigitalBookstore';
+import ProductCard from '@/components/shop/ProductCard';
 import { MERCH_PRODUCTS } from "@/data/shopProducts";
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -314,8 +314,28 @@ function ShopContent() {
                 </div>
             </div>
 
-            {/* Digital Bookstore Section */}
-            <DigitalBookstore />
+            {/* Digital Bookstore CTA */}
+            <section className="max-w-6xl mx-auto mb-32 px-6">
+                <div className="relative group overflow-hidden rounded-[3rem] bg-gradient-to-br from-pink-900/40 to-purple-900/40 border border-pink-500/20 p-12 text-center">
+                    <div className="absolute inset-0 bg-[url('/bg-pattern.png')] opacity-10 pointer-events-none" />
+                    <div className="relative z-10 space-y-8">
+                        <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter leading-none">
+                            The Digital <span className="text-pink-500">Bookstore</span>
+                        </h2>
+                        <p className="text-white/60 max-w-xl mx-auto font-bold text-lg">
+                            Access the complete SingIt Pop discography. Get high-resolution Digital Artbooks for every album, with full lyrics and production notes.
+                        </p>
+                        <Link 
+                            href="/shop/artbooks"
+                            className="inline-flex items-center gap-4 bg-pink-600 hover:bg-pink-500 text-white px-10 py-6 rounded-2xl font-black uppercase text-xl italic transition-all active:scale-95 shadow-[0_0_50px_rgba(236,72,153,0.3)] border-4 border-white/20"
+                        >
+                            <BookOpen size={32} />
+                            Browse Full Library • £5 Each
+                            <ArrowRight size={24} />
+                        </Link>
+                    </div>
+                </div>
+            </section>
 
             {/* Merch Store Section */}
             <div className="max-w-6xl mx-auto">

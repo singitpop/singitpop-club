@@ -267,7 +267,7 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
             title: albumName,
             year: year,
             genre: genres,
-            coverArt: `/albums/artwork/${albumSlug}.jpg`,
+            coverArt: 'cover.png', // Standardized for S3 signing via API
             tracks: [],
             releaseDate: releaseDate, // Use full date
             folderPath: matchingFolder,
