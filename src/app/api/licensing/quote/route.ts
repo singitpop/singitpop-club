@@ -60,6 +60,15 @@ export async function POST(req: Request) {
                     </div>
                     <h3 style="margin-bottom: 10px;">Project Details:</h3>
                     <p style="background: #1a1a1a; padding: 15px; border-radius: 8px; color: #ccc; margin-top: 0;">${details || 'No additional details provided.'}</p>
+                    
+                    ${['stems', 'instrumental'].includes(configuration.version) ? `
+                    <div style="background: #3f2c00; border-left: 4px solid #f59e0b; padding: 15px; margin-top: 20px; color: #fde68a; border-radius: 8px;">
+                        <h4 style="margin-top: 0; margin-bottom: 8px; font-size: 14px;">💡 Reminder: Stem Request</h4>
+                        <p style="margin: 0; font-size: 13px; line-height: 1.5;">This buyer requested <strong>${configuration.version}</strong>. If you do not have the genuine studio files for this track, you can copy/paste this reply:<br/><br/>
+                        <em style="color: #fff;">"Unfortunately, isolated stems are not available for this specific archive track, but the Master is still available."</em></p>
+                    </div>
+                    ` : ''}
+
                     <p style="color: #888; font-size: 13px; margin-top: 30px;">Manage quotes in your <a href="https://singitpop.com/admin" style="color: #7c3aed;">Admin Dashboard</a>.</p>
                 </div>
             `

@@ -163,6 +163,10 @@ export default function AdminPage() {
                         <Briefcase size={18} />
                         Licensing Hub
                     </Link>
+                    <Link href="/admin/recut" className={`${styles.btn} from-purple-900/40 to-blue-900/40 border-purple-500/30 hover:border-purple-400`}>
+                        <Scissors size={18} className="text-purple-400" />
+                        Recut Studio
+                    </Link>
                     <Link href="/admin/club" className={styles.btn}>
                         <LockIcon size={18} />
                         Club Manager

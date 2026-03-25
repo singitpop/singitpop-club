@@ -7,10 +7,21 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
 
 export async function POST(req: Request) {
     try {
-        const { trackId, trackTitle, buyerName, buyerEmail } = await req.json();
+        const { trackId, trackTitle, buyerName, buyerEmail, tier } = await req.json();
 
-        if (!trackId || !trackTitle) {
-            return NextResponse.json({ error: "Missing track details" }, { status: 400 });
+        if (!trackId || !trackTitle || !tier) {
+            return NextResponse.json({ error: "Missing track details or tier" }, { status: 400 });
+        }
+
+        let unitAmount = 5000;
+        let tierLabel = 'Diamond';
+        
+        if (tier === 'gold') {
+            unitAmount = 1000;
+            tierLabel = 'Gold';
+        } else if (tier === 'platinum') {
+            unitAmount = 2500;
+            tierLabel = 'Platinum';
         }
 
         const session = await stripe.checkout.sessions.create({
@@ -20,10 +31,10 @@ export async function POST(req: Request) {
                     price_data: {
                         currency: "gbp",
                         product_data: {
-                            name: `Executive Producer Sponsorship: ${trackTitle}`,
-                            description: `Become the official sponsor and Executive Producer of '${trackTitle}' on SingIt Pop.`,
+                            name: `${tierLabel} Sponsor: ${trackTitle}`,
+                            description: `Become an official ${tierLabel} Sponsor for '${trackTitle}' on SingIt Pop.`,
                         },
-                        unit_amount: 5000, // £50.00
+                        unit_amount: unitAmount,
                     },
                     quantity: 1,
                 },
@@ -35,6 +46,7 @@ export async function POST(req: Request) {
                 type: "sponsorship",
                 trackId,
                 trackTitle,
+                tier
             },
             customer_email: buyerEmail,
         });

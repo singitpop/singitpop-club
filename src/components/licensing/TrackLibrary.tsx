@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from '@/app/licensing/page.module.css';
 import PricingCalculator from './PricingCalculator';
+import SponsorshipModal from './SponsorshipModal';
 
 interface TrackLibraryProps {
     tracks: any[];
@@ -11,6 +12,7 @@ interface TrackLibraryProps {
 
 export default function TrackLibrary({ tracks }: TrackLibraryProps) {
     const [selectedTrack, setSelectedTrack] = useState<any | null>(null);
+    const [selectedTrackForSponsor, setSelectedTrackForSponsor] = useState<any | null>(null);
     const [visibleCount, setVisibleCount] = useState(12);
     const [genreFilter, setGenreFilter] = useState('All Genres');
     const [moodFilter, setMoodFilter] = useState('All Moods');
@@ -60,29 +62,6 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
             .catch(err => console.error('Error loading sponsorships:', err));
     }, []);
 
-    // Handle Sponsorship Checkout
-    const handleSponsorClick = async (track: any) => {
-        try {
-            setIsSponsoring(track.id);
-            const res = await fetch('/api/shop/sponsorship/checkout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    trackId: track.id,
-                    trackTitle: track.title
-                })
-            });
-            const { url, error } = await res.json();
-            if (url) window.location.href = url;
-            else alert(error || 'Failed to start checkout. Please try again.');
-        } catch (err) {
-            console.error('Sponsorship error:', err);
-            alert('Something went wrong. Please try again.');
-        } finally {
-            setIsSponsoring(null);
-        }
-    };
-
     return (
         <section id="library" className={styles.librarySection}>
             <h2 className={styles.sectionHeading}>Browse Licensable Tracks</h2>
@@ -129,11 +108,23 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
                         <div className={styles.trackMeta}>
                             <div className="flex items-center gap-3">
                                 <h4 className="m-0">{track.title}</h4>
-                                {sponsorships[track.id] && (
-                                    <div className={styles.sponsorBadge} title={`Sponsored by ${sponsorships[track.id]}`}>
-                                        Executive Producer: {sponsorships[track.id]}
-                                    </div>
-                                )}
+                                {(() => {
+                                    const sponsorData = sponsorships[track.id];
+                                    if (!sponsorData) return null;
+                                    const sponsorName = typeof sponsorData === 'string' ? sponsorData : sponsorData?.name;
+                                    const sponsorTier = typeof sponsorData === 'string' ? 'diamond' : sponsorData?.tier || 'diamond';
+                                    
+                                    let badgeColor = '#06b6d4'; // Diamond
+                                    let badgeLabel = 'Diamond Sponsor';
+                                    if (sponsorTier === 'gold') { badgeColor = '#facc15'; badgeLabel = 'Gold Sponsor'; }
+                                    if (sponsorTier === 'platinum') { badgeColor = '#94a3b8'; badgeLabel = 'Platinum Sponsor'; }
+                                    
+                                    return (
+                                        <div className={styles.sponsorBadge} style={{ borderColor: badgeColor, color: badgeColor }} title={`${badgeLabel}: ${sponsorName}`}>
+                                            ★ {sponsorName}
+                                        </div>
+                                    );
+                                })()}
                             </div>
                             <p>{track.albumTitle} &bull; {track.genre} &bull; {track.mood}</p>
                         </div>
@@ -148,10 +139,10 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
                             {!sponsorships[track.id] && (
                                 <button 
                                     className={styles.sponsorBtn}
-                                    onClick={() => handleSponsorClick(track)}
-                                    disabled={isSponsoring === track.id}
+                                    onClick={() => setSelectedTrackForSponsor(track)}
+                                    title="Sponsor this Track & Become an Executive Producer"
                                 >
-                                    {isSponsoring === track.id ? 'Loading...' : 'Become Executive Producer'}
+                                    Sponsor this Track
                                 </button>
                             )}
                         </div>
@@ -172,6 +163,14 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
                 <PricingCalculator 
                     track={selectedTrack} 
                     onClose={() => setSelectedTrack(null)} 
+                />
+            )}
+
+            {/* Render Tiered Sponsorship Modal */}
+            {selectedTrackForSponsor && (
+                <SponsorshipModal 
+                    track={selectedTrackForSponsor}
+                    onClose={() => setSelectedTrackForSponsor(null)}
                 />
             )}
         </section>

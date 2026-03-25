@@ -4,9 +4,10 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Resend } from 'resend';
 import fs from 'fs';
 import path from 'path';
-import { saveSponsorship } from '@/lib/s3-storage';
+import { saveSponsorship, saveArtbookAccess } from '@/lib/s3-storage';
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import crypto from 'crypto';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock', {
     apiVersion: '2026-01-28.clover',
@@ -64,31 +65,83 @@ export async function POST(req: Request) {
 
         // Handle Song Sponsorship
         if (meta.type === 'sponsorship') {
-            const { trackId, trackTitle } = meta;
+            const { trackId, trackTitle, tier } = meta;
             const buyerName = session.customer_details?.name || 'Anonymous Fan';
             const buyerEmail = session.customer_details?.email || '';
 
-            console.log(`Processing sponsorship for: ${buyerName} - ${trackTitle}`);
+            console.log(`Processing ${tier} sponsorship for: ${buyerName} - ${trackTitle}`);
 
             // 1. Save to S3 (Persistent)
-            await saveSponsorship(trackId, buyerName);
+            await saveSponsorship(trackId, buyerName, tier);
 
-            // 2. Send "Welcome Executive Producer" Email
+            // 2. Send "Welcome Sponsor" Email
+            let tierLabel = 'Diamond';
+            let badgeColor = '#06b6d4';
+            if (tier === 'gold') { tierLabel = 'Gold'; badgeColor = '#facc15'; }
+            if (tier === 'platinum') { tierLabel = 'Platinum'; badgeColor = '#94a3b8'; }
+
             const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
             await resend.emails.send({
                 from: 'SingIt Pop <orders@singitpop.com>',
                 to: [buyerEmail],
                 bcc: [ownerEmail],
-                subject: `Welcome, Executive Producer of '${trackTitle}'!`,
+                subject: `Welcome, ${tierLabel} Sponsor of '${trackTitle}'!`,
                 html: `
-                    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px; border: 1px solid #FFD700;">
-                        <h1 style="color: #FFD700;">You are now an Executive Producer!</h1>
+                    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px; border: 1px solid ${badgeColor};">
+                        <h1 style="color: ${badgeColor};">You are now a ${tierLabel} Sponsor!</h1>
                         <p>Hi ${buyerName},</p>
-                        <p>Thank you for sponsoring <strong>${trackTitle}</strong>. Your name is now permanently displayed on the track page as an Executive Producer.</p>
+                        <p>Thank you for sponsoring <strong>${trackTitle}</strong>. Your name is now permanently displayed on the track page with an official ${tierLabel} badge.</p>
                         <p>This contribution directly supports the creation of new music and keeps the beat alive at SingIt Pop.</p>
                         <hr style="border-color: #333; margin: 20px 0;" />
-                        <p>Head over to the <a href="${process.env.NEXT_PUBLIC_APP_URL}/music" style="color: #FFD700;">Music Library</a> to see your gold badge!</p>
+                        <p>Head over to the <a href="${process.env.NEXT_PUBLIC_APP_URL}/music" style="color: ${badgeColor};">Music Library</a> to see your new badge!</p>
                         <p>Keep Singing It POP,<br/>Gary & The Team</p>
+                    </div>
+                `
+            });
+
+            return NextResponse.json({ received: true, success: true });
+        }
+
+        // Handle Digital Artbook Purchase
+        if (meta.type === 'artbook') {
+            const { albumId, albumTitle } = meta;
+            const buyerName = session.customer_details?.name || 'Friend';
+            const buyerEmail = session.customer_details?.email || '';
+
+            console.log(`Processing Artbook purchase for: ${albumTitle} (${buyerEmail})`);
+
+            // 1. Generate Unique Access Token
+            const token = crypto.randomBytes(16).toString('hex');
+            
+            // 2. Save Access to S3 (Persistent)
+            await saveArtbookAccess(token, albumId, buyerEmail);
+
+            // 3. Send Access Email
+            const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://singitpop.com';
+            const accessUrl = `${appUrl}/artbook/${token}`;
+            const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
+
+            await resend.emails.send({
+                from: 'SingIt Pop <orders@singitpop.com>',
+                to: [buyerEmail],
+                bcc: [ownerEmail],
+                subject: `Your Digital Artbook is ready: ${albumTitle}`,
+                html: `
+                    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px; border: 1px solid #FF0080;">
+                        <h1 style="color: #FF0080;">Your Artbook is Ready! ✓</h1>
+                        <p>Hi ${buyerName},</p>
+                        <p>Thank you for purchasing the <strong>${albumTitle} Digital Artbook</strong>.</p>
+                        <p>Dive into the lyrics, stories, and exclusive artwork behind the music. Click the button below to launch your personal cinematic viewer.</p>
+                        
+                        <div style="text-align: center; margin: 40px 0;">
+                            <a href="${accessUrl}" style="background: #FF0080; color: #fff; padding: 15px 30px; border-radius: 99px; text-decoration: none; font-weight: bold; font-size: 18px;">
+                                LAUNCH ARTBOOK
+                            </a>
+                        </div>
+                        
+                        <p style="color: #888; font-size: 13px;">*This is your personal access link. Do not share it.</p>
+                        <hr style="border-color: #333; margin: 20px 0;" />
+                        <p>Keep Dreaming,<br/>Gary & The SingIt Pop Team</p>
                     </div>
                 `
             });

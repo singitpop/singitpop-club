@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Lock, ExternalLink, Music, Heart, Sparkles, Smartphone, ArrowRight, Play, Pause, Volume2 } from 'lucide-react';
 import VinylCard from '@/components/shop/VinylCard';
+import DigitalBookstore from '@/components/shop/DigitalBookstore';
 import { MERCH_PRODUCTS } from "@/data/shopProducts";
 import Link from 'next/link';
 
@@ -60,12 +61,27 @@ export default function ShopPage() {
         }
     };
 
-    const volumeMockups: Record<number, string> = {
-        1: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol1_corrected_v3_1774313516692.png',
-        2: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol2_corrected_v3_1774313530950.png',
-        3: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol3_corrected_v3_1774313544881.png',
-        4: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol4_corrected_v3_1774313558112.png',
-        5: '/Users/garybirrell/.gemini/antigravity/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/creator_pack_vol5_corrected_v3_1774313572659.png'
+    const volumeThemes: Record<number, { name: string, filter: string }> = {
+        1: { name: "Country Roots I", filter: "hue-rotate(45deg) saturate(1.2) brightness(1.1)" }, // Gold
+        2: { name: "Country Roots II", filter: "hue-rotate(45deg) saturate(1.2) brightness(1.1)" },
+        3: { name: "Country Roots III", filter: "hue-rotate(45deg) saturate(1.2) brightness(1.1)" },
+        4: { name: "Country Roots IV", filter: "hue-rotate(45deg) saturate(1.2) brightness(1.1)" },
+        5: { name: "Pop & Dance I", filter: "hue-rotate(180deg) saturate(1.5)" }, // Cyan/Blue
+        6: { name: "Pop & Dance II", filter: "hue-rotate(180deg) saturate(1.5)" },
+        7: { name: "Pop & Dance III", filter: "hue-rotate(180deg) saturate(1.5)" },
+        8: { name: "Pop & Dance IV", filter: "hue-rotate(180deg) saturate(1.5)" }, 
+        9: { name: "Synth & Trance", filter: "hue-rotate(280deg) saturate(2)" }, // Purple/Violet
+        10: { name: "Dance Party", filter: "hue-rotate(320deg) saturate(2)" }, // Pink/Magenta
+        11: { name: "Energy & Rock I", filter: "hue-rotate(0deg) saturate(2) brightness(0.9)" }, // Red/Energy
+        12: { name: "Energy & Rock II", filter: "hue-rotate(0deg) saturate(2) brightness(0.9)" },
+        13: { name: "Celtic Spirits I", filter: "hue-rotate(120deg) saturate(1.5)" }, // Green
+        14: { name: "Celtic Spirits II", filter: "hue-rotate(120deg) saturate(1.5)" },
+        15: { name: "Highland Folk", filter: "hue-rotate(120deg) saturate(1.5)" },
+        16: { name: "Disney Magic", filter: "hue-rotate(200deg) saturate(1.2) brightness(1.2)" }, // Sky Blue
+        17: { name: "Musical & Romance", filter: "hue-rotate(340deg) saturate(1.5)" }, // Soft Pink
+        18: { name: "Acoustic Chill", filter: "sepia(0.5) contrast(1.1)" }, // Warm/Sepia
+        19: { name: "Jazz & R&B", filter: "hue-rotate(260deg) brightness(0.8)" }, // Deep Blue/Midnight
+        20: { name: "The Best of (Mixed)", filter: "none" } // Master Cyan
     };
 
     return (
@@ -81,7 +97,7 @@ export default function ShopPage() {
                         Shop
                     </h1>
                     <p className="text-xl text-white/60 max-w-2xl mx-auto">
-                        Official merchandise, vinyl, and exclusive audio experiences.
+                        Official merchandise, vinyl, and <strong className="text-cyan-400">Vocal-Free</strong> creator assets.
                     </p>
                 </motion.div>
             </div>
@@ -110,105 +126,6 @@ export default function ShopPage() {
                     </motion.div>
                 </div>
             ) : null}
-
-            {/* Digital Creator Pack - NEW FEATURED SECTION */}
-            <div className="max-w-6xl mx-auto mb-24">
-                <motion.div 
-                    className="bg-gradient-to-r from-cyan-900/40 via-blue-900/20 to-black border border-cyan-500/30 rounded-3xl p-8 md:p-12 relative overflow-hidden group"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                >
-                    <div className="absolute top-0 right-0 p-64 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
-                    
-                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
-                        <div className="flex-1 text-center md:text-left">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/20 rounded-full text-cyan-400 text-sm font-bold mb-6 border border-cyan-500/30">
-                                <Sparkles size={14} /> NEW FOR CREATORS
-                            </div>
-                            <h2 className="text-4xl md:text-5xl font-bold mb-6">Digital Creator Video Pack <span className="text-cyan-400">v{selectedVolume}</span></h2>
-                            <p className="text-xl text-white/70 mb-8 leading-relaxed">
-                                Elevate your videos with Gary's professional audio toolkit. 
-                                <strong className="text-white"> 20+ high-quality assets</strong> in every pack: 10x Impact Transitions, 5x Cinematic Atmos Loops, and 5x Narrative Stingers.
-                            </p>
-                            
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 text-left">
-                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 10x High-Impact Transitions</li>
-                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 5x Cinematic Atmos Loops</li>
-                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> 5x Narrative Stingers</li>
-                                <li className="flex items-center gap-2 text-white/60"><div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"/> Commercial Rights Included</li>
-                            </ul>
-
-                            {/* Volume Selector */}
-                            <div className="mb-10">
-                                <p className="text-xs text-white/40 uppercase tracking-widest mb-4">Select Volume</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {[1,2,3,4,5,6,7,8,9,10].map((v) => (
-                                        <button
-                                            key={v}
-                                            onClick={() => setSelectedVolume(v)}
-                                            className={`w-10 h-10 rounded-lg font-bold border transition-all ${
-                                                selectedVolume === v 
-                                                ? 'bg-cyan-500 border-cyan-400 text-black shadow-[0_0_15px_rgba(6,182,212,0.4)]' 
-                                                : 'bg-white/5 border-white/10 text-white/60 hover:border-white/30'
-                                            }`}
-                                        >
-                                            {v}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col sm:flex-row items-center gap-6">
-                                <button 
-                                    onClick={handleCreatorPackCheckout}
-                                    disabled={isProcessing}
-                                    className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-2xl transition-all flex items-center gap-3 text-lg disabled:opacity-50"
-                                >
-                                    {isProcessing ? 'Loading Checkout...' : `Buy Volume ${selectedVolume} — £20.00`}
-                                    {!isProcessing && <ArrowRight size={20} />}
-                                </button>
-                                <button
-                                    onClick={togglePreview}
-                                    className="flex items-center gap-3 px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all group"
-                                >
-                                    <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/30">
-                                        {isPlayingPreview ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
-                                    </div>
-                                    <div className="text-left">
-                                        <div className="text-sm font-bold text-white leading-tight">
-                                            {isPlayingPreview ? 'Playing Samples' : 'Listen to Samples'}
-                                        </div>
-                                        <div className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">
-                                            60s High-Res Preview
-                                        </div>
-                                    </div>
-                                </button>
-                                <span className="text-white/40 text-sm">Instant S3 Download via Email</span>
-                            </div>
-                        </div>
-                        
-                        <div className="w-full md:w-auto flex-shrink-0">
-                            <div className="relative w-64 h-64 mx-auto">
-                                <div className="absolute inset-0 bg-cyan-500/20 blur-3xl rounded-full animate-pulse" />
-                                <div className="relative z-10 w-full h-full bg-black/40 border border-white/10 rounded-3xl flex items-center justify-center backdrop-blur-md overflow-hidden">
-                                    {volumeMockups[selectedVolume] ? (
-                                        <img 
-                                            src={volumeMockups[selectedVolume]} 
-                                            alt={`Volume ${selectedVolume}`} 
-                                            className="w-full h-full object-cover"
-                                        />
-                                    ) : (
-                                        <div className="text-cyan-400">
-                                            <Music size={80} strokeWidth={1.5} />
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
 
             {/* Navigation Cards */}
             <div className="max-w-6xl mx-auto mb-24 grid md:grid-cols-2 gap-6">
@@ -254,6 +171,9 @@ export default function ShopPage() {
                     </motion.div>
                 </Link>
             </div>
+
+            {/* Digital Bookstore Section */}
+            <DigitalBookstore />
 
             {/* Merch Store Section */}
             <div className="max-w-6xl mx-auto">

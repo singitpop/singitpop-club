@@ -11,7 +11,7 @@ const s3Client = new S3Client({
 const BUCKET = process.env.AWS_S3_BUCKET || "singitpop-music";
 const SPONSORSHIPS_KEY = "data/sponsorships.json";
 
-export async function getSponsorships(): Promise<Record<string, string>> {
+export async function getSponsorships(): Promise<Record<string, any>> {
     try {
         const command = new GetObjectCommand({
             Bucket: BUCKET,
@@ -30,10 +30,10 @@ export async function getSponsorships(): Promise<Record<string, string>> {
     }
 }
 
-export async function saveSponsorship(trackId: string, sponsorName: string): Promise<boolean> {
+export async function saveSponsorship(trackId: string, sponsorName: string, tier: string = 'executive'): Promise<boolean> {
     try {
         const currentSponsorships = await getSponsorships();
-        currentSponsorships[trackId] = sponsorName;
+        currentSponsorships[trackId] = { name: sponsorName, tier };
 
         const command = new PutObjectCommand({
             Bucket: BUCKET,
@@ -46,6 +46,48 @@ export async function saveSponsorship(trackId: string, sponsorName: string): Pro
         return true;
     } catch (error) {
         console.error("Error saving sponsorship to S3:", error);
+        return false;
+    }
+}
+const ARTBOOKS_KEY = "data/artbooks.json";
+
+export async function getArtbookAccess(): Promise<Record<string, any>> {
+    try {
+        const command = new GetObjectCommand({
+            Bucket: BUCKET,
+            Key: ARTBOOKS_KEY,
+        });
+
+        const response = await s3Client.send(command);
+        const content = await response.Body?.transformToString();
+        return content ? JSON.parse(content) : {};
+    } catch (error: any) {
+        if (error.name === "NoSuchKey") return {};
+        console.error("Error fetching artbook access from S3:", error);
+        return {};
+    }
+}
+
+export async function saveArtbookAccess(token: string, albumId: string, customerEmail: string): Promise<boolean> {
+    try {
+        const currentData = await getArtbookAccess();
+        currentData[token] = { 
+            albumId, 
+            email: customerEmail, 
+            grantedAt: new Date().toISOString() 
+        };
+
+        const command = new PutObjectCommand({
+            Bucket: BUCKET,
+            Key: ARTBOOKS_KEY,
+            Body: JSON.stringify(currentData, null, 2),
+            ContentType: "application/json",
+        });
+
+        await s3Client.send(command);
+        return true;
+    } catch (error) {
+        console.error("Error saving artbook access to S3:", error);
         return false;
     }
 }
