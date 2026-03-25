@@ -2,7 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import styles from './page.module.css';
-import { getArtbookAccess } from '@/lib/s3-storage';
+import { getArtbookAccess } from '@/lib/artbook-s3';
 import albumsData from '@/data/albums.json';
 
 // Define expected structure
@@ -28,8 +28,7 @@ export default async function ArtbookPage({ params }: { params: { token: string 
     const { token } = params;
 
     // 1. Verify Secure Token against S3 Vault
-    const tokens = await getArtbookAccess();
-    const accessData = tokens[token];
+    const accessData = await getArtbookAccess(token);
 
     if (!accessData) {
         return (

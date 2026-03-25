@@ -4,6 +4,8 @@ import Stripe from "stripe";
 import { Resend } from "resend";
 import { getSignedFileUrl } from "@/lib/s3";
 import { createClerkClient } from '@clerk/nextjs/server';
+import { saveMixtape } from "@/lib/mixtape-s3";
+import { createArtbookAccess } from "@/lib/artbook-s3";
 
 // Init Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
@@ -208,6 +210,95 @@ export async function POST(req: Request) {
                 console.log(`✅ Creator Pack v${volume} delivered to ${customerEmail}`);
             } catch (err) {
                 console.error("❌ Failed to deliver Creator Pack:", err);
+            }
+        }
+
+        // 3. Handle Digital Mixtapes
+        if (session.metadata?.type === "mixtape") {
+            const { to, from, occasion, message, tracks, theme } = session.metadata;
+            console.log(`🎁 Mixtape Order for: ${to}`);
+
+            try {
+                const id = await saveMixtape({
+                    to,
+                    from,
+                    occasion,
+                    message,
+                    tracks: JSON.parse(tracks),
+                    theme: theme as any,
+                    orderId: session.id
+                });
+
+                if (id) {
+                    const mixtapeUrl = `${process.env.NEXT_PUBLIC_APP_URL}/mixtape/${id}`;
+                    await resend.emails.send({
+                        from: 'SingIt Pop <orders@singitpop.com>',
+                        to: [customerEmail],
+                        subject: `Your Digital Mixtape Gift for ${to} is Ready! 🎁`,
+                        html: `
+                            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #050505; color: #fff; padding: 40px; border-radius: 20px; border: 1px solid #f43f5e;">
+                                <h1 style="color: #f43f5e; margin-bottom: 20px; font-style: italic;">A Special Gift has Arrived! 🎁</h1>
+                                <p style="font-size: 16px; line-height: 1.6;">
+                                    Thanks for creating a <strong>SingIt Pop Digital Mixtape</strong> for ${to}. 
+                                    Your personalized curation and dedication have been securely packaged.
+                                </p>
+                                
+                                <div style="background: rgba(244, 63, 94, 0.1); padding: 30px; border-radius: 15px; margin: 30px 0; border: 1px solid rgba(244, 63, 94, 0.2); text-align: center;">
+                                    <p style="color: #f43f5e; font-weight: bold; margin-bottom: 20px; letter-spacing: 0.1em;">THE GIFT LINK:</p>
+                                    <a href="${mixtapeUrl}" style="background: #f43f5e; color: #fff; padding: 15px 30px; text-decoration: none; border-radius: 12px; display: inline-block; font-weight: bold; font-size: 18px; font-style: italic;">Open Digital Mixtape</a>
+                                </div>
+
+                                <p style="font-size: 14px; color: #9ca3af;">
+                                    Share this link with ${to}. It will remain active forever as a digital keepsake of your dedication.
+                                </p>
+                                <p style="color: #f43f5e; font-size: 14px; margin-top: 30px; font-weight: bold; font-style: italic;">
+                                    Keep Spreading the Love,<br/>SingIt Pop
+                                </p>
+                            </div>
+                        `
+                    });
+                    console.log(`✅ Mixtape delivered: ${id}`);
+                }
+            } catch (err) {
+                console.error("❌ Failed to fulfill Mixtape:", err);
+            }
+        }
+
+        // 4. Handle Digital Artbooks
+        if (session.metadata?.type === "artbook") {
+            const albumId = session.metadata.albumId;
+            console.log(`📖 Artbook Order: ${albumId}`);
+
+            try {
+                const token = await createArtbookAccess(albumId, customerEmail);
+                if (token) {
+                    const artbookUrl = `${process.env.NEXT_PUBLIC_APP_URL}/artbook/${token}`;
+                    await resend.emails.send({
+                        from: 'SingIt Pop <orders@singitpop.com>',
+                        to: [customerEmail],
+                        subject: `Your Digital Artbook Access: ${albumId} 📖`,
+                        html: `
+                            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #050505; color: #fff; padding: 40px; border-radius: 20px; border: 1px solid #10b981;">
+                                <h1 style="color: #10b981; margin-bottom: 20px;">Your Digital Artbook is Ready! 📖</h1>
+                                <p style="font-size: 16px; line-height: 1.6;">
+                                    Thanks for purchasing the <strong>Digital Artbook & Lyric Companion</strong> for ${albumId}. 
+                                    You can now access your high-resolution lyrics and exclusive visual companion.
+                                </p>
+                                
+                                <div style="background: rgba(16, 185, 129, 0.1); padding: 30px; border-radius: 15px; margin: 30px 0; border: 1px solid rgba(16, 185, 129, 0.2); text-align: center;">
+                                    <a href="${artbookUrl}" style="background: #10b981; color: #fff; padding: 15px 30px; text-decoration: none; border-radius: 12px; display: inline-block; font-weight: bold; font-size: 18px;">Open Digital Artbook</a>
+                                </div>
+
+                                <p style="font-size: 14px; color: #9ca3af;">
+                                    This link is tied to your purchase and will remain active for your permanent collection.
+                                </p>
+                            </div>
+                        `
+                    });
+                    console.log(`✅ Artbook token delivered: ${token}`);
+                }
+            } catch (err) {
+                console.error("❌ Failed to fulfill Artbook:", err);
             }
         }
 

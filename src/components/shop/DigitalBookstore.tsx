@@ -4,17 +4,43 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/context/AuthContext';
 
 export default function DigitalBookstore() {
     const [albums, setAlbums] = useState<any[]>([]);
     const [loadingBook, setLoadingBook] = useState<string | null>(null);
 
+    const { user, isPro, isLabel } = useAuth();
+    
     useEffect(() => {
         fetch('/api/content/albums')
             .then(res => res.json())
-            .then(data => setAlbums(data))
+            .then(data => {
+                // Filter by release date (Unless VIP/Admin)
+                const now = new Date();
+                const visibleAlbums = data.filter((album: any) => {
+                    if (!album.releaseDate) {
+                        // Filter out Singles collection per Gary's feedback
+                        if (album.folderPath?.toLowerCase().includes('singles') || album.id === 'singles') {
+                            return false;
+                        }
+                        return true;
+                    }
+                    const releaseDate = new Date(album.releaseDate);
+                    if (releaseDate <= now) {
+                         // Filter out Singles collection per Gary's feedback
+                         if (album.folderPath?.toLowerCase().includes('singles') || album.id === 'singles') {
+                            return false;
+                        }
+                        return true;
+                    }
+                    // Future release - only show to Pro (VIP/Label)
+                    return isPro || isLabel;
+                });
+                setAlbums(visibleAlbums);
+            })
             .catch(err => console.error('Error loading albums:', err));
-    }, []);
+    }, [isPro, isLabel]);
 
     const handleCheckout = async (album: any) => {
         try {
@@ -41,7 +67,7 @@ export default function DigitalBookstore() {
     if (albums.length === 0) return null;
 
     return (
-        <div className="max-w-6xl mx-auto mb-24">
+        <div className="max-w-6xl mx-auto mb-24" id="digital-artbooks">
             <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold mb-4 flex items-center justify-center gap-3">
                     <BookOpen className="text-pink-400" size={32} />
@@ -53,7 +79,7 @@ export default function DigitalBookstore() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {albums.slice(0, 8).map(album => (
+                {albums.map(album => (
                     <motion.div 
                         key={album.id}
                         className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-pink-500/50 transition-all group flex flex-col"

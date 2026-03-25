@@ -2,15 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from '@/context/AuthContext';
-import { motion } from 'framer-motion';
-import { ShoppingBag, Lock, ExternalLink, Music, Heart, Sparkles, Smartphone, ArrowRight, Play, Pause, Volume2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShoppingBag, Lock, ExternalLink, Music, Heart, Sparkles, Smartphone, ArrowRight, Play, Pause, Volume2, Gift, CheckCircle } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import VinylCard from '@/components/shop/VinylCard';
 import DigitalBookstore from '@/components/shop/DigitalBookstore';
 import { MERCH_PRODUCTS } from "@/data/shopProducts";
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-export default function ShopPage() {
+function ShopContent() {
     const { user } = useAuth();
+    const searchParams = useSearchParams();
+    const isMixtapeSuccess = searchParams?.get('mixtape') === 'success';
 
     const [selectedVolume, setSelectedVolume] = useState(1);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -97,10 +101,39 @@ export default function ShopPage() {
                         Shop
                     </h1>
                     <p className="text-xl text-white/60 max-w-2xl mx-auto">
-                        Official merchandise, vinyl, and <strong className="text-cyan-400">Vocal-Free</strong> creator assets.
+                        Official merchandise, <strong className="text-yellow-400">Ringtones</strong>, <strong className="text-pink-400">Digital Artbooks</strong>, and <strong className="text-cyan-400">Vocal-Free</strong> creator assets.
                     </p>
                 </motion.div>
             </div>
+
+            {/* Mixtape Success Message */}
+            <AnimatePresence>
+                {isMixtapeSuccess && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: -20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                        className="max-w-4xl mx-auto mb-16 bg-gradient-to-r from-rose-500/20 to-pink-500/20 border border-rose-500/50 rounded-3xl p-8 text-center relative overflow-hidden"
+                    >
+                        <div className="absolute top-0 left-0 p-32 bg-rose-500/10 blur-[80px] rounded-full pointer-events-none" />
+                        <div className="relative z-10 flex flex-col items-center gap-4">
+                            <div className="w-16 h-16 bg-rose-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-rose-500/20">
+                                <CheckCircle size={32} />
+                            </div>
+                            <h2 className="text-3xl font-black uppercase tracking-tight italic">GIFT SENT! 🎁</h2>
+                            <p className="text-white/70 max-w-md mx-auto">
+                                Your **Digital Mixtape** has been delivered to your email. You can now share the unique gift link with your recipient!
+                            </p>
+                            <Link 
+                                href="/shop" 
+                                className="mt-4 px-8 py-3 bg-white text-black font-black uppercase tracking-tighter italic rounded-xl hover:bg-rose-100 transition-all text-sm"
+                            >
+                                Continue Shopping
+                            </Link>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* VIP Discount Banner */}
             {(user as any)?.publicMetadata?.tier === 'VIP' || (user as any)?.publicMetadata?.tier === 'LABEL' ? (
@@ -170,6 +203,115 @@ export default function ShopPage() {
                         </div>
                     </motion.div>
                 </Link>
+
+                {/* Digital Mixtape Card */}
+                <Link href="/shop/mixtape/builder" className="group md:col-span-2">
+                    <motion.div
+                        className="bg-gradient-to-br from-rose-900/40 to-black border border-white/10 rounded-3xl p-8 h-full hover:border-rose-500/50 transition-all relative overflow-hidden"
+                        whileHover={{ scale: 1.01 }}
+                    >
+                        <div className="absolute top-0 right-0 p-64 bg-rose-500/10 blur-[120px] rounded-full pointer-events-none" />
+                        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
+                            <div className="w-24 h-24 bg-rose-500/20 rounded-[2rem] flex items-center justify-center text-rose-400 group-hover:text-rose-300 transition-colors shrink-0">
+                                <Gift size={48} />
+                            </div>
+                            <div className="flex-1 text-center md:text-left">
+                                <h2 className="text-4xl font-black italic tracking-tighter mb-2 uppercase">DIGITAL MIXTAPE GIFTING</h2>
+                                <p className="text-white/60 mb-6 text-lg">Pick 5 tracks, write a dedication, and give a gift of music that lasts forever. <strong className="text-white">£10.00</strong></p>
+
+                                <div className="flex items-center justify-center md:justify-start text-rose-400 font-black uppercase tracking-widest text-sm group-hover:translate-x-2 transition-transform">
+                                    Build Your Gift <ArrowRight size={18} className="ml-2" />
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </Link>
+            </div>
+
+            {/* Digital Creator Packs Section */}
+            <div className="max-w-6xl mx-auto mb-24">
+                <div className="bg-gradient-to-br from-cyan-900/40 to-black border border-cyan-500/20 rounded-[3rem] p-8 md:p-12 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-64 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
+                    
+                    <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 rounded-full text-cyan-400 text-sm font-bold mb-6 border border-cyan-500/30">
+                                <Sparkles size={16} />
+                                STUDIO QUALITY V13
+                            </div>
+                            <h2 className="text-4xl md:text-5xl font-bold mb-6">Digital Creator Packs</h2>
+                            <p className="text-lg text-white/70 mb-8 leading-relaxed">
+                                Professional, <span className="text-white font-bold">100% Vocal-Free</span> production assets. Each volume contains 10 melodic intros and 10 cinematic stingers, surgically harvested from the master stems.
+                            </p>
+
+                            <div className="grid grid-cols-2 gap-4 mb-8">
+                                <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+                                    <div className="text-cyan-400 font-bold mb-1">20 Assets</div>
+                                    <div className="text-xs text-white/40 uppercase tracking-wider">Per Volume</div>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+                                    <div className="text-pink-400 font-bold mb-1">Studio Stems</div>
+                                    <div className="text-xs text-white/40 uppercase tracking-wider">Zero Bleed</div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                <label className="text-sm text-white/40 uppercase tracking-widest block font-bold">Select Genre Volume</label>
+                                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-10 gap-2">
+                                    {Object.keys(volumeThemes).map((vol) => (
+                                        <button
+                                            key={vol}
+                                            onClick={() => setSelectedVolume(parseInt(vol))}
+                                            className={`h-10 rounded-lg font-bold transition-all border ${
+                                                selectedVolume === parseInt(vol) 
+                                                    ? 'bg-cyan-500 border-cyan-400 text-black scale-110 shadow-[0_0_15px_rgba(6,182,212,0.5)]' 
+                                                    : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                                            }`}
+                                        >
+                                            {vol}
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="text-cyan-400 font-bold mt-2">
+                                    Theme: {volumeThemes[selectedVolume].name}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center">
+                            <div className="relative group cursor-pointer mb-8" onClick={togglePreview}>
+                                <div 
+                                    className="w-64 h-64 md:w-80 md:h-80 bg-cyan-500/20 rounded-[2.5rem] border-2 border-cyan-500/50 flex items-center justify-center relative overflow-hidden shadow-2xl transition-transform group-hover:scale-105"
+                                    style={{ filter: volumeThemes[selectedVolume].filter }}
+                                >
+                                    <img 
+                                        src="/images/shop/creator-pack-master.png" 
+                                        alt="Creator Pack"
+                                        className="w-full h-full object-cover opacity-80"
+                                    />
+                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                        <div className="w-20 h-20 bg-cyan-500 rounded-full flex items-center justify-center text-black shadow-xl">
+                                            {isPlayingPreview ? <Pause size={32} /> : <Play size={32} className="ml-1" />}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-black border border-cyan-500/50 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-xl">
+                                    {isPlayingPreview ? "PLAYING PREVIEW..." : "TAP TO PREVIEW"}
+                                </div>
+                            </div>
+
+                            <button 
+                                onClick={handleCreatorPackCheckout}
+                                disabled={isProcessing}
+                                className="w-full max-w-sm bg-white text-black py-4 rounded-2xl font-black text-xl hover:bg-cyan-400 transition-all flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.2)] disabled:opacity-50"
+                            >
+                                <ShoppingBag />
+                                {isProcessing ? 'PROCESSING...' : `BUY VOL ${selectedVolume} • £20`}
+                            </button>
+                            <p className="mt-4 text-xs text-white/40 uppercase tracking-widest font-bold">Instant S3 Download via Email</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {/* Digital Bookstore Section */}
@@ -246,5 +388,13 @@ export default function ShopPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function ShopPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-black" />}>
+            <ShopContent />
+        </Suspense>
     );
 }
