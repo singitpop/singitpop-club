@@ -53,6 +53,7 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
 
         // Fix known typos in Excel
         if (albumName === 'Aplril Comes Soft') albumName = 'April Comes Soft';
+        if (albumName === 'Last One Standing') albumName = 'Last Ones Standing';
 
         const trackNumber = row[5]; // Column F: Track No
         const releaseDate = row[8]; // Column I: Release Date (Excel date number)

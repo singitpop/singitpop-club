@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-25T16:41:13.553Z",
-  "totalAlbums": 55,
-  "totalTracks": 668,
+  "generated": "2026-03-25T23:31:26.899Z",
+  "totalAlbums": 56,
+  "totalTracks": 680,
   "genres": [
     "Christmas",
     "Country",
@@ -24,6 +24,17 @@
     2024
   ],
   "albums": [
+    {
+      "id": "last-ones-standing-2026",
+      "title": "Last Ones Standing",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Last Ones Standing",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/last-ones-standing/"
+    },
     {
       "id": "solstice-2026",
       "title": "Solstice",
