@@ -124,7 +124,7 @@ export default function DigitalBookstorePage() {
                         Own the <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400">Production</span> Notes
                     </h2>
                     <p className="text-zinc-500 max-w-2xl mx-auto font-bold text-lg md:text-xl">
-                        Immerse yourself in the story behind every track. High-resolution art, full lyrics, and exclusive production notes.
+                        Immerse yourself in the story behind every track. High-resolution album artwork and full lyrics, straight from the studio archive.
                     </p>
                 </div>
 
