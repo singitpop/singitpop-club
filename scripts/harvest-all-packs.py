@@ -204,9 +204,15 @@ for v in range(PACKS_COUNT):
             "sweet tea kisses"        # Stinger 14 replace
         ]]
     
+    # NEW: Industrial Unique Slicing (20 Tracks per Volume)
+    vol_pool = pool[(vol_num-1)*20 : vol_num*20]
+    if len(vol_pool) < 20: 
+        print(f"    [SKIP] Pool exhausted for Vol {vol_num}. Using wrap-around.")
+        vol_pool = pool
+    
     # 01-10: Transitions (Smart Duration - Intro Focus)
     for i in range(TRANS_COUNT):
-        track = pool[i % len(pool)]
+        track = vol_pool[i]
         out_f = os.path.join(vol_dir, f"{i+1:02}_Transition_Intro_{track['title'].replace(' ', '_').replace('/','_')}.wav")
         tmp = os.path.join(TEMP_DIR, f"v{vol_num}_t{i}.wav")
         try:
@@ -217,9 +223,9 @@ for v in range(PACKS_COUNT):
             v_start, v_end = get_vocal_gate(track.get("vocal_path"))
             duration = max(5, min(30, v_start - 0.5))
             
-            # Phase 13: Gary Surgical Overrides (Exact timings from feedback)
+            # Phase 13: Gary Surgical Overrides (ONLY for Volume 1)
             trimmed_title = track["title"].strip()
-            if trimmed_title in gary_durations:
+            if vol_num == 1 and trimmed_title in gary_durations:
                 duration = gary_durations[trimmed_title]
                 print(f"    [GARY] Forced duration: {duration}s for {trimmed_title}")
             
@@ -240,7 +246,7 @@ for v in range(PACKS_COUNT):
 
     # 11-20: Stingers (Guaranteed 11s - AI Instrumental Master)
     for i in range(STINGER_COUNT):
-        track = pool[(i + 10) % len(pool)]
+        track = vol_pool[i + 10]
         out_f = os.path.join(vol_dir, f"{i+11:02}_Stinger_Outro_{track['title'].replace(' ', '_').replace('/','_')}.wav")
         tmp = os.path.join(TEMP_DIR, f"v{vol_num}_s{i}.wav")
         try:
