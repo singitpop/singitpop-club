@@ -14,15 +14,15 @@
 }
 
 .modal {
-    background: #0a0a0a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    background: #0d0d0d;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 32px;
     width: 100%;
-    max-width: 800px;
+    max-width: 950px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
 }
@@ -58,12 +58,12 @@
 }
 
 .header h2 {
-    margin: 0 0 10px 0;
-    font-size: 2rem;
-    background: linear-gradient(135deg, #FFD700, #F59E0B);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin: 0 0 5px 0;
+    font-size: 2.8rem;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    color: #facc15; /* Gold brand color */
 }
 
 .header p {
@@ -86,13 +86,13 @@
 }
 
 .tierCard {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px;
+    background: #151515;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 32px;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -203,14 +203,31 @@
 
 .popularBadge {
     position: absolute;
-    top: 12px;
-    right: -30px;
+    top: 20px;
+    right: -35px;
     background: #06b6d4;
     color: black;
-    font-size: 0.7rem;
-    font-weight: bold;
-    padding: 4px 30px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    padding: 8px 40px;
     transform: rotate(45deg);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+    z-index: 5;
+}
+
+.diamond {
+    border: 2px solid #06b6d4 !important;
+    background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, #151515 100%);
+    box-shadow: 0 10px 40px -10px rgba(6, 182, 212, 0.1);
+}
+
+.gold {
+    border: 2px solid #facc15 !important;
+    background: linear-gradient(180deg, rgba(250, 204, 21, 0.05) 0%, #151515 100%);
+}
+
+.platinum {
+    border: 2px solid #94a3b8 !important;
 }

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Music, CheckCircle, Search, Gift, Heart, User, MessageCircle, X, Trash2, ChevronRight, Play } from 'lucide-react';
+import { ArrowLeft, Music, CheckCircle, Search, Gift, Heart, User, MessageCircle, X, Trash2, ChevronRight, Play, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Album, Track } from '@/data/albumData';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -28,10 +28,14 @@ export default function MixtapeBuilderPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await fetch('/api/music/albums');
+                const res = await fetch('/api/content/albums');
                 const data = await res.json();
                 if (Array.isArray(data)) {
-                    setAlbums(data);
+                    const now = new Date();
+                    // STRICT RELEASE LOGIC: Only show albums released as of TODAY.
+                    // Even VIPs cannot select future unreleased tracks for mixtapes.
+                    const releasedAlbums = data.filter(a => new Date(a.releaseDate) <= now);
+                    setAlbums(releasedAlbums);
                 }
             } catch (e) {
                 console.error("Failed to fetch albums:", e);
@@ -172,37 +176,39 @@ export default function MixtapeBuilderPage() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="lg:w-2/3 space-y-3">
-                                            {activeAlbum?.tracks.map((track, i) => {
-                                                const uid = `${activeAlbum.id}-${track.id}`;
-                                                const isSelected = selectedTracks.includes(uid);
-                                                return (
-                                                    <motion.div
-                                                        key={uid}
-                                                        initial={{ opacity: 0, x: 20 }}
-                                                        animate={{ opacity: 1, x: 0 }}
-                                                        transition={{ delay: i * 0.05 }}
-                                                        onClick={() => toggleTrack(uid)}
-                                                        className={`group flex items-center justify-between p-6 rounded-[1.5rem] border transition-all cursor-pointer ${isSelected
-                                                            ? 'bg-pink-500/10 border-pink-500 shadow-lg shadow-pink-500/5'
-                                                            : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
-                                                        }`}
-                                                    >
-                                                        <div className="flex items-center gap-6">
-                                                            <div className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center text-xs font-black">
-                                                                {i + 1}
+                                        <div className="lg:w-2/3">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                {activeAlbum?.tracks.map((track, i) => {
+                                                    const uid = `${activeAlbum.id}-${track.id}`;
+                                                    const isSelected = selectedTracks.includes(uid);
+                                                    return (
+                                                        <motion.div
+                                                            key={uid}
+                                                            initial={{ opacity: 0, scale: 0.95 }}
+                                                            animate={{ opacity: 1, scale: 1 }}
+                                                            transition={{ delay: i * 0.03 }}
+                                                            onClick={() => toggleTrack(uid)}
+                                                            className={`group relative flex flex-col p-6 rounded-[2rem] border transition-all cursor-pointer overflow-hidden ${isSelected
+                                                                ? 'bg-pink-500/10 border-pink-500 shadow-xl shadow-pink-500/10'
+                                                                : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
+                                                            }`}
+                                                        >
+                                                            <div className="flex items-start justify-between mb-4">
+                                                                <div className="w-8 h-8 rounded-full bg-black/40 flex items-center justify-center text-[10px] font-black">
+                                                                    {i + 1}
+                                                                </div>
+                                                                <div className={`w-8 h-8 rounded-xl flex items-center justify-center border transition-all ${isSelected ? 'bg-pink-500 border-pink-500 text-white' : 'border-white/10 text-white/20'}`}>
+                                                                    {isSelected ? <CheckCircle size={16} /> : <Plus size={16} />}
+                                                                </div>
                                                             </div>
                                                             <div>
-                                                                <h4 className="font-black text-lg group-hover:text-pink-400 transition-colors uppercase italic">{track.title}</h4>
-                                                                <p className="text-[10px] text-white/40 uppercase tracking-[0.2em] font-bold">{track.duration}</p>
+                                                                <h4 className="font-black text-xl group-hover:text-pink-400 transition-colors uppercase italic leading-tight mb-2">{track.title}</h4>
+                                                                <p className="text-[10px] text-white/40 uppercase tracking-[0.2em] font-black">{track.duration}</p>
                                                             </div>
-                                                        </div>
-                                                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center border transition-all ${isSelected ? 'bg-pink-500 border-pink-500 text-white' : 'border-white/10 text-white/20'}`}>
-                                                            {isSelected ? <CheckCircle size={16} /> : <div className="w-1.5 h-1.5 rounded-full bg-current" />}
-                                                        </div>
-                                                    </motion.div>
-                                                );
-                                            })}
+                                                        </motion.div>
+                                                    );
+                                                })}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

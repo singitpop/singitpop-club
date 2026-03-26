@@ -100,7 +100,13 @@ export default function TrackLibrary({ tracks }: TrackLibraryProps) {
                     <div key={i} className={styles.trackListCard}>
                         <div className={styles.trackImageWrapper}>
                             {track.coverArt ? (
-                                <Image src={track.coverArt} alt={track.title} width={60} height={60} className={styles.trackArt} />
+                                <Image 
+                                    src={track.coverArt.startsWith('http') || track.coverArt.startsWith('/') ? track.coverArt : `/${track.coverArt}`} 
+                                    alt={track.title} 
+                                    width={60} 
+                                    height={60} 
+                                    className={styles.trackArt} 
+                                />
                             ) : (
                                 <div className={styles.placeholderArt}>SP</div>
                             )}

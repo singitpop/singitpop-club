@@ -1,0 +1,26 @@
+[
+  {
+    "id": "adv-001",
+    "title": "Kitchen Bliss (Instrumental)",
+    "albumTitle": "Commercial Archive: Home & Living",
+    "genre": "Advert / Mood",
+    "mood": "Clean, Modern, Bright",
+    "duration": "00:30",
+    "bpm": 120,
+    "tag": "Kitchens & Bathrooms",
+    "description": "Bright, minimalist acoustic-pop perfectly suited for home improvement and interior design walkthroughs.",
+    "coverArt": "/images/licensing/advert-home.png"
+  },
+  {
+    "id": "adv-002",
+    "title": "Bathroom Sanctuary (Ambient)",
+    "albumTitle": "Commercial Archive: Home & Living",
+    "genre": "Ambient / Zen",
+    "mood": "Relaxing, Spa, Pure",
+    "duration": "01:00",
+    "bpm": 85,
+    "tag": "Kitchens & Bathrooms",
+    "description": "Slow, ethereal pads and gentle piano for luxury bathroom brands and spa-like atmospheres.",
+    "coverArt": "/images/licensing/advert-spa.png"
+  }
+]

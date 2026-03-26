@@ -219,7 +219,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Solstice.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": "solstice-2026/1.json"
       },
       {
         "id": 2,
@@ -234,7 +235,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Afterglow%20Pulse.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": "solstice-2026/2.json"
       },
       {
         "id": 3,
@@ -249,7 +251,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Ignite%20the%20Night.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/3.json"
       },
       {
         "id": 4,
@@ -264,7 +267,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Higher%20Than%20the%20Sun.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": "solstice-2026/4.json"
       },
       {
         "id": 5,
@@ -279,7 +283,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Gravity%20of%20Us.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/5.json"
       },
       {
         "id": 6,
@@ -294,7 +299,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Unbreakable%20Light.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/6.json"
       },
       {
         "id": 7,
@@ -309,7 +315,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Midnight%20Frequency.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/7.json"
       },
       {
         "id": 8,
@@ -324,7 +331,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Radiant%20Horizon.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/8.json"
       },
       {
         "id": 9,
@@ -339,7 +347,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Infinite%20Rise.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/9.json"
       },
       {
         "id": 10,
@@ -354,7 +363,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Edge%20of%20Forever.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/10.json"
       },
       {
         "id": 11,
@@ -369,7 +379,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Before%20the%20Dawn.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/11.json"
       },
       {
         "id": 12,
@@ -384,7 +395,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Solstice.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": "solstice-2026/12.json"
       }
     ],
     "releaseDate": "2026-06-19",
@@ -393,7 +405,8 @@
     "type": "standard",
     "trending": false,
     "exclusive": true,
-    "accessTier": "vip"
+    "accessTier": "vip",
+    "backCover": "https://singitpop-music.s3.eu-north-1.amazonaws.com/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/solstice_back_cover_official_v1_1774487043782.png"
   },
   {
     "id": "nashville-in-june-2026",

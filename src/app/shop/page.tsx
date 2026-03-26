@@ -337,6 +337,32 @@ function ShopContent() {
                 </div>
             </section>
 
+            {/* Adopt a Song / Sponsorship CTA */}
+            <section className="max-w-6xl mx-auto mb-24 px-6">
+                <div className="bg-gradient-to-br from-yellow-900/40 to-black border border-yellow-500/30 rounded-[3rem] p-12 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-64 bg-yellow-500/10 blur-[120px] rounded-full pointer-events-none group-hover:bg-yellow-500/20 transition-all" />
+                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-12 text-center md:text-left">
+                        <div className="w-32 h-32 bg-yellow-500/20 rounded-[2.5rem] flex items-center justify-center text-yellow-500 shrink-0 shadow-[0_0_30px_rgba(250,204,21,0.2)]">
+                            <Sparkles size={64} />
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter mb-4 uppercase">ADOPT A SONG</h2>
+                            <p className="text-xl text-white/70 mb-8 max-w-2xl leading-relaxed">
+                                Become an **Executive Producer**. Sponsor your favorite track permanently and earn a verified badge, early access, and lifetime discounts.
+                            </p>
+                            <Link 
+                                href="/licensing#library"
+                                className="inline-flex items-center gap-4 bg-yellow-500 text-black px-10 py-5 rounded-2xl font-black uppercase text-lg italic transition-all hover:scale-[1.05] active:scale-95 shadow-[0_10px_40px_rgba(250,204,21,0.3)]"
+                            >
+                                <Music size={24} />
+                                Start Sponsorship
+                                <ArrowRight size={20} />
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Merch Store Section */}
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12">

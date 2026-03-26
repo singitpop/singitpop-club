@@ -20,6 +20,7 @@ export interface Track {
     albumId?: string;
     sourceFolder?: string;
     isSingle?: boolean;
+    lyrics?: string; // Path to lyrics JSON or raw text
 }
 
 export interface Album {
@@ -38,6 +39,7 @@ export interface Album {
     type?: 'studio' | 'live' | 'standard';
     exclusive?: boolean;
     accessTier?: 'vip' | 'free' | string;
+    backCover?: string; // Filename like 'back.png'
 }
 
 // Cast the imported JSON to the Album[] type

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Search, ArrowLeft, Sparkles, Filter, ShoppingBag } from 'lucide-react';
+import { Search, ShoppingBag, BookOpen, Sparkles, X, Eye, Image as ImageIcon, FileText, ArrowLeft, Filter } from "lucide-react";
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -13,8 +13,45 @@ export default function DigitalBookstorePage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [loadingBook, setLoadingBook] = useState<string | null>(null);
+    const [previewAlbum, setPreviewAlbum] = useState<Album | null>(null);
+    const [previewLyrics, setPreviewLyrics] = useState<string[]>([]);
+    const [isLoadingLyrics, setIsLoadingLyrics] = useState(false);
+    const [showBack, setShowBack] = useState(false);
 
     const { user, isPro, isLabel } = useAuth();
+
+    // Reset showBack when opening a new preview
+    useEffect(() => {
+        if (previewAlbum) setShowBack(false);
+    }, [previewAlbum]);
+
+    // Fetch lyrics when previewing an album
+    useEffect(() => {
+        const fetchLyrics = async () => {
+            if (!previewAlbum || !previewAlbum.tracks[0]?.lyrics) {
+                setPreviewLyrics([]);
+                return;
+            }
+
+            setIsLoadingLyrics(true);
+            try {
+                const response = await fetch(`/data/lyrics/${previewAlbum.tracks[0].lyrics}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setPreviewLyrics(data.lyrics || []);
+                } else {
+                    setPreviewLyrics([]);
+                }
+            } catch (err) {
+                console.error("Failed to fetch lyrics:", err);
+                setPreviewLyrics([]);
+            } finally {
+                setIsLoadingLyrics(false);
+            }
+        };
+
+        fetchLyrics();
+    }, [previewAlbum]);
 
     useEffect(() => {
         fetch('/api/content/albums')
@@ -121,7 +158,7 @@ export default function DigitalBookstorePage() {
                 {/* Hero / Intro */}
                 <div className="mb-16 text-center space-y-4">
                     <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-none">
-                        Own the <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400">Production</span> Notes
+                        Own the <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400 px-1">Production</span> Notes
                     </h2>
                     <p className="text-zinc-500 max-w-2xl mx-auto font-bold text-lg md:text-xl">
                         Immerse yourself in the story behind every track. High-resolution album artwork and full lyrics, straight from the studio archive.
@@ -156,10 +193,17 @@ export default function DigitalBookstorePage() {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
                                         
                                         {/* Hover Overlay */}
-                                        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0">
-                                            <div className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl mb-4">
-                                                <BookOpen size={28} />
-                                            </div>
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0 bg-black/40 backdrop-blur-sm">
+                                            <button 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setPreviewAlbum(album);
+                                                }}
+                                                className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl mb-4 hover:scale-110 transition-transform"
+                                            >
+                                                <Eye size={28} />
+                                            </button>
+                                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-white">Preview Artwork</div>
                                         </div>
 
                                         <div className="absolute bottom-6 left-6 right-6">
@@ -215,6 +259,132 @@ export default function DigitalBookstorePage() {
                     </div>
                 </div>
             </footer>
+            {/* Preview Modal */}
+            <AnimatePresence>
+                {previewAlbum && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/90 backdrop-blur-xl"
+                        onClick={() => setPreviewAlbum(null)}
+                    >
+                        <motion.div 
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            className="bg-zinc-900 w-full max-w-6xl max-h-full overflow-hidden rounded-[2.5rem] border border-white/10 flex flex-col md:flex-row relative shadow-[0_0_100px_rgba(236,72,153,0.1)]"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button 
+                                onClick={() => setPreviewAlbum(null)}
+                                className="absolute top-6 right-6 w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/20 z-10"
+                            >
+                                <X size={24} />
+                            </button>
+                            {/* Left: Artwork Preview */}
+                            <div className="md:w-1/2 aspect-square relative bg-black group/art cursor-pointer overflow-hidden"
+                                onClick={() => setShowBack(!showBack)}
+                            >
+                                <motion.div 
+                                    key={showBack ? "back" : "front"}
+                                    initial={{ opacity: 0, scale: 1.1 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="relative w-full h-full"
+                                >
+                                    <Image 
+                                        src={showBack ? (previewAlbum.backCover || 'https://singitpop-music.s3.eu-north-1.amazonaws.com/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/placeholder_back_coming_soon_v1_1774518707780.png') : previewAlbum.coverArt} 
+                                        alt={previewAlbum.title} 
+                                        fill 
+                                        className="object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                                </motion.div>
+
+                                <div className="absolute bottom-12 left-12 right-12 flex items-end justify-between">
+                                    <div className="flex-1">
+                                        <div className="text-pink-500 font-black uppercase tracking-[0.4em] text-[10px] mb-4">
+                                            {showBack ? "Master Back Cover" : "Archive Original Art"}
+                                        </div>
+                                        <h3 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter leading-none text-white max-w-md drop-shadow-2xl">
+                                            {previewAlbum.title}
+                                        </h3>
+                                    </div>
+                                    <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/40 group-hover/art:bg-pink-500 group-hover/art:text-black transition-all">
+                                        <RotateCcw size={20} className={showBack ? "rotate-180 transition-transform duration-500" : "transition-transform duration-500"} />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Right: Contents & Purchase */}
+                            <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto custom-scrollbar flex flex-col">
+                                <div className="flex-1 space-y-12">
+                                    <section>
+                                        <div className="flex items-center gap-4 mb-4">
+                                            <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500">
+                                                <ImageIcon size={16} />
+                                            </div>
+                                            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white">High-Resolution Art</h4>
+                                        </div>
+                                        <p className="text-zinc-400 font-bold leading-relaxed">
+                                            This artbook includes the master high-resolution cover artwork, full-bleed interior spreads, and alternative concept art from the SingIt Pop creative studio.
+                                        </p>
+                                    </section>
+
+                                    <section>
+                                        <div className="flex items-center gap-4 mb-4">
+                                            <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500">
+                                                <FileText size={16} />
+                                            </div>
+                                            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white">Official Lyrics & Notes</h4>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <p className="text-zinc-400 font-bold leading-relaxed">
+                                                Full official lyrics for every track in the digital booklet. Includes songwriting credits and original production metadata.
+                                            </p>
+                                            <div className="bg-white/5 border border-white/5 rounded-2xl p-6 font-mono text-[10px] text-zinc-500 uppercase tracking-widest leading-loose italic overflow-hidden">
+                                                {isLoadingLyrics ? (
+                                                    <div className="animate-pulse space-y-1">
+                                                        <div className="h-2 w-3/4 bg-white/10 rounded" />
+                                                        <div className="h-2 w-1/2 bg-white/10 rounded" />
+                                                        <div className="h-2 w-2/3 bg-white/10 rounded" />
+                                                    </div>
+                                                ) : previewLyrics.length > 0 ? (
+                                                    <div className="space-y-1">
+                                                        {previewLyrics.slice(0, 4).map((line, idx) => (
+                                                            <div key={idx} className="truncate">"{line}"</div>
+                                                        ))}
+                                                        {previewLyrics.length > 4 && <div>...</div>}
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        "Official lyrics and studio notes<br/>
+                                                        encrypted and secured in the vault..."
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+
+                                <div className="mt-12 pt-12 border-t border-white/5 flex items-center justify-between gap-6">
+                                    <div className="space-y-1">
+                                        <div className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Full Access</div>
+                                        <div className="text-2xl font-black text-white italic">£5.00</div>
+                                    </div>
+                                    <button 
+                                        onClick={() => handleCheckout(previewAlbum)}
+                                        className="flex-1 py-5 bg-gradient-to-r from-pink-500 to-rose-400 text-black rounded-2xl font-black uppercase text-sm italic transition-all hover:scale-[1.02] active:scale-95 shadow-[0_10px_30px_rgba(236,72,153,0.3)]"
+                                    >
+                                        Download Master PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
