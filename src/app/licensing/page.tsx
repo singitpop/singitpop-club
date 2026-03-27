@@ -25,11 +25,17 @@ export default async function LicensingPage() {
 
         return album.tracks
             .filter((t: any) => t.audioUrl && t.audioUrl.trim() !== '')
-            .map((track: any) => ({
-                ...track,
-                albumTitle: album.title,
-                coverArt: album.coverArt,
-            }));
+            .map((track: any) => {
+                // Correct coverArt path (raw metadata is just 'cover.png')
+                const sluggedFolder = album.folderPath ? album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-') : '';
+                const coverArt = sluggedFolder ? `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${sluggedFolder}/cover.png` : album.coverArt;
+                
+                return {
+                    ...track,
+                    albumTitle: album.title,
+                    coverArt: coverArt,
+                };
+            });
     });
     
     // Read advert tracks

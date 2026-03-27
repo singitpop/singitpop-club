@@ -455,13 +455,17 @@ export default function CommunityHubPage() {
             if (parts.length >= 2) {
                 const aId = parts.slice(0, -1).join('-');
                 const album = albums.find(a => a.id === aId);
-                if (album) imageUrls.push(album.coverArt);
+                if (album) {
+                    const art = album.coverArt;
+                    imageUrls.push(art.startsWith('http') || art.startsWith('/') ? art : `/${art}`);
+                }
             } else {
                 // Try brute force search if just number
                 const idNum = parseInt(String(tId));
                 for (const album of albums) {
                     if (album.tracks.some(t => t.id === idNum)) {
-                        imageUrls.push(album.coverArt);
+                        const art = album.coverArt;
+                        imageUrls.push(art.startsWith('http') || art.startsWith('/') ? art : `/${art}`);
                         break;
                     }
                 }
@@ -666,6 +670,10 @@ export default function CommunityHubPage() {
                             onDelete={() => handleDeletePlaylist(selectedPlaylist.id)}
                             canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin'}
                             isVIP={isVIP}
+                            onUpdate={(updated) => {
+                                setPlaylists(prev => prev.map(p => p.id === updated.id ? updated : p));
+                                setSelectedPlaylist(updated);
+                            }}
                         />
                 )
             }

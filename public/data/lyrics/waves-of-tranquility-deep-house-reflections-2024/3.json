@@ -1,0 +1,62 @@
+{
+  "title": "Sway With The Tide",
+  "artist": "SingIt Pop",
+  "album": "Waves of Tranquility Deep House Reflections",
+  "id": 3,
+  "lyrics": [
+    {
+      "id": 1,
+      "text": "The sun is setting low, casting gold on the sea,\nFeel the breeze in the air, it’s just you and me.\nPalm trees swayin’, waves rollin’ in slow,\nWe’ve got nowhere to be, nowhere to go.",
+      "startTime": 0,
+      "endTime": 15
+    },
+    {
+      "id": 2,
+      "text": "Let the water kiss the shore,\nWe’ll stay here a little more.\nClose your eyes, let the moment be,\nWe’re floatin’ in a dream, just you and me.",
+      "startTime": 15,
+      "endTime": 30
+    },
+    {
+      "id": 3,
+      "text": "Sway with the tide, let the world drift by,\nUnderneath the stars in a painted sky.\nFeel the rhythm of the ocean’s song,\nWe’re right where we belong.\nSway with the tide, let the night unfold,\nIn the warmth of the summer’s hold.\nBreathe it in, let the waves decide,\nWe’ll sway, we’ll sway with the tide.",
+      "startTime": 30,
+      "endTime": 45
+    },
+    {
+      "id": 4,
+      "text": "The moon is risin’ high, lighting up the shore,\nWith every gentle wave, we’re feelin’ more.\nOur feet in the sand, hearts in the breeze,\nThe night is young, and we’re feelin’ so free.",
+      "startTime": 45,
+      "endTime": 60
+    },
+    {
+      "id": 5,
+      "text": "Let the water kiss the shore,\nWe’ll stay here a little more.\nClose your eyes, let the moment be,\nWe’re floatin’ in a dream, just you and me.",
+      "startTime": 60,
+      "endTime": 75
+    },
+    {
+      "id": 6,
+      "text": "Sway with the tide, let the world drift by,\nUnderneath the stars in a painted sky.\nFeel the rhythm of the ocean’s song,\nWe’re right where we belong.\nSway with the tide, let the night unfold,\nIn the warmth of the summer’s hold.\nBreathe it in, let the waves decide,\nWe’ll sway, we’ll sway with the tide.",
+      "startTime": 75,
+      "endTime": 90
+    },
+    {
+      "id": 7,
+      "text": "Every wave, every breeze,\nCarries us to a place of peace.\nNo rush, no care, just you and I,\nDancing slow beneath the sky.",
+      "startTime": 90,
+      "endTime": 105
+    },
+    {
+      "id": 8,
+      "text": "Sway with the tide, let the world drift by,\nUnderneath the stars in a painted sky.\nFeel the rhythm of the ocean’s song,\nWe’re right where we belong.\nSway with the tide, let the night unfold,\nIn the warmth of the summer’s hold.\nBreathe it in, let the waves decide,\nWe’ll sway, we’ll sway with the tide.",
+      "startTime": 105,
+      "endTime": 120
+    },
+    {
+      "id": 9,
+      "text": "Sway with the tide…\nJust you and I…\nWe’ll drift away, under the moonlit sky.",
+      "startTime": 120,
+      "endTime": 135
+    }
+  ]
+}

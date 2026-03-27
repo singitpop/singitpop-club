@@ -8,49 +8,32 @@ export async function GET() {
 
         // Sign S3 URLs for cover art
         const signedAlbums = await Promise.all(albums.map(async (album) => {
-            let signedCover = album.coverArt;
+            try {
+                let signedCover = album.coverArt;
 
-            // Fix for inconsistent album art paths in data file
-            // Data file points to /albums/artwork/ but files are actually in albums/{folderPath}/cover.png
-            if (album.folderPath) {
-                const filename = album.coverImageName || 'cover.png';
-                // Slugify the folderPath to match what upload-s3.js uses as the S3 key
-                const sluggedFolder = album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-');
-                const correctedKey = `albums/${sluggedFolder}/${filename}`;
-                signedCover = await getSignedFileUrl(correctedKey);
-            } else if (album.coverArt && !album.coverArt.startsWith('http')) {
-                // ... legacy/fallback logic ...
-                // Strip leading slash if present for S3 key
-                const key = album.coverArt.startsWith('/') ? album.coverArt.substring(1) : album.coverArt;
-
-                if (key.includes('s3.eu-north-1.amazonaws.com')) {
-                    // It's a full S3 URL but without http (unlikely, but safe to handle)
-                    try {
-                        const url = new URL(key.startsWith('http') ? key : `https://${key}`);
-                        const s3Key = url.pathname.substring(1);
-                        signedCover = await getSignedFileUrl(decodeURIComponent(s3Key));
-                    } catch (e) {
-                        signedCover = await getSignedFileUrl(key);
-                    }
-                } else {
-                    // It's a direct key
+                // Fix for inconsistent album art paths in data file
+                if (album.folderPath) {
+                    const filename = album.coverImageName || 'cover.png';
+                    const sluggedFolder = album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-');
+                    const correctedKey = `albums/${sluggedFolder}/${filename}`;
+                    signedCover = await getSignedFileUrl(correctedKey);
+                } else if (album.coverArt && !album.coverArt.startsWith('http')) {
+                    const key = album.coverArt.startsWith('/') ? album.coverArt.substring(1) : album.coverArt;
                     signedCover = await getSignedFileUrl(key);
-                }
-            } else if (album.coverArt && album.coverArt.includes('s3.eu-north-1.amazonaws.com')) {
-                // It's a full http S3 URL
-                try {
+                } else if (album.coverArt && album.coverArt.includes('s3.eu-north-1.amazonaws.com')) {
                     const url = new URL(album.coverArt);
                     const key = url.pathname.substring(1);
                     signedCover = await getSignedFileUrl(decodeURIComponent(key));
-                } catch (e) {
-                    console.warn("Failed to parse S3 URL for signing:", album.coverArt);
                 }
-            }
 
-            return {
-                ...album,
-                coverArt: signedCover
-            };
+                return {
+                    ...album,
+                    coverArt: signedCover
+                };
+            } catch (err) {
+                console.error(`Failed to sign cover art for album ${album.id}:`, err);
+                return album; // Return original album if signing fails
+            }
         }));
 
         return NextResponse.json(signedAlbums);

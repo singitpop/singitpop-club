@@ -4,6 +4,7 @@ import path from 'path';
 import Link from 'next/link';
 import { ArrowLeft, CheckCircle2, FileText, AlertCircle, PlayCircle, DollarSign, ShieldAlert } from 'lucide-react';
 import styles from './page.module.css';
+import { StatusActions } from './StatusActions';
 
 // Read JSON DBs natively on the server
 function getTableData(filename: string) {
@@ -22,6 +23,9 @@ export default async function AdminLicensingDashboard() {
     const licenses = getTableData('licenses.json').reverse(); // Newest first
     const quotes = getTableData('quotes.json').reverse();
     const whitelists = getTableData('whitelists.json').reverse();
+
+    const pendingQuotes = quotes.filter((q: { status: string }) => q.status === 'pending').length;
+    const pendingWhitelists = whitelists.filter((w: { status: string }) => w.status === 'pending').length;
 
     return (
         <div className={styles.container}>
@@ -44,12 +48,12 @@ export default async function AdminLicensingDashboard() {
                 <div className={styles.statCard}>
                     <FileText size={24} className={styles.statIcon} style={{color: '#f472b6'}} />
                     <h3>Pending Quotes</h3>
-                    <div className={styles.statValue}>{quotes.filter((q: any) => q.status === 'pending').length}</div>
+                    <div className={styles.statValue}>{pendingQuotes}</div>
                 </div>
                 <div className={styles.statCard}>
                     <PlayCircle size={24} className={styles.statIcon} style={{color: '#ef4444'}} />
                     <h3>YouTube Disputes</h3>
-                    <div className={styles.statValue}>{whitelists.filter((w: any) => w.status === 'pending').length}</div>
+                    <div className={styles.statValue}>{pendingWhitelists}</div>
                 </div>
             </div>
 
@@ -57,24 +61,24 @@ export default async function AdminLicensingDashboard() {
             <div className="mb-12 grid md:grid-cols-2 gap-6">
                 <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/10 border border-blue-500/20 rounded-3xl p-8 backdrop-blur-xl">
                     <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-blue-400">
-                        <PlayCircle size={20} /> YouTube & TuneCore Guide
+                        <PlayCircle size={20} /> YouTube &amp; TuneCore Guide
                     </h2>
                     <ul className="space-y-4 text-sm text-white/70 leading-relaxed">
                         <li>
                             <strong className="text-white">Whitelisting:</strong> TuneCore does NOT allow per-video whitelisting. It only whitelists entire channels. 
                         </li>
                         <li>
-                            <strong className="text-white">Handling Claims:</strong> Tell the licensee to hit <strong>"Dispute"</strong> on YouTube and upload the PDF certificate we sent them. You can then release the claim in your TuneCore "Disputes" section.
+                            <strong className="text-white">Handling Claims:</strong> Tell the licensee to hit <strong>&quot;Dispute&quot;</strong> on YouTube and upload the PDF certificate we sent them. You can then release the claim in your TuneCore &quot;Disputes&quot; section.
                         </li>
                         <li>
-                            <strong className="text-white">The Clean Strategy:</strong> For high-value tracks you sell often, consider disabling "YouTube Monetization" for that track in TuneCore entirely to avoid buyer headaches.
+                            <strong className="text-white">The Clean Strategy:</strong> For high-value tracks you sell often, consider disabling &quot;YouTube Monetization&quot; for that track in TuneCore entirely to avoid buyer headaches.
                         </li>
                     </ul>
                 </div>
 
                 <div className="bg-gradient-to-br from-pink-900/20 to-rose-900/10 border border-pink-500/20 rounded-3xl p-8 backdrop-blur-xl">
                     <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-pink-400">
-                        <ShieldAlert size={20} /> Rights & Metadata Guide
+                        <ShieldAlert size={20} /> Rights &amp; Metadata Guide
                     </h2>
                     <ul className="space-y-4 text-sm text-white/70 leading-relaxed">
                         <li>
@@ -84,7 +88,7 @@ export default async function AdminLicensingDashboard() {
                             <strong className="text-white">PDF Certificates:</strong> Ensure <code>RESEND_API_KEY</code> is set in <strong>Vercel &gt; Settings &gt; Environment Variables</strong>. This is required to email license PDFs to customers.
                         </li>
                         <li>
-                            <strong className="text-white">ASCAP Registration:</strong> Log into ASCAP &rarr; "Register a Work" &rarr; Enter Title + Writers (Gary Birrell 100%) + ISRC. This ensures you collect performance royalties.
+                            <strong className="text-white">ASCAP Registration:</strong> Log into ASCAP &rarr; &quot;Register a Work&quot; &rarr; Enter Title + Writers (Gary Birrell 100%) + ISRC. This ensures you collect performance royalties.
                         </li>
                     </ul>
                 </div>
@@ -111,7 +115,7 @@ export default async function AdminLicensingDashboard() {
                             <tbody>
                                 {licenses.length === 0 ? (
                                     <tr><td colSpan={5} className={styles.emptyState}>No completed licenses found.</td></tr>
-                                ) : licenses.map((lic: any) => (
+                                ) : licenses.map((lic: { id: string; date: string; buyerName: string; buyerEmail: string; trackTitle: string; licenseType: string; usage: string; amount: number }) => (
                                     <tr key={lic.id}>
                                         <td>{new Date(lic.date).toLocaleDateString()}</td>
                                         <td><strong>{lic.buyerName}</strong><br/><small>{lic.buyerEmail}</small></td>
@@ -142,12 +146,13 @@ export default async function AdminLicensingDashboard() {
                                     <th>Company</th>
                                     <th>Track Config</th>
                                     <th>Project Details</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {quotes.length === 0 ? (
-                                    <tr><td colSpan={5} className={styles.emptyState}>No pending quotes.</td></tr>
-                                ) : quotes.map((quote: any) => (
+                                    <tr><td colSpan={6} className={styles.emptyState}>No pending quotes.</td></tr>
+                                ) : quotes.map((quote: { id: string; date: string; name: string; email: string; company: string; trackTitle: string; configuration: { usage: string; duration: string; territory: string }; details: string; status: string }) => (
                                     <tr key={quote.id}>
                                         <td>{new Date(quote.date).toLocaleDateString()}</td>
                                         <td><strong>{quote.name}</strong><br/><small>{quote.email}</small></td>
@@ -156,8 +161,21 @@ export default async function AdminLicensingDashboard() {
                                             <strong>{quote.trackTitle}</strong><br/>
                                             <small>{quote.configuration.usage} | {quote.configuration.duration} | {quote.configuration.territory}</small>
                                         </td>
-                                        <td style={{ maxWidth: '300px', whiteSpace: 'normal', fontSize: '0.85rem' }}>
+                                        <td style={{ maxWidth: '250px', whiteSpace: 'normal', fontSize: '0.85rem' }}>
                                             {quote.details}
+                                        </td>
+                                        <td>
+                                            <StatusQuoteBadge status={quote.status} />
+                                            <StatusActions
+                                                id={quote.id}
+                                                currentStatus={quote.status}
+                                                action="update_quote_status"
+                                                options={[
+                                                    { value: 'pending', label: 'Pending' },
+                                                    { value: 'quoted', label: 'Quoted' },
+                                                    { value: 'resolved', label: 'Resolved' },
+                                                ]}
+                                            />
                                         </td>
                                     </tr>
                                 ))}
@@ -185,14 +203,23 @@ export default async function AdminLicensingDashboard() {
                             <tbody>
                                 {whitelists.length === 0 ? (
                                     <tr><td colSpan={5} className={styles.emptyState}>No YouTube clearance requests.</td></tr>
-                                ) : whitelists.map((wl: any) => (
+                                ) : whitelists.map((wl: { id: string; date: string; name: string; email: string; trackTitle: string; youtubeUrl: string; status: string }) => (
                                     <tr key={wl.id}>
                                         <td>{new Date(wl.date).toLocaleDateString()}</td>
                                         <td><strong>{wl.name}</strong><br/><small>{wl.email}</small></td>
                                         <td>{wl.trackTitle}</td>
                                         <td><a href={wl.youtubeUrl} target="_blank" rel="noreferrer" className={styles.urlLink}>{wl.youtubeUrl}</a></td>
                                         <td>
-                                            <span className={styles.pendingBadge}>Need to Action</span>
+                                            <StatusWhitelistBadge status={wl.status} />
+                                            <StatusActions
+                                                id={wl.id}
+                                                currentStatus={wl.status}
+                                                action="update_whitelist_status"
+                                                options={[
+                                                    { value: 'pending', label: 'Pending' },
+                                                    { value: 'cleared', label: 'Cleared' },
+                                                ]}
+                                            />
                                         </td>
                                     </tr>
                                 ))}
@@ -203,5 +230,53 @@ export default async function AdminLicensingDashboard() {
 
             </div>
         </div>
+    );
+}
+
+function StatusQuoteBadge({ status }: { status: string }) {
+    const colors: Record<string, string> = {
+        pending: 'rgba(239,68,68,0.15)',
+        quoted: 'rgba(251,191,36,0.15)',
+        resolved: 'rgba(74,222,128,0.15)',
+    };
+    const textColors: Record<string, string> = {
+        pending: '#f87171',
+        quoted: '#fbbf24',
+        resolved: '#4ade80',
+    };
+    return (
+        <span style={{
+            display: 'inline-block',
+            background: colors[status] || 'transparent',
+            color: textColors[status] || '#ccc',
+            padding: '3px 10px',
+            borderRadius: '6px',
+            fontSize: '0.75rem',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            marginBottom: '8px',
+        }}>
+            {status || 'pending'}
+        </span>
+    );
+}
+
+function StatusWhitelistBadge({ status }: { status: string }) {
+    const isPending = !status || status === 'pending';
+    return (
+        <span style={{
+            display: 'inline-block',
+            background: isPending ? 'rgba(239,68,68,0.15)' : 'rgba(74,222,128,0.15)',
+            color: isPending ? '#f87171' : '#4ade80',
+            padding: '3px 10px',
+            borderRadius: '6px',
+            fontSize: '0.75rem',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            marginBottom: '8px',
+            border: isPending ? '1px dashed #ef4444' : 'none',
+        }}>
+            {isPending ? 'Need to Action' : 'Cleared'}
+        </span>
     );
 }

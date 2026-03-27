@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-25T23:33:21.917Z",
-  "totalAlbums": 56,
-  "totalTracks": 680,
+  "generated": "2026-03-27T13:38:39.643Z",
+  "totalAlbums": 57,
+  "totalTracks": 694,
   "genres": [
     "Christmas",
     "Country",
@@ -47,15 +47,15 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/"
     },
     {
-      "id": "nashville-in-june-2026",
-      "title": "Nashville in June",
+      "id": "live-nashville-in-june-2026",
+      "title": "Live Nashville in June",
       "year": 2026,
       "trackCount": 12,
       "genres": [
         "Country"
       ],
-      "folderPath": "Nashville in June",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/"
+      "folderPath": "Live Nashville in June",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/"
     },
     {
       "id": "before-the-light-2026",
@@ -168,8 +168,8 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/desert-winds-and-open-roads/"
     },
     {
-      "id": "step-into-the-light-2025",
-      "title": "Step Into the Light",
+      "id": "live-step-into-the-light-2025",
+      "title": "Live Step Into the Light",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -215,7 +215,7 @@
       "id": "shadows-and-fires-2025",
       "title": "Shadows and Fires",
       "year": 2025,
-      "trackCount": 15,
+      "trackCount": 14,
       "genres": [
         "Folk"
       ],
@@ -452,8 +452,8 @@
       "genres": [
         "Pop"
       ],
-      "folderPath": "Echos Of Us",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/"
+      "folderPath": "Echoes Of Us",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/"
     },
     {
       "id": "heartland-rhythms-2025",
@@ -605,12 +605,24 @@
       "id": "happily-ever-after-dreams-2024",
       "title": "Happily Ever After Dreams",
       "year": 2024,
-      "trackCount": 11,
+      "trackCount": 12,
       "genres": [
         "Disney"
       ],
       "folderPath": "Happily Ever After Dreams",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/"
+    },
+    {
+      "id": "between-the-lines-of-love-2024",
+      "title": "Between the lines of love",
+      "year": 2024,
+      "trackCount": 14,
+      "genres": [
+        "Country",
+        "Christmas"
+      ],
+      "folderPath": "Between the lines of love",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/"
     },
     {
       "id": "popstar-winter-wonderland-2024",

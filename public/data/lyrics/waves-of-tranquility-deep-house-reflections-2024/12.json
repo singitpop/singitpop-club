@@ -1,0 +1,68 @@
+{
+  "title": "Under Midnights Spell",
+  "artist": "SingIt Pop",
+  "album": "Waves of Tranquility Deep House Reflections",
+  "id": 12,
+  "lyrics": [
+    {
+      "id": 1,
+      "text": "The lights are low, shadows play,\nA magnetic pulse, pulls me your way.\nThe beat is heavy, the rhythm’s deep,\nUnder midnight’s spell, no time for sleep.",
+      "startTime": 0,
+      "endTime": 15
+    },
+    {
+      "id": 2,
+      "text": "Close your eyes, let the feeling rise,\nThe night is ours, under starlit skies.\nIn the haze, the world slips away,\nWe’re lost in the sound, where we want to stay.",
+      "startTime": 15,
+      "endTime": 30
+    },
+    {
+      "id": 3,
+      "text": "Under midnight’s spell, we move as one,\nIn the pulse of the night, the night’s just begun.\nFeel the bass, let it sink below,\nWe’re caught in the rhythm, let the moment flow.\nUnder midnight’s spell, no need to hide,\nThe music calls, and we can’t deny.\nWe’ll dance ‘til the dawn, let the world stand still,\nLost in the magic, feel the thrill.",
+      "startTime": 30,
+      "endTime": 45
+    },
+    {
+      "id": 4,
+      "text": "Echoes of sound, they wrap around,\nIn every beat, we’re spellbound.\nA heartbeat syncs with every sway,\nIn this rhythm, we drift away.",
+      "startTime": 45,
+      "endTime": 60
+    },
+    {
+      "id": 5,
+      "text": "Lose control, let the night unfold,\nThe music’s fire, we’re burning bold.\nA hypnotic trance, as time slips by,\nIn the glow of the night, you and I.",
+      "startTime": 60,
+      "endTime": 75
+    },
+    {
+      "id": 6,
+      "text": "Under midnight’s spell, we move as one,\nIn the pulse of the night, the night’s just begun.\nFeel the bass , let it sink below,\nWe’re caught in the rhythm, let the moment flow.\nUnder midnight’s spell, no need to hide,\nThe music calls, and we can’t deny.\nWe’ll dance ‘til the dawn, let the world stand still,\nLost in the magic, feel the thrill.",
+      "startTime": 75,
+      "endTime": 90
+    },
+    {
+      "id": 7,
+      "text": "With every beat, the stars align,\nThe night’s our canvas, painted in time.\nIn the depth of sound, we’re free to roam,\nOn this dance floor, we’ve found our home.",
+      "startTime": 90,
+      "endTime": 105
+    },
+    {
+      "id": 8,
+      "text": "Under midnight’s spell, we move as one,\nIn the pulse of the night, the night’s just begun.\nFeel the bass, let it sink below,\nWe’re caught in the rhythm, let the moment flow.\nUnder midnight’s spell, no need to hide,\nThe music calls, and we can’t deny.\nWe’ll dance ‘til the dawn, let the world stand still,\nLost in the magic, feel the thrill.",
+      "startTime": 105,
+      "endTime": 120
+    },
+    {
+      "id": 9,
+      "text": "Under midnight’s spell… we’re here to stay,\nWith the beat as our guide, we’ll dance away.",
+      "startTime": 120,
+      "endTime": 135
+    },
+    {
+      "id": 10,
+      "text": "With every beat, we’re spell bound, we’re here to stay.\nWith the beat as our guide, we’ll dance away.",
+      "startTime": 135,
+      "endTime": 150
+    }
+  ]
+}

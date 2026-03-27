@@ -1,0 +1,62 @@
+{
+  "title": "Lost In The Groove",
+  "artist": "SingIt Pop",
+  "album": "Waves of Tranquility Deep House Reflections",
+  "id": 4,
+  "lyrics": [
+    {
+      "id": 1,
+      "text": "The lights are soft, shadows blend,\nThe beat takes hold, becomes my friend.\nA gentle pulse beneath my feet,\nI close my eyes, feel the steady beat.",
+      "startTime": 0,
+      "endTime": 15
+    },
+    {
+      "id": 2,
+      "text": "Let the night just drift and sway,\nIn this groove, we’ll float away.\nThe sound surrounds, we’re in a trance,\nLost in the rhythm, caught in the dance.",
+      "startTime": 15,
+      "endTime": 30
+    },
+    {
+      "id": 3,
+      "text": "We’re lost in the groove, the moment’s ours,\nMoving slow beneath the stars.\nFeel the warmth, let the rhythm flow,\nWe’re here in the music, no need to go.\nIn the groove, where time moves slow,\nLet the beat take you, let your spirit glow.\nWith every step, we’re falling deep,\nLost in the groove, where we can breathe.",
+      "startTime": 30,
+      "endTime": 45
+    },
+    {
+      "id": 4,
+      "text": "A quiet thrill, a mellow high,\nAs we dance beneath the open sky.\nThe baseline hums, the melody’s low,\nWe drift along, we let it show.",
+      "startTime": 45,
+      "endTime": 60
+    },
+    {
+      "id": 5,
+      "text": "The world fades out, we’re weightless here,\nThe music so close, so warm, so near.\nIn every note, in every sway,\nWe’re part of the night, come what may.",
+      "startTime": 60,
+      "endTime": 75
+    },
+    {
+      "id": 6,
+      "text": "We’re lost in the groove, the moment’s ours,\nMoving slow beneath the stars.\nFeel the warmth, let the rhythm flow,\nWe’re here in the music, no need to go.\nIn the groove, where time moves slow,\nLet the beat take you, let your spirit glow.\nWith every step, we’re falling deep,\nLost in the groove, where we can breathe.",
+      "startTime": 75,
+      "endTime": 90
+    },
+    {
+      "id": 7,
+      "text": "This melody, it holds us tight,\nGuiding us through the velvet night.\nIn every beat, we’re free to roam,\nWith the music, we’ve found our home.",
+      "startTime": 90,
+      "endTime": 105
+    },
+    {
+      "id": 8,
+      "text": "We’re lost in the groove, the moment’s ours,\nMoving slow beneath the stars.\nFeel the warmth, let the rhythm flow,\nWe’re here in the music, no need to go.\nIn the groove, where time moves slow,\nLet the beat take you, let your spirit glow.\nWith every step, we’re falling deep,\nLost in the groove, where we can breathe.",
+      "startTime": 105,
+      "endTime": 120
+    },
+    {
+      "id": 9,
+      "text": "Lost in the groove, the night feels right,\nDrifting along in the soft moonlight.\nLost in the groove, where the world fades away,\nWith every beat, we’re here to stay.",
+      "startTime": 120,
+      "endTime": 135
+    }
+  ]
+}

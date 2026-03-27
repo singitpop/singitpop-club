@@ -128,3 +128,60 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
     }
 }
+
+export async function PATCH(req: Request) {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const body = await req.json();
+        const { id, title, tracks, coverImage } = body;
+
+        if (!id) {
+            return NextResponse.json({ error: 'Missing ID' }, { status: 400 });
+        }
+
+        // 1. Fetch Existing
+        const playlist = await getCommunityPlaylist(id);
+        if (!playlist) {
+            return NextResponse.json({ error: 'Not found' }, { status: 404 });
+        }
+
+        // 2. Verified Owner or Admin
+        let isAllowed = false;
+        if (playlist.userId === userId) {
+            isAllowed = true;
+        } else {
+            const client = await clerkClient();
+            const user = await client.users.getUser(userId);
+            if (user.publicMetadata.role === 'admin') {
+                isAllowed = true;
+            }
+        }
+
+        if (!isAllowed) {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+        }
+
+        // 3. Update Fields
+        const updatedPlaylist = {
+            ...playlist,
+            title: title !== undefined ? title.substring(0, 50) : playlist.title,
+            tracks: tracks !== undefined ? tracks : playlist.tracks,
+            coverImage: coverImage !== undefined ? coverImage : playlist.coverImage
+        };
+
+        const success = await saveCommunityPlaylist(updatedPlaylist);
+        if (!success) {
+            throw new Error("S3 Update Failed");
+        }
+
+        return NextResponse.json({ success: true, playlist: updatedPlaylist });
+
+    } catch (error) {
+        console.error("PATCH Error:", error);
+        return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
+    }
+}

@@ -125,7 +125,7 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
     const folderMappings = {
         "Aplril Comes Soft": "April Comes Soft", // Typo in Excel
         "Heartland Rhythms": "Heartland Rythms", // Typo in folder
-        "Echoes of Us": "Echos Of Us", // Typo in folder
+        "Echoes of Us": "Echoes Of Us", // Typo in folder
         "Forever Starts Today (Country Music for Weddings)": "Forever Starts Today - Country Album", // Different formatting
         "Night Drive: 80s Beats & Ballads": "Night Drive - 80s Beats & Ballads", // Different separator
         "Popstar Winter Wonderland": "Pop Star Winter Wonderland", // Spacing difference

@@ -1,0 +1,62 @@
+{
+  "title": "Waves Of Summer",
+  "artist": "SingIt Pop",
+  "album": "Waves of Tranquility Deep House Reflections",
+  "id": 6,
+  "lyrics": [
+    {
+      "id": 1,
+      "text": "The sun is sinking low, painting the sky,\nWarm breeze in the air, it’s paradise.\nFeel the sand beneath our feet, so free,\nThe ocean calls, just you and me.",
+      "startTime": 0,
+      "endTime": 15
+    },
+    {
+      "id": 2,
+      "text": "Let the waves roll in, feel the rhythm of the sea,\nWe’re lost in the moment, where we’re meant to be.\nNo rush, no worries, just the sound of the tide,\nWe’ll drift away on the summer high.",
+      "startTime": 15,
+      "endTime": 30
+    },
+    {
+      "id": 3,
+      "text": "In these waves of summer, we’ll float all night,\nCatch the sun as it fades from sight.\nWith the ocean breeze and the stars above,\nWe’re caught in a moment filled with love.\nIn these waves of summer, we’ll lose control,\nLet the music and the waves take hold.\nFeel the heat, let it set you free,\nWaves of summer, where we’re meant to be.\nWhere we’re meant to be.",
+      "startTime": 30,
+      "endTime": 45
+    },
+    {
+      "id": 4,
+      "text": "The moon is risin’ high, lights up the shore,\nThe night is young, let’s dive in some more.\nWith every heartbeat, we’re in perfect sync,\nWe’ll ride this wave until the brink.",
+      "startTime": 45,
+      "endTime": 60
+    },
+    {
+      "id": 5,
+      "text": "Let the waves roll in, feel the rhythm of the sea,\nWe’re lost in the moment, where we’re meant to be.\nNo rush, no worries, just the sound of the tide,\nWe’ll drift away on the summer high.",
+      "startTime": 60,
+      "endTime": 75
+    },
+    {
+      "id": 6,
+      "text": "In these waves of summer, we’ll float all night,\nCatch the sun as it fades from sight.\nWith the ocean breeze and the stars above,\nWe’re caught in a moment filled with love.\nIn these waves of summer, we’ll lose control,\nLet the music and the waves take hold.\nFeel the heat, let it set you free,\nWaves of summer, where we’re meant to be.",
+      "startTime": 75,
+      "endTime": 90
+    },
+    {
+      "id": 7,
+      "text": "So close your eyes, let the night unfold,\nFeel the warmth as the story’s told.\nWe’re sinking deeper into the sea,\nLet’s ride the wave of serenity.",
+      "startTime": 90,
+      "endTime": 105
+    },
+    {
+      "id": 8,
+      "text": "In these waves of summer, we’ll float all night,\nCatch the sun as it fades from sight.\nWith the ocean breeze and the stars above,\nWe’re caught in a moment filled with love.\nIn these waves of summer, we’ll lose control,\nLet the music and the waves take hold.\nFeel the heat, let it set you free,\nWaves of summer, where we’re meant to be.",
+      "startTime": 105,
+      "endTime": 120
+    },
+    {
+      "id": 9,
+      "text": "In these waves of summer, just you and me,\nFloating away in perfect harmony.",
+      "startTime": 120,
+      "endTime": 135
+    }
+  ]
+}

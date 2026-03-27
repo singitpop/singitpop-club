@@ -365,3 +365,82 @@
         padding: 1rem;
     }
 }
+/* Change Cover UI */
+.changeCoverBtn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    opacity: 0;
+    transition: all 0.2s;
+    z-index: 5;
+}
+
+.artworkContainer:hover .changeCoverBtn {
+    opacity: 1;
+}
+
+.coverSelector {
+    margin-top: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.coverSelector h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.artworkGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 12px;
+}
+
+.artworkGrid button {
+    aspect-ratio: 1/1;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #222;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 0.7rem;
+}
+
+.artworkGrid button:hover {
+    transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.artworkGrid button.selectedArt {
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 15px rgba(255, 0, 128, 0.3);
+}
+
+.artworkGrid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

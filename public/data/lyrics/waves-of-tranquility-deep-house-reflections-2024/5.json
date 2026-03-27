@@ -1,0 +1,62 @@
+{
+  "title": "Island Breeze",
+  "artist": "SingIt Pop",
+  "album": "Waves of Tranquility Deep House Reflections",
+  "id": 5,
+  "lyrics": [
+    {
+      "id": 1,
+      "text": "Feel the warm breeze on my skin,\nThe sound of the ocean pullin’ me in.\nUnder the palm trees, we let go,\nLost in the rhythm, we take it slow.",
+      "startTime": 0,
+      "endTime": 15
+    },
+    {
+      "id": 2,
+      "text": "Waves rollin’ in, so soft, so sweet,\nWith every sound, we find our beat.\nNo place to be, no need to hide,\nJust driftin’ away with the rising tide.",
+      "startTime": 15,
+      "endTime": 30
+    },
+    {
+      "id": 3,
+      "text": "On the island breeze, we float away,\nUnderneath the sun, where the palm trees sway.\nFeel the warmth, feel the ease,\nLet’s get lost in the island breeze.\nOn the island breeze, just you and me,\nWith the ocean calm, and the feelin’ free.\nLet it go, feel the peace,\nWe’re sailin’ on the island breeze.",
+      "startTime": 30,
+      "endTime": 45
+    },
+    {
+      "id": 4,
+      "text": "Time slows down, no worries in sight,\nThe moon’s risin’ up, it’s a perfect night.\nStars above, reflecting on the sea,\nWe’re dancin’ slow, just you and me.",
+      "startTime": 45,
+      "endTime": 60
+    },
+    {
+      "id": 5,
+      "text": "Waves rollin’ in, so soft, so sweet,\nWith every sound, we find our beat.\nNo rush, no plans, just you and I,\nWe’re floatin’ along under the sky.",
+      "startTime": 60,
+      "endTime": 75
+    },
+    {
+      "id": 6,
+      "text": "On the island breeze, we float away,\nUnderneath the sun, where the palm trees sway.\nFeel the warmth, feel the ease,\nLet’s get lost in the island breeze.\nOn the island breeze, just you and me,\nWith the ocean calm, and the feelin’ free.\nLet it go, feel the peace,\nWe’re sailin’ on the island breeze.",
+      "startTime": 75,
+      "endTime": 90
+    },
+    {
+      "id": 7,
+      "text": "Let the waves take us where we belong,\nIn this moment, the world feels calm.\nWith the sand beneath and the sky so wide,\nWe’ll drift away on the ocean’s tide.",
+      "startTime": 90,
+      "endTime": 105
+    },
+    {
+      "id": 8,
+      "text": "On the island breeze, we float away,\nUnderneath the sun, where the palm trees sway.\nFeel the warmth, feel the ease,\nLet’s get lost in the island breeze.\nOn the island breeze, just you and me,\nWith the ocean calm, and the feelin’ free.\nLet it go, feel the peace,\nWe’re sailin’ on the island breeze.",
+      "startTime": 105,
+      "endTime": 120
+    },
+    {
+      "id": 9,
+      "text": "Sailin’ on the island breeze…\nJust you and me…\nLost in the peace of the island breeze.",
+      "startTime": 120,
+      "endTime": 135
+    }
+  ]
+}

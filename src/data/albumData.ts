@@ -2,7 +2,7 @@
  * Album Data
  * Auto-generated from Excel spreadsheet OR Admin Uploads
  * Source of Truth: src/data/albums.json
- * Generated: 2026-03-25T23:33:21.916Z
+ * Generated: 2026-03-27T13:38:39.637Z
  */
 
 import albumsData from './albums.json';
@@ -20,7 +20,6 @@ export interface Track {
     albumId?: string;
     sourceFolder?: string;
     isSingle?: boolean;
-    lyrics?: string; // Path to lyrics JSON or raw text
 }
 
 export interface Album {
@@ -39,7 +38,6 @@ export interface Album {
     type?: 'studio' | 'live' | 'standard';
     exclusive?: boolean;
     accessTier?: 'vip' | 'free' | string;
-    backCover?: string; // Filename like 'back.png'
 }
 
 // Cast the imported JSON to the Album[] type

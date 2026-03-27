@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingBag, BookOpen, Sparkles, X, Eye, Image as ImageIcon, FileText, ArrowLeft, Filter } from "lucide-react";
+import { Search, ShoppingBag, BookOpen, Sparkles, X, Eye, Image as ImageIcon, FileText, ArrowLeft, Filter, RotateCcw } from "lucide-react";
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -13,7 +13,7 @@ export default function DigitalBookstorePage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [loadingBook, setLoadingBook] = useState<string | null>(null);
-    const [previewAlbum, setPreviewAlbum] = useState<Album | null>(null);
+    const [previewAlbum, setPreviewAlbum] = useState<any | null>(null);
     const [previewLyrics, setPreviewLyrics] = useState<string[]>([]);
     const [isLoadingLyrics, setIsLoadingLyrics] = useState(false);
     const [showBack, setShowBack] = useState(false);
@@ -37,8 +37,14 @@ export default function DigitalBookstorePage() {
             try {
                 const response = await fetch(`/data/lyrics/${previewAlbum.tracks[0].lyrics}`);
                 if (response.ok) {
-                    const data = await response.json();
-                    setPreviewLyrics(data.lyrics || []);
+                    const text = await response.text();
+                    try {
+                        const data = JSON.parse(text);
+                        setPreviewLyrics(data.lyrics || []);
+                    } catch (e) {
+                        console.error("Failed to parse lyrics JSON:", e);
+                        setPreviewLyrics([]);
+                    }
                 } else {
                     setPreviewLyrics([]);
                 }
@@ -57,6 +63,12 @@ export default function DigitalBookstorePage() {
         fetch('/api/content/albums')
             .then(res => res.json())
             .then(data => {
+                if (!Array.isArray(data)) {
+                    console.error('API returned non-array data:', data);
+                    setAlbums([]);
+                    setFilteredAlbums([]);
+                    return;
+                }
                 const now = new Date();
                 const visibleAlbums = data.filter((album: any) => {
                     // Filter out Singles collection
@@ -158,10 +170,10 @@ export default function DigitalBookstorePage() {
                 {/* Hero / Intro */}
                 <div className="mb-16 text-center space-y-4">
                     <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-none">
-                        Own the <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400 px-1">Production</span> Notes
+                        Own the <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400 px-1">Digital</span> Artbooks
                     </h2>
                     <p className="text-zinc-500 max-w-2xl mx-auto font-bold text-lg md:text-xl">
-                        Immerse yourself in the story behind every track. High-resolution album artwork and full lyrics, straight from the studio archive.
+                        Experience high-resolution artwork and full official lyrics, straight from the studio archive.
                     </p>
                 </div>
 
@@ -294,10 +306,18 @@ export default function DigitalBookstorePage() {
                                     className="relative w-full h-full"
                                 >
                                     <Image 
-                                        src={showBack ? (previewAlbum.backCover || 'https://singitpop-music.s3.eu-north-1.amazonaws.com/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/placeholder_back_coming_soon_v1_1774518707780.png') : previewAlbum.coverArt} 
+                                        src={(() => {
+                                            const art = showBack ? (previewAlbum.backCover || 'https://singitpop-music.s3.eu-north-1.amazonaws.com/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/placeholder_back_coming_soon_v1_1774518707780.png') : (previewAlbum.coverArt || '');
+                                            if (!art) return 'https://singitpop-music.s3.eu-north-1.amazonaws.com/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/placeholder_back_coming_soon_v1_1774518707780.png';
+                                            return art.startsWith('http') || art.startsWith('/') ? art : `/${art}`;
+                                        })()} 
                                         alt={previewAlbum.title} 
                                         fill 
                                         className="object-cover"
+                                        onError={(e) => {
+                                            // @ts-ignore
+                                            e.target.src = 'https://singitpop-music.s3.eu-north-1.amazonaws.com/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/placeholder_back_coming_soon_v1_1774518707780.png';
+                                        }}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                                 </motion.div>

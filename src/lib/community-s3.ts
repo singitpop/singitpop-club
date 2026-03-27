@@ -23,6 +23,7 @@ export interface CommunityPlaylist {
     themeColor: string; // Hex
     likes: number; // Stored in JSON
     likedBy?: string[]; // Array of user IDs who liked
+    coverImage?: string; // Optional custom artwork URL
 }
 
 export async function saveCommunityPlaylist(playlist: CommunityPlaylist): Promise<boolean> {

@@ -17,10 +17,13 @@ interface PlaylistViewerProps {
     onDelete?: () => void;
     canDelete?: boolean;
     isVIP?: boolean;
+    onUpdate?: (updatedPlaylist: any) => void;
 }
 
-export default function PlaylistViewer({ playlist, onClose, onPlayTrack, currentTrackId, isPlaying, onLike, hasLiked, onDelete, canDelete, isVIP = false }: PlaylistViewerProps) {
+export default function PlaylistViewer({ playlist, onClose, onPlayTrack, currentTrackId, isPlaying, onLike, hasLiked, onDelete, canDelete, isVIP = false, onUpdate }: PlaylistViewerProps) {
     const [resolvedTracks, setResolvedTracks] = useState<any[]>([]);
+    const [isEditingCover, setIsEditingCover] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     // Resolve tracks on mount or playlist change
     useEffect(() => {
@@ -65,6 +68,38 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
         setResolvedTracks(tracks);
     }, [playlist]);
 
+    // Unique artworks from tracks
+    const availableArtworks = useMemo(() => {
+        const set = new Set<string>();
+        resolvedTracks.forEach(t => {
+            if (t.coverArt) set.add(t.coverArt);
+        });
+        return Array.from(set);
+    }, [resolvedTracks]);
+
+    const handleUpdateCover = async (artworkUrl: string) => {
+        setIsSaving(true);
+        try {
+            const res = await fetch('/api/community/playlist', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: playlist.id,
+                    coverImage: artworkUrl
+                })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                onUpdate?.(data.playlist);
+                setIsEditingCover(false);
+            }
+        } catch (err) {
+            console.error("Failed to update cover:", err);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     // Calculate total duration
     const totalDuration = useMemo(() => {
         if (!resolvedTracks.length) return "0 min";
@@ -97,6 +132,8 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
 
     if (!playlist) return null;
 
+    const displayCover = playlist.coverImage || (resolvedTracks.length > 0 ? (resolvedTracks[0].artwork || resolvedTracks[0].coverArt) : null);
+
     return (
         <div className={styles.overlay} onClick={onClose}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
@@ -110,10 +147,18 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
                             className={styles.artwork}
                             style={{
                                 background: playlist.color || '#333',
-                                backgroundImage: resolvedTracks.length > 0 ? `url(${resolvedTracks[0].artwork || resolvedTracks[0].coverArt})` : undefined,
+                                backgroundImage: displayCover ? `url(${displayCover})` : undefined,
                                 backgroundSize: 'cover'
                             }}
                         />
+                        {canDelete && (
+                            <button 
+                                className={styles.changeCoverBtn}
+                                onClick={() => setIsEditingCover(!isEditingCover)}
+                            >
+                                <Share2 size={14} /> Change Cover
+                            </button>
+                        )}
                     </div>
 
                     <div className={styles.info}>
@@ -134,6 +179,29 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
                                 <Clock size={14} /> {totalDuration}
                             </span>
                         </div>
+
+                        {/* Cover Selector Drawer */}
+                        {isEditingCover && (
+                            <div className={styles.coverSelector}>
+                                <h4>Select Artwork</h4>
+                                <div className={styles.artworkGrid}>
+                                    {availableArtworks.map((art, idx) => (
+                                        <button 
+                                            key={idx} 
+                                            disabled={isSaving}
+                                            onClick={() => handleUpdateCover(art)}
+                                            className={playlist.coverImage === art ? styles.selectedArt : ''}
+                                        >
+                                            <img src={art} alt="" />
+                                        </button>
+                                    ))}
+                                    {/* Option to clear to default? */}
+                                    <button onClick={() => handleUpdateCover('')} disabled={isSaving}>
+                                        Default
+                                    </button>
+                                </div>
+                            </div>
+                        )}
 
                         <div className={styles.actions}>
                             <button

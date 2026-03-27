@@ -5,12 +5,13 @@ import styles from './PlaylistCard.module.css';
 
 interface PlaylistCardProps {
     playlist: {
-        id: number;
+        id: number | string;
         title: string;
         creator: string;
         likes: number;
         color: string; // Fallback
         themeColor?: string;
+        coverImage?: string; // New: Custom cover
     };
     coverImages?: string[]; // Array of up to 4 artwork URLs
     isPlaying: boolean;
@@ -24,8 +25,9 @@ import RadialVisualizer from '../ui/RadialVisualizer';
 
 export default function PlaylistCard({ playlist, coverImages = [], isPlaying, onPlay, onClick, onLike, hasLiked }: PlaylistCardProps) {
     const glowColor = playlist.themeColor || '#8b5cf6';
-    // Use first image for vinyl label if available
-    const vinylImage = coverImages.length > 0 ? coverImages[0] : null;
+    
+    // Priority: Custom coverImage -> First track artwork -> default color
+    const mainImage = playlist.coverImage || (coverImages.length > 0 ? coverImages[0] : null);
 
     return (
         <div
@@ -38,7 +40,7 @@ export default function PlaylistCard({ playlist, coverImages = [], isPlaying, on
                 <div
                     className={styles.vinylLabel}
                     style={{
-                        background: vinylImage ? `url(${vinylImage}) center/cover no-repeat` : playlist.color,
+                        background: mainImage ? `url(${mainImage}) center/cover no-repeat` : playlist.color,
                         boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.2)'
                     }}
                 />
@@ -49,8 +51,23 @@ export default function PlaylistCard({ playlist, coverImages = [], isPlaying, on
                 className={styles.sleeve}
                 style={{ background: '#111', overflow: 'hidden', position: 'relative' }}
             >
-                {/* 2x2 Grid or Single Image */}
-                {coverImages.length > 0 ? (
+                {/* Custom Cover or 2x2 Grid or Fallback */}
+                {playlist.coverImage ? (
+                    <img
+                        src={playlist.coverImage}
+                        alt=""
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            opacity: isPlaying ? 0.4 : 1,
+                            transition: 'opacity 0.3s ease'
+                        }}
+                    />
+                ) : coverImages.length > 0 ? (
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: coverImages.length >= 4 ? '1fr 1fr' : '1fr',
@@ -60,7 +77,7 @@ export default function PlaylistCard({ playlist, coverImages = [], isPlaying, on
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        opacity: isPlaying ? 0.4 : 1, // Dim slightly when playing to show viz better?
+                        opacity: isPlaying ? 0.4 : 1,
                         transition: 'opacity 0.3s ease'
                     }}>
                         {coverImages.slice(0, 4).map((img, i) => (

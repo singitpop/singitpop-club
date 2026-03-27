@@ -1,0 +1,92 @@
+{
+  "title": "Calm Of The Tide",
+  "artist": "SingIt Pop",
+  "album": "Waves of Tranquility Deep House Reflections",
+  "id": 9,
+  "lyrics": [
+    {
+      "id": 1,
+      "text": "Feel the calm, let it flow…",
+      "startTime": 0,
+      "endTime": 15
+    },
+    {
+      "id": 2,
+      "text": "Soft waves roll, as the day unwinds,\nGolden hues paint the ocean line.\nBarefoot on the shore, I let go of the fight,\nWith the tide by my side, everything feels right.",
+      "startTime": 15,
+      "endTime": 30
+    },
+    {
+      "id": 3,
+      "text": "Bearing, in the breeze, the salty sea air,\nIn the pull of the tide, I lose every care.",
+      "startTime": 30,
+      "endTime": 45
+    },
+    {
+      "id": 4,
+      "text": "So I let it all fade, like sand in the sea,\nWith the calm of the tide, I feel finally free.\nThe rhythm of the waves, a lullaby so true,\nIn this endless peace, I find something new.",
+      "startTime": 45,
+      "endTime": 60
+    },
+    {
+      "id": 5,
+      "text": "Feel the calm, let it flow, let it flow…",
+      "startTime": 60,
+      "endTime": 75
+    },
+    {
+      "id": 6,
+      "text": "Stars appear above, as the light drifts away,\nIn the arms of the night, I’m content to stay.\nEvery sound is soft, every thought is clear,\nIn the stillness of the sea, I feel whole right here.",
+      "startTime": 75,
+      "endTime": 90
+    },
+    {
+      "id": 7,
+      "text": "Gone are the worries, washed out to sea,\nIn the calm of the waves, I let myself be.",
+      "startTime": 90,
+      "endTime": 105
+    },
+    {
+      "id": 8,
+      "text": "So I let it all fade, like sand in the sea,\nWith the calm of the tide, I feel finally free.\nThe rhythm of the waves, a lullaby so true,\nIn this endless peace, I find something new.",
+      "startTime": 105,
+      "endTime": 120
+    },
+    {
+      "id": 9,
+      "text": "In the hush of the night, I drift and I sway,\nHeld by the tide, I’m miles away.\nNo rush, no race, just the ocean’s embrace,\nIn this simple peace, I find my place.",
+      "startTime": 120,
+      "endTime": 135
+    },
+    {
+      "id": 10,
+      "text": "So.. I let it all fade, like sand in the sea,\nWith the calm of the tide, I feel finally free.\nThe rhythm of the waves, a lullaby so true,\nIn this endless peace, I find something new.",
+      "startTime": 135,
+      "endTime": 150
+    },
+    {
+      "id": 11,
+      "text": "In the calm of the tide, I let my heart go,\nFloating free with the waves, in the ocean’s flow.",
+      "startTime": 150,
+      "endTime": 165
+    },
+    {
+      "id": 12,
+      "text": "Feel the calm, let it flow, let it flow…",
+      "startTime": 165,
+      "endTime": 180
+    },
+    {
+      "id": 13,
+      "text": "Feel the calm, let it flow, let it flow…",
+      "startTime": 180,
+      "endTime": 195
+    },
+    {
+      "id": 14,
+      "text": "Feel the calm, let it flow…",
+      "startTime": 195,
+      "endTime": 210
+    }
+  ]
+}

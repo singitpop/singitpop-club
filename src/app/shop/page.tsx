@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Lock, ExternalLink, Music, Heart, Sparkles, Smartphone, ArrowRight, Play, Pause, Volume2, Gift, CheckCircle, BookOpen } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import VinylCard from '@/components/shop/VinylCard';
-import ProductCard from '@/components/shop/ProductCard';
 import { MERCH_PRODUCTS } from "@/data/shopProducts";
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -323,7 +322,7 @@ function ShopContent() {
                             The Digital <span className="text-pink-500">Bookstore</span>
                         </h2>
                         <p className="text-white/60 max-w-xl mx-auto font-bold text-lg">
-                            Access the complete SingIt Pop discography. Get high-resolution Digital Artbooks for every album, with full lyrics and production notes.
+                            Access the complete SingIt Pop discography. Get high-resolution Digital Artbooks for every album, with full lyrics.
                         </p>
                         <Link 
                             href="/shop/artbooks"

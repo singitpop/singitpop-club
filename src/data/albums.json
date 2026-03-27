@@ -219,8 +219,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Solstice.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": true,
-        "lyrics": "solstice-2026/1.json"
+        "isSingle": true
       },
       {
         "id": 2,
@@ -235,8 +234,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Afterglow%20Pulse.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": true,
-        "lyrics": "solstice-2026/2.json"
+        "isSingle": true
       },
       {
         "id": 3,
@@ -251,8 +249,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Ignite%20the%20Night.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/3.json"
+        "isSingle": false
       },
       {
         "id": 4,
@@ -267,8 +264,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Higher%20Than%20the%20Sun.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": true,
-        "lyrics": "solstice-2026/4.json"
+        "isSingle": true
       },
       {
         "id": 5,
@@ -283,8 +279,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Gravity%20of%20Us.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/5.json"
+        "isSingle": false
       },
       {
         "id": 6,
@@ -299,8 +294,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Unbreakable%20Light.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/6.json"
+        "isSingle": false
       },
       {
         "id": 7,
@@ -315,8 +309,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Midnight%20Frequency.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/7.json"
+        "isSingle": false
       },
       {
         "id": 8,
@@ -331,8 +324,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Radiant%20Horizon.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/8.json"
+        "isSingle": false
       },
       {
         "id": 9,
@@ -347,8 +339,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Infinite%20Rise.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/9.json"
+        "isSingle": false
       },
       {
         "id": 10,
@@ -363,8 +354,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Edge%20of%20Forever.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/10.json"
+        "isSingle": false
       },
       {
         "id": 11,
@@ -379,8 +369,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Before%20the%20Dawn.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/11.json"
+        "isSingle": false
       },
       {
         "id": 12,
@@ -395,8 +384,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/Solstice.mp3",
         "sourceFolder": "Solstice",
         "albumId": "solstice-2026",
-        "isSingle": false,
-        "lyrics": "solstice-2026/12.json"
+        "isSingle": false
       }
     ],
     "releaseDate": "2026-06-19",
@@ -405,12 +393,11 @@
     "type": "standard",
     "trending": false,
     "exclusive": true,
-    "accessTier": "vip",
-    "backCover": "https://singitpop-music.s3.eu-north-1.amazonaws.com/brain/75fc6105-7ac9-476c-a08c-0bd8917fa7c0/solstice_back_cover_official_v1_1774487043782.png"
+    "accessTier": "vip"
   },
   {
-    "id": "nashville-in-june-2026",
-    "title": "Nashville in June",
+    "id": "live-nashville-in-june-2026",
+    "title": "Live Nashville in June",
     "year": 2026,
     "genre": [
       "Country"
@@ -426,10 +413,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Broadway%20Boots.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Broadway%20Boots.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Broadway%20Boots.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Broadway%20Boots.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": true
       },
       {
@@ -441,10 +428,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Nashville%20in%20June.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Nashville%20in%20June.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Nashville%20in%20June.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Nashville%20in%20June.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": true
       },
       {
@@ -456,10 +443,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Barstool%20Halo.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Barstool%20Halo.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Barstool%20Halo.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Barstool%20Halo.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": true
       },
       {
@@ -471,10 +458,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Honky%20Tonk%20Heartbeat.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Honky%20Tonk%20Heartbeat.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Honky%20Tonk%20Heartbeat.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Honky%20Tonk%20Heartbeat.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": false
       },
       {
@@ -486,10 +473,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Neon%20Don't%20Sleep.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Neon%20Don't%20Sleep.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Neon%20Don't%20Sleep.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Neon%20Don't%20Sleep.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": false
       },
       {
@@ -501,10 +488,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Whiskey%20on%20Repeat.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Whiskey%20on%20Repeat.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Whiskey%20on%20Repeat.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Whiskey%20on%20Repeat.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": false
       },
       {
@@ -516,10 +503,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Corner%20of%20the%20Dance%20Floor.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Corner%20of%20the%20Dance%20Floor.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Corner%20of%20the%20Dance%20Floor.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Corner%20of%20the%20Dance%20Floor.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": false
       },
       {
@@ -531,10 +518,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Stages%20After%20Midnight.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Stages%20After%20Midnight.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Stages%20After%20Midnight.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Stages%20After%20Midnight.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": false
       },
       {
@@ -546,10 +533,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Two%20Step%20Summer.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Two%20Step%20Summer.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Two%20Step%20Summer.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Two%20Step%20Summer.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": false
       },
       {
@@ -561,10 +548,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Backroom%20Bandits.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Backroom%20Bandits.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Backroom%20Bandits.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Backroom%20Bandits.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": false
       },
       {
@@ -576,10 +563,10 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/June%20Didn%E2%80%99t%20End.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/June%20Didn%E2%80%99t%20End.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/June%20Didn%E2%80%99t%20End.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/June%20Didn%E2%80%99t%20End.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": true
       },
       {
@@ -591,15 +578,15 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Broadway%20Don%E2%80%99t%20Shut%20Down.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/nashville-in-june/Broadway%20Don%E2%80%99t%20Shut%20Down.mp3",
-        "sourceFolder": "Nashville in June",
-        "albumId": "nashville-in-june-2026",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Broadway%20Don%E2%80%99t%20Shut%20Down.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/Broadway%20Don%E2%80%99t%20Shut%20Down.mp3",
+        "sourceFolder": "Live Nashville in June",
+        "albumId": "live-nashville-in-june-2026",
         "isSingle": false
       }
     ],
     "releaseDate": "2026-06-05",
-    "folderPath": "Nashville in June",
+    "folderPath": "Live Nashville in June",
     "mp3Count": 36,
     "type": "standard",
     "trending": false,
@@ -662,13 +649,15 @@
       },
       {
         "id": 4,
-        "title": "Velvet Minarets",
-        "duration": "3:30",
+        "title": "Velvet Sky",
+        "duration": "4:37",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Dance Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/before-the-light/Velvet%20Sky.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/before-the-light/Velvet%20Sky.mp3",
         "sourceFolder": "Before the Light",
         "albumId": "before-the-light-2026",
         "isSingle": false
@@ -903,13 +892,15 @@
       },
       {
         "id": 7,
-        "title": "Green Lights Only ",
-        "duration": "3:30",
+        "title": "Only Green Lights",
+        "duration": "3:01",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "R&B",
         "mood": "Smooth",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Only%20Green%20Lights.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/may-in-motion/Only%20Green%20Lights.mp3",
         "sourceFolder": "May In Motion",
         "albumId": "may-in-motion-2026",
         "isSingle": false
@@ -1618,7 +1609,7 @@
       },
       {
         "id": 2,
-        "title": "Slowly Down the Line",
+        "title": "Falling Slowly Down the Line",
         "duration": "2:51",
         "plays": "0",
         "locked": false,
@@ -1664,12 +1655,14 @@
       {
         "id": 5,
         "title": "where the colours come from",
-        "duration": "3:30",
+        "duration": "3:50",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/Where%20the%20Colours%20Come%20From.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/Where%20the%20Colours%20Come%20From.mp3",
         "sourceFolder": "Spring Begins Inside You",
         "albumId": "spring-begins-inside-you-2026",
         "isSingle": true
@@ -1706,45 +1699,36 @@
       },
       {
         "id": 8,
-        "title": "march comes carrying light",
-        "duration": "3:30",
+        "title": "When the Light Turns Amber",
+        "duration": "3:38",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/When%20the%20Light%20Turns%20Amber.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/When%20the%20Light%20Turns%20Amber.mp3",
         "sourceFolder": "Spring Begins Inside You",
         "albumId": "spring-begins-inside-you-2026",
         "isSingle": false
       },
       {
         "id": 9,
-        "title": "what we plant in ourselves",
-        "duration": "3:30",
+        "title": "Morning After The Rain",
+        "duration": "4:46",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/Morning%20After%20the%20Rain.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/Morning%20After%20the%20Rain.mp3",
         "sourceFolder": "Spring Begins Inside You",
         "albumId": "spring-begins-inside-you-2026",
         "isSingle": false
       },
       {
         "id": 10,
-        "title": "bloom my heart again",
-        "duration": "3:30",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Pop",
-        "mood": "Upbeat",
-        "sourceFolder": "Spring Begins Inside You",
-        "albumId": "spring-begins-inside-you-2026",
-        "isSingle": false
-      },
-      {
-        "id": 11,
         "title": "the shape of joy returning",
         "duration": "3:46",
         "plays": "0",
@@ -1754,6 +1738,21 @@
         "mood": "Upbeat",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/The%20Shape%20of%20Joy%20Returning.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/The%20Shape%20of%20Joy%20Returning.mp3",
+        "sourceFolder": "Spring Begins Inside You",
+        "albumId": "spring-begins-inside-you-2026",
+        "isSingle": false
+      },
+      {
+        "id": 11,
+        "title": "The World Feels Wide Again",
+        "duration": "3:14",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Pop",
+        "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/The%20World%20Feels%20Wide%20Again.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/spring-begins-inside-you/The%20World%20Feels%20Wide%20Again.mp3",
         "sourceFolder": "Spring Begins Inside You",
         "albumId": "spring-begins-inside-you-2026",
         "isSingle": false
@@ -1868,13 +1867,15 @@
       },
       {
         "id": 6,
-        "title": "stay in your arms",
-        "duration": "3:30",
+        "title": "stay in my arms",
+        "duration": "4:28",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Stay%20in%20My%20Arms.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/Stay%20in%20My%20Arms.mp3",
         "sourceFolder": "A Love That Never Ends",
         "albumId": "a-love-that-never-ends-2026",
         "isSingle": false
@@ -2048,13 +2049,15 @@
       },
       {
         "id": 5,
-        "title": "red roses and them old boots",
-        "duration": "3:30",
+        "title": "red roses and old boots",
+        "duration": "3:02",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Red%20Roses%20and%20Old%20Boots.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/valentine-country/Red%20Roses%20And%20Old%20Boots.mp3",
         "sourceFolder": "Valentine Country",
         "albumId": "valentine-country-2026",
         "isSingle": true
@@ -2333,13 +2336,15 @@
       },
       {
         "id": 11,
-        "title": "the light we leve behind",
-        "duration": "3:30",
+        "title": "the light we leave behind",
+        "duration": "4:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Rock",
         "mood": "Powerful",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/The%20Light%20We%20Leave%20Behind.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-light/The%20Light%20We%20Leave%20Behind.mp3",
         "sourceFolder": "Echoes Of Light",
         "albumId": "echoes-of-light-2026",
         "isSingle": false
@@ -2597,8 +2602,8 @@
     "accessTier": "free"
   },
   {
-    "id": "step-into-the-light-2025",
-    "title": "Step Into the Light",
+    "id": "live-step-into-the-light-2025",
+    "title": "Live Step Into the Light",
     "year": 2025,
     "genre": [
       "Country"
@@ -2617,7 +2622,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Golden%20Hour%20in%20the%20Valley-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Golden%20Hour%20in%20the%20Valley.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": false
       },
       {
@@ -2632,7 +2637,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Whisper%20of%20the%20Pines-2-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Whisper%20of%20the%20Pines.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": false
       },
       {
@@ -2647,7 +2652,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Starlight%20Serenade%20old.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Starlight%20Serenade%20old.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": true
       },
       {
@@ -2662,7 +2667,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Painted%20Skies-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Painted%20Skies.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": false
       },
       {
@@ -2677,7 +2682,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Shine%20All%20Night-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Shine%20All%20Night.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": true
       },
       {
@@ -2692,7 +2697,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Fields%20of%20Forever-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Fields%20of%20Forever.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": true
       },
       {
@@ -2707,7 +2712,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/The%20Valley%20Sings-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/The%20Valley%20Sings.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": false
       },
       {
@@ -2722,12 +2727,12 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Valley%20of%20Dreams-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Valley%20of%20Dreams.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": false
       },
       {
         "id": 9,
-        "title": "heaven in the hills",
+        "title": "haven in the hills",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -2735,7 +2740,7 @@
         "genre": "Country",
         "mood": "Acoustic",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": true
       },
       {
@@ -2750,7 +2755,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Harvest%20Moon%20Glow-2-acappella.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Harvest%20Moon%20Glow.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": false
       },
       {
@@ -2765,7 +2770,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Horizon%E2%80%99s%20Embrace-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Horizons%20Embrace.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": false
       },
       {
@@ -2780,7 +2785,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Golden%20Hour%20Finale-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Golden%20Hour%20Finale.mp3",
         "sourceFolder": "Live Step Into the Light",
-        "albumId": "step-into-the-light-2025",
+        "albumId": "live-step-into-the-light-2025",
         "isSingle": false
       }
     ],
@@ -3199,13 +3204,15 @@
     "tracks": [
       {
         "id": 1,
-        "title": "neon slowfall",
-        "duration": "3:30",
+        "title": "neon snowfall",
+        "duration": "2:45",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Christmas",
         "mood": "Festive",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Neon%20Snowfall-clarify.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Neon%20Snowfall.mp3",
         "sourceFolder": "Electric Sleigh",
         "albumId": "electric-sleigh-2025",
         "isSingle": false
@@ -3332,13 +3339,15 @@
       },
       {
         "id": 10,
-        "title": "sleighbells and synths",
-        "duration": "3:30",
+        "title": "Midnight Electric",
+        "duration": "3:14",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Christmas",
         "mood": "Festive",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Midnight%20Electric-clarify.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/electric-sleigh/Midnight%20Electric.mp3",
         "sourceFolder": "Electric Sleigh",
         "albumId": "electric-sleigh-2025",
         "isSingle": false
@@ -3597,19 +3606,6 @@
         "mood": "Rootsy",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Dawn%20of%20Reverie-2%20clarity.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/shadows-and-fires/Dawn%20of%20Reverie.mp3",
-        "sourceFolder": "Shadows and Fires",
-        "albumId": "shadows-and-fires-2025",
-        "isSingle": false
-      },
-      {
-        "id": 15,
-        "title": "Hollow Lights",
-        "duration": "3:30",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Folk",
-        "mood": "Rootsy",
         "sourceFolder": "Shadows and Fires",
         "albumId": "shadows-and-fires-2025",
         "isSingle": false
@@ -5201,13 +5197,15 @@
       },
       {
         "id": 10,
-        "title": "the compass in my soal",
-        "duration": "3:30",
+        "title": "the compass in my soul",
+        "duration": "3:18",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/The%20Compass%20in%20My%20Soul%20(Remastered).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/The%20Compass%20in%20My%20Soul.mp3",
         "sourceFolder": "Winding Roads",
         "albumId": "winding-roads-2025",
         "isSingle": true
@@ -5229,13 +5227,15 @@
       },
       {
         "id": 12,
-        "title": "winding road finale",
-        "duration": "3:30",
+        "title": "winding roads finale",
+        "duration": "4:48",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Winding%20Roads%20Finale.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/winding-roads/Winding%20Roads%20Finale.mp3",
         "sourceFolder": "Winding Roads",
         "albumId": "winding-roads-2025",
         "isSingle": true
@@ -5732,15 +5732,13 @@
       },
       {
         "id": 6,
-        "title": "Heatwave Lover",
-        "duration": "3:05",
+        "title": "Heatwave High",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Disco",
         "mood": "Energetic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/Heatwave%20Lover.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/Heatwave%20Lover.mp3",
         "sourceFolder": "Midnight Motion",
         "albumId": "midnight-motion-2025",
         "isSingle": false
@@ -5855,13 +5853,15 @@
     "tracks": [
       {
         "id": 1,
-        "title": "rough hands bright dreeams",
-        "duration": "3:30",
+        "title": "rough hands bright dreams",
+        "duration": "3:58",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/Rough%20Hands%20Bright%20Dreams.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/dust-and-diamonds-/Rough%20Hands%20Bright%20Dreams.mp3",
         "sourceFolder": "Dust and Diamonds ",
         "albumId": "dust-and-diamonds-2025",
         "isSingle": true
@@ -6171,13 +6171,15 @@
       },
       {
         "id": 9,
-        "title": "evening serernade",
-        "duration": "3:30",
+        "title": "evening serenade",
+        "duration": "2:56",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/Evening%20Serenade%20(Remastered).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/Evening%20Serenade%20(Remastered)2.mp3",
         "sourceFolder": "Endless Glow",
         "albumId": "endless-glow-2025",
         "isSingle": false
@@ -6199,13 +6201,15 @@
       },
       {
         "id": 11,
-        "title": "echos of the night",
-        "duration": "3:30",
+        "title": "echoes of the night",
+        "duration": "3:15",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/Echoes%20of%20the%20Night%20(Remastered).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/endless-glow/Echoes%20of%20the%20Night%20(Remastered)2.mp3",
         "sourceFolder": "Endless Glow",
         "albumId": "endless-glow-2025",
         "isSingle": false
@@ -6320,20 +6324,22 @@
       },
       {
         "id": 6,
-        "title": "Burnt Toast & Goodbye Notes",
-        "duration": "3:30",
+        "title": "Burnt Toast and Goodbye Notes",
+        "duration": "2:59",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/Burnt%20Toast%20and%20Goodbye%20Notes.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/Burnt%20Toast%20and%20Goodbye%20Notes.mp3",
         "sourceFolder": "Wildcards and Whiskey",
         "albumId": "wildcards-and-whiskey-2025",
         "isSingle": true
       },
       {
         "id": 7,
-        "title": "Two-Step Devil",
+        "title": "Two Step Devil",
         "duration": "2:41",
         "plays": "0",
         "locked": false,
@@ -6378,20 +6384,22 @@
       },
       {
         "id": 10,
-        "title": "Jokers & Lovers",
-        "duration": "3:30",
+        "title": "Jokers and Lovers",
+        "duration": "3:12",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/Jokers%20and%20Lovers.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/Jokers%20and%20Lovers.mp3",
         "sourceFolder": "Wildcards and Whiskey",
         "albumId": "wildcards-and-whiskey-2025",
         "isSingle": false
       },
       {
         "id": 11,
-        "title": "Last Call, First Love",
+        "title": "Last Call First Love",
         "duration": "2:53",
         "plays": "0",
         "locked": false,
@@ -6406,13 +6414,15 @@
       },
       {
         "id": 12,
-        "title": "Wildcards & Whiskey",
-        "duration": "3:30",
+        "title": "Wildcards and Whiskey",
+        "duration": "2:54",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/Wildcards%20and%20Whiskey%20(Remastered).wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wildcards-and-whiskey/Wildcards%20and%20Whiskey.mp3",
         "sourceFolder": "Wildcards and Whiskey",
         "albumId": "wildcards-and-whiskey-2025",
         "isSingle": true
@@ -6968,13 +6978,15 @@
       },
       {
         "id": 10,
-        "title": "tides and tramlines",
-        "duration": "3:30",
+        "title": "tides and tanlines",
+        "duration": "2:47",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Dance Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/Tides%20and%20Tanlines.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/summer-fever/Tides%20and%20Tanlines.mp3",
         "sourceFolder": "Summer fever",
         "albumId": "summer-fever-2025",
         "isSingle": false
@@ -7044,13 +7056,15 @@
       },
       {
         "id": 2,
-        "title": "Pulse Armor",
-        "duration": "3:30",
+        "title": "Pulse Armour",
+        "duration": "2:40",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Dance Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/Pulse%20Armour.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/glass-bloom/Pulse%20Armour.mp3",
         "sourceFolder": "Glass Bloom",
         "albumId": "glass-bloom-2025",
         "isSingle": true
@@ -7621,14 +7635,16 @@
     "tracks": [
       {
         "id": 1,
-        "title": "Throught the mirror",
-        "duration": "3:30",
+        "title": "Through the mirror",
+        "duration": "3:55",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Through%20the%20Mirror.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Through%20the%20Mirror.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": true
       },
@@ -7641,9 +7657,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Together%20Alone.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Together%20Alone.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Together%20Alone.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Together%20Alone.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": false
       },
@@ -7656,9 +7672,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Where%20We%20Begin.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Where%20We%20Begin.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Where%20We%20Begin.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Where%20We%20Begin.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": true
       },
@@ -7671,9 +7687,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Lost%20and%20Found.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Lost%20and%20Found.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Lost%20and%20Found.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Lost%20and%20Found.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": false
       },
@@ -7686,9 +7702,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Unspoken%20Words.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Unspoken%20Words.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Unspoken%20Words.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Unspoken%20Words.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": true
       },
@@ -7701,9 +7717,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Heartbeat%20in%20Time.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Heartbeat%20in%20Time.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Heartbeat%20in%20Time.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Heartbeat%20in%20Time.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": false
       },
@@ -7716,9 +7732,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Silent%20Stars.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Silent%20Stars.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Silent%20Stars.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Silent%20Stars.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": true
       },
@@ -7731,9 +7747,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Bridge%20to%20you.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Bridge%20to%20you.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Bridge%20to%20you.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Bridge%20to%20you.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": false
       },
@@ -7746,9 +7762,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Fading%20Echoes.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Fading%20Echoes.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Fading%20Echoes.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Fading%20Echoes.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": false
       },
@@ -7761,7 +7777,7 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "sourceFolder": "Echos Of Us",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": false
       },
@@ -7774,9 +7790,9 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Eternal%20Echo.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/Eternal%20Echo.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Eternal%20Echo.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/Eternal%20Echo.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": true
       },
@@ -7789,15 +7805,15 @@
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/One%20Voice.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echos-of-us/One%20Voice.mp3",
-        "sourceFolder": "Echos Of Us",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/One%20Voice.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-of-us/One%20Voice.mp3",
+        "sourceFolder": "Echoes Of Us",
         "albumId": "echoes-of-us-2025",
         "isSingle": true
       }
     ],
     "releaseDate": "2025-05-12",
-    "folderPath": "Echos Of Us",
+    "folderPath": "Echoes Of Us",
     "mp3Count": 24,
     "type": "standard",
     "trending": false,
@@ -7816,14 +7832,12 @@
       {
         "id": 1,
         "title": "Sweet tea and summer nights",
-        "duration": "3:28",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Sweet%20Tea%20and%20Summer%20Nights.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Sweet%20Tea%20and%20Summer%20Nights.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7831,14 +7845,12 @@
       {
         "id": 2,
         "title": "Heartstrings",
-        "duration": "3:38",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Heartstrings.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Heartstrings.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7846,14 +7858,12 @@
       {
         "id": 3,
         "title": "Porch swing love",
-        "duration": "3:58",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Porch%20Swing%20Love.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Porch%20Swing%20Love.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7861,14 +7871,12 @@
       {
         "id": 4,
         "title": "Home fires burning",
-        "duration": "3:38",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Home%20Fires%20Burning.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Home%20Fires%20Burning.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7876,14 +7884,12 @@
       {
         "id": 5,
         "title": "County Fair Kisses",
-        "duration": "3:58",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/County%20Fair%20Kisses%20-%20Instrumental.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/County%20Fair%20Kisses.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7891,21 +7897,19 @@
       {
         "id": 6,
         "title": "Roots run deep",
-        "duration": "3:25",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Roots%20Run%20Deep.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Roots%20Run%20Deep.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
       },
       {
         "id": 7,
-        "title": "Small town Saturday nights",
+        "title": "Small town Friday nights",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -7932,14 +7936,12 @@
       {
         "id": 9,
         "title": "This Town Knows Me",
-        "duration": "3:55",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/This%20Town%20Knows%20Me.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/This%20Town%20Knows%20Me.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7947,14 +7949,12 @@
       {
         "id": 10,
         "title": "dirtroads and day dreams",
-        "duration": "3:41",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Dirt%20Roads%20and%20Daydreams.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Dirt%20Roads%20and%20Daydreams.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7962,14 +7962,12 @@
       {
         "id": 11,
         "title": "backyard barbecue",
-        "duration": "3:40",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Backyard%20Barbecue.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Backyard%20Barbecue.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7977,14 +7975,12 @@
       {
         "id": 12,
         "title": "Where I belong",
-        "duration": "3:05",
+        "duration": "3:30",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Where%20I%20Belong.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Where%20I%20Belong.mp3",
         "sourceFolder": "Heartland Rythms",
         "albumId": "heartland-rhythms-2025",
         "isSingle": true
@@ -7992,7 +7988,7 @@
     ],
     "releaseDate": "2025-05-12",
     "folderPath": "Heartland Rythms",
-    "mp3Count": 28,
+    "mp3Count": 0,
     "type": "standard",
     "trending": false,
     "exclusive": false,
@@ -8312,13 +8308,15 @@
       },
       {
         "id": 6,
-        "title": "Locked & Loaded",
-        "duration": "3:30",
+        "title": "Locked and Loaded",
+        "duration": "3:38",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "EDM",
         "mood": "High-Energy",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/Locked%20and%20Loaded.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/empire-under-lights/Locked%20and%20Loaded.mp3",
         "sourceFolder": "Empire Under Lights",
         "albumId": "empire-under-lights-2025",
         "isSingle": false
@@ -8844,13 +8842,15 @@
       },
       {
         "id": 2,
-        "title": "May The Fourth Remind Us",
-        "duration": "3:30",
+        "title": "May The Fourth Remind You",
+        "duration": "3:14",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/May%20the%20fourth%20remind%20you%20.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/May%20the%20fourth%20remind%20you%20.mp3",
         "sourceFolder": "Starlight Frequencies",
         "albumId": "starlight-frequencies-2025",
         "isSingle": true
@@ -8887,13 +8887,15 @@
       },
       {
         "id": 5,
-        "title": "glactic dreams",
-        "duration": "3:30",
+        "title": "galactic dreams",
+        "duration": "3:24",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Galactic%20Dreams.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Galactic%20Dreams.mp3",
         "sourceFolder": "Starlight Frequencies",
         "albumId": "starlight-frequencies-2025",
         "isSingle": false
@@ -9083,13 +9085,15 @@
       },
       {
         "id": 5,
-        "title": "Hearstrings",
-        "duration": "3:30",
+        "title": "Heartstrings",
+        "duration": "3:07",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Romantic",
         "mood": "Gentle",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/Heartstrings.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/love-in-bloom/Heartstrings.mp3",
         "sourceFolder": "Love in Bloom",
         "albumId": "love-in-bloom-2025",
         "isSingle": false
@@ -9663,13 +9667,15 @@
       },
       {
         "id": 6,
-        "title": "wild open road",
-        "duration": "3:30",
+        "title": "wide open road",
+        "duration": "2:59",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/Wide%20Open%20Road.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/highways-of-the-heart/Wide%20Open%20Road.mp3",
         "sourceFolder": "Highways of the Heart",
         "albumId": "highways-of-the-heart-2024",
         "isSingle": false
@@ -9966,13 +9972,15 @@
       },
       {
         "id": 4,
-        "title": "kickin' Up some fun",
-        "duration": "3:30",
+        "title": "kicking Up some fun",
+        "duration": "3:26",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems/kicking%20up%20some%20fun.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems/kicking%20up%20some%20fun.mp3",
         "sourceFolder": "Boots and Beats Country Line Dance Anthems",
         "albumId": "boots-and-beats-country-line-dance-anthems-2024",
         "isSingle": true
@@ -9994,13 +10002,15 @@
       },
       {
         "id": 6,
-        "title": "dancin' in the moonlight",
-        "duration": "3:30",
+        "title": "dancing in the moonlight",
+        "duration": "2:31",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems/dancing%20in%20the%20moonlight.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems/dancing%20in%20the%20moonlight.mp3",
         "sourceFolder": "Boots and Beats Country Line Dance Anthems",
         "albumId": "boots-and-beats-country-line-dance-anthems-2024",
         "isSingle": true
@@ -10022,13 +10032,15 @@
       },
       {
         "id": 8,
-        "title": "Kickin' Up Dust",
-        "duration": "3:30",
+        "title": "Kicking Up Dust",
+        "duration": "2:33",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems/kicking%20up%20dust.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-and-beats-country-line-dance-anthems/kicking%20up%20dust.mp3",
         "sourceFolder": "Boots and Beats Country Line Dance Anthems",
         "albumId": "boots-and-beats-country-line-dance-anthems-2024",
         "isSingle": false
@@ -10156,13 +10168,14 @@
       },
       {
         "id": 4,
-        "title": "Lost in the grove",
-        "duration": "3:30",
+        "title": "Lost in the groove",
+        "duration": "3:58",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Dance Pop",
         "mood": "Upbeat",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/lost%20in%20the%20groove.wav",
         "sourceFolder": "Waves of Tranquility Deep House Reflections",
         "albumId": "waves-of-tranquility-deep-house-reflections-2024",
         "isSingle": false
@@ -10310,7 +10323,7 @@
     ],
     "releaseDate": "2024-11-29",
     "folderPath": "Waves of Tranquility Deep House Reflections",
-    "mp3Count": 16,
+    "mp3Count": 15,
     "type": "standard",
     "trending": false,
     "exclusive": false,
@@ -10447,13 +10460,15 @@
       },
       {
         "id": 9,
-        "title": "Under the Moolight Sea",
-        "duration": "3:30",
+        "title": "Under the Moonlit Sea",
+        "duration": "3:00",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Disney",
         "mood": "Magical",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/Under%20the%20Moonlit%20Sea.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/Under%20the%20Moonlit%20Sea.mp3",
         "sourceFolder": "Happily Ever After Dreams",
         "albumId": "happily-ever-after-dreams-2024",
         "isSingle": true
@@ -10487,11 +10502,255 @@
         "sourceFolder": "Happily Ever After Dreams",
         "albumId": "happily-ever-after-dreams-2024",
         "isSingle": true
+      },
+      {
+        "id": 12,
+        "title": "Once Upon a Dream",
+        "duration": "3:45",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Disney",
+        "mood": "Magical",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/Once%20Upon%20a%20Dream.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/happily-ever-after-dreams/Once%20Upon%20a%20Dream.mp3",
+        "sourceFolder": "Happily Ever After Dreams",
+        "albumId": "happily-ever-after-dreams-2024",
+        "isSingle": true
       }
     ],
     "releaseDate": "2024-11-27",
     "folderPath": "Happily Ever After Dreams",
     "mp3Count": 24,
+    "type": "standard",
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
+  },
+  {
+    "id": "between-the-lines-of-love-2024",
+    "title": "Between the lines of love",
+    "year": 2024,
+    "genre": [
+      "Country",
+      "Christmas"
+    ],
+    "coverArt": "cover.png",
+    "tracks": [
+      {
+        "id": 1,
+        "title": "Forever Yours",
+        "duration": "3:25",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Forever%20Yours.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Forever%20Yours.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      },
+      {
+        "id": 2,
+        "title": "I'm Missing You",
+        "duration": "2:48",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/I'm%20Missing%20You.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/I'm%20Missing%20You.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      },
+      {
+        "id": 3,
+        "title": "A Love That Never Fades",
+        "duration": "3:14",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/A%20Love%20That%20Never%20Fades.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/A%20Love%20That%20Never%20Fades.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": true
+      },
+      {
+        "id": 4,
+        "title": "A Dream with You",
+        "duration": "3:57",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/a%20dream%20with%20you.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/a%20dream%20with%20you.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      },
+      {
+        "id": 5,
+        "title": "I want to know what love is",
+        "duration": "3:28",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/I%20want%20to%20know%20what%20love%20is.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/I%20want%20to%20know%20what%20love%20is.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": true
+      },
+      {
+        "id": 6,
+        "title": "Chasing Waterfalls",
+        "duration": "4:39",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/chasing%20waterfalls.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/chasing%20waterfalls.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      },
+      {
+        "id": 7,
+        "title": "Endless Love",
+        "duration": "2:22",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Endless%20Love.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Endless%20Love.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      },
+      {
+        "id": 8,
+        "title": "How Long",
+        "duration": "3:27",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/How%20Long.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/How%20Long.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      },
+      {
+        "id": 9,
+        "title": "I'm coming back to you",
+        "duration": "2:45",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/I'm%20Coming%20Back%20to%20You.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/I'm%20Coming%20Back%20to%20You.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": true
+      },
+      {
+        "id": 10,
+        "title": "This Moment is Ours",
+        "duration": "3:26",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/This%20Moment%20is%20Ours.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/This%20Moment%20is%20Ours.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      },
+      {
+        "id": 11,
+        "title": "Love like this",
+        "duration": "3:15",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Love%20Like%20This.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Love%20Like%20This.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": true
+      },
+      {
+        "id": 12,
+        "title": "You and Me Forever - Ballad",
+        "duration": "3:29",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Christmas",
+        "mood": "Festive",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/You%20and%20Me%20Forever.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/You%20and%20Me%20Forever.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      },
+      {
+        "id": 13,
+        "title": "Making Love to You",
+        "duration": "3:20",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Making%20Love%20to%20You.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Making%20Love%20to%20You.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": true
+      },
+      {
+        "id": 14,
+        "title": "Love to Last ",
+        "duration": "3:52",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Love%20to%20Last.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/Love%20to%20Last.mp3",
+        "sourceFolder": "Between the lines of love",
+        "albumId": "between-the-lines-of-love-2024",
+        "isSingle": false
+      }
+    ],
+    "releaseDate": "2024-11-19",
+    "folderPath": "Between the lines of love",
+    "mp3Count": 28,
     "type": "standard",
     "trending": false,
     "exclusive": false,
@@ -10570,12 +10829,14 @@
       {
         "id": 5,
         "title": "Snow is all Around Us",
-        "duration": "3:30",
+        "duration": "3:12",
         "plays": "0",
         "locked": false,
         "price": 0.99,
         "genre": "Christmas",
         "mood": "Festive",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/Snow%20is%20All%20Around%20Us.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/Snow%20is%20All%20Around%20Us.mp3",
         "sourceFolder": "Pop Star Winter Wonderland",
         "albumId": "popstar-winter-wonderland-2024",
         "isSingle": true

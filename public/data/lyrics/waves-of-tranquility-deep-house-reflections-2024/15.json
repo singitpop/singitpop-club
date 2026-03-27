@@ -1,0 +1,80 @@
+{
+  "title": "Sailing Into The Sunset",
+  "artist": "SingIt Pop",
+  "album": "Waves of Tranquility Deep House Reflections",
+  "id": 15,
+  "lyrics": [
+    {
+      "id": 1,
+      "text": "No shuffling, in Summer,\nTropical Beats Fading!",
+      "startTime": 0,
+      "endTime": 15
+    },
+    {
+      "id": 2,
+      "text": "Mmm...\nWe’re drifting... yeah, we’re drifting...",
+      "startTime": 15,
+      "endTime": 30
+    },
+    {
+      "id": 3,
+      "text": "Sailing into the sunset, skies of gold so high,\nWaves are dancing softly, under the fading light.\nFeel the breeze on my skin, everything's in flow,\nLeave the world behind us, where the ocean goes.",
+      "startTime": 30,
+      "endTime": 45
+    },
+    {
+      "id": 4,
+      "text": "Oh, can you feel it?\nThe rhythm of the tide,\nWe’re floating on this moment,\nWith no need to hide.",
+      "startTime": 45,
+      "endTime": 60
+    },
+    {
+      "id": 5,
+      "text": "We’re sailing, sailing, into the sunset glow,\nLet the colors wrap around us, we’ll go where the wind will blow.\nIn this endless summer feeling, nothing’s in our way,\nWe’re sailing, sailing, into another perfect day.",
+      "startTime": 60,
+      "endTime": 75
+    },
+    {
+      "id": 6,
+      "text": "No shuffling, in Summer,\nTropical Beats Fading!\nNo shuffling, in Summer,\nTropical Beats Fading!",
+      "startTime": 75,
+      "endTime": 90
+    },
+    {
+      "id": 7,
+      "text": "Ahhh, Ahhh, into the sunset...\nAhhh, Ahhh, let it all fade away...",
+      "startTime": 90,
+      "endTime": 105
+    },
+    {
+      "id": 8,
+      "text": "The horizon stretches farther, with every breath we take,\nIn the quiet of the ocean, no more hearts to break.\nAll the worries left behind, washed away with the tide,\nJust you and me together, beneath the orange sky.",
+      "startTime": 105,
+      "endTime": 120
+    },
+    {
+      "id": 9,
+      "text": "Oh, can you feel it?\nThe rhythm of the tide,\nWe’re floating on this moment,\nWith no need to hide.",
+      "startTime": 120,
+      "endTime": 135
+    },
+    {
+      "id": 10,
+      "text": "We’re sailing, sailing, into the sunset glow,\nLet the colors wrap around us, we’ll go where the wind will blow.\nIn this endless summer feeling, nothing’s in our way,\nWe’re sailing, sailing, into another perfect day.",
+      "startTime": 135,
+      "endTime": 150
+    },
+    {
+      "id": 11,
+      "text": "No shuffling, in Summer,\nTropical Beats Fading!\nNo shuffling, in Summer,\nTropical Beats Fading!",
+      "startTime": 150,
+      "endTime": 165
+    },
+    {
+      "id": 12,
+      "text": "Ahhh, ahhh, into the sunset...\nAhhh, Ahhh, let it all fade away...",
+      "startTime": 165,
+      "endTime": 180
+    }
+  ]
+}
