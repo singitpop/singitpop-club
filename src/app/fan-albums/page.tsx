@@ -229,6 +229,7 @@ export default function CommunityHubPage() {
         console.log(`[handlePlay] Resolving first track: ${firstTrackId}`);
 
         let foundTrack: any = null;
+        let resolvedAlbum: any = null;
         
         // 1. Try resolving via album-track format
         const parts = String(firstTrackId).split('-');
@@ -237,16 +238,16 @@ export default function CommunityHubPage() {
             const tId = parseInt(parts[parts.length - 1]);
             
             // Try exact album match first
-            let album = albums.find(a => a.id === potentialAlbumId);
+            resolvedAlbum = albums.find(a => a.id === potentialAlbumId);
             
             // If no exact match, try fuzzy album match (folders often change)
-            if (!album) {
-                album = albums.find(a => a.id.includes(potentialAlbumId) || potentialAlbumId.includes(a.id));
+            if (!resolvedAlbum) {
+                resolvedAlbum = albums.find(a => a.id.includes(potentialAlbumId) || potentialAlbumId.includes(a.id));
             }
 
-            foundTrack = album?.tracks.find(t => t.id === tId);
-            if (foundTrack && album) {
-                foundTrack = { ...foundTrack, albumId: album.id, albumTitle: album.title };
+            foundTrack = resolvedAlbum?.tracks.find((t: any) => t.id === tId);
+            if (foundTrack && resolvedAlbum) {
+                foundTrack = { ...foundTrack, albumId: resolvedAlbum.id, albumTitle: resolvedAlbum.title };
             }
         }
 
@@ -257,6 +258,7 @@ export default function CommunityHubPage() {
                 for (const album of albums) {
                     const match = album.tracks.find(t => t.id === numericId);
                     if (match) {
+                        resolvedAlbum = album;
                         foundTrack = { ...match, albumId: album.id, albumTitle: album.title };
                         break;
                     }
@@ -265,12 +267,18 @@ export default function CommunityHubPage() {
         }
 
         if (foundTrack) {
-            // Ensure ID is consistent with viewer format
-            foundTrack = { ...foundTrack, id: `track-${foundTrack.id}` };
-            handleTrackPlay(foundTrack);
+            console.log(`🎯 Playlist Auto-Resolved: "${foundTrack.title}" from album "${resolvedAlbum?.title}"`);
+            // USE THE EXACT ID FORMAT THE UI EXPECTS: track-[originalId]
+            handleTrackPlay({ 
+                ...foundTrack, 
+                id: `track-${firstTrackId}`, 
+                albumId: resolvedAlbum?.id, 
+                albumTitle: resolvedAlbum?.title 
+            });
         } else {
-            console.warn(`[handlePlay] Resolution failed for track ID: ${firstTrackId}`);
+            console.error(`❌ Resolution failed for track ID: ${firstTrackId}`);
             alert("Sorry, we couldn't find the audio for this track. It may have been moved or removed.");
+            setIsLoading(false);
         }
     };
 
@@ -316,17 +324,28 @@ export default function CommunityHubPage() {
         setIsLoading(true);
         setIsPlaying(false); // Stop previous
 
+        // 🚀 Browser Hack: Prime the audio element immediately on user-click tick
+        // This ensures the browser grants permission for subsequent .play() calls
+        // even after the async Signing API fetch.
+        if (audioRef.current) {
+            console.log("🔊 Priming audio element for:", track.title);
+            audioRef.current.load(); 
+        }
+
+        // Keep the ORIGINAL ID for UI consistency (e.g., "track-Nashville-1")
+        const originalTrackId = track.id;
+        
         // NEW: Resolve FRESH track data from master albums.json to ensure audioUrl is current
-        let freshTrack = track;
+        let freshTrack = { ...track };
         const trackIdStr = String(track.id);
         
-        // Handle track-XX or album-XX formats
+        // Handle track-XX or album-XX-trackXX formats to get the numeric track ID
         const trackIdMatch = trackIdStr.match(/(\d+)$/);
-        const resolvedId = trackIdMatch ? parseInt(trackIdMatch[1]) : (typeof track.id === 'number' ? track.id : null);
+        const resolvedNumericId = trackIdMatch ? parseInt(trackIdMatch[1]) : (typeof track.id === 'number' ? track.id : null);
         
-        if (resolvedId) {
+        if (resolvedNumericId) {
             for (const album of albums) {
-                const match = album.tracks.find(t => t.id === resolvedId);
+                const match = album.tracks.find(t => t.id === resolvedNumericId);
                 if (match) {
                     freshTrack = { ...match, albumId: album.id, albumTitle: album.title };
                     break;
@@ -334,27 +353,33 @@ export default function CommunityHubPage() {
             }
         }
 
-        setCurrentTrackId(freshTrack.id);
-        setCurrentTrackData(freshTrack); // Store full track for display
+        // IMPORTANT: Use the original track ID (which has prefixes like "track-") for currentTrackId state
+        // This ensures the isPlaying comparison in the UI works correctly.
+        setCurrentTrackId(originalTrackId);
+        setCurrentTrackData(freshTrack);
 
         try {
-            // Sign URL - ALWAYS use freshTrack which was resolved from master albums.json
-            console.log(`🔐 Signing audio URL for: "${freshTrack.title}" | URL: ${freshTrack.audioUrl}`);
+            console.log(`🔐 Signing audio URL for: "${freshTrack.title}" | ID: ${originalTrackId}`);
             const res = await fetch('/api/music/sign', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url: freshTrack.audioUrl })
+                body: JSON.stringify({ 
+                    url: freshTrack.audioUrl,
+                    title: freshTrack.title,
+                    albumId: freshTrack.albumId
+                })
             });
 
             if (!res.ok) {
                 const errorText = await res.text();
                 console.error(`❌ Sign API failed (${res.status}):`, errorText);
-                throw new Error(`Failed to sign URL: ${res.status} - ${errorText}`);
+                throw new Error(`Failed to sign URL: ${res.status}`);
             }
+            
             const data = await res.json();
 
             if (data.signedUrl) {
-                console.log(`✅ Signed URL received for: "${track.title}"`);
+                console.log(`✅ Signed URL received for: "${freshTrack.title}"`);
                 setCurrentSignedUrl(data.signedUrl);
 
                 // Reset Audio Props safely
@@ -365,27 +390,24 @@ export default function CommunityHubPage() {
 
                 setIsPlaying(true);
             } else {
-                console.error(`❌ No signed URL in response for: "${track.title}"`, data);
                 throw new Error("No signed URL returned");
             }
-        } catch (e) {
-            console.error(`❌ Track play error for "${track.title}":`, e);
+        } catch (e: any) {
+            console.error(`❌ Track play error:`, e.message);
+            alert(`Playback Error: ${e.message}. Please try again.`);
 
             if (activeTab === 'radio') {
-                console.log("📻 Radio error -> Skipping to next track");
                 setTimeout(() => {
-                    isSwitchingRef.current = false; // Reset lock before recursing
+                    isSwitchingRef.current = false;
                     playNextRadioTrack();
-                }, 500);
-                return; // Return early, don't unlock yet (the recursive call will lock)
+                }, 1000);
+                return;
             } else {
                 setCurrentTrackId(null);
                 setIsPlaying(false);
             }
         } finally {
             setIsLoading(false);
-            // Only unlock if we didn't recurse into radio skip (handled above)
-            // Actually, safe to just unlock after a short delay to ensure UI updates
             setTimeout(() => {
                 isSwitchingRef.current = false;
             }, 300);
