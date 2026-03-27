@@ -169,7 +169,16 @@
 }
 
 
-/* --- Standard Grid (Fresh Mixes) --- */
+/* Standard Grid (Fresh Mixes & My Mixes) */
+.playlistGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2.5rem;
+    margin-top: 1rem;
+    /* More breathing room for the vinyl slide-out */
+    overflow: visible;
+}
+
 .masonry {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));

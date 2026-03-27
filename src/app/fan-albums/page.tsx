@@ -315,16 +315,35 @@ export default function CommunityHubPage() {
         isSwitchingRef.current = true;
         setIsLoading(true);
         setIsPlaying(false); // Stop previous
-        setCurrentTrackId(track.id);
-        setCurrentTrackData(track); // Store full track for display
+
+        // NEW: Resolve FRESH track data from master albums.json to ensure audioUrl is current
+        let freshTrack = track;
+        const trackIdStr = String(track.id);
+        
+        // Handle track-XX or album-XX formats
+        const trackIdMatch = trackIdStr.match(/(\d+)$/);
+        const resolvedId = trackIdMatch ? parseInt(trackIdMatch[1]) : (typeof track.id === 'number' ? track.id : null);
+        
+        if (resolvedId) {
+            for (const album of albums) {
+                const match = album.tracks.find(t => t.id === resolvedId);
+                if (match) {
+                    freshTrack = { ...match, albumId: album.id, albumTitle: album.title };
+                    break;
+                }
+            }
+        }
+
+        setCurrentTrackId(freshTrack.id);
+        setCurrentTrackData(freshTrack); // Store full track for display
 
         try {
-            // Sign URL
-            console.log(`🔐 Signing audio URL for: "${track.title}" | URL: ${track.audioUrl}`);
+            // Sign URL - ALWAYS use freshTrack which was resolved from master albums.json
+            console.log(`🔐 Signing audio URL for: "${freshTrack.title}" | URL: ${freshTrack.audioUrl}`);
             const res = await fetch('/api/music/sign', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url: track.audioUrl })
+                body: JSON.stringify({ url: freshTrack.audioUrl })
             });
 
             if (!res.ok) {

@@ -130,17 +130,15 @@ export async function GET() {
                 const normA = normalizeWords(target);
                 const normB = normalizeWords(candidate);
                 
-                // Fallback for very short titles
+                // Fallback for very short titles - use strict equality only
                 if (normA.length === 0 || normB.length === 0) {
-                    const cleanA = normalize(target);
-                    const cleanB = normalize(candidate);
-                    return cleanA === cleanB || cleanA.includes(cleanB) || cleanB.includes(cleanA);
+                    return normalize(target) === normalize(candidate);
                 }
                 
                 const intersection = normA.filter(word => normB.includes(word));
                 // We want high overlap on the SHORTER of the two keyword sets
                 const coverage = intersection.length / Math.min(normA.length, normB.length);
-                return coverage >= 0.6; // Balanced threshold
+                return coverage >= 0.7; // Slightly stricter threshold for safety
             };
 
             for (const album of albumData) {
