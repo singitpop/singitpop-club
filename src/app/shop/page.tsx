@@ -20,18 +20,35 @@ function ShopContent() {
     const [isPlayingPreview, setIsPlayingPreview] = useState(false);
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
-    const togglePreview = () => {
+    const togglePreview = async () => {
         if (isPlayingPreview) {
-            audio?.pause();
+            if (audio) audio.pause();
             setIsPlayingPreview(false);
         } else {
             if (audio) audio.pause();
-            const previewUrl = `https://singitpop-music.s3.eu-north-1.amazonaws.com/shop/SingItPop_CreatorPack_v${selectedVolume}_Preview.mp3`;
-            const newAudio = new Audio(previewUrl);
-            newAudio.onended = () => setIsPlayingPreview(false);
-            setAudio(newAudio);
-            newAudio.play();
-            setIsPlayingPreview(true);
+            
+            try {
+                const res = await fetch(`/api/shop/creator-pack/preview?volume=${selectedVolume}`);
+                const { url, error } = await res.json();
+                
+                if (error || !url) {
+                    console.error("Failed to get preview URL:", error);
+                    alert("Unable to play preview. Please try again later.");
+                    return;
+                }
+
+                const newAudio = new Audio(url);
+                newAudio.onended = () => setIsPlayingPreview(false);
+                setAudio(newAudio);
+                newAudio.play().catch(err => {
+                    console.error("Playback failed:", err);
+                    setIsPlayingPreview(false);
+                });
+                setIsPlayingPreview(true);
+            } catch (err) {
+                console.error("Error fetching preview:", err);
+                alert("Something went wrong. Please try again.");
+            }
         }
     };
 
