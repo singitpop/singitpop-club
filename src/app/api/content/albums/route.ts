@@ -13,7 +13,7 @@ export async function GET() {
 
                 // Fix for inconsistent album art paths in data file
                 if (album.folderPath) {
-                    const filename = album.coverImageName || 'cover.png';
+                    const filename = album.coverArt || 'cover.png';
                     const sluggedFolder = album.folderPath.toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ /g, '-');
                     const correctedKey = `albums/${sluggedFolder}/${filename}`;
                     signedCover = await getSignedFileUrl(correctedKey);
