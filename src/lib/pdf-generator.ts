@@ -10,6 +10,7 @@ export interface LicenseMetadata {
     territory: string;
     version: string;
     date?: string;
+    certNo?: string;
 }
 
 export async function generateBrandedLicensePdf(meta: LicenseMetadata): Promise<Uint8Array> {
@@ -69,7 +70,7 @@ export async function generateBrandedLicensePdf(meta: LicenseMetadata): Promise<
     
     // Certificate Number / Date
     const date = meta.date || new Date().toLocaleDateString();
-    const certNo = Math.random().toString(36).substring(2, 10).toUpperCase();
+    const certNo = meta.certNo || Math.random().toString(36).substring(2, 10).toUpperCase();
 
     page.drawText(`Certificate ID: ${certNo}`, { x: 50, y, size: 10, font: courierFont, color: rgb(0.5, 0.5, 0.5) });
     page.drawText(`Date of Issue: ${date}`, { x: width - 200, y, size: 10, font: timesRomanFont });
@@ -83,6 +84,7 @@ export async function generateBrandedLicensePdf(meta: LicenseMetadata): Promise<
         return currentY - 45;
     };
 
+    y = drawDetail('License #', certNo, y);
     y = drawDetail('Licensee', meta.buyerName, y);
     y = drawDetail('Licensor', 'Singit Pop', y);
     y = drawDetail('Audio Work', meta.trackTitle, y);
@@ -139,6 +141,14 @@ will manually clear the video upon verification of this license.`;
     page.drawText('GARY BIRRELL', { x: 50, y: 120, size: 10, font: timesBoldFont, color: magenta });
     page.drawText('Authorized Signature', { x: 50, y: 110, size: 8, font: timesRomanFont, color: rgb(0.6, 0.6, 0.6) });
     
+    page.drawText(`© ${new Date().getFullYear()} Singit Pop. All Rights Reserved.`, {
+        x: width - 200,
+        y: 50,
+        size: 8,
+        font: timesRomanFont,
+        color: rgb(0.5, 0.5, 0.5)
+    });
+
     // Save PDF
     return await pdfDoc.save();
 }

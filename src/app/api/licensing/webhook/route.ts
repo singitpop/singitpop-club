@@ -202,6 +202,7 @@ export async function POST(req: Request) {
 
             // 1. GENERATE PDF CERTIFICATE (Branded)
             const { generateBrandedLicensePdf } = await import('@/lib/pdf-generator');
+            const certNo = crypto.randomBytes(4).toString('hex').toUpperCase();
             
             const pdfBytes = await generateBrandedLicensePdf({
                 buyerName: meta.buyerName,
@@ -211,13 +212,15 @@ export async function POST(req: Request) {
                 usage: meta.usage,
                 duration: meta.duration,
                 territory: meta.territory,
-                version: meta.version || 'Full Master'
+                version: meta.version || 'Full Master',
+                certNo: certNo
             });
 
             // 2. SAVE TO JSON DB (Vercel-safe)
             const existing = readJson(LICENSES_FILE);
             existing.push({
                 id: session.id,
+                certNo: certNo,
                 date: new Date().toISOString(),
                 ...meta,
                 amount: session.amount_total ? session.amount_total / 100 : 0

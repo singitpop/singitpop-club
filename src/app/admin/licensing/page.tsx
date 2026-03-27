@@ -106,6 +106,7 @@ export default async function AdminLicensingDashboard() {
                             <thead>
                                 <tr>
                                     <th>Date</th>
+                                    <th>License #</th>
                                     <th>Buyer Name</th>
                                     <th>Track</th>
                                     <th>Tier / Usage</th>
@@ -114,10 +115,11 @@ export default async function AdminLicensingDashboard() {
                             </thead>
                             <tbody>
                                 {licenses.length === 0 ? (
-                                    <tr><td colSpan={5} className={styles.emptyState}>No completed licenses found.</td></tr>
-                                ) : licenses.map((lic: { id: string; date: string; buyerName: string; buyerEmail: string; trackTitle: string; licenseType: string; usage: string; amount: number }) => (
+                                    <tr><td colSpan={7} className={styles.emptyState}>No completed licenses found.</td></tr>
+                                ) : licenses.map((lic: { id: string; date: string; buyerName: string; buyerEmail: string; trackTitle: string; licenseType: string; usage: string; amount: number; certNo?: string }) => (
                                     <tr key={lic.id}>
                                         <td>{new Date(lic.date).toLocaleDateString()}</td>
+                                        <td><code className="text-xs bg-white/5 px-2 py-1 rounded">{lic.certNo || 'LEGACY-ID'}</code></td>
                                         <td><strong>{lic.buyerName}</strong><br/><small>{lic.buyerEmail}</small></td>
                                         <td>{lic.trackTitle}</td>
                                         <td>
