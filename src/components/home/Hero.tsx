@@ -169,6 +169,19 @@ export default function Hero() {
                 )}
             </AnimatePresence>
 
+            {/* Top Scroll Hint */}
+            {!showVideo && !isLoading && (
+                <motion.div 
+                    className={styles.scrollHint}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0.4, 0.8, 0.4] }}
+                    transition={{ delay: 2, duration: 3, repeat: Infinity }}
+                >
+                    <span>SCROLL TO EXPLORE</span>
+                    <div className={styles.scrollLine} />
+                </motion.div>
+            )}
+
             {/* NEW: Feature Discovery Ribbon */}
             {!showVideo && !isLoading && <ValueRibbon />}
         </section>

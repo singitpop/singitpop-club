@@ -37,9 +37,10 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    align-items: center;
+    /* Force 4 columns on desktop to fit all tiers on one line */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    align-items: stretch;
     margin-bottom: 4rem;
 }
 
@@ -58,15 +59,18 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 2rem;
+    padding: 1.5rem 1.2rem;
     text-align: center;
-    transition: transform 0.3s;
+    transition: transform 0.3s, border-color 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 
 .highlight {
     background: linear-gradient(145deg, rgba(139, 92, 246, 0.1), rgba(10, 10, 14, 0.8));
     border-color: var(--primary);
-    transform: scale(1.05);
+    /* Subtle scale to avoid clipping in tight grid */
+    transform: scale(1.02);
     box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
 }
 
@@ -79,9 +83,9 @@
 }
 
 .price {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .features {
@@ -115,6 +119,22 @@
 
 .outlineBtn:hover {
     border-color: white;
+}
+
+@media (max-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
 }
 
 .perks {

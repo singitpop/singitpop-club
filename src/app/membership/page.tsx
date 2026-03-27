@@ -47,7 +47,7 @@ const tiers = [
     },
     {
         name: "Lifetime VIP",
-        price: "£299",
+        price: "£149",
         features: [
             "One-time payment 💸",
             "Forever VIP Access ♾️",

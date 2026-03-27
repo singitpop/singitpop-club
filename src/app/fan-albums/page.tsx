@@ -212,65 +212,65 @@ export default function CommunityHubPage() {
 
     // Handle Play Button Click (Card Play)
     const handlePlay = (e: React.MouseEvent, playlistId: number | string) => {
-        e.stopPropagation(); // Prevent opening modal
+        e.stopPropagation(); 
 
-        // AUTH CHECK: Require sign-in to play community mixes
         if (!userId) {
             router.push('/sign-in');
             return;
         }
 
-        // Find the playlist
         const playlist = playlists.find(p => p.id === playlistId);
-        if (!playlist || !playlist.tracks || playlist.tracks.length === 0) return;
+        if (!playlist || !playlist.tracks || playlist.tracks.length === 0) {
+            alert("This playlist is empty.");
+            return;
+        }
 
-        // Resolve first track ID
         const firstTrackId = playlist.tracks[0];
+        console.log(`[handlePlay] Resolving first track: ${firstTrackId}`);
 
-        // NOTE: We rely on the loose coupling here. If we click play on a playlist, we try to play its first track.
-        // But we need to map "playlistId" to a "currentTrackId" check?
-        // Actually, let's keep it simple: If any track FROM this playlist is playing, we pause. 
-        // Otherwise, we play the first track.
-
-        // Optimization: Check if currentTrackId belongs to this playlist? 
-        // For now, if we click play on the playlist card, we just want to play the first track.
-
-        // Logic:
-        // 1. Resolve first track ID (to match format)
-        // 2. See if that is currentTrackId
-
-        // Issue: We don't easily know the Resolved Track ID without doing the split logic again.
-        // Let's reuse the logic inside `handleTrackPlay` if possible, but we don't have the track object yet.
-
-        // For now, let's call `handleTrackPlay` with the resolved first track if possible.
-        // But we need to resolve it.
-
-        // Copied resolution logic:
         let foundTrack: any = null;
+        
+        // 1. Try resolving via album-track format
         const parts = String(firstTrackId).split('-');
-        let realId: string | number = firstTrackId;
-
         if (parts.length >= 2) {
-            const aId = parts.slice(0, -1).join('-');
+            const potentialAlbumId = parts.slice(0, -1).join('-');
             const tId = parseInt(parts[parts.length - 1]);
-            const album = albums.find(a => a.id === aId);
+            
+            // Try exact album match first
+            let album = albums.find(a => a.id === potentialAlbumId);
+            
+            // If no exact match, try fuzzy album match (folders often change)
+            if (!album) {
+                album = albums.find(a => a.id.includes(potentialAlbumId) || potentialAlbumId.includes(a.id));
+            }
+
             foundTrack = album?.tracks.find(t => t.id === tId);
-            // Construct unique ID used in Viewer
-            if (foundTrack) foundTrack = { ...foundTrack, id: `track-${firstTrackId}` }; // Use consistent ID
-        } else {
-            const tId = parseInt(firstTrackId);
-            for (const album of albums) {
-                const match = album.tracks.find(t => t.id === tId);
-                if (match) {
-                    foundTrack = match;
-                    foundTrack = { ...foundTrack, id: `track-${firstTrackId}` };
-                    break;
+            if (foundTrack && album) {
+                foundTrack = { ...foundTrack, albumId: album.id, albumTitle: album.title };
+            }
+        }
+
+        // 2. Global fallback - scan all albums for the numeric ID
+        if (!foundTrack) {
+            const numericId = parseInt(String(firstTrackId).match(/\d+/)?.[0] || "");
+            if (!isNaN(numericId)) {
+                for (const album of albums) {
+                    const match = album.tracks.find(t => t.id === numericId);
+                    if (match) {
+                        foundTrack = { ...match, albumId: album.id, albumTitle: album.title };
+                        break;
+                    }
                 }
             }
         }
 
         if (foundTrack) {
+            // Ensure ID is consistent with viewer format
+            foundTrack = { ...foundTrack, id: `track-${foundTrack.id}` };
             handleTrackPlay(foundTrack);
+        } else {
+            console.warn(`[handlePlay] Resolution failed for track ID: ${firstTrackId}`);
+            alert("Sorry, we couldn't find the audio for this track. It may have been moved or removed.");
         }
     };
 

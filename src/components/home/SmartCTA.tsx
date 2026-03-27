@@ -133,6 +133,34 @@ export default function SmartCTA() {
                         {loadingTier === 'VIP' ? <Loader2 className="animate-spin" size={20} /> : (isExactlyVIP ? 'Current Plan' : 'Get VIP Access')}
                     </button>
                 </div>
+
+                {/* Tier 4: Lifetime */}
+                <div className={`${styles.card} ${styles.featured}`}>
+                    <div className={styles.cardHeader}>
+                        <img 
+                            src="/images/icon-tier-premium-neon.png" 
+                            alt="" 
+                            className={`${styles.icon} ${styles.goldIcon}`} 
+                        />
+                        <h3>Lifetime VIP</h3>
+                        <span className={styles.price}>£149</span>
+                    </div>
+                    <ul className={styles.features}>
+                        <li>✅ <strong>One-time payment 💸</strong></li>
+                        <li>✅ <strong>Forever VIP Access ♾️</strong></li>
+                        <li>✅ Special 'Lifetime' Badge 🏅</li>
+                        <li>✅ All Future Perks Included 🚀</li>
+                        <li>✅ Maximum Priority Support ⚡</li>
+                    </ul>
+                    <button
+                        className={styles.glowBtn}
+                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_LIFETIME || '', 'Lifetime VIP')}
+                        disabled={loadingTier === 'Lifetime VIP' || user?.tier === 'LIFETIME'}
+                        style={user?.tier === 'LIFETIME' ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
+                    >
+                        {loadingTier === 'Lifetime VIP' ? <Loader2 className="animate-spin" size={20} /> : (user?.tier === 'LIFETIME' ? 'Current Plan' : 'Get Lifetime Access')}
+                    </button>
+                </div>
             </div>
         </section>
     );

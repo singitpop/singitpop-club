@@ -123,10 +123,10 @@ export async function GET() {
             const normalize = (s: string) => s.toLowerCase().replace(/[^\w\s]/g, '').trim();
 
             // Improved Fuzzy Matcher with Stop-Word Filtering
+            const stopWords = new Set(['the', 'and', 'for', 'with', 'from', 'into', 'them', 'this', 'that', 'with', 'back', 'just']);
+            const normalizeWords = (s: string) => normalize(s).split(' ').filter(w => w.length > 3 && !stopWords.has(w));
+            
             const isFuzzyMatch = (target: string, candidate: string) => {
-                const stopWords = new Set(['the', 'and', 'for', 'with', 'from', 'into', 'them', 'this', 'that', 'with', 'back', 'just']);
-                const normalizeWords = (s: string) => normalize(s).split(' ').filter(w => w.length > 3 && !stopWords.has(w));
-                
                 const normA = normalizeWords(target);
                 const normB = normalizeWords(candidate);
                 
@@ -135,24 +135,53 @@ export async function GET() {
                     return normalize(target) === normalize(candidate);
                 }
                 
-                const intersection = normA.filter(word => normB.includes(word));
-                // We want high overlap on the SHORTER of the two keyword sets
-                const coverage = intersection.length / Math.min(normA.length, normB.length);
-                return coverage >= 0.7; // Slightly stricter threshold for safety
+                const intersection = normA.filter((word: string) => normB.includes(word));
+                // HIGH DENSITY: We want high overlap relative to the LONGER of the two keyword sets
+                const coverage = intersection.length / Math.max(normA.length, normB.length);
+                return coverage >= 0.8; // High precision
             };
 
-            for (const album of albumData) {
-                // 1. Check tracks
-                const track = album.tracks.find(t => isFuzzyMatch(title, t.title));
-                
-                // 2. Check album title
-                const albumMatchStatus = isFuzzyMatch(title, album.title);
+            let bestMatch: { album: any; track: any; score: number } | null = null;
+            const exactNormalizedTitle = normalize(title);
 
-                if (track || albumMatchStatus) {
-                    albumMatch = album;
-                    trackMatch = track;
-                    break;
+            for (const album of albumData) {
+                // 1. Try EXACT Track Match (Score: 1.0)
+                const exactTrack = album.tracks.find(t => normalize(t.title) === exactNormalizedTitle);
+                if (exactTrack) {
+                    bestMatch = { album, track: exactTrack, score: 1.0 };
+                    break; 
                 }
+
+                // 2. Try FUZZY Track Match (Score: coverage)
+                const fuzzyTrack = album.tracks.find(t => {
+                    const nA = normalizeWords(title);
+                    const nB = normalizeWords(t.title);
+                    if (nA.length === 0 || nB.length === 0) return normalize(title) === normalize(t.title);
+                    const intersect = nA.filter((w: string) => nB.includes(w));
+                    return (intersect.length / Math.max(nA.length, nB.length)) >= 0.8;
+                });
+
+                if (fuzzyTrack) {
+                    const nA = normalizeWords(title);
+                    const nB = normalizeWords(fuzzyTrack.title);
+                    const intersect = nA.filter((w: string) => nB.includes(w));
+                    const score = intersect.length / Math.max(nA.length, nB.length);
+                    if (!bestMatch || score > bestMatch.score) {
+                        bestMatch = { album, track: fuzzyTrack, score };
+                    }
+                }
+
+                // 3. Try Album Match (Score: 0.7) - Lower Priority
+                if (!bestMatch || bestMatch.score < 0.7) {
+                    if (isFuzzyMatch(title, album.title)) {
+                        bestMatch = { album, track: null, score: 0.7 };
+                    }
+                }
+            }
+
+            if (bestMatch) {
+                albumMatch = bestMatch.album;
+                trackMatch = bestMatch.track;
             }
 
             if (product.metadata?.releaseDate) {

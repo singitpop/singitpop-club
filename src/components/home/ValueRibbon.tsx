@@ -47,15 +47,15 @@ const FEATURES = [
 
 export default function ValueRibbon() {
     return (
-        <div className={styles.ribbonContainer}>
-            <div className={styles.ribbonContent}>
+        <div className={styles.dockContainer}>
+            <div className={styles.dockContent}>
                 {FEATURES.map((item, idx) => (
                     <motion.div 
                         key={idx}
                         className={`${styles.featureItem} ${item.highlight ? styles.highlight : ''}`}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.5 + (idx * 0.1), duration: 0.5 }}
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1 + (idx * 0.1), duration: 0.5 }}
                     >
                         <Link href={item.href} className={styles.link}>
                             <div className={styles.iconWrapper} style={{ color: item.color }}>
@@ -69,16 +69,6 @@ export default function ValueRibbon() {
                     </motion.div>
                 ))}
             </div>
-            
-            <motion.div 
-                className={styles.scrollHint}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0] }}
-                transition={{ delay: 3, duration: 2, repeat: Infinity }}
-            >
-                <span>SCROLL TO EXPLORE</span>
-                <div className={styles.scrollLine} />
-            </motion.div>
         </div>
     );
 }
