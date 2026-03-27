@@ -581,7 +581,61 @@ export default function CommunityHubPage() {
                         )
                     )}
 
-                    {/* ... (Recommendations grid code) ... */}
+                    {(activeTab === 'browse' || activeTab === 'my-mixes' || activeTab === 'favorites') && (
+                        <div className={styles.tabContent}>
+                            <div className={styles.sectionHeader}>
+                                <h2>
+                                    {activeTab === 'browse' ? 'Browse All Mixes' : 
+                                     activeTab === 'my-mixes' ? 'My Custom Mixes' : 'My Favorite Mixes'}
+                                </h2>
+                                <div className={styles.sortControls}>
+                                    <button 
+                                        className={activeSort === 'newest' ? styles.activeSort : ''} 
+                                        onClick={() => setActiveSort('newest')}
+                                    >
+                                        Newest
+                                    </button>
+                                    <button 
+                                        className={activeSort === 'popular' ? styles.activeSort : ''} 
+                                        onClick={() => setActiveSort('popular')}
+                                    >
+                                        Popular
+                                    </button>
+                                </div>
+                            </div>
+
+                            {getSortedPlaylists().length > 0 ? (
+                                <div className={styles.playlistGrid}>
+                                    {getSortedPlaylists().map(playlist => (
+                                        <PlaylistCard
+                                            key={playlist.id}
+                                            playlist={playlist}
+                                            coverImages={getPlaylistArtwork(playlist)}
+                                            isPlaying={isPlaying && currentTrackId === `track-${playlist.tracks[0]}`}
+                                            onPlay={(e) => handlePlay(e, playlist.id)}
+                                            onClick={() => setSelectedPlaylist(playlist)}
+                                            onLike={() => handleLike(playlist.id)}
+                                            hasLiked={playlist.likedBy?.includes(userId)}
+                                        />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className={styles.emptyState}>
+                                    <div className={styles.emptyIcon}>💿</div>
+                                    <h3>No mixes found</h3>
+                                    <p>
+                                        {activeTab === 'favorites' ? "You haven't liked any mixes yet." : 
+                                         activeTab === 'my-mixes' ? "You haven't created any custom mixes yet." : "No mixes found matching your search."}
+                                    </p>
+                                    {activeTab === 'my-mixes' && (
+                                        <Link href="/music">
+                                            <button className="primary-button" style={{ marginTop: '1rem' }}>Create a Mix in the Music Page</button>
+                                        </Link>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    )}
 
                 </main>
 
