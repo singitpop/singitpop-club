@@ -123,11 +123,17 @@ export async function GET() {
             const cleanTitle = normalize(title);
 
             for (const album of albumData) {
+                // 1. Exact track match
                 const track = album.tracks.find(t => {
                     const cleanTrack = normalize(t.title);
                     return cleanTitle === cleanTrack || cleanTitle.includes(cleanTrack);
                 });
-                if (track) {
+                
+                // 2. Fallback: Check if ringtone title matches album title or is contained in it
+                const cleanAlbum = normalize(album.title);
+                const albumMatchStatus = cleanTitle === cleanAlbum || cleanAlbum.includes(cleanTitle) || cleanTitle.includes(cleanAlbum);
+
+                if (track || albumMatchStatus) {
                     albumMatch = album;
                     break;
                 }

@@ -1,29 +1,30 @@
-import { getSignedFileUrl } from "./s3";
-import { getAlbumCoverUrl } from "./image-utils";
+import { getSignedFileUrl, findImageKey } from "./s3";
 
 /**
  * Server-only utility to get a signed album cover URL.
- * Works by first resolving the S3 path and then signing it.
+ * Uses robust S3 searching to find the best matching image.
  */
-export async function getSignedAlbumCoverUrl(album: any): Promise<string> {
-    const rawUrl = getAlbumCoverUrl(album);
-    
-    // If it's already a public image or already signed (has query params), return as is
-    if (!rawUrl.includes("amazonaws.com") || rawUrl.includes("?X-Amz-Algorithm")) {
-        return rawUrl;
-    }
+export async function getSignedAlbumCoverUrl(album: any, track?: any): Promise<string> {
+    const albumSlug = album.id || album.title || "";
+    const trackTitle = track?.title;
 
     try {
-        // Extract key from the URL
-        // Expecting: https://[bucket].s3.[region].amazonaws.com/[key]
-        const url = new URL(rawUrl);
-        const key = url.pathname.substring(1); // Remove leading slash
+        // 1. Find the best matching image key in S3
+        // This handles fuzzy folder names (e.g. "Live Nashville" -> "nashville-in-june")
+        const key = await findImageKey(albumSlug, trackTitle);
         
-        // Sign for 7 days (maximum possible)
+        if (!key) {
+            console.warn(`[Server-Image-Utils] No image found in S3 for ${albumSlug}${trackTitle ? ` / ${trackTitle}` : ""}`);
+            // Fallback to default if everything fails
+            return "/images/defaults/vinyl_default.png";
+        }
+
+        // 2. Sign the URL for 7 days
         const signedUrl = await getSignedFileUrl(key, 604800);
-        return signedUrl || rawUrl;
+        return signedUrl;
+
     } catch (e) {
-        console.error("[Server-Image-Utils] Failed to sign:", rawUrl, e);
-        return rawUrl;
+        console.error("[Server-Image-Utils] Failed to resolve/sign:", albumSlug, e);
+        return "/images/defaults/vinyl_default.png";
     }
 }

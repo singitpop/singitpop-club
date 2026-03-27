@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import { getAlbums } from '@/lib/data';
 import { GetObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
-import { s3Client, getSignedFileUrl } from '@/lib/s3';
+import { s3Client, getSignedFileUrl, findImageKey } from '@/lib/s3';
 import { getAlbumCoverUrl } from '@/lib/image-utils';
 
 export const dynamic = 'force-dynamic';
@@ -11,111 +11,7 @@ export const revalidate = 0;
 const BUCKET_NAME = 'singitpop-music';
 const METADATA_KEY = 'admin/albumMetadata.json';
 
-// Helper: Find the first best image key match in a folder
-async function findImageKey(folderName: string, trackTitle?: string, strictTrackMatch = false): Promise<string | null> {
-    try {
-        let actualFolderPrefix = `albums/${folderName}/`;
-
-        // 1. Validate/Resolve Folder Name
-        const normalizeName = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-        const targetNorm = normalizeName(folderName);
-
-        const listFoldersCmd = new ListObjectsV2Command({
-            Bucket: BUCKET_NAME,
-            Prefix: 'albums/',
-            Delimiter: '/'
-        });
-        const foldersRes = await (s3Client as any).send(listFoldersCmd);
-        const prefixes = foldersRes.CommonPrefixes || [];
-
-        // Try exact match first
-        let match = prefixes.find((p: any) => normalizeName(p.Prefix.split('/')[1]) === targetNorm);
-
-        // Try partial match if no exact match (important for "Live - Step into the Light" vs "Step into the Light")
-        if (!match) {
-            match = prefixes.find((p: any) => {
-                const pNameNorm = normalizeName(p.Prefix.split('/')[1]);
-                return pNameNorm.includes(targetNorm) || targetNorm.includes(pNameNorm);
-            });
-        }
-
-        if (match) {
-            actualFolderPrefix = match.Prefix;
-            console.log(`[FindImageKey] Resolved fuzzy folder: '${actualFolderPrefix}' from '${folderName}'`);
-        } else {
-            console.warn(`[FindImageKey] Could not resolve folder for: ${folderName}`);
-            // If we can't find the folder, we can't find images inside it.
-            // BUT, if it's a single, it might be in 'Singles/TrackName/'
-            if (folderName !== 'Singles') {
-                const singlesMatch = await findImageKey('Singles', trackTitle, true);
-                if (singlesMatch) return singlesMatch;
-            }
-            return null;
-        }
-
-        // 2. Search within the resolved folder
-        const command = new ListObjectsV2Command({
-            Bucket: BUCKET_NAME,
-            Prefix: actualFolderPrefix,
-        });
-
-        const response = await (s3Client as any).send(command);
-        const contents = response.Contents || [];
-
-        // Helper: remove special chars, extra spaces, lowercase
-        const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-
-        // 1. Try Specific Track Image (Nested logic)
-        if (trackTitle) {
-            const normalizedTrack = normalize(trackTitle);
-
-            const trackCover = contents.find((c: any) => {
-                const key = c.Key || '';
-                const lowerKey = key.toLowerCase();
-                if (!lowerKey.startsWith(actualFolderPrefix.toLowerCase())) return false;
-
-                const segments = lowerKey.split('/');
-                const albumSegmentCount = actualFolderPrefix.split('/').filter(Boolean).length; 
-                const searchSegments = segments.slice(albumSegmentCount); 
-
-                const songFolderMatch = searchSegments.some((seg: string) => normalize(seg).includes(normalizedTrack));
-                const isImage = key.match(/\.(png|jpg|jpeg|webp)$/i);
-                const isCover = key.toLowerCase().includes('cover') || key.toLowerCase().includes('front');
-
-                return (songFolderMatch && isImage) || (isCover && songFolderMatch);
-            });
-
-            if (trackCover) return trackCover.Key;
-        }
-
-        if (strictTrackMatch && trackTitle) return null;
-
-        // 2. Fallback: Album Cover (cover.png, front.jpg, etc)
-        const albumCover = contents.find((c: any) => {
-            const key = c.Key || '';
-            const filename = key.split('/').pop()?.toLowerCase() || '';
-            const isImage = filename.endsWith('.png') || filename.endsWith('.jpg') || filename.endsWith('.jpeg') || filename.endsWith('.webp');
-            const isStandardName = filename.startsWith('cover.') || filename.startsWith('front.') || filename.startsWith('folder.') || filename.includes('cover');
-
-            return isImage && isStandardName;
-        });
-
-        if (albumCover) return albumCover.Key;
-
-        // 3. Last Resort: Any image in Album Root
-        const anyRootImage = contents.find((c: any) => {
-            const key = c.Key || '';
-            const albumSegmentCount = actualFolderPrefix.split('/').filter(Boolean).length;
-            return key.match(/\.(png|jpg|jpeg|webp)$/i) && (key.split('/').length === albumSegmentCount + 1);
-        });
-
-        if (anyRootImage) return anyRootImage.Key;
-
-    } catch (error) {
-        console.warn('Error finding image key:', error);
-    }
-    return null;
-}
+// Local findImageKey removed in favor of shared utility from '@/lib/s3'
 
 async function readMetadata() {
     try {
