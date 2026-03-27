@@ -15,11 +15,11 @@ import { ClerkProvider } from '@clerk/nextjs';
 export const metadata: Metadata = {
     metadataBase: new URL('https://singitpop.com'),
     title: {
-        default: 'SingIt Pop | The Future of Pop Music',
-        template: '%s | SingIt Pop'
+        default: 'SING | SingIt Pop Official Music Artist Site',
+        template: '%s | SING - SingIt Pop'
     },
-    description: 'The official home of SingIt Pop. Experience the next generation of AI-infused pop music. Join the club for exclusive tracks, mix-tapes, and virtual merchandise.',
-    keywords: ['SingIt Pop', 'AI Music', 'Pop Music', 'Gary Birrell', 'Fan Club', 'Virtual Artist', 'Future Pop', 'Music NFT'],
+    description: 'SING - The official home of SingIt Pop. Experience the future of pop music. Join the club for exclusive tracks, mix-tapes, and premium licensing. Step into the world of the digital music artist SING.',
+    keywords: ['SING', 'SingIt Pop', 'Music Artist', 'Pop Music', 'AI Music', 'Gary Birrell', 'Fan Club', 'Licensing', 'Sync Music', 'Virtual Artist', 'Ringtones'],
     authors: [{ name: 'Gary Birrell' }],
     creator: 'Gary Birrell',
     publisher: 'SingIt Pop',

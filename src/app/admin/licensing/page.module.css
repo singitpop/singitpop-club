@@ -217,3 +217,37 @@
     color: #a78bfa;
 }
 
+.issueBtn {
+    background: linear-gradient(135deg, #FF0080, #7928CA);
+    border: none;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(255, 0, 128, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.issueBtn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(255, 0, 128, 0.4);
+    filter: brightness(1.1);
+}
+
+.issueBtn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.issueBtn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+

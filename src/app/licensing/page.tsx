@@ -5,6 +5,7 @@ import TrackLibrary from '@/components/licensing/TrackLibrary';
 import fs from 'fs';
 import path from 'path';
 import { Sparkles, Home, Bath, Droplets } from 'lucide-react';
+import { getSignedAlbumCoverUrl } from '@/lib/server-image-utils';
 
 export default async function LicensingPage() {
     // Read JSON dynamically at runtime to prevent Turbopack from hanging on massive JSON AST parsing
@@ -13,17 +14,19 @@ export default async function LicensingPage() {
     const albumsData = JSON.parse(albumsRaw);
 
     // Prepare album-centric data for the library
-    const albums = albumsData.map((album: any) => {
-        // Correct coverArt path
-        const slug = album.folderPath ? album.folderPath.toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ /g, '-') : '';
-        const coverArt = slug ? `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${slug}/cover.png` : album.coverArt;
+    const albums = await Promise.all(albumsData.map(async (album: any) => {
+        // Use the unified server-side signer for all covers
+        const coverArt = await getSignedAlbumCoverUrl(album);
         
         return {
             ...album,
             coverArt: coverArt,
             tracks: album.tracks.filter((t: any) => t.audioUrl && t.audioUrl.trim() !== '')
         };
-    }).filter((a: any) => a.tracks.length > 0);
+    }));
+    
+    // Filter out albums with no tracks
+    const filteredAlbums = albums.filter((a: any) => a.tracks.length > 0);
     
     // Read advert tracks (keep as niche collection)
     const advertPath = path.join(process.cwd(), 'src', 'data', 'advertTracks.json');
@@ -146,7 +149,7 @@ export default async function LicensingPage() {
             </section>
 
             {/* ALBUM LIBRARY INTERACTIVE CLIENT COMPONENT */}
-            <TrackLibrary albums={albums} advertTracks={advertTracks} />
+            <TrackLibrary albums={filteredAlbums} advertTracks={advertTracks} />
 
         </main>
     );

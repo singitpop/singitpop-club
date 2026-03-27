@@ -570,3 +570,49 @@
         font-size: 0.85rem;
     }
 }
+
+.sponsorBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
+
+.sponsorBadge:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.diamondBadge {
+    animation: diamondGlow 3s infinite alternate;
+    border-color: rgba(0, 242, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+    background: rgba(0, 242, 255, 0.05);
+}
+
+@keyframes diamondGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(0, 242, 255, 0.2);
+        border-color: rgba(0, 242, 255, 0.3);
+        filter: brightness(1);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+        border-color: rgba(0, 242, 255, 0.8);
+        filter: brightness(1.2);
+        transform: translateY(-1px) scale(1.02);
+    }
+}
+
+.sponsorCredit {
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+    margin-left: 4px;
+    font-size: 0.8rem;
+}

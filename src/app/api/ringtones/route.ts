@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { getSignedAlbumCoverUrl } from '@/lib/server-image-utils';
+import { albums as albumData } from '@/data/albumData';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
     apiVersion: '2026-01-28.clover' as any,
@@ -41,37 +43,9 @@ const MOCK_DATA = [
     }
 ];
 
-import { albums } from '@/data/albumData';
 
-// Helper to find release date for a ringtone title
-// Helper to find release date for a ringtone title
-// Normalize: remove "Ringtone", "ringtone", extra spaces, dashes
-const getRingtoneReleaseDate = (ringtoneTitle: string) => {
-    // Normalize: remove "Ringtone", "ringtone", extra spaces, dashes
-    const normalize = (s: string) => s.replace(/[- ]*Ringtone$/i, '').toLowerCase().replace(/[^\w\s]/g, '').trim();
-    const cleanRingtone = normalize(ringtoneTitle);
 
-    // Find matching track in any album
-    for (const album of albums) {
-        const track = album.tracks.find(t => {
-            const cleanTrack = normalize(t.title);
-            return cleanRingtone === cleanTrack || cleanRingtone.includes(cleanTrack) && cleanTrack.length > 3;
-        });
 
-        if (track) {
-            // console.log(`✅ Matched "${ringtoneTitle}" to Album: ${album.title} (${album.releaseDate})`);
-            return new Date(album.releaseDate).getTime();
-        }
-    }
-
-    // Fallback: If title contains "2026", assume it's new
-    if (cleanRingtone.includes('2026') || ringtoneTitle.includes('2026')) {
-        return new Date('2026-01-01').getTime();
-    }
-
-    // console.log(`❌ Could not match "${ringtoneTitle}" to any album. Falling back to old date.`);
-    return 0; // Unknown/Old
-};
 
 export async function GET() {
     if (!process.env.STRIPE_SECRET_KEY) {
@@ -137,11 +111,28 @@ export async function GET() {
         const now = Date.now();
         const sixtyDaysAgo = now - (60 * 24 * 60 * 60 * 1000);
 
-        const allRingtones = ringtoneProducts.map((product) => {
+        const allRingtones = await Promise.all(ringtoneProducts.map(async (product) => {
             const price = priceMap.get(product.id);
             const title = product.name.replace(/[- ]*Ringtone$/i, '').trim();
 
             let releaseDate = 0;
+            let albumMatch = null;
+
+            // Find matching album for artwork and date
+            const normalize = (s: string) => s.toLowerCase().replace(/[^\w\s]/g, '').trim();
+            const cleanTitle = normalize(title);
+
+            for (const album of albumData) {
+                const track = album.tracks.find(t => {
+                    const cleanTrack = normalize(t.title);
+                    return cleanTitle === cleanTrack || cleanTitle.includes(cleanTrack);
+                });
+                if (track) {
+                    albumMatch = album;
+                    break;
+                }
+            }
+
             if (product.metadata?.releaseDate) {
                 try {
                     const dateStr = product.metadata.releaseDate;
@@ -151,17 +142,17 @@ export async function GET() {
                     } else {
                         releaseDate = new Date(dateStr).getTime();
                     }
-                } catch (e) {
-                    // console.warn(`Failed to parse release date for ${title}:`, product.metadata.releaseDate);
-                }
+                } catch (e) {}
             }
 
-            if (releaseDate === 0) {
-                releaseDate = getRingtoneReleaseDate(title);
+            if (releaseDate === 0 && albumMatch) {
+                releaseDate = new Date(albumMatch.releaseDate).getTime();
             }
 
-            // isNew IF released between (Today - 60 days) AND (Today)
             const isNew = releaseDate >= sixtyDaysAgo && releaseDate <= now;
+
+            // Pre-sign the artwork on the server
+            const artwork = albumMatch ? await getSignedAlbumCoverUrl(albumMatch) : "/images/singles-cover.png";
 
             return {
                 id: product.id,
@@ -172,9 +163,10 @@ export async function GET() {
                 genre: product.metadata?.genre || 'Pop',
                 duration: product.description?.match(/(\d+)s/)?.[1] || '30',
                 createdAt: releaseDate,
-                isNew: isNew
+                isNew: isNew,
+                artwork: artwork
             };
-        });
+        }));
 
         // 4. Deduplicate by Title (Keep latest releaseDate)
         const deduplicatedMap = new Map();

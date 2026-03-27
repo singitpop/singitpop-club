@@ -30,7 +30,7 @@ export async function getSponsorships(): Promise<Record<string, any>> {
     }
 }
 
-export async function saveSponsorship(trackId: string, sponsorName: string, tier: string = 'executive'): Promise<boolean> {
+export async function saveSponsorship(trackId: string, sponsorName: string, tier: string): Promise<boolean> {
     try {
         const currentSponsorships = await getSponsorships();
         currentSponsorships[trackId] = { name: sponsorName, tier };
@@ -49,6 +49,47 @@ export async function saveSponsorship(trackId: string, sponsorName: string, tier
         return false;
     }
 }
+
+const LICENSES_KEY = "data/issued_licenses.json";
+
+export async function getIssuedLicenses(): Promise<any[]> {
+    try {
+        const command = new GetObjectCommand({
+            Bucket: BUCKET,
+            Key: LICENSES_KEY,
+        });
+        const response = await s3Client.send(command);
+        const content = await response.Body?.transformToString();
+        return content ? JSON.parse(content) : [];
+    } catch (error: any) {
+        if (error.name === "NoSuchKey") return [];
+        return [];
+    }
+}
+
+export async function saveIssuedLicense(license: any): Promise<boolean> {
+    try {
+        const current = await getIssuedLicenses();
+        current.push({
+            ...license,
+            issuedAt: new Date().toISOString()
+        });
+
+        const command = new PutObjectCommand({
+            Bucket: BUCKET,
+            Key: LICENSES_KEY,
+            Body: JSON.stringify(current, null, 2),
+            ContentType: "application/json",
+        });
+
+        await s3Client.send(command);
+        return true;
+    } catch (error) {
+        console.error("Error saving license to S3:", error);
+        return false;
+    }
+}
+
 const ARTBOOKS_KEY = "data/artbooks.json";
 
 export async function getArtbookAccess(): Promise<Record<string, any>> {

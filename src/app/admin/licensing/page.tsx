@@ -4,7 +4,8 @@ import path from 'path';
 import Link from 'next/link';
 import { ArrowLeft, CheckCircle2, FileText, AlertCircle, PlayCircle, DollarSign, ShieldAlert } from 'lucide-react';
 import styles from './page.module.css';
-import { StatusActions } from './StatusActions';
+import { StatusActions, IssueCertificateButton } from './StatusActions';
+import { getIssuedLicenses } from '@/lib/s3-storage';
 
 // Read JSON DBs natively on the server
 function getTableData(filename: string) {
@@ -23,6 +24,7 @@ export default async function AdminLicensingDashboard() {
     const licenses = getTableData('licenses.json').reverse(); // Newest first
     const quotes = getTableData('quotes.json').reverse();
     const whitelists = getTableData('whitelists.json').reverse();
+    const issuedRegistry = await getIssuedLicenses();
 
     const pendingQuotes = quotes.filter((q: { status: string }) => q.status === 'pending').length;
     const pendingWhitelists = whitelists.filter((w: { status: string }) => w.status === 'pending').length;
@@ -57,7 +59,7 @@ export default async function AdminLicensingDashboard() {
                 </div>
             </div>
 
-            {/* LICENSING CHEAT SHEET */}
+            {/* LICENSING CHEAT SHEET (unchanged) */}
             <div className="mb-12 grid md:grid-cols-2 gap-6">
                 <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/10 border border-blue-500/20 rounded-3xl p-8 backdrop-blur-xl">
                     <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-blue-400">
@@ -85,7 +87,7 @@ export default async function AdminLicensingDashboard() {
                             <strong className="text-white">Excel/Mood Update:</strong> To change mood mapping, edit the <code>moodMapping</code> object in <code>scripts/convertExcelToAlbums.js</code> and run <code>node scripts/convertExcelToAlbums.js</code> in your terminal.
                         </li>
                         <li>
-                            <strong className="text-white">PDF Certificates:</strong> Ensure <code>RESEND_API_KEY</code> is set in <strong>Vercel &gt; Settings &gt; Environment Variables</strong>. This is required to email license PDFs to customers.
+                            <strong className="text-white">PDF Certificates:</strong> PDF generation is now active for all completed sales and quotes. Tracking is logged to S3.
                         </li>
                         <li>
                             <strong className="text-white">ASCAP Registration:</strong> Log into ASCAP &rarr; &quot;Register a Work&quot; &rarr; Enter Title + Writers (Gary Birrell 100%) + ISRC. This ensures you collect performance royalties.
@@ -110,23 +112,33 @@ export default async function AdminLicensingDashboard() {
                                     <th>Buyer Name</th>
                                     <th>Track</th>
                                     <th>Tier / Usage</th>
-                                    <th>Amount</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {licenses.length === 0 ? (
-                                    <tr><td colSpan={7} className={styles.emptyState}>No completed licenses found.</td></tr>
-                                ) : licenses.map((lic: { id: string; date: string; buyerName: string; buyerEmail: string; trackTitle: string; licenseType: string; usage: string; amount: number; certNo?: string }) => (
+                                    <tr><td colSpan={6} className={styles.emptyState}>No completed licenses found.</td></tr>
+                                ) : licenses.map((lic: any) => (
                                     <tr key={lic.id}>
                                         <td>{new Date(lic.date).toLocaleDateString()}</td>
-                                        <td><code className="text-xs bg-white/5 px-2 py-1 rounded">{lic.certNo || 'LEGACY-ID'}</code></td>
+                                        <td><code className="text-xs bg-white/5 px-2 py-1 rounded">{lic.certNo || 'NEW'}</code></td>
                                         <td><strong>{lic.buyerName}</strong><br/><small>{lic.buyerEmail}</small></td>
                                         <td>{lic.trackTitle}</td>
                                         <td>
                                             <span className={styles.badge}>{lic.licenseType.toUpperCase()}</span>
                                             <span className={styles.subBadge}>{lic.usage.toUpperCase()}</span>
                                         </td>
-                                        <td className={styles.amountWrap}>£{lic.amount}</td>
+                                        <td>
+                                            <IssueCertificateButton metadata={{
+                                                buyerName: lic.buyerName,
+                                                buyerEmail: lic.buyerEmail,
+                                                trackTitle: lic.trackTitle,
+                                                licenseType: lic.licenseType,
+                                                usage: lic.usage,
+                                                duration: 'perpetual',
+                                                territory: 'Worldwide'
+                                            }} />
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -148,13 +160,13 @@ export default async function AdminLicensingDashboard() {
                                     <th>Company</th>
                                     <th>Track Config</th>
                                     <th>Project Details</th>
-                                    <th>Status</th>
+                                    <th>Status / Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {quotes.length === 0 ? (
                                     <tr><td colSpan={6} className={styles.emptyState}>No pending quotes.</td></tr>
-                                ) : quotes.map((quote: { id: string; date: string; name: string; email: string; company: string; trackTitle: string; configuration: { usage: string; duration: string; territory: string }; details: string; status: string }) => (
+                                ) : quotes.map((quote: any) => (
                                     <tr key={quote.id}>
                                         <td>{new Date(quote.date).toLocaleDateString()}</td>
                                         <td><strong>{quote.name}</strong><br/><small>{quote.email}</small></td>
@@ -178,6 +190,17 @@ export default async function AdminLicensingDashboard() {
                                                     { value: 'resolved', label: 'Resolved' },
                                                 ]}
                                             />
+                                            {quote.status === 'resolved' && (
+                                                <IssueCertificateButton metadata={{
+                                                    buyerName: quote.name,
+                                                    buyerEmail: quote.email,
+                                                    trackTitle: quote.trackTitle,
+                                                    licenseType: 'Custom License',
+                                                    usage: quote.configuration.usage,
+                                                    duration: quote.configuration.duration,
+                                                    territory: quote.configuration.territory
+                                                }} />
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
@@ -205,7 +228,7 @@ export default async function AdminLicensingDashboard() {
                             <tbody>
                                 {whitelists.length === 0 ? (
                                     <tr><td colSpan={5} className={styles.emptyState}>No YouTube clearance requests.</td></tr>
-                                ) : whitelists.map((wl: { id: string; date: string; name: string; email: string; trackTitle: string; youtubeUrl: string; status: string }) => (
+                                ) : whitelists.map((wl: any) => (
                                     <tr key={wl.id}>
                                         <td>{new Date(wl.date).toLocaleDateString()}</td>
                                         <td><strong>{wl.name}</strong><br/><small>{wl.email}</small></td>
@@ -223,6 +246,39 @@ export default async function AdminLicensingDashboard() {
                                                 ]}
                                             />
                                         </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                {/* 4. ISSUED LICENSE REGISTRY (Persistence Registry) */}
+                <section className={styles.tableSection}>
+                    <div className={styles.sectionHeader}>
+                        <h2><ShieldAlert size={20} color="#38bdf8" /> Issued Certificate Registry (S3)</h2>
+                    </div>
+                    <div className={styles.tableWrapper}>
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    <th>Issued At</th>
+                                    <th>Certificate ID</th>
+                                    <th>Licensee</th>
+                                    <th>Track Title</th>
+                                    <th>Usage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {issuedRegistry.length === 0 ? (
+                                    <tr><td colSpan={5} className={styles.emptyState}>No certificates issued yet.</td></tr>
+                                ) : issuedRegistry.map((reg: any) => (
+                                    <tr key={reg.certNo}>
+                                        <td>{new Date(reg.issuedAt).toLocaleString()}</td>
+                                        <td><code className="text-xs bg-cyan-900/20 text-cyan-400 px-2 py-1 rounded border border-cyan-800/30">{reg.certNo}</code></td>
+                                        <td>{reg.buyerName}</td>
+                                        <td>{reg.trackTitle}</td>
+                                        <td className="text-xs text-zinc-500 italic">{reg.usage}</td>
                                     </tr>
                                 ))}
                             </tbody>

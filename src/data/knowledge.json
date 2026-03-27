@@ -51,9 +51,38 @@
     {
       "q": "What are the Radio Stations?",
       "a": "We have several stations including Main, Deep Cuts, Demos, and Live. VIPs get access to all stations for the ultimate 'Inside the Studio' experience."
+    },
+    {
+      "q": "What are the Sponsorship Tiers?",
+      "a": "We offer three premium sponsorship tiers for each track: <br/>• <strong>Gold</strong>: Your name permanently on the track page + Official Badge.<br/>• <strong>Platinum</strong>: Prominent placement + Official Badge + Early access to the next Single.<br/>• <strong>Diamond</strong>: Top Billing as 'Executive Producer' + Exclusive Animated Badge + Early access + Lifetime 10% Merch Discount."
+    },
+    {
+      "q": "How can I track my license?",
+      "a": "Once you purchase a license, it is registered in our master database. You can request your official PDF certificate which includes your unique License Number and the current issue date for legal proof of use."
+    },
+    {
+      "q": "Do you have Ringtones?",
+      "a": "Yes! We have a dedicated <a href='/shop/ringtones' class='text-pink-400 underline'>Ringtones Page</a> featuring exclusive snippets of the latest drops and vault tracks."
+    },
+    {
+      "q": "Where is the audience from?",
+      "a": "Our global analytics now tracks visitor geography in real-time. We have fans from all over the world, with deep data on country-level engagement (Visits by Country) visible in our admin dashboard."
+    },
+    {
+      "q": "How can I support Gary directly?",
+      "a": "You can use the new <strong>Tip the Artist</strong> feature! Just click the 'Heart' icon next to any track in the music library to send a small tip (£1, £5, £10, or £25). 100% of tips go directly toward studio time and future song production."
+    },
+    {
+      "q": "What is the Free Welcome Gift?",
+      "a": "New fans who join the club for free get an instant high-resolution track download as a 'Thank You'. It's our way of welcoming you to the SingIt Pop family!"
     }
   ],
   "pages": [
+    {
+      "name": "Licensing Hub",
+      "url": "/licensing",
+      "desc": "Browse the catalog and secure legal rights for your productions with instant digital certificates."
+    },
     {
       "name": "About",
       "url": "/about",
@@ -153,6 +182,17 @@
         "Select a Visual Theme (Pink, Purple, Gold, or Cyan).",
         "Complete checkout for £10.",
         "Share the unique gift link with your recipient!"
+      ]
+    },
+    {
+      "feature": "Tip the Artist",
+      "tier": "All",
+      "devices": ["PC", "Mobile"],
+      "steps": [
+        "Go to the Music or Licensing page.",
+        "Find a track you love and click the pink 'Heart' icon.",
+        "Select a tip amount (Coffee, Beer, Pizza, or Studio Time).",
+        "Complete the quick checkout to support Gary's production directly!"
       ]
     }
   ]

@@ -8,6 +8,8 @@ import styles from './SongList.module.css';
 import { Track, Album } from '@/data/albumData'; // Just types
 import { capitalizeTitle } from '@/utils/formatters';
 import SponsorshipModal from '@/components/licensing/SponsorshipModal';
+import TipModal from '@/components/music/TipModal';
+import { getUniqueId } from '@/lib/track-utils';
 
 interface SongListProps {
     tracks: Track[];
@@ -40,6 +42,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
     const [isClaiming, setIsClaiming] = useState(false);
     const [sponsorships, setSponsorships] = useState<any[]>([]);
     const [selectedSponsorTrack, setSelectedSponsorTrack] = useState<any | null>(null);
+    const [selectedTipTrack, setSelectedTipTrack] = useState<any | null>(null);
 
     // Fetch initial claims usage
     useEffect(() => {
@@ -400,16 +403,19 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
 
                         const isLatestSingle = String(uniqueId) === String(latestSingleUid);
                         const isOwned = hasTrackAccess(uniqueId);
+                        
+                        const sponsor = sponsorships.find(s => s.trackId === uniqueId);
+                        const isSponsor = sponsor && user?.name && user.name.toLowerCase() === sponsor.name.toLowerCase();
 
                         if (isPreRelease && !isLatestSingle) {
-                            // Pre-Release (VIP Only)
-                            if (!isPro) {
+                            // Pre-Release (VIP Only, or Sponsor)
+                            if (!isPro && !isSponsor) {
                                 isLocked = true;
                                 lockMessage = "VIP Exclusive! Upgrade to listen before release.";
                             }
                         } else {
                             // Standard Release Logic
-                            if (!isOwned) {
+                            if (!isOwned && !isSponsor) { // Sponsor gets full access too
                                 isPreview = true;
                             }
                         }
@@ -459,27 +465,37 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                             {(() => {
                                                 const sponsor = sponsorships.find(s => s.trackId === uniqueId);
                                                 if (!sponsor) return null;
+                                                
+                                                const tierColor = sponsor.tier === 'diamond' ? '#00f2ff' : 
+                                                                 sponsor.tier === 'platinum' ? '#e5e4e2' : '#ffd700';
+                                                const tierLabel = sponsor.tier ? sponsor.tier.charAt(0).toUpperCase() + sponsor.tier.slice(1) : 'Gold';
+
                                                 return (
                                                     <span 
-                                                        className={styles.sponsorBadge} 
-                                                        title={`Sponsored by ${sponsor.name}`}
-                                                        style={{ 
-                                                            marginLeft: '8px', 
-                                                            color: sponsor.tier === 'diamond' ? '#00f2ff' : 
-                                                                   sponsor.tier === 'platinum' ? '#e5e4e2' : '#ffd700',
-                                                            display: 'inline-flex',
-                                                            alignItems: 'center',
-                                                            gap: '2px'
-                                                        }}
+                                                        className={`${styles.sponsorBadge} ${sponsor.tier === 'diamond' ? styles.diamondBadge : ''}`}
+                                                        style={{ marginLeft: '12px' }}
+                                                        title={`${tierLabel} Sponsor: ${sponsor.name}`}
                                                     >
-                                                        <Award size={12} fill="currentColor" />
-                                                        <span style={{ fontSize: '0.6rem', fontWeight: 'bold' }}>ADOPTED</span>
+                                                        <Award size={14} fill={tierColor} color={tierColor} />
+                                                        <span style={{ 
+                                                            fontSize: '0.65rem', 
+                                                            fontWeight: '800', 
+                                                            color: tierColor,
+                                                            letterSpacing: '0.05em'
+                                                        }}>
+                                                            {tierLabel.toUpperCase()} SPONSOR: {sponsor.name.toUpperCase()}
+                                                        </span>
                                                     </span>
                                                 );
                                             })()}
                                         </div>
                                         <div className={styles.meta}>
                                             £{track.price} • {track.plays} plays
+                                            {sponsor && (
+                                                <span className={styles.sponsorCredit}>
+                                                    • Sponsored by <strong className="text-white">{sponsor.name}</strong>
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -585,7 +601,19 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                         <Heart size={18} fill={favorites.includes(uniqueId) ? "var(--accent)" : "none"} color={favorites.includes(uniqueId) ? "var(--accent)" : "currentColor"} />
                                     </button>
 
-                                    {/* Sponsor Button */}
+                                    {/* Tip Button */}
+                                    <button
+                                        className={styles.actionBtn}
+                                        title="Tip the Artist"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setSelectedTipTrack(track);
+                                        }}
+                                        style={{ color: '#ec4899' }}
+                                    >
+                                        <Heart size={18} />
+                                    </button>
+
                                     {!sponsorships.find(s => s.trackId === uniqueId) && (
                                         <button
                                             className={styles.actionBtn}
@@ -865,6 +893,13 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
             )}
 
             {/* Sponsorship Modal */}
+            {selectedTipTrack && (
+                <TipModal 
+                    trackTitle={selectedTipTrack.title} 
+                    onClose={() => setSelectedTipTrack(null)} 
+                />
+            )}
+
             {selectedSponsorTrack && (
                 <SponsorshipModal 
                     track={selectedSponsorTrack} 

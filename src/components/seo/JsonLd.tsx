@@ -5,10 +5,10 @@ export default function JsonLd() {
     const jsonLd: WithContext<MusicGroup> = {
         '@context': 'https://schema.org',
         '@type': 'MusicGroup',
-        name: 'SingIt Pop',
+        name: 'SING | SingIt Pop',
         url: 'https://singitpop.com',
         logo: 'https://singitpop.com/logo.png', // Ensure this exists or use a valid image URL
-        description: 'The future of pop music. AI-infused artist and digital fan club.',
+        description: 'SING - Official Pop Music Artist. The future of pop music with AI-infused tracks and a premium digital fan club.',
         sameAs: [
             'https://www.youtube.com/@singitpop',
             'https://www.instagram.com/singitpop',

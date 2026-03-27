@@ -95,6 +95,11 @@ export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
                     behind-the-scenes content, and VIP experiences.
                 </p>
 
+                <div className="bg-gradient-to-r from-pink-500/20 to-purple-500/20 backdrop-blur-md border border-white/20 rounded-2xl p-4 mb-8 max-w-sm mx-auto">
+                    <p className="text-sm font-bold text-pink-400 mb-1">🎁 WELCOME GIFT</p>
+                    <p className="text-white font-medium">Join for FREE & get an instant high-res track download.</p>
+                </div>
+
                 <div className={styles.actions}>
                     <button
                         onClick={() => {
@@ -103,14 +108,14 @@ export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
                             } else {
                                 handleDismiss();
                                 setTimeout(() => {
-                                    const element = document.getElementById('access');
-                                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                                    // Redirect to membership sections
+                                    window.location.href = '/membership';
                                 }, 600);
                             }
                         }}
                         className={styles.enterClubBtn}
                     >
-                        {user ? "Go to Dashboard" : "Choose Your Access"}
+                        {user ? "Go to Dashboard" : "Get My Free Gift"}
                     </button>
 
                     <button onClick={handleDismiss} className={styles.enterSiteBtn}>

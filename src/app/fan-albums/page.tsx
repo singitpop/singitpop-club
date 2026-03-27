@@ -146,11 +146,18 @@ export default function CommunityHubPage() {
         fetchPlaylists();
 
         // Fetch Active Challenge
-        fetch('/api/community/challenge', { cache: 'no-store' }).then(res => res.json()).then(data => {
-            if (data && data.active) {
-                setActiveChallenge(data);
-            }
-        });
+        fetch('/api/community/challenge', { cache: 'no-store' })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.active) {
+                    setActiveChallenge(data);
+                } else {
+                    setActiveChallenge({ title: 'New Challenge Soon!', description: 'Stay tuned for next week\'s interactive challenge.', active: false });
+                }
+            })
+            .catch(() => {
+                setActiveChallenge({ title: 'New Challenge Soon!', description: 'Stay tuned for next week\'s interactive challenge.', active: false });
+            });
     }, []);
 
     // Stop audio/effects on unmount

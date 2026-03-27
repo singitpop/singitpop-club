@@ -10,7 +10,53 @@ interface AnalyticsChartsProps {
     userData: any[];
     playlistData: any[];
     playlistStats: number[];
-    visitData: Record<string, number>;
+    visitData: Record<string, number | any>;
+}
+
+// Helper Sub-components & Utilities
+function MetricCard({ title, value, trend, color, bgColor, borderColor }: any) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`p-5 rounded-2xl border ${borderColor} ${bgColor} backdrop-blur-sm`}
+        >
+            <div className={`text-sm font-medium ${color} opacity-80 uppercase tracking-wider`}>{title}</div>
+            <div className="text-3xl font-bold text-white mt-1">{value}</div>
+            <div className="text-xs text-white/40 mt-1">{trend}</div>
+        </motion.div>
+    );
+}
+
+function ChartCard({ title, subtitle, children }: any) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-[#0A0A0A] border border-white/10 rounded-2xl p-6 h-[350px] flex flex-col relative"
+        >
+            <div className="mb-4">
+                <h3 className="text-lg font-bold text-white">{title}</h3>
+                <p className="text-white/40 text-xs">{subtitle}</p>
+            </div>
+            <div className="flex-1 min-h-0">
+                {children}
+            </div>
+        </motion.div>
+    );
+}
+
+function getEmojiFlag(countryCode: string) {
+    if (!countryCode || countryCode.length !== 2) return '🌐';
+    const code = countryCode.toUpperCase();
+    const codePoints = code
+        .split('')
+        .map(char => 127397 + char.charCodeAt(0));
+    try {
+        return String.fromCodePoint(...codePoints);
+    } catch (e) {
+        return '🌐';
+    }
 }
 
 export default function AnalyticsCharts({ userData, playlistData, playlistStats, visitData }: AnalyticsChartsProps) {
@@ -39,14 +85,33 @@ export default function AnalyticsCharts({ userData, playlistData, playlistStats,
         count: playlistCreationStats[date]
     })).slice(-14); // Last 14 days activity
 
-    // 3. Visits Data
+    // 3. Visits Data & Country Breakdown
     const visitChartData = Object.entries(visitData || {})
-        .map(([date, count]) => ({
-            date: new Date(date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
-            count
-        }))
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .map(([date, val]) => {
+            const count = typeof val === 'number' ? val : (val as any).total;
+            return {
+                date: new Date(date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+                count,
+                rawDate: date
+            };
+        })
+        .sort((a, b) => new Date(a.rawDate).getTime() - new Date(b.rawDate).getTime())
         .slice(-14);
+
+    // Aggregate Countries
+    const countryStats: Record<string, number> = {};
+    Object.values(visitData || {}).forEach(val => {
+        if (typeof val === 'object' && val !== null && (val as any).countries) {
+            Object.entries((val as any).countries).forEach(([code, count]) => {
+                const countryName = code.toUpperCase();
+                countryStats[countryName] = (countryStats[countryName] || 0) + (count as number);
+            });
+        }
+    });
+
+    const topCountries = Object.entries(countryStats)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
 
     // 4. Recent Users
     const recentUsers = [...userData]
@@ -131,6 +196,33 @@ export default function AnalyticsCharts({ userData, playlistData, playlistStats,
                 </ChartCard>
             </div>
 
+            {/* --- SECTION 2.5: GEOGRAPHY BREAKDOWN --- */}
+            <div className="grid grid-cols-1 gap-8">
+                <div className="bg-[#0A0A0A] border border-white/10 rounded-2xl p-6">
+                    <div className="mb-6">
+                        <h3 className="text-lg font-bold text-white">Audience Geography</h3>
+                        <p className="text-white/40 text-xs">Visits breakdown by country (Captured via S3 Analytics)</p>
+                    </div>
+                    
+                    {topCountries.length === 0 ? (
+                        <div className="py-12 text-center text-white/20 italic">No country data collected yet.</div>
+                    ) : (
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+                            {topCountries.map(([code, count]) => (
+                                <div key={code} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                                    <div className="text-2xl mb-1">
+                                        {/* Simple Emoji Flag logic or just the code */}
+                                        {code === 'UNKNOWN' ? '🌐' : getEmojiFlag(code)}
+                                    </div>
+                                    <div className="text-sm font-bold text-white">{code}</div>
+                                    <div className="text-xs text-white/40">{count} visits</div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+
             {/* --- SECTION 3: DEEP DIVE --- */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -188,38 +280,5 @@ export default function AnalyticsCharts({ userData, playlistData, playlistStats,
                 </motion.div>
             </div>
         </div>
-    );
-}
-
-// Sub-components for cleaner code
-function MetricCard({ title, value, trend, color, bgColor, borderColor }: any) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`p-5 rounded-2xl border ${borderColor} ${bgColor} backdrop-blur-sm`}
-        >
-            <div className={`text-sm font-medium ${color} opacity-80 uppercase tracking-wider`}>{title}</div>
-            <div className="text-3xl font-bold text-white mt-1">{value}</div>
-            <div className="text-xs text-white/40 mt-1">{trend}</div>
-        </motion.div>
-    );
-}
-
-function ChartCard({ title, subtitle, children }: any) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-[#0A0A0A] border border-white/10 rounded-2xl p-6 h-[350px] flex flex-col"
-        >
-            <div className="mb-4">
-                <h3 className="text-lg font-bold text-white">{title}</h3>
-                <p className="text-white/40 text-xs">{subtitle}</p>
-            </div>
-            <div className="flex-1 min-h-0">
-                {children}
-            </div>
-        </motion.div>
     );
 }

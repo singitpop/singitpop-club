@@ -5,8 +5,13 @@ import { s3Client } from "./s3";
 const BUCKET = process.env.AWS_S3_BUCKET || "singitpop-music";
 const KEY = "analytics/visits.json";
 
+export interface AnalyticsDay {
+    total: number;
+    countries: Record<string, number>;
+}
+
 export interface AnalyticsData {
-    [date: string]: number;
+    [date: string]: number | AnalyticsDay;
 }
 
 export async function getDailyVisits(): Promise<AnalyticsData> {
@@ -30,14 +35,30 @@ export async function getDailyVisits(): Promise<AnalyticsData> {
     }
 }
 
-export async function incrementDailyVisit(): Promise<void> {
+export async function incrementDailyVisit(country?: string): Promise<void> {
     try {
         // 1. Get current data
         const data = await getDailyVisits();
 
         // 2. Increment today's count
         const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        data[today] = (data[today] || 0) + 1;
+        
+        let dayData = data[today];
+
+        // Migration/Normalization: Convert number to AnalyticsDay
+        if (typeof dayData === 'number' || !dayData) {
+            dayData = {
+                total: (dayData as number) || 0,
+                countries: {}
+            };
+        }
+
+        dayData.total += 1;
+        if (country && country !== 'unknown') {
+            dayData.countries[country] = (dayData.countries[country] || 0) + 1;
+        }
+
+        data[today] = dayData;
 
         // 3. Save back to S3
         const command = new PutObjectCommand({
@@ -49,7 +70,6 @@ export async function incrementDailyVisit(): Promise<void> {
         });
 
         await s3Client.send(command);
-        // console.log(`[Analytics] Incremented visit for ${today}. New count: ${data[today]}`);
     } catch (error) {
         console.error("[Analytics] Failed to increment visit:", error);
     }

@@ -8,24 +8,24 @@ export const S3_BUCKET_URL = "https://singitpop-music.s3.eu-north-1.amazonaws.co
  * Converts a raw coverArt filename or relative path into a full S3 URL.
  * matches logic in licensing and album APIs.
  */
-export function getAlbumCoverUrl(album: { id?: string, folderPath?: string, coverArt?: string }): string {
-    if (!album) return "/images/placeholders/album-default.jpg";
+export function getAlbumCoverUrl(album: any): string {
+    if (!album) return "/images/defaults/vinyl_default.png";
     
-    const art = album.coverArt || "cover.png";
-    
-    // If already a full URL, return it
-    if (art.startsWith('http')) return art;
-    
-    // If it starts with / but is basically a local public path
-    if (art.startsWith('/') && !art.includes('amazonaws.com')) return art;
+    // 1. If coverArt is a full URL (signed or public), return it
+    if (album.coverArt && (album.coverArt.startsWith('http') || album.coverArt.startsWith('/'))) {
+        return album.coverArt;
+    }
 
-    // Use slugified folderPath or ID to build S3 path
-    const folder = album.folderPath || album.id || "";
-    const sluggedFolder = folder.toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ /g, '-');
+    // 2. Resolve the slug for S3 folder path
+    // Logic: album.folderPath -> first track's sourceFolder -> album.id -> album.title
+    const rawFolder = album.folderPath || (album.tracks?.[0]?.sourceFolder) || album.id || album.title;
+    const slug = rawFolder ? rawFolder.toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ /g, '-') : '';
     
-    if (!sluggedFolder) return "/images/placeholders/album-default.jpg";
+    if (!slug) return "/images/defaults/vinyl_default.png";
     
-    return `${S3_BUCKET_URL}/albums/${sluggedFolder}/cover.png`;
+    // 3. Construct URL
+    const filename = (album.coverArt && album.coverArt.includes('.')) ? album.coverArt : 'cover.png';
+    return `${S3_BUCKET_URL}/albums/${slug}/${filename}`;
 }
 
 /**

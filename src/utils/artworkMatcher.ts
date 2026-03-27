@@ -1,4 +1,5 @@
 import { albums } from "@/data/albumData";
+import { getAlbumCoverUrl } from "@/lib/image-utils";
 
 export const getArtworkForTrack = (trackTitle: string): string => {
     if (!trackTitle) return "/images/defaults/vinyl_default.png";
@@ -8,8 +9,8 @@ export const getArtworkForTrack = (trackTitle: string): string => {
     for (const album of albums) {
         for (const track of album.tracks) {
             if (track.title.toLowerCase().trim() === normalizedTitle) {
-                // Return album cover if found
-                return album.coverArt;
+                // Use robust S3 resolution
+                return getAlbumCoverUrl(album);
             }
         }
     }

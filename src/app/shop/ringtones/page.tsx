@@ -98,7 +98,7 @@ export default function RingtonesPage() {
                             </h3>
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                                 {ringtones.filter(r => r.isNew).map((ringtone, index) => {
-                                    const artwork = getArtworkForTrack(ringtone.title);
+                                    const artwork = ringtone.artwork || "/images/singles-cover.png";
                                     return (
                                         <motion.div
                                             key={ringtone.id}
@@ -145,7 +145,7 @@ export default function RingtonesPage() {
                             <h3 className="text-xl font-bold mb-6 text-white/60">The Vault</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 opacity-80 hover:opacity-100 transition-opacity">
                                 {ringtones.filter(r => !r.isNew).map((ringtone) => {
-                                    const artwork = getArtworkForTrack(ringtone.title);
+                                    const artwork = ringtone.artwork || "/images/singles-cover.png";
                                     return (
                                         <div key={ringtone.id} className="bg-black/20 rounded-xl p-3 border border-white/5 hover:border-white/20 transition-all flex items-center justify-between gap-4">
                                             <div className="flex items-center gap-3 overflow-hidden">
