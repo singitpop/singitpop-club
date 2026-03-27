@@ -15,8 +15,8 @@ export default async function LicensingPage() {
     // Prepare album-centric data for the library
     const albums = albumsData.map((album: any) => {
         // Correct coverArt path
-        const sluggedFolder = album.folderPath ? album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-') : '';
-        const coverArt = sluggedFolder ? `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${sluggedFolder}/cover.png` : album.coverArt;
+        const slug = album.folderPath ? album.folderPath.toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ /g, '-') : '';
+        const coverArt = slug ? `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${slug}/cover.png` : album.coverArt;
         
         return {
             ...album,

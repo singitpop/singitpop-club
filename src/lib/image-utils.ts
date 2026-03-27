@@ -21,7 +21,7 @@ export function getAlbumCoverUrl(album: { id?: string, folderPath?: string, cove
 
     // Use slugified folderPath or ID to build S3 path
     const folder = album.folderPath || album.id || "";
-    const sluggedFolder = folder.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-');
+    const sluggedFolder = folder.toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ /g, '-');
     
     if (!sluggedFolder) return "/images/placeholders/album-default.jpg";
     

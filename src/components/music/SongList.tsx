@@ -86,7 +86,13 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                 const res = await fetch('/api/music/sponsorships');
                 if (res.ok) {
                     const data = await res.json();
-                    setSponsorships(data.sponsorships || []);
+                    // API returns a record { trackId: { name, tier } }, convert to array for .find()
+                    const sponsorshipRecord = data.sponsorships || {};
+                    const sponsorshipArray = Object.entries(sponsorshipRecord).map(([trackId, details]: [string, any]) => ({
+                        trackId,
+                        ...details
+                    }));
+                    setSponsorships(sponsorshipArray);
                 }
             } catch (e) {
                 console.error("Failed to load sponsorships", e);
@@ -450,23 +456,27 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                             {isPreview && <span className={styles.badge} style={{ marginLeft: '8px', fontSize: '0.6rem', background: '#666', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>PREVIEW</span>}
                                             
                                             {/* Sponsor Badge */}
-                                            {sponsorships.find(s => s.trackId === uniqueId) && (
-                                                <span 
-                                                    className={styles.sponsorBadge} 
-                                                    title={`Sponsored by ${sponsorships.find(s => s.trackId === uniqueId).name}`}
-                                                    style={{ 
-                                                        marginLeft: '8px', 
-                                                        color: sponsorships.find(s => s.trackId === uniqueId).tier === 'diamond' ? '#00f2ff' : 
-                                                               sponsorships.find(s => s.trackId === uniqueId).tier === 'platinum' ? '#e5e4e2' : '#ffd700',
-                                                        display: 'inline-flex',
-                                                        alignItems: 'center',
-                                                        gap: '2px'
-                                                    }}
-                                                >
-                                                    <Award size={12} fill="currentColor" />
-                                                    <span style={{ fontSize: '0.6rem', fontWeight: 'bold' }}>ADOPTED</span>
-                                                </span>
-                                            )}
+                                            {(() => {
+                                                const sponsor = sponsorships.find(s => s.trackId === uniqueId);
+                                                if (!sponsor) return null;
+                                                return (
+                                                    <span 
+                                                        className={styles.sponsorBadge} 
+                                                        title={`Sponsored by ${sponsor.name}`}
+                                                        style={{ 
+                                                            marginLeft: '8px', 
+                                                            color: sponsor.tier === 'diamond' ? '#00f2ff' : 
+                                                                   sponsor.tier === 'platinum' ? '#e5e4e2' : '#ffd700',
+                                                            display: 'inline-flex',
+                                                            alignItems: 'center',
+                                                            gap: '2px'
+                                                        }}
+                                                    >
+                                                        <Award size={12} fill="currentColor" />
+                                                        <span style={{ fontSize: '0.6rem', fontWeight: 'bold' }}>ADOPTED</span>
+                                                    </span>
+                                                );
+                                            })()}
                                         </div>
                                         <div className={styles.meta}>
                                             £{track.price} • {track.plays} plays
