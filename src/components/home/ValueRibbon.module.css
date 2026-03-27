@@ -1,0 +1,140 @@
+.ribbonContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    padding-bottom: 2rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.ribbonContent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 1200px;
+    width: 90%;
+}
+
+.featureItem {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 12px 20px;
+    min-width: 200px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.featureItem:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.highlight {
+    background: rgba(250, 0, 255, 0.05);
+    border-color: rgba(250, 0, 255, 0.2);
+}
+
+.highlight:hover {
+    border-color: rgba(250, 0, 255, 0.5);
+    box-shadow: 0 0 20px rgba(250, 0, 255, 0.2);
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: white;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.textWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.featureTitle {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.featureDesc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.scrollHint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.scrollHint span {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 700;
+}
+
+.scrollLine {
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
+}
+
+@media (max-width: 1100px) {
+    .featureItem {
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ribbonContainer {
+        padding-bottom: 2.5rem;
+    }
+    
+    .ribbonContent {
+        gap: 0.8rem;
+    }
+
+    .featureItem {
+        min-width: 140px;
+        padding: 10px;
+    }
+
+    .featureTitle {
+        font-size: 0.85rem;
+    }
+
+    .featureDesc {
+        display: none;
+    }
+    
+    .iconWrapper {
+        width: 32px;
+        height: 32px;
+    }
+}

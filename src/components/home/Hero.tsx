@@ -9,6 +9,7 @@ import { LATEST_RELEASES } from '@/config/latestReleases';
 import { albums } from '@/data/albumData';
 
 import WelcomeOverlay from './WelcomeOverlay';
+import ValueRibbon from './ValueRibbon';
 
 export default function Hero() {
     const [showVideo, setShowVideo] = useState(false);
@@ -167,6 +168,9 @@ export default function Hero() {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* NEW: Feature Discovery Ribbon */}
+            {!showVideo && !isLoading && <ValueRibbon />}
         </section>
     );
 }

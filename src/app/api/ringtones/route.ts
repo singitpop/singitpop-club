@@ -122,16 +122,25 @@ export async function GET() {
             // Find matching album for artwork and date
             const normalize = (s: string) => s.toLowerCase().replace(/[^\w\s]/g, '').trim();
 
-            // Robust Word-Overlap Fuzzy Matcher
+            // Improved Fuzzy Matcher with Stop-Word Filtering
             const isFuzzyMatch = (target: string, candidate: string) => {
-                const normA = normalize(target).split(' ').filter(word => word.length > 2);
-                const normB = normalize(candidate).split(' ').filter(word => word.length > 2);
-                if (normA.length === 0 || normB.length === 0) return normalize(target).includes(normalize(candidate)) || normalize(candidate).includes(normalize(target));
+                const stopWords = new Set(['the', 'and', 'for', 'with', 'from', 'into', 'them', 'this', 'that', 'with', 'back', 'just']);
+                const normalizeWords = (s: string) => normalize(s).split(' ').filter(w => w.length > 3 && !stopWords.has(w));
                 
-                // Count how many significant words from A are in B (or vice versa)
+                const normA = normalizeWords(target);
+                const normB = normalizeWords(candidate);
+                
+                // Fallback for very short titles
+                if (normA.length === 0 || normB.length === 0) {
+                    const cleanA = normalize(target);
+                    const cleanB = normalize(candidate);
+                    return cleanA === cleanB || cleanA.includes(cleanB) || cleanB.includes(cleanA);
+                }
+                
                 const intersection = normA.filter(word => normB.includes(word));
+                // We want high overlap on the SHORTER of the two keyword sets
                 const coverage = intersection.length / Math.min(normA.length, normB.length);
-                return coverage >= 0.6; // 60% overlap of keywords
+                return coverage >= 0.6; // Balanced threshold
             };
 
             for (const album of albumData) {

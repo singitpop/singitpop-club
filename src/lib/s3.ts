@@ -190,12 +190,13 @@ export async function findImageKey(folderName: string, trackTitle?: string, stri
 
         const response = await s3Client.send(command) as any;
         const contents = response.Contents || [];
-
+        // Helper: remove special chars, extra spaces, lowercase
         const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
-        // 1. Try Specific Track Image
+        // 1. Try Specific Track Image (Nested logic)
         if (trackTitle) {
             const normalizedTrack = normalize(trackTitle);
+            const trackWords = normalizedTrack.split(' ').filter(w => w.length > 2);
 
             const trackCover = contents.find((c: any) => {
                 const key = c.Key || '';
@@ -206,14 +207,26 @@ export async function findImageKey(folderName: string, trackTitle?: string, stri
                 const albumSegmentCount = actualFolderPrefix.split('/').filter(Boolean).length; 
                 const searchSegments = segments.slice(albumSegmentCount); 
 
-                const songFolderMatch = searchSegments.some((seg: string) => normalize(seg).includes(normalizedTrack));
+                // Fuzzy segment match
+                const songFolderMatch = searchSegments.some((seg: string) => {
+                    const normSeg = normalize(seg);
+                    const segWords = normSeg.split(' ').filter(w => w.length > 2);
+                    if (trackWords.length === 0 || segWords.length === 0) return normSeg.includes(normalizedTrack) || normalizedTrack.includes(normSeg);
+                    
+                    const intersection = trackWords.filter(w => segWords.includes(w));
+                    return (intersection.length / Math.min(trackWords.length, segWords.length)) >= 0.7; // 70% match
+                });
+                
                 const isImage = key.match(/\.(png|jpg|jpeg|webp)$/i);
                 const isCover = key.toLowerCase().includes('cover') || key.toLowerCase().includes('front');
 
                 return (songFolderMatch && isImage) || (isCover && songFolderMatch);
             });
 
-            if (trackCover) return trackCover.Key;
+            if (trackCover) {
+                console.log(`[FindImageKey] Found track-specific artwork: ${trackCover.Key}`);
+                return trackCover.Key;
+            }
         }
 
         if (strictTrackMatch && trackTitle) return null;
