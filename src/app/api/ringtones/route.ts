@@ -117,6 +117,7 @@ export async function GET() {
 
             let releaseDate = 0;
             let albumMatch = null;
+            let trackMatch = null;
 
             // Find matching album for artwork and date
             const normalize = (s: string) => s.toLowerCase().replace(/[^\w\s]/g, '').trim();
@@ -135,6 +136,7 @@ export async function GET() {
 
                 if (track || albumMatchStatus) {
                     albumMatch = album;
+                    trackMatch = track; // Store the specific track match if it exists
                     break;
                 }
             }
@@ -157,8 +159,8 @@ export async function GET() {
 
             const isNew = releaseDate >= sixtyDaysAgo && releaseDate <= now;
 
-            // Pre-sign the artwork on the server
-            const artwork = albumMatch ? await getSignedAlbumCoverUrl(albumMatch) : "/images/singles-cover.png";
+            // Pre-sign the artwork on the server - now PASSING trackMatch for single-specific artwork
+            const artwork = albumMatch ? await getSignedAlbumCoverUrl(albumMatch, trackMatch) : "/images/singles-cover.png";
 
             return {
                 id: product.id,
