@@ -121,22 +121,29 @@ export async function GET() {
 
             // Find matching album for artwork and date
             const normalize = (s: string) => s.toLowerCase().replace(/[^\w\s]/g, '').trim();
-            const cleanTitle = normalize(title);
+
+            // Robust Word-Overlap Fuzzy Matcher
+            const isFuzzyMatch = (target: string, candidate: string) => {
+                const normA = normalize(target).split(' ').filter(word => word.length > 2);
+                const normB = normalize(candidate).split(' ').filter(word => word.length > 2);
+                if (normA.length === 0 || normB.length === 0) return normalize(target).includes(normalize(candidate)) || normalize(candidate).includes(normalize(target));
+                
+                // Count how many significant words from A are in B (or vice versa)
+                const intersection = normA.filter(word => normB.includes(word));
+                const coverage = intersection.length / Math.min(normA.length, normB.length);
+                return coverage >= 0.6; // 60% overlap of keywords
+            };
 
             for (const album of albumData) {
-                // 1. Exact track match
-                const track = album.tracks.find(t => {
-                    const cleanTrack = normalize(t.title);
-                    return cleanTitle === cleanTrack || cleanTitle.includes(cleanTrack);
-                });
+                // 1. Check tracks
+                const track = album.tracks.find(t => isFuzzyMatch(title, t.title));
                 
-                // 2. Fallback: Check if ringtone title matches album title or is contained in it
-                const cleanAlbum = normalize(album.title);
-                const albumMatchStatus = cleanTitle === cleanAlbum || cleanAlbum.includes(cleanTitle) || cleanTitle.includes(cleanAlbum);
+                // 2. Check album title
+                const albumMatchStatus = isFuzzyMatch(title, album.title);
 
                 if (track || albumMatchStatus) {
                     albumMatch = album;
-                    trackMatch = track; // Store the specific track match if it exists
+                    trackMatch = track;
                     break;
                 }
             }
