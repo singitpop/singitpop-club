@@ -23,8 +23,7 @@ interface SongListProps {
 
 const MAX_MIXTAPE_TRACKS = 12;
 
-// Helper to generate unique ID
-const getUniqueId = (track: Track) => track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
+// Helper for unique ID is now imported from '@/lib/track-utils'
 
 export default function SongList({ tracks, albums, filterMode = 'all', selectedTracks, onToggleSelection, latestSingleUid, autoPlayTrackId }: SongListProps) {
     const { isPro, isInsider, isLabel, user, hasTrackAccess } = useAuth();
