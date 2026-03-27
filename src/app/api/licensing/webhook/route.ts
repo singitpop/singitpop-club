@@ -200,42 +200,19 @@ export async function POST(req: Request) {
         try {
             console.log(`Processing completed license for: ${meta.buyerName} - ${meta.trackTitle}`);
 
-            // 1. GENERATE PDF CERTIFICATE
-            const pdfDoc = await PDFDocument.create();
-            const page = pdfDoc.addPage([595.28, 841.89]); // A4
-            const { width, height } = page.getSize();
-
-            const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-            const timesBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
-
-            page.drawText('SINGIT POP MUSIC', { x: 50, y: height - 80, size: 24, font: timesBoldFont, color: rgb(0.54, 0.36, 0.96) });
-            page.drawText('OFFICIAL SYNCHRONIZATION LICENSE AGREEMENT', { x: 50, y: height - 110, size: 16, font: timesBoldFont });
-
-            let y = height - 160;
-            const drawRow = (label: string, val: string) => {
-                page.drawText(label + ':', { x: 50, y, size: 12, font: timesBoldFont });
-                page.drawText(val, { x: 180, y, size: 12, font: timesRomanFont });
-                y -= 25;
-            };
-
-            page.drawText(`Date Issued: ${new Date().toLocaleDateString()}`, { x: 50, y, size: 12, font: timesRomanFont });
-            y -= 40;
-
-            drawRow('Licensee Name', meta.buyerName);
-            drawRow('Licensed Track', meta.trackTitle);
-            drawRow('License Tier', meta.licenseType.toUpperCase());
-            drawRow('Approved Usage', meta.usage.toUpperCase());
-            drawRow('Term / Duration', meta.duration.toUpperCase().replace('_', ' '));
-            drawRow('Territory', meta.territory.toUpperCase());
-            drawRow('Audio Format', meta.version.toUpperCase());
-
-            y -= 20;
-
-            const legalText = `By this agreement, SingIt Pop grants to the Licensee (${meta.buyerName}) the non-exclusive \nsynchronization rights to use the master recording "${meta.trackTitle}" strictly within \nthe parameters defined above. \n\nPRO Registration: The composition is registered with ASCAP. \nIPI Number: 1294507240.\n\nAll copyright and ownership remain strictly with SingIt Pop. The Licensee may not \nresell, remix, or redistribute this audio outside of the defined synchronized production.\nIf the Licensee receives a YouTube copyright claim from our official distributor, they \nmust dispute the claim and manually attach this PDF Certificate for auto-clearance.`;
-
-            page.drawText(legalText, { x: 50, y, size: 10, font: timesRomanFont, maxWidth: 450, lineHeight: 14 });
-
-            const pdfBytes = await pdfDoc.save();
+            // 1. GENERATE PDF CERTIFICATE (Branded)
+            const { generateBrandedLicensePdf } = await import('@/lib/pdf-generator');
+            
+            const pdfBytes = await generateBrandedLicensePdf({
+                buyerName: meta.buyerName,
+                buyerEmail: meta.buyerEmail,
+                trackTitle: meta.trackTitle,
+                licenseType: meta.licenseType,
+                usage: meta.usage,
+                duration: meta.duration,
+                territory: meta.territory,
+                version: meta.version || 'Full Master'
+            });
 
             // 2. SAVE TO JSON DB (Vercel-safe)
             const existing = readJson(LICENSES_FILE);

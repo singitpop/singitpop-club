@@ -5,6 +5,7 @@ import styles from './PlaylistViewer.module.css';
 import { useState, useEffect, useMemo } from 'react';
 
 import { albums } from '@/data/albumData'; // Import data to resolve tracks
+import { getAlbumCoverUrl } from '@/lib/image-utils';
 
 interface PlaylistViewerProps {
     playlist: any;
@@ -60,7 +61,8 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
                 if (!isVIP && album.releaseDate && new Date(album.releaseDate) > now) {
                     return null;
                 }
-                return { ...track, uniqueId: uniqueId, id: uniqueId, originalId: track.id, albumTitle: album.title, coverArt: album.coverArt };
+                const artwork = getAlbumCoverUrl(album);
+                return { ...track, uniqueId: uniqueId, id: uniqueId, originalId: track.id, albumTitle: album.title, coverArt: artwork };
             }
             return null;
         }).filter(Boolean);
@@ -68,11 +70,16 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
         setResolvedTracks(tracks);
     }, [playlist]);
 
-    // Unique artworks from tracks
+    // All available album artworks for selection
     const availableArtworks = useMemo(() => {
         const set = new Set<string>();
+        // Add covers from tracks currently in playlist
         resolvedTracks.forEach(t => {
             if (t.coverArt) set.add(t.coverArt);
+        });
+        // Add all other album covers as options
+        albums.forEach(album => {
+            set.add(getAlbumCoverUrl(album));
         });
         return Array.from(set);
     }, [resolvedTracks]);
@@ -132,7 +139,7 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
 
     if (!playlist) return null;
 
-    const displayCover = playlist.coverImage || (resolvedTracks.length > 0 ? (resolvedTracks[0].artwork || resolvedTracks[0].coverArt) : null);
+    const displayCover = playlist.coverImage || (resolvedTracks.length > 0 ? resolvedTracks[0].coverArt : null);
 
     return (
         <div className={styles.overlay} onClick={onClose}>

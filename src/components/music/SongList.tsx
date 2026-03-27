@@ -1,12 +1,13 @@
 "use client";
 
-import { Play, Lock, Share2, Heart, Check, ShoppingBag, Download, X, ListMusic } from 'lucide-react';
+import { Play, Lock, Share2, Heart, Check, ShoppingBag, Download, X, ListMusic, Award, Star } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import styles from './SongList.module.css';
 import { Track, Album } from '@/data/albumData'; // Just types
 import { capitalizeTitle } from '@/utils/formatters';
+import SponsorshipModal from '@/components/licensing/SponsorshipModal';
 
 interface SongListProps {
     tracks: Track[];
@@ -37,6 +38,8 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [isClaiming, setIsClaiming] = useState(false);
+    const [sponsorships, setSponsorships] = useState<any[]>([]);
+    const [selectedSponsorTrack, setSelectedSponsorTrack] = useState<any | null>(null);
 
     // Fetch initial claims usage
     useEffect(() => {
@@ -76,6 +79,21 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         }
         fetchFavorites();
     }, [user]);
+    // Fetch sponsorships on mount
+    useEffect(() => {
+        async function fetchSponsorships() {
+            try {
+                const res = await fetch('/api/music/sponsorships');
+                if (res.ok) {
+                    const data = await res.json();
+                    setSponsorships(data.sponsorships || []);
+                }
+            } catch (e) {
+                console.error("Failed to load sponsorships", e);
+            }
+        }
+        fetchSponsorships();
+    }, []);
 
     // Fetch Signed URL when active track changes
     useEffect(() => {
@@ -430,6 +448,25 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                             {capitalizeTitle(track.title)}
                                             {isPreRelease && <span className={styles.badge} style={{ marginLeft: '8px', fontSize: '0.6rem', background: 'var(--accent)', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>EARLY ACCESS</span>}
                                             {isPreview && <span className={styles.badge} style={{ marginLeft: '8px', fontSize: '0.6rem', background: '#666', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>PREVIEW</span>}
+                                            
+                                            {/* Sponsor Badge */}
+                                            {sponsorships.find(s => s.trackId === uniqueId) && (
+                                                <span 
+                                                    className={styles.sponsorBadge} 
+                                                    title={`Sponsored by ${sponsorships.find(s => s.trackId === uniqueId).name}`}
+                                                    style={{ 
+                                                        marginLeft: '8px', 
+                                                        color: sponsorships.find(s => s.trackId === uniqueId).tier === 'diamond' ? '#00f2ff' : 
+                                                               sponsorships.find(s => s.trackId === uniqueId).tier === 'platinum' ? '#e5e4e2' : '#ffd700',
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        gap: '2px'
+                                                    }}
+                                                >
+                                                    <Award size={12} fill="currentColor" />
+                                                    <span style={{ fontSize: '0.6rem', fontWeight: 'bold' }}>ADOPTED</span>
+                                                </span>
+                                            )}
                                         </div>
                                         <div className={styles.meta}>
                                             £{track.price} • {track.plays} plays
@@ -537,6 +574,21 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     >
                                         <Heart size={18} fill={favorites.includes(uniqueId) ? "var(--accent)" : "none"} color={favorites.includes(uniqueId) ? "var(--accent)" : "currentColor"} />
                                     </button>
+
+                                    {/* Sponsor Button */}
+                                    {!sponsorships.find(s => s.trackId === uniqueId) && (
+                                        <button
+                                            className={styles.actionBtn}
+                                            title="Sponsor this Song"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setSelectedSponsorTrack({ ...track, id: uniqueId });
+                                            }}
+                                            style={{ color: '#ffd700' }}
+                                        >
+                                            <Star size={18} />
+                                        </button>
+                                    )}
 
                                     <button
                                         className={styles.actionBtn}
@@ -800,6 +852,14 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* Sponsorship Modal */}
+            {selectedSponsorTrack && (
+                <SponsorshipModal 
+                    track={selectedSponsorTrack} 
+                    onClose={() => setSelectedSponsorTrack(null)} 
+                />
             )}
         </div>
     );

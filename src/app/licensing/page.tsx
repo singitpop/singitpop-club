@@ -12,33 +12,20 @@ export default async function LicensingPage() {
     const albumsRaw = await fs.promises.readFile(dataPath, 'utf8');
     const albumsData = JSON.parse(albumsRaw);
 
-    // Extract flat tracks array natively, filtering only those with valid streaming links
-    const now = new Date();
-    const tracks = albumsData.flatMap((album: any) => {
-        // Skip entirely if it's a VIP album that hasn't been released yet
-        if (album.accessTier === 'vip' && album.releaseDate) {
-            const releaseDate = new Date(album.releaseDate);
-            if (releaseDate > now) {
-                return [];
-            }
-        }
-
-        return album.tracks
-            .filter((t: any) => t.audioUrl && t.audioUrl.trim() !== '')
-            .map((track: any) => {
-                // Correct coverArt path (raw metadata is just 'cover.png')
-                const sluggedFolder = album.folderPath ? album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-') : '';
-                const coverArt = sluggedFolder ? `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${sluggedFolder}/cover.png` : album.coverArt;
-                
-                return {
-                    ...track,
-                    albumTitle: album.title,
-                    coverArt: coverArt,
-                };
-            });
-    });
+    // Prepare album-centric data for the library
+    const albums = albumsData.map((album: any) => {
+        // Correct coverArt path
+        const sluggedFolder = album.folderPath ? album.folderPath.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-') : '';
+        const coverArt = sluggedFolder ? `https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/${sluggedFolder}/cover.png` : album.coverArt;
+        
+        return {
+            ...album,
+            coverArt: coverArt,
+            tracks: album.tracks.filter((t: any) => t.audioUrl && t.audioUrl.trim() !== '')
+        };
+    }).filter((a: any) => a.tracks.length > 0);
     
-    // Read advert tracks
+    // Read advert tracks (keep as niche collection)
     const advertPath = path.join(process.cwd(), 'src', 'data', 'advertTracks.json');
     const advertRaw = await fs.promises.readFile(advertPath, 'utf8');
     const advertTracks = JSON.parse(advertRaw);
@@ -158,8 +145,8 @@ export default async function LicensingPage() {
                 </div>
             </section>
 
-            {/* TRACK LIBRARY INTERACTIVE CLIENT COMPONENT */}
-            <TrackLibrary tracks={[...tracks, ...advertTracks]} />
+            {/* ALBUM LIBRARY INTERACTIVE CLIENT COMPONENT */}
+            <TrackLibrary albums={albums} advertTracks={advertTracks} />
 
         </main>
     );

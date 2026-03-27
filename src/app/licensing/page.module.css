@@ -224,160 +224,282 @@
   color: var(--accent);
 }
 
-.librarySection {
-  max-width: 1200px;
-  margin: 0 auto 80px;
-  padding: 0 20px;
-}
-
-.filtersBar {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-  align-items: flex-end;
-}
-
-.filterGroup {
+/* LIBRARY HEADER & TABS */
+.libraryHeader {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  min-width: 200px;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
-.filterGroup label {
-  font-size: 0.9rem;
-  color: #888;
+.libraryTabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.libraryTabs button {
+  background: transparent;
+  border: none;
+  color: #ccc;
+  padding: 10px 24px;
+  border-radius: 99px;
+  cursor: pointer;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  transition: all 0.2s;
 }
 
-.filterGroup select,
-.filterGroup input {
-  padding: 12px 15px;
-  border-radius: 8px;
+.libraryTabs button:hover {
+  color: white;
+}
+
+.libraryTabs button.activeTab {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+/* SEARCH & FILTERS */
+.filtersBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 15px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.searchWrapper {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.searchWrapper input {
+  width: 100%;
+  background: #000;
   border: 1px solid #333;
-  background-color: #111;
+  padding: 12px 15px 12px 45px;
+  border-radius: 12px;
   color: white;
   font-size: 1rem;
 }
 
-.trackGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 20px;
-  margin-bottom: 40px;
-}
-
-.trackListCard {
+.backBtn {
   display: flex;
   align-items: center;
-  gap: 15px;
-  background-color: var(--card-bg, #1a1a1a);
-  border: 1px solid var(--border-color, #333);
-  padding: 15px;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 10px 20px;
   border-radius: 12px;
-  transition: background-color 0.2s ease;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
-.trackListCard:hover {
-  background-color: #222;
+.backBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border-color: #666;
 }
 
-.trackImageWrapper {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+/* ALBUM GRID */
+.albumGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.albumCard {
+  background: var(--surface-hover);
+  border-radius: 20px;
   overflow: hidden;
-  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
-.trackArt {
-  object-fit: cover;
+.albumCard:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
-.placeholderArt {
+.albumArtWrapper {
+  position: relative;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+
+.albumArt {
   width: 100%;
   height: 100%;
-  background-color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  font-weight: bold;
+  object-fit: cover;
+  transition: transform 0.6s ease;
 }
 
-.trackMeta {
-  flex: 1;
-  min-width: 0;
-}
-
-.trackMeta h4 {
-  margin: 0 0 5px 0;
-  font-size: 1.1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.trackMeta p {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #888;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.trackActions {
-  flex-shrink: 0;
-}
-
-.licenseBtn {
-  background-color: white;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.licenseBtn:hover {
+.albumCard:hover .albumArt {
   transform: scale(1.05);
 }
 
-.centerAction {
-  text-align: center;
+.vipBadge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: black;
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 5px 12px;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.loadMoreBtn {
-  background-color: transparent;
-  color: white;
-  border: 1px solid #666;
-  padding: 12px 30px;
-  border-radius: 30px;
-  font-size: 1rem;
+.albumInfo {
+  padding: 20px;
+}
+
+.albumInfo h3 {
+  font-size: 1.25rem;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.albumInfo p {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* TRACK LIST VIEW */
+.trackLibraryList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.licensingTrackRow {
+  display: grid;
+  grid-template-columns: 50px 1fr 120px;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.licensingTrackRow:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.rowPlayBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  color: white;
+  transition: all 0.2s;
 }
 
-.loadMoreBtn:hover {
-  border-color: white;
+.rowPlayBtn:hover {
+  background: var(--primary);
+  transform: scale(1.1);
+}
+
+.trackInfoCell {
+  padding: 0 15px;
+}
+
+.trackPrimary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.trackTitle {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.rowSponsorBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #FFD700;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: rgba(255, 215, 0, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.trackSecondary {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.rowLicenseBtn {
+  background: white;
+  color: black;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rowLicenseBtn:hover {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
-  .heroTitle {
-    font-size: 2.2rem;
+  .licensingTrackRow {
+    grid-template-columns: 50px 1fr;
+    gap: 10px;
   }
   
-  .heroActions {
+  .trackActionCell {
+    grid-column: 2;
+    margin-top: 10px;
+  }
+  
+  .filtersBar {
     flex-direction: column;
+    align-items: stretch;
   }
   
-  .trackGrid {
-    grid-template-columns: 1fr;
+  .searchWrapper {
+    max-width: none;
   }
 }

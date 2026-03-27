@@ -97,7 +97,7 @@ export default async function ArtbookPage({ params }: { params: { token: string 
 
                 <footer className={styles.footer}>
                     <p>© {album.year} SingIt Pop Music. All Rights Reserved.</p>
-                    <p>Officially licensed digital booklet for: {accessData.email}</p>
+                    <p>Officially licensed digital booklet for: {accessData.customerEmail}</p>
                 </footer>
             </div>
         </main>

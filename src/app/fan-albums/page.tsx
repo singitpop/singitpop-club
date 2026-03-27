@@ -12,6 +12,7 @@ import { Search, Filter, TrendingUp, Clock } from 'lucide-react';
 import styles from './page.module.css';
 import { useState, useRef, useEffect } from 'react';
 import { albums } from '@/data/albumData';
+import { getAlbumCoverUrl } from '@/lib/image-utils';
 import { useAuth } from '@/context/AuthContext';
 import Roadmap from '@/components/fans/Roadmap';
 import Link from 'next/link';
@@ -441,7 +442,6 @@ export default function CommunityHubPage() {
         }
     };
 
-    // Helper: Get artwork URLs for a playlist
     const getPlaylistArtwork = (playlist: any) => {
         if (!playlist || !playlist.tracks) return [];
 
@@ -450,29 +450,25 @@ export default function CommunityHubPage() {
         const imageUrls: string[] = [];
 
         trackIds.forEach((tId: string | number) => {
-            // Logic to find artwork from albumData
             const parts = String(tId).split('-');
             if (parts.length >= 2) {
                 const aId = parts.slice(0, -1).join('-');
                 const album = albums.find(a => a.id === aId);
                 if (album) {
-                    const art = album.coverArt;
-                    imageUrls.push(art.startsWith('http') || art.startsWith('/') ? art : `/${art}`);
+                    imageUrls.push(getAlbumCoverUrl(album));
                 }
             } else {
-                // Try brute force search if just number
                 const idNum = parseInt(String(tId));
                 for (const album of albums) {
                     if (album.tracks.some(t => t.id === idNum)) {
-                        const art = album.coverArt;
-                        imageUrls.push(art.startsWith('http') || art.startsWith('/') ? art : `/${art}`);
+                        imageUrls.push(getAlbumCoverUrl(album));
                         break;
                     }
                 }
             }
         });
 
-        // Remove duplicates if multiple tracks from same album
+        // Remove duplicates
         return Array.from(new Set(imageUrls)).slice(0, 4);
     };
 
