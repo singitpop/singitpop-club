@@ -6,7 +6,7 @@ import styles from '@/app/licensing/page.module.css';
 import PricingCalculator from './PricingCalculator';
 import SponsorshipModal from './SponsorshipModal';
 
-import { Play, Pause, Search, Award, Music, ArrowLeft } from 'lucide-react';
+import { Play, Pause, Search, Award, Music, ArrowLeft, X } from 'lucide-react';
 
 interface TrackLibraryProps {
     albums: any[];
@@ -23,6 +23,7 @@ export default function TrackLibrary({ albums, advertTracks }: TrackLibraryProps
     const [playingTrackId, setPlayingTrackId] = useState<string | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
+    const [previewEnded, setPreviewEnded] = useState(false);
     const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
     const [sponsorships, setSponsorships] = useState<Record<string, any>>({});
@@ -196,12 +197,49 @@ export default function TrackLibrary({ albums, advertTracks }: TrackLibraryProps
                 </div>
             )}
 
+            {/* PREVIEW LIMIT NOTIFICATION */}
+            {previewEnded && (
+                <div className={styles.previewToast}>
+                    <div className={styles.toastContent}>
+                        <Music className="text-cyan-400" size={24} />
+                        <div>
+                            <h4 className="font-bold">Preview Ended</h4>
+                            <p className="text-sm opacity-70 text-white">License this track to unlock the full high-quality version.</p>
+                        </div>
+                    </div>
+                    <button 
+                        className={styles.toastAction}
+                        onClick={() => {
+                            setPreviewEnded(false);
+                            const track = playingTrackId ? (albums.flatMap(a => a.tracks).find(t => `${a.id}-${t.id}` === playingTrackId) || nicheTracks.find(t => `niche-${t.id}` === playingTrackId)) : null;
+                            if (track) setSelectedTrack(track);
+                        }}
+                    >
+                        License Now
+                    </button>
+                    <button className={styles.toastClose} onClick={() => setPreviewEnded(false)}>
+                        <X size={16} />
+                    </button>
+                </div>
+            )}
+
             <audio 
                 ref={audioRef} 
                 src={currentSignedUrl || undefined}
-                onPlay={() => setIsPlaying(true)}
+                onPlay={() => { setIsPlaying(true); setPreviewEnded(false); }}
                 onPause={() => setIsPlaying(false)}
                 onEnded={() => setIsPlaying(false)}
+                onTimeUpdate={(e) => {
+                    const audio = e.currentTarget;
+                    // Industry Standard Preview: 90 seconds (1.5 mins)
+                    if (audio.currentTime > 90) {
+                        console.warn("🔐 Preview limit reached (90s). Pausing playback.");
+                        audio.pause();
+                        audio.currentTime = 0;
+                        setIsPlaying(false);
+                        setPreviewEnded(true);
+                    }
+                }}
                 autoPlay
             />
 

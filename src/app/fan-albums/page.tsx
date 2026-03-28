@@ -658,7 +658,7 @@ export default function CommunityHubPage() {
                                         <PlaylistCard
                                             key={playlist.id}
                                             playlist={playlist}
-                                            coverImages={getPlaylistArtwork(playlist)}
+                                            coverImages={playlist.trackArtworks?.length > 0 ? playlist.trackArtworks : getPlaylistArtwork(playlist)}
                                             isPlaying={isPlaying && currentTrackId === `track-${playlist.tracks[0]}`}
                                             onPlay={(e) => handlePlay(e, playlist.id)}
                                             onClick={() => setSelectedPlaylist(playlist)}

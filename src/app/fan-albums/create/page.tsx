@@ -13,13 +13,14 @@ export default function CreatePlaylistPage() {
     const { user, isInsider } = useAuth();
     const [title, setTitle] = useState('');
     const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
+    const [selectedCover, setSelectedCover] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Dynamic Data States
     const [albums, setAlbums] = useState<Album[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [viewMode, setViewMode] = useState<'albums' | 'tracks' | 'review'>('albums');
+    const [viewMode, setViewMode] = useState<'albums' | 'tracks' | 'cover' | 'review'>('albums');
     const [activeAlbumId, setActiveAlbumId] = useState<string | null>(null);
 
     // Redirect if not Insider/VIP
@@ -96,7 +97,8 @@ export default function CreatePlaylistPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     title: title,
-                    tracks: selectedTracks
+                    tracks: selectedTracks,
+                    coverImage: selectedCover
                 })
             });
 
@@ -210,7 +212,7 @@ export default function CreatePlaylistPage() {
                                     </motion.div>
                                 ))}
                             </motion.div>
-                        ) : (
+                        ) : viewMode === 'tracks' ? (
                             <motion.div
                                 key="track-list"
                                 initial={{ opacity: 0, x: 20 }}
@@ -268,6 +270,35 @@ export default function CreatePlaylistPage() {
                                     })}
                                     {/* Spacer for fixed footer */}
                                     <div className="h-40 md:h-24"></div>
+                                </div>
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="cover-selection"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="space-y-8"
+                            >
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                                    {albums.map(album => (
+                                        <motion.div
+                                            key={album.id}
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setSelectedCover(album.id)}
+                                            className={`relative aspect-square rounded-3xl overflow-hidden cursor-pointer border-4 transition-all ${
+                                                selectedCover === album.id ? 'border-purple-500 shadow-lg shadow-purple-500/50' : 'border-transparent opacity-60 hover:opacity-100'
+                                            }`}
+                                        >
+                                            <img src={album.coverArt} alt="" className="w-full h-full object-cover" />
+                                            {selectedCover === album.id && (
+                                                <div className="absolute inset-0 bg-purple-500/20 flex items-center justify-center">
+                                                    <CheckCircle size={48} className="text-white" />
+                                                </div>
+                                            )}
+                                        </motion.div>
+                                    ))}
                                 </div>
                             </motion.div>
                         )}
@@ -338,15 +369,25 @@ export default function CreatePlaylistPage() {
                                     />
                                 </div>
                                 <div className="flex w-full sm:w-auto gap-2">
+                                    {viewMode === 'tracks' ? (
+                                        <button
+                                            onClick={() => setViewMode('cover')}
+                                            disabled={selectedTracks.length === 0}
+                                            className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white px-6 py-3 rounded-xl font-bold uppercase tracking-tight text-sm flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-purple-600/20"
+                                        >
+                                            Next: Choose Cover <ChevronRight size={16} />
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={handleCreate}
+                                            disabled={isSubmitting || !title.trim() || !selectedCover}
+                                            className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white px-6 py-3 rounded-xl font-bold uppercase tracking-tight text-sm flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-purple-600/20"
+                                        >
+                                            {isSubmitting ? <><div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> Publishing...</> : <><Save size={16} /> Publish My Mix</>}
+                                        </button>
+                                    )}
                                     <button
-                                        onClick={handleCreate}
-                                        disabled={isSubmitting || !title.trim()}
-                                        className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-500 disabled:opacity-50 disabled:grayscale text-white px-6 py-3 rounded-xl font-bold uppercase tracking-tight text-sm flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-purple-600/20"
-                                    >
-                                        {isSubmitting ? <><div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> Publishing...</> : <><Save size={16} /> Publish</>}
-                                    </button>
-                                    <button
-                                        onClick={() => setSelectedTracks([])}
+                                        onClick={() => { setSelectedTracks([]); setViewMode('albums'); setTitle(''); }}
                                         className="p-3 bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-500 transition-colors rounded-xl border border-white/5"
                                         title="Reset Selection"
                                     >

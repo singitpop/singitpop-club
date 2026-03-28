@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { auth, clerkClient } from '@clerk/nextjs/server';
 import { saveCommunityPlaylist, getCommunityPlaylists, getCommunityPlaylist, deleteCommunityPlaylist } from '@/lib/community-s3';
+import { getSignedAlbumCoverUrl } from '@/lib/server-image-utils';
+import { albums } from '@/data/albumData';
 
 export async function DELETE(req: Request) {
     try {
@@ -73,9 +75,59 @@ const GRADIENTS = [
 
 export async function GET() {
     try {
-        const playlists = await getCommunityPlaylists();
+        const rawPlaylists = await getCommunityPlaylists();
+        
+        // Resolve Signed URLs and Track Artworks for all playlists
+        const playlists = await Promise.all(rawPlaylists.map(async (playlist: any) => {
+            let coverUrl = playlist.coverImage || playlist.coverArt;
+            const trackArtworks: string[] = [];
+
+            // Resolve First 4 Track Artworks (Signed)
+            if (playlist.tracks && playlist.tracks.length > 0) {
+                const previewTracks = playlist.tracks.slice(0, 4);
+                
+                for (const tId of previewTracks) {
+                    const parts = String(tId).split('-');
+                    let foundAlbum: any = null;
+
+                    if (parts.length >= 2) {
+                        const albumId = parts.slice(0, -1).join('-');
+                        foundAlbum = albums.find(a => a.id === albumId);
+                    }
+                    
+                    if (!foundAlbum) {
+                        const numericId = parseInt(String(tId).match(/\d+/)?.[0] || "");
+                        if (!isNaN(numericId)) {
+                            foundAlbum = albums.find(a => a.tracks.some(t => t.id === numericId));
+                        }
+                    }
+
+                    if (foundAlbum) {
+                        const signedArt = await getSignedAlbumCoverUrl(foundAlbum);
+                        trackArtworks.push(signedArt);
+                    }
+                }
+            }
+            
+            // If no custom cover, use the first signed track artwork
+            if (!coverUrl && trackArtworks.length > 0) {
+                coverUrl = trackArtworks[0];
+            } else if (coverUrl && !coverUrl.startsWith('http')) {
+                // It's a relative path/ID string, sign it separately
+                const match = albums.find(a => a.id === coverUrl || a.title === coverUrl);
+                coverUrl = await getSignedAlbumCoverUrl(match || { id: coverUrl });
+            }
+
+            return {
+                ...playlist,
+                coverImage: coverUrl,
+                trackArtworks: trackArtworks // New: Signed URLs for 2x2 grid
+            };
+        }));
+
         return NextResponse.json(playlists);
     } catch (error) {
+        console.error("GET Playlists Error:", error);
         return NextResponse.json({ error: 'Failed to fetch playlists' }, { status: 500 });
     }
 }
@@ -88,7 +140,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        const { title, tracks } = body;
+        const { title, tracks, coverImage } = body;
 
         if (!title || !tracks || !Array.isArray(tracks) || tracks.length === 0) {
             return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
@@ -104,11 +156,12 @@ export async function POST(req: Request) {
 
         const newPlaylist = {
             id: "", // set in lib
-            title: title.substring(0, 50), // Limit length
+            title: title.substring(0, 50),
             creator: `@${creatorName}`,
             creatorId: userId,
             userId: userId,
             tracks: tracks,
+            coverImage: coverImage, // Save the selected cover (ID or relative path)
             createdAt: new Date().toISOString(),
             color: style.color,
             themeColor: style.themeColor,
