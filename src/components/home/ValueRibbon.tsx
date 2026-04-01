@@ -47,7 +47,7 @@ const FEATURES = [
 
 export default function ValueRibbon() {
     return (
-        <div className={`${styles.dockContainer} hidden md:flex`}>
+        <div className={styles.dockContainer}>
             <div className={styles.dockContent}>
                 {FEATURES.map((item, idx) => (
                     <motion.div 

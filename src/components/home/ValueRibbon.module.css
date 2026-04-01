@@ -105,6 +105,33 @@
 
 @media (max-width: 768px) {
     .dockContainer {
-        display: none !important;
+        right: 0.6rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .dockContent {
+        padding: 0.6rem;
+        gap: 0.5rem;
+        border-radius: 40px;
+    }
+
+    .featureItem {
+        width: 42px;
+        height: 42px;
+    }
+
+    /* Disable expand on mobile — icons only */
+    .featureItem:hover {
+        width: 42px;
+    }
+
+    .textWrapper {
+        display: none;
+    }
+
+    .iconWrapper {
+        min-width: 32px;
+        height: 32px;
     }
 }
