@@ -957,9 +957,9 @@
     "genre": [
       "R&B"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/may-in-motion/main.png",
     "artbook": {
-      "artwork": "/images/artbooks/summer-state-of-mind/main.png",
+      "artwork": "/images/artbooks/may-in-motion/main.png",
       "accentColor": "#00CED1",
       "layout": "premium-v1"
     },
@@ -1196,9 +1196,9 @@
     "genre": [
       "Dance Pop"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/april-comes-soft-2026/main.png",
     "artbook": {
-      "artwork": "/images/artbooks/echoes-of-yesterday/main.png",
+      "artwork": "/images/artbooks/april-comes-soft-2026/main.png",
       "accentColor": "#FFD700",
       "layout": "premium-v1"
     },
@@ -1435,9 +1435,9 @@
     "genre": [
       "Country"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/through-the-glass-2026/main.png",
     "artbook": {
-      "artwork": "/images/artbooks/glass-house/main.png",
+      "artwork": "/images/artbooks/through-the-glass-2026/main.png",
       "accentColor": "#F0F8FF",
       "layout": "premium-v1"
     },
