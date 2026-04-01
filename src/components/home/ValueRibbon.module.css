@@ -119,6 +119,7 @@
     .featureItem {
         width: 42px;
         height: 42px;
+        justify-content: center;
     }
 
     /* Disable expand on mobile — icons only */
@@ -126,12 +127,21 @@
         width: 42px;
     }
 
+    /* Center the icon inside the fixed-width link */
+    .link {
+        width: 42px;
+        padding: 0;
+        justify-content: center;
+    }
+
     .textWrapper {
         display: none;
     }
 
     .iconWrapper {
-        min-width: 32px;
+        min-width: unset;
+        width: 32px;
         height: 32px;
+        justify-content: center;
     }
 }
