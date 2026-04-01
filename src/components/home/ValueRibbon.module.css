@@ -99,33 +99,12 @@
 @media (max-width: 1024px) {
     .dockContainer {
         right: 1rem;
+        top: 40%;
     }
 }
 
 @media (max-width: 768px) {
-    .ribbonContainer {
-        padding-bottom: 2.5rem;
-    }
-    
-    .ribbonContent {
-        gap: 0.8rem;
-    }
-
-    .featureItem {
-        min-width: 140px;
-        padding: 10px;
-    }
-
-    .featureTitle {
-        font-size: 0.85rem;
-    }
-
-    .featureDesc {
-        display: none;
-    }
-    
-    .iconWrapper {
-        width: 32px;
-        height: 32px;
+    .dockContainer {
+        display: none !important;
     }
 }

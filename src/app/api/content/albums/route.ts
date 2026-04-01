@@ -12,15 +12,21 @@ export async function GET() {
                 let signedCover = album.coverArt;
 
                 // Fix for inconsistent album art paths in data file
-                if (album.folderPath) {
+                // If it's a perfectly valid local path (starts with /images/), DO NOT attempt to sign it with AWS S3!
+                if (album.coverArt && album.coverArt.startsWith('/images/')) {
+                    signedCover = album.coverArt;
+                } 
+                else if (album.folderPath) {
                     const filename = album.coverArt || 'cover.png';
                     const sluggedFolder = album.folderPath.toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ /g, '-');
                     const correctedKey = `albums/${sluggedFolder}/${filename}`;
                     signedCover = await getSignedFileUrl(correctedKey);
-                } else if (album.coverArt && !album.coverArt.startsWith('http')) {
+                } 
+                else if (album.coverArt && !album.coverArt.startsWith('http')) {
                     const key = album.coverArt.startsWith('/') ? album.coverArt.substring(1) : album.coverArt;
                     signedCover = await getSignedFileUrl(key);
-                } else if (album.coverArt && album.coverArt.includes('s3.eu-north-1.amazonaws.com')) {
+                } 
+                else if (album.coverArt && album.coverArt.includes('s3.eu-north-1.amazonaws.com')) {
                     const url = new URL(album.coverArt);
                     const key = url.pathname.substring(1);
                     signedCover = await getSignedFileUrl(decodeURIComponent(key));

@@ -133,7 +133,7 @@ export default async function LicensingPage() {
                         </div>
                         <div className="relative z-10 w-full md:w-80 h-80 bg-black/40 border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
                              <Image 
-                                src="/images/licensing/advert-cover-mock.jpg" 
+                                src="/images/artbooks/echoes-of-yesterday/main.png" 
                                 alt="Commercial Sync" 
                                 fill 
                                 className="object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" 

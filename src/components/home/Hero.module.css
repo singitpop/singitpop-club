@@ -129,6 +129,7 @@
     font-weight: 800;
     line-height: 1;
     background: linear-gradient(to right, #fff, #ccc);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -136,12 +137,19 @@
 
 @media (max-width: 768px) {
     .songTitle {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        line-height: 1.1;
+        text-wrap: balance;
     }
 
     .titleContainer {
         top: 15%;
         left: 5%;
+        width: 90%;
+    }
+
+    .centerStage {
+        margin-bottom: 15vh; /* Push play button up away from the bottom fixed player */
     }
 }
 

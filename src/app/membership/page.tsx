@@ -34,7 +34,7 @@ const tiers = [
     },
     {
         name: "The VIP",
-        price: "£8.99/mo",
+        price: "£6.99/mo",
         features: [
             "Everything in Insider",
             "Create 10 Mixtapes / Month",

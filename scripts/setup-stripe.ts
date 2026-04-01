@@ -47,14 +47,14 @@ async function main() {
         console.log(`Price ID: ${priceId}`);
     }
 
-    // 2. The VIP (£8.99/mo)
+    // 2. The VIP (£6.99/mo)
     console.log("\n--- The VIP ---");
     const vip = await stripe.products.create({
         name: 'The VIP',
         description: 'MP3 + WAV Downloads, Exclusive Demos, and Shop Discount.',
         default_price_data: {
             currency: 'gbp',
-            unit_amount: 899, // £8.99
+            unit_amount: 699, // £6.99
             recurring: { interval: 'month' },
         },
         metadata: {

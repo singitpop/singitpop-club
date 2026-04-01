@@ -286,11 +286,16 @@ export async function POST(req: Request) {
                                 </p>
                                 
                                 <div style="background: rgba(16, 185, 129, 0.1); padding: 30px; border-radius: 15px; margin: 30px 0; border: 1px solid rgba(16, 185, 129, 0.2); text-align: center;">
-                                    <a href="${artbookUrl}" style="background: #10b981; color: #fff; padding: 15px 30px; text-decoration: none; border-radius: 12px; display: inline-block; font-weight: bold; font-size: 18px;">Open Digital Artbook</a>
+                                    <div style="margin-bottom: 15px;">
+                                        <a href="${artbookUrl}" style="background: #10b981; color: #fff; padding: 15px 30px; text-decoration: none; border-radius: 12px; display: inline-block; font-weight: bold; font-size: 18px; width: 100%; max-width: 280px;">📖 Open Digital Artbook</a>
+                                    </div>
+                                    <div>
+                                        <a href="${artbookUrl}/download" style="background: transparent; color: #10b981; border: 2px solid #10b981; padding: 15px 30px; text-decoration: none; border-radius: 12px; display: inline-block; font-weight: bold; font-size: 16px; width: 100%; max-width: 280px;">⬇️ Download Digital Extras (.zip)</a>
+                                    </div>
                                 </div>
 
                                 <p style="font-size: 14px; color: #9ca3af;">
-                                    This link is tied to your purchase and will remain active for your permanent collection.
+                                    These links are securely tied to your purchase. The Digital Extras vault contains your high-resolution 4K Desktop & Mobile wallpapers, and exclusive Thematic Lore.
                                 </p>
                             </div>
                         `

@@ -357,11 +357,11 @@ export default function DigitalBookstorePage() {
                                             <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500">
                                                 <FileText size={16} />
                                             </div>
-                                            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white">Official Lyrics & Notes</h4>
+                                            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white">Official Lyrics & Digital Extras</h4>
                                         </div>
                                         <div className="space-y-4">
                                             <p className="text-zinc-400 font-bold leading-relaxed">
-                                                Full official lyrics for every track in the digital booklet. Includes songwriting credits and original production metadata.
+                                                Full official lyrics for every track seamlessly paired with high-resolution digital wallpapers, thematic lore, and exclusive behind-the-scenes visual concepts that expand the album's cinematic universe.
                                             </p>
                                             <div className="bg-white/5 border border-white/5 rounded-2xl p-6 font-mono text-[10px] text-zinc-500 uppercase tracking-widest leading-loose italic overflow-hidden">
                                                 {isLoadingLyrics ? (
