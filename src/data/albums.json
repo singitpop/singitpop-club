@@ -723,7 +723,7 @@
     "genre": [
       "Dance Pop"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/before-the-light-2026/main.png",
     "tracks": [
       {
         "id": 1,
@@ -12754,7 +12754,7 @@
       "Country",
       "Christmas"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/popstar-winter-wonderland/main.png",
     "artbook": {
       "artwork": "/images/artbooks/popstar-winter-wonderland/main.png",
       "accentColor": "#FF69B4",
@@ -13494,7 +13494,9 @@
     "id": "electric-dreams-2026",
     "title": "Electric Dreams",
     "year": 2026,
-    "genre": ["Synthwave"],
+    "genre": [
+      "Synthwave"
+    ],
     "coverArt": "/images/artbooks/electric-dreams/main.png",
     "artbook": {
       "artwork": "/images/artbooks/electric-dreams/main.png",
@@ -13507,7 +13509,9 @@
     "id": "midnight-coffee-2026",
     "title": "Midnight Coffee",
     "year": 2026,
-    "genre": ["Lo-fi"],
+    "genre": [
+      "Lo-fi"
+    ],
     "coverArt": "/images/artbooks/midnight-coffee/main.png",
     "artbook": {
       "artwork": "/images/artbooks/midnight-coffee/main.png",
@@ -13520,7 +13524,9 @@
     "id": "neon-rodeo-2026",
     "title": "Neon Rodeo",
     "year": 2026,
-    "genre": ["Country Pop"],
+    "genre": [
+      "Country Pop"
+    ],
     "coverArt": "/images/artbooks/neon-rodeo/main.png",
     "artbook": {
       "artwork": "/images/artbooks/neon-rodeo/main.png",
@@ -13533,7 +13539,9 @@
     "id": "starlight-serenade-2026",
     "title": "Starlight Serenade",
     "year": 2026,
-    "genre": ["Orchestral Pop"],
+    "genre": [
+      "Orchestral Pop"
+    ],
     "coverArt": "/images/artbooks/starlight-serenade/main.png",
     "artbook": {
       "artwork": "/images/artbooks/starlight-serenade/main.png",
@@ -13546,7 +13554,9 @@
     "id": "pixelated-hearts-2026",
     "title": "Pixelated Hearts",
     "year": 2026,
-    "genre": ["Hyperpop"],
+    "genre": [
+      "Hyperpop"
+    ],
     "coverArt": "/images/artbooks/pixelated-hearts/main.png",
     "artbook": {
       "artwork": "/images/artbooks/pixelated-hearts/main.png",
@@ -13559,7 +13569,9 @@
     "id": "velocity-2026",
     "title": "Velocity",
     "year": 2026,
-    "genre": ["Electronic Dance"],
+    "genre": [
+      "Electronic Dance"
+    ],
     "coverArt": "/images/artbooks/velocity/main.png",
     "artbook": {
       "artwork": "/images/artbooks/velocity/main.png",
