@@ -46,7 +46,13 @@ export default function RadioLivePage() {
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search);
             if (params.get('autoplay') === 'true' || params.get('obs') === 'true') {
-                setStarted(true);
+                // We add a tiny delay to ensure the DOM is ready
+                setTimeout(() => {
+                    setStarted(true);
+                    // Also try to find any audio elements and play them
+                    const audios = document.querySelectorAll('audio');
+                    audios.forEach(a => a.play().catch(() => {}));
+                }, 1000);
             }
         }
     }, []);
