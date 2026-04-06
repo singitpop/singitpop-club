@@ -48,7 +48,6 @@ export default function RadioLivePage() {
                     "dust-and-diamonds-2026",
                     "wildcards-and-whiskey-2026",
                     "october-boots-and-fall-roots-2026",
-                    "snowfall-and-steel-strings-2025",
                     "the-long-way-home-2026",
                     "live-at-autumn-lights-2026",
                     "live-step-into-the-light-2025",
