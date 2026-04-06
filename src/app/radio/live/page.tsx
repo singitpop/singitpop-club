@@ -1,7 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { Player } from '@remotion/player';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the player to prevent SSR crashes
+const Player = dynamic(
+    () => import('@remotion/player').then((mod) => mod.Player),
+    { ssr: false }
+);
+
 import { CountrySignalRadio } from '@/video/compositions/CountrySignalRadio';
 
 interface Track {
