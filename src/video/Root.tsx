@@ -1,6 +1,7 @@
 import { Composition } from 'remotion';
 import { LyricVideo } from './compositions/LyricVideo';
 import { Thumbnail } from './compositions/Thumbnail';
+import { CountrySignalRadio } from './compositions/CountrySignalRadio';
 import './style.css';
 
 // This is the entry point for Remotion
@@ -49,6 +50,21 @@ export const RemotionRoot: React.FC = () => {
                     title: "Song Title",
                     artist: "Artist Name",
                     coverImg: "/Club_Gateway_Pop.png"
+                }}
+            />
+            <Composition
+                id="RadioStation"
+                component={CountrySignalRadio as any}
+                durationInFrames={900 * 30} // 15 mins loop
+                fps={30}
+                width={1920}
+                height={1080}
+                defaultProps={{
+                    title: "Nashville in June",
+                    artist: "Gazza B",
+                    coverImg: "/images/artbooks/live-nashville-in-june-2026/main.png",
+                    backgroundImg: "/country_signal_background.png",
+                    accentColor: "#FF0000"
                 }}
             />
         </>

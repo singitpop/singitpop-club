@@ -32,9 +32,25 @@ export async function GET() {
                     signedCover = await getSignedFileUrl(decodeURIComponent(key));
                 }
 
+                // Sign S3 URLs for tracks
+                const signedTracks = await Promise.all((album.tracks || []).map(async (track) => {
+                    try {
+                        let signedAudio = track.audioUrl;
+                        if (track.audioUrl && track.audioUrl.includes('s3.eu-north-1.amazonaws.com')) {
+                            const url = new URL(track.audioUrl);
+                            const key = url.pathname.substring(1);
+                            signedAudio = await getSignedFileUrl(decodeURIComponent(key));
+                        }
+                        return { ...track, audioUrl: signedAudio };
+                    } catch (err) {
+                        return track;
+                    }
+                }));
+
                 return {
                     ...album,
-                    coverArt: signedCover
+                    coverArt: signedCover,
+                    tracks: signedTracks
                 };
             } catch (err) {
                 console.error(`Failed to sign cover art for album ${album.id}:`, err);

@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const albums = JSON.parse(fs.readFileSync('/tmp/albums-current.json', 'utf8'));
+const albums = JSON.parse(fs.readFileSync('./src/data/albums.json', 'utf8'));
 
 let patchedCount = 0;
 let latestSingleUid = '';

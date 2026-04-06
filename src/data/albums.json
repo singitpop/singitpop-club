@@ -711,7 +711,7 @@
     "releaseDate": "2026-06-05",
     "folderPath": "Live Nashville in June",
     "mp3Count": 36,
-    "type": "standard",
+    "type": "live",
     "trending": false,
     "exclusive": true,
     "accessTier": "vip"
@@ -1674,7 +1674,12 @@
     "genre": [
       "Dance Pop"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/heart-of-the-sky-drums/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/heart-of-the-sky-drums/main.png",
+      "accentColor": "#FF1493",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -1908,7 +1913,12 @@
     "genre": [
       "Pop"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/spring-begins-inside-you/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/spring-begins-inside-you/main.png",
+      "accentColor": "#FFD700",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -2142,7 +2152,12 @@
     "genre": [
       "Pop"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/a-love-that-never-ends/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/a-love-that-never-ends/main.png",
+      "accentColor": "#DA70D6",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -2375,7 +2390,12 @@
     "genre": [
       "Country"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/valentine-country/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/valentine-country/main.png",
+      "accentColor": "#FF6347",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -2609,7 +2629,12 @@
     "genre": [
       "Rock"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/echoes-of-light/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/echoes-of-light/main.png",
+      "accentColor": "#FFD700",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -2874,7 +2899,7 @@
   {
     "id": "desert-winds-and-open-roads-2026",
     "title": "Desert Winds And Open Roads",
-    "year": 2026,
+    "year": "2026",
     "genre": [
       "Country"
     ],
@@ -3097,7 +3122,7 @@
         }
       }
     ],
-    "releaseDate": "2026-01-16",
+    "releaseDate": "2026-01-01",
     "folderPath": "Desert Winds And Open Roads",
     "mp3Count": 48,
     "type": "standard",
@@ -3267,6 +3292,8 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Haven%20in%20the%20Hills-2.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Haven%20in%20the%20Hills.mp3",
         "sourceFolder": "Live Step Into the Light",
         "albumId": "live-step-into-the-light-2025",
         "isSingle": true,
@@ -3332,7 +3359,7 @@
     "releaseDate": "2025-12-08",
     "folderPath": "Live Step Into the Light",
     "mp3Count": 54,
-    "type": "standard",
+    "type": "live",
     "trending": false,
     "exclusive": false,
     "accessTier": "free"
@@ -4538,7 +4565,7 @@
     "releaseDate": "2025-11-01",
     "folderPath": "Live at Autumn Lights Festival",
     "mp3Count": 77,
-    "type": "standard",
+    "type": "live",
     "trending": false,
     "exclusive": false,
     "accessTier": "free"
