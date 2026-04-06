@@ -15,7 +15,7 @@ export default function RadioStreamLayout({
             
             <style dangerouslySetInnerHTML={{ __html: `
                 /* Hide global site elements specifically for the stream */
-                header, footer, nav, #cookie-consent, [class*="CookieConsent"], [class*="cookie-banner"], [id*="cookie-consent"], .chat-widget, #hubspot-messages-iframe-container, #_next-cookie-consent, [class*="chat-bubble"], #chat-widget-container, .cl-userButton-root {
+                header, footer, nav, #cookie-consent, [class*="CookieConsent"], [class*="cookie-banner"], [id*="cookie-consent"], .chat-widget, #hubspot-messages-iframe-container, #_next-cookie-consent, [class*="chat-bubble"], #chat-widget-container, .cl-userButton-root, [class*="bubble"], [id*="bubble"], [class*="chat"], [id*="chat"], iframe, .widget-container {
                     display: none !important;
                     visibility: hidden !important;
                     pointer-events: none !important;

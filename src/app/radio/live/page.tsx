@@ -216,8 +216,24 @@ export default function RadioLivePage() {
                         </div>
 
                         {/* Now Playing HUD - Bottom Right */}
-                        <div className="absolute bottom-20 right-0 w-[500px] flex flex-col items-end animate-in fade-in slide-in-from-right duration-1000">
+                        <div className="absolute bottom-20 right-0 w-[550px] flex flex-col items-end animate-in fade-in slide-in-from-right duration-1000">
                             <div className="bg-black/80 backdrop-blur-2xl border-r-[12px] border-red-600 px-8 py-6 rounded-l-[32px] shadow-[0_30px_60px_rgba(0,0,0,1)] flex flex-col items-end text-right">
+                                
+                                {(() => {
+                                    const releaseDate = (currentTrack as any).releaseDate;
+                                    const isReleased = releaseDate ? new Date(releaseDate) <= new Date() : true;
+                                    const formattedDate = releaseDate ? new Date(releaseDate).toLocaleDateString("en-GB", { day: 'numeric', month: 'long' }) : "";
+                                    
+                                    if (!isReleased) {
+                                        return (
+                                            <div className="bg-red-600 text-white px-3 py-1 rounded-md text-[10px] font-black tracking-[2px] mb-4 animate-pulse shadow-[0_0_20px_rgba(220,38,38,0.5)]">
+                                                COMING {formattedDate.toUpperCase()}
+                                            </div>
+                                        );
+                                    }
+                                    return null;
+                                })()}
+
                                 <span className="text-white/40 text-xs font-bold tracking-[4px] uppercase mb-2">Now Playing</span>
                                 <h1 className="text-white text-4xl font-black leading-tight mb-2 uppercase tracking-tighter drop-shadow-lg">
                                     {currentTrack.title}
