@@ -60,7 +60,7 @@ export default function ChatWidget() {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, isOpen]);
 
-    if (!pathname || pathname.startsWith('/admin') || pathname.startsWith('/studio')) return null;
+    if (!pathname || pathname.startsWith('/admin') || pathname.startsWith('/studio') || pathname.startsWith('/radio/live')) return null;
 
     const handleSend = () => {
         if (!inputValue.trim()) return;
