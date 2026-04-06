@@ -87,14 +87,25 @@ export default function RadioLivePage() {
                 const countryAlbums = data.filter((a: any) => PERMITTED_ALBUM_IDS.includes(a.id));
                 console.log(`[Radio] Station Locked: ${countryAlbums.length} approved albums in rotation.`);
                 
-                // Shuffle playlist
+                // Shuffle playlist and filter out known broken tracks (like 'Haven in the Hills')
                 const playlist = countryAlbums.flatMap((a: any) => 
-                    a.tracks.map((t: any) => ({
-                        ...t,
-                        artist: a.artist,
-                        albumTitle: a.title,
-                        coverArt: a.coverArt
-                    }))
+                    a.tracks
+                        .filter((t: any) => {
+                            // 1. Skip known broken tracks
+                            if (t.title?.toLowerCase().includes("haven in the hills")) return false;
+                            
+                            // 2. Skip tracks with invalid audio URLs
+                            if (!t.audioUrl || t.audioUrl.trim() === "" || t.audioUrl.toLowerCase().includes("example.com")) return false;
+                            
+                            return true;
+                        })
+                        .map((t: any) => ({
+                            ...t,
+                            artist: a.artist,
+                            albumTitle: a.title,
+                            coverArt: a.coverArt,
+                            releaseDate: a.releaseDate
+                        }))
                 );
                 
                 const shuffled = [...playlist].sort(() => Math.random() - 0.5);
@@ -155,6 +166,7 @@ export default function RadioLivePage() {
                     inputProps={{
                         title: currentTrack.title,
                         albumTitle: (currentTrack as any).albumTitle || "Country Signal",
+                        releaseDate: (currentTrack as any).releaseDate,
                         backgroundImg: "/radio-station-background.png",
                         accentColor: "#FF0000"
                     }}
