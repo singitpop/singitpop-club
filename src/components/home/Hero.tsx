@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 // @ts-ignore
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X } from 'lucide-react';
@@ -108,6 +109,10 @@ export default function Hero() {
                         <div className={styles.pulseRing} />
                     </motion.button>
                     <span className={styles.watchText}>{heroData.BUTTON_TEXT}</span>
+                    <Link href="/radio/live" className={styles.radioCTA}>
+                        <div className={styles.miniDot} />
+                        LISTEN LIVE 📻
+                    </Link>
                 </div>
             )}
 

@@ -13,6 +13,7 @@ import UserBadge from '../ui/UserBadge';
 
 const navItems = [
   { name: 'Home', href: '/' },
+  { name: '📻 Radio', href: '/radio/live' },
   { name: 'About', href: '/about' },
   { name: 'Music', href: '/music' },
   { name: 'FanZone', href: '/fan-albums' },
@@ -53,7 +54,10 @@ export default function Header() {
                 href={item.href}
                 className={`${styles.navLink} ${pathname === item.href ? styles.active : ''}`}
               >
-                {item.name}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  {item.name}
+                  {item.name.includes('Radio') && <div className={styles.liveDot} title="Live Now" />}
+                </div>
                 {pathname === item.href && (
                   <motion.div layoutId="underline" className={styles.underline} />
                 )}
@@ -134,7 +138,14 @@ export default function Header() {
                 className={styles.mobileLink}
                 onClick={() => setIsOpen(false)}
               >
-                {item.name}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {item.name}
+                  {item.name.includes('Radio') && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#ff3b3b', fontWeight: 'bold' }}>
+                       <div className={styles.liveDot} /> LIVE
+                    </div>
+                  )}
+                </div>
               </Link>
             ))}
           </motion.div>

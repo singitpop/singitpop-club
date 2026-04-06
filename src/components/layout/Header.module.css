@@ -113,3 +113,35 @@
         display: none !important;
     }
 }
+
+.liveBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ff3b3b;
+    font-weight: 700;
+}
+
+.liveDot {
+    width: 8px;
+    height: 8px;
+    background-color: #ff3b3b;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.7);
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(255, 59, 59, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 59, 59, 0);
+    }
+}
