@@ -1,10 +1,12 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import React, { useState, useEffect, useMemo } from 'react';
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 
 // Dynamically import the player to prevent SSR crashes
-const Player = dynamic(
+const Player = nextDynamic(
     () => import('@remotion/player').then((mod) => mod.Player),
     { ssr: false }
 );
