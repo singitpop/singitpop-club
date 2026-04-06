@@ -27,6 +27,16 @@ export default function RadioLivePage() {
     const [loading, setLoading] = useState(true);
 
     const [started, setStarted] = useState(false);
+    
+    // Auto-start for OBS if ?autoplay=true is in the URL
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('autoplay') === 'true' || params.get('obs') === 'true') {
+                setStarted(true);
+            }
+        }
+    }, []);
 
     useEffect(() => {
         const fetchAlbums = async () => {
