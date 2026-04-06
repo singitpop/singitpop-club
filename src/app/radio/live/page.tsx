@@ -5,13 +5,17 @@ export const dynamic = 'force-dynamic';
 import React, { useState, useEffect, useMemo } from 'react';
 import nextDynamic from 'next/dynamic';
 
-// Dynamically import the player to prevent SSR crashes
+// 1. Ghost Isolation - Player
 const Player = nextDynamic(
     () => import('@remotion/player').then((mod) => mod.Player),
     { ssr: false }
 );
 
-import { CountrySignalRadio } from '@/video/compositions/CountrySignalRadio';
+// 2. Ghost Isolation - Visuals (Important: This prevents SSR crashes!)
+const CountrySignalVisuals = nextDynamic(
+    () => import('@/video/compositions/CountrySignalRadio').then((mod) => mod.CountrySignalRadio),
+    { ssr: false }
+);
 
 interface Track {
     id: number;
@@ -132,7 +136,7 @@ export default function RadioLivePage() {
             {/* The Broadcast Player - True Full Screen Background */}
             <div className="absolute inset-0 z-0">
                 <Player
-                    component={CountrySignalRadio as any}
+                    component={CountrySignalVisuals as any}
                     durationInFrames={900 * 30}
                     fps={30}
                     compositionWidth={1920}
