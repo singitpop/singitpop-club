@@ -116,8 +116,16 @@ export default function RadioLivePage() {
                             releaseDate: a.releaseDate
                         }))
                 );
+
+                // 2. TRUE RANDOM SHUFFLE (Fisher-Yates Algorithm)
+                // This ensures a professional, uniform distribution of all 100+ tracks
+                const shuffled = [...playlist];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
                 
-                const shuffled = [...playlist].sort(() => Math.random() - 0.5);
+                console.log(`[Radio] Playlist Ready: ${shuffled.length} tracks in rotation.`);
                 setAlbums(shuffled as any);
                 setLoading(false);
             } catch (err) {
