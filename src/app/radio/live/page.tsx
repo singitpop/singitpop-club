@@ -96,6 +96,15 @@ export default function RadioLivePage() {
                             
                             // 2. Skip tracks with invalid audio URLs
                             if (!t.audioUrl || t.audioUrl.trim() === "" || t.audioUrl.toLowerCase().includes("example.com")) return false;
+
+                            // 3. MASTER-ONLY RULE: Skip drafts/versions (Old, 1, 2, 3 etc)
+                            const title = t.title?.toLowerCase().trim() || "";
+                            if (title.endsWith(" old") || title.includes(" (old)")) return false;
+                            if (title.match(/\s\d$/) || title.match(/\(\d\)$/)) return false; // Ends with " 1" or "(1)"
+                            
+                            // 4. Skip if the audio file itself looks like an old version
+                            const url = t.audioUrl.toLowerCase();
+                            if (url.includes("old") || url.includes("-1.mp3") || url.includes("-2.mp3") || url.includes("-3.mp3")) return false;
                             
                             return true;
                         })
