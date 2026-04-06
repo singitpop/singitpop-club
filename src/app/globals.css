@@ -261,3 +261,34 @@ a[class*="resend"] {
   color: rgba(255, 255, 255, 0.95) !important;
   opacity: 1 !important;
 }
+
+/* 🎙️ Country Signal - Nuclear Screen Cleanup */
+/* Forcefully hide banners and site UI when on the radio path */
+body:has([href*="/radio/live"]), 
+[id*="cookie-consent"], 
+[class*="CookieConsent"], 
+[class*="cookie-banner"], 
+#_next-cookie-consent {
+  /* If the URL contains radio/live, we kill the banner globally */
+  display: block; /* placeholder for logic */
+}
+
+/* Modern logic to hide banners if we are on the radio page */
+@supports (selector(:has(*))) {
+  html:has(a[href="/radio/live"].active) #cookie-consent,
+  html:has(a[href="/radio/live"].active) [class*="CookieConsent"],
+  html:has(a[href="/radio/live"].active) [class*="cookie-banner"],
+  html:has(a[href="/radio/live"].active) #_next-cookie-consent {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+/* Fallback for OBS browser source which might be older */
+body.radio-path #cookie-consent,
+body.radio-path [class*="CookieConsent"],
+body.radio-path [class*="cookie-banner"] {
+  display: none !important;
+}
