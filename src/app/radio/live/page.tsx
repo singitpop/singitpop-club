@@ -64,61 +64,90 @@ export default function RadioLivePage() {
                 const data = await res.json();
                 
                 // 1. DYNAMIC GENRE DISCOVERY (Auto-filters all Country albums)
-                // This replaces the hardcoded list and automatically includes all 200+ tracks.
                 const countryAlbums = data.filter((a: any) => 
                     a.genre?.some((g: string) => g.toLowerCase() === "country")
                 );
 
                 console.log(`[Radio] Station Locked: ${countryAlbums.length} Country albums discovered.`);
                 
-                // 2. MASTER PLAYLIST GENERATION
-                const fullPlaylist = countryAlbums.flatMap((a: any) => 
-                    a.tracks
-                        .filter((t: any) => {
-                            // Skip known broken/draft tracks
-                            if (t.title?.toLowerCase().includes("haven in the hills")) return false;
-                            if (!t.audioUrl || t.audioUrl.trim() === "" || t.audioUrl.toLowerCase().includes("example.com")) return false;
-                            
-                            const title = t.title?.toLowerCase().trim() || "";
-                            if (title.endsWith(" old") || title.includes(" (old)")) return false;
-                            if (title.match(/\s\d$/) || title.match(/\(\d\)$/)) return false;
-                            
-                            const url = t.audioUrl.toLowerCase();
-                            if (url.includes("old") || url.includes("-1.mp3") || url.includes("-2.mp3") || url.includes("-3.mp3")) return false;
-                            
-                            return true;
-                        })
-                        .map((t: any) => ({
+                // 2. BULLETPROOF POOL GENERATION (Strict De-duplication by Audio URL)
+                const seenUrls = new Set();
+                const uniquePlaylist: any[] = [];
+                
+                countryAlbums.forEach((a: any) => {
+                    a.tracks.forEach((t: any) => {
+                        // Master Filter Logic (Broken, Old, Drafts)
+                        if (t.title?.toLowerCase().includes("haven in the hills")) return;
+                        if (!t.audioUrl || t.audioUrl.trim() === "" || t.audioUrl.toLowerCase().includes("example.com")) return;
+                        
+                        const title = t.title?.toLowerCase().trim() || "";
+                        if (title.endsWith(" old") || title.includes(" (old)")) return;
+                        if (title.match(/\s\d$/) || title.match(/\(\d\)$/)) return;
+                        
+                        const url = t.audioUrl.toLowerCase().trim();
+                        if (url.includes("old") || url.includes("-1.mp3") || url.includes("-2.mp3") || url.includes("-3.mp3")) return;
+                        
+                        // DE-DUPLICATION CHECK: Prevent repeated audio files from different albums
+                        if (seenUrls.has(url)) return;
+                        seenUrls.add(url);
+
+                        uniquePlaylist.push({
                             ...t,
                             artist: a.artist,
                             albumTitle: a.title,
                             coverArt: a.coverArt,
                             releaseDate: a.releaseDate
-                        }))
-                );
+                        });
+                    });
+                });
 
-                // 3. PERSISTENT SHUFFLE ENGINE (localStorage)
-                let finalPlaylist = [];
-                const savedPlaylist = localStorage.getItem('countrySignal_playlist');
-                const savedIndex = localStorage.getItem('countrySignal_index');
+                // 3. FINGERPRINTING: Detect any change in the unique pool
+                const libraryFingerprint = uniquePlaylist.map(t => t.audioUrl).sort().join("|").substring(0, 500);
+                const savedFingerprint = localStorage.getItem('countrySignal_fingerprint');
+
+                // 4. PERSISTENT SHUFFLE ENGINE
+                let finalPlaylist: any[] = [];
+                const savedPlaylistStr = localStorage.getItem('countrySignal_playlist');
+                const savedIndexStr = localStorage.getItem('countrySignal_index');
+                const historyStr = localStorage.getItem('countrySignal_history') || "[]";
                 
-                // We reuse if count matches (preventing stale logic)
-                if (savedPlaylist && JSON.parse(savedPlaylist).length === fullPlaylist.length) {
-                    console.log(`[Radio] Resuming session: ${fullPlaylist.length} tracks in rotation.`);
-                    finalPlaylist = JSON.parse(savedPlaylist);
-                    if (savedIndex) {
-                        const idx = parseInt(savedIndex, 10);
+                let savedPlaylist = savedPlaylistStr ? JSON.parse(savedPlaylistStr) : [];
+                let history = JSON.parse(historyStr);
+
+                // We only resume if the library hasn't changed (Fingerprint Match)
+                if (libraryFingerprint === savedFingerprint && savedPlaylist.length === uniquePlaylist.length) {
+                    console.log(`[Radio] Resume Session: ${uniquePlaylist.length} unique tracks in cycle.`);
+                    finalPlaylist = savedPlaylist;
+                    if (savedIndexStr) {
+                        const idx = parseInt(savedIndexStr, 10);
                         setCurrentIndex(isNaN(idx) ? 0 : idx);
                     }
                 } else {
-                    console.log(`[Radio] New Cycle: Shuffling ${fullPlaylist.length} tracks.`);
-                    finalPlaylist = [...fullPlaylist];
+                    console.log(`[Radio] Library Change Detected: Re-shuffling ${uniquePlaylist.length} tracks.`);
+                    
+                    // Fisher-Yates Shuffle
+                    finalPlaylist = [...uniquePlaylist];
                     for (let i = finalPlaylist.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [finalPlaylist[i], finalPlaylist[j]] = [finalPlaylist[j], finalPlaylist[i]];
                     }
+
+                    // "COOL DOWN" Gating: Prevent any of the last 10 tracks from appearing first in the new shuffle
+                    if (history.length > 0) {
+                        const lastPlayedUrls = history.slice(-10);
+                        const cleanStarts: any[] = [];
+                        const deferred: any[] = [];
+                        
+                        finalPlaylist.forEach(t => {
+                            if (lastPlayedUrls.includes(t.audioUrl)) deferred.push(t);
+                            else cleanStarts.push(t);
+                        });
+                        finalPlaylist = [...cleanStarts, ...deferred];
+                    }
+
                     localStorage.setItem('countrySignal_playlist', JSON.stringify(finalPlaylist));
                     localStorage.setItem('countrySignal_index', '0');
+                    localStorage.setItem('countrySignal_fingerprint', libraryFingerprint);
                     setCurrentIndex(0);
                 }
                 
@@ -146,6 +175,15 @@ export default function RadioLivePage() {
 
     const nextTrack = () => {
         const nextIndex = (currentIndex + 1) % albums.length;
+        
+        // Record History for "Cool Down" logic (Last 50 tracks)
+        const historyStr = localStorage.getItem('countrySignal_history') || "[]";
+        const history = JSON.parse(historyStr);
+        const currentAudioUrl = (albums[currentIndex] as any).audioUrl;
+        
+        const newHistory = [...history.slice(-49), currentAudioUrl];
+        localStorage.setItem('countrySignal_history', JSON.stringify(newHistory));
+
         setCurrentIndex(nextIndex);
         localStorage.setItem('countrySignal_index', nextIndex.toString());
     };
