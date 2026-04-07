@@ -63,46 +63,26 @@ export default function RadioLivePage() {
                 const res = await fetch('/api/content/albums');
                 const data = await res.json();
                 
-                // 1. Definitive Country Signal Allowlist (ONLY these 18 albums play)
-                const PERMITTED_ALBUM_IDS = [
-                    "southern-lights-2026",
-                    "winding-roads-2026",
-                    "last-ones-standing-2026",
-                    "live-nashville-in-june-2026",
-                    "through-the-glass-2026",
-                    "boots-and-beats-country-line-dance-anthems-2024",
-                    "whispers-of-the-heart-country-ballads-for-the-soul-2026",
-                    "highways-of-the-heart-2024",
-                    "heartland-rhythms-2026",
-                    "dust-and-diamonds-2026",
-                    "wildcards-and-whiskey-2026",
-                    "october-boots-and-fall-roots-2026",
-                    "the-long-way-home-2026",
-                    "live-at-autumn-lights-2026",
-                    "live-step-into-the-light-2025",
-                    "desert-winds-and-open-roads-2026",
-                    "forever-starts-today-country-music-for-weddings-2024"
-                ];
+                // 1. DYNAMIC GENRE DISCOVERY (Auto-filters all Country albums)
+                // This replaces the hardcoded list and automatically includes all 200+ tracks.
+                const countryAlbums = data.filter((a: any) => 
+                    a.genre?.some((g: string) => g.toLowerCase() === "country")
+                );
 
-                const countryAlbums = data.filter((a: any) => PERMITTED_ALBUM_IDS.includes(a.id));
-                console.log(`[Radio] Station Locked: ${countryAlbums.length} approved albums in rotation.`);
+                console.log(`[Radio] Station Locked: ${countryAlbums.length} Country albums discovered.`);
                 
-                // Shuffle playlist and filter out known broken tracks (like 'Haven in the Hills')
-                const playlist = countryAlbums.flatMap((a: any) => 
+                // 2. MASTER PLAYLIST GENERATION
+                const fullPlaylist = countryAlbums.flatMap((a: any) => 
                     a.tracks
                         .filter((t: any) => {
-                            // 1. Skip known broken tracks
+                            // Skip known broken/draft tracks
                             if (t.title?.toLowerCase().includes("haven in the hills")) return false;
-                            
-                            // 2. Skip tracks with invalid audio URLs
                             if (!t.audioUrl || t.audioUrl.trim() === "" || t.audioUrl.toLowerCase().includes("example.com")) return false;
-
-                            // 3. MASTER-ONLY RULE: Skip drafts/versions (Old, 1, 2, 3 etc)
+                            
                             const title = t.title?.toLowerCase().trim() || "";
                             if (title.endsWith(" old") || title.includes(" (old)")) return false;
-                            if (title.match(/\s\d$/) || title.match(/\(\d\)$/)) return false; // Ends with " 1" or "(1)"
+                            if (title.match(/\s\d$/) || title.match(/\(\d\)$/)) return false;
                             
-                            // 4. Skip if the audio file itself looks like an old version
                             const url = t.audioUrl.toLowerCase();
                             if (url.includes("old") || url.includes("-1.mp3") || url.includes("-2.mp3") || url.includes("-3.mp3")) return false;
                             
@@ -117,16 +97,32 @@ export default function RadioLivePage() {
                         }))
                 );
 
-                // 2. TRUE RANDOM SHUFFLE (Fisher-Yates Algorithm)
-                // This ensures a professional, uniform distribution of all 100+ tracks
-                const shuffled = [...playlist];
-                for (let i = shuffled.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                // 3. PERSISTENT SHUFFLE ENGINE (localStorage)
+                let finalPlaylist = [];
+                const savedPlaylist = localStorage.getItem('countrySignal_playlist');
+                const savedIndex = localStorage.getItem('countrySignal_index');
+                
+                // We reuse if count matches (preventing stale logic)
+                if (savedPlaylist && JSON.parse(savedPlaylist).length === fullPlaylist.length) {
+                    console.log(`[Radio] Resuming session: ${fullPlaylist.length} tracks in rotation.`);
+                    finalPlaylist = JSON.parse(savedPlaylist);
+                    if (savedIndex) {
+                        const idx = parseInt(savedIndex, 10);
+                        setCurrentIndex(isNaN(idx) ? 0 : idx);
+                    }
+                } else {
+                    console.log(`[Radio] New Cycle: Shuffling ${fullPlaylist.length} tracks.`);
+                    finalPlaylist = [...fullPlaylist];
+                    for (let i = finalPlaylist.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [finalPlaylist[i], finalPlaylist[j]] = [finalPlaylist[j], finalPlaylist[i]];
+                    }
+                    localStorage.setItem('countrySignal_playlist', JSON.stringify(finalPlaylist));
+                    localStorage.setItem('countrySignal_index', '0');
+                    setCurrentIndex(0);
                 }
                 
-                console.log(`[Radio] Playlist Ready: ${shuffled.length} tracks in rotation.`);
-                setAlbums(shuffled as any);
+                setAlbums(finalPlaylist as any);
                 setLoading(false);
             } catch (err) {
                 console.error("Failed to load radio tracks:", err);
@@ -149,7 +145,9 @@ export default function RadioLivePage() {
     }
 
     const nextTrack = () => {
-        setCurrentIndex((prev) => (prev + 1) % albums.length);
+        const nextIndex = (currentIndex + 1) % albums.length;
+        setCurrentIndex(nextIndex);
+        localStorage.setItem('countrySignal_index', nextIndex.toString());
     };
 
     return (
