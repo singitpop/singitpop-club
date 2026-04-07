@@ -9,6 +9,11 @@
     "coverArt": "/images/artbooks/last-ones-standing-2026/main.png",
     "artbook": {
       "artwork": "/images/artbooks/last-ones-standing-2026/main.png",
+      "sketch": "/images/artbooks/last-ones-standing-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/last-ones-standing-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/last-ones-standing-2026/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#FF0080",
       "layout": "premium-v1"
     },
@@ -248,6 +253,11 @@
     "coverArt": "/images/artbooks/solstice-2026/main.png",
     "artbook": {
       "artwork": "/images/artbooks/solstice-2026/main.png",
+      "sketch": "/images/artbooks/solstice-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/solstice-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/solstice-2026/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#00F0FF",
       "layout": "premium-v1"
     },
@@ -487,6 +497,11 @@
     "coverArt": "/images/artbooks/live-nashville-in-june-2026/main.png",
     "artbook": {
       "artwork": "/images/artbooks/live-nashville-in-june-2026/main.png",
+      "sketch": "/images/artbooks/live-nashville-in-june-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/live-nashville-in-june-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/live-nashville-in-june-2026/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#FFA500",
       "layout": "premium-v1"
     },
@@ -724,6 +739,16 @@
       "Dance Pop"
     ],
     "coverArt": "/images/artbooks/before-the-light-2026/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/before-the-light-2026/main.png",
+      "sketch": "/images/artbooks/before-the-light-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/before-the-light-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/before-the-light-2026/extras/mobile-wallpaper.png"
+      },
+      "accentColor": "#00FFFF",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -960,6 +985,11 @@
     "coverArt": "/images/artbooks/may-in-motion/main.png",
     "artbook": {
       "artwork": "/images/artbooks/may-in-motion/main.png",
+      "sketch": "/images/artbooks/may-in-motion/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/may-in-motion/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/may-in-motion/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#00CED1",
       "layout": "premium-v1"
     },
