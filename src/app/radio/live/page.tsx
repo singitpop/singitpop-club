@@ -38,8 +38,8 @@ export default function RadioLivePage() {
     const [albums, setAlbums] = useState<Album[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
-
     const [started, setStarted] = useState(false);
+    const [skippedTracks, setSkippedTracks] = useState<string[]>([]);
     
     // Auto-start for OBS if ?autoplay=true is in the URL
     useEffect(() => {
@@ -173,7 +173,6 @@ export default function RadioLivePage() {
         );
     }
 
-    const [skippedTracks, setSkippedTracks] = useState<string[]>([]);
     
     const nextTrack = (wasError: boolean = false) => {
         if (wasError && albums[currentIndex]) {
