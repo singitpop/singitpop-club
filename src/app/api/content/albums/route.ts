@@ -60,16 +60,30 @@ export async function GET() {
                                 if (foundKey) {
                                     signedAudio = await getSignedFileUrl(foundKey);
                                     console.log(`[Content API] Found correct S3 key: ${foundKey}`);
-                                } else {
-                                    throw e; // No file found at all
                                 }
                             }
                         }
-                        return { ...track, audioUrl: signedAudio };
-                    } catch (err) {
-                        return track;
+
+                        // MANDATORY VALIDATION: If signedAudio is empty or invalid, fallback to search
+                        if (!signedAudio || signedAudio.trim() === "") {
+                            throw new Error("Invalid signed URL");
+                        }
+
+                    // STRICT COUNTRY FILTER: Remove unwanted genres that leaked into Country Signal
+                    const title = track.title?.toLowerCase() || "";
+                    const albumTitle = album.title?.toLowerCase() || "";
+                    const forbidden = ["christmas", "holiday", "noel", "mistletoe", "pop", "rock", "dance", "house", "techno", "electronic", "club", "remix"];
+                    
+                    if (forbidden.some(word => title.includes(word) || albumTitle.includes(word))) {
+                        return null; // Filter out from API response
                     }
-                }));
+
+                    return { ...track, audioUrl: signedAudio };
+                } catch (err: any) {
+                    console.warn(`[Content API] Track Link Failure for ${track.title}:`, err.message);
+                    return null; // Skip entire track if link cannot be resolved
+                }
+            })).then(tracks => tracks.filter((t): t is any => t !== null)); // Remove filtered/null tracks
 
                 return {
                     ...album,

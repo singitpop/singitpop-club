@@ -67,19 +67,15 @@ export async function generateSignedUrl(s3Url: string, expiresInSeconds: number 
 }
 
 export async function getSignedFileUrl(key: string, expiresIn: number = 3600, isDownload: boolean = false): Promise<string> {
-    try {
-        const command = new GetObjectCommand({
-            Bucket: process.env.AWS_S3_BUCKET || "singitpop-music",
-            Key: key,
-            ResponseContentDisposition: isDownload ? 'attachment' : undefined
-        });
+    const command = new GetObjectCommand({
+        Bucket: process.env.AWS_S3_BUCKET || "singitpop-music",
+        Key: key,
+        ResponseContentDisposition: isDownload ? 'attachment' : undefined
+    });
 
-        const signedUrl = await getSignedUrl(s3Client, command, { expiresIn });
-        return signedUrl;
-    } catch (err) {
-        console.error("Error generating signed file URL:", err);
-        return "";
-    }
+    const signedUrl = await getSignedUrl(s3Client, command, { expiresIn });
+    if (!signedUrl || signedUrl.trim() === "") throw new Error("Empty signed URL generated");
+    return signedUrl;
 }
 
 /**
