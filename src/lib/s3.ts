@@ -88,14 +88,19 @@ export async function getSignedFileUrl(key: string, expiresIn: number = 3600, is
  */
 export async function findTrackKey(folderName: string, trackTitle: string): Promise<string | null> {
     try {
-        const bucketName = process.env.AWS_S3_BUCKET || "singitpop-music";
-        const prefix = `albums/${folderName}/`;
+        const actualFolderPrefix = await findFolderPrefix(folderName);
+        if (!actualFolderPrefix) {
+            console.warn(`[S3-Search] Could not resolve folder for: ${folderName}`);
+            return null;
+        }
 
-        console.log(`[S3-Search] Searching for '${trackTitle}' in '${prefix}'`);
+        const bucketName = process.env.AWS_S3_BUCKET || "singitpop-music";
+        
+        console.log(`[S3-Search] Searching for '${trackTitle}' in confirmed folder '${actualFolderPrefix}'`);
 
         const command = new ListObjectsV2Command({
             Bucket: bucketName,
-            Prefix: prefix
+            Prefix: actualFolderPrefix
         });
 
         const response = await s3Client.send(command) as any;
@@ -103,7 +108,12 @@ export async function findTrackKey(folderName: string, trackTitle: string): Prom
 
         if (contents.length === 0) return null;
 
-        const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+        // CRITICAL: Normalize quotes and dashes for matching
+        const normalize = (s: string) => s.toLowerCase()
+            .replace(/[’'"]/g, '') // Remove all types of quotes
+            .replace(/[-_]/g, '')  // Remove dashes/underscores
+            .replace(/[^a-z0-9]/g, ''); // Remove all other non-alphanumeric
+
         const targetNorm = normalize(trackTitle);
 
         // Filter for audio files

@@ -88,6 +88,10 @@ export default function RadioLivePage() {
                         const url = t.audioUrl.toLowerCase().trim();
                         if (url.includes("old") || url.includes("-1.mp3") || url.includes("-2.mp3") || url.includes("-3.mp3")) return;
                         
+                        // Christmas / Holiday Exclusion Filter
+                        if (title.includes("christmas") || title.includes("holiday") || title.includes("noel") || title.includes("mistletoe")) return;
+                        if (a.title?.toLowerCase().includes("christmas") || a.title?.toLowerCase().includes("holiday")) return;
+
                         // DE-DUPLICATION CHECK: Prevent repeated audio files from different albums
                         if (seenUrls.has(url)) return;
                         seenUrls.add(url);
@@ -231,20 +235,7 @@ export default function RadioLivePage() {
                 />
             )}
 
-            {/* Diagnostic HUD - Top Left (Visible only to us for sorting) */}
-            {skippedTracks.length > 0 && (
-                <div className="absolute top-8 left-8 z-[1000] bg-red-600/90 text-white p-4 rounded-xl text-[10px] font-mono shadow-2xl backdrop-blur-xl border border-white/20 animate-in slide-in-from-top-4 duration-500 max-w-[300px]">
-                    <div className="font-black uppercase tracking-widest mb-2 border-b border-white/20 pb-2">⚠️ Signal Leak Detected</div>
-                    <ul className="space-y-1">
-                        {skippedTracks.map((t, i) => (
-                            <li key={i} className="opacity-80 line-clamp-1 flex gap-2">
-                                <span className="opacity-40">#{i+1}</span> {t}
-                            </li>
-                        ))}
-                    </ul>
-                    <div className="mt-4 text-[8px] opacity-40 uppercase tracking-[2px]">Sorting library...</div>
-                </div>
-            )}
+            {/* Diagnostic HUD hidden for production/user request */}
 
             {/* The Broadcast Player - True Full Screen Background */}
             <div className="absolute inset-0 z-0">
