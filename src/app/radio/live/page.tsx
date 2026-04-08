@@ -107,8 +107,8 @@ export default function RadioLivePage() {
                 });
 
                 // 3. FINGERPRINTING: Detect any change in the unique pool
-                // NUCLEAR FLUSH (v4): Forces all clients to ignore their old broken cache and re-sync
-                const FLUSH_ID = "RADIO_V4"; 
+                // NUCLEAR FLUSH (v5): Final Whitelist Enforcement
+                const FLUSH_ID = "RADIO_V5"; 
                 const libraryFingerprint = FLUSH_ID + uniquePlaylist.map(t => t.audioUrl).sort().join("|").substring(0, 500);
                 const savedFingerprint = localStorage.getItem('countrySignal_fingerprint');
 

@@ -9,8 +9,31 @@ export async function GET() {
     try {
         const albums = await getAlbums();
 
+        const COUNTRY_WHITELIST = [
+            "Southern Lights",
+            "Winding Roads",
+            "Last Ones Standing",
+            "Live Nashville in June",
+            "Through The Glass",
+            "Boots and Beats Country Line Dance Anthems",
+            "Whispers of the Heart Country Ballads for the Soul",
+            "Forever Starts Today - Country Album",
+            "Highways of the Heart",
+            "Heartland Rhythms",
+            "Dust and Diamonds ",
+            "Line Dancing After Dark",
+            "Wildcards and Whiskey",
+            "October Boots and Fall Roots",
+            "Snowfall and Steel Strings",
+            "The Long Way Home",
+            "Live at Autumn Lights Festival",
+            "Live Step Into the Light",
+            "Desert Winds And Open Roads",
+            "Valentine Country"
+        ];
+
         // Sign S3 URLs for cover art
-        const signedAlbums = await Promise.all(albums.map(async (album) => {
+        const signedAlbums = await Promise.all(albums.filter(a => COUNTRY_WHITELIST.includes(a.title || "")).map(async (album) => {
             try {
                 let signedCover = album.coverArt;
 
