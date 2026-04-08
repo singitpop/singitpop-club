@@ -68,12 +68,14 @@ export async function GET() {
                             }
                         }
 
-                        // STRICT COUNTRY FILTER: Remove Pop/Rock/Holiday
+                        // STRICT COUNTRY FILTER: Remove Pop/Rock/Holiday from Track Titles only
+                        // We allow "Singit Pop" as an album category, but skip individual non-country songs.
                         const title = track.title?.toLowerCase() || "";
-                        const albumTitle = album.title?.toLowerCase() || "";
-                        const forbidden = ["christmas", "holiday", "noel", "mistletoe", "pop", "rock", "dance", "house", "techno", "electronic", "club", "remix"];
+                        const forbidden = ["christmas", "holiday", "noel", "mistletoe", "rock", "dance", "house", "techno", "electronic", "club", "remix"];
                         
-                        if (forbidden.some(word => title.includes(word) || albumTitle.includes(word))) {
+                        // We only filter "pop" if it's in the track title (like "Pop Star"), not if it's just the album category.
+                        if (title.includes("pop") || forbidden.some(word => title.includes(word))) {
+                            console.log(`[Filtering] Skipping non-country match: ${track.title}`);
                             return null; 
                         }
 
