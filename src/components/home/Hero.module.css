@@ -108,82 +108,64 @@
     font-weight: 500;
 }
 
-.radioCTA {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.8rem 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 100px;
-    color: white;
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    margin-top: 1rem;
-    transition: all 0.3s ease;
-    cursor: pointer;
+.songTitle {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -2px;
     text-transform: uppercase;
-}
-
-.radioCTA:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
-}
-
-.liveIndicator {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.7rem;
-    background: rgba(255, 59, 59, 0.1);
-    border: 1px solid rgba(255, 59, 59, 0.3);
-    padding: 2px 8px;
-    border-radius: 4px;
-    color: #ff3b3b;
-}
-
-.miniDot {
-    width: 6px;
-    height: 6px;
-    background-color: #ff3b3b;
-    border-radius: 50%;
-    animation: mini-pulse 2s infinite;
-}
-
-@keyframes mini-pulse {
-    0% { transform: scale(0.8); opacity: 0.5; }
-    50% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(0.8); opacity: 0.5; }
-}
-
-.titleContainer {
-    position: absolute;
-    top: 15%;
-    left: 10%;
-    z-index: 10;
+    background: linear-gradient(to bottom, #fff, #888);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 1));
+    margin-top: 0.5rem;
 }
 
 .artistName {
     display: block;
-    font-size: 1.2rem;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-size: 0.8rem;
+    color: #ff0000;
+    font-weight: 900;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
 }
 
-.songTitle {
-    font-size: 4rem;
+.radioCTA {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    background: rgba(255, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 0, 0, 0.4);
+    border-radius: 100px;
+    color: white;
     font-weight: 800;
-    line-height: 1;
-    background: linear-gradient(to right, #fff, #ccc);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    margin-top: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
+}
+
+.radioCTA:hover {
+    background: rgba(255, 0, 0, 0.3);
+    border-color: #ff0000;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 40px rgba(255, 0, 0, 0.3);
+}
+
+.miniDot {
+    width: 8px;
+    height: 8px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #ff0000;
+    animation: mini-pulse 1s infinite alternate;
 }
 
 @media (max-width: 768px) {

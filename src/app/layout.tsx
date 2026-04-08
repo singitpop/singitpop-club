@@ -67,6 +67,9 @@ export const metadata: Metadata = {
             'max-snippet': -1,
         },
     },
+    alternates: {
+        canonical: 'https://singitpop.com',
+    },
 };
 
 import VisitorTracker from '@/components/analytics/VisitorTracker';
@@ -78,9 +81,37 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "MusicGroup",
+        "name": "SingIt Pop",
+        "alternateName": "SING",
+        "description": "Premium country music and art from Geordie Land.",
+        "url": "https://singitpop.com",
+        "genre": ["Country", "Pop"],
+        "locationCreated": {
+            "@type": "Place",
+            "name": "Geordie Land"
+        },
+        "knowsAbout": ["Country Music", "Digital Artbooks", "Radio Broadcasting"],
+        "hasPart": [
+            {
+                "@type": "RadioStation",
+                "name": "Country Signal",
+                "description": "24/7 high-performance country music broadcast from Geordie Land."
+            }
+        ]
+    };
+
     return (
         <ClerkProvider>
             <html lang="en" suppressHydrationWarning>
+                <head>
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                    />
+                </head>
                 <body suppressHydrationWarning={true}>
                     <AuthProvider>
                         <VisitorTracker />
