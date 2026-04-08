@@ -64,12 +64,11 @@ export default function RadioLivePage() {
                 const res = await fetch('/api/content/albums');
                 const data = await res.json();
                 
-                // 1. DYNAMIC GENRE DISCOVERY (Auto-filters all Country albums)
-                const countryAlbums = data.filter((a: any) => 
-                    a.genre?.some((g: string) => g.toLowerCase() === "country")
-                );
+                // 1. DATA SOURCE: Using the Whitelisted Nashville API
+                // All filtering is now handled server-side for maximum performance and stability.
+                const countryAlbums = data;
 
-                console.log(`[Radio] Station Locked: ${countryAlbums.length} Country albums discovered.`);
+                console.log(`[Radio] Station Locked: ${countryAlbums.length} Nashville albums synchronized.`);
                 
                 // 2. BULLETPROOF POOL GENERATION (Strict De-duplication by Audio URL)
                 const seenUrls = new Set();
