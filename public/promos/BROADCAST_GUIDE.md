@@ -64,3 +64,26 @@ Before you step away, check these two things in OBS:
 2.  **High-Priority**: In the same menu, set "Process Priority" to **High**. This ensures your Mac gives all its power to the music signal first.
 
 **Your station is now locked. Ready to take over the airwaves?** 🎙️🚀📻
+
+---
+
+## 📺 YouTube Stream Description (Copy/Paste)
+Use this description on your YouTube live stream to drive traffic to the website while the live stream is off.
+
+```text
+📻 THE COUNTRY SIGNAL: 24/7 NON-STOP COUNTRY 📻
+
+When this stream is resting, the party continues 24/7 on our official website! 
+Experience higher audio quality, live track metadata, and uninterrupted music every single day of the year.
+
+🌐 TUNE IN NOW: https://singitpop.com/radio
+(No accounts, no interruptions, just pure country)
+
+✨ WHY THE WEBSITE?
+- 24/7 Availability (Even when YouTube is offline)
+- High-Definition Audio
+- Real-time Title & Artist Updates
+- Full Artbook Previews
+
+Keep the signal alive. See you at Singitpop.com!
+```

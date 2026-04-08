@@ -173,7 +173,13 @@ export default function RadioLivePage() {
         );
     }
 
-    const nextTrack = () => {
+    const [skippedTracks, setSkippedTracks] = useState<string[]>([]);
+    
+    const nextTrack = (wasError: boolean = false) => {
+        if (wasError && albums[currentIndex]) {
+            setSkippedTracks(prev => [...prev.slice(-9), albums[currentIndex].title]);
+        }
+        
         const nextIndex = (currentIndex + 1) % albums.length;
         
         // Record History for "Cool Down" logic (Last 50 tracks)
@@ -190,17 +196,47 @@ export default function RadioLivePage() {
 
     return (
         <main className="fixed inset-0 bg-black overflow-hidden flex items-center justify-center">
+            {started && (
+                <div className="absolute top-10 right-10 z-[100] pointer-events-auto">
+                    <a 
+                        href="/"
+                        className="flex items-center gap-3 bg-black/40 hover:bg-red-600/80 backdrop-blur-xl px-6 py-3 rounded-full border border-white/10 text-white transition-all group lg:px-8 lg:py-4"
+                    >
+                        <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span className="text-[10px] font-black uppercase tracking-[4px]">Back to Home</span>
+                    </a>
+                </div>
+            )}
+
             {/* The Broadcast Audio Engine - 24/7 Loop */}
             {started && (
                 <audio 
                     src={(currentTrack as any).audioUrl} 
                     autoPlay 
-                    onEnded={nextTrack}
+                    onEnded={() => nextTrack(false)}
                     onError={() => {
-                        // Silent skip to keep the station professional and avoid dev overlays
-                        nextTrack();
+                        // Diagnostic Logging: Identify broken links
+                        console.error(`[Signal Leak] Skipping Broken Track: ${currentTrack.title} - ${currentTrack.audioUrl}`);
+                        nextTrack(true);
                     }}
                 />
+            )}
+
+            {/* Diagnostic HUD - Top Left (Visible only to us for sorting) */}
+            {skippedTracks.length > 0 && (
+                <div className="absolute top-8 left-8 z-[1000] bg-red-600/90 text-white p-4 rounded-xl text-[10px] font-mono shadow-2xl backdrop-blur-xl border border-white/20 animate-in slide-in-from-top-4 duration-500 max-w-[300px]">
+                    <div className="font-black uppercase tracking-widest mb-2 border-b border-white/20 pb-2">⚠️ Signal Leak Detected</div>
+                    <ul className="space-y-1">
+                        {skippedTracks.map((t, i) => (
+                            <li key={i} className="opacity-80 line-clamp-1 flex gap-2">
+                                <span className="opacity-40">#{i+1}</span> {t}
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="mt-4 text-[8px] opacity-40 uppercase tracking-[2px]">Sorting library...</div>
+                </div>
             )}
 
             {/* The Broadcast Player - True Full Screen Background */}

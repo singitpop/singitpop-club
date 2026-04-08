@@ -480,7 +480,7 @@
       }
     ],
     "releaseDate": "2026-06-19",
-    "folderPath": "Solstice",
+    "folderPath": "solstice",
     "mp3Count": 36,
     "type": "standard",
     "trending": false,
@@ -724,7 +724,7 @@
       }
     ],
     "releaseDate": "2026-06-05",
-    "folderPath": "Live Nashville in June",
+    "folderPath": "nashville-in-june",
     "mp3Count": 36,
     "type": "live",
     "trending": false,
@@ -1229,6 +1229,11 @@
     "coverArt": "/images/artbooks/april-comes-soft-2026/main.png",
     "artbook": {
       "artwork": "/images/artbooks/april-comes-soft-2026/main.png",
+      "sketch": "/images/artbooks/april-comes-soft-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/april-comes-soft-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/april-comes-soft-2026/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#FFD700",
       "layout": "premium-v1"
     },
@@ -1468,6 +1473,11 @@
     "coverArt": "/images/artbooks/through-the-glass-2026/main.png",
     "artbook": {
       "artwork": "/images/artbooks/through-the-glass-2026/main.png",
+      "sketch": "/images/artbooks/through-the-glass-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/through-the-glass-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/through-the-glass-2026/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#F0F8FF",
       "layout": "premium-v1"
     },
@@ -3315,7 +3325,11 @@
       },
       {
         "id": 9,
-        "title": "haven in the hills",
+        
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Haven%20of%20the%20Hills.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Haven%20of%20the%20Hills.mp3",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Haven%20of%20the%20Hills.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-step-into-the-light/Haven%20of%20the%20Hills.mp3",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -6528,15 +6542,20 @@
     "accessTier": "free"
   },
   {
-    "id": "southern-lights-2025",
+    "id": "southern-lights-2026",
     "title": "Southern Lights",
-    "year": 2025,
+    "year": 2026,
     "genre": [
       "Country"
     ],
-    "coverArt": "/images/artbooks/southern-lights-2025/main.png",
+    "coverArt": "/images/artbooks/southern-lights-2026/main.png",
     "artbook": {
-      "artwork": "/images/artbooks/southern-lights-2025/main.png",
+      "artwork": "/images/artbooks/southern-lights-2026/main.png",
+      "sketch": "/images/artbooks/southern-lights-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/southern-lights-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/southern-lights-2026/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#00FF8C",
       "layout": "premium-v1"
     },
@@ -6553,7 +6572,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Southern%20Lights%20Finale.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Southern%20Lights%20Finale.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "The night’s alive, we’re feeling free,\nThe southern stars shine just for me.\nWith every spark, with every sight,\nWe come alive in southern lights.\nFireflies in the sky, headlights on the road,\nWe’re chasing dreams we’ve never told.\nYour laugh, that smile, the way you move,\nThis southern night’s got something to prove.\nSouthern lights, we're glowing bright,\nDancing through the neon night.\nWith you beside me, it all feels right,\nWe’re falling hard in southern lights.\nBare feet on the dashboard, heartbeats on repeat,\nYou pull me close and skip the beat.\nNo map, no plan, just you and me,\nUnder southern skies where we’re meant to be.\nSouthern lights, in city glow,\nA country soul with a pop tempo.\nWe move like fire, we shine, we fight,\nWe love like stars in southern lights.\nIt’s not the place, it’s the feeling inside,\nThe way we shine when our worlds collide.\nEvery song, every spark, every night,\nYou and me in the southern lights.\nSouthern lights, we’re glowing bright,\nDancing through the neon night.\nWith you beside me, it all feels right,\nWe’re falling hard in southern lights.\nThe stars go dim, the night moves slow,\nBut we’re still lit in that southern glow.\nWe’ll always shine, no need for heights\nWe’re home inside these southern lights."
@@ -6571,7 +6590,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Under%20the%20Magnolia%20Moon.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Under%20the%20Magnolia%20Moon.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "Barefoot on the porch, time slows down,\nYou're the calm in this wild old town.\nThe stars lean in, your eyes so true,\nI find forever right next to you.\nUnder the magnolia moon, hearts aligned,\nA love so strong, it redefines.\nEvery whisper, every tune,\nWe're falling deep under that magnolia moon.\nThe fireflies dance, the silence sings,\nYour touch is light, like angel wings.\nIn this southern sky, with you I swoon,\nYou turn the dark to something new.\nUnder the magnolia moon, night's so wide,\nLove wraps us up, no need to hide.\nThrough the stillness, through the bloom,\nWe’re weightless under the magnolia moon.\nThis is the part we always chase,\nWhere time stops still and hearts embrace.\nNo need for words, no need to speak,\nYou’re everything I’ll ever need.\nUnder the magnolia moon, hearts aligned,\nA love so strong, it redefines.\nEvery whisper, every tune,\nWe're falling deep under that magnolia moon.\nThe breeze rolls on, the world is right,\nWe found forever in southern light.\nYou and me, in perfect tune,\nUnder the magnolia moon."
@@ -6589,7 +6608,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Backyard%20Revival.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Backyard%20Revival.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "Friday lights, the fire's alive,\nRed solo cups and summer highs.\nWe're turning grass into a stage tonight\nIt’s a backyard revival under southern light.\nSpeakers in the window, ice in the glass,\nYour smile hits me like a shotgun blast.\nNeighbours don’t mind when the volume's loud,\n'Cause they’re dancing too in this hometown crowd.\nIt’s a backyard revival, boots on the ground,\nHearts on fire with a country sound.\nFrom the tailgate sparks to the moonlit mile,\nWe’re living it up in a backyard revival.\nYou pull me close when that beat drops low,\nWe’re moving like we’ve got nowhere to go.\nThat dress, those eyes, that kiss you steal\nYeah, this small-town party just got real.\nIt’s a backyard revival, feel the heat,\nDancing barefoot in the midnight beat.\nFrom the first chord strike to the final smile,\nWe’re burning it down in a backyard revival.\nWe don’t need no neon sign,\nJust your hand and a little time.\nThis beat, this buzz, this sky, this night\nEverything about it feels so right.\nIt’s a backyard revival, boots on the ground,\nHearts on fire with a country sound.\nFrom the tailgate sparks to the moonlit mile,\nWe’re living it up in a backyard revival.\nSo bring your laugh, bring your smile,\nLet’s get lost in this backyard revival."
@@ -6607,7 +6626,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Honey%20on%20My%20Heart.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Honey%20on%20My%20Heart.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The way you laugh, the way you smile,\nIt makes the hard days feel worthwhile.\nThrough every storm, through every start,\nYou leave your honey on my heart.\nHoney on my heart, it lingers so sweet,\nA love like yours makes me complete.\nThrough every moment, through every part,\nYou’ll always be honey on my heart.\nThe world feels slow when I’m with you,\nThe sky turns gold, the colours true.\nThrough every whisper, through every spark,\nYou leave your honey on my heart.\nHoney on my heart, it melts right in,\nA sweetness flowing deep within.\nWith every touch, with every start,\nYou stay with me, honey on my heart.\nIt’s not just words, it’s not just dreams,\nYour love flows steady like southern streams.\nThrough every season, near or far,\nYour love is honey on my heart.\nHoney on my heart, it lingers so sweet,\nA love like yours makes me complete.\nThrough every moment, through every part,\nYou’ll always be honey on my heart.\nThe stars shine soft, the night feels still,\nYour love’s a sweetness I always feel.\nThrough every whisper, through every spark,\nYou’ll always be honey on my heart."
@@ -6625,7 +6644,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Saturday%20Nights%20Down%20South%20.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Saturday%20Nights%20Down%20South%20.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The fire’s lit, the drinks are cold,\nThe sky turns pink and orange and gold.\nLaughter rolls through the open air,\nWith music floating everywhere.\nSaturday nights down south, we raise our hands,\nSinging with the band, no need to plan.\nDancing in boots on dusty ground,\nSaturday nights are where we’re found.\nThe tailgates drop, the stories flow,\nThe southern charm begins to grow.\nFrom dusk till dawn, we’re feelin’ right,\nDown here the stars all shine so bright.\nSaturday nights down south, we're wild and free,\nWith moonlight shining over me.\nThe world feels right, the world feels loud,\nUnder southern skies and hometown crowds.\nIt’s not the place, it’s who you’re near,\nThe smiles, the love, the voices here.\nThrough every fire, through every song,\nWe find the place where we belong.\nSaturday nights down south, we raise our hands,\nSinging with the band, no need to plan.\nDancing in boots on dusty ground,\nSaturday nights are where we’re found.\nThe embers fade, the music dies,\nBut Saturday nights stay in our eyes.\nWith every cheer and southern sound,\nSaturday nights still roll around."
@@ -6643,7 +6662,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Carolina%20Kisses.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Carolina%20Kisses.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "Your lips taste like a summer breeze,\nYour voice still haunts these coastal trees.\nWhere mountains meet the ocean tide,\nThat’s where our love would always hide.\nCarolina kisses, warm and slow,\nThey stay with me wherever I go.\nThrough every mile, through every miss,\nI’m holding on to your Carolina kiss.\nI still see you in that dress,\nLaughing wild with no regrets.\nThe skyline changed, but I still feel\nThat southern love, so true, so real.\nCarolina kisses, soft and sweet,\nThey're in the rain, they’re in the heat.\nNo matter where this road may twist,\nI’m never far from your Carolina kiss.\nLet the seasons spin around,\nBut your memory’s still this town.\nI carry you in every sky,\nCarolina love don’t say goodbye.\nCarolina kisses, warm and slow,\nThey stay with me wherever I go.\nThrough every mile, through every miss,\nI’m holding on to your Carolina kiss.\nThe sun fades low, the skyline bends,\nBut Carolina love never ends.\nWith every dream, with every wish,\nYou’re still my first Carolina kiss."
@@ -6661,7 +6680,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Backroads%20and%20Blue%20Jeans.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Backroads%20and%20Blue%20Jeans.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The truck rolls steady, the breeze feels cool,\nThe road feels like an endless jewel.\nThrough every twist, through every stream,\nWe chase our dreams in backroads and blue jeans.\nBackroads and blue jeans, the simple life,\nA southern charm that feels so right.\nThrough every sunset, through every scene,\nWe find our love in backroads and blue jeans.\nThe stars come out, the night turns slow,\nThe southern charm begins to show.\nThrough every laugh, through every dream,\nWe’re free on backroads in blue jeans.\nBackroads and blue jeans, the open road,\nregarding stories, we’ve never told.\nwith you beside, the world feels clean,\nWe ride as one, in backroads and blue jeans.\nIt’s not the road, it’s who you’re near,\nThe south’s a treasure when love is clear.\nThrough every mile, through every stream,\nWe’re making memories in blue jeans.\nBackroads and blue jeans, the simple life,\nA southern charm that feels so right.\nThrough every sunset, through every scene,\nWe find our love in backroads and blue jeans.\nThe gravel settles, the stars still shine,\nWith backroads and blue jeans, the world aligns.\nThrough southern nights and golden dreams,\nWe’ll always live in backroads and blue jeans."
@@ -6679,7 +6698,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Sweet%20Tea%20Serenade.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Sweet%20Tea%20Serenade.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The pitcher’s cold, the sun shines bright,\nA southern dream on a summer’s night.\nWith every sip, with every sway,\nLife feels good in a sweet tea serenade.\nThe porch is humming, the swing’s in tune,\nThe sun’s dipping low beneath the dune.\nThrough every laugh, through every parade,\nWe’re singing loud in a sweet tea serenade.\nSweet tea serenade, it’s love in the air,\nA melody that takes us there.\nThrough every breeze, through every shade,\nLife is sweeter in a sweet tea serenade.\nThe cicadas hum, the fireflies glow,\nThe southern charm begins to show.\nThrough every smile, through every cascade,\nOur hearts sing loud in this serenade.\nSweet tea serenade, we laugh and sway,\nTo southern songs at close of day.\nThrough every echo, through every fade,\nWe find joy in this sweet tea serenade.\nLet the night sing on, let the love remain,\nIn every note, in every refrain.\nThrough the years, through every stage,\nWe’ll always hum our sweet tea serenade.\nSweet tea serenade, it’s love in the air,\nA melody that takes us there.\nThrough every breeze, through every shade,\nLife is sweeter in a sweet tea serenade.\nThe porch light flickers, the music fades,\nBut the love still hums in our serenade.\nWith every sip, with every sway,\nLife feels good in a sweet tea serenade."
@@ -6697,7 +6716,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Southern%20Stars.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Southern%20Stars.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The pine trees sway, the fields stretch wide,\nThe southern stars light up the night.\nThrough every laugh, through every sound,\nWe find our love where stars are found.\nSouthern stars, they guide the way,\nA shining light that won’t decay.\nThrough every journey, through every scar,\nWe find our truth in southern stars.\nThe rivers shimmer, the crickets sing,\nThe southern night feels like a dream.\nThrough every moment, through near and far,\nOur story life’s, in southern stars.\nSouthern stars, they're bold and bright,\nThey carry dreams through southern night.\nThey pull us close no matter how far,\nWe’re always home with southern stars.\nIt’s not the stars, it’s what they show,\nThe southern love we’ll always know.\nThrough every path, through every stream,\nSouthern stars hold all our dreams.\nSouthern stars, they guide the way,\nA shining light that won’t decay.\nThrough every journey, through every scar,\nWe find our truth in southern stars.\nThe stars still shine, the night feels new,\nTheir southern light pulls me to you.\nThrough every twinkle, near or far,\nWe’ll always shine with southern stars."
@@ -6715,7 +6734,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Front%20Porch%20Glow%20.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Front%20Porch%20Glow%20.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "Screen door swings, that old floor creaks,\nBarefoot dreams and whispered speaks.\nFireflies light up the yard,\nThat’s the life we built so far.\nFront porch glow, it pulls me in,\nThe kind of peace found deep within.\nThe way you smile, the way winds blow,\nI find forever in the front porch glow.\nYour laugh cuts through the humid air,\nI lose my worries in your stare.\nIt’s quiet, slow, but full of soul,\nWrapped in this southern kind of gold.\nFront porch glow, it feels like grace,\nLike time just stops in this one place.\nNo need to leave, no place to go,\nEverything I need’s in the front porch glow.\nWe don’t need city lights,\nWe’ve got stars and fireflies.\nThis old swing, your touch, this breeze\nIt’s everything that sets me free.\nFront porch glow, it pulls me in,\nThe kind of peace found deep within.\nThe way you smile, the way winds blow,\nI find forever in the front porch glow.\nThe world slows down, the moon climbs high,\nWe sit in silence, you and I.\nAnd love keeps burning soft and low,\nHere in our front porch glow."
@@ -6733,7 +6752,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Lightning%20Bugs%20and%20Mason%20Jars.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Lightning%20Bugs%20and%20Mason%20Jars.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The backyard buzzes, the night feels free,\nThe kids are chasing memories.\nThrough the golden glow, through the simple charms,\nIt’s lightning bugs and mason jars.\nLightning bugs and mason jars,\nA southern treasure beneath the stars.\nThrough every moment, through every scar,\nWe find the light in mason jars.\nThe porch light’s dim, the world’s at ease,\nA warm embrace in the southern breeze.\nWith every spark, with every star,\nWe gather dreams in mason jars.\nLightning bugs and mason jars,\nHold our laughter, hide our scars.\nThrough every breeze and backyard spark,\nOur love still glows in mason jars.\nIt’s not the jar, it’s the glow inside,\nA piece of magic we cannot hide.\nThrough every season, every hour,\nWe find our love in jars of power.\nLightning bugs and mason jars,\nA southern treasure beneath the stars.\nThrough every moment, through every scar,\nWe find the light in mason jars.\nThe night fades slow, the jars still gleam,\nA southern memory, a lasting dream.\nThrough lightning bugs and mason jars,\nWe’ll hold this magic near our hearts."
@@ -6751,7 +6770,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Southern%20Lights%20Finale.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/southern-lights/Southern%20Lights%20Finale.mp3",
         "sourceFolder": "Southern Lights",
-        "albumId": "southern-lights-2025",
+        "albumId": "southern-lights-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The fire burns soft, the wind feels sweet,\nThe rhythm of life beneath my feet.\nThrough every moment, through every sight,\nWe’re living beneath the southern lights.\nSouthern lights, they shine so true,\nA beacon of love that carries you.\nThrough every shadow, through every flight,\nWe find our hearts in southern lights\nThe roads may wined, the skies may turn,\nBut southern lights forever burn.\nThrough every trial, through every fight,\nWe find our strength in southern lights.\nSouthern lights, they show the way,\nThey rise again when hope won’t stay.\nThrough every loss, through every height,\nWe keep on walking in southern lights.\nIt’s not just the glow, it’s what it means,\nA southern love in endless streams.\nThrough every mile, through every tune,\nSouthern lights will see us through.\nSouthern lights, they shine so true,\nA beacon of love that carries you.\nThrough every shadow, through every flight,\nWe find our hearts in southern lights.\nThe glow fades slow, the night is near,\nBut southern lights will reappear.\nThrough every shadow, through every height,\nOur love lives on in southern lights."
@@ -9460,7 +9479,11 @@
       },
       {
         "id": 8,
-        "title": "hometown heros",
+        
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Hometown%20Heroes.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Hometown%20Heroes.mp3",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Hometown%20Heroes.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/Hometown%20Heroes.mp3",
         "duration": "3:30",
         "plays": "0",
         "locked": false,
@@ -10520,15 +10543,20 @@
     "accessTier": "free"
   },
   {
-    "id": "starlight-frequencies-2025",
+    "id": "starlight-frequencies-2026",
     "title": "Starlight Frequencies",
-    "year": 2025,
+    "year": 2026,
     "genre": [
       "Pop"
     ],
-    "coverArt": "/images/artbooks/starlight-frequencies-2025/main.png",
+    "coverArt": "/images/artbooks/starlight-frequencies-2026/main.png",
     "artbook": {
-      "artwork": "/images/artbooks/starlight-frequencies-2025/main.png",
+      "artwork": "/images/artbooks/starlight-frequencies-2026/main.png",
+      "sketch": "/images/artbooks/starlight-frequencies-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/starlight-frequencies-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/starlight-frequencies-2026/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#fa00ff",
       "layout": "premium-v1"
     },
@@ -10545,7 +10573,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Dancing%20in%20the%20Stars.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Dancing%20in%20the%20Stars.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "La-da-da, da-da-da...\nUnderneath the velvet skies, Your eyes reflect the starlit ties. The world fades away, just you and me, In this cosmic symphony.\nHold me close, don’t let me go, We’re lost in time, where love will grow.\nWe’re dancing in the stars tonight, A timeless waltz, pure and bright. Each step we take, a love so true, The universe is ours, just me and you.\nEvery step, a promise made, Under the moon, our hearts cascade. The galaxy watches as we glide, Two souls as one, side by side.\nWe’re dancing in the stars tonight, A timeless waltz, pure and bright. Each step we take, a love so true, The universe is ours, just me and you.\nEvery step, a promise made, Under the moon, our hearts cascade. The galaxy watches as we glide, Two souls as one, side by side.\nWe’re dancing in the stars tonight, A timeless waltz, pure and bright. Each step we take, a love so true, The universe is ours, just me and you.\nThe night will fade, but this will stay, An endless dream that lights our way.\nWe’re dancing in the stars tonight, A timeless waltz, pure and bright. Each step we take, a love so true, The universe is ours, just me and you.\nLa-da-da, da-da-da... Forever dancing... in the stars."
@@ -10563,7 +10591,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/May%20the%20fourth%20remind%20you%20.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/May%20the%20fourth%20remind%20you%20.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "Ohhh, ahhh... The stars align tonight...\nWe rise like Jedi, fearless in the fight, Through the galaxy, burning bright, bright light.\nThe twin suns set, the shadows call, A destiny that echoes through us all. From Tatooine sands to Naboo skies, The Force awakens, and hope will rise.\nFeel the saber hum, hear the battle drum, In the heart of darkness, the light will come. Legends live forever, the story's not done, Together we'll stand.\nMay the Force be with us, under starry skies, A spark of rebellion, where the power lies. Through the dark side’s shadow, we ignite the flame, May the Fourth remind us, we're one and the same.\nAcross the stars, we’ll find our way, Fighters for tomorrow, we seize today. Through the Death Star’s fire, through Vader’s reign, The light survives, breaking every chain.\nMay the Force be with us, under starry skies, A spark of rebellion, where the power lies. Through the dark side’s shadow, we ignite the flame, May the Fourth remind us, we're one and the same.\n“Don’t lose faith; the Force flows through you.” “Do or do not—there is no try, stay true.” A legacy eternal, from the stars anew, The rebellion’s fire burns in me and you.\nMay the Force be with us, under starry skies, A spark of rebellion, where the power lies. Through the dark side’s shadow, we ignite the flame, May the Fourth remind us, we're one and the same.\nRise, try, through the stars align tonight...\nRise, Jedi rise, feel the power inside, No Sith can break what the Force unites.\nMay the Force be with us, under starry skies, A spark of rebellion, where the power lies. Through the dark side’s shadow, we ignite the flame, May the Fourth remind us, we're one and the same.\nAhhh... Don’t lose faith; the Fourth… forever… guide our way."
@@ -10581,7 +10609,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Eternal%20Light.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Eternal%20Light.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "Ohh, rise up... Feel the light inside, shining bright...\nThrough the storm, we found our way, Shadows turned to break of day. Every step, a battle won, Now we rise, into the sun.\nHold your head high, let the world see, A fire burning eternally. No more darkness, no more fight, We’re united in eternal light.\nEternal light, it calls us home, A beacon bright where we belong. Hearts aligned, we’ll shine as one, Forever burning like the sun.\nEvery tear has paved this road, A journey shared, a love we’ve sowed. Now we stand on hallowed ground, With the universe’s endless sound.\nEternal light, it calls us home, A beacon bright where we belong. Hearts aligned, we’ll shine as one, Forever burning like the sun.\nOhh, ohh... Lift your voice, let it soar, A hymn of hope forever more. Through the skies, through endless night, We are bound by this eternal light.\nEternal light, it calls us home, A beacon bright where we belong. Hearts aligned, we’ll shine as one, Forever burning like the sun.\nOhh... Forever shining... In eternal light."
@@ -10599,7 +10627,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Starlight%20Frequencies.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Starlight%20Frequencies.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "Waves of light, they carry me, A cosmic sound, a symphony. The stars align, their voices sing, Starlight frequencies, they pull the string.\nStarlight frequencies, a cosmic sound, Through the galaxies, we’re unbound. In every note, in every ray, The stars will guide us, show the way.\nThrough the void, the echoes rise, A rhythm born beyond the skies. In this dance, we find our place, A melody in endless space.\nStarlight frequencies, a cosmic sound, Through the galaxies, we’re unbound. In every note, in every ray, The stars will guide us, show the way.\nThe universe, a song so vast, A timeless tune from future to past. Feel the pulse, let it set you free, Starlight frequencies, our destiny.\nStarlight frequencies, a cosmic sound, Through the galaxies, we’re unbound. In every note, in every ray, The stars will guide us, show the way."
@@ -10617,7 +10645,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Galactic%20Dreams.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Galactic%20Dreams.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "Drifting far beyond the skies, Through galaxies where starlight lies. A cosmic whisper calls my name, Galactic dreams, I’m not the same.\nGalactic dreams, they pull me high, Through endless stars, where visions fly. A world unknown, so vast, so near, Galactic dreams, I feel you here.\nThrough nebulae, the colors glow, A universe I’ll never outgrow. Every star, a path to take, Galactic dreams, my soul awakes.\nGalactic dreams, they pull me high, Through endless stars, where visions fly. A world unknown, so vast, so near, Galactic dreams, I feel you here.\nTime dissolves, the light expands, The cosmos shifts beneath my hands. In this dream, I’ve found my place, A universe I can’t erase.\nGalactic dreams, they pull me high, Through endless stars, where visions fly. A world unknown, so vast, so near, Galactic dreams, I feel you here.\nOhh, ohh..."
@@ -10635,7 +10663,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Through%20the%20Nebula-2.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Through%20the%20Nebula-2.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "Through the nebula, where colors blend, A journey starts, it will never end. The stars ignite, the path is clear, Through the nebula, there’s no fear,\nThrough the nebula, we rise and fall, A symphony of light, it holds us all. The unknown calls, a whispered sound, Through the nebula, we’re unbound.\nEach ray of light, a guiding flame, Through distant worlds, we’re not the same. We leave behind the life we know, Through the nebula, we’ll let it go.\nThrough the nebula, we rise and fall, A symphony of light, it holds us all. The unknown calls, a whispered sound, Through the nebula, we’re unbound.\nThe stars are maps, they lead the way, Through endless nights, into the day. A cosmic dance, a gentle tide, Through the nebula, we’ll collide.\nThrough the nebula, we rise and fall, A symphony of light, it holds us all. The unknown calls, a whispered sound, Through the nebula, we’re unbound."
@@ -10653,7 +10681,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Lost%20in%20Orbit.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Lost%20in%20Orbit.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "Floating high, no tether tight, A lonely drift through endless night. The stars my map, the void my guide, Lost in orbit, nowhere to hide.\nLost in orbit, spinning free, A place between what I can’t see. Through the silence, I’ll redefine, This empty space as truly mine.\nA weightless heart, a restless soul, Through cosmic tides, I find control. Each spin around, I see it clear, I’m not lost; I’m meant to be here.\nLost in orbit, spinning free, A place between what I can’t see. Through the silence, I’ll redefine, This empty space as truly mine.\nEvery turn, a new view shows, Through the dark, a light still glows. I’m not adrift; I’ve found my way, Lost in orbit, here to stay.\nLost in orbit, spinning free, A place between what I can’t see. Through the silence, I’ll redefine, This empty space as truly mine."
@@ -10671,7 +10699,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/%20Light%20Years%20Away.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/%20Light%20Years%20Away.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The distance grows, the stars remain, A love that echoes through time and pain. Though galaxies keep us apart, You’re always here, inside my heart.\nLight years away, yet you’re so near, Your voice a song I always hear. Through endless time, our love will stay, A guiding light, forever and a day.\nThrough blackened skies, your light breaks through, A beacon strong, a love so true. No matter how the cosmos bends, Our love’s a force that never ends.\nLight years away, yet you’re so near, Your voice a song I always hear. Through endless time, our love will stay, A guiding light, forever and a day.\nThrough the void, I’ll call your name, A constant fire, an endless flame. In every star, in every glow, Light years apart, but I still know.\nLight years away, yet you’re so near, Your voice a song I always hear. Through endless time, our love will stay, A guiding light, forever and a day."
@@ -10689,7 +10717,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Solar%20Winds.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Solar%20Winds.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "Ohh, ohh... Ohh, ohh... Drifting through the quiet skies, A silent whisper where the cosmos lies. Fingers tracing unseen streams, Caught between reality and dreams.\nSolar winds, they guide my way, Through endless nights and dawning grey. A cosmic dance, a gentle call, The universe unfolds it all.\nA million stars, a map of light, Guiding me beyond the sight. Each breath a thread that ties me near, To the universe, so vast, so clear.\nSolar winds, they guide my way, Through endless nights and dawning grey. A cosmic dance, a gentle call, The universe unfolds it all.\nWhispers through the void, A voice that's never coy. Carried far on streams of gold, Secrets of the stars retold.\nOhh, ohh... Solar winds... drifting far, Through every dream, through every star."
@@ -10707,7 +10735,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Cosmic%20Vibes.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Cosmic%20Vibes.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "The beat is rising, we’re taking flight, Lost in the rhythm of the starlit night. A galaxy spins, we’re in the flow, Cosmic vibes begin to show.\nCosmic vibes, they pull me in, A universe beneath my skin. Feel the energy, let it rise, We’re dancing under cosmic skies.\nThe stars align, the bass is deep, Through the heavens, we take a leap. No gravity can hold us down, Cosmic vibes, we’re lost, we’re found.\nCosmic vibes, they pull me in, A universe beneath my skin. Feel the energy, let it rise, We’re dancing under cosmic skies.\nLights are flashing, hearts collide, A rhythm flows, a starry tide. Through the cosmos, we’ll transcend, Cosmic vibes will never end.\nCosmic vibes, they pull me in, A universe beneath my skin. Feel the energy, let it rise, We’re dancing under cosmic skies."
@@ -10725,7 +10753,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Gravity%20and%20Light.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Gravity%20and%20Light.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "I feel the pull, it’s keeping me here, A quiet weight, a force so clear. Through every shadow, there’s a spark, A ray of hope that lights the dark.\nGravity and light, they guide my way, Through endless night, to brighter days. A perfect balance, a timeless fight, The harmony of gravity and light.\nThe weight of love, the glow of dreams, A fragile thread through shifting streams. Each step I take, I feel the sway, A force that leads, won’t let me stray.\nGravity and light, they guide my way, Through endless night, to brighter days. A perfect balance, a timeless fight, The harmony of gravity and light.\nLet the pull ground me, let the glow rise, A cosmic force under endless skies. In this dance, I find my place, Gravity and light in an endless embrace.\nGravity and light, they guide my way, Through endless night, to brighter days. A perfect balance, a timeless fight, The harmony of gravity and light."
@@ -10743,7 +10771,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Beyond%20the%20Horizon.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/starlight-frequencies/Beyond%20the%20Horizon.mp3",
         "sourceFolder": "Starlight Frequencies",
-        "albumId": "starlight-frequencies-2025",
+        "albumId": "starlight-frequencies-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "Beyond the horizon, the end of sight, A journey calls us through the night. Beyond the horizon, a world unknown, A place where dreams have always flown.\nBeyond the horizon, we’ll take the leap, A boundless sky, a cosmic deep. With every step, the stars will show, Beyond the horizon, we’ll always go.\nThe winds of change, they carry us far, Through fields of light, from star to star. We’ll chase the glow, we’ll find the way, Beyond the horizon, a brighter day.\nBeyond the horizon, we’ll take the leap, A boundless sky, a cosmic deep. With every step, the stars will show, Beyond the horizon, we’ll always go.\nThe unknown calls, but we’re not afraid, This endless path is where we’re made. Through the vast and through the blue, Beyond the horizon, there’s me and you.\nBeyond the horizon, we’ll take the leap, A boundless sky, a cosmic deep. With every step, the stars will show, Beyond the horizon, we’ll always go.\nOhh, ohh... Ohh, ohh..."
@@ -11610,6 +11638,8 @@
         "price": 0.99,
         "genre": "Country",
         "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Highways%20of%20the%20Heart/echos%20of%20yesterday/Echoes%20Of%20Yesterday.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Highways%20of%20the%20Heart/echos%20of%20yesterday/Echoes%20Of%20Yesterday.mp3",
         "sourceFolder": "Highways of the Heart",
         "albumId": "highways-of-the-heart-2024",
         "isSingle": false,
