@@ -40,6 +40,7 @@ export default function RadioLivePage() {
     const [loading, setLoading] = useState(true);
     const [started, setStarted] = useState(false);
     const [skippedTracks, setSkippedTracks] = useState<string[]>([]);
+    const [isCooldown, setIsCooldown] = useState(false);
     
     // Auto-start for OBS if ?autoplay=true is in the URL
     useEffect(() => {
@@ -216,9 +217,16 @@ export default function RadioLivePage() {
                     autoPlay 
                     onEnded={() => nextTrack(false)}
                     onError={() => {
+                        if (isCooldown) return;
+                        setIsCooldown(true);
                         // Diagnostic Logging: Identify broken links
                         console.error(`[Signal Leak] Skipping Broken Track: ${currentTrack.title} - ${currentTrack.audioUrl}`);
-                        nextTrack(true);
+                        
+                        // SAFETY BRAKE: Wait 2 seconds before skipping to stop the 'crazy' HUD flushing
+                        setTimeout(() => {
+                            nextTrack(true);
+                            setIsCooldown(false);
+                        }, 2000);
                     }}
                 />
             )}

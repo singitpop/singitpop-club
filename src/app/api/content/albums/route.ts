@@ -51,11 +51,19 @@ export async function GET() {
                             }
 
                             // Attempt direct sign first
-                            signedAudio = await getSignedFileUrl(finalKey);
-
-                            // AUTO-RECOVERY: If it's a Country album (Radio priority), or if direct sign fails, 
-                            // we could do a search, but for now we'll just ensure the key is the most likely candidate.
-                            // To perfectly fix 403s, we really need to check if the file exists OR have a perfect map.
+                            try {
+                                signedAudio = await getSignedFileUrl(finalKey);
+                            } catch (e) {
+                                console.warn(`[Content API] Direct sign failed for ${track.title}, attempting S3 search...`);
+                                // FALLBACK: Use fuzzy search to find the actual track in S3
+                                const foundKey = await findTrackKey(album.folderPath || album.id, track.title);
+                                if (foundKey) {
+                                    signedAudio = await getSignedFileUrl(foundKey);
+                                    console.log(`[Content API] Found correct S3 key: ${foundKey}`);
+                                } else {
+                                    throw e; // No file found at all
+                                }
+                            }
                         }
                         return { ...track, audioUrl: signedAudio };
                     } catch (err) {
