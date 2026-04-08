@@ -1,6 +1,6 @@
 {
     "stationName": "Country Signal",
-    "version": "RADIO_V9_SEASONAL_STABLE",
+    "version": "RADIO_V7_NASHVILLE_STABLE",
     "whitelist": [
         "Southern Lights",
         "Winding Roads",
@@ -16,20 +16,12 @@
         "Line Dancing After Dark",
         "Wildcards and Whiskey",
         "October Boots and Fall Roots",
+        "Snowfall and Steel Strings",
         "The Long Way Home",
         "Live at Autumn Lights Festival",
         "Live Step Into the Light",
         "Desert Winds And Open Roads",
         "Valentine Country"
     ],
-    "seasonalWhitelist": [
-        {
-            "title": "Snowfall and Steel Strings",
-            "startMonth": 10,
-            "startWeek": 3,
-            "endMonth": 0,
-            "endDate": 1
-        }
-    ],
-    "lastSnapshot": "2026-04-08T15-01-33-893Z"
+    "lastSnapshot": "2026-04-08T13-45-04-783Z"
 }

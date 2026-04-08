@@ -18,37 +18,7 @@ export async function GET() {
         const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
         const normalizedWhitelist = (radioConfig.whitelist || []).map(normalize);
 
-        // 2. Intelligent Seasonality: Check for active holiday albums
-        const now = new Date();
-        const currentMonth = now.getMonth(); // 0-11
-        const currentDate = now.getDate();
-        const currentDay = now.getDay();
-        // Calculate week of month (rough approximation)
-        const currentWeek = Math.ceil((currentDate + (new Date(now.getFullYear(), currentMonth, 1).getDay())) / 7);
-
-        (radioConfig.seasonalWhitelist || []).forEach((item: any) => {
-            let isActive = false;
-            
-            // Check if we are in the months between start and end
-            if (currentMonth > item.startMonth || currentMonth < item.endMonth) {
-                isActive = true;
-            } 
-            // Check if we are in the start month, past the start week
-            else if (currentMonth === item.startMonth && currentWeek >= item.startWeek) {
-                isActive = true;
-            }
-            // Check if we are in the end month, before the end date
-            else if (currentMonth === item.endMonth && currentDate <= item.endDate) {
-                isActive = true;
-            }
-
-            if (isActive) {
-                normalizedWhitelist.push(normalize(item.title));
-                console.log(`[Seasonality] 🎄 HOLIDAY SIGNAL ACTIVE: ${item.title}`);
-            }
-        });
-
-        // 3. Filter & Sign (The "Nashville Baseline" Engine)
+        // 2. Filter & Sign (The "Nashville Baseline" Engine)
         const filteredAlbums = albums.filter(a => {
             const title = a.title || "";
             return normalizedWhitelist.includes(normalize(title));
