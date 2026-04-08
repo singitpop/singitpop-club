@@ -67,15 +67,19 @@ export async function generateSignedUrl(s3Url: string, expiresInSeconds: number 
 }
 
 export async function getSignedFileUrl(key: string, expiresIn: number = 3600, isDownload: boolean = false): Promise<string> {
-    const command = new GetObjectCommand({
-        Bucket: process.env.AWS_S3_BUCKET || "singitpop-music",
-        Key: key,
-        ResponseContentDisposition: isDownload ? 'attachment' : undefined
-    });
+    try {
+        const command = new GetObjectCommand({
+            Bucket: process.env.AWS_S3_BUCKET || "singitpop-music",
+            Key: key,
+            ResponseContentDisposition: isDownload ? 'attachment' : undefined
+        });
 
-    const signedUrl = await getSignedUrl(s3Client, command, { expiresIn });
-    if (!signedUrl || signedUrl.trim() === "") throw new Error("Empty signed URL generated");
-    return signedUrl;
+        const signedUrl = await getSignedUrl(s3Client, command, { expiresIn });
+        return signedUrl;
+    } catch (err) {
+        console.error("Error generating signed file URL:", err);
+        return "";
+    }
 }
 
 /**
@@ -84,19 +88,14 @@ export async function getSignedFileUrl(key: string, expiresIn: number = 3600, is
  */
 export async function findTrackKey(folderName: string, trackTitle: string): Promise<string | null> {
     try {
-        const actualFolderPrefix = await findFolderPrefix(folderName);
-        if (!actualFolderPrefix) {
-            console.warn(`[S3-Search] Could not resolve folder for: ${folderName}`);
-            return null;
-        }
-
         const bucketName = process.env.AWS_S3_BUCKET || "singitpop-music";
-        
-        console.log(`[S3-Search] Searching for '${trackTitle}' in confirmed folder '${actualFolderPrefix}'`);
+        const prefix = `albums/${folderName}/`;
+
+        console.log(`[S3-Search] Searching for '${trackTitle}' in '${prefix}'`);
 
         const command = new ListObjectsV2Command({
             Bucket: bucketName,
-            Prefix: actualFolderPrefix
+            Prefix: prefix
         });
 
         const response = await s3Client.send(command) as any;
@@ -104,12 +103,7 @@ export async function findTrackKey(folderName: string, trackTitle: string): Prom
 
         if (contents.length === 0) return null;
 
-        // CRITICAL: Normalize quotes and dashes for matching
-        const normalize = (s: string) => s.toLowerCase()
-            .replace(/[’'"]/g, '') // Remove all types of quotes
-            .replace(/[-_]/g, '')  // Remove dashes/underscores
-            .replace(/[^a-z0-9]/g, ''); // Remove all other non-alphanumeric
-
+        const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
         const targetNorm = normalize(trackTitle);
 
         // Filter for audio files

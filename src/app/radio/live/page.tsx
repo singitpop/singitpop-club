@@ -106,8 +106,8 @@ export default function RadioLivePage() {
                 });
 
                 // 3. FINGERPRINTING: Detect any change in the unique pool
-                // NUCLEAR FLUSH (v5): Final Whitelist Enforcement
-                const FLUSH_ID = "RADIO_V5"; 
+                // NUCLEAR FLUSH (v6): Restore 8 AM Stability Baseline
+                const FLUSH_ID = "RADIO_V6"; 
                 const libraryFingerprint = FLUSH_ID + uniquePlaylist.map(t => t.audioUrl).sort().join("|").substring(0, 500);
                 const savedFingerprint = localStorage.getItem('countrySignal_fingerprint');
 
