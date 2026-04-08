@@ -35,55 +35,54 @@ export async function GET() {
                 } 
 
                 // Sign S3 URLs for tracks
+                // Sign S3 URLs for tracks
                 const signedTracks = await Promise.all((album.tracks || []).map(async (track) => {
                     try {
                         let signedAudio = track.audioUrl;
                         if (track.audioUrl && track.audioUrl.includes('s3.eu-north-1.amazonaws.com')) {
-                            // Extract key from URL
                             const url = new URL(track.audioUrl);
                             const rawKey = decodeURIComponent(url.pathname.substring(1));
                             
-                            // RESILIENCE: If the album has a folderPath, try to construct a cleaner key
-                            let finalKey = rawKey;
+                            // 1. Direct Guess (Resilient)
+                            let directKey = rawKey;
                             if (album.folderPath) {
                                 const filename = rawKey.split('/').pop();
-                                finalKey = `albums/${album.folderPath}/${filename}`;
+                                directKey = `albums/${album.folderPath}/${filename}`;
                             }
 
-                            // Attempt direct sign first
                             try {
-                                signedAudio = await getSignedFileUrl(finalKey);
+                                signedAudio = await getSignedFileUrl(directKey);
                             } catch (e) {
-                                console.warn(`[Content API] Direct sign failed for ${track.title}, attempting S3 search...`);
-                                // FALLBACK: Use fuzzy search to find the actual track in S3
+                                // 2. Robust Fallback: Search S3 properly
+                                console.warn(`[Content API] Direct sign failed for ${track.title}, searching S3...`);
                                 const foundKey = await findTrackKey(album.folderPath || album.id, track.title);
                                 if (foundKey) {
                                     signedAudio = await getSignedFileUrl(foundKey);
-                                    console.log(`[Content API] Found correct S3 key: ${foundKey}`);
+                                } else {
+                                    throw new Error(`File not found in S3: ${track.title}`);
                                 }
+                            }
+
+                            if (!signedAudio || signedAudio.trim() === "") {
+                                throw new Error("Could not resolve signed audio URL");
                             }
                         }
 
-                        // MANDATORY VALIDATION: If signedAudio is empty or invalid, fallback to search
-                        if (!signedAudio || signedAudio.trim() === "") {
-                            throw new Error("Invalid signed URL");
+                        // STRICT COUNTRY FILTER: Remove Pop/Rock/Holiday
+                        const title = track.title?.toLowerCase() || "";
+                        const albumTitle = album.title?.toLowerCase() || "";
+                        const forbidden = ["christmas", "holiday", "noel", "mistletoe", "pop", "rock", "dance", "house", "techno", "electronic", "club", "remix"];
+                        
+                        if (forbidden.some(word => title.includes(word) || albumTitle.includes(word))) {
+                            return null; 
                         }
 
-                    // STRICT COUNTRY FILTER: Remove unwanted genres that leaked into Country Signal
-                    const title = track.title?.toLowerCase() || "";
-                    const albumTitle = album.title?.toLowerCase() || "";
-                    const forbidden = ["christmas", "holiday", "noel", "mistletoe", "pop", "rock", "dance", "house", "techno", "electronic", "club", "remix"];
-                    
-                    if (forbidden.some(word => title.includes(word) || albumTitle.includes(word))) {
-                        return null; // Filter out from API response
+                        return { ...track, audioUrl: signedAudio };
+                    } catch (err: any) {
+                        console.warn(`[Content API] Link Failure for ${track.title}:`, err.message);
+                        return null; 
                     }
-
-                    return { ...track, audioUrl: signedAudio };
-                } catch (err: any) {
-                    console.warn(`[Content API] Track Link Failure for ${track.title}:`, err.message);
-                    return null; // Skip entire track if link cannot be resolved
-                }
-            })).then(tracks => tracks.filter((t): t is any => t !== null)); // Remove filtered/null tracks
+                })).then(results => results.filter((t): t is any => t !== null));
 
                 return {
                     ...album,
