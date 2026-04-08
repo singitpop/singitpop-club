@@ -107,7 +107,9 @@ export default function RadioLivePage() {
                 });
 
                 // 3. FINGERPRINTING: Detect any change in the unique pool
-                const libraryFingerprint = uniquePlaylist.map(t => t.audioUrl).sort().join("|").substring(0, 500);
+                // NUCLEAR FLUSH (v4): Forces all clients to ignore their old broken cache and re-sync
+                const FLUSH_ID = "RADIO_V4"; 
+                const libraryFingerprint = FLUSH_ID + uniquePlaylist.map(t => t.audioUrl).sort().join("|").substring(0, 500);
                 const savedFingerprint = localStorage.getItem('countrySignal_fingerprint');
 
                 // 4. PERSISTENT SHUFFLE ENGINE
@@ -128,7 +130,7 @@ export default function RadioLivePage() {
                         setCurrentIndex(isNaN(idx) ? 0 : idx);
                     }
                 } else {
-                    console.log(`[Radio] Library Change Detected: Re-shuffling ${uniquePlaylist.length} tracks.`);
+                    console.log(`[Radio] Library Change Detected (or Nuclear Flush): Re-shuffling ${uniquePlaylist.length} tracks.`);
                     
                     // Fisher-Yates Shuffle
                     finalPlaylist = [...uniquePlaylist];
