@@ -32,8 +32,15 @@ export async function GET() {
             "Valentine Country"
         ];
 
+        // Normalize helper: lowercase and strip extra spacing/non-alphanumeric
+        const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const normalizedWhitelist = COUNTRY_WHITELIST.map(normalize);
+
         // Sign S3 URLs for cover art
-        const signedAlbums = await Promise.all(albums.filter(a => COUNTRY_WHITELIST.includes(a.title || "")).map(async (album) => {
+        const signedAlbums = await Promise.all(albums.filter(a => {
+            const title = a.title || "";
+            return normalizedWhitelist.includes(normalize(title));
+        }).map(async (album) => {
             try {
                 let signedCover = album.coverArt;
 
