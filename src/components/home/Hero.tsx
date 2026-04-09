@@ -111,7 +111,7 @@ export default function Hero() {
                     <span className={styles.watchText}>{heroData.BUTTON_TEXT}</span>
                     <Link href="/radio/live" className={styles.radioCTA}>
                         <div className={styles.miniDot} />
-                        LISTEN LIVE 📻
+                        LISTEN TO COUNTRY MUSIC LIVE 📻
                     </Link>
                 </div>
             )}

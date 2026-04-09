@@ -86,19 +86,19 @@ export default function RootLayout({
         "@type": "MusicGroup",
         "name": "SingIt Pop",
         "alternateName": "SING",
-        "description": "Premium country music and art from Geordie Land.",
+        "description": "Premium country music and art from SingIt Pop.",
         "url": "https://singitpop.com",
         "genre": ["Country", "Pop"],
         "locationCreated": {
             "@type": "Place",
-            "name": "Geordie Land"
+            "name": "SingIt Pop"
         },
         "knowsAbout": ["Country Music", "Digital Artbooks", "Radio Broadcasting"],
         "hasPart": [
             {
                 "@type": "RadioStation",
                 "name": "Country Signal",
-                "description": "24/7 high-performance country music broadcast from Geordie Land."
+                "description": "24/7 high-performance country music broadcast."
             }
         ]
     };

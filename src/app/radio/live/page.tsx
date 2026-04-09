@@ -27,9 +27,9 @@ interface Track {
 }
 
 /**
- * RADIO 7.0: NASHVILLE BASELINE
+ * RADIO 7.0: COUNTRY SIGNAL BASELINE
  * A high-performance, strictly whitelisted radio engine.
- * Redundant filters purged. Stability maximized.
+ * V15 SIGNAL LOCK ensures drift prevention and eliminates track flipping.
  */
 export default function RadioLivePage() {
     const [tracks, setTracks] = useState<Track[]>([]);
@@ -38,90 +38,144 @@ export default function RadioLivePage() {
     const [started, setStarted] = useState(false);
     const [isCooldown, setIsCooldown] = useState(false);
     
-    // NUCLEAR FLUSH VERSION: V13-GLOBAL-SYNC
-    // This version aligns OBS and Website to a single Master Clock.
-    const STATION_VERSION = "RADIO_V13_GLOBAL_SYNC";
+    // NUCLEAR FLUSH VERSION: V15-SIGNAL-LOCK
+    // This version uses ACTUAL track durations with a 5-second sync buffer to prevent flipping.
+    const STATION_VERSION = "RADIO_V15_SIGNAL_LOCK";
+    const SYNC_THRESHOLD = 5; // 5 seconds buffer
+
+    const durationToSeconds = (dur: string) => {
+        if (!dur) return 180;
+        const [m, s] = dur.split(':').map(Number);
+        return (m * 60) + (s || 0);
+    };
 
     useEffect(() => {
+        let isMounted = true;
+        let syncInterval: NodeJS.Timeout;
+
         const fetchStationData = async () => {
             try {
                 const res = await fetch('/api/content/albums');
                 if (!res.ok) throw new Error("Station Signal Failure");
                 const albums = await res.json();
                 
-                // 1. Flatten into dynamic playlist
                 const rawPool: Track[] = [];
                 const seenUrls = new Set();
-
-                // Ensure deterministic order from API
                 albums.sort((a: any, b: any) => a.id.localeCompare(b.id));
 
                 albums.forEach((a: any) => {
                     (a.tracks || []).forEach((t: any) => {
                         if (!t.audioUrl || t.audioUrl.trim() === "") return;
                         if (seenUrls.has(t.audioUrl)) return;
-                        
                         seenUrls.add(t.audioUrl);
                         rawPool.push({
                             ...t,
                             artist: a.artist,
                             albumTitle: a.title,
                             coverArt: a.coverArt,
-                            releaseDate: a.releaseDate
+                            releaseDate: a.releaseDate,
+                            // Ensure duration is handled
+                            durationSeconds: durationToSeconds(t.duration)
                         });
                     });
                 });
 
-                // 2. SIGNAL LOCK: Pre-Flight Check (Remove dead tracks)
                 const pool = rawPool.filter(t => t.audioUrl && t.audioUrl.length > 20);
-
-                // 3. MASTER CLOCK: Seeded Shuffle (Deterministic for all users)
                 const seededShuffle = (array: any[], seed: string) => {
                     let m = array.length, t, i;
-                    // Simple deterministic LCG-like generator
                     let seedNum = Array.from(seed).reduce((acc, char) => acc + char.charCodeAt(0), 0);
                     const random = () => {
                         seedNum = (seedNum * 9301 + 49297) % 233280;
                         return seedNum / 233280;
                     };
-
                     while (m) {
                         i = Math.floor(random() * m--);
-                        t = array[m];
-                        array[m] = array[i];
-                        array[i] = t;
+                        t = array[m]; array[m] = array[i]; array[i] = t;
                     }
                     return array;
                 };
 
-                // 4. Time-Based Index Calculation (The Master Clock)
                 const masterPlaylist = seededShuffle([...pool], STATION_VERSION);
-                
-                // Assumption: Average song duration 180 seconds
-                const AVG_DURATION_SECONDS = 180;
-                const totalCycleSeconds = masterPlaylist.length * AVG_DURATION_SECONDS;
-                
-                // Seconds since Unix Epoch (Global Reference)
-                const secondsSinceEpoch = Math.floor(Date.now() / 1000);
-                const currentCyclePosition = secondsSinceEpoch % totalCycleSeconds;
-                const masterIndex = Math.floor(currentCyclePosition / AVG_DURATION_SECONDS);
-
-                console.log(`[Nashville-Global] Syncing to track ${masterIndex + 1} of ${masterPlaylist.length}.`);
+                if (!isMounted) return;
 
                 setTracks(masterPlaylist);
-                setCurrentIndex(masterIndex);
                 setLoading(false);
+
+                // 4. PRECISION SIGNAL LOCK: Periodic global clock synchronization
+                const totalCycleSeconds = masterPlaylist.reduce((acc, t: any) => acc + (t.durationSeconds || 180), 0);
+
+                const syncAudio = () => {
+                    const secondsSinceEpoch = Math.floor(Date.now() / 1000);
+                    const currentCyclePosition = secondsSinceEpoch % totalCycleSeconds;
+                    
+                    let accumulatedTime = 0;
+                    let masterIndex = 0;
+                    let seekTime = 0;
+
+                    for (let i = 0; i < masterPlaylist.length; i++) {
+                        const trackDur = (masterPlaylist[i] as any).durationSeconds || 180;
+                        if (accumulatedTime + trackDur > currentCyclePosition) {
+                            masterIndex = i;
+                            seekTime = currentCyclePosition - accumulatedTime;
+                            break;
+                        }
+                        accumulatedTime += trackDur;
+                    }
+
+                    setCurrentIndex((currentIdx) => {
+                        const audio = document.querySelector('audio');
+                        
+                        if (currentIdx !== masterIndex) {
+                            console.log(`[Country-Signal] Phase shifted. Forcing track ${masterIndex + 1}.`);
+                            return masterIndex; 
+                        } else if (audio) {
+                            const drift = Math.abs(audio.currentTime - seekTime);
+                            if (drift > SYNC_THRESHOLD) {
+                                console.warn(`[Country-Signal] Time drift detected (${drift.toFixed(1)}s). Re-locking signal...`);
+                                audio.currentTime = seekTime;
+                            }
+                        }
+                        return currentIdx;
+                    });
+                };
+
+                syncAudio();
+                const audio = document.querySelector('audio');
+                if (audio) {
+                    const secondsSinceEpoch = Math.floor(Date.now() / 1000);
+                    const currentCyclePosition = secondsSinceEpoch % totalCycleSeconds;
+                    let accumulatedTime = 0;
+                    let seekTime = 0;
+                    for (let i = 0; i < masterPlaylist.length; i++) {
+                        const trackDur = (masterPlaylist[i] as any).durationSeconds || 180;
+                        if (accumulatedTime + trackDur > currentCyclePosition) {
+                            seekTime = currentCyclePosition - accumulatedTime;
+                            break;
+                        }
+                        accumulatedTime += trackDur;
+                    }
+                    audio.currentTime = seekTime;
+                }
+
+                syncInterval = setInterval(syncAudio, 2500); 
+
             } catch (err) {
-                console.error("[Nashville-Global] Sync Failure:", err);
+                console.error("[Country-Signal] Sync Failure:", err);
             }
         };
         fetchStationData();
+
+        return () => {
+            isMounted = false;
+            clearInterval(syncInterval);
+        };
     }, []);
 
-    const nextTrack = (wasError = false) => {
-        const nextIndex = (currentIndex + 1) % tracks.length;
-        setCurrentIndex(nextIndex);
-        localStorage.setItem('countrySignal_index', nextIndex.toString());
+    const nextTrack = (force = false) => {
+        if (force) {
+            const nextIndex = (currentIndex + 1) % tracks.length;
+            setCurrentIndex(nextIndex);
+        }
     };
 
     const currentTrack = tracks[currentIndex];
@@ -131,7 +185,7 @@ export default function RadioLivePage() {
             <div className="min-h-screen bg-black flex items-center justify-center text-white font-mono">
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-xl tracking-widest uppercase">Tuning Geordie Land Stable...</p>
+                    <p className="text-xl tracking-widest uppercase text-red-600 animate-pulse">Tuning Master Signal...</p>
                 </div>
             </div>
         );
@@ -147,7 +201,7 @@ export default function RadioLivePage() {
                 </div>
             )}
 
-            {/* Nashville Native Audio Engine */}
+            {/* Country Signal Native Audio Engine */}
             {started && (
                 <audio 
                     src={currentTrack.audioUrl} 
@@ -176,7 +230,7 @@ export default function RadioLivePage() {
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     inputProps={{
                         title: currentTrack.title,
-                        albumTitle: currentTrack.albumTitle || "Geordie Land Broadcast",
+                        albumTitle: currentTrack.albumTitle || "Country Signal - Geordie Land",
                         releaseDate: currentTrack.releaseDate,
                         backgroundImg: "/radio-station-background.png",
                         accentColor: "#FF0000"
@@ -214,7 +268,7 @@ export default function RadioLivePage() {
                         <div className="bg-black/95 backdrop-blur-3xl border-r-[12px] border-red-600 px-10 py-8 rounded-l-[40px] shadow-2xl flex flex-col items-end text-right">
                             <span className="text-white/30 text-[10px] font-black tracking-[4px] uppercase mb-4">Now Broadcasting</span>
                             
-                            {/* NEW: Release Countdown / Coming Soon Banner */}
+                            {/* Release Countdown / Coming Soon Banner */}
                             {currentTrack.releaseDate && new Date(currentTrack.releaseDate) > new Date() && (
                                 <div className="flex items-center gap-2 bg-red-600 px-3 py-1.5 rounded-lg mb-4 animate-pulse">
                                     <span className="text-white text-[10px] font-black tracking-[2px] uppercase">
