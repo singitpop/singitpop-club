@@ -18,6 +18,23 @@ export default function TrackLibrary({ albums, advertTracks }: TrackLibraryProps
     const [selectedTrack, setSelectedTrack] = useState<any | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [activeTab, setActiveTab] = useState<'all' | 'niche'>('all');
+
+    // Make tab auto-switch based on URL hash
+    React.useEffect(() => {
+        const handleHashChange = () => {
+            if (window.location.hash === '#niche-catalog') {
+                setActiveTab('niche');
+                setSelectedAlbum(null);
+            }
+        };
+
+        // Check on mount
+        handleHashChange();
+
+        // Listen for changes
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
     
     // Audio State
     const [playingTrackId, setPlayingTrackId] = useState<string | null>(null);
@@ -90,6 +107,7 @@ export default function TrackLibrary({ albums, advertTracks }: TrackLibraryProps
 
     return (
         <section id="library" className={styles.librarySection}>
+            <div id="niche-catalog" className="absolute -mt-32" /> {/* Scroll anchor offset */}
             <div className={styles.libraryHeader}>
                 <h2 className={styles.sectionHeading}>{selectedAlbum ? selectedAlbum.title : 'Licensing Catalog'}</h2>
                 <div className={styles.libraryTabs}>
@@ -211,7 +229,7 @@ export default function TrackLibrary({ albums, advertTracks }: TrackLibraryProps
                         className={styles.toastAction}
                         onClick={() => {
                             setPreviewEnded(false);
-                            const track = playingTrackId ? (albums.flatMap(a => a.tracks).find(t => `${a.id}-${t.id}` === playingTrackId) || nicheTracks.find(t => `niche-${t.id}` === playingTrackId)) : null;
+                            const track = playingTrackId ? (albums.flatMap(a => a.tracks).find((t: any) => playingTrackId.endsWith(`-${t.id}`)) || nicheTracks.find(t => `niche-${t.id}` === playingTrackId)) : null;
                             if (track) setSelectedTrack(track);
                         }}
                     >

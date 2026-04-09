@@ -129,7 +129,7 @@ export default async function LicensingPage() {
                                     <Droplets size={18} /> Spas
                                 </div>
                             </div>
-                            <a href="#library" className={styles.primaryButton}>Browse Niche Catalog</a>
+                            <a href="#niche-catalog" className={styles.primaryButton}>Browse Niche Catalog</a>
                         </div>
                         <div className="relative z-10 w-full md:w-80 h-80 bg-black/40 border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
                              <Image 
