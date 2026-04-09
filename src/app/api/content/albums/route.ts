@@ -9,6 +9,20 @@ export const dynamic = 'force-dynamic';
  * REBILD 7.0: NASHVILLE STABLE
  * Wiped legacy fuzzy search and redundant filtering.
  * Strictly uses the radio_config.json whitelist.
+ */
+export async function GET() {
+    try {
+        const albums = await getAlbums();
+        
+        // 1. Music Page Protocol: Filter by Genre (Country) and Released status
+        const isReleased = (dateStr: string) => {
+            if (!dateStr || dateStr === '0' || !dateStr.includes('-')) return false;
+            const releaseDate = new Date(dateStr);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return releaseDate <= today;
+        };
+
         const whitelist = new Set(radioConfig.whitelist.map(t => t.trim().toLowerCase()));
 
         const filteredAlbums = albums.filter(a => {
