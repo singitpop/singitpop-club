@@ -4,7 +4,7 @@ import Image from 'next/image';
 import TrackLibrary from '@/components/licensing/TrackLibrary';
 import fs from 'fs';
 import path from 'path';
-import { Sparkles, Home, Bath, Droplets } from 'lucide-react';
+import { Sparkles, Film, Tv, Briefcase } from 'lucide-react';
 import { getSignedAlbumCoverUrl } from '@/lib/server-image-utils';
 
 export default async function LicensingPage() {
@@ -116,17 +116,17 @@ export default async function LicensingPage() {
                             </div>
                             <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter mb-6 uppercase">Sync for Brands</h2>
                             <p className="text-xl text-white/70 mb-8 max-w-2xl leading-relaxed">
-                                Our <strong className="text-white">Commercial Archive</strong> features minimalist instrumentals surgically designed for high-end interior brands. Perfectly suited for <strong className="text-cyan-400">Kitchens, Bathrooms, and Luxury Living</strong> campaigns.
+                                Our <strong className="text-white">Commercial Archive</strong> features bespoke instrumentals specifically designed for high-end media. Perfectly suited for <strong className="text-cyan-400">Epic Trailers, Global Commercials, and Luxury Brand</strong> campaigns.
                             </p>
-                            <div className="flex gap-4 mb-8">
+                            <div className="flex gap-4 mb-8 flex-wrap">
                                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-xl border border-white/10 text-white/60">
-                                    <Home size={18} /> Kitchens
+                                    <Film size={18} /> Film & Trailers
                                 </div>
                                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-xl border border-white/10 text-white/60">
-                                    <Bath size={18} /> Bathrooms
+                                    <Tv size={18} /> TV Ads
                                 </div>
                                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-xl border border-white/10 text-white/60">
-                                    <Droplets size={18} /> Spas
+                                    <Briefcase size={18} /> Brands & Luxury
                                 </div>
                             </div>
                             <a href="#niche-catalog" className={styles.primaryButton}>Browse Niche Catalog</a>
@@ -141,7 +141,7 @@ export default async function LicensingPage() {
                              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                              <div className="absolute bottom-6 left-6">
                                 <div className="text-xs text-cyan-400 font-bold uppercase tracking-widest mb-1">Featured Collection</div>
-                                <div className="text-xl font-bold">Home & Living v1</div>
+                                <div className="text-xl font-bold">Cinematic & Commercial v1</div>
                              </div>
                         </div>
                     </div>
