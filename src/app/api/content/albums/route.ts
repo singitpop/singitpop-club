@@ -9,26 +9,21 @@ export const dynamic = 'force-dynamic';
  * REBILD 7.0: NASHVILLE STABLE
  * Wiped legacy fuzzy search and redundant filtering.
  * Strictly uses the radio_config.json whitelist.
- */
-export async function GET() {
-    try {
-        const albums = await getAlbums();
-        
-        // 1. Music Page Protocol: Filter by Genre (Country) and Released status
-        const isReleased = (dateStr: string) => {
-            if (!dateStr || dateStr === '0') return false;
-            const releaseDate = new Date(dateStr);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            return releaseDate <= today;
-        };
+        const whitelist = new Set(radioConfig.whitelist.map(t => t.trim().toLowerCase()));
 
         const filteredAlbums = albums.filter(a => {
-            const isCountry = a.genre && a.genre.some((g: string) => g.toLowerCase() === 'country');
+            // Strictly enforce the whitelist by Title
+            const titleMatch = a.title && whitelist.has(a.title.trim().toLowerCase());
+            
+            // Explicitly exclude any albums marked as a single-item collection or having 'isSingle' true
+            const isActuallySingle = a.isSingle === true || a.title?.toLowerCase().includes('(single)');
+            
             const hasReleased = isReleased(a.releaseDate);
-            return isCountry && hasReleased;
+            
+            return titleMatch && !isActuallySingle && hasReleased;
         });
 
+        // 2. Music Page Protocol: Filter out tracks that are marked as isSingle
         const signedAlbums = await Promise.all(filteredAlbums.map(async (album) => {
             try {
                 // Sign Cover Art
@@ -38,7 +33,9 @@ export async function GET() {
                 }
 
                 // Sign Tracks (Robust Bucket Detection)
-                const signedTracks = await Promise.all((album.tracks || []).map(async (track) => {
+                // Also FILTER OUT singles from whitelisted full albums as a safety double-layer
+                const validTracks = (album.tracks || []).filter(t => !t.isSingle);
+                const signedTracks = await Promise.all(validTracks.map(async (track) => {
                     try {
                         let signedAudio = track.audioUrl;
                         

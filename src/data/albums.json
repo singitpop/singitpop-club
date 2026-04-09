@@ -3352,7 +3352,8 @@
         "isSingle": true,
         "lyrics": {
           "rawText": "The hills roll tall, the boots hit hard,\nWe raise it up in the ol\u2019 backyard.\nAlright y\u2019all, let\u2019s bring it back home\nThis one\u2019s for every hometown heart out there\nSun on my neck, dust on my jeans,\nDancin\u2019 on gravel in worn-out seams.\nSky so wide, nothin\u2019 to prove,\nWe dance the land where we learned to move.\nLeft step, right, spin it twice,\nDown and back, now hold it tight.\nKick that dirt where time stands still,\nYou\u2019ll find your soul in the haven of the hills.\nKeep it rollin\u2019\nY\u2019all sound good tonight\nY\u2019all\nY\u2019all\nCreek runs loud, but we stomp louder,\nUnder that sky, we\u2019ve got the power.\nHands held high, boots stand strong,\nThe hilltop crowd singin\u2019 every song.\nLeft step, right, spin it twice,\nDown and back, now hold it tight.\nKick that dirt where time stands still,\nYou\u2019ll find your soul in the haven of the hills.\nKeep it goin\u2019 now\nEverybody now, raise it up  \nKick that dust and let it fly\nFeel that hill beneath your boots\nIt\u2019s not just trees, it\u2019s roots, it\u2019s flame,\nA place that knows you by your name.\nCan you feel it? It\u2019s home\nLeft step, right, spin it twice,\nDown and back, now hold it tight.\nKick that dirt where time stands still,\nYou\u2019ll find your soul in the haven of the hills.\nWhen the night gets long, and the stars fall still,\nWe\u2019ll keep dancin\u2019 in the haven of the hills.\nGive it up for the hills tonight"
-        }
+        },
+        "title": "Haven in the Hills"
       },
       {
         "id": 10,
@@ -5079,13 +5080,13 @@
     ]
   },
   {
-    "id": "the-long-way-home-2025",
+    "id": "the-long-way-home-2026",
     "title": "The Long Way Home",
-    "year": 2025,
+    "year": 2026,
     "genre": [
       "Country"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "artbooks/the-long-way-home-2026/main.png",
     "tracks": [
       {
         "id": 1,
@@ -5099,7 +5100,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/The%20Long%20Way%20Home.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/The%20Long%20Way%20Home.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "I\u2019ve been driving without a map\nThrough the silence, through the cracks\nEvery light I passed was fading\nEvery road was rearranging\nSo I take the long way home\nPast the towns where we had grown\nWhere your voice still haunts the night\nLike a song I can\u2019t rewrite\nI take the long way home\nRearview mirrors show the past\nGhosts that I can\u2019t seem to pass\nI whisper prayers into the dark\nAnd trace your name into the dash\nSo I take the long way home\nWhere the stars are overgrown\nEvery sign and every bend\nFeels like starting once again\nI take the long way home\nI never said the words just right\nHeld too much, held on too tight\nBut if you're waiting at the end\nI'll keep walking through this bend\nSo I take the long way home\nEven lost, I\u2019m not alone\nYour memory lights the way\nIn every mile I choose to stay\nI take the long way home"
@@ -5117,7 +5118,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fading%20Through%20You.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fading%20Through%20You.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "We don\u2019t talk the way we used to\nIt\u2019s like there\u2019s something in the way\nI sit beside you on the sofa\nBut we\u2019ve got nothing left to say\nI\u2019m fading through you\nLike I\u2019m here, but I\u2019m not\nI reach for your hand\nBut the feeling is gone\nYou look right past me\nLike I\u2019m already through\nI\u2019m not leaving\t\nI\u2019m just fading through you\nYour coffee\u2019s still warm on the counter\nBut your eyes are somewhere else\nAnd I can feel you slipping slowly\nWhile I\u2019m stuck here by myself\nI\u2019m fading through you\nLike I\u2019m not in the room\nWe\u2019re talking in circles\nBut nothing breaks through\nI smile just to hide\nThat I don\u2019t have a clue\nHow I got here\nJust fading through you\nI miss the way you\u2019d say my name\nNow it just don\u2019t sound the same\nAnd maybe you don\u2019t even see\nThat I\u2019m still right here, \njust not who I used to be\nI\u2019m fading through you\nAnd I don\u2019t know what\u2019s real\nI still say I love you\nBut I don\u2019t know what you feel\nI\u2019d hold on tighter\nIf I only knew\nThat I was still someone to you\nNot just fading through you"
@@ -5135,7 +5136,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fall%20Apart%20Gracefully.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fall%20Apart%20Gracefully.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "We\u2019ve been trying for too long\nHolding on when it feels all wrong\nWe don\u2019t fight, we don\u2019t touch\nWe just don\u2019t feel like us\nLet\u2019s fall apart gracefully\nNo shouting, no blame, no need\nWe can walk away with care\nLike we were never scared\nLet\u2019s fall apart gracefully\nI still want good things for you\nI just know we\u2019re not getting through\nWe don\u2019t laugh like we used to do\nAnd I don\u2019t feel like me with you\nLet\u2019s fall apart gracefully\nWith a quiet kind of honesty\nNo fireworks, no crash and burn\nJust two people who\u2019ve outgrown the turn\nWe had love, and that was real\nBut now it\u2019s something we can\u2019t feel\nAnd it\u2019s okay to let it fade\nWe gave it everything we gave\nLet\u2019s fall apart gracefully\nNo hard words, no history\nJust the truth we both can see\nThat love\u2019s not what it used to be"
@@ -5153,7 +5154,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Letters%20Never%20Sent.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Letters%20Never%20Sent.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "There\u2019s a box beneath my bed\nFilled with words I never said\nFolded pages, faded ink\nOf all the things I didn\u2019t think\nLetters never sent\nBut every one meant\nTo say I\u2019m sorry, I still care\nThough I never got them there\nLetters never sent\nI wrote you in the quiet night\nWhen my chest was holding tight\nThought I\u2019d mail them in the spring\nBut lost the strength to feel that sting\nLetters never sent\nEach one heaven bent\nTo reach you past the pain we made\nBut stayed locked in a darker place\nSome words are safer unread\nSome truths are softer unsaid\nBut every line I couldn\u2019t share\nStill hangs like smoke in the air\nLetters never sent\nStill I can't forget\nWhat it cost to hold them close\nWhen I should have let you know"
@@ -5171,7 +5172,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/When%20We%20Were%20Wild.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/When%20We%20Were%20Wild.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": true,
         "lyrics": {
           "rawText": "We were sparks beneath the moon\nRunning fast, too far, too soon\nNo map, no rules, just borrowed time\nYou held my hand, and I lost my mind\nWhen we were wild, and nothing could break\nHearts unchained in every mistake\nJumped the fences, took the fall\nBut God, we had it all\nWhen we were wild\nYour lipstick on my favorite shirt\nA perfect mess, a perfect hurt\nWe burned the nights down to the bone\nAnd called that chaos home\nWhen we were wild, and nothing could break\nHearts unchained in every mistake\nEven when we hit the wall\nWe swore we\u2019d never crawl\nWhen we were wild\nNow I watch the years unfold\nBut I still feel sixteen years old\nEvery time that song plays loud\nI\u2019m right back in that crowd\nWhen we were wild, and full of fire\nTangled sheets and bad desires\nI still chase that memory\nWhen love was wild and free"
@@ -5189,7 +5190,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/If%20I%20Break.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/If%20I%20Break.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "I\u2019ve been standing in the quiet\nTrying hard to play it strong\nBut I\u2019m one more word away\nFrom showing everything is wrong\nIf I break will you still stay\nWill you hold the mess I made\nI\u2019m not asking you to fix me\nJust don\u2019t walk away too quickly\nIf I break\nSome nights I stare into the mirror\nLooking for the man you knew\nBut time\u2019s been heavy on my shoulders\nAnd I\u2019m barely making through\nIf I break will you still try\nWill you look me in the eye\nI\u2019ve been strong for far too long\nNow I need a place where I belong\nI don\u2019t need a savior\u2019s hand\nJust someone who understands\nI\u2019m not proud of falling down\nBut I still want to be found\nIf I break don\u2019t turn away\nI\u2019ve been losing light all day\nYou don\u2019t have to say it\u2019s fine\nJust promise you won\u2019t cross that line\nIf I break"
@@ -5207,7 +5208,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sleepwalking%20Hearts.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sleepwalking%20Hearts.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "We're awake but never feeling\nKinda floating, barely healing\nLoving like it's muscle memory\nStuck inside a soft daydream\n\nSleepwalking hearts\nWe forget where we start\nHolding hands in separate worlds\nTalking soft in tangled words\nSleepwalking hearts\nYou're a voice behind the curtain\nStill familiar, still uncertain\nWe touch like strangers passing by\nIn the hallway of goodbye\nSleepwalking hearts\nJust shadows in the dark\nI say your name, but it won\u2019t land\nLike writing songs in sinking sand\nWe don\u2019t break, we just dissolve\nIn a silence we can\u2019t solve\nMaybe love just fades to grey\nWhen we both drift far away\nSleepwalking hearts\nDrifting miles apart\nThe rhythm\u2019s gone, but we still dance\nTo the ghost of second chance"
@@ -5225,7 +5226,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sunday%20Rain.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sunday%20Rain.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "We used to laugh on days like this\nNow the silence feels like mist\nI make my coffee, pour two cups\nBut you don\u2019t even look up\nSunday rain\nFalling on the glass\nLike the words we left in the past\nYou sit there lost in yesterday\nWhile we slowly drift away\nSunday rain\nYour voice is low, your eyes are tired\nWe\u2019re pretending, uninspired\nWe're not fighting, but we ache\nThis isn't how love\u2019s supposed to break\nSunday rain\nRunning down the pane\nLike the dreams we can\u2019t explain\nWe\u2019re here but we\u2019re not the same\nAnd I don\u2019t know who to blame\nThis house still holds our names\nBut it doesn\u2019t feel the same\nCan we fight through all the gray\nOr are we just one more clich\u00e9\nSunday rain\nLet\u2019s not go in vain\nI want to feel your hand again\nIf there's something left to save\nSay it now before the rain"
@@ -5243,7 +5244,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Before%20the%20Storm-clarify.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Before%20the%20Storm.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "You\u2019re standing there, back to me\nTension thick like broken seas\nOne wrong word, one glance away\nAnd everything could slip today\nBefore the storm\nLet\u2019s take one breath\nSay the things we still have left\nDon\u2019t walk away, don\u2019t shut the door\nNot before the storm\nYou say you\u2019re fine, but I can tell\nWe\u2019re living inside different shells\nStill I believe in what we were\nAnd I can still remember her\nBefore the storm\nLet me in again\nDon\u2019t end this on pretend\nJust give me one last honest word\nBefore the storm\nI know that I\u2019m not perfect\nBut I\u2019m still willing to fight\nIf there\u2019s still one spark inside you\nLet\u2019s not lose it tonight\nBefore the storm\nLet\u2019s feel it all\nEven if we start to fall\nI\u2019d rather crash than never know\nWhat we were fighting for"
@@ -5261,7 +5262,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Something%20Left%20to%20Say.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Something%20Left%20to%20Say.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "We said goodbye too quietly\nNo slamming doors, no tragedy\nBut deep inside, I feel the weight\nOf all the words we never said\nThere\u2019s something left to say\nEven if we walk away\nNot \u201cI love you\u201d, not \u201ccome back\u201d\nJust something real to close the gap\nThere\u2019s something left to say\nYou took your keys, I watched you go\nBut silence echoed down the road\nAnd now I lie awake at night\nJust trying to make it right\nThere\u2019s something left to say\nWe never meant to fade this way\nNo goodbye, no second glance\nJust a song without a last dance\nI\u2019m not asking for forever\nJust one more honest word\nWe can end what we started\nBut let our voices be heard\nThere\u2019s something left to say\nBefore we throw this all away\nI don\u2019t want a grand return\nJust to know you really learned\nThere\u2019s something left to say"
@@ -5279,7 +5280,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Carry%20Me%20Slow-clarify.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Carry%20Me%20Slow.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "I\u2019ve been running out of fight\nJust trying to make it through the night\nMy hands are tired, my breath is low\nI just need someone to know\nCarry me slow\nWhen I\u2019ve got nowhere to go\nDon\u2019t lift me off the ground\nJust walk beside me now\nCarry me slow\nI\u2019ve been strong for everyone\nBut right now, I\u2019m coming undone\nI don\u2019t need you to fix what\u2019s wrong\nJust stay beside me all night long\nCarry me slow\nDon\u2019t push, don\u2019t pull, just go\nAt the pace my heart can take\nUntil I find my way awake\nCarry me slow\nSome days are heavy for no reason\nSome nights last longer than the seasons\nBut if you\u2019re here, I won\u2019t pretend\nThat I don\u2019t need a friend\nCarry me slow\nI just want you to know\nYou don\u2019t have to say a word\nJust being here is all I\u2019ve heard\nCarry me slow"
@@ -5297,7 +5298,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Steady%20and%20True.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Steady%20and%20True.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "I still see you in the mornings\nEven when you\u2019re far away\nLike the sunlight through the curtains\nThat starts my quiet day\nYou\u2019re steady and true\nThrough the nights I\u2019ve known\nThrough the miles, through the years\nYou\u2019ve never gone\nIt\u2019s not loud, it\u2019s not wild\nBut it\u2019s something I knew\nYou\u2019re steady and true\nAnd I\u2019m steady for you\nWe don\u2019t write, we don\u2019t call much\nBut I still feel you near\nIt\u2019s the comfort in the silence\nThe voice I still hear\nYou\u2019re steady and true\nThrough the storms we\u2019ve braved\nThrough the change, through the time\nIt\u2019s never swayed\nIt\u2019s not need, it\u2019s not want\nIt\u2019s a quiet proof\nYou\u2019re steady and true\nAnd I\u2019m steady for you\nSome things don\u2019t need a reason\nSome things don\u2019t need a name\nThey just live in the space we keep\nAnd they never go away\nYou\u2019re steady and true\nThrough the nights I\u2019ve known\nThrough the miles, through the years\nYou\u2019ve never gone\nIt\u2019s not loud, it\u2019s not wild\nBut it\u2019s something I knew\nYou\u2019re steady and true\nAnd I\u2019m steady for you\nSteady and true"
@@ -5322,10 +5323,19 @@
           "rawText": "Something Left To Say"
         }
       }
-    ]
+    ],
+    "title": "Echoes in the Firelight",
+    "year": 2025,
+    "genre": [
+      "Rock"
+    ],
+    "coverArt": "cover.png",
+    "releaseDate": "2025-10-15",
+    "type": "standard",
+    "accessTier": "free"
   },
   {
-    "id": "the-long-way-home-2025",
+    "id": "the-long-way-home-2026",
     "tracks": [
       {
         "id": 11,
@@ -5339,7 +5349,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Carry%20Me%20Slow-clarify.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Carry%20Me%20Slow.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "I\u2019ve been running out of fight\nJust trying to make it through the night\nMy hands are tired, my breath is low\nI just need someone to know\nCarry me slow\nWhen I\u2019ve got nowhere to go\nDon\u2019t lift me off the ground\nJust walk beside me now\nCarry me slow\nI\u2019ve been strong for everyone\nBut right now, I\u2019m coming undone\nI don\u2019t need you to fix what\u2019s wrong\nJust stay beside me all night long\nCarry me slow\nDon\u2019t push, don\u2019t pull, just go\nAt the pace my heart can take\nUntil I find my way awake\nCarry me slow\nSome days are heavy for no reason\nSome nights last longer than the seasons\nBut if you\u2019re here, I won\u2019t pretend\nThat I don\u2019t need a friend\nCarry me slow\nI just want you to know\nYou don\u2019t have to say a word\nJust being here is all I\u2019ve heard\nCarry me slow"
@@ -5357,7 +5367,7 @@
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Steady%20and%20True.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Steady%20and%20True.mp3",
         "sourceFolder": "The Long Way Home",
-        "albumId": "the-long-way-home-2025",
+        "albumId": "the-long-way-home-2026",
         "isSingle": false,
         "lyrics": {
           "rawText": "I still see you in the mornings\nEven when you\u2019re far away\nLike the sunlight through the curtains\nThat starts my quiet day\nYou\u2019re steady and true\nThrough the nights I\u2019ve known\nThrough the miles, through the years\nYou\u2019ve never gone\nIt\u2019s not loud, it\u2019s not wild\nBut it\u2019s something I knew\nYou\u2019re steady and true\nAnd I\u2019m steady for you\nWe don\u2019t write, we don\u2019t call much\nBut I still feel you near\nIt\u2019s the comfort in the silence\nThe voice I still hear\nYou\u2019re steady and true\nThrough the storms we\u2019ve braved\nThrough the change, through the time\nIt\u2019s never swayed\nIt\u2019s not need, it\u2019s not want\nIt\u2019s a quiet proof\nYou\u2019re steady and true\nAnd I\u2019m steady for you\nSome things don\u2019t need a reason\nSome things don\u2019t need a name\nThey just live in the space we keep\nAnd they never go away\nYou\u2019re steady and true\nThrough the nights I\u2019ve known\nThrough the miles, through the years\nYou\u2019ve never gone\nIt\u2019s not loud, it\u2019s not wild\nBut it\u2019s something I knew\nYou\u2019re steady and true\nAnd I\u2019m steady for you\nSteady and true"
@@ -5370,7 +5380,13 @@
     "type": "standard",
     "trending": false,
     "exclusive": false,
-    "accessTier": "free"
+    "accessTier": "free",
+    "title": "The Long Way Home",
+    "year": 2026,
+    "genre": [
+      "Country"
+    ],
+    "coverArt": "artbooks/the-long-way-home-2026/main.png"
   },
   {
     "id": "october-boots-and-fall-roots-2025",
@@ -7076,12 +7092,12 @@
   },
   {
     "id": "dust-and-diamonds-2026",
-    "title": "Dust and Diamonds\u00a0",
-    "year": 2025,
+    "title": "Dust and Diamonds",
+    "year": 2026,
     "genre": [
       "Country"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "artbooks/dust-and-diamonds-2026/main.png",
     "tracks": [
       {
         "id": 1,
@@ -8256,7 +8272,7 @@
   },
   {
     "id": "summer-fever-2025",
-    "title": "Summer Fever\u00a0",
+    "title": "Summer Fever",
     "year": 2025,
     "genre": [
       "Dance Pop"
@@ -9558,7 +9574,8 @@
         "isSingle": true,
         "lyrics": {
           "rawText": "There\u2019s a picture on the diner wall,\nA memory framed in the town hall.\nThe names and faces we all know,\nHometown heroes, our hearts they show.\n\nThe fire chief, the farmer\u2019s son,\nThe teacher proud of everyone.\nThrough every storm, through every year,\nThey\u2019re the reason we persevere.\n\nThey don\u2019t wear capes or fly above,\nBut they\u2019re the soul of this place we love.\n\nHometown heroes, they hold the line,\nThrough the darkest days, they always shine.\nWith every heart, with every vow,\nHometown heroes, we thank you now.\n\nThe coach who taught us how to dream,\nThe neighbour baking for the team.\nTheir acts of kindness pave the way,\nHometown heroes save the day.\n\nThrough every challenge, they never fall,\nHometown pride runs through it all.\n\nHometown heroes, they hold the line,\nThrough the darkest days, they always shine.\nWith every heart, with every vow,\nHometown heroes, we thank you now.\n\nWe see their faces in the crowd,\nQuiet strength that makes us proud.\nThrough every trial, through every mile,\nHometown heroes make it worth while.\n\nHometown heroes, they hold the line,\nThrough the darkest days, they always shine.\nWith every heart, with every vow,\nHometown heroes, we thank you now.\n\nThe streets grow quiet, the lights grow dim,\nBut their legacy shines from within.\nHometown heroes, their spirits show,\nThe heart of the town will always grow."
-        }
+        },
+        "title": "Hometown Heroes"
       },
       {
         "id": 9,
@@ -9906,11 +9923,11 @@
   {
     "id": "empire-under-lights-2026",
     "title": "Empire Under lights",
-    "year": 2025,
+    "year": 2026,
     "genre": [
       "EDM"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "artbooks/empire-under-lights-2026/main.png",
     "tracks": [
       {
         "id": 1,
@@ -13741,7 +13758,7 @@
     "genre": [
       "Country"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "artbooks/echoes-of-yesterday-2026/main.png",
     "tracks": [],
     "releaseDate": "2026-03-20",
     "folderPath": "Echoes of Yesterday",
@@ -13768,7 +13785,7 @@
     "genre": [
       "Pop"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "artbooks/always-and-forever-2026/main.png",
     "tracks": [],
     "releaseDate": "2026-03-20",
     "folderPath": "Always and Forever",

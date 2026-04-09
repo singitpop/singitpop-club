@@ -2,10 +2,11 @@ import React from 'react';
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle2, FileText, AlertCircle, PlayCircle, DollarSign, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, FileText, AlertCircle, PlayCircle, DollarSign, ShieldAlert, Music } from 'lucide-react';
 import styles from './page.module.css';
 import { StatusActions, IssueCertificateButton } from './StatusActions';
 import { getIssuedLicenses } from '@/lib/s3-storage';
+import { CommercialArchiveView } from './CommercialArchive';
 
 // Read JSON DBs natively on the server
 function getTableData(filename: string) {
@@ -24,6 +25,7 @@ export default async function AdminLicensingDashboard() {
     const licenses = getTableData('licenses.json').reverse(); // Newest first
     const quotes = getTableData('quotes.json').reverse();
     const whitelists = getTableData('whitelists.json').reverse();
+    const advertTracks = getTableData('advertTracks.json');
     const issuedRegistry = await getIssuedLicenses();
 
     const pendingQuotes = quotes.filter((q: { status: string }) => q.status === 'pending').length;
@@ -284,6 +286,17 @@ export default async function AdminLicensingDashboard() {
                             </tbody>
                         </table>
                     </div>
+                </section>
+
+                {/* 5. COMMERCIAL ARCHIVE (ADVERT TRACKS) */}
+                <section className={styles.tableSection}>
+                    <div className={styles.sectionHeader}>
+                        <h2><Music size={20} color="#DA70D6" /> Commercial Archive (Sync for Brands)</h2>
+                        <p style={{ fontSize: '0.85rem', color: '#888' }}>
+                            {advertTracks.length} high-fidelity assets ready for brand synchronization.
+                        </p>
+                    </div>
+                    <CommercialArchiveView tracks={advertTracks} />
                 </section>
 
             </div>
