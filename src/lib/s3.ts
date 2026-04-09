@@ -89,19 +89,28 @@ export async function getSignedFileUrl(key: string, expiresIn: number = 3600, is
 export async function findTrackKey(folderName: string, trackTitle: string): Promise<string | null> {
     try {
         const bucketName = process.env.AWS_S3_BUCKET || "singitpop-music";
-        const prefix = `albums/${folderName}/`;
 
-        console.log(`[S3-Search] Searching for '${trackTitle}' in '${prefix}'`);
+        // NEW: Resolve the actual folder prefix first (handles case-sensitivity and slight naming differences)
+        const actualFolderPrefix = await findFolderPrefix(folderName);
+        if (!actualFolderPrefix) {
+            console.warn(`[S3-Search] ❌ Could not resolve folder prefix for: ${folderName}`);
+            return null;
+        }
+
+        console.log(`[S3-Search] Searching for '${trackTitle}' in confirmed prefix '${actualFolderPrefix}'`);
 
         const command = new ListObjectsV2Command({
             Bucket: bucketName,
-            Prefix: prefix
+            Prefix: actualFolderPrefix
         });
 
         const response = await s3Client.send(command) as any;
         const contents = (response.Contents || []) as any[];
 
-        if (contents.length === 0) return null;
+        if (contents.length === 0) {
+            console.warn(`[S3-Search] ⚠️ Folder found but empty: ${actualFolderPrefix}`);
+            return null;
+        }
 
         const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
         const targetNorm = normalize(trackTitle);

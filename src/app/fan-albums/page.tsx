@@ -31,6 +31,28 @@ const trackMapping: Record<number, { albumId: string, trackId: number }> = {
 // Initial Mock Data (Fallback)
 const initialPlaylists: any[] = [];
 
+const EXPLICIT_COUNTRY_ALBUM_IDS = [
+    'southern-lights-2026',
+    'winding-roads-2025',
+    'last-ones-standing-2026',
+    'live-nashville-in-june-2026',
+    'through-the-glass-2026',
+    'boots-and-beats-country-line-dance-anthems-2024',
+    'whispers-of-the-heart-country-ballads-for-the-soul-2024',
+    'forever-starts-today-country-music-for-weddings-2024',
+    'highways-of-the-heart-2024',
+    'heartland-rhythms-2025',
+    'dust-and-diamonds-2025',
+    'line-dancing-after-dark-2025',
+    'wildcards-and-whiskey-2025',
+    'october-boots-and-fall-roots-2025',
+    'snowfall-and-steel-strings-2025',
+    'the-long-way-home-2025',
+    'live-at-autumn-lights-2025',
+    'live-step-into-the-light-2025',
+    'desert-winds-and-open-roads-2026'
+];
+
 export default function CommunityHubPage() {
     const { user: clerkUser } = useUser();
     const { isPro: isVIP, isInsider } = useAuth(); // Get VIP/Insider status
@@ -50,6 +72,7 @@ export default function CommunityHubPage() {
     const [currentSignedUrl, setCurrentSignedUrl] = useState<string | null>(null);
     const [activeSort, setActiveSort] = useState<'newest' | 'popular'>('newest');
     const [activeChallenge, setActiveChallenge] = useState<any>(null);
+    const [consecutiveFailures, setConsecutiveFailures] = useState<number>(0);
 
     const getSortedPlaylists = () => {
         let filtered = [...playlists];
@@ -94,17 +117,37 @@ export default function CommunityHubPage() {
                 .map(t => ({ ...t, albumId: a.id, albumTitle: a.title, albumGenre: a.genre, genre: t.genre || a.genre || 'Pop' }));
         });
 
-        // Genre filter (mirrors StationView logic, including R&B in Pop)
+        // Genre filter (mirrors StationView logic)
         const matchesGenre = (t: any) => {
-            const g = Array.isArray(t.genre) ? t.genre.map((x: string) => x.toLowerCase()).join(' ') : (t.genre || '').toLowerCase();
+            const rawG = t.genre || "";
+            const g = Array.isArray(rawG)
+                ? rawG.map((x: string) => x.toLowerCase()).join(' ')
+                : (typeof rawG === 'string' ? rawG.toLowerCase() : "");
+
             if (genre === 'All') return true;
-            if (genre === 'Pop') return (g.includes('pop') || g.includes('r&b') || g.includes('soul') || g.includes('funk'))
-                && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk');
-            if (genre === 'Rock') return g.includes('rock') || g.includes('alternative') || g.includes('metal') || g.includes('grunge');
-            if (genre === 'Country') return g.includes('country') || g.includes('americana');
-            if (genre === 'Folk') return g.includes('folk') || g.includes('acoustic') || g.includes('singer-songwriter');
-            if (genre === 'Dance') return g.includes('dance') || g.includes('disco') || g.includes('edm') || g.includes('house');
-            return g.includes(genre.toLowerCase());
+
+            const s = genre.toLowerCase();
+
+            // 1. COUNTRY RADIO LOCKDOWN
+            if (s === 'country') {
+                const isExplicitlyPermitted = EXPLICIT_COUNTRY_ALBUM_IDS.includes(t.albumId);
+                const isPureCountry = g.includes('country') && !g.includes('christmas') && !g.includes('pop');
+                return isExplicitlyPermitted || isPureCountry;
+            }
+
+            // 2. POP RADIO LOCKDOWN
+            if (s === 'pop') {
+                // Pop + R&B/Soul - exclude rock, dance, country, folk, christmas
+                return (g.includes('pop') || g.includes('r&b') || g.includes('soul') || g.includes('funk'))
+                    && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk') && !g.includes('christmas');
+            }
+
+            // 3. OTHER GENRES
+            if (s === 'rock') return g.includes('rock') || g.includes('alternative') || g.includes('metal');
+            if (s === 'folk') return g.includes('folk') || g.includes('acoustic');
+            if (s === 'dance') return g.includes('dance') || g.includes('disco') || g.includes('edm') || g.includes('house');
+
+            return g.includes(s);
         };
 
         let filtered = allTracks.filter(matchesGenre);
@@ -366,7 +409,8 @@ export default function CommunityHubPage() {
                 body: JSON.stringify({ 
                     url: freshTrack.audioUrl,
                     title: freshTrack.title,
-                    albumId: freshTrack.albumId
+                    albumId: freshTrack.albumId,
+                    sourceFolder: freshTrack.sourceFolder
                 })
             });
 
@@ -780,10 +824,14 @@ export default function CommunityHubPage() {
             <audio
                 ref={audioRef}
                 onWaiting={() => console.log("⏳ Audio Buffering...")}
-                onCanPlay={() => console.log("✅ Audio Ready to Play")}
+                onCanPlay={() => {
+                    console.log("✅ Audio Ready to Play (Resetting failure counter)");
+                    setConsecutiveFailures(0);
+                }}
                 onStalled={() => console.log("⚠️ Audio Stalled (Network)")}
                 onEnded={() => {
                     if (activeTab === 'radio') {
+                        setConsecutiveFailures(0); // Success enough
                         playNextRadioTrack();
                     } else {
                         setIsPlaying(false);
@@ -791,21 +839,34 @@ export default function CommunityHubPage() {
                 }}
                 onError={(e) => {
                     const target = e.target as HTMLAudioElement;
+                    const errorMsg = target.error?.message || "Unknown error";
                     console.error("❌ Audio playback error event:", {
                         src: target.src,
-                        error: target.error,
                         code: target.error?.code,
-                        message: target.error?.message
+                        message: errorMsg
                     });
 
-                    // AUTO-SKIP LOGIC
+                    // AUTO-SKIP LOGIC WITH CIRCUIT BREAKER
                     if (activeTab === 'radio') {
-                        console.log("📻 Radio track failed (Event). Auto-skipping in 500ms...");
-                        setTimeout(() => {
-                            isSwitchingRef.current = false;
-                            playNextRadioTrack();
-                        }, 500);
+                        const nextFailCount = consecutiveFailures + 1;
+                        setConsecutiveFailures(nextFailCount);
 
+                        if (nextFailCount >= 5) {
+                            console.error("⛔ [CIRCUIT BREAKER] Radio station unstable. Stopping playback.");
+                            setIsPlaying(false);
+                            alert("📡 SIGNAL INTERRUPTED: We're having trouble reaching the broadcaster. Please check back in a few minutes.");
+                            // Stop flipping
+                            isSwitchingRef.current = false;
+                        } else {
+                            // Increase skip delay slightly to dampen the 'flipping' frantic effect
+                            const delay = 1500 + (nextFailCount * 500); 
+                            console.log(`📻 Radio track failed. Attempt ${nextFailCount}/5. Auto-skipping in ${delay}ms...`);
+                            
+                            setTimeout(() => {
+                                isSwitchingRef.current = false;
+                                playNextRadioTrack();
+                            }, delay);
+                        }
                     } else {
                         setIsPlaying(false);
                         setCurrentTrackId(null);

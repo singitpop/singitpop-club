@@ -30,6 +30,28 @@ const STATIONS = [
 
 import { useAuth } from '@/context/AuthContext';
 
+const EXPLICIT_COUNTRY_ALBUM_IDS = [
+    'southern-lights-2026',
+    'winding-roads-2025',
+    'last-ones-standing-2026',
+    'live-nashville-in-june-2026',
+    'through-the-glass-2026',
+    'boots-and-beats-country-line-dance-anthems-2024',
+    'whispers-of-the-heart-country-ballads-for-the-soul-2024',
+    'forever-starts-today-country-music-for-weddings-2024',
+    'highways-of-the-heart-2024',
+    'heartland-rhythms-2025',
+    'dust-and-diamonds-2025',
+    'line-dancing-after-dark-2025',
+    'wildcards-and-whiskey-2025',
+    'october-boots-and-fall-roots-2025',
+    'snowfall-and-steel-strings-2025',
+    'the-long-way-home-2025',
+    'live-at-autumn-lights-2025',
+    'live-step-into-the-light-2025',
+    'desert-winds-and-open-roads-2026'
+];
+
 const getStationTracks = (stationGenre: string, isVip: boolean) => {
     const now = new Date();
 
@@ -62,26 +84,30 @@ const getStationTracks = (stationGenre: string, isVip: boolean) => {
             ? rawG.map((x: string) => x.toLowerCase()).join(' ')
             : (typeof rawG === 'string' ? rawG.toLowerCase() : "");
 
-        // Handle albumGenre safely
-        const rawAg = (t as any).albumGenre;
-        const ag = Array.isArray(rawAg)
-            ? rawAg.map((x: string) => x.toLowerCase()).join(' ')
-            : (typeof rawAg === 'string' ? rawAg.toLowerCase() : "");
-
         const s = stationGenre.toLowerCase();
 
-        // Strict genre matching to prevent cross-contamination
-        if (s === 'pop') {
-            // Pop + R&B/Soul - exclude rock, dance, country, folk
-            return (g.includes('pop') || g.includes('r&b') || g.includes('soul') || g.includes('funk') || g.includes('rhythm'))
-                && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk');
+        // 1. COUNTRY RADIO LOCKDOWN
+        if (s === 'country') {
+            const isExplicitlyPermitted = EXPLICIT_COUNTRY_ALBUM_IDS.includes(t.albumId);
+            const isPureCountry = g.includes('country') && !g.includes('christmas') && !g.includes('pop');
+            
+            // Re-tagged "The Long Way Home" is now "Country" and should be in EXPLICIT_COUNTRY_ALBUM_IDS too just in case
+            return isExplicitlyPermitted || isPureCountry;
         }
-        if (s === 'rock') return g.includes('rock') || g.includes('alternative') || g.includes('metal') || g.includes('grunge');
-        if (s === 'country') return g.includes('country') || g.includes('americana');
-        if (s === 'folk') return g.includes('folk') || g.includes('acoustic') || g.includes('singer-songwriter');
+
+        // 2. POP RADIO LOCKDOWN
+        if (s === 'pop') {
+            // Pop + R&B/Soul - exclude rock, dance, country, folk, christmas
+            return (g.includes('pop') || g.includes('r&b') || g.includes('soul') || g.includes('funk'))
+                && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk') && !g.includes('christmas');
+        }
+
+        // 3. OTHER GENRES
+        if (s === 'rock') return g.includes('rock') || g.includes('alternative') || g.includes('metal');
+        if (s === 'folk') return g.includes('folk') || g.includes('acoustic');
         if (s === 'dance') return g.includes('dance') || g.includes('disco') || g.includes('edm') || g.includes('house');
 
-        return g.includes(s) || ag.includes(s);
+        return g.includes(s);
     });
 };
 

@@ -19,13 +19,27 @@ export async function POST(req: NextRequest) {
 
         // 2. Fallback: Search S3 dynamically if title and albumId are provided
         if (title && albumId) {
-            const folderName = albumId.replace(/-20\d\d$/, ''); // Convert ID "album-2026" to "album" folder name
-            const foundKey = await findTrackKey(folderName, title);
+            const { sourceFolder } = body;
+            const derivedFolderName = albumId.replace(/-20\d\d$/, '');
+            
+            // Try sourceFolder first, then derived
+            const folderToSearch = sourceFolder || derivedFolderName;
+
+            console.log(`[Sign-API] 🔍 Attempting fallback search for: "${title}" in folder: "${folderToSearch}"`);
+            const foundKey = await findTrackKey(folderToSearch, title);
 
             if (foundKey) {
                 console.log(`[Sign-API] ✅ Found fallback key in S3: ${foundKey}`);
                 const signedUrl = await getSignedFileUrl(foundKey, 3600, download || false);
                 return NextResponse.json({ signedUrl, fallback: true });
+            } else if (sourceFolder && folderToSearch !== derivedFolderName) {
+                // Secondary fallback attempt if sourceFolder failed
+                console.log(`[Sign-API] 🔍 Primary search failed, trying derived name: "${derivedFolderName}"`);
+                const secondKey = await findTrackKey(derivedFolderName, title);
+                if (secondKey) {
+                    const signedUrl = await getSignedFileUrl(secondKey, 3600, download || false);
+                    return NextResponse.json({ signedUrl, fallback: true });
+                }
             }
         }
 

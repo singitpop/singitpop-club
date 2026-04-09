@@ -2192,9 +2192,14 @@
     "genre": [
       "Pop"
     ],
-    "coverArt": "/images/artbooks/a-love-that-never-ends/main.png",
+    "coverArt": "/images/artbooks/a-love-that-never-ends-2026/main.png",
     "artbook": {
-      "artwork": "/images/artbooks/a-love-that-never-ends/main.png",
+      "artwork": "/images/artbooks/a-love-that-never-ends-2026/main.png",
+      "sketch": "/images/artbooks/a-love-that-never-ends-2026/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/a-love-that-never-ends-2026/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/a-love-that-never-ends-2026/extras/mobile-wallpaper.png"
+      },
       "accentColor": "#DA70D6",
       "layout": "premium-v1"
     },
@@ -4117,7 +4122,17 @@
     "genre": [
       "Folk"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/shadows-and-fires-2025/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/shadows-and-fires-2025/main.png",
+      "sketch": "/images/artbooks/shadows-and-fires-2025/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/shadows-and-fires-2025/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/shadows-and-fires-2025/extras/mobile-wallpaper.png"
+      },
+      "accentColor": "#4A2C2A",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -4387,7 +4402,17 @@
     "genre": [
       "Country"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/live-at-autumn-lights-2025/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/live-at-autumn-lights-2025/main.png",
+      "sketch": "/images/artbooks/live-at-autumn-lights-2025/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/live-at-autumn-lights-2025/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/live-at-autumn-lights-2025/extras/mobile-wallpaper.png"
+      },
+      "accentColor": "#D2691E",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -4621,7 +4646,17 @@
     "genre": [
       "R&B"
     ],
-    "coverArt": "cover.png",
+    "coverArt": "/images/artbooks/november-nights-2025/main.png",
+    "artbook": {
+      "artwork": "/images/artbooks/november-nights-2025/main.png",
+      "sketch": "/images/artbooks/november-nights-2025/sketch.png",
+      "extras": {
+        "desktop": "/images/artbooks/november-nights-2025/extras/desktop-wallpaper.png",
+        "mobile": "/images/artbooks/november-nights-2025/extras/mobile-wallpaper.png"
+      },
+      "accentColor": "#2F4F4F",
+      "layout": "premium-v1"
+    },
     "tracks": [
       {
         "id": 1,
@@ -5034,60 +5069,11 @@
         "albumId": "echoes-in-the-firelight-2025",
         "isSingle": false,
         "lyrics": {
-          "rawText": "Beyond the fog, I hear your call\nA silver thread across the wall\nWe walk by faith, not perfect sight\nBut love still learns to read the night\nThrough the mystery, I will follow you\nPast the endless sea, into something true\nIf the road grows dim, we’ll become the light\nThrough the mystery, we’re alive tonight\nEvery doubt becomes a door\nOpening to something more\nWith your hand inside of mine\nI see the pattern and the sign\nThrough the mystery, I will follow you\nPast the endless sea, into something true\nIf the road grows dim, we’ll become the light\nThrough the mystery, we’re alive tonight\nThrough the mystery, I will follow you\nPast the endless sea, into something true\nIf the road grows dim, we’ll become the light\nThrough the mystery, we’re alive tonight"
-        }
-      },
-      {
-        "id": 11,
-        "title": "Rise Again Tonight",
-        "duration": "3:51",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Rock",
-        "mood": "Powerful",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Rise%20Again%20Tonight-tape.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Rise%20Again%20Tonight.mp3",
-        "sourceFolder": "Echoes in the Firelight ",
-        "albumId": "echoes-in-the-firelight-2025",
-        "isSingle": true,
-        "lyrics": {
-          "rawText": "We were broken but not done\nCounting losses, losing none\nFrom the ashes we can see\nWhat our love was meant to be\nRise again tonight, set the sky on fire\nTurn our pain to light, higher and higher\nTake my hand and fight, hearts becoming one\nRise again tonight, we’ve only just begun\nEvery scar’s a silver line\nProof we made it through the night\nWhen the dark forgets our names\nWe will answer just the same\nRise again tonight, set the sky on fire\nTurn our pain to light, higher and higher\nTake my hand and fight, hearts becoming one\nRise again tonight, we’ve only just begun\nRise again tonight, set the sky on fire\nTurn our pain to light, higher and higher\nTake my hand and fight, hearts becoming one\nRise again tonight, we’ve only just begun"
-        }
-      },
-      {
-        "id": 12,
-        "title": "Love Will Find Us Here",
-        "duration": "3:39",
-        "plays": "0",
-        "locked": false,
-        "price": 0.99,
-        "genre": "Rock",
-        "mood": "Powerful",
-        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Love%20Will%20Find%20Us%20Here%20(Cover)%20clarity.wav",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/echoes-in-the-firelight-/Love%20Will%20Find%20Us%20Here.mp3",
-        "sourceFolder": "Echoes in the Firelight ",
-        "albumId": "echoes-in-the-firelight-2025",
-        "isSingle": false,
-        "lyrics": {
-          "rawText": "In the ruins of our doubt\nSomething brave is breaking out\nEvery tear we tried to hide\nBecomes the reason we survive\nLove will find us here, even through the storm\nLighting up our fears, keeping our hearts warm\nHold me in this light, nothing left to fear\nWhere the road is clear, love will find us here\nWhen the long night starts to fade\nWe remember what we made\nHope that never learned to break\nHands that never learned to shake\nLove will find us here, even through the storm\nLighting up our fears, keeping our hearts warm\nHold me in this light, nothing left to fear\nWhere the road is clear, love will find us here\nLove will find us here, even through the storm\nLighting up our fears, keeping our hearts warm\nHold me in this light, nothing left to fear\nWhere the road is clear, love will find us here"
-        }
-      }
-    ],
-    "releaseDate": "2025-10-22",
-    "folderPath": "Echoes in the Firelight ",
-    "mp3Count": 37,
-    "type": "standard",
-    "trending": false,
-    "exclusive": false,
-    "accessTier": "free"
-  },
-  {
-    "id": "the-long-way-home-2025",
+          "rawText": "Beyond the fog, I hear your call\nA silver thread across the wall\nWe walk by faith, not perfect sight\nBut love still learns to read the night\nThrough the mystery, I will follow you\nPast the endless sea, into something true\nIf the road grows dim, we’ll become the light\nThrough the mystery, we’re alive tonight\nEvery doubt becomes a door\nOpening to something more\nWith your hand inside of mine\nI see the pattern and the sign    "id": "the-long-way-home-2025",
     "title": "The Long Way Home",
     "year": 2025,
     "genre": [
-      "Rock"
+      "Country"
     ],
     "coverArt": "cover.png",
     "tracks": [
@@ -5098,7 +5084,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/The%20Long%20Way%20Home.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/The%20Long%20Way%20Home.mp3",
@@ -5116,7 +5102,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fading%20Through%20You.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fading%20Through%20You.mp3",
@@ -5134,7 +5120,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fall%20Apart%20Gracefully.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Fall%20Apart%20Gracefully.mp3",
@@ -5152,7 +5138,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Letters%20Never%20Sent.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Letters%20Never%20Sent.mp3",
@@ -5170,7 +5156,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/When%20We%20Were%20Wild.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/When%20We%20Were%20Wild.mp3",
@@ -5188,7 +5174,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/If%20I%20Break.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/If%20I%20Break.mp3",
@@ -5206,7 +5192,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sleepwalking%20Hearts.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sleepwalking%20Hearts.mp3",
@@ -5224,7 +5210,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sunday%20Rain.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Sunday%20Rain.mp3",
@@ -5242,7 +5228,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Before%20the%20Storm-clarify.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Before%20the%20Storm.mp3",
@@ -5260,7 +5246,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Rock",
+        "genre": "Country",
         "mood": "Powerful",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Something%20Left%20to%20Say.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Something%20Left%20to%20Say.mp3",
@@ -5269,6 +5255,53 @@
         "isSingle": false,
         "lyrics": {
           "rawText": "We said goodbye too quietly\nNo slamming doors, no tragedy\nBut deep inside, I feel the weight\nOf all the words we never said\nThere’s something left to say\nEven if we walk away\nNot “I love you”, not “come back”\nJust something real to close the gap\nThere’s something left to say\nYou took your keys, I watched you go\nBut silence echoed down the road\nAnd now I lie awake at night\nJust trying to make it right\nThere’s something left to say\nWe never meant to fade this way\nNo goodbye, no second glance\nJust a song without a last dance\nI’m not asking for forever\nJust one more honest word\nWe can end what we started\nBut let our voices be heard\nThere’s something left to say\nBefore we throw this all away\nI don’t want a grand return\nJust to know you really learned\nThere’s something left to say"
+        }
+      },
+      {
+        "id": 11,
+        "title": "Carry Me Slow",
+        "duration": "4:11",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Powerful",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Carry%20Me%20Slow-clarify.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Carry%20Me%20Slow.mp3",
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025",
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "I’ve been running out of fight\nJust trying to make it through the night\nMy hands are tired, my breath is low\nI just need someone to know\nCarry me slow\nWhen I’ve got nowhere to go\nDon’t lift me off the ground\nJust walk beside me now\nCarry me slow\nI’ve been strong for everyone\nBut right now, I’m coming undone\nI don’t need you to fix what’s wrong\nJust stay beside me all night long\nCarry me slow\nDon’t push, don’t pull, just go\nAt the pace my heart can take\nUntil I find my way awake\nCarry me slow\nSome days are heavy for no reason\nSome nights last longer than the seasons\nBut if you’re here, I won’t pretend\nThat I don’t need a friend\nCarry me slow\nI just want you to know\nYou don’t have to say a word\nJust being here is all I’ve heard\nCarry me slow"
+        }
+      },
+      {
+        "id": 12,
+        "title": "Steady and True",
+        "duration": "4:15",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Powerful",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Steady%20and%20True.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/Steady%20and%20True.mp3",
+        "sourceFolder": "The Long Way Home",
+        "albumId": "the-long-way-home-2025",
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "I still see you in the mornings\nEven when you’re far away\nLike the sunlight through the curtains\nThat starts my quiet day\nYou’re steady and true\nThrough the nights I’ve known\nThrough the miles, through the years\nYou’ve never gone\nIt’s not loud, it’s not wild\nBut it’s something I knew\nYou’re steady and true\nAnd I’m steady for you\nWe don’t write, we don’t call much\nBut I still feel you near\nIt’s the comfort in the silence\nThe voice I still hear\nYou’re steady and true\nThrough the storms we’ve braved\nThrough the change, through the time\nIt’s never swayed\nIt’s not need, it’s not want\nIt’s a quiet proof\nYou’re steady and true\nAnd I’m steady for you\nSome things don’t need a reason\nSome things don’t need a name\nThey just live in the space we keep\nAnd they never go away\nYou’re steady and true\nThrough the nights I’ve known\nThrough the miles, through the years\nYou’ve never gone\nIt’s not loud, it’s not wild\nBut it’s something I knew\nYou’re steady and true\nAnd I’m steady for you\nSteady and true"
+        }
+      }
+    ],
+    "releaseDate": "2025-10-15",
+    "folderPath": "The Long Way Home",
+    "mp3Count": 39,
+    "type": "standard",
+    "trending": false,
+    "exclusive": false,
+    "accessTier": "free"
+road\nAnd now I lie awake at night\nJust trying to make it right\nThere’s something left to say\nWe never meant to fade this way\nNo goodbye, no second glance\nJust a song without a last dance\nI’m not asking for forever\nJust one more honest word\nWe can end what we started\nBut let our voices be heard\nThere’s something left to say\nBefore we throw this all away\nI don’t want a grand return\nJust to know you really learned\nThere’s something left to say"
         }
       },
       {
@@ -12838,8 +12871,8 @@
     "title": "Popstar Winter Wonderland",
     "year": 2024,
     "genre": [
-      "Country",
-      "Christmas"
+      "Christmas",
+      "Pop"
     ],
     "coverArt": "/images/artbooks/popstar-winter-wonderland/main.png",
     "artbook": {
@@ -12855,7 +12888,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Country",
+        "genre": "Christmas",
         "mood": "Acoustic",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/Underneath%20the%20Christmas%20Lights.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/Underneath%20the%20Christmas%20Lights.mp3",
@@ -12909,7 +12942,7 @@
         "plays": "0",
         "locked": false,
         "price": 0.99,
-        "genre": "Country",
+        "genre": "Christmas",
         "mood": "Acoustic",
         "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/Electric%20Christmas%20Show.wav",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/Electric%20Christmas%20Show.mp3",
@@ -13061,17 +13094,11 @@
         "albumId": "popstar-winter-wonderland-2024",
         "isSingle": false,
         "lyrics": {
-          "rawText": "It’s that time of year, let’s take a break!\nThe lights are up, the snow’s falling, and we’re ready to celebrate!\n\nCome on, let’s go, feel the beat,\nThe holidays are here, let’s move our feet!\nChristmas lights, shining bright,\nLet’s dance all night, ‘cause it feels so right!\n\nHoliday break, we’re turning it up!\nLet the music flow, feel the Christmas love!\nWe’re dancing through the snow, with lights aglow,\nIt’s a holiday break, let’s go, let’s go!\nHoliday break, hands in the air,\nWith joy and love, we don’t have a care!\nLet’s party tonight, the festive way,\nIt’s a holiday break, we’re here to play!\n\nSnow is falling, the vibe is right,\nFriends and family by our side tonight.\nCocoa’s hot, the music’s loud,\nWe’re living in the moment, dancing with the crowd!\n\nTurn it up, feel the beat,\nThis Christmas groove, it’s got us on our feet.\nThe fire’s warm, but the night is young,\nLet’s celebrate until the break of dawn!\n\nHoliday break, we’re turning it up!\nLet the music flow, feel the Christmas love!\nWe’re dancing through the snow, with lights aglow,\nIt’s a holiday break, let’s go, let’s go!\nHoliday break, hands in the air,\nWith joy and love, we don’t have a care!\nLet’s party tonight, the festive way,\nIt’s a holiday break, we’re here to play!\n\nThe stars are shining, the moon’s so high,\nWe’re dancing like it’s Christmas in the sky.\nThe night is ours, we’re feeling free,\nThis holiday break is where we’re meant to be!\n\nTurn it up, feel the cheer,\nThis is the best time of the year!\nWith every beat, with every sound,\nLet’s spread the love, let’s dance around!\n\nHoliday break, we’re turning it up!\nLet the music flow, feel the Christmas love!\nWe’re dancing through the snow, with lights aglow,\nIt’s a holiday break, let’s go, let’s go!\nHoliday break, hands in the air,\nWith joy and love, we don’t have a care!\nLet’s party tonight, the festive way,\nIt’s a holiday break, we’re here to play!\n\nHoliday break, the party’s begun,\nWe’re dancing all night ‘til the rise of the sun!\nFeel the beat, feel the love,\nIt’s Christmas time, we’re lighting it up!"
+          "rawText": "It’s that time of year, let’s take a break!\Text is falling, the night is falling, and we’re ready to celebrate!\n\nCome on, let’s go, feel the beat,\nThe holidays are here, let’s move our feet!\nChristmas lights, shining bright,\nLet’s dance all night, ‘cause it feels so right!\n\nHoliday break, we’re turning it up!\nLet the music flow, feel the Christmas love!\nWe’re dancing through the snow, with lights aglow,\nIt’s a holiday break, let’s go, let’s go!\nHoliday break, hands in the air,\nWith joy and love, we don’t have a care!\nLet’s party tonight, the festive way,\nIt’s a holiday break, we’re here to play!\n\nSnow is falling, the vibe is right,\nFriends and family by our side tonight.\nCocoa’s hot, the music’s loud,\nWe’re living in the moment, dancing with the crowd!\n\nTurn it up, feel the beat,\nThis Christmas groove, it’s got us on our feet.\nThe fire’s warm, but the night is young,\nLet’s celebrate until the break of dawn!\n\nHoliday break, we’re turning it up!\nLet the music flow, feel the Christmas love!\nWe’re dancing through the snow, with lights aglow,\nIt’s a holiday break, let’s go, let’s go!\nHoliday break, hands in the air,\nWith joy and love, we don’t have a care!\nLet’s party tonight, the festive way,\nIt’s a holiday break, we’re here to play!\n\nThe stars are shining, the moon’s so high,\nWe’re dancing like it’s Christmas in the sky.\nThe night is ours, we’re feeling free,\nThis holiday break is where we’re meant to be!\n\nTurn it up, feel the cheer,\nThis is the best time of the year!\nWith every beat, with every sound,\nLet’s spread the love, let’s dance around!\n\nHoliday break, we’re turning it up!\nLet the music flow, feel the Christmas love!\nWe’re dancing through the snow, with lights aglow,\nIt’s a holiday break, let’s go, let’s go!\nHoliday break, hands in the air,\nWith joy and love, we don’t have a care!\nLet’s party tonight, the festive way,\nIt’s a holiday break, we’re here to play!\n\nHoliday break, the party’s begun,\nWe’re dancing all night ‘til the rise of the sun!\nFeel the beat, feel the love,\nIt’s Christmas time, we’re lighting it up!"
         }
       }
     ],
     "releaseDate": "2024-11-19",
-    "folderPath": "Pop Star Winter Wonderland",
-    "mp3Count": 26,
-    "type": "standard",
-    "trending": false,
-    "exclusive": false,
-    "accessTier": "free"
   },
   {
     "id": "forever-starts-today-country-music-for-weddings-2024",
