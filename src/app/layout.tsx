@@ -11,6 +11,8 @@ import ChatWidget from '@/components/support/ChatWidget';
 import ReferralClaimer from '@/components/fans/ReferralClaimer';
 
 import { ClerkProvider } from '@clerk/nextjs';
+import { NotificationProvider } from '@/hooks/useNotification';
+import NotificationManager from '@/components/ui/NotificationManager';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://singitpop.com'),
@@ -105,47 +107,50 @@ export default function RootLayout({
 
     return (
         <ClerkProvider>
-            <html lang="en" suppressHydrationWarning>
-                <head>
-                    <script
-                        type="application/ld+json"
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-                    />
-                </head>
-                <body suppressHydrationWarning={true}>
-                    <AuthProvider>
-                        <VisitorTracker />
-                        <SkipLink />
-                        <Header />
-                        <main id="main-content" style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
-                            {children}
-                            <MobileNav />
-                        </main>
-                        <Footer />
-                        <CookieConsent />
-                        <ChatWidget />
-                        <ReferralClaimer />
-                    </AuthProvider>
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                                if ('serviceWorker' in navigator) {
-                                    window.addEventListener('load', function() {
-                                        navigator.serviceWorker.register('/sw.js').then(
-                                            function(registration) {
-                                                console.log('Service Worker registration successful with scope: ', registration.scope);
-                                            },
-                                            function(err) {
-                                                console.log('Service Worker registration failed: ', err);
-                                            }
-                                        );
-                                    });
-                                }
-                            `,
-                        }}
-                    />
-                </body>
-            </html>
+            <NotificationProvider>
+                <html lang="en" suppressHydrationWarning>
+                    <head>
+                        <script
+                            type="application/ld+json"
+                            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                        />
+                    </head>
+                    <body suppressHydrationWarning={true}>
+                        <AuthProvider>
+                            <NotificationManager />
+                            <VisitorTracker />
+                            <SkipLink />
+                            <Header />
+                            <main id="main-content" style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
+                                {children}
+                                <MobileNav />
+                            </main>
+                            <Footer />
+                            <CookieConsent />
+                            <ChatWidget />
+                            <ReferralClaimer />
+                        </AuthProvider>
+                        <script
+                            dangerouslySetInnerHTML={{
+                                __html: `
+                                    if ('serviceWorker' in navigator) {
+                                        window.addEventListener('load', function() {
+                                            navigator.serviceWorker.register('/sw.js').then(
+                                                function(registration) {
+                                                    console.log('Service Worker registration successful with scope: ', registration.scope);
+                                                },
+                                                function(err) {
+                                                    console.log('Service Worker registration failed: ', err);
+                                                }
+                                            );
+                                        });
+                                    }
+                                `,
+                            }}
+                        />
+                    </body>
+                </html>
+            </NotificationProvider>
         </ClerkProvider>
     );
 }

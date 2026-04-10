@@ -49,19 +49,29 @@ export default function RecommendationStrip() {
 
     const recommendations = [
         {
-            id: 1,
+            id: 'latest-single',
             title: isLoading ? "Loading..." : capitalizeTitle(latestSingleTitle),
             reason: '🔥 Latest Single',
             icon: latestSingleCover || '/images/icons/music-note-clean.png'
         },
         {
-            id: 2,
+            id: 'latest-album',
             title: isLoading ? "Loading..." : capitalizeTitle(latestAlbumTitle),
             reason: '🎵 Latest Album',
             icon: latestAlbumCover || '/images/icons/music-note-clean.png'
         },
-        { id: 3, title: isLoading ? "Loading..." : capitalizeTitle(topTrendingTitle), reason: '📈 Top Trending', icon: '/images/icons/trending-clean.png' },
-        { id: 4, title: 'Neon Nights', reason: '💎 Fan Favorite', icon: '/images/icons/diamond-clean.png' },
+        { 
+            id: 'trending', 
+            title: isLoading ? "Loading..." : capitalizeTitle(topTrendingTitle), 
+            reason: '📈 Top Trending', 
+            icon: '/images/icons/trending-clean.png' 
+        },
+        { 
+            id: 'fan-favorite', 
+            title: 'Always and Forever', // Dynamic fallback if needed, or we could fetch this too
+            reason: '💎 Fan Favorite', 
+            icon: '/images/icons/diamond-clean.png' 
+        },
     ];
 
     // Duplicate list for seamless loop effect

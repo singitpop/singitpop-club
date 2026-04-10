@@ -21,40 +21,89 @@ interface AdvertTrack {
 export function CommercialArchiveView({ tracks }: { tracks: AdvertTrack[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTag, setSelectedTag] = useState('All');
+    const [selectedMood, setSelectedMood] = useState('All');
+    const [bpmRange, setBpmRange] = useState('All');
 
-    const tags = ['All', ...Array.from(new Set(tracks.map(t => t.tag)))];
+    const tags = ['All', ...Array.from(new Set(tracks.map(t => t.tag)))].sort();
+    const moods = ['All', ...Array.from(new Set(tracks.flatMap(t => t.mood.split(',').map(m => m.trim()))))].sort();
 
     const filteredTracks = tracks.filter(t => {
         const matchesSearch = t.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                              t.description.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesTag = selectedTag === 'All' || t.tag === selectedTag;
-        return matchesSearch && matchesTag;
+        const matchesMood = selectedMood === 'All' || t.mood.includes(selectedMood);
+        
+        let matchesBpm = true;
+        if (bpmRange === 'slow') matchesBpm = t.bpm < 90;
+        else if (bpmRange === 'mid') matchesBpm = t.bpm >= 90 && t.bpm <= 120;
+        else if (bpmRange === 'fast') matchesBpm = t.bpm > 120;
+        
+        return matchesSearch && matchesTag && matchesMood && matchesBpm;
     });
 
     return (
         <div className="space-y-8">
-            <div className="flex flex-wrap items-center justify-between gap-6 bg-white/5 p-6 rounded-3xl border border-white/10 backdrop-blur-xl">
-                <div className="flex items-center gap-4 flex-1 min-w-[300px]">
+            <div className="bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-xl space-y-6">
+                <div className="flex items-center gap-4 bg-black/20 p-4 rounded-2xl border border-white/5">
                     <Search className="text-zinc-500" size={20} />
                     <input 
                         type="text" 
-                        placeholder="Search by title or description..." 
-                        className="bg-transparent border-none outline-none text-white w-full text-lg"
+                        placeholder="Search by title, style or description..." 
+                        className="bg-transparent border-none outline-none text-white w-full text-lg placeholder:text-zinc-600"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
-                <div className="flex items-center gap-3">
-                    <Tag size={18} className="text-zinc-500" />
-                    <select 
-                        className="bg-zinc-900 border border-white/10 rounded-xl px-4 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500/50"
-                        value={selectedTag}
-                        onChange={(e) => setSelectedTag(e.target.value)}
+                
+                <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <Tag size={16} className="text-zinc-500" />
+                        <select 
+                            className="bg-zinc-900 border border-white/10 rounded-xl px-4 py-2 text-xs text-zinc-300 outline-none focus:ring-2 focus:ring-blue-500/50 min-w-[140px]"
+                            value={selectedTag}
+                            onChange={(e) => setSelectedTag(e.target.value)}
+                        >
+                            <option value="All">All Categories</option>
+                            {tags.filter(t => t !== 'All').map(tag => (
+                                <option key={tag} value={tag}>{tag}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <Music size={16} className="text-zinc-500" />
+                        <select 
+                            className="bg-zinc-900 border border-white/10 rounded-xl px-4 py-2 text-xs text-zinc-300 outline-none focus:ring-2 focus:ring-blue-500/50 min-w-[140px]"
+                            value={selectedMood}
+                            onChange={(e) => setSelectedMood(e.target.value)}
+                        >
+                            <option value="All">All Moods</option>
+                            {moods.filter(m => m !== 'All').map(mood => (
+                                <option key={mood} value={mood}>{mood}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <div className="text-zinc-500 text-xs font-bold mr-1">BPM</div>
+                        <select 
+                            className="bg-zinc-900 border border-white/10 rounded-xl px-4 py-2 text-xs text-zinc-300 outline-none focus:ring-2 focus:ring-blue-500/50 min-w-[140px]"
+                            value={bpmRange}
+                            onChange={(e) => setBpmRange(e.target.value)}
+                        >
+                            <option value="All">Any Tempo</option>
+                            <option value="slow">Slow (< 90)</option>
+                            <option value="mid">Medium (90-120)</option>
+                            <option value="fast">Fast (> 120)</option>
+                        </select>
+                    </div>
+
+                    <button 
+                        onClick={() => { setSearchTerm(''); setSelectedTag('All'); setSelectedMood('All'); setBpmRange('All'); }}
+                        className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 hover:text-white transition-colors ml-auto"
                     >
-                        {tags.map(tag => (
-                            <option key={tag} value={tag}>{tag}</option>
-                        ))}
-                    </select>
+                        Reset Filters
+                    </button>
                 </div>
             </div>
 

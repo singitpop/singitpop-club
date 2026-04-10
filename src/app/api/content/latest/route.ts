@@ -224,7 +224,11 @@ export async function GET() {
         // Calculate Top Trending Track
         const now = new Date();
         const trendingAlbums = albums.filter(a => a.trending && new Date(a.releaseDate) <= now);
-        let topTrendingTrack = 'Whiskey Slide'; // Fallback
+        
+        // Initial defaults (will be overridden by dynamic data if available)
+        let topTrendingTrack = 'Whiskey Slide';
+        let latestAlbumId = latestNonCountry ? latestNonCountry.id : "valentine-country-2026";
+        let latestAlbumTitle = latestNonCountry ? latestNonCountry.title : "Valentine Country";
 
         if (trendingAlbums.length > 0) {
             // Get most recent trending album
@@ -236,11 +240,16 @@ export async function GET() {
             if (topTrack) {
                 topTrendingTrack = topTrack.title;
             }
+        } else if (albums.length > 0) {
+             // Global fallback to highest played track if no trending flag is set
+             const allTracks = albums.flatMap(a => a.tracks);
+             const topOverall = allTracks.sort((a, b) => parseInt(b.plays || '0') - parseInt(a.plays || '0'))[0];
+             if (topOverall) topTrendingTrack = topOverall.title;
         }
 
         return NextResponse.json({
-            latestAlbumId: latestNonCountry ? latestNonCountry.id : "valentine-country-2026",
-            latestAlbumTitle: latestNonCountry ? latestNonCountry.title : "Valentine Country",
+            latestAlbumId,
+            latestAlbumTitle,
             latestAlbumCover: signedLatestCover,
             latestCountryAlbumTitle: latestCountry ? latestCountry.title : "Step into the Light",
             latestCountryAlbumCover: signedCountryCover,

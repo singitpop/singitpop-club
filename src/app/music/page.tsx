@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { TrendingUp, Star, Clock, Grid, Crown } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import SongList from '@/components/music/SongList';
@@ -27,13 +27,15 @@ const isReleased = (dateStr: string) => {
 function MusicContent() {
     const { isPro, isLabel, isInsider, isLoaded } = useAuth();
     const searchParams = useSearchParams();
+    const params = useParams();
     const router = useRouter();
+    const routeAlbumId = params?.albumId as string | undefined;
 
     // State for Dynamic Data
     const [albums, setAlbums] = useState<Album[]>(staticAlbums);
     const [isLoading, setIsLoading] = useState(true);
 
-    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(null);
+    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(routeAlbumId || null);
     const [latestSingleUid, setLatestSingleUid] = useState<string | null>(null);
 
     // Fetch Dynamic Data on Mount
