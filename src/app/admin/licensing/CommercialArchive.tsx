@@ -92,9 +92,9 @@ export function CommercialArchiveView({ tracks }: { tracks: AdvertTrack[] }) {
                             onChange={(e) => setBpmRange(e.target.value)}
                         >
                             <option value="All">Any Tempo</option>
-                            <option value="slow">Slow (< 90)</option>
+                            <option value="slow">Slow {"(< 90)"}</option>
                             <option value="mid">Medium (90-120)</option>
-                            <option value="fast">Fast (> 120)</option>
+                            <option value="fast">Fast ({" > 120"})</option>
                         </select>
                     </div>
 
