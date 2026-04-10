@@ -75,6 +75,7 @@ export const metadata: Metadata = {
 };
 
 import VisitorTracker from '@/components/analytics/VisitorTracker';
+import PageTransition from '@/components/layout/PageTransition';
 
 // ... (existing imports)
 
@@ -122,7 +123,9 @@ export default function RootLayout({
                             <SkipLink />
                             <Header />
                             <main id="main-content" style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
-                                {children}
+                                <PageTransition>
+                                    {children}
+                                </PageTransition>
                                 <MobileNav />
                             </main>
                             <Footer />

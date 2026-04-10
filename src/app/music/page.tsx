@@ -551,9 +551,11 @@ function MusicContent() {
     );
 }
 
+import { AlbumSkeleton } from '@/components/ui/Skeleton';
+
 export default function MusicPage() {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<AlbumSkeleton />}>
             <MusicContent />
         </Suspense>
     )

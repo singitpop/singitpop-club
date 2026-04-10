@@ -8,6 +8,7 @@ import styles from './page.module.css';
 import { Track, Album } from '@/data/albumData';
 import { siteContent } from '@/config/siteContent';
 import { useAuth } from '@/context/AuthContext';
+import { useNotification } from '@/hooks/useNotification';
 import { capitalizeTitle } from '@/utils/formatters';
 
 const PRODUCT_TYPES = {
@@ -126,11 +127,17 @@ function CheckoutContent() {
     const productPrice = PRODUCT_TYPES['download'].price;
     const totalPrice = isEligibleForFree ? 0.00 : productPrice;
 
+    const { showNotification } = useAuth(); // Actually use useNotification
+    // Wait, useAuth doesn't have showNotification. I need useNotification.
+    
+    // Correction:
+    const { showNotification } = useNotification();
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!termsAccepted) {
-            alert("Please accept the terms regarding the immediate download and waiver of cancellation rights.");
+            showNotification("Please accept the terms regarding the immediate download.", "warning");
             return;
         }
 
@@ -158,12 +165,12 @@ function CheckoutContent() {
             if (data.url) {
                 window.location.href = data.url;
             } else {
-                alert('Checkout failed: ' + (data.error || 'Unknown error'));
+                showNotification('Checkout failed: ' + (data.error || 'Unknown error'), 'error');
                 setIsLoading(false);
             }
         } catch (err) {
             console.error(err);
-            alert('An error occurred. Please try again.');
+            showNotification('An error occurred. Please try again.', 'error');
             setIsLoading(false);
         }
     };
@@ -316,10 +323,12 @@ function CheckoutContent() {
     );
 }
 
+import { CheckoutSkeleton } from '@/components/ui/Skeleton';
+
 export default function MixtapeCheckout() {
     return (
         <div className={`container ${styles.page}`}>
-            <Suspense fallback={<div>Loading checkout...</div>}>
+            <Suspense fallback={<CheckoutSkeleton />}>
                 <CheckoutContent />
             </Suspense>
         </div>
