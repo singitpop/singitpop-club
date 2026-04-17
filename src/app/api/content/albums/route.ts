@@ -23,18 +23,14 @@ export async function GET() {
             return releaseDate <= today;
         };
 
-        const whitelist = new Set(radioConfig.whitelist.map(t => t.trim().toLowerCase()));
-
         const filteredAlbums = albums.filter(a => {
-            // Strictly enforce the whitelist by Title
-            const titleMatch = a.title && whitelist.has(a.title.trim().toLowerCase());
-            
             // Explicitly exclude any albums marked as a single-item collection or having 'isSingle' true
             const isActuallySingle = a.isSingle === true || a.title?.toLowerCase().includes('(single)');
             
             const hasReleased = isReleased(a.releaseDate);
             
-            return titleMatch && !isActuallySingle && hasReleased;
+            // Show all studio/standard albums (not just whitelisted ones)
+            return (a.type === 'studio' || a.type === 'standard' || a.type === 'mixtape') && !isActuallySingle && hasReleased;
         });
 
         // 2. Music Page Protocol: Filter out tracks that are marked as isSingle

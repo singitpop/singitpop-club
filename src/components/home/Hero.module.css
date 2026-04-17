@@ -146,41 +146,7 @@
     backdrop-filter: blur(5px);
 }
 
-.radioCTA {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 1rem 2rem;
-    background: rgba(255, 0, 0, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 0, 0, 0.4);
-    border-radius: 100px;
-    color: white;
-    font-weight: 800;
-    font-size: 0.8rem;
-    letter-spacing: 4px;
-    margin-top: 1.5rem;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
-}
-
-.radioCTA:hover {
-    background: rgba(255, 0, 0, 0.3);
-    border-color: #ff0000;
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 10px 40px rgba(255, 0, 0, 0.3);
-}
-
-.miniDot {
-    width: 8px;
-    height: 8px;
-    background-color: #ff0000;
-    border-radius: 50%;
-    box-shadow: 0 0 15px #ff0000;
-    animation: mini-pulse 1s infinite alternate;
-}
+/* Removed Radio Styles */
 
 @media (max-width: 768px) {
     .songTitle {

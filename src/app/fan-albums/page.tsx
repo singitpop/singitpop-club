@@ -104,69 +104,7 @@ export default function CommunityHubPage() {
     // Prevent rapid-fire clicks
     const isSwitchingRef = useRef(false);
 
-    // Extracted Shuffle Logic — respects the active station genre
-    const playNextRadioTrack = () => {
-        const now = new Date();
-        const genre = activeStationGenreRef.current; // Use ref to avoid stale closure
-
-        const allTracks = albums.flatMap(a => {
-            if (!isVIP && new Date(a.releaseDate) > now) return [];
-            return a.tracks
-                .filter(t => t.audioUrl && t.id !== currentTrackId)
-                // albumId/albumTitle already set here — no secondary lookup needed
-                .map(t => ({ ...t, albumId: a.id, albumTitle: a.title, albumGenre: a.genre, genre: t.genre || a.genre || 'Pop' }));
-        });
-
-        // Genre filter (mirrors StationView logic)
-        const matchesGenre = (t: any) => {
-            const rawG = t.genre || "";
-            const g = Array.isArray(rawG)
-                ? rawG.map((x: string) => x.toLowerCase()).join(' ')
-                : (typeof rawG === 'string' ? rawG.toLowerCase() : "");
-
-            if (genre === 'All') return true;
-
-            const s = genre.toLowerCase();
-
-            // 1. COUNTRY RADIO LOCKDOWN
-            if (s === 'country') {
-                const isExplicitlyPermitted = EXPLICIT_COUNTRY_ALBUM_IDS.includes(t.albumId);
-                const isPureCountry = g.includes('country') && !g.includes('christmas') && !g.includes('pop');
-                return isExplicitlyPermitted || isPureCountry;
-            }
-
-            // 2. POP RADIO LOCKDOWN
-            if (s === 'pop') {
-                // Pop + R&B/Soul - exclude rock, dance, country, folk, christmas
-                return (g.includes('pop') || g.includes('r&b') || g.includes('soul') || g.includes('funk'))
-                    && !g.includes('rock') && !g.includes('dance') && !g.includes('country') && !g.includes('folk') && !g.includes('christmas');
-            }
-
-            // 3. OTHER GENRES
-            if (s === 'rock') return g.includes('rock') || g.includes('alternative') || g.includes('metal');
-            if (s === 'folk') return g.includes('folk') || g.includes('acoustic');
-            if (s === 'dance') return g.includes('dance') || g.includes('disco') || g.includes('edm') || g.includes('house');
-
-            return g.includes(s);
-        };
-
-        let filtered = allTracks.filter(matchesGenre);
-        if (filtered.length === 0) filtered = allTracks; // Fallback to all if no genre match
-
-        if (filtered.length === 0) {
-            console.error('No valid tracks found for radio');
-            return;
-        }
-
-        const randomTrack = filtered[Math.floor(Math.random() * filtered.length)];
-        // randomTrack.albumId is already correctly set from the map above — no secondary lookup
-        console.log(`📻 Auto-skipping to: ${randomTrack.title} [${genre}] – ${randomTrack.albumTitle}`);
-
-        handleTrackPlay({
-            ...randomTrack,
-            uniqueId: `${randomTrack.albumId}-${randomTrack.id}`,
-        });
-    };
+    // Removed Radio Shuffle Logic
 
     // Fetch Live Community Playlists
     useEffect(() => {
@@ -328,10 +266,7 @@ export default function CommunityHubPage() {
     const handleTrackPlay = async (track: any) => {
         if (!track || !track.audioUrl) {
             console.warn("Invalid track requested:", track);
-            // If radio, skip
-            if (activeTab === 'radio' && !isSwitchingRef.current) {
-                playNextRadioTrack();
-            }
+            // Guard removed
             return;
         }
 
@@ -440,13 +375,7 @@ export default function CommunityHubPage() {
             console.error(`❌ Track play error:`, e.message);
             alert(`Playback Error: ${e.message}. Please try again.`);
 
-            if (activeTab === 'radio') {
-                setTimeout(() => {
-                    isSwitchingRef.current = false;
-                    playNextRadioTrack();
-                }, 1000);
                 return;
-            } else {
                 setCurrentTrackId(null);
                 setIsPlaying(false);
             }
@@ -576,8 +505,6 @@ export default function CommunityHubPage() {
 
                 {/* Center: Feed / Main Content */}
                 <main className={styles.feed}>
-                    {/* Header / Search - Hide on Radio Tab */}
-                    {activeTab !== 'radio' && (
                         <div className={styles.feedHeader}>
                             <div className={styles.searchBar}>
                                 <Search size={18} color="var(--text-muted)" />
@@ -588,7 +515,6 @@ export default function CommunityHubPage() {
                                 <div className={styles.avatar}>GB</div>
                             </div>
                         </div>
-                    )}
 
                     {activeTab === 'home' && (
                         <>
@@ -640,37 +566,6 @@ export default function CommunityHubPage() {
                             {/* Voting Section */}
                             <VotingSection />
                         </>
-                    )}
-
-
-
-
-                    {activeTab === 'radio' && (
-                        isVIP ? (
-                            <StationView
-                                currentTrackId={currentTrackId}
-                                isPlaying={isPlaying}
-                                onPlayTrack={handleTrackPlay}
-                                currentTrack={currentTrackData ?? undefined}
-                                onNext={playNextRadioTrack}
-                                onStop={() => setIsPlaying(false)}
-                                onStationChange={(genre) => { activeStationGenreRef.current = genre; setActiveStationGenre(genre); }}
-                            />
-                        ) : (
-                            <div className="flex flex-col items-center justify-center h-[60vh] text-center p-8 bg-white/5 rounded-3xl border border-white/10">
-                                <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-orange-500/20">
-                                    <Clock size={40} className="text-white" />
-                                </div>
-                                <h2 className="text-3xl font-bold mb-3">VIP Access Only</h2>
-                                <p className="text-white/60 max-w-md mb-8">
-                                    The "SingItPop Radio" station is an exclusive perk for our VIP members.
-                                    Upgrade to listen to non-stop curated mixes.
-                                </p>
-                                <Link href="/membership" className="px-8 py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform">
-                                    Upgrade to VIP
-                                </Link>
-                            </div>
-                        )
                     )}
 
                     {(activeTab === 'browse' || activeTab === 'my-mixes' || activeTab === 'favorites') && (

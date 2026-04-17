@@ -13,7 +13,6 @@ import UserBadge from '../ui/UserBadge';
 
 const navItems = [
   { name: 'Home', href: '/' },
-  { name: '📻 Radio', href: '/radio/live' },
   { name: 'About', href: '/about' },
   { name: 'Music', href: '/music' },
   { name: 'FanZone', href: '/fan-albums' },

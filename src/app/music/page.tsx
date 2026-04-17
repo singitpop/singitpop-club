@@ -77,16 +77,11 @@ function MusicContent() {
             const activeAlbums = albums.filter(a =>
                 (a.type === 'studio' || a.type === 'standard') &&
                 isReleased(a.releaseDate)
-            ).sort((a, b) => {
-                const timeA = new Date(a.releaseDate).getTime();
-                const timeB = new Date(b.releaseDate).getTime();
                 if (timeB === timeA) {
-                    if (b.title === 'A Love That Never Ends') return 1;
-                    if (a.title === 'A Love That Never Ends') return -1;
-                    return 0;
+                    // Secondary deterministic sort by title
+                    return a.title.localeCompare(b.title);
                 }
                 return timeB - timeA;
-            });
 
             const topActiveId = activeAlbums.length > 0 ? activeAlbums[0].id : siteContent.musicPage.latestAlbumId;
 
@@ -223,16 +218,10 @@ function MusicContent() {
                     const isCountry = a.genre && a.genre.some(g => g.toLowerCase() === 'country');
                     return !isCountry && (a.type === 'studio' || a.type === 'standard');
                 })
-                .sort((a, b) => {
-                    const timeA = new Date(a.releaseDate).getTime();
-                    const timeB = new Date(b.releaseDate).getTime();
                     if (timeB === timeA) {
-                        if (b.title === 'A Love That Never Ends') return 1;
-                        if (a.title === 'A Love That Never Ends') return -1;
-                        return 0;
+                        return a.title.localeCompare(b.title);
                     }
                     return timeB - timeA;
-                });
             const latestAlbum = studios.length > 0 ? studios[0] : (activeAlbums.length > 0 ? activeAlbums[0] : null);
 
             return {
