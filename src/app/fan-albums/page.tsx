@@ -619,6 +619,26 @@ export default function CommunityHubPage() {
                         </div>
                     )}
 
+                    {activeTab === 'radio' && (
+                        <div className={styles.tabContent}>
+                            <div className={styles.sectionHeader}>
+                                <h2>Live Radio Stations 📡</h2>
+                                <p style={{ color: '#aaa', fontSize: '0.9rem' }}>Tune in to our official 24/7 themed broadcasts.</p>
+                            </div>
+                            <StationView 
+                                currentTrackId={currentTrackId}
+                                isPlaying={isPlaying}
+                                onPlayTrack={handleTrackPlay}
+                                currentTrack={currentTrackData}
+                                onStationChange={(genre) => setActiveStationGenre(genre)}
+                                onStop={() => {
+                                    setIsPlaying(false);
+                                    if (audioRef.current) audioRef.current.pause();
+                                }}
+                            />
+                        </div>
+                    )}
+
                 </main>
 
                 {/* Right Sidebar: Activity */}

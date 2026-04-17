@@ -24,16 +24,12 @@ export async function GET() {
         };
 
         const filteredAlbums = albums.filter(a => {
-            // Explicitly exclude any albums marked as a single-item collection or having 'isSingle' true
-            const isActuallySingle = a.isSingle === true || a.title?.toLowerCase().includes('(single)');
-            
+            // Show all released studio/standard/live/mixtape albums
             const hasReleased = isReleased(a.releaseDate);
-            
-            // Show all studio/standard albums (not just whitelisted ones)
-            return (a.type === 'studio' || a.type === 'standard' || a.type === 'mixtape') && !isActuallySingle && hasReleased;
+            return (a.type === 'studio' || a.type === 'standard' || a.type === 'mixtape' || a.type === 'live') && hasReleased;
         });
 
-        // 2. Music Page Protocol: Filter out tracks that are marked as isSingle
+        // 2. Music Page Protocol: Sign all tracks (No filtering out singles)
         const signedAlbums = await Promise.all(filteredAlbums.map(async (album) => {
             try {
                 // Sign Cover Art
@@ -42,10 +38,8 @@ export async function GET() {
                     signedCover = await getSignedFileUrl(album.coverArt);
                 }
 
-                // Sign Tracks (Robust Bucket Detection)
-                // Also FILTER OUT singles from whitelisted full albums as a safety double-layer
-                const validTracks = (album.tracks || []).filter(t => !t.isSingle);
-                const signedTracks = await Promise.all(validTracks.map(async (track) => {
+                // Sign ALL Tracks (Robust Bucket Detection)
+                const signedTracks = await Promise.all((album.tracks || []).map(async (track) => {
                     try {
                         let signedAudio = track.audioUrl;
                         
@@ -59,7 +53,7 @@ export async function GET() {
                         }
                         return { ...track, audioUrl: signedAudio };
                     } catch (e) {
-                        return { ...track, audioUrl: "" }; // Skip broken individual tracks
+                        return { ...track, audioUrl: track.audioUrl }; // Fallback to raw URL
                     }
                 }));
 

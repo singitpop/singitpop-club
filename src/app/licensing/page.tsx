@@ -7,11 +7,11 @@ import path from 'path';
 import { Sparkles, Film, Tv, Briefcase } from 'lucide-react';
 import { getSignedAlbumCoverUrl } from '@/lib/server-image-utils';
 
+import { getAlbums } from '@/lib/data';
+
 export default async function LicensingPage() {
-    // Read JSON dynamically at runtime to prevent Turbopack from hanging on massive JSON AST parsing
-    const dataPath = path.join(process.cwd(), 'src', 'data', 'albums.json');
-    const albumsRaw = await fs.promises.readFile(dataPath, 'utf8');
-    const albumsData = JSON.parse(albumsRaw);
+    // Use the robust getAlbums utility which handles S3 + local fallback
+    const albumsData = await getAlbums();
 
     // Prepare album-centric data for the library
     const albums = await Promise.all(albumsData.map(async (album: any) => {

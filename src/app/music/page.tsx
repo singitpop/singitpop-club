@@ -218,17 +218,14 @@ function MusicContent() {
         if (filterMode === 'latest') {
             const studios = activeAlbums
                 .filter(a => {
-                    // Exclude Country albums
-                    const isCountry = a.genre && a.genre.some(g => g.toLowerCase() === 'country');
-                    return !isCountry && (a.type === 'studio' || a.type === 'standard');
+                    // Prioritize studio albums or released new content
+                    return (a.type === 'studio' || a.type === 'standard' || a.type === 'live');
                 })
                 .sort((a, b) => {
-                    const timeA = new Date(a.releaseDate).getTime();
-                    const timeB = new Date(b.releaseDate).getTime();
-                    if (timeB === timeA) {
-                        return a.title.localeCompare(b.title);
-                    }
-                    return timeB - timeA;
+                    const dateA = new Date(a.releaseDate).getTime();
+                    const dateB = new Date(b.releaseDate).getTime();
+                    if (dateB !== dateA) return dateB - dateA;
+                    return a.title.localeCompare(b.title);
                 });
             const latestAlbum = studios.length > 0 ? studios[0] : (activeAlbums.length > 0 ? activeAlbums[0] : null);
 

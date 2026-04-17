@@ -15,6 +15,7 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
     const navItems = [
         { id: 'home', icon: Home, label: 'Hub Home' },
         { id: 'browse', icon: Compass, label: 'Browse' },
+        { id: 'radio', icon: Radio, label: 'Radio' },
         { id: 'my-mixes', icon: User, label: 'My Playlists' },
         { id: 'favorites', icon: Heart, label: 'Fav' },
     ];
@@ -38,6 +39,7 @@ export default function SidebarNav({ activeTab, onTabChange }: SidebarNavProps) 
                         <span>{item.label}</span>
                     </button>
                 ))}
+
 
 
             </div>
