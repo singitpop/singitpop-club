@@ -109,10 +109,6 @@ export default function Hero() {
                         <div className={styles.pulseRing} />
                     </motion.button>
                     <span className={styles.watchText}>{heroData.BUTTON_TEXT}</span>
-                    <Link href="/radio/live" className={styles.radioCTA}>
-                        <div className={styles.miniDot} />
-                        LISTEN TO COUNTRY MUSIC LIVE 📻
-                    </Link>
                 </div>
             )}
 
