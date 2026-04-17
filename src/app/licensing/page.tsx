@@ -28,10 +28,17 @@ export default async function LicensingPage() {
     // Filter out albums with no tracks
     const filteredAlbums = albums.filter((a: any) => a.tracks.length > 0);
     
-    // Read advert tracks (keep as niche collection)
-    const advertPath = path.join(process.cwd(), 'src', 'data', 'advertTracks.json');
-    const advertRaw = await fs.promises.readFile(advertPath, 'utf8');
-    const advertTracks = JSON.parse(advertRaw);
+    // Read advert tracks with safety
+    let advertTracks = [];
+    try {
+        const advertPath = path.join(process.cwd(), 'src', 'data', 'advertTracks.json');
+        if (fs.existsSync(advertPath)) {
+            const advertRaw = await fs.promises.readFile(advertPath, 'utf8');
+            advertTracks = JSON.parse(advertRaw);
+        }
+    } catch (e) {
+        console.warn("Advert tracks could not be loaded:", e);
+    }
 
     return (
         <main className={styles.main}>

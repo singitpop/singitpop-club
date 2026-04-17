@@ -16,7 +16,6 @@ const navItems = [
   { name: 'About', href: '/about' },
   { name: 'Music', href: '/music' },
   { name: 'FanZone', href: '/fan-albums' },
-  { name: 'Radio', href: '/radio/live' },
   { name: 'Projects', href: '/projects' },
   { name: 'Licensing', href: '/licensing' },
   { name: 'Shop', href: '/shop' },

@@ -21,9 +21,9 @@ export const siteContent = {
             },
             {
                 id: 3,
-                title: "Step into the Light",
+                title: "Through The Glass",
                 subtitle: "Latest Country Album",
-                image: "/images/album-step-live.jpg",
+                image: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Through%20The%20Glass/cover.png",
                 action: "modal",
                 cta: "Stream Now 🎧"
             },

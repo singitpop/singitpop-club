@@ -1,22 +1,22 @@
 export const LATEST_RELEASES = {
-    // The ID of the latest album (Must match ID in albumData.ts)
-    ALBUM_ID: "desert-winds-and-open-roads-2026",
+    // The ID of the latest album
+    ALBUM_ID: "heart-of-the-sky-drums-2026",
 
-    // The details of the latest single (For Hero Player & Cards)
+    // The details of the latest single
     SINGLE: {
-        TITLE: "you are my valentine", // Must match title in albumData.ts EXACTLY (case-insensitive usually, but let's be precise)
+        TITLE: "Celestial Tears",
         ARTIST: "SingIt Pop",
-        AUDIO_URL: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/a-love-that-never-ends/You%20Are%20My%20Valentine.mp3",
-        DURATION: 210,
-        BADGE: "Latest Single 💕",
-        COVER_ART: "/images/single-you-are-my-valentine.jpg"
+        AUDIO_URL: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20Of%20The%20Sky%20Drums/Celestial%20Tears/Celestial%20Tears.mp3",
+        DURATION: 225,
+        BADGE: "Latest Single ⚡",
+        COVER_ART: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20Of%20The%20Sky%20Drums/Cover.png"
     },
 
     // The details for the Album Card
     ALBUM_CARD: {
-        TITLE: "Desert Winds And Open Roads",
+        TITLE: "Heart Of The Sky Drums",
         SUBTITLE: "Latest Studio Album",
-        COVER_ART: "/images/album-desert-winds.jpg"
+        COVER_ART: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20Of%20The%20Sky%20Drums/Cover.png"
     },
 
     // Premier Video Configuration (The big video on the homepage)

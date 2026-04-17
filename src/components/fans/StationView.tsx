@@ -24,8 +24,7 @@ const STATIONS = [
     { freq: '98.5', name: 'Country Roads', genre: 'Country', color: '#FFA500', img: '/stations/station_country_roads_1769687894278.png' },
     { freq: '104.2', name: 'Rock Classics', genre: 'Rock', color: '#007CF0', img: '/stations/station_rock_classics_1769688015837.png' },
     { freq: '107.9', name: 'Party Mix', genre: 'Dance', color: '#7928CA', img: '/stations/station_party_mix_1769688110910.png' },
-    { freq: '88.0', name: 'Chill / Folk', genre: 'Folk', color: '#4ade80', img: '/stations/station_chill_folk_1769687928384.png' },
-    { freq: '92.3', name: 'All Hits', genre: 'All', color: '#ffd700', img: '/stations/station_all_hits_gold_label_1769698667175.png' }
+    { freq: '88.0', name: 'Chill / Folk', genre: 'Folk', color: '#4ade80', img: '/stations/station_chill_folk_1769687928384.png' }
 ];
 
 import { useAuth } from '@/context/AuthContext';

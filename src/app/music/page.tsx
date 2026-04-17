@@ -74,14 +74,14 @@ function MusicContent() {
     useEffect(() => {
         // Initialize or Update Current Selection
         if (albums.length > 0) {
-            const activeAlbums = albums.filter(a =>
-                (a.type === 'studio' || a.type === 'standard') &&
-                isReleased(a.releaseDate)
-            ).sort((a, b) => {
+            const activeAlbums = albums.filter(a => {
+                const isRel = (a.type === 'studio' || a.type === 'standard') && isReleased(a.releaseDate);
+                const isCountry = Array.isArray(a.genre) ? a.genre.includes('Country') : a.genre === 'Country';
+                return isRel && !isCountry;
+            }).sort((a, b) => {
                 const timeA = new Date(a.releaseDate).getTime();
                 const timeB = new Date(b.releaseDate).getTime();
                 if (timeB === timeA) {
-                    // Secondary deterministic sort by title
                     return a.title.localeCompare(b.title);
                 }
                 return timeB - timeA;
@@ -218,6 +218,10 @@ function MusicContent() {
         if (filterMode === 'latest') {
             const studios = activeAlbums
                 .filter(a => {
+                    // EXCLUSION: Never show Country as the 'Latest Release' in the general music section
+                    const isCountry = Array.isArray(a.genre) ? a.genre.includes('Country') : a.genre === 'Country';
+                    if (isCountry) return false;
+
                     // Prioritize studio albums or released new content
                     return (a.type === 'studio' || a.type === 'standard' || a.type === 'live');
                 })
@@ -227,7 +231,13 @@ function MusicContent() {
                     if (dateB !== dateA) return dateB - dateA;
                     return a.title.localeCompare(b.title);
                 });
-            const latestAlbum = studios.length > 0 ? studios[0] : (activeAlbums.length > 0 ? activeAlbums[0] : null);
+            const latestAlbum = studios.length > 0 ? studios[0] : (activeAlbums.filter(a => {
+                const isCountry = Array.isArray(a.genre) ? a.genre.includes('Country') : a.genre === 'Country';
+                return !isCountry;
+            }).length > 0 ? activeAlbums.filter(a => {
+                const isCountry = Array.isArray(a.genre) ? a.genre.includes('Country') : a.genre === 'Country';
+                return !isCountry;
+            })[0] : null);
 
             return {
                 tracks: latestAlbum ? latestAlbum.tracks.map(t => ({ ...t, albumId: latestAlbum.id })) : [],
