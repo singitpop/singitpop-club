@@ -68,9 +68,12 @@ export async function generateSignedUrl(s3Url: string, expiresInSeconds: number 
 
 export async function getSignedFileUrl(key: string, expiresIn: number = 3600, isDownload: boolean = false): Promise<string> {
     try {
+        // IMPORTANT: Decode the key to handle %20 vs spaces mismatches
+        const decodedKey = decodeURIComponent(key);
+        
         const command = new GetObjectCommand({
             Bucket: process.env.AWS_S3_BUCKET || "singitpop-music",
-            Key: key,
+            Key: decodedKey,
             ResponseContentDisposition: isDownload ? 'attachment' : undefined
         });
 
