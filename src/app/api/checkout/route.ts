@@ -17,9 +17,9 @@ export async function POST(req: NextRequest) {
 
         let priceId = inputPriceId;
 
-        // Handle Track Purchase
-        if (!priceId && trackId) {
-            priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_TRACK;
+        // Handle Track & Ringtone Purchase - Authoritative £0.99 Rule
+        if (!priceId && (trackId || req.nextUrl.searchParams.get('type') === 'ringtone')) {
+            priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_TRACK || 'price_1 AUTHORITATIVE_99P';
         }
 
         if (!priceId) {

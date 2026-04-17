@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 import { Play, Pause, Lock } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 import styles from './TeaserPlayer.module.css';
+import { getAccessRules, canStreamFull, shouldEnforcePreview } from '@/lib/access-rules';
 
 import { capitalizeTitle } from '@/utils/formatters';
 
 export default function TeaserPlayer() {
-    const { isSignedIn } = useUser();
+    const { user } = useUser();
+    const isSignedIn = !!user;
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const [signedUrl, setSignedUrl] = useState<string | null>(null);
@@ -77,16 +79,14 @@ export default function TeaserPlayer() {
         const audio = document.getElementById('hero-audio') as HTMLAudioElement;
         if (!audio || !signedUrl) return;
 
-        if (limitReached && !isSignedIn) {
-            window.location.href = '/club'; // Redirect or just show prompt?
-            return;
-        }
+        const metadata = user?.publicMetadata || {};
+        const rules = getAccessRules(metadata.tier as string, metadata.role as string);
+        const isLatestSingle = true; // Hero player always plays the latest single
 
         if (isPlaying) {
             audio.pause();
         } else {
-            // Check if we are already at the limit
-            if (!isSignedIn && audio.currentTime >= 30) {
+            if (shouldEnforcePreview(rules, isLatestSingle, audio.currentTime)) {
                 setLimitReached(true);
                 return;
             }
@@ -98,15 +98,18 @@ export default function TeaserPlayer() {
     const handleTimeUpdate = (e: React.SyntheticEvent<HTMLAudioElement>) => {
         const audio = e.currentTarget;
         if (audio.duration) {
-            // Check for 30s limit
-            if (!isSignedIn && audio.currentTime >= 30) {
+            const metadata = user?.publicMetadata || {};
+            const rules = getAccessRules(metadata.tier as string, metadata.role as string);
+            const isLatestSingle = true;
+
+            if (shouldEnforcePreview(rules, isLatestSingle, audio.currentTime)) {
                 audio.pause();
                 setIsPlaying(false);
                 setLimitReached(true);
             } else {
                 setLimitReached(false);
+                setProgress((audio.currentTime / audio.duration) * 100);
             }
-            setProgress((audio.currentTime / audio.duration) * 100);
         }
     };
 

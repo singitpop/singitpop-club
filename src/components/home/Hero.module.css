@@ -134,8 +134,8 @@
 
 .titleContainer {
     position: absolute;
-    top: 6vh;
-    left: 4vw;
+    top: 2rem;
+    left: 2rem;
     z-index: 25;
     text-align: left;
     max-width: 40vw;

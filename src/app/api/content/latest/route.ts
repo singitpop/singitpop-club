@@ -38,27 +38,22 @@ export async function GET() {
             getAlbums()
         ]);
 
-        // Latest NON-Country Album (any genre except Country)
-        const nonCountryAlbums = albums
+        // Latest NON-Country Released Album
+        const releasedAlbums = albums.filter(a => new Date(a.releaseDate) <= new Date());
+        
+        const latestNonCountry = releasedAlbums
             .filter(a => {
                 const isCountry = a.genre && a.genre.some(g => g.toLowerCase() === 'country');
-                const isReleased = new Date(a.releaseDate) <= new Date();
-                return !isCountry && isReleased;
+                return !isCountry;
             })
-            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime())[0] || null;
 
-        const latestNonCountry = nonCountryAlbums.length > 0 ? nonCountryAlbums[0] : null;
-
-        // Latest Country Album (includes live country albums)
-        const countryAlbums = albums
+        const latestCountry = releasedAlbums
             .filter(a => {
                 const isCountry = a.genre && a.genre.some(g => g.toLowerCase() === 'country');
-                const isReleased = new Date(a.releaseDate) <= new Date();
-                return isCountry && isReleased;
+                return isCountry;
             })
-            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
-
-        const latestCountry = countryAlbums.length > 0 ? countryAlbums[0] : null;
+            .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime())[0] || null;
 
         let latestSingleUid = metadata?.latestSingleUid; // e.g. "albumid-1"
         let latestVideoTitle = metadata?.latestVideoTitle;

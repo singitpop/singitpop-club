@@ -14,6 +14,7 @@ import { useState, useRef, useEffect } from 'react';
 import { albums } from '@/data/albumData';
 import { getAlbumCoverUrl } from '@/lib/image-utils';
 import { useAuth } from '@/context/AuthContext';
+import { getAccessRules } from '@/lib/access-rules';
 import Roadmap from '@/components/fans/Roadmap';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -54,13 +55,27 @@ const EXPLICIT_COUNTRY_ALBUM_IDS = [
 ];
 
 export default function CommunityHubPage() {
-    const { user: clerkUser } = useUser();
-    const { isPro: isVIP, isInsider } = useAuth(); // Get VIP/Insider status
+    const { user: clerkUser, isLoaded: isClerkLoaded } = useUser();
+    const { isPro: isVIP, isInsider, user: authUser } = useAuth(); // Get VIP/Insider status
     const userId = clerkUser?.id;
     const router = useRouter();
+    
     const [activeTab, setActiveTab] = useState('home');
     const [playlists, setPlaylists] = useState<any[]>(initialPlaylists);
     const [isLoading, setIsLoading] = useState(true);
+
+    // ACCESS CONTROL: VIP+ Only for the whole page
+    useEffect(() => {
+        if (!isClerkLoaded) return;
+        
+        const metadata = clerkUser?.publicMetadata || {};
+        const rules = getAccessRules(metadata.tier as string, metadata.role as string);
+        
+        if (!rules.canAccessFanZone) {
+            // Redirect to upgrade
+            router.push('/club');
+        }
+    }, [isClerkLoaded, clerkUser, router]);
 
     const [selectedPlaylist, setSelectedPlaylist] = useState<any>(null);
     const [currentTrackId, setCurrentTrackId] = useState<number | string | null>(null);

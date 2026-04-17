@@ -10,6 +10,7 @@ import { capitalizeTitle } from '@/utils/formatters';
 import SponsorshipModal from '@/components/licensing/SponsorshipModal';
 import TipModal from '@/components/music/TipModal';
 import { getUniqueId } from '@/lib/track-utils';
+import { getAccessRules, canStreamFull, shouldEnforcePreview } from '@/lib/access-rules';
 
 interface SongListProps {
     tracks: Track[];
@@ -226,30 +227,13 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         const track = tracks.find(t => getUniqueId(t) === activeTrackId);
         if (!track) return;
 
-        // Access Logic (Mirrors render logic)
-        let album = track.albumId ? albums.find(a => a.id === track.albumId) : undefined;
-        if (!album) album = albums.find(a => a.tracks.some(t => t.id === track.id));
-
         const uniqueId = getUniqueId(track);
-        // Ensure latestSingleUid is string comparison
         const isLatestSingle = String(uniqueId) === String(latestSingleUid);
+        
+        const metadata = user?.publicMetadata || {};
+        const rules = getAccessRules(metadata.tier as string, metadata.role as string);
 
-        // 1. Latest Single: Guests = Preview, Fans+ = Full
-        if (isLatestSingle) {
-            if (!user && audioRef.current.currentTime >= 30) {
-                audioRef.current.pause();
-                setIsPlaying(false);
-                audioRef.current.currentTime = 0;
-                setShowPreviewModal(true);
-            }
-            return;
-        }
-
-        // 2. Standard Album Tracks: Guest/Fan = Preview, Insider+ = Full
-        const isFullAccess = isPro || isInsider;
-
-        // If not full access, enforce 30s limit
-        if (!isFullAccess && audioRef.current.currentTime >= 30) {
+        if (shouldEnforcePreview(rules, isLatestSingle, audioRef.current.currentTime)) {
             audioRef.current.pause();
             setIsPlaying(false);
             audioRef.current.currentTime = 0;
@@ -395,26 +379,28 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                         const releaseDate = album?.releaseDate ? new Date(album.releaseDate) : new Date();
                         const isPreRelease = releaseDate > new Date();
 
+                        const metadata = user?.publicMetadata || {};
+                        const rules = getAccessRules(metadata.tier as string, metadata.role as string);
+                        
+                        const isLatestSingle = String(uniqueId) === String(latestSingleUid);
+                        const isOwned = hasTrackAccess(uniqueId);
+                        const isFullAccess = canStreamFull(rules, isLatestSingle);
+                        
+                        const sponsor = sponsorships.find(s => s.trackId === uniqueId);
+                        const isSponsor = sponsor && user?.name && user.name.toLowerCase() === sponsor.name.toLowerCase();
+
                         // Access Logic
                         let isLocked = false;
                         let isPreview = false;
                         let lockMessage = "";
 
-                        const isLatestSingle = String(uniqueId) === String(latestSingleUid);
-                        const isOwned = hasTrackAccess(uniqueId);
-                        
-                        const sponsor = sponsorships.find(s => s.trackId === uniqueId);
-                        const isSponsor = sponsor && user?.name && user.name.toLowerCase() === sponsor.name.toLowerCase();
-
                         if (isPreRelease && !isLatestSingle) {
-                            // Pre-Release (VIP Only, or Sponsor)
-                            if (!isPro && !isSponsor) {
+                            if (!rules.canAccessExclusiveRadio && !isSponsor) { // VIP/Label logic tied to radio access for pre-releases
                                 isLocked = true;
                                 lockMessage = "VIP Exclusive! Upgrade to listen before release.";
                             }
                         } else {
-                            // Standard Release Logic
-                            if (!isOwned && !isSponsor) { // Sponsor gets full access too
+                            if (!isFullAccess && !isOwned && !isSponsor) {
                                 isPreview = true;
                             }
                         }
@@ -489,7 +475,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                             })()}
                                         </div>
                                         <div className={styles.meta}>
-                                            £{track.price} • {track.plays} plays
+                                            £0.99
                                             {sponsor && (
                                                 <span className={styles.sponsorCredit}>
                                                     • Sponsored by <strong className="text-white">{sponsor.name}</strong>

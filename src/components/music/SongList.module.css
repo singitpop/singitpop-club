@@ -239,7 +239,7 @@
 /* New Floating Box Styles */
 .floatingMixtapeBox {
     position: fixed;
-    top: calc(var(--header-height) + 50px);
+    top: 5px; /* Shifted to Top Right explicitly */
     right: 5px;
     /* Moved closer to edge to avoid overlapping center content */
     width: 280px;
