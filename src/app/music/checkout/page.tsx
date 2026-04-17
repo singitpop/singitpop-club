@@ -127,10 +127,6 @@ function CheckoutContent() {
     const productPrice = PRODUCT_TYPES['download'].price;
     const totalPrice = isEligibleForFree ? 0.00 : productPrice;
 
-    const { showNotification } = useAuth(); // Actually use useNotification
-    // Wait, useAuth doesn't have showNotification. I need useNotification.
-    
-    // Correction:
     const { showNotification } = useNotification();
 
     const handleSubmit = async (e: React.FormEvent) => {
