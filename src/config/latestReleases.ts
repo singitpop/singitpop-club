@@ -1,22 +1,22 @@
 export const LATEST_RELEASES = {
     // The ID of the latest album
-    ALBUM_ID: "heart-of-the-sky-drums-2026",
+    ALBUM_ID: "april-comes-soft-2026",
 
     // The details of the latest single
     SINGLE: {
-        TITLE: "Celestial Tears",
+        TITLE: "April Comes Soft",
         ARTIST: "SingIt Pop",
-        AUDIO_URL: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20Of%20The%20Sky%20Drums/Celestial%20Tears/Celestial%20Tears.mp3",
+        AUDIO_URL: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/April%20Comes%20Soft/April%20Comes%20Soft/April%20Comes%20Soft.mp3",
         DURATION: 225,
-        BADGE: "Latest Single ⚡",
-        COVER_ART: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20Of%20The%20Sky%20Drums/Cover.png"
+        BADGE: "Latest Single 🌸",
+        COVER_ART: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/April%20Comes%20Soft/cover.png"
     },
 
     // The details for the Album Card
     ALBUM_CARD: {
-        TITLE: "Heart Of The Sky Drums",
+        TITLE: "April Comes Soft",
         SUBTITLE: "Latest Studio Album",
-        COVER_ART: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20Of%20The%20Sky%20Drums/Cover.png"
+        COVER_ART: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/April%20Comes%20Soft/cover.png"
     },
 
     // Premier Video Configuration (The big video on the homepage)
