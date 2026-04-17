@@ -374,11 +374,6 @@ export default function CommunityHubPage() {
         } catch (e: any) {
             console.error(`❌ Track play error:`, e.message);
             alert(`Playback Error: ${e.message}. Please try again.`);
-
-                return;
-                setCurrentTrackId(null);
-                setIsPlaying(false);
-            }
         } finally {
             setIsLoading(false);
             setTimeout(() => {
