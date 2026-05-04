@@ -230,8 +230,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
         const uniqueId = getUniqueId(track);
         const isLatestSingle = String(uniqueId) === String(latestSingleUid);
         
-        const metadata = user?.publicMetadata || {};
-        const rules = getAccessRules(metadata.tier as string, metadata.role as string);
+        const rules = getAccessRules(user?.tier as string);
 
         if (shouldEnforcePreview(rules, isLatestSingle, audioRef.current.currentTime)) {
             audioRef.current.pause();
@@ -379,8 +378,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                         const releaseDate = album?.releaseDate ? new Date(album.releaseDate) : new Date();
                         const isPreRelease = releaseDate > new Date();
 
-                        const metadata = user?.publicMetadata || {};
-                        const rules = getAccessRules(metadata.tier as string, metadata.role as string);
+                        const rules = getAccessRules(user?.tier as string);
                         
                         const isLatestSingle = String(uniqueId) === String(latestSingleUid);
                         const isOwned = hasTrackAccess(uniqueId);
