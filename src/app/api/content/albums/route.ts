@@ -83,7 +83,10 @@ export async function GET() {
             }
         }));
 
-        return NextResponse.json(signedAlbums);
+        const headers = new Headers();
+        headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+
+        return NextResponse.json(signedAlbums, { headers });
     } catch (error) {
         console.error("[Nashville-API] Critical Error:", error);
         return NextResponse.json({ error: "Failed to fetch station data" }, { status: 500 });
