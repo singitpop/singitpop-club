@@ -190,7 +190,20 @@ export async function GET() {
             }
         };
 
-        const signedLatestCover = await signCover(latestNonCountry);
+        let signedLatestCover = "/images/defaults/vinyl_default.png";
+        if (latestNonCountry) {
+            const folder = latestNonCountry.folderPath || latestNonCountry.title;
+            const key = await findImageKey(folder, undefined, false);
+            if (key) {
+                signedLatestCover = await getSignedFileUrl(key, 3600);
+            } else {
+                const stored = latestNonCountry.coverArt;
+                if (stored && !stored.includes('default.jpg')) {
+                    const signed = await signCover(latestNonCountry);
+                    if (signed) signedLatestCover = signed;
+                }
+            }
+        }
 
         // Latest Country Album Cover
         let signedCountryCover = "/images/album-step-live.jpg"; // Fallback
@@ -206,7 +219,7 @@ export async function GET() {
                 // 2. Fallback to stored URL if valid
                 const stored = latestCountry.coverArt;
                 if (stored && !stored.includes('default.jpg')) {
-                    const signed = await signCover(stored);
+                    const signed = await signCover(latestCountry);
                     if (signed) signedCountryCover = signed;
                 }
             }
