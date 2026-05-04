@@ -31,11 +31,13 @@ export async function DELETE(req: Request) {
         if (playlist.userId === userId) {
             isAllowed = true;
         } else {
-            // Check Admin
+            // Check Admin or Label
             const client = await clerkClient();
             const user = await client.users.getUser(userId);
             const role = user.publicMetadata.role as string; // 'admin'
-            if (role === 'admin') {
+            const tier = String(user.publicMetadata.tier || '').toUpperCase(); // 'LABEL'
+            
+            if (role === 'admin' || tier === 'LABEL') {
                 isAllowed = true;
                 isAdminAction = true;
             }

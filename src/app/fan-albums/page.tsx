@@ -56,7 +56,7 @@ const EXPLICIT_COUNTRY_ALBUM_IDS = [
 
 export default function CommunityHubPage() {
     const { user: clerkUser, isLoaded: isClerkLoaded } = useUser();
-    const { isPro: isVIP, isInsider, user: authUser } = useAuth(); // Get VIP/Insider status
+    const { isPro: isVIP, isInsider, isLabel, user: authUser } = useAuth(); // Get VIP/Insider/Label status
     const userId = clerkUser?.id;
     const router = useRouter();
     
@@ -747,7 +747,7 @@ export default function CommunityHubPage() {
                             onLike={() => handleLike(selectedPlaylist.id)}
                             hasLiked={selectedPlaylist.likedBy?.includes(userId)}
                             onDelete={() => handleDeletePlaylist(selectedPlaylist.id)}
-                            canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin'}
+                            canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin' || isLabel}
                             isVIP={isVIP}
                             onUpdate={(updated) => {
                                 setPlaylists(prev => prev.map(p => p.id === updated.id ? updated : p));
