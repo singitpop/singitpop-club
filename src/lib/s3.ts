@@ -256,13 +256,15 @@ export async function findImageKey(folderName: string, trackTitle?: string, stri
         if (strictTrackMatch && trackTitle) return null;
 
         // 2. Fallback: Album Cover (cover.png, front.jpg, etc)
+        const albumSegmentCount = actualFolderPrefix.split('/').filter(Boolean).length;
         const albumCover = contents.find((c: any) => {
             const key = c.Key || '';
+            const isRoot = key.split('/').filter(Boolean).length === albumSegmentCount + 1;
             const filename = key.split('/').pop()?.toLowerCase() || '';
             const isImage = filename.endsWith('.png') || filename.endsWith('.jpg') || filename.endsWith('.jpeg') || filename.endsWith('.webp');
-            const isStandardName = filename.startsWith('cover.') || filename.startsWith('front.') || filename.startsWith('folder.') || filename.includes('cover');
+            const isStandardName = filename.startsWith('cover.') || filename.startsWith('front.') || filename.startsWith('folder.');
 
-            return isImage && isStandardName;
+            return isRoot && isImage && isStandardName;
         });
 
         if (albumCover) return albumCover.Key;

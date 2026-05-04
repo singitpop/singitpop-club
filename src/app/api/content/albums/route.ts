@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAlbums } from '@/lib/data';
-import { getSignedFileUrl } from '@/lib/s3';
+import { getSignedFileUrl, findImageKey } from '@/lib/s3';
 import radioConfig from '@/data/radio_config.json';
 
 export const dynamic = 'force-dynamic';
@@ -31,10 +31,26 @@ export async function GET() {
         // 2. Music Page Protocol: Sign all tracks (No filtering out singles)
         const signedAlbums = await Promise.all(filteredAlbums.map(async (album) => {
             try {
-                // Sign Cover Art
-                let signedCover = album.coverArt;
-                if (album.coverArt && !album.coverArt.startsWith('/images/') && !album.coverArt.startsWith('http')) {
-                    signedCover = await getSignedFileUrl(album.coverArt);
+                // 1. Dynamic S3 Folder Lookup (User Requested Format)
+                const folderName = album.folderPath || album.title;
+                const dynamicKey = await findImageKey(folderName, undefined, false);
+                let signedCover = album.coverArt; // Fallback to whatever is in JSON
+
+                if (dynamicKey) {
+                    signedCover = await getSignedFileUrl(dynamicKey, 3600);
+                } else if (album.coverArt) {
+                    // 2. Legacy signing fallback for hardcoded URLs
+                    if (!album.coverArt.startsWith('/images/') && !album.coverArt.startsWith('http')) {
+                        signedCover = await getSignedFileUrl(album.coverArt, 3600);
+                    } else if (album.coverArt.includes('singitpop-music.s3') || album.coverArt.includes('s3.eu-north-1.amazonaws.com')) {
+                        try {
+                            const url = new URL(album.coverArt);
+                            const key = decodeURIComponent(url.pathname.substring(1));
+                            signedCover = await getSignedFileUrl(key, 3600);
+                        } catch(e) {
+                            // ignore URL parse errors
+                        }
+                    }
                 }
 
                 // Sign ALL Tracks (Robust Bucket Detection)
