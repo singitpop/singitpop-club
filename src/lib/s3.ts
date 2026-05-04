@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsV2Command, HeadObjectCommand } from "@aws-sdk/client-s3";
 // @ts-ignore
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -46,6 +46,14 @@ export async function generateSignedUrl(s3Url: string, expiresInSeconds: number 
         // Sanitize filename for headers (replace spaces/special chars to prevent mobile download errors)
         const filename = key.split('/').pop() || "download.mp3";
         const safeFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
+
+        // CHECK IF OBJECT EXISTS BEFORE SIGNING
+        try {
+            await s3Client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));
+        } catch (headErr: any) {
+            console.warn(`[S3] Object does not exist or access denied: ${key}`);
+            throw new Error(`Object missing in S3: ${key}`);
+        }
 
         const command = new GetObjectCommand({
             Bucket: bucket,
