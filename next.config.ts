@@ -56,11 +56,6 @@ const nextConfig: NextConfig = {
         destination: '/sign-in',
         permanent: true,
       },
-      {
-        source: '/licensing',
-        destination: '/projects/licensing',
-        permanent: true,
-      },
     ];
   },
 } as any;
