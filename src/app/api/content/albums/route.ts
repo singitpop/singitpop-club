@@ -24,9 +24,8 @@ export async function GET() {
         };
 
         const filteredAlbums = albums.filter(a => {
-            // Show all released studio/standard/live/mixtape albums
-            const hasReleased = isReleased(a.releaseDate);
-            return (a.type === 'studio' || a.type === 'standard' || a.type === 'mixtape' || a.type === 'live') && hasReleased;
+            // Show all studio/standard/live/mixtape albums (frontend handles release date gating)
+            return (a.type === 'studio' || a.type === 'standard' || a.type === 'mixtape' || a.type === 'live');
         });
 
         // 2. Music Page Protocol: Sign all tracks (No filtering out singles)
