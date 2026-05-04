@@ -343,7 +343,7 @@ export default function CommunityHubPage() {
                 if (album) {
                     const match = album.tracks.find(t => t.id === resolvedNumericId);
                     if (match) {
-                        freshTrack = { ...match, albumId: album.id, albumTitle: album.title };
+                        freshTrack = { ...match, albumId: album.id, albumTitle: album.title, coverArt: album.coverArt };
                     }
                 }
             } else {
@@ -351,7 +351,7 @@ export default function CommunityHubPage() {
                 for (const album of albums) {
                     const match = album.tracks.find(t => t.id === resolvedNumericId);
                     if (match) {
-                        freshTrack = { ...match, albumId: album.id, albumTitle: album.title };
+                        freshTrack = { ...match, albumId: album.id, albumTitle: album.title, coverArt: album.coverArt };
                         break;
                     }
                 }
