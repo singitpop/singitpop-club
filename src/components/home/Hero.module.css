@@ -123,13 +123,15 @@
 }
 
 .artistName {
-    display: block;
-    font-size: 0.8rem;
-    color: #ff0000;
-    font-weight: 900;
-    letter-spacing: 12px;
+    display: inline-block;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    text-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    margin-bottom: 0.5rem;
+    border-left: 2px solid var(--primary, #FF0080);
+    padding-left: 10px;
 }
 
 .titleContainer {
