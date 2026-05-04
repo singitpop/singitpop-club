@@ -52,17 +52,18 @@ export default function TeaserPlayer() {
 
         // Fetch secure signed URL for the track
         const fetchUrl = async () => {
-            // OPTIMIZATION: If URL is already signed by the API, skip the extra fetch
-            if (track.fileUrl.includes('X-Amz-Signature') || track.fileUrl.includes('Key-Pair-Id')) {
-                setSignedUrl(track.fileUrl);
-                return;
-            }
+            // Removed optimization to skip fetch, because the URL might be a blindly signed invalid key from the backend. We must verify/fallback.
 
             try {
                 const res = await fetch('/api/music/sign', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: track.fileUrl })
+                    body: JSON.stringify({ 
+                        url: track.fileUrl,
+                        title: track.title,
+                        albumId: track.albumId,
+                        sourceFolder: track.sourceFolder
+                    })
                 });
                 const data = await res.json();
                 if (data.signedUrl) {

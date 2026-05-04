@@ -218,7 +218,7 @@ export async function findImageKey(folderName: string, trackTitle?: string, stri
             const normalizedTrack = normalize(trackTitle);
             const trackWords = normalizedTrack.split(' ').filter(w => w.length > 2);
 
-            const trackCover = contents.find((c: any) => {
+            const possibleImages = contents.filter((c: any) => {
                 const key = c.Key || '';
                 const lowerKey = key.toLowerCase();
                 if (!lowerKey.startsWith(actualFolderPrefix.toLowerCase())) return false;
@@ -238,10 +238,14 @@ export async function findImageKey(folderName: string, trackTitle?: string, stri
                 });
                 
                 const isImage = key.match(/\.(png|jpg|jpeg|webp)$/i);
-                const isCover = key.toLowerCase().includes('cover') || key.toLowerCase().includes('front');
-
-                return (songFolderMatch && isImage) || (isCover && songFolderMatch);
+                return songFolderMatch && isImage;
             });
+
+            // Prioritize cover/front over other generic images
+            const trackCover = possibleImages.find((c: any) => {
+                const lowerKey = (c.Key || '').toLowerCase();
+                return lowerKey.includes('cover') || lowerKey.includes('front');
+            }) || possibleImages[0];
 
             if (trackCover) {
                 console.log(`[FindImageKey] Found track-specific artwork: ${trackCover.Key}`);
