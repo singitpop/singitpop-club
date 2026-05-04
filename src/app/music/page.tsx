@@ -32,7 +32,11 @@ function MusicContent() {
     const routeAlbumId = params?.albumId as string | undefined;
 
     // State for Dynamic Data
-    const [albums, setAlbums] = useState<Album[]>(staticAlbums);
+    // Strip coverArt from initial static data — those URLs are private/unsigned and would 403.
+    // The signed versions arrive shortly from /api/content/albums.
+    const [albums, setAlbums] = useState<Album[]>(
+        staticAlbums.map(a => ({ ...a, coverArt: '' }))
+    );
     const [isLoading, setIsLoading] = useState(true);
 
     const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(routeAlbumId || null);

@@ -88,8 +88,17 @@ export default function AlbumOverlay({ isOpen, onClose, albums, onSelectAlbum, t
                                         alt={album.title}
                                         loading="lazy"
                                         onError={(e) => {
+                                            // Hide broken image and show dark disc placeholder
                                             e.currentTarget.style.display = 'none';
-                                            e.currentTarget.parentElement!.style.background = 'linear-gradient(45deg, #FF0080, #7928CA)';
+                                            const parent = e.currentTarget.parentElement!;
+                                            parent.style.background = '#1a1a2e';
+                                            parent.style.display = 'flex';
+                                            parent.style.alignItems = 'center';
+                                            parent.style.justifyContent = 'center';
+                                            // Add disc icon via innerHTML only if not already added
+                                            if (!parent.querySelector('svg')) {
+                                                parent.innerHTML += '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>';
+                                            }
                                         }}
                                     />
                                 ) : (

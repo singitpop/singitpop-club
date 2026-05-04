@@ -4,7 +4,13 @@ import { getSignedFileUrl, findImageKey } from '@/lib/s3';
 
 export const dynamic = 'force-dynamic';
 
-// Throttle: process albums in batches to avoid AWS S3 rate limits
+// Server-side in-memory cache for signed albums.
+// Signed URLs are valid for 1 hour — we refresh every 45 minutes to stay safe.
+let cachedSignedAlbums: any[] | null = null;
+let cacheExpiry = 0;
+const CACHE_TTL_MS = 45 * 60 * 1000; // 45 minutes
+
+// Throttle: process items in batches to avoid AWS S3 rate limits
 async function processInBatches<T, R>(items: T[], batchSize: number, fn: (item: T) => Promise<R>): Promise<R[]> {
     const results: R[] = [];
     for (let i = 0; i < items.length; i += batchSize) {
@@ -17,14 +23,25 @@ async function processInBatches<T, R>(items: T[], batchSize: number, fn: (item: 
 
 export async function GET() {
     try {
+        const now = Date.now();
+
+        // Return cached result if still valid
+        if (cachedSignedAlbums && now < cacheExpiry) {
+            console.log('[Albums-API] Returning cached signed albums');
+            const headers = new Headers();
+            headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+            return NextResponse.json(cachedSignedAlbums, { headers });
+        }
+
+        console.log('[Albums-API] Signing fresh album data...');
         const albums = await getAlbums();
 
         const filteredAlbums = albums.filter((a: any) => {
             return (a.type === 'studio' || a.type === 'standard' || a.type === 'mixtape' || a.type === 'live');
         });
 
-        // Process 8 albums at a time to avoid S3 API rate limits
-        const signedAlbums = await processInBatches(filteredAlbums, 8, async (album: any) => {
+        // Process 10 albums at a time to balance speed vs S3 rate limits
+        const signedAlbums = await processInBatches(filteredAlbums, 10, async (album: any) => {
             try {
                 const folderName = album.folderPath || album.title;
                 const dynamicKey = await findImageKey(folderName, undefined, false);
@@ -46,8 +63,8 @@ export async function GET() {
                     }
                 }
 
-                // Sign tracks in batches too (5 at a time per album)
-                const signedTracks = await processInBatches(album.tracks || [], 5, async (track: any) => {
+                // Sign tracks in batches (6 at a time per album)
+                const signedTracks = await processInBatches(album.tracks || [], 6, async (track: any) => {
                     try {
                         let signedAudio = track.audioUrl;
                         if (track.audioUrl && (track.audioUrl.includes('s3.eu-north-1.amazonaws.com') || track.audioUrl.includes('singitpop-music.s3'))) {
@@ -72,7 +89,13 @@ export async function GET() {
             }
         });
 
+        // Cache the result server-side for 45 minutes
+        cachedSignedAlbums = signedAlbums;
+        cacheExpiry = now + CACHE_TTL_MS;
+        console.log(`[Albums-API] Signed ${signedAlbums.length} albums. Cache valid until ${new Date(cacheExpiry).toISOString()}`);
+
         const headers = new Headers();
+        // Tell the browser not to cache (we manage freshness server-side)
         headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
 
         return NextResponse.json(signedAlbums, { headers });
