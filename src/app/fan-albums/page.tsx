@@ -337,11 +337,23 @@ export default function CommunityHubPage() {
         const resolvedNumericId = trackIdMatch ? parseInt(trackIdMatch[1]) : (typeof track.id === 'number' ? track.id : null);
         
         if (resolvedNumericId) {
-            for (const album of albums) {
-                const match = album.tracks.find(t => t.id === resolvedNumericId);
-                if (match) {
-                    freshTrack = { ...match, albumId: album.id, albumTitle: album.title };
-                    break;
+            if (track.albumId) {
+                // We know the exact album, find it directly
+                const album = albums.find(a => a.id === track.albumId);
+                if (album) {
+                    const match = album.tracks.find(t => t.id === resolvedNumericId);
+                    if (match) {
+                        freshTrack = { ...match, albumId: album.id, albumTitle: album.title };
+                    }
+                }
+            } else {
+                // Danger: Fallback to scanning all albums (numeric IDs are NOT globally unique)
+                for (const album of albums) {
+                    const match = album.tracks.find(t => t.id === resolvedNumericId);
+                    if (match) {
+                        freshTrack = { ...match, albumId: album.id, albumTitle: album.title };
+                        break;
+                    }
                 }
             }
         }
