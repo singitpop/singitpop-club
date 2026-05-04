@@ -213,8 +213,54 @@
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20(country%20Music%20For%20Weddings)/Dancing%20Into%20Forever/Dancing%20Into%20Forever.mp3",
         "isSingle": true
+      },
+      {
+        "id": 17,
+        "title": "You and Me Forever",
+        "duration": "3:45",
+        "price": 0.99,
+        "genre": "Country",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever Starts Today - Country Album/you and me forever/You and Me Forever.mp3",
+        "isSingle": false
+      },
+      {
+        "id": 18,
+        "title": "Hand in Hand",
+        "duration": "3:45",
+        "price": 0.99,
+        "genre": "Country",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever Starts Today - Country Album/hand in hand/Hand in Hand.mp3",
+        "isSingle": false
+      },
+      {
+        "id": 20,
+        "title": "From This Day On",
+        "duration": "3:45",
+        "price": 0.99,
+        "genre": "Country",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever Starts Today - Country Album/from this day on/from this day on.mp3",
+        "isSingle": false
+      },
+      {
+        "id": 21,
+        "title": "From This Moment",
+        "duration": "3:45",
+        "price": 0.99,
+        "genre": "Country",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever Starts Today - Country Album/from this moment/from this moment.mp3",
+        "isSingle": false
+      },
+      {
+        "id": 22,
+        "title": "With You Im Home",
+        "duration": "3:45",
+        "price": 0.99,
+        "genre": "Country",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever Starts Today - Country Album/With you Im Home/with you Im home.mp3",
+        "isSingle": false
       }
-    ]
+    ],
+    "mp3Count": 12
   },
   {
     "id": "between-the-lines-of-love-2024",
@@ -880,7 +926,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/Boundless%20Love/Boundless%20Love.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/Boundless Love/Boundless Love.mp3",
         "isSingle": true
       },
       {
@@ -889,7 +935,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Rock",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/Pedal%20to%20the%20metal/Pedal%20to%20the%20metal.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/pedal to the metal/Pedal to the Metal.mp3",
         "isSingle": true
       },
       {
@@ -898,7 +944,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Rock",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/waiting%20for%20a%20girl%20like%20you/waiting%20for%20a%20girl%20like%20you.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/waiting for a girl like you/Waiting for a Girl Like You.mp3",
         "isSingle": true
       },
       {
@@ -907,7 +953,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/say%20it%20again/say%20it%20again.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/say it again/Say It Again.mp3",
         "isSingle": true
       },
       {
@@ -916,10 +962,20 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Pop",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/Bridge%20Over%20Troubled%20Water/Bridge%20Over%20Troubled%20Water.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/bridge over troubled water/Bridge Over Troubled Water.mp3",
+        "isSingle": true
+      },
+      {
+        "id": 21,
+        "title": "distant sky",
+        "duration": "3:45",
+        "price": 0.99,
+        "genre": "Country",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/distant sky/Distant Sky.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "mp3Count": 6
   },
   {
     "id": "highways-of-the-heart-2024",
@@ -1180,65 +1236,6 @@
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Whispers%20Of%20The%20Heart%20Country%20Ballads%20For%20The%20Soul/Every%20day%20I%20miss%20you/Every%20day%20I%20miss%20you.mp3",
         "isSingle": true
-      }
-    ]
-  },
-  {
-    "id": "forever-starts-today--country-music-for-weddings--2025",
-    "title": "Forever Starts Today (country Music For Weddings)",
-    "releaseDate": "2024-12-09",
-    "year": 2025,
-    "type": "studio",
-    "genre": [
-      "Country"
-    ],
-    "folderPath": "Forever Starts Today - Country Album",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20(country%20Music%20For%20Weddings)/Cover.png",
-    "tracks": [
-      {
-        "id": 7,
-        "title": "You and Me Forever",
-        "duration": "3:45",
-        "price": 0.99,
-        "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20(country%20Music%20For%20Weddings)/You%20and%20Me%20Forever/You%20and%20Me%20Forever.mp3",
-        "isSingle": false
-      },
-      {
-        "id": 8,
-        "title": "Hand in Hand",
-        "duration": "3:45",
-        "price": 0.99,
-        "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20(country%20Music%20For%20Weddings)/Hand%20in%20Hand/Hand%20in%20Hand.mp3",
-        "isSingle": false
-      },
-      {
-        "id": 10,
-        "title": "From This Day On",
-        "duration": "3:45",
-        "price": 0.99,
-        "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20(country%20Music%20For%20Weddings)/From%20This%20Day%20On/From%20This%20Day%20On.mp3",
-        "isSingle": false
-      },
-      {
-        "id": 11,
-        "title": "From This Moment",
-        "duration": "3:45",
-        "price": 0.99,
-        "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20(country%20Music%20For%20Weddings)/From%20This%20Moment/From%20This%20Moment.mp3",
-        "isSingle": false
-      },
-      {
-        "id": 12,
-        "title": "With You Im Home",
-        "duration": "3:45",
-        "price": 0.99,
-        "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20(country%20Music%20For%20Weddings)/With%20You%20Im%20Home/With%20You%20Im%20Home.mp3",
-        "isSingle": false
       }
     ]
   },
@@ -5327,11 +5324,11 @@
     "title": "Live Step Into The Light",
     "releaseDate": "2025-12-08",
     "year": 2025,
-    "type": "studio",
+    "type": "live",
     "genre": [
       "Country"
     ],
-    "folderPath": "Live Step Into The Light",
+    "folderPath": "Live Step Into the Light",
     "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/Cover.png",
     "tracks": [
       {
@@ -5340,7 +5337,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/golden%20hour%20in%20the%20valley/golden%20hour%20in%20the%20valley.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Golden Hour in the Valley.mp3",
         "isSingle": false
       },
       {
@@ -5349,7 +5346,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/whisper%20of%20the%20pines/whisper%20of%20the%20pines.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Whisper of the Pines.mp3",
         "isSingle": false
       },
       {
@@ -5358,7 +5355,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/starlight%20serenade/starlight%20serenade.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Starlight Serenade.mp3",
         "isSingle": true
       },
       {
@@ -5367,7 +5364,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/painted%20skies/painted%20skies.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Painted Skies.mp3",
         "isSingle": false
       },
       {
@@ -5376,7 +5373,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/shine%20all%20night/shine%20all%20night.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Shine All Night.mp3",
         "isSingle": true
       },
       {
@@ -5385,7 +5382,7 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/fields%20of%20forever/fields%20of%20forever.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Fields of Forever.mp3",
         "isSingle": true
       },
       {
@@ -5394,69 +5391,56 @@
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/the%20valley%20sings/the%20valley%20sings.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/The Valley Sings.mp3",
         "isSingle": false
-      }
-    ]
-  },
-  {
-    "id": "live-step-into-the-light-2026",
-    "title": "Live Step Into The Light",
-    "releaseDate": "2025-12-08",
-    "year": 2026,
-    "type": "studio",
-    "genre": [
-      "Country"
-    ],
-    "folderPath": "Live Step Into The Light",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/Cover.png",
-    "tracks": [
+      },
       {
-        "id": 8,
+        "id": 18,
         "title": "valley of dreams",
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/valley%20of%20dreams/valley%20of%20dreams.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Valley of Dreams.mp3",
         "isSingle": false
       },
       {
-        "id": 9,
+        "id": 19,
         "title": "haven of the hills",
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/haven%20of%20the%20hills/haven%20of%20the%20hills.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Haven of the Hills.mp3",
         "isSingle": true
       },
       {
-        "id": 10,
+        "id": 20,
         "title": "harvest moon glow",
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/harvest%20moon%20glow/harvest%20moon%20glow.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Harvest Moon Glow.mp3",
         "isSingle": false
       },
       {
-        "id": 11,
+        "id": 21,
         "title": "horizons embrace",
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/horizons%20embrace/horizons%20embrace.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Horizons Embrace.mp3",
         "isSingle": false
       },
       {
-        "id": 12,
+        "id": 22,
         "title": "golden hour finale",
         "duration": "3:45",
         "price": 0.99,
         "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/golden%20hour%20finale/golden%20hour%20finale.mp3",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live Step Into the Light/Golden Hour Finale.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "mp3Count": 12
   },
   {
     "id": "desert-winds-and-open-roads-2026",
@@ -5960,29 +5944,6 @@
         "price": 0.99,
         "genre": "Country",
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Valentine%20Country/forever%20starts%20tonight/forever%20starts%20tonight.mp3",
-        "isSingle": true
-      }
-    ]
-  },
-  {
-    "id": "singles-2026",
-    "title": "Singles",
-    "releaseDate": "2026-02-06",
-    "year": 2026,
-    "type": "studio",
-    "genre": [
-      "Country"
-    ],
-    "folderPath": "Singles",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/Cover.png",
-    "tracks": [
-      {
-        "id": 1,
-        "title": "distant sky",
-        "duration": "3:45",
-        "price": 0.99,
-        "genre": "Country",
-        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Singles/distant%20sky/distant%20sky.mp3",
         "isSingle": true
       }
     ]
