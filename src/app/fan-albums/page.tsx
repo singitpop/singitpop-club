@@ -560,6 +560,12 @@ export default function CommunityHubPage() {
                                                     onClick={() => setSelectedPlaylist(playlist)}
                                                     onLike={() => handleLike(playlist.id)}
                                                     hasLiked={playlist.likedBy?.includes(userId)}
+                                                    canDelete={userId === playlist.userId || clerkUser?.publicMetadata?.role === 'admin' || isLabel || String(clerkUser?.publicMetadata?.tier || '').toUpperCase() === 'LABEL'}
+                                                    onDelete={(e) => {
+                                                        if (confirm("Are you sure you want to delete this mix? This cannot be undone.")) {
+                                                            handleDeletePlaylist(playlist.id);
+                                                        }
+                                                    }}
                                                 />
                                             </div>
                                         ))}
@@ -625,6 +631,12 @@ export default function CommunityHubPage() {
                                             onClick={() => setSelectedPlaylist(playlist)}
                                             onLike={() => handleLike(playlist.id)}
                                             hasLiked={playlist.likedBy?.includes(userId)}
+                                            canDelete={userId === playlist.userId || clerkUser?.publicMetadata?.role === 'admin' || isLabel || String(clerkUser?.publicMetadata?.tier || '').toUpperCase() === 'LABEL'}
+                                            onDelete={(e) => {
+                                                if (confirm("Are you sure you want to delete this mix? This cannot be undone.")) {
+                                                    handleDeletePlaylist(playlist.id);
+                                                }
+                                            }}
                                         />
                                     ))}
                                 </div>
@@ -747,7 +759,7 @@ export default function CommunityHubPage() {
                             onLike={() => handleLike(selectedPlaylist.id)}
                             hasLiked={selectedPlaylist.likedBy?.includes(userId)}
                             onDelete={() => handleDeletePlaylist(selectedPlaylist.id)}
-                            canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin' || isLabel}
+                            canDelete={userId === selectedPlaylist.userId || clerkUser?.publicMetadata?.role === 'admin' || isLabel || String(clerkUser?.publicMetadata?.tier || '').toUpperCase() === 'LABEL'}
                             isVIP={isVIP}
                             onUpdate={(updated) => {
                                 setPlaylists(prev => prev.map(p => p.id === updated.id ? updated : p));

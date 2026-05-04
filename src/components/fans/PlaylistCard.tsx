@@ -19,11 +19,13 @@ interface PlaylistCardProps {
     onClick: () => void;
     onLike?: () => void;
     hasLiked?: boolean;
+    canDelete?: boolean;
+    onDelete?: (e: React.MouseEvent) => void;
 }
 
 import RadialVisualizer from '../ui/RadialVisualizer';
 
-export default function PlaylistCard({ playlist, coverImages = [], isPlaying, onPlay, onClick, onLike, hasLiked }: PlaylistCardProps) {
+export default function PlaylistCard({ playlist, coverImages = [], isPlaying, onPlay, onClick, onLike, hasLiked, canDelete, onDelete }: PlaylistCardProps) {
     const glowColor = playlist.themeColor || '#8b5cf6';
     
     // Priority: Custom coverImage -> First track artwork -> default color
@@ -138,14 +140,25 @@ export default function PlaylistCard({ playlist, coverImages = [], isPlaying, on
                     <div className={styles.creator}>
                         <span>{playlist.creator}</span>
                         {!isPlaying && (
-                            <button
-                                onClick={(e) => { e.stopPropagation(); onLike && onLike(); }}
-                                className={styles.likeBtn}
-                                style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.8rem', background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}
-                            >
-                                <Heart size={14} fill={hasLiked ? "var(--primary)" : "rgba(255,255,255,0.5)"} color={hasLiked ? "var(--primary)" : "white"} />
-                                {playlist.likes}
-                            </button>
+                            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); onLike && onLike(); }}
+                                    className={styles.likeBtn}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.8rem', background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}
+                                >
+                                    <Heart size={14} fill={hasLiked ? "var(--primary)" : "rgba(255,255,255,0.5)"} color={hasLiked ? "var(--primary)" : "white"} />
+                                    {playlist.likes}
+                                </button>
+                                {canDelete && onDelete && (
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); onDelete(e); }}
+                                        style={{ background: 'none', border: 'none', color: '#ff4444', cursor: 'pointer', padding: '2px', display: 'flex', alignItems: 'center' }}
+                                        title="Delete Mix"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                                    </button>
+                                )}
+                            </div>
                         )}
                     </div>
                 </div>
