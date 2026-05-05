@@ -44,8 +44,8 @@ const RULES: Record<UserTier, AccessRule> = {
         downloadMp3: true,
         downloadWav: false,
         mixtapeLimit: 3,
-        canAccessFanZone: false,
-        canAccessExclusiveRadio: false
+        canAccessFanZone: true,
+        canAccessExclusiveRadio: true
     },
     'VIP': {
         tier: 'VIP',

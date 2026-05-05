@@ -71,6 +71,9 @@ export default function DigitalBookstorePage() {
                 }
                 const now = new Date();
                 const visibleAlbums = data.filter((album: any) => {
+                    // Only show albums that have artbook assets in S3
+                    if (!album.hasArtbook) return false;
+
                     // Filter out Singles collection
                     if (album.folderPath?.toLowerCase().includes('singles') || album.id === 'singles') {
                         return false;

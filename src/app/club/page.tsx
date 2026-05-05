@@ -67,7 +67,7 @@ export default function ClubPage() {
     }
 
     const tierName = appUser?.tier || 'MEMBER';
-    const isVIP = tierName === 'VIP' || tierName === 'LABEL' || tierName === 'LIFETIME';
+    const isVIP = tierName === 'VIP' || tierName === 'LABEL' || tierName === 'ADMIN' || tierName === 'LIFETIME';
 
     return (
         <div className="min-h-screen bg-black text-white p-6 pb-24">

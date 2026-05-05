@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useUser } from '@clerk/nextjs';
 
-type UserTier = 'GUEST' | 'FAN' | 'INSIDER' | 'VIP' | 'LABEL' | 'LIFETIME';
+type UserTier = 'GUEST' | 'FAN' | 'INSIDER' | 'VIP' | 'LABEL' | 'ADMIN' | 'LIFETIME';
 
 interface User {
     tier: UserTier;
@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (isLoaded && clerkUser) {
             const metadata = clerkUser.publicMetadata;
             // Check for 'tier' or 'role' in metadata
-            const tier = (metadata.tier as UserTier) || (metadata.role === 'admin' ? 'LABEL' : 'FAN');
+            const tier = (metadata.tier as UserTier) || (metadata.role === 'admin' ? 'ADMIN' : 'FAN');
 
             setUser({
                 tier: tier,
@@ -63,7 +63,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (tier === 'INSIDER') name = 'The Insider';
         if (tier === 'VIP') name = 'Pro Member';
         if (tier === 'LIFETIME') name = 'Lifetime VIP';
-        if (tier === 'LABEL') name = 'SingIt Pop (Admin)';
+        if (tier === 'LABEL') name = 'SingIt Pop (Label)';
+        if (tier === 'ADMIN') name = 'SingIt Pop (Admin)';
 
         const newUser: User = { tier, name, purchasedTracks: [] };
         setUser(newUser);
@@ -77,7 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const isPro = user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'LIFETIME'; // VIP Get High Res
     const isInsider = user?.tier === 'INSIDER' || isPro; // Insider Gets MP3 (Pro gets this too)
-    const isLabel = user?.tier === 'LABEL';
+    const isLabel = user?.tier === 'LABEL' || user?.tier === 'ADMIN';
 
     const hasTrackAccess = (trackId: string) => {
         if (!user) return false;

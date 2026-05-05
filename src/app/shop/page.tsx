@@ -152,7 +152,7 @@ function ShopContent() {
             </AnimatePresence>
 
             {/* VIP Discount Banner */}
-            {(user as any)?.publicMetadata?.tier === 'VIP' || (user as any)?.publicMetadata?.tier === 'LABEL' ? (
+            {(user as any)?.publicMetadata?.tier === 'VIP' || (user as any)?.publicMetadata?.tier === 'LABEL' || (user as any)?.publicMetadata?.tier === 'ADMIN' ? (
                 <div className="max-w-4xl mx-auto mb-16">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}

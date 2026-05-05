@@ -137,7 +137,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Night%20Drive%3A%2080s%20Beats%20%26%20Ballads/Love%20Lights%20Up/Love%20Lights%20Up.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "forever-starts-today--country-music-for-weddings--2024",
@@ -260,7 +261,8 @@
         "isSingle": false
       }
     ],
-    "mp3Count": 12
+    "mp3Count": 12,
+    "hasArtbook": false
   },
   {
     "id": "between-the-lines-of-love-2024",
@@ -400,7 +402,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Between%20The%20Lines%20Of%20Love/Love%20to%20Last/Love%20to%20Last.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "popstar-winter-wonderland-2024",
@@ -522,7 +525,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Popstar%20Winter%20Wonderland/Winter%20Wonderland/Winter%20Wonderland.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "happily-ever-after-dreams-2024",
@@ -644,7 +648,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Happily%20Ever%20After%20Dreams/The%20call%20of%20the%20sea/The%20call%20of%20the%20sea.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "boots-and-beats-country-line-dance-anthems-2024",
@@ -766,7 +771,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Boots%20And%20Beats%20Country%20Line%20Dance%20Anthems/jukebox%20jumping/jukebox%20jumping.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "waves-of-tranquility-deep-house-reflections-2024",
@@ -906,7 +912,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Waves%20Of%20Tranquility%20Deep%20House%20Reflections/Ebb%20and%20Flow/Ebb%20and%20Flow.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "singles-2024",
@@ -975,7 +982,8 @@
         "isSingle": true
       }
     ],
-    "mp3Count": 6
+    "mp3Count": 6,
+    "hasArtbook": false
   },
   {
     "id": "highways-of-the-heart-2024",
@@ -1115,7 +1123,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Highways%20Of%20The%20Heart/Long%20way%20back%20to%20you/Long%20way%20back%20to%20you.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "whispers-of-the-heart-country-ballads-for-the-soul-2024",
@@ -1237,7 +1246,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Whispers%20Of%20The%20Heart%20Country%20Ballads%20For%20The%20Soul/Every%20day%20I%20miss%20you/Every%20day%20I%20miss%20you.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "neon-dreams-2025",
@@ -1359,7 +1369,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Neon%20Dreams/City%20of%20Stars/City%20of%20Stars.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "love-in-bloom-2025",
@@ -1472,7 +1483,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Love%20In%20Bloom/In%20Your%20Arms/In%20Your%20Arms.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "starlight-frequencies-2025",
@@ -1594,7 +1606,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Starlight%20Frequencies/beyond%20the%20horizon/beyond%20the%20horizon.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "heartlines-2025",
@@ -1716,7 +1729,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heartlines/Starting%20Again/Starting%20Again.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "spring-awakening-2025",
@@ -1838,7 +1852,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Spring%20Awakening/light%20in%20the%20sky/light%20in%20the%20sky.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "empire-under-lights-2025",
@@ -1960,7 +1975,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Empire%20Under%20Lights/Concrete%20Jungle/Concrete%20Jungle.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "ethereal-highlands-2025",
@@ -2100,7 +2116,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Ethereal%20Highlands/Farewell%20to%20the%20Northern%20Lights/Farewell%20to%20the%20Northern%20Lights.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "echoes-of-us-2025",
@@ -2222,7 +2239,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Echoes%20Of%20Us/one%20voice/one%20voice.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "heartland-rhythms-2025",
@@ -2344,7 +2362,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heartland%20Rhythms/Where%20I%20belong/Where%20I%20belong.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "golden-hour-2025",
@@ -2466,7 +2485,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Golden%20Hour/forever%20bright/forever%20bright.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "eternal-summer-2025",
@@ -2588,7 +2608,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Eternal%20Summer/endless%20sky/endless%20sky.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "glass-bloom-2025",
@@ -2710,7 +2731,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Glass%20Bloom/Afterglow/Afterglow.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "limitless-2025",
@@ -2832,7 +2854,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Limitless/skys%20the%20limit/skys%20the%20limit.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "summer-fever-2025",
@@ -2954,7 +2977,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Summer%20Fever/endless%20summer/endless%20summer.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "line-dancing-after-dark-2025",
@@ -3076,7 +3100,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Line%20Dancing%20After%20Dark/Last%20Call%20Swing/Last%20Call%20Swing.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "wildcards-and-whiskey-2025",
@@ -3198,7 +3223,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Wildcards%20And%20Whiskey/Wildcards%20and%20Whiskey/Wildcards%20and%20Whiskey.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "endless-glow-2025",
@@ -3320,7 +3346,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Endless%20Glow/fading%20glow/fading%20glow.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "dust-and-diamonds-2025",
@@ -3442,7 +3469,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Dust%20And%20Diamonds/dust%20and%20diamonds/dust%20and%20diamonds.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "midnight-motion-2025",
@@ -3564,7 +3592,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Midnight%20Motion/Final%20Shine/Final%20Shine.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "southern-lights-2025",
@@ -3686,7 +3715,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Southern%20Lights/Southern%20Lights%20Finale/Southern%20Lights%20Finale.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "september-moves-2025",
@@ -3808,7 +3838,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/September%20Moves/The%20Last%20Dance%20Floor/The%20Last%20Dance%20Floor.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "winding-roads-2025",
@@ -3930,7 +3961,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Winding%20Roads/winding%20roads%20finale/winding%20roads%20finale.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "falling-for-october-2025",
@@ -4052,7 +4084,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Falling%20For%20October/Evergreen%20Promise/Evergreen%20Promise.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "hallowave-dance-of-the-shadows-2025",
@@ -4201,7 +4234,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Hallowave%20Dance%20Of%20The%20Shadows/final%20spell%20dance%20edit/final%20spell%20dance%20edit.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "october-boots-and-fall-roots-2025",
@@ -4323,7 +4357,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/October%20Boots%20And%20Fall%20Roots/Falling%20for%20Fall/Falling%20for%20Fall.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "the-long-way-home-2025",
@@ -4445,7 +4480,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/The%20Long%20Way%20Home/Steady%20and%20True/Steady%20and%20True.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "echoes-in-the-firelight-2025",
@@ -4567,7 +4603,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Echoes%20In%20The%20Firelight/Love%20Will%20Find%20Us%20Here/Love%20Will%20Find%20Us%20Here.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": false
   },
   {
     "id": "live-at-autumn-lights-2025",
@@ -4689,7 +4726,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20At%20Autumn%20Lights/Autumn%20Lights%20Finale/Autumn%20Lights%20Finale.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "november-nights-2025",
@@ -4811,7 +4849,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/November%20Nights/the%20last%20november/the%20last%20november.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "shadows-and-fires-2025",
@@ -4951,7 +4990,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Shadows%20And%20Fires/Dawn%20Of%20Reverie/Dawn%20Of%20Reverie.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "electric-sleigh-2025",
@@ -5073,7 +5113,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Electric%20Sleigh/final%20sparkle/final%20sparkle.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "snowfall-and-steel-strings-2025",
@@ -5195,7 +5236,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Snowfall%20And%20Steel%20Strings/new%20years%20eve%20in%20the%20barn/new%20years%20eve%20in%20the%20barn.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "new-year-s-odyssey-2025",
@@ -5317,7 +5359,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/New%20Year's%20Odyssey/First%20Sunrise/First%20Sunrise.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "live-step-into-the-light-2025",
@@ -5440,7 +5483,8 @@
         "isSingle": false
       }
     ],
-    "mp3Count": 12
+    "mp3Count": 12,
+    "hasArtbook": true
   },
   {
     "id": "desert-winds-and-open-roads-2026",
@@ -5562,7 +5606,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Desert%20Winds%20And%20Open%20Roads/the%20last%20sunset%20in%20santa%20fe/the%20last%20sunset%20in%20santa%20fe.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "echoes-of-light-2026",
@@ -5702,7 +5747,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Echoes%20Of%20Light/the%20silent%20conversation%20reprise/the%20silent%20conversation%20reprise.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "a-love-that-never-ends-2026",
@@ -5824,7 +5870,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/A%20Love%20That%20Never%20Ends/a%20love%20that%20never%20ends/a%20love%20that%20never%20ends.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "valentine-country-2026",
@@ -5946,7 +5993,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Valentine%20Country/forever%20starts%20tonight/forever%20starts%20tonight.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "spring-begins-inside-you-2026",
@@ -6068,7 +6116,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Spring%20Begins%20Inside%20You/spring%20begins%20inside%20you/spring%20begins%20inside%20you.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "heart-of-the-sky-drums-2026",
@@ -6190,7 +6239,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20Of%20The%20Sky%20Drums/Return%20to%20Silence/Return%20to%20Silence.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "through-the-glass-2026",
@@ -6312,7 +6362,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Through%20The%20Glass/Miles%20from%20Yesterday/Miles%20from%20Yesterday.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "april-comes-soft-2026",
@@ -6434,7 +6485,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/April%20Comes%20Soft/Morning%20Still/Morning%20Still.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "may-in-motion-2026",
@@ -6556,7 +6608,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/May%20In%20Motion/Sunset%20on%20Repeat/Sunset%20on%20Repeat.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "before-the-light-2026",
@@ -6678,7 +6731,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Before%20The%20Light/Before%20the%20Light/Before%20the%20Light.mp3",
         "isSingle": true
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "live-nashville-in-june-2026",
@@ -6800,7 +6854,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Nashville%20In%20June/Broadway%20Don%E2%80%99t%20Shut%20Down/Broadway%20Don%E2%80%99t%20Shut%20Down.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "solstice-2026",
@@ -6922,7 +6977,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Solstice/We%20are%20The%20Solstice/We%20are%20The%20Solstice.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "last-ones-standing-2026",
@@ -7044,7 +7100,8 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Last%20Ones%20Standing/Last%20Ones%20Standing/Last%20Ones%20Standing.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": true
   },
   {
     "id": "skin-and-silence-2026",
@@ -7166,6 +7223,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Skin%20And%20Silence/Last%20Light/Last%20Light.mp3",
         "isSingle": false
       }
-    ]
+    ],
+    "hasArtbook": false
   }
 ]

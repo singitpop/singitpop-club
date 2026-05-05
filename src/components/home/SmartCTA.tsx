@@ -18,12 +18,12 @@ export default function SmartCTA() {
     // Router and Clerk are already defined above
 
     // Helper to check tier levels
-    const isInsider = user?.tier === 'INSIDER' || user?.tier === 'VIP' || user?.tier === 'LABEL';
-    const isVIP = user?.tier === 'VIP' || user?.tier === 'LABEL';
+    const isInsider = user?.tier === 'INSIDER' || user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'ADMIN' || user?.tier === 'LIFETIME';
+    const isVIP = user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'ADMIN' || user?.tier === 'LIFETIME';
 
     // Exact tier checks for button display
     const isExactlyInsider = user?.tier === 'INSIDER';
-    const isExactlyVIP = user?.tier === 'VIP' || user?.tier === 'LABEL';
+    const isExactlyVIP = user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'ADMIN';
 
     const handleCheckout = async (priceId: string, tierName: string) => {
         setLoadingTier(tierName);
