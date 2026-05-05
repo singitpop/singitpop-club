@@ -149,7 +149,7 @@
       "Pop"
     ],
     "folderPath": "Forever Starts Today - Country Album",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20(country%20Music%20For%20Weddings)/Cover.png",
+    "coverArt": "albums/Forever Starts Today - Country Album/Album cover.png",
     "tracks": [
       {
         "id": 1,
@@ -412,7 +412,7 @@
       "Christmas"
     ],
     "folderPath": "Popstar Winter Wonderland",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Popstar%20Winter%20Wonderland/Cover.png",
+    "coverArt": "albums/Pop Star Winter Wonderland/Album cover.png",
     "tracks": [
       {
         "id": 1,

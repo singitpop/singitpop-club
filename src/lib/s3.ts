@@ -255,19 +255,22 @@ export async function findImageKey(folderName: string, trackTitle?: string, stri
 
         if (strictTrackMatch && trackTitle) return null;
 
-        // 2. Fallback: Album Cover (cover.png, front.jpg, etc)
+        // 2. Fallback: Album Cover — prefer 'Album cover.*' (large artwork) over small generic 'cover.png'
         const albumSegmentCount = actualFolderPrefix.split('/').filter(Boolean).length;
-        const albumCover = contents.find((c: any) => {
+        const rootImageCandidates = contents.filter((c: any) => {
             const key = c.Key || '';
             const isRoot = key.split('/').filter(Boolean).length === albumSegmentCount + 1;
             const filename = key.split('/').pop()?.toLowerCase() || '';
             const isImage = filename.endsWith('.png') || filename.endsWith('.jpg') || filename.endsWith('.jpeg') || filename.endsWith('.webp');
-            const isStandardName = filename.startsWith('cover.') || filename.startsWith('front.') || filename.startsWith('folder.');
-
+            const isStandardName = filename.startsWith('album cover') || filename.startsWith('cover.') || filename.startsWith('front.') || filename.startsWith('folder.');
             return isRoot && isImage && isStandardName;
         });
 
-        if (albumCover) return albumCover.Key;
+        // Pick the largest file — real album art is always bigger than a small generic placeholder
+        if (rootImageCandidates.length > 0) {
+            rootImageCandidates.sort((a: any, b: any) => (b.Size || 0) - (a.Size || 0));
+            return rootImageCandidates[0].Key;
+        }
 
         // 3. Last Resort: Any image in Album Root
         const anyRootImage = contents.find((c: any) => {
