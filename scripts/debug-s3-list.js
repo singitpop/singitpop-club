@@ -13,7 +13,7 @@ async function list() {
     try {
         const cmd = new ListObjectsV2Command({
             Bucket: "singitpop-music",
-            Prefix: "albums/valentine-country"
+            Prefix: "albums/Southern Lights"
         });
         const data = await client.send(cmd);
         if (data.Contents) {

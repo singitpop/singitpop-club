@@ -8,8 +8,8 @@
     "genre": [
       "Pop"
     ],
-    "folderPath": "Night Drive: 80s Beats & Ballads",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Night%20Drive%3A%2080s%20Beats%20%26%20Ballads/Cover.png",
+    "folderPath": "Night Drive - 80s Beats & Ballads",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Night%20Drive%20-%2080s%20Beats%20%26%20Ballads/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -150,7 +150,7 @@
       "Pop"
     ],
     "folderPath": "Forever Starts Today - Country Album",
-    "coverArt": "albums/Forever Starts Today - Country Album/Album cover.png",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Forever%20Starts%20Today%20-%20Country%20Album/Album cover.png",
     "tracks": [
       {
         "id": 1,
@@ -273,8 +273,8 @@
     "genre": [
       "Pop"
     ],
-    "folderPath": "Between The Lines Of Love",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Between%20The%20Lines%20Of%20Love/Cover.png",
+    "folderPath": "Between the lines of love",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Between%20the%20lines%20of%20love/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -414,8 +414,8 @@
     "genre": [
       "Christmas"
     ],
-    "folderPath": "Popstar Winter Wonderland",
-    "coverArt": "albums/Pop Star Winter Wonderland/Album cover.png",
+    "folderPath": "Pop Star Winter Wonderland",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Pop%20Star%20Winter%20Wonderland/Album cover.png",
     "tracks": [
       {
         "id": 1,
@@ -660,8 +660,8 @@
     "genre": [
       "Country"
     ],
-    "folderPath": "Boots And Beats Country Line Dance Anthems",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Boots%20And%20Beats%20Country%20Line%20Dance%20Anthems/Cover.png",
+    "folderPath": "Boots and Beats Country Line Dance Anthems",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Boots%20and%20Beats%20Country%20Line%20Dance%20Anthems/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -783,8 +783,8 @@
     "genre": [
       "Dance Pop"
     ],
-    "folderPath": "Waves Of Tranquility Deep House Reflections",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Waves%20Of%20Tranquility%20Deep%20House%20Reflections/Cover.png",
+    "folderPath": "Waves of Tranquility Deep House Reflections",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Waves%20of%20Tranquility%20Deep%20House%20Reflections/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -994,8 +994,8 @@
     "genre": [
       "Country"
     ],
-    "folderPath": "Highways Of The Heart",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Highways%20Of%20The%20Heart/Cover.png",
+    "folderPath": "Highways of the Heart",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Highways%20of%20the%20Heart/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -1135,8 +1135,8 @@
     "genre": [
       "Country"
     ],
-    "folderPath": "Whispers Of The Heart Country Ballads For The Soul",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Whispers%20Of%20The%20Heart%20Country%20Ballads%20For%20The%20Soul/Cover.png",
+    "folderPath": "Whispers of the Heart Country Ballads for the Soul",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Whispers%20of%20the%20Heart%20Country%20Ballads%20for%20the%20Soul/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -1381,8 +1381,8 @@
     "genre": [
       "Romantic"
     ],
-    "folderPath": "Love In Bloom",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Love%20In%20Bloom/Cover.png",
+    "folderPath": "Love in Bloom",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Love%20in%20Bloom/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -2866,8 +2866,8 @@
     "genre": [
       "Dance Pop"
     ],
-    "folderPath": "Summer Fever",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Summer%20Fever/Cover.png",
+    "folderPath": "Summer fever",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Summer%20fever/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -3112,8 +3112,8 @@
     "genre": [
       "Country"
     ],
-    "folderPath": "Wildcards And Whiskey",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Wildcards%20And%20Whiskey/Cover.png",
+    "folderPath": "Wildcards and Whiskey",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Wildcards%20and%20Whiskey/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -3358,8 +3358,8 @@
     "genre": [
       "Country"
     ],
-    "folderPath": "Dust And Diamonds",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Dust%20And%20Diamonds/Cover.png",
+    "folderPath": "Dust and Diamonds ",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Dust%20and%20Diamonds%20/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -3973,8 +3973,8 @@
     "genre": [
       "Folk"
     ],
-    "folderPath": "Falling For October",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Falling%20For%20October/Cover.png",
+    "folderPath": "Falling for October ",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Falling%20for%20October%20/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -4096,8 +4096,8 @@
     "genre": [
       "Dance Pop"
     ],
-    "folderPath": "Hallowave Dance Of The Shadows",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Hallowave%20Dance%20Of%20The%20Shadows/Cover.png",
+    "folderPath": "Hallowave Dance of the shadows",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Hallowave%20Dance%20of%20the%20shadows/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -4246,8 +4246,8 @@
     "genre": [
       "Country"
     ],
-    "folderPath": "October Boots And Fall Roots",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/October%20Boots%20And%20Fall%20Roots/Cover.png",
+    "folderPath": "October Boots and Fall Roots",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/October%20Boots%20and%20Fall%20Roots/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -4492,8 +4492,8 @@
     "genre": [
       "Rock"
     ],
-    "folderPath": "Echoes In The Firelight",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Echoes%20In%20The%20Firelight/Cover.png",
+    "folderPath": "Echoes in the Firelight ",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Echoes%20in%20the%20Firelight%20/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -4615,8 +4615,8 @@
     "genre": [
       "Country"
     ],
-    "folderPath": "Live At Autumn Lights",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20At%20Autumn%20Lights/Cover.png",
+    "folderPath": "Live at Autumn Lights Festival",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20at%20Autumn%20Lights%20Festival/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -4861,8 +4861,8 @@
     "genre": [
       "Folk"
     ],
-    "folderPath": "Shadows And Fires",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Shadows%20And%20Fires/Cover.png",
+    "folderPath": "Shadows and Fires",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Shadows%20and%20Fires/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -5125,8 +5125,8 @@
     "genre": [
       "Christmas"
     ],
-    "folderPath": "Snowfall And Steel Strings",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Snowfall%20And%20Steel%20Strings/Cover.png",
+    "folderPath": "Snowfall and Steel Strings",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Snowfall%20and%20Steel%20Strings/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -5248,8 +5248,8 @@
     "genre": [
       "Dance Pop"
     ],
-    "folderPath": "New Year's Odyssey",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/New%20Year's%20Odyssey/Cover.png",
+    "folderPath": "New Year’s Odyssey",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/New%20Year%E2%80%99s%20Odyssey/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -5372,7 +5372,7 @@
       "Country"
     ],
     "folderPath": "Live Step Into the Light",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20The%20Light/Cover.png",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Step%20Into%20the%20Light/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -6128,8 +6128,8 @@
     "genre": [
       "Dance Pop"
     ],
-    "folderPath": "Heart Of The Sky Drums",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20Of%20The%20Sky%20Drums/Cover.png",
+    "folderPath": "Heart of the Sky Drums",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Heart%20of%20the%20Sky%20Drums/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -6620,8 +6620,8 @@
     "genre": [
       "Dance Pop"
     ],
-    "folderPath": "Before The Light",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Before%20The%20Light/Cover.png",
+    "folderPath": "Before the Light",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Before%20the%20Light/Cover.png",
     "tracks": [
       {
         "id": 1,
@@ -6743,8 +6743,8 @@
     "genre": [
       "Country"
     ],
-    "folderPath": "Live Nashville In June",
-    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Nashville%20In%20June/Cover.png",
+    "folderPath": "Live Nashville in June",
+    "coverArt": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/Live%20Nashville%20in%20June/Cover.png",
     "tracks": [
       {
         "id": 1,

@@ -76,9 +76,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('singit_user');
     };
 
-    const isPro = user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'LIFETIME'; // VIP Get High Res
-    const isInsider = user?.tier === 'INSIDER' || isPro; // Insider Gets MP3 (Pro gets this too)
     const isLabel = user?.tier === 'LABEL' || user?.tier === 'ADMIN';
+    const isPro = user?.tier === 'VIP' || user?.tier === 'LIFETIME' || isLabel; // VIP/Lifetime/Admin Get High Res
+    const isInsider = user?.tier === 'INSIDER' || isPro; // Insider Gets MP3 (VIP/Admin gets this too)
 
     const hasTrackAccess = (trackId: string) => {
         if (!user) return false;
