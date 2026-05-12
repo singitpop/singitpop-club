@@ -5,7 +5,7 @@ const staticRoutes = [
     '',
     '/about',
     '/music',
-    '/fanzone',
+    '/fan-albums',
     '/projects',
     '/shop',
     '/contact',

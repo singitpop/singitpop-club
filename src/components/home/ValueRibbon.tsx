@@ -32,7 +32,7 @@ const FEATURES = [
         icon: <Trophy size={20} />,
         title: "FanZone",
         desc: "Challenges & Rewards",
-        href: "/fanzone",
+        href: "/fan-albums",
         color: "#00ff8c"
     },
     {

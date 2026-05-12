@@ -40,14 +40,6 @@ export default function Header() {
   return (
     <>
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-        {/* Restoration Warning Banner */}
-        <div className={styles.restorationBanner}>
-          <div className={styles.bannerContent}>
-             <span className={styles.bannerBadge}>LIVE UPDATE</span>
-             <p>Restoration in Progress: We are currently restoring the full 64-album catalog and assets. Some links may be temporary.</p>
-          </div>
-        </div>
-
         <div className={`container ${styles.container}`}>
           <Link href="/" className={styles.logo}>
             SingIt<span className={styles.pop}>Pop</span>

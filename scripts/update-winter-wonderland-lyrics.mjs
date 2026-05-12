@@ -678,7 +678,10 @@ for (const [albumId, trackMap] of Object.entries(lyricsUpdate)) {
         );
 
         if (!track && title.includes("Rockin' round")) {
-             track = album.tracks.find(t => t.title.toLowerCase().includes("rockin' around"));
+             track = album.tracks.find(t => 
+                t.title.toLowerCase().includes("rockin' around") || 
+                t.title.toLowerCase().includes("rocking round")
+            );
         }
 
         if (track) {
