@@ -10,6 +10,8 @@ const s3Client = new S3Client({
         accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
     },
+    requestChecksumCalculation: "WHEN_REQUIRED",
+    responseChecksumValidation: "WHEN_REQUIRED",
 });
 
 const MIXTAPE_LIMIT_PER_MONTH = 3;
@@ -41,10 +43,10 @@ export async function POST(req: Request) {
 
         // 1. Check Eligibility (Insider or VIP/Label)
         const tier = (metadata.tier as string) || 'FAN';
-        const isEligible = ['INSIDER', 'VIP', 'LABEL'].includes(tier) || metadata.role === 'admin';
+        const isEligible = ['INSIDER', 'VIP', 'LABEL', 'LIFETIME'].includes(tier) || metadata.role === 'admin';
 
         if (!isEligible) {
-            return NextResponse.json({ error: 'This feature is exclusively for Insider and VIP members.' }, { status: 403 });
+            return NextResponse.json({ error: 'This feature is exclusively for Premium members.' }, { status: 403 });
         }
 
         // Check Limits
@@ -56,9 +58,9 @@ export async function POST(req: Request) {
             count = 0;
         }
 
-        // Limits: Insider = 3, VIP = 10, Admin/Label = Unlimited
+        // Limits: Premium/VIP/Lifetime = 10, Admin/Label = Unlimited
         const isAdminOrLabel = tier === 'LABEL' || metadata.role === 'admin';
-        const limit = (tier === 'VIP') ? 10 : 3;
+        const limit = (tier === 'VIP' || tier === 'INSIDER' || tier === 'LIFETIME') ? 10 : 3;
 
         if (!isAdminOrLabel && count >= limit) {
             return NextResponse.json({ error: `You have reached your limit of ${limit} mixtapes for this month. Upgrade tier or wait until next month.` }, { status: 429 });
@@ -159,7 +161,7 @@ export async function GET(req: Request) {
     if (metadata.lastDownloadMonth !== currentMonth) {
         count = 0;
     }
-    const limit = (tier === 'VIP') ? 10 : 3;
+    const limit = (tier === 'VIP' || tier === 'INSIDER' || tier === 'LIFETIME') ? 10 : 3;
     const isAdminOrLabel = tier === 'LABEL' || metadata.role === 'admin';
 
     return NextResponse.json({

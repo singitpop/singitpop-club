@@ -9,6 +9,12 @@ export async function getSignedAlbumCoverUrl(album: any, track?: any): Promise<s
     const trackTitle = track?.title;
 
     try {
+        // During Next.js static build, return local default placeholder to prevent
+        // S3 ListObjectsV2 calls that timeout across 7 parallel workers.
+        if (process.env.NEXT_PHASE === 'phase-production-build') {
+            return "/images/defaults/vinyl_default.png";
+        }
+
         // 1. Find the best matching image key in S3
         // This handles fuzzy folder names (e.g. "Live Nashville" -> "nashville-in-june")
         const key = await findImageKey(albumSlug, trackTitle);

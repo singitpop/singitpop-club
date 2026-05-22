@@ -42,8 +42,8 @@ const RULES: Record<UserTier, AccessRule> = {
         fullStreaming: true,
         previewSeconds: 0,
         downloadMp3: true,
-        downloadWav: false,
-        mixtapeLimit: 3,
+        downloadWav: true,
+        mixtapeLimit: 10,
         canAccessFanZone: true,
         canAccessExclusiveRadio: true
     },

@@ -8,6 +8,11 @@ export const s3Client = new S3Client({
         accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
     },
+    // Prevent AWS SDK v3 from injecting x-amz-checksum-mode=ENABLED into
+    // pre-signed URLs. When this header is in the URL but not sent in the
+    // actual request, S3 rejects it with 403 (signature mismatch).
+    requestChecksumCalculation: "WHEN_REQUIRED",
+    responseChecksumValidation: "WHEN_REQUIRED",
 });
 
 export async function generateSignedUrl(s3Url: string, expiresInSeconds: number = 604800, isDownload: boolean = true): Promise<string> {
@@ -93,6 +98,12 @@ export async function getSignedFileUrl(key: string, expiresIn: number = 3600, is
     }
 }
 
+// Cache S3 ListObjects queries to prevent massive concurrent API requests during build
+let foldersPrefixesCache: any[] | null = null;
+let foldersPrefixesPromise: Promise<any[]> | null = null;
+const folderContentsCache = new Map<string, any[]>();
+const folderContentsPromises = new Map<string, Promise<any[]>>();
+
 /**
  * Robustly find a track key in S3 when the direct path fails.
  * Searches within albums/{folderName}/ for a title match.
@@ -101,7 +112,7 @@ export async function findTrackKey(folderName: string, trackTitle: string): Prom
     try {
         const bucketName = process.env.AWS_S3_BUCKET || "singitpop-music";
 
-        // NEW: Resolve the actual folder prefix first (handles case-sensitivity and slight naming differences)
+        // Resolve the actual folder prefix first
         const actualFolderPrefix = await findFolderPrefix(folderName);
         if (!actualFolderPrefix) {
             console.warn(`[S3-Search] ❌ Could not resolve folder prefix for: ${folderName}`);
@@ -110,13 +121,32 @@ export async function findTrackKey(folderName: string, trackTitle: string): Prom
 
         console.log(`[S3-Search] Searching for '${trackTitle}' in confirmed prefix '${actualFolderPrefix}'`);
 
-        const command = new ListObjectsV2Command({
-            Bucket: bucketName,
-            Prefix: actualFolderPrefix
-        });
-
-        const response = await s3Client.send(command) as any;
-        const contents = (response.Contents || []) as any[];
+        let contents: any[] = [];
+        if (folderContentsCache.has(actualFolderPrefix)) {
+            contents = folderContentsCache.get(actualFolderPrefix)!;
+        } else if (folderContentsPromises.has(actualFolderPrefix)) {
+            contents = await folderContentsPromises.get(actualFolderPrefix)!;
+        } else {
+            const promise = (async () => {
+                try {
+                    const command = new ListObjectsV2Command({
+                        Bucket: bucketName,
+                        Prefix: actualFolderPrefix
+                    });
+                    const response = await s3Client.send(command) as any;
+                    const items = response.Contents || [];
+                    folderContentsCache.set(actualFolderPrefix, items);
+                    return items;
+                } catch (err) {
+                    console.error(`[S3-Search] Failed to list prefix ${actualFolderPrefix}:`, err);
+                    return [];
+                } finally {
+                    folderContentsPromises.delete(actualFolderPrefix);
+                }
+            })();
+            folderContentsPromises.set(actualFolderPrefix, promise);
+            contents = await promise;
+        }
 
         if (contents.length === 0) {
             console.warn(`[S3-Search] ⚠️ Folder found but empty: ${actualFolderPrefix}`);
@@ -162,13 +192,32 @@ export async function findFolderPrefix(folderName: string): Promise<string | nul
         const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
         const targetNorm = normalize(folderName);
 
-        const listFoldersCmd = new ListObjectsV2Command({
-            Bucket: bucketName,
-            Prefix: 'albums/',
-            Delimiter: '/'
-        });
-        const foldersRes = await s3Client.send(listFoldersCmd) as any;
-        const prefixes = foldersRes.CommonPrefixes || [];
+        let prefixes: any[] = [];
+        if (foldersPrefixesCache) {
+            prefixes = foldersPrefixesCache;
+        } else if (foldersPrefixesPromise) {
+            prefixes = await foldersPrefixesPromise;
+        } else {
+            foldersPrefixesPromise = (async () => {
+                try {
+                    const listFoldersCmd = new ListObjectsV2Command({
+                        Bucket: bucketName,
+                        Prefix: 'albums/',
+                        Delimiter: '/'
+                    });
+                    const foldersRes = await s3Client.send(listFoldersCmd) as any;
+                    const result = foldersRes.CommonPrefixes || [];
+                    foldersPrefixesCache = result;
+                    return result;
+                } catch (err) {
+                    console.error("[S3-Folder-Search] Failed to list folders:", err);
+                    return [];
+                } finally {
+                    foldersPrefixesPromise = null;
+                }
+            })();
+            prefixes = await foldersPrefixesPromise;
+        }
 
         // 1. Try exact match first
         let match = prefixes.find((p: any) => normalize(p.Prefix.split('/')[1]) === targetNorm);
@@ -203,13 +252,33 @@ export async function findImageKey(folderName: string, trackTitle?: string, stri
              return null;
         }
 
-        const command = new ListObjectsV2Command({
-            Bucket: bucketName,
-            Prefix: actualFolderPrefix,
-        });
+        let contents: any[] = [];
+        if (folderContentsCache.has(actualFolderPrefix)) {
+            contents = folderContentsCache.get(actualFolderPrefix)!;
+        } else if (folderContentsPromises.has(actualFolderPrefix)) {
+            contents = await folderContentsPromises.get(actualFolderPrefix)!;
+        } else {
+            const promise = (async () => {
+                try {
+                    const command = new ListObjectsV2Command({
+                        Bucket: bucketName,
+                        Prefix: actualFolderPrefix,
+                    });
+                    const response = await s3Client.send(command) as any;
+                    const items = response.Contents || [];
+                    folderContentsCache.set(actualFolderPrefix, items);
+                    return items;
+                } catch (err) {
+                    console.error(`[S3-Search] Failed to list prefix ${actualFolderPrefix}:`, err);
+                    return [];
+                } finally {
+                    folderContentsPromises.delete(actualFolderPrefix);
+                }
+            })();
+            folderContentsPromises.set(actualFolderPrefix, promise);
+            contents = await promise;
+        }
 
-        const response = await s3Client.send(command) as any;
-        const contents = response.Contents || [];
         // Helper: remove special chars, extra spaces, lowercase
         const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 

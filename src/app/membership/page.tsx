@@ -20,39 +20,28 @@ const tiers = [
         action: "Join"
     },
     {
-        name: "The Insider",
+        name: "Premium Club",
         price: "£3.99/mo",
         features: [
             "Everything in Fan",
             "Full Current Release Catalog 🔓",
-            "Create 3 Mixtapes / Month",
-            "Compile Playlists in Fanzone 🎧",
-            "MP3 Downloads ⬇️"
+            "Create 10 Mixtapes / Month 🎧",
+            "Lossless WAV & MP3 Downloads 💎",
+            "Exclusive Radio Stations 📻",
+            "20% Discount in Shop 🏷️"
         ],
         highlight: true,
         action: "Upgrade"
     },
     {
-        name: "The VIP",
-        price: "£6.99/mo",
-        features: [
-            "Everything in Insider",
-            "Create 10 Mixtapes / Month",
-            "Lossless WAV Downloads 💎",
-            "20% Discount in Shop 🏷️",
-            "Exclusive Radio Stations 📻"
-        ],
-        highlight: false,
-        action: "Upgrade"
-    },
-    {
-        name: "Lifetime VIP",
-        price: "£149",
+        name: "Lifetime Premium",
+        price: "£79",
         features: [
             "One-time payment 💸",
-            "Forever VIP Access ♾️",
+            "Forever Premium Access ♾️",
             "Special 'Lifetime' Badge 🏅",
-            "All Future Perks Included 🚀"
+            "All Future Perks Included 🚀",
+            "Maximum Priority Support ⚡"
         ],
         highlight: true,
         action: "Buy Once"
@@ -97,14 +86,13 @@ export default function MembershipPage() {
             return;
         }
 
-        if (tierName === "The Insider") {
-            handleCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER!, tierName);
+        if (tierName === "Premium Club") {
+            const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER || process.env.NEXT_PUBLIC_PRICE_INSIDER || '';
+            handleCheckout(priceId, tierName);
         }
-        if (tierName === "The VIP") {
-            handleCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_VIP!, tierName);
-        }
-        if (tierName === "Lifetime VIP") {
-            handleCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME!, tierName);
+        if (tierName === "Lifetime Premium") {
+            const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME || '';
+            handleCheckout(priceId, tierName);
         }
     };
 
@@ -123,9 +111,8 @@ export default function MembershipPage() {
                 {tiers.map((tier) => {
                     // Simple logic to show "Current" state
                     const isCurrent = (user?.tier === 'FAN' && tier.name === 'The Fan') ||
-                        (user?.tier === 'VIP' && tier.name === 'The VIP') ||
-                        (user?.tier === 'INSIDER' && tier.name === 'The Insider') ||
-                        (user?.tier === 'LIFETIME' && tier.name === 'Lifetime VIP');
+                        ((user?.tier === 'INSIDER' || user?.tier === 'VIP') && tier.name === 'Premium Club') ||
+                        (user?.tier === 'LIFETIME' && tier.name === 'Lifetime Premium');
 
                     const isLoading = loadingTier === tier.name;
 
@@ -142,7 +129,7 @@ export default function MembershipPage() {
                             <button
                                 onClick={() => !isCurrent && handleJoin(tier.name)}
                                 disabled={isCurrent || isLoading}
-                                className={tier.highlight || tier.name === 'The VIP' ? 'glow-button' : styles.outlineBtn}
+                                className={tier.highlight ? 'glow-button' : styles.outlineBtn}
                                 style={{ opacity: (isCurrent || isLoading) ? 0.7 : 1, cursor: (isCurrent || isLoading) ? 'default' : 'pointer' }}
                             >
                                 {isLoading ? 'Processing...' : isCurrent ? 'Active' : tier.action}

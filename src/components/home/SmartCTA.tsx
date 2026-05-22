@@ -86,55 +86,40 @@ export default function SmartCTA() {
                     </button>
                 </div>
 
-                {/* Tier 2: Insider */}
+                {/* Tier 2: Premium Club */}
                 <div className={styles.card}>
                     <div className={styles.cardHeader}>
                         <img src="/images/icon-tier-premium-neon.png" alt="" className={styles.icon} />
-                        <h3>The Insider</h3>
+                        <h3>Premium Club</h3>
                         <span className={styles.price}>£3.99<small>/mo</small></span>
                     </div>
                     <ul className={styles.features}>
                         <li>✅ <strong>Everything in Fan</strong></li>
                         <li>✅ Full Current Release Catalog 🔓</li>
-                        <li>✅ Create 3 Mixtapes / Month</li>
-                        <li>✅ Compile Playlists in Fanzone 🎧</li>
-                        <li>✅ MP3 Downloads ⬇️</li>
+                        <li>✅ Create 10 Mixtapes / Month 🎧</li>
+                        <li>✅ Lossless WAV & MP3 Downloads 💎</li>
+                        <li>✅ Exclusive Radio Stations 📻</li>
+                        <li>✅ 20% Discount in Shop 🏷️</li>
                     </ul>
                     <button
                         className={styles.glowBtn}
-                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_INSIDER || '', 'INSIDER')}
+                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_INSIDER || process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER || '', 'INSIDER')}
                         disabled={loadingTier === 'INSIDER' || isInsider}
-                        style={isExactlyInsider ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
+                        style={isInsider ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
                     >
-                        {loadingTier === 'INSIDER' ? <Loader2 className="animate-spin" size={20} /> : (isExactlyInsider ? 'Current Plan' : isVIP ? 'Downgrade' : 'Go Insider')}
+                        {loadingTier === 'INSIDER' ? (
+                            <Loader2 className="animate-spin" size={20} />
+                        ) : user?.tier === 'LIFETIME' ? (
+                            'Included in Lifetime'
+                        ) : (user?.tier === 'INSIDER' || user?.tier === 'VIP') ? (
+                            'Current Plan'
+                        ) : (
+                            'Go Premium'
+                        )}
                     </button>
                 </div>
 
-                {/* Tier 3: VIP */}
-                <div className={styles.card}>
-                    <div className={styles.cardHeader}>
-                        <img src="/images/icon-tier-creator-neon.png" alt="" className={styles.icon} />
-                        <h3>The VIP</h3>
-                        <span className={styles.price}>£8.99<small>/mo</small></span>
-                    </div>
-                    <ul className={styles.features}>
-                        <li>✅ <strong>Everything in Insider</strong></li>
-                        <li>✅ <strong>Create 10 Mixtapes / Month</strong></li>
-                        <li>✅ Lossless WAV Downloads 💎</li>
-                        <li>✅ 20% Discount in Shop 🏷️</li>
-                        <li>✅ Exclusive Radio Stations 📻</li>
-                    </ul>
-                    <button
-                        className={styles.outlineBtn}
-                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_VIP || '', 'VIP')}
-                        disabled={loadingTier === 'VIP' || isVIP}
-                        style={isExactlyVIP ? { background: '#222', borderColor: '#444', color: '#888', cursor: 'default' } : {}}
-                    >
-                        {loadingTier === 'VIP' ? <Loader2 className="animate-spin" size={20} /> : (isExactlyVIP ? 'Current Plan' : 'Get VIP Access')}
-                    </button>
-                </div>
-
-                {/* Tier 4: Lifetime */}
+                {/* Tier 3: Lifetime Premium */}
                 <div className={`${styles.card} ${styles.featured}`}>
                     <div className={styles.cardHeader}>
                         <img 
@@ -142,23 +127,29 @@ export default function SmartCTA() {
                             alt="" 
                             className={`${styles.icon} ${styles.goldIcon}`} 
                         />
-                        <h3>Lifetime VIP</h3>
-                        <span className={styles.price}>£149</span>
+                        <h3>Lifetime Premium</h3>
+                        <span className={styles.price}>£79</span>
                     </div>
                     <ul className={styles.features}>
                         <li>✅ <strong>One-time payment 💸</strong></li>
-                        <li>✅ <strong>Forever VIP Access ♾️</strong></li>
+                        <li>✅ <strong>Forever Premium Access ♾️</strong></li>
                         <li>✅ Special 'Lifetime' Badge 🏅</li>
                         <li>✅ All Future Perks Included 🚀</li>
                         <li>✅ Maximum Priority Support ⚡</li>
                     </ul>
                     <button
                         className={styles.glowBtn}
-                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_LIFETIME || '', 'Lifetime VIP')}
+                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_LIFETIME || process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME || '', 'Lifetime VIP')}
                         disabled={loadingTier === 'Lifetime VIP' || user?.tier === 'LIFETIME'}
                         style={user?.tier === 'LIFETIME' ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
                     >
-                        {loadingTier === 'Lifetime VIP' ? <Loader2 className="animate-spin" size={20} /> : (user?.tier === 'LIFETIME' ? 'Current Plan' : 'Get Lifetime Access')}
+                        {loadingTier === 'Lifetime VIP' ? (
+                            <Loader2 className="animate-spin" size={20} />
+                        ) : user?.tier === 'LIFETIME' ? (
+                            'Current Plan'
+                        ) : (
+                            'Get Lifetime Access'
+                        )}
                     </button>
                 </div>
             </div>
