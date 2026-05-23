@@ -256,7 +256,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/September%20Turns%20Gold%20Remix%20Live.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "Old boots resting by the screen door\nDust still clinging from July\nFields are leaning toward the sunrise\nAmber colors fill the sky\n\nWhen September turns to gold\nWhen the green becomes a fire\nCool winds rolling through these roads\nAnd the stars climb even higher\n\nFriday lights across the valley\nBonfires burning on the hill\nOld friends laughing through the darkness\nLike they always always will\n\nLeaves may fall but roots stay planted\nTime may bend but not erase\nEvery season leaves its lesson\nEvery road recalls a place\n\nWhen September turns to gold\nWhen the green becomes a fire\nCool winds rolling through these roads\nAnd the stars climb even higher"
+        }
       },
       {
         "id": 2,
@@ -271,7 +274,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Neon%20County%20Line.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Neon shines on a two lane road\nChrome lights up where the blacktop rolls\nCool night air through an open door\nOne more mile, then a little more\n\nNeon lights and county lines\nRunning strong through southern nights\nEvery turn feels smooth and right\nKeep it moving side by side\n\nWhite lines cut through fields of stone\nEvery road feels close to home\nSmall town stars in a midnight sky\nMoving fast as the miles go by\n\nNeon lights and county lines\nRunning strong through southern nights\nEvery turn feels smooth and right\nKeep it moving side by side\n\nMoon hangs low above the trees\nCool wind rides the autumn breeze\nEvery mile keeps pulling strong\nRight here is where we belong\n\nNeon lights and county lines\nRunning strong through southern nights\nEvery turn feels smooth and right\nKeep it moving side by side"
+        }
       },
       {
         "id": 3,
@@ -286,7 +292,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Dust%20On%20The%20Blacktop.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Sun drops low on the painted lines\nChrome lights flash as the highway shines\nCool air moves through an open ride\nLong road calling from side to side\n\nDust on the blacktop rolls\nFire in these country souls\nEvery mile takes control\nKeep it moving, never slow\n\nSmall town lights in a midnight glow\nBackroad signs where the tall pines grow\nEvery turn feels smooth and right\nRunning strong through the southern night\n\nDust on the blacktop rolls\nFire in these country souls\nEvery mile takes control\nKeep it moving, never slow\n\nMoon rides high above the lane\nCold wind cuts through fields of grain\nEvery road keeps pulling strong\nRight here is where we belong\n\nDust on the blacktop rolls\nFire in these country souls\nEvery mile takes control\nKeep it moving, never slow"
+        }
       },
       {
         "id": 4,
@@ -301,7 +310,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Whiskey%20In%20The%20Headlights.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Headlights cut through the midnight haze\nChrome shines bright through the smoky glaze\nCold night rolls on a painted line\nOne more turn and the stars align\n\nWhiskey in the headlights glows\nDown these roads where the wild wind blows\nEvery mile keeps burning bright\nRunning strong through the southern night\n\nWhite lines run through fields of stone\nEvery road feels close to home\nEngine hum with a steady sound\nHeartbeat locked when the wheels roll round\n\nWhiskey in the headlights glows\nDown these roads where the wild wind blows\nEvery mile keeps burning bright\nRunning strong through the southern night\n\nMoon hangs low above the pines\nCool air moves through county lines\nEvery road keeps pulling strong\nRight here is where we belong\n\nWhiskey in the headlights glows\nDown these roads where the wild wind blows\nEvery mile keeps burning bright\nRunning strong through the southern night"
+        }
       },
       {
         "id": 5,
@@ -316,7 +328,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Midnight%20Gravel.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Moon rides low on a midnight trail\nChrome cuts through where the shadows sail\nCold wind runs through an open lane\nBlacktop shines after evening rain\n\nMidnight gravel, sparks that fly\nRolling hard beneath the sky\nEvery mile feels strong and true\nEvery road comes back to you\n\nWhite lines fade where the pine trees stand\nLong road curves through open land\nEngine hum with a steady sound\nHeartbeats lock when the wheels roll round\n\nMidnight gravel, sparks that fly\nRolling hard beneath the sky\nEvery mile feels strong and true\nEvery road comes back to you\n\nCool air falls across the field\nSome things break and some things heal\n\nEvery turn, every sign\nKeeps this rhythm locked in time\n\nMidnight gravel, sparks that fly\nRolling hard beneath the sky\nEvery mile feels strong and true\nEvery road comes back to you"
+        }
       },
       {
         "id": 6,
@@ -331,7 +346,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Backroad%20Heartbeat.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Tail lights glow on a county bend\nCool night rolls where the fences end\nLong road runs through fields of green\nLike every mile knows what I mean\n\nBackroad heartbeat, strong and slow\nThrough the dust where the wild winds blow\nEvery turn feels right on time\nStep for step and line for line\n\nMoonlight falls on the gravel lane\nSummer heat meets autumn rain\nEvery sign and every light\nPulls me deeper through the night\n\nBackroad heartbeat, strong and slow\nThrough the dust where the wild winds blow\nEvery turn feels right on time\nStep for step and line for line\n\nCold air moves through open fields\nSome roads break and some roads heal\n\nEvery mile, every sign\nKeeps this rhythm locked in time\n\nBackroad heartbeat, strong and slow\nThrough the dust where the wild winds blow\nEvery turn feels right on time\nStep for step and line for line"
+        }
       },
       {
         "id": 7,
@@ -346,7 +364,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Highway%20On%20Fire.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "Sun drops low on a painted lane\nChrome lights flash through the cooling rain\nLong road runs where the pine trees stand\nWide open sky across the land\n\nHighway on fire, burning bright\nRolling hard through the southern night\nEvery mile feels strong and right\nKeep it moving till morning light\n\nWhite lines cut through fields of stone\nEvery road still feels like home\nCold air moves through an open ride\nSteady wheels and a clear night sky\n\nHighway on fire, burning bright\nRolling hard through the southern night\nEvery mile feels strong and right\nKeep it moving till morning light\n\nMoon hangs low above the trees\nCool wind rides the autumn breeze\n\nEvery turn, every sign\nKeeps this rhythm locked in time\n\nHighway on fire, burning bright\nRolling hard through the southern night\nEvery mile feels strong and right\nKeep it moving till morning light"
+        }
       },
       {
         "id": 8,
@@ -361,7 +382,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Southern%20Steel.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "Chrome shines bright on a midnight lane\nCold stars burn through the autumn rain\nLong roads run where the pine trees lean\nSmall town lights cut sharp and clean\n\nSouthern steel, strong and true\nRunning fast like I always do\nEvery mile, every wheel\nBuilt to last, southern steel\n\nWhite lines glow on the blacktop roll\nCool night air and a steady soul\nEvery turn feels smooth and right\nRolling strong through the southern night\n\nSouthern steel, strong and true\nRunning fast like I always do\nEvery mile, every wheel\nBuilt to last, southern steel\n\nMoon rides low above the field\nSome roads break and some roads heal\n\nEvery sign, every line\nKeeps this rhythm locked in time\n\nSouthern steel, strong and true\nRunning fast like I always do\nEvery mile, every wheel\nBuilt to last, southern steel"
+        }
       },
       {
         "id": 9,
@@ -376,7 +400,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/One%20More%20Round.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Low cut dress and a whiskey smile\nBeen watching you for a little while\nSlow move, baby, take your time\nYou got yours and I got mine\n\nOne more round, one more song\nOne more place where we belong\nOne slow turn, one slow spin\nPull me close and pull me in\n\nBoot heels slide on hardwood lines\nYour hand fits easy locked in mine\nNo fast words, no big scene\nJust you and me somewhere between\n\nOne more round, one more song\nOne more place where we belong\nOne slow turn, one slow spin\nPull me close and pull me in\n\nLast call light, still burning low\nNeither one of us wants to go\nClock says late, heart says stay\nLet the night fade slow this way\n\nOne more round, one more song\nOne more place where we belong\nOne slow turn, one slow spin\nPull me close and pull me in"
+        }
       },
       {
         "id": 10,
@@ -391,7 +418,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Bootleg%20Midnight.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Blacktop shines in a silver glow\nTail lights fade where the pine winds blow\nCold night air on a county line\nOne more look and you’re looking mine\n\nBootleg midnight, smooth and slow\nWhiskey fire in a neon glow\nOne more turn, one more line\nYou got yours and I got mine\n\nLow cut smile and a sideways glance\nPulled me in with a slow two-step chance\nNo fast talk and no big show\nJust that look saying nice and slow\n\nBootleg midnight, smooth and slow\nWhiskey fire in a neon glow\nOne more turn, one more line\nYou got yours and I got mine\n\nClock runs late but nobody cares\nSmoke and shadows everywhere\nOne more song before we go\nTake it easy, take it slow\n\nBootleg midnight, smooth and slow\nWhiskey fire in a neon glow\nOne more turn, one more line\nYou got yours and I got mine"
+        }
       },
       {
         "id": 11,
@@ -406,7 +436,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Last%20Call%20Eyes.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Low light falls on your dark blue jeans\nOne slow smile says what it means\nNo fast words, no alibis\nJust that fire in your last call eyes\n\nLast call eyes, burning low\nPull me in and don’t let go\nOne slow touch, one deep breath\nGot me closer with every step\n\nMidnight moves in silver smoke\nEvery look feels soft and close\nNo wrong turn and no disguise\nJust that spark in your midnight eyes\n\nLast call eyes, burning low\nPull me in and don’t let go\nOne slow touch, one deep breath\nGot me closer with every step\n\nClock runs late but time stands still\nYou lean close and the room goes still\nNo looking back, no asking why\nJust me and you beneath tonight\n\nLast call eyes, burning low\nPull me in and don’t let go\nOne slow touch, one deep breath\nGot me closer with every step"
+        }
       },
       {
         "id": 12,
@@ -421,7 +454,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/Back%20To%20Gold.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Long roads wind through autumn trees\nCold night rides on a southern breeze\nEvery mile and every sign\nLed me back here one more time\n\nBack to gold, back to home\nBack to roads I've always known\nEvery turn, every mile\nBrings me back with every smile\n\nMoon rides high on a county line\nSilver stars in a sky so wide\nEvery road that pulled me far\nStill points back to where you are\n\nBack to gold, back to home\nBack to roads I've always known\nEvery turn, every mile\nBrings me back with every smile\n\nSeasons change but roots stay strong\nSome roads fade but not for long\nEvery mile, every road\nAlways leads me back to gold\n\nBack to gold, back to home\nBack to roads I've always known\nEvery turn, every mile\nBrings me back with every smile"
+        }
       },
       {
         "id": 13,
@@ -436,7 +472,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/September%20Turns%20Gold%20Remix%20Live.mp3",
         "sourceFolder": "September Turns Gold",
         "albumId": "september-turns-gold-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Old boots resting by the screen door\nDust still clinging from July\nFields are leaning toward the sunrise\nAmber colors fill the sky\n\nWhen September turns to gold\nWhen the green becomes a fire\nCool winds rolling through these roads\nAnd the stars climb even higher\n\nFriday lights across the valley\nBonfires burning on the hill\nOld friends laughing through the darkness\nLike they always always will\n\nLeaves may fall but roots stay planted\nTime may bend but not erase\nEvery season leaves its lesson\nEvery road recalls a place\n\nWhen September turns to gold\nWhen the green becomes a fire\nCool winds rolling through these roads\nAnd the stars climb even higher"
+        }
       }
     ],
     "releaseDate": "2026-09-18",
