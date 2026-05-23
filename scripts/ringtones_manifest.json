@@ -1,38 +1,182 @@
 [
     {
-        "title": "Solstice\u00a0",
+        "title": "Friday Again",
         "price": 0.99,
         "duration": 29,
-        "genre": "Trance",
-        "mp3_key": "ringtones/solstice\u00a0.mp3",
-        "m4r_key": "ringtones/solstice\u00a0.m4r",
-        "release_date": "2026-06-19"
+        "genre": "Country",
+        "mp3_key": "ringtones/friday-again.mp3",
+        "m4r_key": "ringtones/friday-again.m4r",
+        "release_date": "2026-10-02"
     },
     {
-        "title": "Afterglow Pulse",
+        "title": "Cold Smoke",
         "price": 0.99,
         "duration": 29,
-        "genre": "Trance",
-        "mp3_key": "ringtones/afterglow-pulse.mp3",
-        "m4r_key": "ringtones/afterglow-pulse.m4r",
-        "release_date": "2026-06-19"
+        "genre": "Country",
+        "mp3_key": "ringtones/cold-smoke.mp3",
+        "m4r_key": "ringtones/cold-smoke.m4r",
+        "release_date": "2026-10-02"
     },
     {
-        "title": "Higher than the Sun",
+        "title": "Blue Flame",
         "price": 0.99,
         "duration": 29,
-        "genre": "Trance",
-        "mp3_key": "ringtones/higher-than-the-sun.mp3",
-        "m4r_key": "ringtones/higher-than-the-sun.m4r",
-        "release_date": "2026-06-19"
+        "genre": "Country",
+        "mp3_key": "ringtones/blue-flame.mp3",
+        "m4r_key": "ringtones/blue-flame.m4r",
+        "release_date": "2026-10-02"
     },
     {
-        "title": "Infinite Rise",
+        "title": "When The Lights Go Gold",
         "price": 0.99,
         "duration": 29,
-        "genre": "Trance",
-        "mp3_key": "ringtones/infinite-rise.mp3",
-        "m4r_key": "ringtones/infinite-rise.m4r",
-        "release_date": "2026-06-19"
+        "genre": "Country",
+        "mp3_key": "ringtones/when-the-lights-go-gold.mp3",
+        "m4r_key": "ringtones/when-the-lights-go-gold.m4r",
+        "release_date": "2026-10-02"
+    },
+    {
+        "title": "White Line Weather",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/white-line-weather.mp3",
+        "m4r_key": "ringtones/white-line-weather.m4r",
+        "release_date": "2026-10-02"
+    },
+    {
+        "title": "One More Summer",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/one-more-summer.mp3",
+        "m4r_key": "ringtones/one-more-summer.m4r",
+        "release_date": "2026-10-02"
+    },
+    {
+        "title": "September Turns Gold",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/september-turns-gold.mp3",
+        "m4r_key": "ringtones/september-turns-gold.m4r",
+        "release_date": "2026-09-18"
+    },
+    {
+        "title": "Highway On Fire",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/highway-on-fire.mp3",
+        "m4r_key": "ringtones/highway-on-fire.m4r",
+        "release_date": "2026-09-18"
+    },
+    {
+        "title": "Southern Steel",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/southern-steel.mp3",
+        "m4r_key": "ringtones/southern-steel.m4r",
+        "release_date": "2026-09-18"
+    },
+    {
+        "title": "Hold On Until Night",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Dance",
+        "mp3_key": "ringtones/hold-on-until-night.mp3",
+        "m4r_key": "ringtones/hold-on-until-night.m4r",
+        "release_date": "2026-09-04"
+    },
+    {
+        "title": "September Afterglow",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Dance",
+        "mp3_key": "ringtones/september-afterglow.mp3",
+        "m4r_key": "ringtones/september-afterglow.m4r",
+        "release_date": "2026-09-04"
+    },
+    {
+        "title": "First Light No Regrets",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Dance",
+        "mp3_key": "ringtones/first-light-no-regrets.mp3",
+        "m4r_key": "ringtones/first-light-no-regrets.m4r",
+        "release_date": "2026-09-04"
+    },
+    {
+        "title": "Quiet Turning",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Dance Pop",
+        "mp3_key": "ringtones/quiet-turning.mp3",
+        "m4r_key": "ringtones/quiet-turning.m4r",
+        "release_date": "2026-08-21"
+    },
+    {
+        "title": "Afterglow Drift",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Dance Pop",
+        "mp3_key": "ringtones/afterglow-drift.mp3",
+        "m4r_key": "ringtones/afterglow-drift.m4r",
+        "release_date": "2026-08-21"
+    },
+    {
+        "title": "Call It Something",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Dance Pop",
+        "mp3_key": "ringtones/call-it-something.mp3",
+        "m4r_key": "ringtones/call-it-something.m4r",
+        "release_date": "2026-08-21"
+    },
+    {
+        "title": "Let It Stay",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Dance Pop",
+        "mp3_key": "ringtones/let-it-stay.mp3",
+        "m4r_key": "ringtones/let-it-stay.m4r",
+        "release_date": "2026-08-21"
+    },
+    {
+        "title": "Honky Tonk Sundown\u00a0",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/honky-tonk-sundown\u00a0.mp3",
+        "m4r_key": "ringtones/honky-tonk-sundown\u00a0.m4r",
+        "release_date": "2026-06-03"
+    },
+    {
+        "title": "August Heatwave\u00a0",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/august-heatwave\u00a0.mp3",
+        "m4r_key": "ringtones/august-heatwave\u00a0.m4r",
+        "release_date": "2026-06-03"
+    },
+    {
+        "title": "Dust Kicking Rhythm",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/dust-kicking-rhythm.mp3",
+        "m4r_key": "ringtones/dust-kicking-rhythm.m4r",
+        "release_date": "2026-06-03"
+    },
+    {
+        "title": "Sunburnt Memories",
+        "price": 0.99,
+        "duration": 29,
+        "genre": "Country",
+        "mp3_key": "ringtones/sunburnt-memories.mp3",
+        "m4r_key": "ringtones/sunburnt-memories.m4r",
+        "release_date": "2026-06-03"
     }
 ]

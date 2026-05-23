@@ -1,21 +1,20 @@
 {
-  "generated": "2026-03-29T15:23:18.123Z",
-  "totalAlbums": 57,
-  "totalTracks": 694,
+  "generated": "2026-05-23T14:55:54.410Z",
+  "totalAlbums": 63,
+  "totalTracks": 767,
   "genres": [
     "Christmas",
     "Country",
+    "Dance",
     "Dance Pop",
     "Disco",
     "Disney",
     "EDM",
     "Folk",
-    "New Year",
     "Pop",
     "R&B",
     "Rock",
     "Romantic",
-    "Scottish",
     "Trance"
   ],
   "years": [
@@ -24,6 +23,61 @@
     2024
   ],
   "albums": [
+    {
+      "id": "when-the-lights-go-gold-2026",
+      "title": "When the Lights Go Gold",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "When The Lights Go Gold",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/"
+    },
+    {
+      "id": "september-turns-gold-2026",
+      "title": "September Turns Gold",
+      "year": 2026,
+      "trackCount": 13,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "September Turns Gold",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-turns-gold/"
+    },
+    {
+      "id": "september-afterglow-2026",
+      "title": "September Afterglow",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Dance"
+      ],
+      "folderPath": "September Afterglow",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/"
+    },
+    {
+      "id": "quiet-turning-2026",
+      "title": "Quiet Turning",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Dance Pop"
+      ],
+      "folderPath": "Quiet Turning",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/"
+    },
+    {
+      "id": "skin-and-silence-2026",
+      "title": "Skin And Silence",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "R&B"
+      ],
+      "folderPath": "Skin And Silence",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/skin-and-silence/"
+    },
     {
       "id": "last-ones-standing-2026",
       "title": "Last Ones Standing",
@@ -48,7 +102,7 @@
     },
     {
       "id": "live-nashville-in-june-2026",
-      "title": "Live Nashville in June",
+      "title": "Live Nashville In June",
       "year": 2026,
       "trackCount": 12,
       "genres": [
@@ -58,8 +112,19 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/"
     },
     {
+      "id": "boots-in-the-autumn-dust-2026",
+      "title": "Boots in the Autumn Dust",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Boots in the Autumn Dust",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/"
+    },
+    {
       "id": "before-the-light-2026",
-      "title": "Before the Light",
+      "title": "Before The Light",
       "year": 2026,
       "trackCount": 12,
       "genres": [
@@ -92,7 +157,7 @@
     },
     {
       "id": "through-the-glass-2026",
-      "title": "Through the Glass",
+      "title": "Through The Glass",
       "year": 2026,
       "trackCount": 12,
       "genres": [
@@ -103,7 +168,7 @@
     },
     {
       "id": "heart-of-the-sky-drums-2026",
-      "title": "Heart of the Sky Drums",
+      "title": "Heart Of The Sky Drums",
       "year": 2026,
       "trackCount": 12,
       "genres": [
@@ -147,7 +212,7 @@
     },
     {
       "id": "echoes-of-light-2026",
-      "title": "Echoes of Light",
+      "title": "Echoes Of Light",
       "year": 2026,
       "trackCount": 14,
       "genres": [
@@ -169,7 +234,7 @@
     },
     {
       "id": "live-step-into-the-light-2025",
-      "title": "Live Step Into the Light",
+      "title": "Live Step Into The Light",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -184,14 +249,14 @@
       "year": 2025,
       "trackCount": 12,
       "genres": [
-        "New Year"
+        "Dance Pop"
       ],
       "folderPath": "New Year’s Odyssey",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/new-years-odyssey/"
     },
     {
       "id": "snowfall-and-steel-strings-2025",
-      "title": "Snowfall and Steel Strings",
+      "title": "Snowfall And Steel Strings",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -213,7 +278,7 @@
     },
     {
       "id": "shadows-and-fires-2025",
-      "title": "Shadows and Fires",
+      "title": "Shadows And Fires",
       "year": 2025,
       "trackCount": 14,
       "genres": [
@@ -246,7 +311,7 @@
     },
     {
       "id": "echoes-in-the-firelight-2025",
-      "title": "Echoes in the Firelight",
+      "title": "Echoes In The Firelight",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -261,14 +326,14 @@
       "year": 2025,
       "trackCount": 12,
       "genres": [
-        "Rock"
+        "Country"
       ],
       "folderPath": "The Long Way Home",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-long-way-home/"
     },
     {
       "id": "october-boots-and-fall-roots-2025",
-      "title": "October Boots and Fall Roots",
+      "title": "October Boots And Fall Roots",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -279,19 +344,18 @@
     },
     {
       "id": "hallowave-dance-of-the-shadows-2025",
-      "title": "Hallowave Dance of the shadows",
+      "title": "Hallowave Dance Of The Shadows",
       "year": 2025,
       "trackCount": 15,
       "genres": [
-        "Dance Pop",
-        "Rock"
+        "Dance Pop"
       ],
       "folderPath": "Hallowave Dance of the shadows",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/hallowave-dance-of-the-shadows/"
     },
     {
       "id": "falling-for-october-2025",
-      "title": "Falling for October",
+      "title": "Falling For October",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -339,15 +403,14 @@
       "year": 2025,
       "trackCount": 12,
       "genres": [
-        "Disco",
-        "Country"
+        "Disco"
       ],
       "folderPath": "Midnight Motion",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/midnight-motion/"
     },
     {
       "id": "dust-and-diamonds-2025",
-      "title": "Dust and Diamonds ",
+      "title": "Dust And Diamonds",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -369,7 +432,7 @@
     },
     {
       "id": "wildcards-and-whiskey-2025",
-      "title": "Wildcards and Whiskey",
+      "title": "Wildcards And Whiskey",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -402,7 +465,7 @@
     },
     {
       "id": "summer-fever-2025",
-      "title": "Summer Fever ",
+      "title": "Summer Fever",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -446,7 +509,7 @@
     },
     {
       "id": "echoes-of-us-2025",
-      "title": "Echoes of Us",
+      "title": "Echoes Of Us",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -463,8 +526,8 @@
       "genres": [
         "Country"
       ],
-      "folderPath": "Heartland Rythms",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rythms/"
+      "folderPath": "Heartland Rhythms",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/heartland-rhythms/"
     },
     {
       "id": "ethereal-highlands-2025",
@@ -472,14 +535,14 @@
       "year": 2025,
       "trackCount": 14,
       "genres": [
-        "Scottish"
+        "Folk"
       ],
       "folderPath": "Ethereal Highlands",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/ethereal-highlands/"
     },
     {
       "id": "empire-under-lights-2025",
-      "title": "Empire Under lights",
+      "title": "Empire Under Lights",
       "year": 2025,
       "trackCount": 12,
       "genres": [
@@ -545,7 +608,7 @@
     },
     {
       "id": "whispers-of-the-heart-country-ballads-for-the-soul-2024",
-      "title": "Whispers of the Heart Country Ballads for the Soul",
+      "title": "Whispers Of The Heart Country Ballads For The Soul",
       "year": 2024,
       "trackCount": 12,
       "genres": [
@@ -556,7 +619,7 @@
     },
     {
       "id": "highways-of-the-heart-2024",
-      "title": "Highways of the Heart",
+      "title": "Highways Of The Heart",
       "year": 2024,
       "trackCount": 14,
       "genres": [
@@ -571,16 +634,14 @@
       "year": 2024,
       "trackCount": 6,
       "genres": [
-        "Country",
-        "Rock",
-        "Pop"
+        "Country"
       ],
       "folderPath": "Singles",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/singles/"
     },
     {
       "id": "boots-and-beats-country-line-dance-anthems-2024",
-      "title": "Boots and Beats Country Line Dance Anthems",
+      "title": "Boots And Beats Country Line Dance Anthems",
       "year": 2024,
       "trackCount": 12,
       "genres": [
@@ -591,12 +652,11 @@
     },
     {
       "id": "waves-of-tranquility-deep-house-reflections-2024",
-      "title": "Waves of Tranquility Deep House Reflections",
+      "title": "Waves Of Tranquility Deep House Reflections",
       "year": 2024,
       "trackCount": 14,
       "genres": [
-        "Dance Pop",
-        "Trance"
+        "Dance Pop"
       ],
       "folderPath": "Waves of Tranquility Deep House Reflections",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/waves-of-tranquility-deep-house-reflections/"
@@ -614,12 +674,11 @@
     },
     {
       "id": "between-the-lines-of-love-2024",
-      "title": "Between the lines of love",
+      "title": "Between The Lines Of Love",
       "year": 2024,
       "trackCount": 14,
       "genres": [
-        "Country",
-        "Christmas"
+        "Pop"
       ],
       "folderPath": "Between the lines of love",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/between-the-lines-of-love/"
@@ -630,25 +689,24 @@
       "year": 2024,
       "trackCount": 12,
       "genres": [
-        "Country",
         "Christmas"
       ],
       "folderPath": "Pop Star Winter Wonderland",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/pop-star-winter-wonderland/"
     },
     {
-      "id": "forever-starts-today-country-music-for-weddings-2024",
-      "title": "Forever Starts Today (Country Music for Weddings)",
+      "id": "forever-starts-today--country-music-for-weddings--2024",
+      "title": "Forever Starts Today (country Music For Weddings)",
       "year": 2024,
       "trackCount": 12,
       "genres": [
-        "Country"
+        "Pop"
       ],
       "folderPath": "Forever Starts Today - Country Album",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/forever-starts-today--country-album/"
     },
     {
-      "id": "night-drive-80s-beats-ballads-2024",
+      "id": "night-drive--80s-beats---ballads-2024",
       "title": "Night Drive: 80s Beats & Ballads",
       "year": 2024,
       "trackCount": 14,

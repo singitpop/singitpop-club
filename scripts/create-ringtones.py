@@ -161,8 +161,17 @@ def main():
                         "release_date": r_date
                     })
                 elif status == "SKIPPED":
-                    # Do not append to manifest to prevent Stripe API spam
-                    continue
+                    # Append to manifest so they can still be synced to Stripe
+                    r_date = album.get('releaseDate', '2025-01-01')
+                    manifest.append({
+                        "title": track['title'],
+                        "price": 0.99,
+                        "duration": 29,
+                        "genre": track['genre'],
+                        "mp3_key": f"ringtones/{slug}.mp3",
+                        "m4r_key": f"ringtones/{slug}.m4r",
+                        "release_date": r_date
+                    })
 
     # write manifest
     with open(MANIFEST_PATH, 'w') as f:
