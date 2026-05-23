@@ -34,7 +34,18 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
-      "node_modules/**"
+      "node_modules/**",
+      "node_modules_bad_versions/**",
+      "node_modules_trash_1769789215/**",
+      "scratch/**",
+      "scripts/**",
+      "temp_stems_pilot/**",
+      "temp_demucs/**",
+      "tmp/**",
+      "backup/**",
+      "backup_2026-04-10_NUKED_RESTORATION/**",
+      "backup_2026-04-10_restoration_baseline/**",
+      "snapshots/**"
     ],
   },
 ];
