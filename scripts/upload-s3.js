@@ -53,11 +53,26 @@ async function scanAndUpload(dir) {
 
     const items = fs.readdirSync(dir, { withFileTypes: true });
 
+    // TARGET ALBUMS FILTER
+    const targetAlbums = [
+        "quiet turning",
+        "boots in the autumn dust",
+        "september afterglow",
+        "september turns gold",
+        "when the lights go gold"
+    ];
+
     for (const item of items) {
         if (item.isDirectory()) {
             const dirname = item.name;
             // Skip website and untitled folders
             if (dirname === 'website' || dirname === 'untitled folder') continue;
+
+            const dirnameLower = dirname.toLowerCase().trim();
+            const isTarget = targetAlbums.some(t => dirnameLower.includes(t) || t.includes(dirnameLower));
+            if (!isTarget) {
+                continue;
+            }
 
             const slug = dirname.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/ /g, '-');
             const albumPath = path.join(dir, dirname);

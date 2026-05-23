@@ -118,7 +118,19 @@ def main():
     
     count = 0
     
+    target_albums = [
+        "quiet turning",
+        "boots in the autumn dust",
+        "september afterglow",
+        "september turns gold",
+        "when the lights go gold"
+    ]
+    
     for album in albums:
+        title_lower = album.get('title', '').lower().strip()
+        if not any(t in title_lower or title_lower in t for t in target_albums):
+            continue
+            
         for track in album.get('tracks', []):
             if track.get('isSingle'):
                 print(f"🔍 Found Single: {track['title']} (Album: {album['title']})")

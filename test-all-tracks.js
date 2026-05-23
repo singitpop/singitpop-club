@@ -6,8 +6,14 @@ const d = require('./src/data/albums.json');
 
 async function checkUrl(url) {
     try {
-        const res = await fetch(url, { method: 'HEAD' });
-        return res.status;
+        // Signed GetObject URLs reject HEAD (method mismatch) — use GET with
+        // a small range header to avoid downloading the whole file.
+        const res = await fetch(url, {
+            method: 'GET',
+            headers: { 'Range': 'bytes=0-1023' }
+        });
+        // 206 Partial Content = success, 200 also fine
+        return (res.status === 206 || res.status === 200) ? 200 : res.status;
     } catch (e) {
         return 500;
     }
@@ -25,7 +31,10 @@ async function run() {
         credentials: {
             accessKeyId: process.env.AWS_ACCESS_KEY_ID,
             secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        }
+        },
+        // Prevent x-amz-checksum-mode=ENABLED in signed URLs (causes 403)
+        requestChecksumCalculation: 'WHEN_REQUIRED',
+        responseChecksumValidation: 'WHEN_REQUIRED',
     });
 
     for (const album of d) {
@@ -59,7 +68,6 @@ async function run() {
                  failed.push(`${album.title} - ${track.title} (Invalid S3 Config / URL format)`);
             }
         }
-        break; // Just test the first album for now
     }
     
     console.log(`\n\nChecked ${checked} tracks.`);

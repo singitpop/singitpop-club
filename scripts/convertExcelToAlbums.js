@@ -43,6 +43,16 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
     const albums = {};
     const tracksByAlbum = {};
 
+    // 5 Target albums to process and merge
+    const targetAlbums = [
+        "Quiet Turning",
+        "Boots in the Autumn Dust",
+        "September Afterglow",
+        "September Turns Gold",
+        "When the Lights Go Gold"
+    ];
+    const targetAlbumsLower = targetAlbums.map(a => a.toLowerCase().trim());
+
     for (let i = 1; i < data.length; i++) {
         const row = data[i];
 
@@ -50,20 +60,24 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
         const genre = row[1];      // Column B: Genre
         const singleType = row[3] ? String(row[3]).trim().toLowerCase() : ''; // Column D: Single marker (all singles)
         let albumName = row[6];  // Column G: Album Title
+        
+        // Skip empty rows
+        if (!trackTitle || !albumName) continue;
 
         // Fix known typos in Excel
         if (albumName === 'Aplril Comes Soft') albumName = 'April Comes Soft';
         if (albumName === 'Last One Standing') albumName = 'Last Ones Standing';
+
+        // Check if the album is in the target list
+        if (!targetAlbumsLower.includes(albumName.toLowerCase().trim())) {
+            continue; // SKIP existing albums to protect them
+        }
 
         const trackNumber = row[5]; // Column F: Track No
         const releaseDate = row[8]; // Column I: Release Date (Excel date number)
         const latestMarker = row[11] ? String(row[11]).trim().toLowerCase() : ''; // Column L: Trending/Latest
         const isTrendingMarker = latestMarker.includes('trend') || latestMarker.includes('trand');
         const playsRaw = row[12]; // Column M: Plays
-
-
-        // Skip empty rows
-        if (!trackTitle || !albumName) continue;
 
         // Convert Excel date to full date string (YYYY-MM-DD)
         let year = new Date().getFullYear();
@@ -246,12 +260,20 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
 
         // Determine Album Type (Studio, Live, or Standard)
         let albumType = 'standard';
+        const forceStudioAlbums = [
+            'quiet turning',
+            'boots in the autumn dust',
+            'september afterglow',
+            'september turns gold',
+            'when the lights go gold'
+        ];
+        const isForceStudio = forceStudioAlbums.includes(albumName.toLowerCase().trim());
         const hasStudioTag = tracks.some(t => t.latestMarker && t.latestMarker.toLowerCase().includes('studio'));
         const hasLiveTag = tracks.some(t => t.latestMarker && t.latestMarker.toLowerCase().includes('live'));
 
         // Priority: Live > Studio > Standard (default)
         if (hasLiveTag) albumType = 'live';
-        else if (hasStudioTag) albumType = 'studio';
+        else if (hasStudioTag || isForceStudio) albumType = 'studio';
 
         const isTrending = tracks.some(t => {
             const marker = (t.latestMarker || '').toLowerCase();
@@ -375,15 +397,45 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
         console.log(`   ✅ ${albumName} (${year}) - ${tracks.length} tracks`);
     }
 
+    // Load existing catalog to merge and preserve the other existing albums
+    const existingJsonPath = path.join(__dirname, '../src/data/albums.json');
+    let existingAlbums = [];
+    if (fs.existsSync(existingJsonPath)) {
+        try {
+            existingAlbums = JSON.parse(fs.readFileSync(existingJsonPath, 'utf8'));
+            console.log(`📖 Loaded ${existingAlbums.length} existing albums from catalog.`);
+        } catch (e) {
+            console.error('⚠️ Failed to load existing albums.json:', e);
+        }
+    }
+
+    // Filter out target albums from the existing catalog to prevent duplicates
+    const targetAlbumTitlesLower = Object.values(albums).map(a => a.title.toLowerCase().trim());
+    const targetAlbumIds = Object.keys(albums).map(k => k.toLowerCase().trim());
+    
+    const preservedAlbums = existingAlbums.filter(ex => {
+        const titleLower = ex.title.toLowerCase().trim();
+        const idLower = ex.id.toLowerCase().trim();
+        return !targetAlbumTitlesLower.includes(titleLower) && !targetAlbumIds.includes(idLower);
+    });
+
+    console.log(`🛡️ Preserved ${preservedAlbums.length} existing albums in the catalog.`);
+
+    // Combine preserved albums with the new ones
+    const combinedAlbums = [
+        ...preservedAlbums,
+        ...Object.values(albums)
+    ];
+
     // Convert to array and sort by Release Date (newest first)
-    const albumsArray = Object.values(albums).sort((a, b) => {
+    const albumsArray = combinedAlbums.sort((a, b) => {
         const dateA = new Date(a.releaseDate).getTime();
         const dateB = new Date(b.releaseDate).getTime();
         if (dateB !== dateA) return dateB - dateA;
         return b.year - a.year; // Fallback
     });
 
-    console.log(`\n✨ Processed ${albumsArray.length} albums successfully!\n`);
+    console.log(`\n✨ Combined catalog now contains ${albumsArray.length} albums successfully!\n`);
 
     // Generate TypeScript file
     const tsContent = `/**
