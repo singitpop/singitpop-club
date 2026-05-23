@@ -195,7 +195,8 @@
     "type": "studio",
     "trending": false,
     "exclusive": true,
-    "accessTier": "vip"
+    "accessTier": "vip",
+    "hasArtbook": true
   },
   {
     "id": "september-turns-gold-2026",
@@ -408,7 +409,8 @@
     "type": "studio",
     "trending": false,
     "exclusive": true,
-    "accessTier": "vip"
+    "accessTier": "vip",
+    "hasArtbook": true
   },
   {
     "id": "september-afterglow-2026",
@@ -606,7 +608,8 @@
     "type": "studio",
     "trending": false,
     "exclusive": true,
-    "accessTier": "vip"
+    "accessTier": "vip",
+    "hasArtbook": true
   },
   {
     "id": "quiet-turning-2026",
@@ -804,7 +807,8 @@
     "type": "studio",
     "trending": false,
     "exclusive": true,
-    "accessTier": "vip"
+    "accessTier": "vip",
+    "hasArtbook": true
   },
   {
     "id": "skin-and-silence-2026",
@@ -1621,7 +1625,8 @@
     "type": "studio",
     "trending": false,
     "exclusive": true,
-    "accessTier": "vip"
+    "accessTier": "vip",
+    "hasArtbook": true
   },
   {
     "id": "before-the-light-2026",

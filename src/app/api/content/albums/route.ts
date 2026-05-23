@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 // Signed URLs are valid for 1 hour — we refresh every 45 minutes to stay safe.
 let cachedSignedAlbums: any[] | null = null;
 let cacheExpiry = 0;
-const CACHE_TTL_MS = 45 * 60 * 1000; // 45 minutes
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 // Throttle: process items in batches to avoid AWS S3 rate limits
 async function processInBatches<T, R>(items: T[], batchSize: number, fn: (item: T) => Promise<R>): Promise<R[]> {
