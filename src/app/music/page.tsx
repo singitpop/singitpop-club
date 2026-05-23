@@ -553,7 +553,7 @@ function MusicContent() {
             </div>
             {/* VERSION STAMP - Forces content change and verifies deployment */}
             <div style={{ textAlign: 'center', padding: '20px', color: '#666', fontSize: '0.8rem' }}>
-                System Version: v2026.01.25-MixtapeUpdate (Build: Live)
+                System Version: v2026.05.23-AlbumIngest (Build: Live)
             </div>
         </div>
     );
