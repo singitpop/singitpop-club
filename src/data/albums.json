@@ -509,7 +509,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Golden%20Hour%20Departure.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "The sunlight falls across your face\nLike time forgot this sacred place\nThe air is warm, the room is still\nAnd silence bends against our will\n\nHold me where the colors fade\nInside the promises we made\nBefore the shadows take the glow\nStay with me a little slow\n\nYour reflection moves in amber glass\nLike every summer couldn’t last\nThe music breathes from rooms behind\nLike memories we left in time\n\nHold me where the colors fade\nInside the promises we made\nBefore the shadows take the glow\nStay with me a little slow\n\nNo spring can live forever here\nNo light survives without the fear\nBut endings shine the brightest when\nWe know we won’t return again\n\nHold me where the colors fade\nInside the promises we made\nBefore the shadows take the glow\nStay with me a little slow"
+        }
       },
       {
         "id": 2,
@@ -524,7 +527,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Empty%20Cabanas.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "The glasses shine with fading gold\nHalf told stories growing old\nCurtains dance without a sound\nEchoes drift across the ground\n\nNo one left but you and me\nGhosts inside this memory\nLights still burn though night's begun\nHolding on to what is gone\n\nYour silhouette in burgundy\nMoves like unfinished symmetry\nEvery step, a soft goodbye\nHidden underneath the sky\n\nNo one left but you and me\nGhosts inside this memory\nLights still burn though night's begun\nHolding on to what is gone\n\nWhen the music fades to blue\nEmpty rooms still speak of you\nSome departures leave a flame\nQuiet, but never quite the same\n\nNo one left but you and me\nGhosts inside this memory\nLights still burn though night's begun\nHolding on to what is gone"
+        }
       },
       {
         "id": 3,
@@ -539,7 +545,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Longer%20Shadows.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "The daylight slips across the floor\nNot reaching where it did before\nYour silhouette begins to blur\nIn quiet shapes I can't preserve\n\nThe shadows grow a little long\nWhere love was right, then somehow wrong\nThe light still fights against the blue\nBut evening always tells the truth\n\nYour fingers trace the empty glass\nLike trying not to let this pass\nNo words are needed in this space\nThe silence knows what's on your face\n\nThe shadows grow a little long\nWhere love was right, then somehow wrong\nThe light still fights against the blue\nBut evening always tells the truth\n\nSome endings come without a sound\nJust fading light upon the ground\nAnd even when we choose to stay\nThe night still slowly finds its way\n\nThe shadows grow a little long\nWhere love was right, then somehow wrong\nThe light still fights against the blue\nBut evening always tells the truth"
+        }
       },
       {
         "id": 4,
@@ -554,7 +563,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Amber%20Between%20Us.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Your fingertips across the light\nLike quiet fire in coming night\nThe amber moves across your skin\nAnd everything begins again\n\nThere's something living in this glow\nThat neither one of us can show\nBetween the silence and the dusk\nThere still is something left of us\n\nYour shadow leans against the glass\nLike asking time to let this last\nNo promises, no need to speak\nSome truths are stronger when they're weak\n\nThere's something living in this glow\nThat neither one of us can show\nBetween the silence and the dusk\nThere still is something left of us\n\nIf every color has to fade\nI'm glad it touched the plans we made\nAnd if tonight becomes goodbye\nAt least it burned before the sky\n\nThere's something living in this glow\nThat neither one of us can show\nBetween the silence and the dusk\nThere still is something left of us"
+        }
       },
       {
         "id": 5,
@@ -569,7 +581,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Hold%20On%20Until%20Night.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "The daylight trembles on your skin\nLike knowing where we've always been\nThe room is quiet, breathing slow\nLike something neither wants to know\n\nHold on until the light is gone\nUntil the colors all move on\nUntil the fire leaves the sky\nStay here before we say goodbye\n\nYour eyes reflect the falling gold\nLike stories never fully told\nNo future written in this space\nJust fading warmth across your face\n\nHold on until the light is gone\nUntil the colors all move on\nUntil the fire leaves the sky\nStay here before we say goodbye\n\nSome hearts don’t break, they slowly bend\nThey know exactly when to end\nAnd even love that learns to leave\nStill gives us something to believe\n\nHold on until the light is gone\nUntil the colors all move on\nUntil the fire leaves the sky\nStay here before we say goodbye"
+        }
       },
       {
         "id": 6,
@@ -584,7 +599,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Burgundy%20Tide.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "The shoreline moves beneath the moon\nLike knowing night arrived too soon\nThe water carries what we were\nIn quiet lines I still prefer\n\nLike burgundy across the sea\nYour memory keeps finding me\nNot pulling back, not pulling through\nJust moving like the tide we knew\n\nYour shadow dances in the foam\nLike every wave still leads me home\nNo promises left to defend\nJust softer places where things end\n\nLike burgundy across the sea\nYour memory keeps finding me\nNot pulling back, not pulling through\nJust moving like the tide we knew\n\nSome loves don't leave with broken sound\nThey drift until they're all around\nAnd even when they're out of sight\nThey color every shade of night\n\nLike burgundy across the sea\nYour memory keeps finding me\nNot pulling back, not pulling through\nJust moving like the tide we knew"
+        }
       },
       {
         "id": 7,
@@ -599,7 +617,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/After%20the%20Last%20Drink.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "The chairs are turned, the lights are low\nThe night has nowhere left to go\nReflections fade on empty walls\nLike echoes after final calls\n\nAfter the last drink, nothing stays\nJust quiet rooms and softer days\nNo final words, no grand release\nJust something close to almost peace\n\nYour glass still holds a trace of gold\nLike something warm that's turning cold\nNo need to reach, no need to speak\nThe silence says what we both keep\n\nAfter the last drink, nothing stays\nJust quiet rooms and softer days\nNo final words, no grand release\nJust something close to almost peace\n\nNot every ending breaks apart\nSome simply loosen from the heart\nAnd what remains is hard to name\nA quieter, unfamiliar frame\n\nAfter the last drink, nothing stays\nJust quiet rooms and softer days\nNo final words, no grand release\nJust something close to almost peace"
+        }
       },
       {
         "id": 8,
@@ -614,7 +635,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Navy%20Horizon.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "The horizon blurs in shades of blue\nWhere I once thought I'd follow you\nNo edges left, no lines to trace\nJust open sky and quiet space\n\nThe navy horizon pulls away\nNo words remain for me to say\nNo need to hold, no need to fight\nJust fading softly into night\n\nYour memory floats without a sound\nNot lost, just nowhere to be found\nNo weight to carry, nothing to prove\nJust something distant as I move\n\nThe navy horizon pulls away\nNo words remain for me to say\nNo need to hold, no need to fight\nJust fading softly into night\n\nSome endings don’t belong to pain\nThey drift beyond what we can name\nAnd in the space they leave behind\nWe lose the past and find the mind\n\nThe navy horizon pulls away\nNo words remain for me to say\nNo need to hold, no need to fight\nJust fading softly into night"
+        }
       },
       {
         "id": 9,
@@ -629,7 +653,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/September%20Afterglow.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "The final light across your skin\nFeels like where we've always been\nNo need to chase what time outgrew\nThe fading gold still carries you\n\nIn the September afterglow\nThe things we lose still softly show\nNot gone, not here, not held too tight\nJust turning slowly into light\n\nThe shadows stretch beyond the sea\nLike every version we could be\nNo broken words, no need for blame\nThe night remembers every flame\n\nIn the September afterglow\nThe things we lose still softly show\nNot gone, not here, not held too tight\nJust turning slowly into light\n\nSome loves were never meant to stay\nBut still they light another way\nAnd even as they disappear\nThey leave their brightest colors here\n\nIn the September afterglow\nThe things we lose still softly show\nNot gone, not here, not held too tight\nJust turning slowly into light"
+        }
       },
       {
         "id": 10,
@@ -644,7 +671,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Letting%20Go%20Slowly.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "The midnight rests upon the sea\nLike all that's left was meant to be\nNo final scene, no closing line\nJust fading warmth inside the tide\n\nI'm letting go, but not alone\nOf every place we used to know\nNot losing you, just setting free\nThe part of you that stays with me\n\nThe stars arrive without a sound\nWhere broken things are never found\nNo need to chase what had to move\nSome endings only teach us truth\n\nI'm letting go, but not alone\nOf every place we used to know\nNot losing you, just setting free\nThe part of you that stays with me\n\nAnd when September turns to grey\nIts golden fire will still remain\nNot in my hands, not in my sight\nBut somewhere softly in the light\n\nI'm letting go, but not alone\nOf every place we used to know\nNot losing you, just setting free\nThe part of you that stays with me"
+        }
       },
       {
         "id": 11,
@@ -659,7 +689,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/Where%20The%20Light%20Stayed.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "The night grew thin above the sea\nAnd left its quiet part in me\nNo voices calling from the shore\nNo need to search for something more\n\nWhere the light stayed after you\nIn colors only silence knew\nNot in the sky, not in the rain\nBut somewhere deeper than the pain\n\nThe morning moves through shades of blue\nAcross the places shaped by you\nNo empty rooms, no closing doors\nJust open waves and quieter shores\n\nWhere the light stayed after you\nIn colors only silence knew\nNot in the sky, not in the rain\nBut somewhere deeper than the pain\n\nSome memories don't ask to stay\nThey simply never fade away\nAnd what was lost becomes a spark\nThat keeps on glowing in the dark\n\nWhere the light stayed after you\nIn colors only silence knew\nNot in the sky, not in the rain\nBut somewhere deeper than the pain"
+        }
       },
       {
         "id": 12,
@@ -674,7 +707,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/september-afterglow/First%20Light%20No%20Regrets.mp3",
         "sourceFolder": "September Afterglow",
         "albumId": "september-afterglow-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "The night gives way without a sound\nAs morning paints the water now\nNo shadows left to pull me back\nNo need to follow any track\n\nIn the first light, I can see\nEvery loss that made me me\nNot a wound, not something gone\nJust another way to dawn\n\nThe sky unfolds in silver gold\nAcross the stories I still hold\nNo empty hands, no borrowed time\nJust open waves and clearer lines\n\nIn the first light, I can see\nEvery loss that made me me\nNot a wound, not something gone\nJust another way to dawn\n\nAnd what we loved was never lost\nIt only changed what silence costs\nAnd every fire that fades from sight\nBecomes the color of new light\n\nIn the first light, I can see\nEvery loss that made me me\nNot a wound, not something gone\nJust another way to dawn"
+        }
       }
     ],
     "releaseDate": "2026-09-04",
