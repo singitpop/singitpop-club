@@ -669,7 +669,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Quiet%20Turning.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "It’s quiet now\nLike the city’s holding breath\nHolding, holding\nSomething turning in my chest\n\nCeiling fan and open window\nSummer air across my skin\nPhone lights up but I don’t answer\nLet the silence pull me in\n\nThere’s a quiet turning now\nI don’t need to name it yet (name it yet)\nLet it move without a sound\nLike a feeling I haven’t said\n\nStreetlight shadows on the ceiling\nTracing shapes I almost know\nEvery line becomes a feeling\nI was scared to let me show\n\nThere’s a quiet turning now\nI don’t need to hold it down, hold it down\nIf I let it breathe a little\nIt’ll find its way around\n\nDon’t wake me up just yet\nI’m somewhere in between\nNot who I was before\nNot everything I’ll be\n\nThere’s a quiet turning now\nYeah I feel it settling in, settling in\nNot a sudden kind of change\nJust a soft shift underneath\n\nStill awake\nBut it’s different now\nDifferent now, different now\nDifferent now, different now\nDifferent now, different now\nEverything’s turning out"
+        }
       },
       {
         "id": 2,
@@ -684,7 +687,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Window%20Fog.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "On the glass\nI draw lines I don’t keep\nLike the thoughts underneath\n\nMorning light through the curtains\nBlurry shapes on your face\nI can feel something changing\nBut it’s hard to explain\n\nOn the window it fades\nEvery word that we said, that we said\nIf I try to hold on\nIt just slips instead\n\nWe were close for a moment\nLike a breath we could keep\nNow it’s turning to distance\nEven lying this deep\n\nOn the window it fades\nLike a shape in the rain, in the rain\nI can see it so clear\nThen it’s gone again\n\nDon’t say anything now\nLet it blur while it can\nIf we look at it straight\nIt won’t stay how it stands\n\nOn the window it fades\nBut I still feel the trace, feel the trace\nLike a mark that was there\nThen it changed shape\n\nOn the glass\nNothing stays where it was\nWhere it was, where it was\nBut it felt like it does"
+        }
       },
       {
         "id": 3,
@@ -699,7 +705,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Say%20It%20Twice.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "You said it once\nLike it didn’t mean that much\nSay it again, say it again\nBut I think it was enough\n\nLittle pause in your sentence\nLike you almost changed your mind\nI can feel how you meant it\nEven when you keep it light\n\nSay it twice\nJust to know it’s real, it’s real\nDon’t be quiet now\nI just wanna feel\n\nEvery word kinda lingers\nLike it’s caught inside the air\nIf I move any closer\nWill it still be sitting there\n\nSay it twice\nLet it echo back, echo back\nIf it disappears\nI can’t hold on to that\n\nIf you mean it, don’t hide it\nIf it’s real, let it stay\nI don’t need you to promise\nJust don’t take it away\n\nSay it twice\nI’ll believe you then, believe you then\nIf it stays this time\nI won’t question it again\n\nSay it twice\nSay it, say it\nSay it twice"
+        }
       },
       {
         "id": 4,
@@ -714,7 +723,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Afterglow%20Drift.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "It’s still there\nEven after it’s gone\nFading out, fading out\nLike it’s holding me on\n\nEvery second feels extended\nLike it’s bending out of time\nAnd I don’t wanna measure it\nI just wanna let it lie\n\nIn the afterglow\nEverything feels slow, feels slow\nLike a quiet wave\nI don’t wanna let go\n\nIf it fades I won’t chase it\nIf it stays I won’t hold\nI just feel it around me\nLike a warmth in the cold\n\nStill it moves\nEven when it’s gone\nWhen it’s gone, when it’s gone\nI keep drifting on"
+        }
       },
       {
         "id": 5,
@@ -729,7 +741,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Poolside%20Echo.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Light on the water\nMoving slow in my eyes\nEverything, everything\nFeels like it’s passing me by\n\nYou said something I remember\nBut it slipped into the air\nNow it’s playing in the silence\nLike it’s still around somewhere\n\nIn the sunlight it stays\nLike an echo in blue, in blue\nEvery word that you said\nComes back softer, not you\n\nI don’t need to hold it\nLet it move how it moves\nIf it comes back around\nI’ll be right where I am\n\nIn the light\nIt was never that clear\nNever that clear\nBut I felt it here"
+        }
       },
       {
         "id": 6,
@@ -744,7 +759,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Sunspill.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Light spills over\nAcross everything we see\nSoft and slow, soft and slow\nLike it’s landing just on me\n\nYou don’t say it any louder\nBut I hear it in your tone\nLike a moment stretching longer\nLike it doesn’t want to go\n\nIn the sunlight we stay\nLike it’s never too much, too much\nEvery second we take\nFeels like barely enough\n\nWe don’t need to define it\nWe don’t need to be sure\nIf it’s here in the moment\nThat’s enough to be yours\n\nStill the light\nStill the same soft glow\nSoft glow, soft glow\nAnd we let it go"
+        }
       },
       {
         "id": 7,
@@ -759,7 +777,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/August%20Fades.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Same air now\nBut it’s quieter\nSoftly there, softly there\nLike it stayed with us\n\nAll the nights we held onto\nAll the words we never said\nThey don’t feel like they’re gone now\nJust not living in my head\n\nAugust fades\nBut it follows through, follows through\nIn the way I feel\nWhen I’m not with you\n\nI don’t need to go back there\nI don’t need to make it stay\nEvery moment we stayed in\nFound a different way\n\nAugust fades\nBut it doesn’t leave, doesn’t leave\nIt becomes the shape\nOf what stays with me\n\nSame light now\nJust a different view\nDifferent view, different view\nStill a part of you"
+        }
       },
       {
         "id": 8,
@@ -774,7 +795,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Still%20Moving.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "It comes back\nNot the same as before\nSlow return, slow return\nBut I feel it once more\n\nThere’s a rhythm in the silence\nLike it’s learning how to stay\nNot as strong as it was then\nBut it doesn’t fade away\n\nStill moving now\nEven when it’s low, it’s low\nLike a quiet wave\nI can let it flow\n\nI don’t need to understand it\nI don’t need to make it clear\nIf it’s something I can feel now\nThen I know that it is here\n\nStill moving now\nI don’t stop the change, stop the change\nIf it comes and goes\nI don’t hold it in place\n\nNot the same as before\nBut it doesn’t have to be\nIf it moves, I’ll move with it\nLet it carry me\n\nStill moving now\nI can feel it grow, feel it grow\nNot a sudden shift\nJust a steady flow\n\nStill it moves\nEven when it’s slow\nWhen it’s slow, when it’s slow\nI just let it go"
+        }
       },
       {
         "id": 9,
@@ -789,7 +813,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Call%20It%20Something.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "We don’t say\nWhat it’s turning into\nSay it now, say it now\nBut it’s already true\n\nEvery time we’re in it\nThere’s a line we never cross\nBut it lingers in the silence\nLike we both know what it was\n\nCall it something now\nEven if it’s small, it’s small\nIf we leave it out\nThen it’s nothing at all\n\nYou don’t have to promise\nYou don’t have to stay\nBut don’t keep it in the shadows\nLike it’s easier that way\n\nCall it something now\nLet it take a shape, take a shape\nIf we let it drift\nIt’ll fade away\n\nI don’t need forever\nI don’t need a name\nJust a little honesty\nSo it’s not the same\n\nCall it something now\nEven if it breaks, if it breaks\nBetter than a space\nWe can’t replace\n\nSay it once\nBefore it disappears\nDisappears, disappears\nSo it stays right here"
+        }
       },
       {
         "id": 10,
@@ -804,7 +831,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Static%20and%20Sunlight.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "In between\nSomething pulls me through\nIn and out, in and out\nLike I’m passing into you\n\nEvery second stretches longer\nLike it’s looping in my head\nI can feel it getting closer\nBut it’s never fully said\n\nStatic and sunlight\nRunning through my mind, my mind\nI can feel the shape\nBut I can’t define\n\nEvery time I almost catch it\nIt dissolves into the air\nLike a signal breaking open\nThen there’s nothing there\n\nStatic and sunlight\nComing in and out, in and out\nIf I follow it\nIt just moves around\n\nI don’t try to hold it\nI don’t slow it down\nIf it keeps on moving\nI’ll just stay around\n\nStatic and sunlight\nI can feel it stay, feel it stay\nNot a solid line\nBut it doesn’t fade\n\nIn between\nIt was always there\nAlways there, always there\nJust beyond the air"
+        }
       },
       {
         "id": 11,
@@ -819,7 +849,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/Let%20It%20Stay.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "It’s still here\nEven after the noise\nStill and clear, still and clear\nLike it made its own voice\n\nI don’t feel the same distance\nI don’t feel it pulling away\nThere’s a softness in the moment\nLike it finally wants to stay\n\nLet it stay\nI don’t need to move, to move\nIf it’s real like this\nI don’t need the proof\n\nEvery doubt is getting quieter\nEvery edge is wearing down\nI don’t have to reach for it\nIt’s already all around\n\nLet it stay\nI won’t push away, push away\nIf it’s here right now\nI can let it stay\n\nI don’t need to name it\nI don’t need control\nIf it’s moving through me\nI can let it hold\n\nLet it stay\nI can feel it now (feel it now)\nNot a passing wave\nBut a steady sound\n\nStill it stays\nEven when it’s low\nWhen it’s low, when it’s low\nAnd I let it flow"
+        }
       },
       {
         "id": 12,
@@ -834,7 +867,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/No%20Signal.mp3",
         "sourceFolder": "Quiet Turning",
         "albumId": "quiet-turning-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Nothing comes through\nEven when I try\nTry again, try\n\nYou were there but fading\nLike a light turned low\nI was still awake but\nThere was nothing left to show\n\nNo signal now\nOnly empty space, empty space\nWhat we almost said\nDidn’t leave a trace\n\nEvery word unspoken\nHanging in the air\nIf I tried to reach it\nThere was nothing there\n\nNo signal now\nNothing coming back, coming back\nJust a fading sound\nLost inside the black\n\nI won’t try to hold it\nI won’t ask it why\nSome things disappear\nWithout a reason why\n\nNo signal now\nI can feel it gone, feel it gone\nStill I stay awake\nLike it might come on\n\nNothing comes through\nOnly quiet air\nOnly quiet air\nBut I’m still there"
+        }
       }
     ],
     "releaseDate": "2026-08-21",
