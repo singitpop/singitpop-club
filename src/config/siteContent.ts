@@ -34,6 +34,15 @@ export const siteContent = {
                 image: "/images/merch-visual.png",
                 link: "/shop",
                 cta: "Shop Official Merch ✨"
+            },
+            {
+                id: 5,
+                title: "Ryker Boone",
+                subtitle: "Signed Country Pop Artist",
+                image: "/images/ryker-boone/hero-cinematic.png",
+                link: "https://rykerboonemusic.website",
+                cta: "Visit Official Website 🌐",
+                external: true
             }
         ]
     },

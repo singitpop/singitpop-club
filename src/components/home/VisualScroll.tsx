@@ -106,6 +106,10 @@ export default function VisualScroll() {
                                         >
                                             {item.cta} <ArrowRight size={18} />
                                         </button>
+                                    ) : item.external ? (
+                                        <a href={item.link!} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                                            {item.cta} <ArrowRight size={18} />
+                                        </a>
                                     ) : (
                                         <Link href={item.link!} className={styles.link}>
                                             {item.cta} <ArrowRight size={18} />
