@@ -1451,7 +1451,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Honky%20Tonk%20Sundown.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "Sun dips low on a neon sign\nBoots hit wood right on time\nDust off the day, step inside\nThat rhythm pulls you to the line\n\nHonky tonk sundown, lights go gold\nTwo-step rhythm, smooth and bold\nSlide and turn, let it roll\nFeel that groove down in your soul\n\nHat tipped low, hands swing wide\nBoot to boot in a side by slide\nEvery move locked in tight\nWe don’t miss when the beat feels right\n\nHonky tonk sundown, feel that sway\nHeels and toes in a clean two step way\nRound and back, don’t slow down\nWe move steady through sundown\n\nBreak it down, just move in time\nWatch it flow in a steady line\nHold that beat, take it slow\nLet the rhythm guide the flow\n\nHonky tonk sundown, lights go gold\nTwo step rhythm, smooth and bold\nSlide and turn, let it roll\nFeel that groove down in your soul"
+        }
       },
       {
         "id": 2,
@@ -1466,7 +1469,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/August%20Heatwave.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "Sun beating down on a gravel road\nDust in the air where the wild wind blows\nRadio loud from a tailgate truck\nWhole town rolling in, fired up\n\nAugust heatwave, feel it rise\nBoots hit steady under open skies\nStomp that beat, keep in time\nWe go all night till morning light\n\nSun goes down but the heat stays on\nNeon lights start coming on\nEverybody moving in a straight-line groove\nStep to the left, now slide right through\n\nAugust heatwave, feel that sound\nHeartbeat steady with the ground\nTurn it up, let the moment take\nWe come alive in the heatwave\n\nSlow it down, feel the air\nEvery step brings us there\nHold that beat, don’t let go\nLet it move, let it flow\n\nAugust heatwave, feel it rise\nBoots hit steady under open skies\nStomp that beat, keep in time\nWe go all night till morning light"
+        }
       },
       {
         "id": 3,
@@ -1481,7 +1487,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Barefoot%20on%20the%20Backroad.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Barefoot running down a dirt road lane\nWarm night air with a hint of rain\nRadio playing that summer sound\nNo destination, just driving around\n\nBarefoot on the backroad tonight\nStep real easy, feel just right\nSide to side in a slow groove flow\nLet that rhythm take control\n\nFireflies lighting up the trees\nCool wind blowing through the breeze\nEvery move got a laid-back sway\nWe just ride that rhythm wave\n\nBarefoot on the backroad tonight\nHands swing loose in the fading light\nSlide real smooth, don’t rush the beat\nLet it roll through your feet\n\nSlow it down, feel the ground\nEvery step got a softer sound\n\nHold that vibe, don’t let go\nLet it drift, let it flow\n\nBarefoot on the backroad tonight\nStep real easy, feel just right\nSide to side in a slow groove flow\nLet that rhythm take control"
+        }
       },
       {
         "id": 4,
@@ -1496,7 +1505,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Neon%20Barn%20Nights.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Neon lights on a wooden wall\nBoots hit hard when the night time calls\nDust kicks up as the beat rolls low\nEvery step in a steady flow\n\nNeon barn nights, light it up\nStomp in time, keep it locked\nClap that beat, feel that drive\nWe move strong, we come alive\n\nString lights glow on a worn wood floor\nEvery step hits more and more\nTurn it quick, then slide in line\nEverything locked into time\n\nNeon barn nights, feel that heat\nBoots strike steady with every beat\nTurn and step, don’t slow down\nWe hold rhythm through this town\n\nBreak it down, just kick and step\nHold that groove with no regret\nWhen it lifts, we move it clean\nEvery step sharp and seen\n\nNeon barn nights, light it up\nStomp in time, keep it locked\nClap that beat, feel that drive\nWe move strong, we come alive"
+        }
       },
       {
         "id": 5,
@@ -1511,7 +1523,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Sweet%20Tea%20and%20Blue%20Jeans.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Sweet tea cold in a simple cup\nBlue jeans worn but they fit just right\nBoots move easy on a wooden floor\nThat rhythm keeps pulling for more\n\nSweet tea and blue jeans tonight\nTwo step smooth under soft light\nClap in time, let it flow\nFeel that rhythm nice and slow\n\nEasy steps as we turn around\nEvery move fits the sound\nNothing rushed, just take your time\nLet it fall into the line\n\nSweet tea and blue jeans tonight\nFeel that groove, keep it light\nStep and slide, stay in time\nLet it move through every line\n\nHold it close, don’t let it break\nEvery move you gently make\n\nWhen it lifts, we follow through\nLet the rhythm carry you\n\nSweet tea and blue jeans tonight\nTwo step smooth under soft light\nClap in time, let it flow\nFeel that rhythm nice and slow"
+        }
       },
       {
         "id": 6,
@@ -1526,7 +1541,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Dust%20Kicking%20Rhythm.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "Boots hit down on a dirt packed line\nDust lifts up every step in time\nKick and step, let the rhythm land\nFeel that weight when you hit the ground\n\nDust kicking rhythm, strong and low\nSteady beat that you can follow\nStep in time, let it ride\nFeel that motion side to side\n\nTurn it slow, then bring it back\nEvery step stays on the track\nHands stay loose, body flows\nLet that steady rhythm go\n\nDust kicking rhythm, hold that pace\nFeel it move in every space\nStep and turn, stay in line\nKeep it locked into the time\n\nBreak it down, just move and breathe\nLet it settle underneath\n\nWhen it lifts, we rise again\nRight back into the line again\n\nDust kicking rhythm, strong and low\nSteady beat that you can follow\nStep in time, let it ride\nFeel that motion side to side"
+        }
       },
       {
         "id": 7,
@@ -1541,7 +1559,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Sunburnt%20Memories.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": true
+        "isSingle": true,
+        "lyrics": {
+          "rawText": "Sunburnt skin and a fading tan\nLong days gone but I still can\nHear that rhythm in the air\nLike those nights still waiting there\n\nSunburnt memories, hold on tight\nMoving slow in the fading light\nClap in time, let it stay\nWe don’t let it fade away\n\nOld dirt roads and a quiet song\nFeels like we been here all along\nEvery step holds something new\nEvery moment coming through\n\nSunburnt memories, feel that sound\nEvery step brings it back around\nStep and sway, don’t let go\nKeep that rhythm moving slow\n\nTake it in, don’t rush the night\nHold that moment, hold it tight\n\nWhen it lifts, we stay in line\nMoving with that steady time\n\nSunburnt memories, hold on tight\nMoving slow in the fading light\nClap in time, let it stay\nWe don’t let it fade away"
+        }
       },
       {
         "id": 8,
@@ -1556,7 +1577,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Tailgate%20Turn%20Up.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Truck lights glow in the evening air\nBass rolls low, steady and clear\nBoots hit gravel right on time\nFeel that rhythm lock in line\n\nTailgate turn up, feel that drive\nSteady beat keeps it alive\nStep in time, keep it smooth\nLock it in with that groove\n\nSimple moves but they feel right\nEvery step fits the night\nTurn it out, bring it back\nEverything stays on track\n\nTailgate turn up, hold that pace\nFeel it move through the space\nClap in time, keep it tight\nLet it carry through the night\n\nBreak it down, keep it clean\nEvery move sharp and seen\n\nWhen it lifts, ride the flow\nKeep it tight, don’t lose control\n\nTailgate turn up, feel that drive\nSteady beat keeps it alive\nStep in time, keep it smooth\nLock it in with that groove"
+        }
       },
       {
         "id": 9,
@@ -1571,7 +1595,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Riverbank%20Two%20Step.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Down by the water where the cool wind blows\nBoots move easy in a steady flow\nMoonlight falling on a slow back beat\nFeel that rhythm under your feet\n\nRiverbank two step, nice and slow\nSlide that line, let it flow\nClap in time, feel that sway\nWe ride that groove till break of day\n\nStep in close, then ease back out\nTurn it smooth, no rush about\nEvery move falls into place\nEasy rhythm, steady pace\n\nRiverbank two step, feel that glide\nSide to side in a smooth ride\nClap in time, keep it low\nLet that rhythm guide the flow\n\nHold that line, don’t break away\nLet it move in a natural way\n\nWhen it lifts, we stay in time\nLocked into that steady line\n\nRiverbank two step, nice and slow\nSlide that line, let it flow\nClap in time, feel that sway\nWe ride that groove till break of day"
+        }
       },
       {
         "id": 10,
@@ -1586,7 +1613,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Fireflies%20and%20Front%20Porches.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Fireflies glow in the midnight air\nOld wood creaks from a rocking chair\nBoots tap steady on a worn-out floor\nThat rhythm pulls you in once more\n\nFireflies and front porches move\nShuffle step in a steady groove\nClap in time, keep it tight\nWe stay in motion through the night\n\nStep and turn with an easy feel\nEvery move stays smooth and real\nCool night breeze but the beat stays strong\nKeeps you moving right along\n\nFireflies and front porches flow\nPick it up, don’t take it slow\nClap in time, lock it in\nLet that rhythm pull you in\n\nHold that step, keep control\nLet it ride but keep it whole\n\nWhen it lifts, we stay aligned\nEvery step right on time\n\nFireflies and front porches move\nShuffle step in a steady groove\nClap in time, keep it tight\nWe stay in motion through the night"
+        }
       },
       {
         "id": 11,
@@ -1601,7 +1631,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Whiskey%20Weather.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Whiskey glass in a quiet hand\nLate night drifting like we planned\nNeon fading in the dark\nJust you and me and a lonely spark\n\nWhiskey weather, slow and low\nNo need to rush, just let it go\nHold me close, don’t say a word\nIn this silence, we are heard\n\nSummer nights turning into fall\nEchoes fading down the hall\nEvery moment lingers on\nLike a memory not quite gone\n\nWhiskey weather, take your time\nLet it settle in your mind\nNo loud lights, no crowded room\nJust us here in the quiet bloom\n\nStay right here, don’t move away\nLet this feeling gently stay\n\nWhen it’s gone, we’ll still know\nWhat we felt in this slow glow\n\nWhiskey weather, slow and low\nNo need to rush, just let it go\nHold me close, don’t say a word\nIn this silence, we are heard"
+        }
       },
       {
         "id": 12,
@@ -1616,7 +1649,10 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/Last%20Dance%20in%20the%20Dirt.mp3",
         "sourceFolder": "Boots in the Autumn Dust",
         "albumId": "boots-in-the-autumn-dust-2026",
-        "isSingle": false
+        "isSingle": false,
+        "lyrics": {
+          "rawText": "Night winds down but the beat stays on\nFading lights but we’re not gone\nBoots still moving in the dust\nHolding onto what we trust\n\nLast dance in the dirt tonight\nStep in close, hold it right\nClap in time, feel that ground\nOne more turn before it winds down\n\nEvery step got a story now\nEvery move shows us how\nAll the nights led to this\nOne more moment we won’t miss\n\nLast dance in the dirt, stay near\nFeel it all while it’s still here\nStep and turn, don’t let go\nLet that final rhythm flow\n\nSlow it down, then bring it back\nEvery step still on the track\n\nWhen it lifts, we rise again\nLike we did back then\n\nLast dance in the dirt tonight\nStep in close, hold it right\nClap in time, feel that ground\nOne more turn before it winds down"
+        }
       }
     ],
     "releaseDate": "2026-06-03",
