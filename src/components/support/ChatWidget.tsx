@@ -9,15 +9,16 @@ import knowledgeBase from '@/data/knowledge.json';
 // Simple fuzzy search helper
 const findAnswer = (query: string) => {
     const q = query.toLowerCase();
+    const kbAny = knowledgeBase as any;
 
     // 1. Guides Match (Priority)
-    const guideMatch = knowledgeBase.guides?.find(g =>
+    const guideMatch = kbAny.guides?.find((g: any) =>
         q.includes(g.feature.toLowerCase()) ||
         g.feature.toLowerCase().includes(q)
     );
 
     if (guideMatch) {
-        const stepsHtml = guideMatch.steps.map(s => `<li>${s}</li>`).join('');
+        const stepsHtml = guideMatch.steps ? guideMatch.steps.map((s: any) => `<li>${s}</li>`).join('') : '';
         const imageHtml = guideMatch.image ? `<img src="${guideMatch.image}" class="w-full h-auto rounded-lg mb-2 border border-white/10" alt="${guideMatch.feature}" />` : '';
 
         return `
@@ -31,15 +32,15 @@ const findAnswer = (query: string) => {
     }
 
     // 2. Direct FAQ Match
-    const faqMatch = knowledgeBase.faq.find(f => f.q.toLowerCase().includes(q) || q.includes(f.q.toLowerCase()));
+    const faqMatch = kbAny.faq?.find((f: any) => f.q.toLowerCase().includes(q) || q.includes(f.q.toLowerCase()));
     if (faqMatch) return faqMatch.a;
 
     // 3. Page Match
-    const pageMatch = knowledgeBase.pages.find(p => q.includes(p.name.toLowerCase()) || p.desc.toLowerCase().includes(q));
+    const pageMatch = kbAny.pages?.find((p: any) => q.includes(p.name.toLowerCase()) || p.desc.toLowerCase().includes(q));
     if (pageMatch) return `You can find that on our ${pageMatch.name} page: <a href="${pageMatch.url}" class="text-pink-400 underline">${pageMatch.name}</a>. ${pageMatch.desc}`;
 
     // 4. Album Match
-    const albumMatch = knowledgeBase.albums.find(a => q.includes(a.title.toLowerCase()));
+    const albumMatch = kbAny.albums?.find((a: any) => q.includes(a.title.toLowerCase()));
     if (albumMatch) return `That's one of our releases! "${albumMatch.title}" is a ${albumMatch.type}. You can listen to it <a href="${albumMatch.url}" class="text-pink-400 underline">here</a>.`;
 
     // 5. Default Fallback

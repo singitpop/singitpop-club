@@ -34,12 +34,12 @@ function ArrowDecorator({ positions }: { positions: [number, number][] }) {
     useEffect(() => {
         if (!map) return;
 
-        const decorator = L.polylineDecorator(positions, {
+        const decorator = (L as any).polylineDecorator(positions, {
             patterns: [
                 {
                     offset: '10%',
                     repeat: '10%',
-                    symbol: L.Symbol.arrowHead({
+                    symbol: (L as any).Symbol.arrowHead({
                         pixelSize: 10,
                         polygon: false,
                         pathOptions: { stroke: true, color: '#60a5fa', weight: 2, opacity: 0.8 }

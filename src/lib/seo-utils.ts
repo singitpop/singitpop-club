@@ -10,10 +10,11 @@ export function generateAlbumMetadata(album: Album): Metadata {
     const description = album.description || 
         `Experience ${album.title} by SING - SingIt Pop. Discover exclusive country-pop tracks, digital artbooks, and the future of virtual music.`;
     
+    const anyAlbum = album as any;
     const keywords = [
         'SingIt Pop', 'SING', album.title, 
         ...(album.genre || []), 
-        ...(album.mood ? album.mood.split(',').map(m => m.trim()) : []),
+        ...(anyAlbum.mood ? anyAlbum.mood.split(',').map((m: any) => m.trim()) : []),
         'Country Music', 'Digital Artbook'
     ];
 

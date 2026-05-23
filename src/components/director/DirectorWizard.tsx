@@ -81,9 +81,9 @@ export const DirectorWizard: React.FC = () => {
     const saveToLocal = () => {
         const title = project.song?.title || `Untitled ${new Date().toLocaleDateString()}`;
         const newEntry = {
-            id: project.id || `proj_${Date.now()}`,
+            id: (project as any).id || `proj_${Date.now()}`,
             name: title,
-            data: { ...project, id: project.id || `proj_${Date.now()}` }
+            data: { ...project, id: (project as any).id || `proj_${Date.now()}` }
         };
 
         const existingIndex = savedProjects.findIndex(p => p.id === newEntry.id);
