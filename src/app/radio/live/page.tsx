@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect } from 'react';
 import nextDynamic from 'next/dynamic';
+import Link from 'next/link';
 
 // Ghost Isolation for Visuals & Player
 const Player = nextDynamic(
@@ -195,9 +196,9 @@ export default function RadioLivePage() {
         <main className="fixed inset-0 bg-black overflow-hidden flex items-center justify-center">
             {started && (
                 <div className="absolute top-10 right-10 z-[100] pointer-events-auto">
-                    <a href="/" className="flex items-center gap-3 bg-black/40 hover:bg-red-600/80 backdrop-blur-xl px-6 py-3 rounded-full border border-white/10 text-white transition-all transform hover:scale-105">
+                    <Link href="/" className="flex items-center gap-3 bg-black/40 hover:bg-red-600/80 backdrop-blur-xl px-6 py-3 rounded-full border border-white/10 text-white transition-all transform hover:scale-105">
                         <span className="text-[10px] font-black uppercase tracking-[4px]">Back to Home</span>
-                    </a>
+                    </Link>
                 </div>
             )}
 
