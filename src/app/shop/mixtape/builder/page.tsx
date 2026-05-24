@@ -169,7 +169,7 @@ export default function MixtapeBuilderPage() {
                                     <div className="flex flex-col lg:flex-row gap-12">
                                         <div className="lg:w-1/3">
                                             <div className="aspect-square rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl shadow-pink-500/10 sticky top-32">
-                                                <img src={activeAlbum?.coverArt} alt="" className="w-full h-full object-cover" />
+                                                <img src={activeAlbum?.coverArt} alt={activeAlbum?.title || "Album Cover"} className="w-full h-full object-cover" />
                                                 <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-black via-black/60 to-transparent">
                                                     <h2 className="text-3xl font-black tracking-tighter italic uppercase">{activeAlbum?.title}</h2>
                                                     <p className="text-white/40 font-bold uppercase tracking-widest text-xs">{activeAlbum?.year}</p>
@@ -406,7 +406,7 @@ export default function MixtapeBuilderPage() {
                                         const track = allTracks.find(t => t.uniqueId === uid);
                                         return (
                                             <motion.div layout key={uid} className="relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-white/10 group">
-                                                <img src={track?.albumCover} alt="" className="w-full h-full object-cover" />
+                                                <img src={track?.albumCover} alt={track?.title || "Track Cover"} className="w-full h-full object-cover" />
                                                 <button onClick={() => toggleTrack(uid)} className="absolute inset-0 bg-rose-600/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <X size={20} />
                                                 </button>

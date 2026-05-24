@@ -67,6 +67,7 @@ export const Step5Editor: React.FC<Step5Props> = ({
                             ) : (
                                 <img
                                     src={activeScene.image || '/placeholder-gradient.jpg'}
+                                    alt={activeScene.prompt || "Active scene edit preview"}
                                     style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                                 />
                             )}
@@ -126,6 +127,7 @@ export const Step5Editor: React.FC<Step5Props> = ({
                                     ) : (
                                         <img
                                             src={scene.image || '/placeholder-gradient.jpg'}
+                                            alt={scene.prompt || `Scene ${i + 1} thumbnail`}
                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                         />
                                     )}

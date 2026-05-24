@@ -229,6 +229,7 @@ export const PreviewPlayer: React.FC<PreviewPlayerProps> = ({
                     {bgImage ? (
                         <img
                             src={bgImage}
+                            alt="Scene background"
                             style={{
                                 width: '100%',
                                 height: '100%',

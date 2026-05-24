@@ -208,6 +208,7 @@ export const Step4Production: React.FC<Step4Props> = ({ scenes, aspectRatio, onN
                             ) : (
                                 <img
                                     src={scene.image === 'generated' ? '/placeholder-gradient.jpg' : scene.image}
+                                    alt={scene.prompt || "Scene production preview"}
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
                             )

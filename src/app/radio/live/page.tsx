@@ -258,7 +258,7 @@ export default function RadioLivePage() {
                 <div className="absolute inset-0 z-50 pointer-events-none">
                     {/* Branded HUD Layer */}
                     <div className="absolute bottom-20 left-20 animate-in fade-in slide-in-from-left duration-1000">
-                        <img src="/country-signal-logo.png" className="w-32 h-auto opacity-90 drop-shadow-2xl mb-4" />
+                        <img src="/country-signal-logo.png" alt="Country Signal Radio Logo" className="w-32 h-auto opacity-90 drop-shadow-2xl mb-4" />
                         <div className="flex items-center gap-3 bg-red-600/20 backdrop-blur-xl px-4 py-2 rounded-full border border-red-600/30">
                             <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
                             <span className="text-white text-[8px] font-black tracking-[2px] uppercase">Master Signal Locked</span>

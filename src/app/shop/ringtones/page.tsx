@@ -152,7 +152,7 @@ export default function RingtonesPage() {
                                                 <img
                                                     src={artwork}
                                                     className="w-10 h-10 rounded bg-gray-800 object-cover flex-shrink-0"
-                                                    alt=""
+                                                    alt={ringtone.title}
                                                     onError={(e) => {
                                                         (e.target as HTMLImageElement).src = "/images/singles-cover.png";
                                                     }}

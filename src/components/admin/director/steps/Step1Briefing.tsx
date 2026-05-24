@@ -70,6 +70,7 @@ export const Step1Briefing: React.FC<Step1Props> = ({ onNext, tracks }) => {
                         >
                             <img
                                 src={track.albumCover || "/Club_Gateway_Pop.png"}
+                                alt={track.title}
                                 style={{ width: '50px', height: '50px', borderRadius: '4px', objectFit: 'cover' }}
                             />
                             <div>

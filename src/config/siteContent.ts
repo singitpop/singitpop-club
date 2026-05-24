@@ -39,7 +39,7 @@ export const siteContent = {
                 id: 5,
                 title: "Ryker Boone",
                 subtitle: "Signed Country Pop Artist",
-                image: "/images/ryker-boone/hero-cinematic.png",
+                image: "/images/ryker-boone/ryker_by_old_truck.png",
                 link: "https://rykerboonemusic.website",
                 cta: "Visit Official Website 🌐",
                 external: true
