@@ -1,5 +1,278 @@
 [
   {
+    "id": "our-love-our-forever-2027",
+    "title": "Our Love Our Forever",
+    "year": 2027,
+    "genre": [
+      "Country"
+    ],
+    "coverArt": "cover.png",
+    "tracks": [
+      {
+        "id": 1,
+        "title": "Here Comes the Light",
+        "duration": "3:53",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Here%20Comes%20the%20Light.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Here%20Comes%20the%20Light.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": true
+      },
+      {
+        "id": 2,
+        "title": "I Choose You",
+        "duration": "3:14",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/I%20Choose%20You.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/I%20Choose%20You.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": true
+      },
+      {
+        "id": 3,
+        "title": "Two Roads One Heart",
+        "duration": "2:55",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Two%20Roads%20One%20Heart.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Two%20Roads%20One%20Heart.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": true
+      },
+      {
+        "id": 4,
+        "title": "Bound to You",
+        "duration": "3:26",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Bound%20to%20You.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Bound%20to%20You.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": true
+      },
+      {
+        "id": 5,
+        "title": "Now and Always",
+        "duration": "3:14",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Now%20and%20Always.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Now%20and%20Always.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 6,
+        "title": "First and Always",
+        "duration": "2:58",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/First%20and%20Always.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/First%20and%20Always.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 7,
+        "title": "Before I Knew Your Name",
+        "duration": "3:39",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Before%20I%20Knew%20Your%20Name.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Before%20I%20Knew%20Your%20Name.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": true
+      },
+      {
+        "id": 8,
+        "title": "Like Home",
+        "duration": "2:54",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Like%20Home.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Like%20Home.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 9,
+        "title": "Forever Starts With You",
+        "duration": "2:54",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Forever%20Starts%20With%20You.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Forever%20Starts%20With%20You.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 10,
+        "title": "Hold This Moment",
+        "duration": "2:39",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Hold%20This%20Moment.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Hold%20This%20Moment.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 11,
+        "title": "One Lifetime More",
+        "duration": "2:39",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/One%20Lifetime%20More.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/One%20Lifetime%20More.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 12,
+        "title": "The Last Song We’ll Ever Need",
+        "duration": "2:32",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/The%20Last%20Song%20We%E2%80%99ll%20Ever%20Need.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/The%20Last%20Song%20We%E2%80%99ll%20Ever%20Need.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 13,
+        "title": "Here Comes the Light Wedding Version",
+        "duration": "4:23",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Here%20Comes%20the%20Light%20Wedding%20Version.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Here%20Comes%20the%20Light%20Wedding%20Version.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 14,
+        "title": "I Choose You Wedding Version",
+        "duration": "4:14",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/I%20Choose%20You%20Wedding%20Version.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/I%20Choose%20You%20Wedding%20Version.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 15,
+        "title": "Two Roads One Heart Wedding Remix",
+        "duration": "3:14",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Two%20Roads%20One%20Heart%20Wedding%20Version.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Two%20Roads%20One%20Heart%20Wedding%20Version.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 16,
+        "title": "Bound to You Wedding Version",
+        "duration": "3:54",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Bound%20to%20You%20Wedding%20Version.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Bound%20to%20You%20Wedding%20Version.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      },
+      {
+        "id": 17,
+        "title": "Before I Knew Your Name Wedding Version",
+        "duration": "4:09",
+        "plays": "0",
+        "locked": false,
+        "price": 0.99,
+        "genre": "Country",
+        "mood": "Acoustic",
+        "highResUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Before%20I%20Knew%20Your%20Name%20Wedding%20Version.wav",
+        "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/Before%20I%20Knew%20Your%20Name%20Wedding%20Version.mp3",
+        "sourceFolder": "Our Love Our Forever",
+        "albumId": "our-love-our-forever-2027",
+        "isSingle": false
+      }
+    ],
+    "releaseDate": "2027-02-12",
+    "folderPath": "Our Love Our Forever",
+    "mp3Count": 34,
+    "type": "standard",
+    "trending": false,
+    "exclusive": true,
+    "accessTier": "vip"
+  },
+  {
     "id": "when-the-lights-go-gold-2026",
     "title": "When the Lights Go Gold",
     "year": 2026,
@@ -21,10 +294,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/Friday%20Again.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": true,
-        "lyrics": {
-          "rawText": "Sunset fading on a Friday town\nBlack Silverado windows rolled down\nYour blue eyes glowing in the dashboard light\nLooking like trouble in the neon night\n\nHere we go getting Friday again\nOne more shot and we’re crossing lines again\nYour hand on mine and the speakers low\nTwo hearts burning in the midnight glow\n\nCold beer dripping from your fingertips\nCherry red smile and a midnight kiss\nSlow song playing while you move real close\nGirl you hit me harder than the Tennessee cold\n\nHere we go getting Friday again\nLittle bit lost and falling fast again\nYour boots tap time while the headlights roll\nRunning full speed with nowhere to go\n\nEvery weekend feels the same with you\nOne more night turns into déjà vu\n\nHere we go getting Friday again\nOne more fire we can’t put out again\nMoonlight shining on your skin tonight\nGirl you make the dark feel alive"
-        }
+        "isSingle": true
       },
       {
         "id": 2,
@@ -39,10 +309,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/Midnight%20Motion.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": false,
-        "lyrics": {
-          "rawText": "Blue lights shining on your golden hair\nCold night moving like we disappeared\nYour hand sliding slow across my skin\nEvery second pulling me back in\n\nMidnight motion, moving close to you\nHeartbeat racing every time you move\nOne more touch and the room turns gold\nBurning alive in the midnight glow\n\nYour black boots tapping by the passenger side\nCity lights dancing in your blue eyes\nLipstick kiss with the windows down\nLost together while the world spins round\n\nMidnight motion, holding onto me\nSlow fire burning underneath the seat\nOne more song and we lose control\nRunning wild in the midnight glow\n\nYour name hits like a summer storm\nEvery night keeps pulling me on\n\nMidnight motion, stay here tonight\nMoonlight falling in your silver eyes\nOne more chance before the sky unfolds\nForever starts in the midnight glow"
-        }
+        "isSingle": false
       },
       {
         "id": 3,
@@ -57,10 +324,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/Cold%20Smoke.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": true,
-        "lyrics": {
-          "rawText": "Long week gone and the sun dipped low\nTail lights dancing on the edge of town roads\nThat blue flame buzz from the dashboard glow\nEverybody chasing what they can’t hold\n\nCold smoke hanging under white lights\nRed dirt spinning on a Friday night\nHearts beat heavy when the bass hits low\nWhole town moving in the cold smoke glow\n\nCheap cologne and a flannel sleeve\nHer blue eyes burning back at me\nWindshield fog with the heat turned high\nKissing like we got one night alive\n\nCold smoke hanging under white lights\nBlue jean shadows moving all night\nBoots hit hard when the kick drum rolls\nSmall-town living in the cold smoke glow\n\nFirst frost falling on the hood tonight\nStill chasing that feeling underneath these lights\n\nCold smoke hanging under white lights\nOne more memory burning all night\nHands up high while the speakers blow\nWe come alive in the cold smoke glow"
-        }
+        "isSingle": true
       },
       {
         "id": 4,
@@ -75,10 +339,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/Blue%20Flame.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": true,
-        "lyrics": {
-          "rawText": "Blue lights shining on the hood tonight\nCold wind moving through the dashboard light\nYour boots up high while the tires roll slow\nWhole world fading past the window glow\n\nBlue flame burning in the midnight dark\nTwo hearts running like a stolen spark\nHands locked tight while the backroads roll\nLittle bit reckless, little outta control\n\nGas station coffee and your flannel sleeve\nRed lips laughing in the passenger seat\nFM static and a county road sign\nKissing like forever was a real thing tonight\n\nBlue flame burning underneath these lights\nCold air falling while the stars ignite\nOne more dance while the speakers blow\nLiving wide awake in the blue flame glow\n\nSome nights stay with you after they’re gone\nLike your favorite line in an old country song\n\nBlue flame burning in the midnight haze\nStill feel your touch in the heat it made\nOne more mile before the night moves on\nBlue flame living long after it’s gone"
-        }
+        "isSingle": true
       },
       {
         "id": 5,
@@ -93,10 +354,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/When%20The%20Lights%20Go%20Gold.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": true,
-        "lyrics": {
-          "rawText": "Cold night falling on the boulevard\nBlue lights shining off your parked car\nYour hand wrapped slow around my sleeve\nLike you already knew you’d never leave\n\nWhen the lights go gold tonight\nEverything feels so alive\nOne more kiss in the neon glow\nHolding onto what we can’t let go\n\nLipstick stain on the coffee cup\nDashboard dreams while the sun comes up\nEvery mile pulling me closer still\nEvery touch giving me that thrill\n\nWhen the lights go gold again\nYour blue eyes pull me back in\nOne more dance while the city slows\nBurning alive in the afterglow\n\nEvery road led me back to you\nLike midnight skies always find the moon\n\nWhen the lights go gold tonight\nTwo hearts burning in the satellite sky\nOne last memory before the night unfolds\nForever starts when the lights go gold"
-        }
+        "isSingle": true
       },
       {
         "id": 6,
@@ -111,10 +369,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/Kiss%20Me%20Like%20That.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": false,
-        "lyrics": {
-          "rawText": "Your red lips hit like Tennessee fire\nBlue jean heartbeat taking me higher\nSlow hands sliding underneath my coat\nGirl you got me hanging on every word you spoke\n\nKiss me like that and the world slows down\nMoonlight spinning when you come around\nOne more touch and I lose control\nYou got your name written on my soul\n\nCold night air and your perfume smoke\nOne look from you and I’m coming undone\nDashboard glow in your blue eyes shine\nGot me falling hard every single time\n\nKiss me like that with your hand in mine\nLate night burning like a neon sign\nOne more move and I’m gone again\nGirl you pull me in like the wind\n\nEvery little thing about you feels right\nLike a slow song burning all night\n\nKiss me like that and don’t let go\nMidnight moving soft and slow\nOne more chance before the morning light\nLove me like this all night tonight"
-        }
+        "isSingle": false
       },
       {
         "id": 7,
@@ -129,10 +384,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/Midnight%20Static.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": false,
-        "lyrics": {
-          "rawText": "Snow clouds hanging over exit signs\nYour silhouette in the dashboard light\nFM buzzing through the midnight air\nThat old song hit like you were still there\n\nMidnight static running through my veins\nCold white lines and a little heartbreak\nYour name echo through the speakers low\nLike a ghost riding shotgun through the snow\n\nTruck stop coffee and the heater glow\nCounting mile markers through the falling snow\nYour leather jacket still across the seat\nEvery mile makes you harder to leave\n\nMidnight static underneath the stars\nBroken signals and beat-up hearts\nCold smoke drifting while the highway rolls\nTrying not to let your memory go\n\nSome songs stay long after the night ends\nTurning old flames into old regrets\n\nMidnight static filling up the dark\nStill hear your voice underneath the sparks\nOne more turn before the morning breaks\nStill lost inside that midnight static haze"
-        }
+        "isSingle": false
       },
       {
         "id": 8,
@@ -147,10 +399,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/White%20Line%20Weather.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": true,
-        "lyrics": {
-          "rawText": "Snowfall drifting past the county signs\nCold black river and the power lines\nHeater running while your hand held mine\nWhite line weather on a Friday night\n\nWhite line weather and your blue jean eyes\nCold wind blowing while the sparks still fly\nOne more mile till the sunrise glows\nRunning wild through the falling snow\n\nTruck stop coffee and a faded map\nYour red lipstick on my cigarette pack\nFM buzzing with a slow heartbreak\nTwo hearts burning on an interstate\n\nWhite line weather underneath these lights\nSmall-town dreams running all night\nCold smoke hanging while the tires roll\nTrying not to let this moment go\n\nSome roads change but the feeling stays\nLike your shadow in the dashboard haze\n\nWhite line weather and a midnight sky\nStill chasing sparks in your blue flame eyes\nOne more turn before the morning breaks\nLiving fast through the white line haze"
-        }
+        "isSingle": true
       },
       {
         "id": 9,
@@ -165,10 +414,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/Too%20Close%20To%20Midnight.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": false,
-        "lyrics": {
-          "rawText": "Black boots stepping through the neon light\nBlue eyes shining in the Friday night\nCherry lips leaning close to mine\nSlow burn moving through my mind\n\nToo close to midnight, too close to you\nOne more drink and I’m coming unglued\nYour touch hits like Tennessee gold\nHeartbeats racing while the night rolls slow\n\nCold air drifting through the Chevrolet\nYour red lipstick got me wide awake\nDashboard glow on your perfect smile\nGirl you make losing worth the while\n\nToo close to midnight, too close to fire\nYour kiss pulling me higher and higher\nOne more song and I lose control\nBurning alive in the midnight glow\n\nEvery move got me falling fast\nLike this night was built to last\n\nToo close to midnight, too close to gone\nStill chasing you when the lights come on\nOne more touch and I lose my mind\nGirl you got me every time"
-        }
+        "isSingle": false
       },
       {
         "id": 10,
@@ -183,10 +429,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/What%20We%20Were.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": false,
-        "lyrics": {
-          "rawText": "Phone lights glowing on the kitchen floor\nYour blue dress hanging by the bedroom door\nLast night’s whiskey still on my breath\nYou moved on but I ain’t there yet\n\nWhat we were still runs through my mind\nLike a slow burn I can’t leave behind\nEvery little memory hits that spark\nStill see your shadow in the dark\n\nCold air drifting through the Chevrolet\nYour name sitting on my old playlist\nHalf these nights still feel the same\nEvery song still says your name\n\nWhat we were still feels so real\nLike your hand still holding the wheel\nLate night driving with nowhere to go\nStill getting lost in what we were before\n\nSome things fade and some things stay\nYou still hit me like yesterday\n\nWhat we were still burns like gold\nEven now when the nights get cold\nOne last memory I can’t outrun\nStill chasing shadows of what we were"
-        }
+        "isSingle": false
       },
       {
         "id": 11,
@@ -201,10 +444,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/Stay%20Till%20Sunday.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": false,
-        "lyrics": {
-          "rawText": "You walked in wearing downtown black\nBlue jean eyes and a backwards cap\nSlow bass line and a neon glow\nYou pulled me close and moved real slow\n\nStay till Sunday, don’t say goodbye\nMoonlight falling in your blue eyes\nOne more kiss before the night is gone\nHold me close till the morning comes\n\nCold air drifting through the parking lot\nYour hand in mine still burning hot\nDashboard lights on an empty road\nTwo hearts racing with nowhere to go\n\nStay till Sunday, don’t let go\nMidnight moving real soft and slow\nOne more touch underneath these lights\nStay right here with me tonight\n\nYour red lips and that midnight smile\nGot me lost for a little while\n\nStay till Sunday, stay all night\nNothing else ever feels this right\nOne more song before the sky turns gold\nStay with me till the night gets old"
-        }
+        "isSingle": false
       },
       {
         "id": 12,
@@ -219,10 +459,7 @@
         "audioUrl": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/when-the-lights-go-gold/One%20More%20Summer.mp3",
         "sourceFolder": "When The Lights Go Gold",
         "albumId": "when-the-lights-go-gold-2026",
-        "isSingle": true,
-        "lyrics": {
-          "rawText": "Your blue eyes shining in the dashboard light\nCold air moving through the Friday night\nRed lips leaning close against my face\nEvery heartbeat speeding up the pace\n\nOne more summer in your arms tonight\nOne more memory burning bright\nOne more kiss before the night moves on\nHolding onto what we almost lost\n\nSilver moon hanging over county roads\nYour hand tracing circles on my coat\nFM playing songs we used to know\nTwo hearts drifting slow through the glow\n\nOne more summer underneath these stars\nOne more second right here where we are\nOne more touch before the morning light\nLoving you like it’s July tonight\n\nEvery time your shadow crosses mine\nFeels like summer frozen in time\n\nOne more summer before the sky turns gold\nOne more fire burning through the cold\nOne last dance before the night is gone\nHolding onto you till the dawn"
-        }
+        "isSingle": true
       }
     ],
     "releaseDate": "2026-10-02",
@@ -231,8 +468,7 @@
     "type": "studio",
     "trending": false,
     "exclusive": true,
-    "accessTier": "vip",
-    "hasArtbook": true
+    "accessTier": "vip"
   },
   {
     "id": "september-turns-gold-2026",

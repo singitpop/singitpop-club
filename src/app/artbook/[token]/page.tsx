@@ -41,7 +41,7 @@ export default async function ArtbookPage({ params }: { params: { token: string 
                 <div className="w-20 h-20 rounded-full bg-red-500/20 flex items-center justify-center border border-red-500/30">
                     <span className="text-red-500 text-3xl font-bold">!</span>
                 </div>
-                <h1 className="text-4xl font-bold tracking-tight">Access Denied</h1>
+                <h2 className="text-4xl font-bold tracking-tight">Access Denied</h2>
                 <p className="text-xl text-zinc-400 max-w-md">Invalid or Expired Artbook Token.</p>
                 <div className="mt-4 p-4 bg-zinc-900/50 rounded-2xl border border-white/5 text-sm text-zinc-500">
                     If you believe this is an error, please check the link in your email receipt, or contact support.

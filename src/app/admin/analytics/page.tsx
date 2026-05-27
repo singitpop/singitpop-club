@@ -33,7 +33,7 @@ export default function AnalyticsPage() {
     if (!isLabel) {
         return (
             <div className="flex h-screen items-center justify-center text-white">
-                <h1>Restricted Area</h1>
+                <h2>Restricted Area</h2>
             </div>
         );
     }

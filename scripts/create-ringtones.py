@@ -119,11 +119,8 @@ def main():
     count = 0
     
     target_albums = [
-        "quiet turning",
-        "boots in the autumn dust",
-        "september afterglow",
-        "september turns gold",
-        "when the lights go gold"
+        "when the lights go gold",
+        "our love our forever"
     ]
     
     for album in albums:

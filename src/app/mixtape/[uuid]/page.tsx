@@ -137,7 +137,7 @@ export default function MixtapePlaybackPage({ params }: { params: { uuid: string
                                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                                 className="w-32 h-32 rounded-full border-8 border-black shadow-2xl overflow-hidden relative group-hover:scale-110 transition-transform"
                              >
-                                <img src={currentTrack?.coverArt} className="w-full h-full object-cover" />
+                                <img src={currentTrack?.coverArt} alt={currentTrack?.title || "Track Cover"} className="w-full h-full object-cover" />
                                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                                     <div className="w-4 h-4 bg-white rounded-full shadow-inner" />
                                 </div>

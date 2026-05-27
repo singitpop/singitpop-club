@@ -1,7 +1,7 @@
 {
-  "generated": "2026-05-23T14:55:54.410Z",
-  "totalAlbums": 63,
-  "totalTracks": 767,
+  "generated": "2026-05-27T09:32:44.718Z",
+  "totalAlbums": 64,
+  "totalTracks": 784,
   "genres": [
     "Christmas",
     "Country",
@@ -18,11 +18,23 @@
     "Trance"
   ],
   "years": [
+    2027,
     2026,
     2025,
     2024
   ],
   "albums": [
+    {
+      "id": "our-love-our-forever-2027",
+      "title": "Our Love Our Forever",
+      "year": 2027,
+      "trackCount": 17,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Our Love Our Forever",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/"
+    },
     {
       "id": "when-the-lights-go-gold-2026",
       "title": "When the Lights Go Gold",

@@ -46,3 +46,7 @@ next-env.d.ts
 SingItPop_CreatorPack_v*.zip
 /creator_pack_volumes/
 /temp_harvest/
+
+# temp scratch and backup files
+/scratch/
+*.bak

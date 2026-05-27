@@ -53,13 +53,10 @@ async function scanAndUpload(dir) {
 
     const items = fs.readdirSync(dir, { withFileTypes: true });
 
-    // TARGET ALBUMS FILTER
+    // TARGET ALBUMS FILTER (Only the new albums)
     const targetAlbums = [
-        "quiet turning",
-        "boots in the autumn dust",
-        "september afterglow",
-        "september turns gold",
-        "when the lights go gold"
+        "when the lights go gold",
+        "our love our forever"
     ];
 
     for (const item of items) {

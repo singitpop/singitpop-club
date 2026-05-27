@@ -43,13 +43,10 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
     const albums = {};
     const tracksByAlbum = {};
 
-    // 5 Target albums to process and merge
+    // Target albums to process and merge (Only the new albums)
     const targetAlbums = [
-        "Quiet Turning",
-        "Boots in the Autumn Dust",
-        "September Afterglow",
-        "September Turns Gold",
-        "When the Lights Go Gold"
+        "When the Lights Go Gold",
+        "Our Love Our Forever"
     ];
     const targetAlbumsLower = targetAlbums.map(a => a.toLowerCase().trim());
 
@@ -325,12 +322,16 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
                 // Find MP3
                 const mp3Match = audioFiles.find(fPath => {
                     const f = path.basename(fPath).toLowerCase();
-                    const cleanFileName = f.replace(/\.mp3$/, '').replace(/[^a-z0-9]/g, '').replace('live', '');
-                    const cleanTitle = track.title.toLowerCase().replace(/[^a-z0-9]/g, '').replace('live', '');
+                    const cleanFileName = f.replace(/\.mp3$/, '').replace(/[^a-z0-9]/g, '').replace('live', '').replace('remix', 'version');
+                    const cleanTitle = track.title.toLowerCase().replace(/[^a-z0-9]/g, '').replace('live', '').replace('remix', 'version');
+                    return f.endsWith('.mp3') && cleanFileName === cleanTitle;
+                }) || audioFiles.find(fPath => {
+                    const f = path.basename(fPath).toLowerCase();
+                    const cleanFileName = f.replace(/\.mp3$/, '').replace(/[^a-z0-9]/g, '').replace('live', '').replace('remix', 'version');
+                    const cleanTitle = track.title.toLowerCase().replace(/[^a-z0-9]/g, '').replace('live', '').replace('remix', 'version');
                     
                     return f.endsWith('.mp3') && (
                         f.includes(track.title.toLowerCase()) ||
-                        cleanFileName === cleanTitle ||
                         cleanFileName.includes(cleanTitle) ||
                         cleanTitle.includes(cleanFileName)
                     );
@@ -339,12 +340,16 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
                 // Find WAV
                 const wavMatch = audioFiles.find(fPath => {
                     const f = path.basename(fPath).toLowerCase();
-                    const cleanFileName = f.replace(/\.wav$/, '').replace(/[^a-z0-9]/g, '').replace('live', '');
-                    const cleanTitle = track.title.toLowerCase().replace(/[^a-z0-9]/g, '').replace('live', '');
+                    const cleanFileName = f.replace(/\.wav$/, '').replace(/[^a-z0-9]/g, '').replace('live', '').replace('remix', 'version');
+                    const cleanTitle = track.title.toLowerCase().replace(/[^a-z0-9]/g, '').replace('live', '').replace('remix', 'version');
+                    return f.endsWith('.wav') && cleanFileName === cleanTitle;
+                }) || audioFiles.find(fPath => {
+                    const f = path.basename(fPath).toLowerCase();
+                    const cleanFileName = f.replace(/\.wav$/, '').replace(/[^a-z0-9]/g, '').replace('live', '').replace('remix', 'version');
+                    const cleanTitle = track.title.toLowerCase().replace(/[^a-z0-9]/g, '').replace('live', '').replace('remix', 'version');
                     
                     return f.endsWith('.wav') && (
                         f.includes(track.title.toLowerCase()) ||
-                        cleanFileName === cleanTitle ||
                         cleanFileName.includes(cleanTitle) ||
                         cleanTitle.includes(cleanFileName)
                     );

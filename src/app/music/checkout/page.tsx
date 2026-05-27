@@ -177,7 +177,7 @@ function CheckoutContent() {
                 <div className={styles.successIcon}>
                     <Check size={64} />
                 </div>
-                <h1>{isEligibleForFree ? "Download Claimed!" : "Order Confirmed!"}</h1>
+                <h2>{isEligibleForFree ? "Download Claimed!" : "Order Confirmed!"}</h2>
                 <p>
                     {isEligibleForFree
                         ? "As a valued member, this mixtape is on the house."

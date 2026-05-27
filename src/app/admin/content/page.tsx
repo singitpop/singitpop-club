@@ -196,7 +196,7 @@ export default function ContentPage() {
     if (!isLabel) {
         return (
             <div className={styles.restricted}>
-                <h1>Restricted Area</h1>
+                <h2>Restricted Area</h2>
                 <p>Content management requires Label permissions.</p>
             </div>
         );

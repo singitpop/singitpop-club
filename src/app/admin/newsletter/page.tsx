@@ -76,7 +76,7 @@ export default function NewsletterBuilder() {
 <body>
   <div class="container">
     <div class="header">
-        <h1>SingIt Pop</h1>
+        <div style="font-size: 24px; font-weight: bold; margin: 0;">SingIt Pop</div>
     </div>
     <div class="content">
         <h2>${subject}</h2>

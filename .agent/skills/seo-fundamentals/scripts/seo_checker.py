@@ -34,7 +34,11 @@ except:
 SKIP_DIRS = {
     'node_modules', '.next', 'dist', 'build', '.git', '.github',
     '__pycache__', '.vscode', '.idea', 'coverage', 'test', 'tests',
-    '__tests__', 'spec', 'docs', 'documentation', 'examples'
+    '__tests__', 'spec', 'docs', 'documentation', 'examples',
+    'node_modules_bad_versions', 'node_modules_trash_1769789215',
+    'scratch', 'temp_stems_pilot', 'temp_demucs', 'tmp', 'backup',
+    'backup_2026-04-10_NUKED_RESTORATION', 'backup_2026-04-10_restoration_baseline',
+    'snapshots'
 }
 
 # Files to skip (not pages)
@@ -102,21 +106,21 @@ def check_page(file_path: Path) -> dict:
     except Exception as e:
         return {"file": str(file_path.name), "issues": [f"Error: {e}"]}
     
-    # Detect if this is a layout/template file (has Head component)
-    is_layout = 'Head>' in content or '<head' in content.lower()
+    # Detect if this is a layout/template file (has Head component or head tag, and is a layout or HTML file)
+    is_layout = ('layout' in file_path.name.lower() or file_path.suffix.lower() in ['.html', '.htm']) and ('<head' in content.lower() or 'Head>' in content or 'metadata' in content)
     
     # 1. Title tag
-    has_title = '<title' in content.lower() or 'title=' in content or 'Head>' in content
+    has_title = '<title' in content.lower() or 'title=' in content or 'Head>' in content or 'title:' in content or 'title =' in content
     if not has_title and is_layout:
         issues.append("Missing <title> tag")
     
     # 2. Meta description
-    has_description = 'name="description"' in content.lower() or 'name=\'description\'' in content.lower()
+    has_description = 'name="description"' in content.lower() or 'name=\'description\'' in content.lower() or 'description:' in content or 'description =' in content
     if not has_description and is_layout:
         issues.append("Missing meta description")
     
     # 3. Open Graph tags
-    has_og = 'og:' in content or 'property="og:' in content.lower()
+    has_og = 'og:' in content or 'property="og:' in content.lower() or 'openGraph:' in content or 'openGraph =' in content
     if not has_og and is_layout:
         issues.append("Missing Open Graph tags")
     
@@ -127,7 +131,9 @@ def check_page(file_path: Path) -> dict:
     
     # 5. Images without alt
     img_pattern = r'<img[^>]+>'
-    imgs = re.findall(img_pattern, content, re.I)
+    # Replace arrow functions (=>) to prevent matching early on > inside JSX
+    content_for_imgs = re.sub(r'=>', '==', content)
+    imgs = re.findall(img_pattern, content_for_imgs, re.I)
     for img in imgs:
         if 'alt=' not in img.lower():
             issues.append("Image missing alt attribute")

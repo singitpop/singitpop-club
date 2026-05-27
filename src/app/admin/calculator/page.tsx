@@ -42,7 +42,7 @@ export default function QuoteCalculatorPage() {
         return (
             <div className="min-h-screen bg-black text-white p-8 flex items-center justify-center">
                 <div className="bg-white/10 p-8 rounded-3xl border border-white/20 text-center">
-                    <h1 className="text-2xl font-bold text-red-400 mb-4">Restricted Access</h1>
+                    <h2 className="text-2xl font-bold text-red-400 mb-4">Restricted Access</h2>
                     <p>You need Label permissions to view this pricing tool.</p>
                 </div>
             </div>

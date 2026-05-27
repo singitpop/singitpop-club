@@ -60,6 +60,26 @@ export async function POST(req: Request) {
             return NextResponse.json({ success: true, tier });
         }
 
+        if (action === 'set_ryker_tier') {
+            await client.users.updateUserMetadata(userId, {
+                publicMetadata: {
+                    rykerTier: tier // 'VIP' or 'FREE'
+                }
+            });
+            return NextResponse.json({ success: true, rykerTier: tier });
+        }
+
+        if (action === 'toggle_ryker_ban') {
+            const userObj = await client.users.getUser(userId);
+            const isCurrentlyBanned = userObj.publicMetadata?.rykerBanned === true;
+            await client.users.updateUserMetadata(userId, {
+                publicMetadata: {
+                    rykerBanned: !isCurrentlyBanned
+                }
+            });
+            return NextResponse.json({ success: true, rykerBanned: !isCurrentlyBanned });
+        }
+
         if (action === 'ban') {
             await client.users.banUser(userId);
             return NextResponse.json({ success: true, banned: true });

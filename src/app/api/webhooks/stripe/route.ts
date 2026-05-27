@@ -95,6 +95,12 @@ export async function POST(req: Request) {
                         publicMetadata: { tier: 'VIP' }
                     });
                     grantedTier = 'VIP';
+                } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_RYKER_VIP) {
+                    console.log("🎸 Ryker VIP Subscription Active!");
+                    await clerkClient.users.updateUser(clerkUserId, {
+                        publicMetadata: { rykerTier: 'VIP' }
+                    });
+                    grantedTier = 'RYKER VIP';
                 } else if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER) {
                     console.log("💿 Insider Subscription Active!");
                     await clerkClient.users.updateUser(clerkUserId, {

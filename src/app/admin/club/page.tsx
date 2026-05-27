@@ -277,7 +277,7 @@ export default function AdminClubPage() {
                             <div key={album.id} className="bg-white/5 rounded-2xl p-6 border border-white/10 flex gap-4 items-center">
                                 <div className="w-16 h-16 bg-white/10 rounded-lg overflow-hidden shrink-0">
                                     {album.coverArt ? (
-                                        <img src={album.coverArt} className="w-full h-full object-cover" />
+                                        <img src={album.coverArt} alt={album.title} className="w-full h-full object-cover" />
                                     ) : <Music className="w-full h-full p-4 text-white/20" />}
                                 </div>
                                 <div className="flex-1">

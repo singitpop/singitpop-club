@@ -13,14 +13,14 @@ async function list() {
     try {
         const cmd = new ListObjectsV2Command({
             Bucket: "singitpop-music",
-            Prefix: "albums/Southern Lights"
+            Prefix: "albums/boots-in-the-autumn-dust/"
         });
         const data = await client.send(cmd);
-        if (data.Contents) {
-            console.log("Files found:");
-            data.Contents.forEach(c => console.log(c.Key));
+        if (data.CommonPrefixes) {
+            console.log("Folders found:");
+            data.CommonPrefixes.forEach(c => console.log(c.Prefix));
         } else {
-            console.log("No files found.");
+            console.log("No folders found.");
         }
     } catch (e) {
         console.error(e);

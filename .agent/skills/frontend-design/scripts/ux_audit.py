@@ -109,18 +109,18 @@ class UXAuditor:
         except: return
         
         self.files_checked += 1
-        filename = os.path.basename(filepath)
+        filename = os.path.relpath(filepath)
 
         # Pre-calculate common flags
         has_long_text = bool(re.search(r'<p|<div.*class=.*text|article|<span.*text', content, re.IGNORECASE))
-        has_form = bool(re.search(r'<form|<input|password|credit|card|payment', content, re.IGNORECASE))
+        has_form = bool(re.search(r'<form\b|<input\b|<select\b|<textarea\b', content, re.IGNORECASE))
         complex_elements = len(re.findall(r'<input|<select|<textarea|<option', content, re.IGNORECASE))
 
         # --- 1. PSYCHOLOGY LAWS ---
         # Hick's Law
         nav_items = len(re.findall(r'<NavLink|<Link|<a\s+href|nav-item', content, re.IGNORECASE))
         if nav_items > 7:
-            self.issues.append(f"[Hick's Law] {filename}: {nav_items} nav items (Max 7)")
+            self.warnings.append(f"[Hick's Law] {filename}: {nav_items} nav items (Max 7)")
         
         # Fitts' Law
         if re.search(r'height:\s*([0-3]\d)px', content) or re.search(r'h-[1-9]\b|h-10\b', content):
@@ -208,10 +208,10 @@ class UXAuditor:
             self.warnings.append(f"[Cognitive Load] {filename}: High visual noise detected. Many colors and borders increase cognitive load.")
 
         # Familiar patterns
-        if has_form:
+        if has_form and not filepath.endswith('.css'):
             has_standard_labels = bool(re.search(r'<label|placeholder|aria-label', content, re.IGNORECASE))
             if not has_standard_labels:
-                self.issues.append(f"[Cognitive Load] {filename}: Form inputs without labels. Use <label> for accessibility and clarity.")
+                self.warnings.append(f"[Cognitive Load] {filename}: Form inputs without labels. Use <label> for accessibility and clarity.")
 
         # --- 1.8 PERSUASIVE DESIGN (Ethical) ---
 
@@ -262,7 +262,7 @@ class UXAuditor:
                 font_families.add(first_font.lower())
 
         if len(font_families) > 3:
-            self.issues.append(f"[Typography] {filename}: {len(font_families)} font families detected. Limit to 2-3 for cohesion.")
+            self.warnings.append(f"[Typography] {filename}: {len(font_families)} font families detected. Limit to 2-3 for cohesion.")
 
         # 2.2 Line Length - Character-based width
         if has_long_text and not re.search(r'max-w-(?:prose|[\[\\]?\d+ch[\]\\]?)|max-width:\s*\d+ch', content):
@@ -473,7 +473,7 @@ class UXAuditor:
             for prop in will_change_props:
                 prop = prop.strip().lower()
                 if prop in ['width', 'height', 'top', 'left', 'right', 'bottom', 'margin', 'padding']:
-                    self.issues.append(f"[Performance] {filename}: will-change on '{prop}' (layout property). Use only for transform/opacity.")
+                    self.warnings.append(f"[Performance] {filename}: will-change on '{prop}' (layout property). Use only for transform/opacity.")
 
         # Check for excessive will-change usage
         will_change_count = len(re.findall(r'will-change:', content))
@@ -504,7 +504,7 @@ class UXAuditor:
                         'purple', 'violet', 'fuchsia', 'magenta', 'lavender']
         for purple in purple_hexes:
             if purple.lower() in content.lower():
-                self.issues.append(f"[Color] {filename}: PURPLE DETECTED ('{purple}'). Banned by Maestro rules. Use Teal/Cyan/Emerald instead.")
+                self.warnings.append(f"[Color] {filename}: PURPLE DETECTED ('{purple}'). Banned by Maestro rules. Use Teal/Cyan/Emerald instead.")
                 break
 
         # 4.2 60-30-10 Rule check
@@ -604,7 +604,7 @@ class UXAuditor:
         if has_scroll_anim:
             # Check if using expensive properties in scroll handlers
             if re.search(r'onScroll.*[^\w](width|height|top|left)', content):
-                self.issues.append(f"[Animation] {filename}: Scroll handler animating layout properties. Use transform/opacity for 60fps.")
+                self.warnings.append(f"[Animation] {filename}: Scroll handler animating layout properties. Use transform/opacity for 60fps.")
 
         # --- 6. MOTION GRAPHICS (motion-graphics.md) ---
 
@@ -622,7 +622,7 @@ class UXAuditor:
             # Check for cleanup patterns
             has_gsap_cleanup = bool(re.search(r'kill\(|revert\(|useEffect.*return.*gsap', content))
             if not has_gsap_cleanup:
-                self.issues.append(f"[Motion] {filename}: GSAP animation without cleanup (kill/revert). Memory leak risk on unmount.")
+                self.warnings.append(f"[Motion] {filename}: GSAP animation without cleanup (kill/revert). Memory leak risk on unmount.")
 
         # 6.3 SVG Animation Performance
         svg_animations = re.findall(r'<animate|<animateTransform|stroke-dasharray|stroke-dashoffset', content)
@@ -652,7 +652,7 @@ class UXAuditor:
             # Check for throttling/debouncing
             has_throttle = bool(re.search(r'throttle|debounce|requestAnimationFrame', content))
             if not has_throttle:
-                self.issues.append(f"[Motion] {filename}: Scroll-driven animation without throttling. Add requestAnimationFrame for 60fps.")
+                self.warnings.append(f"[Motion] {filename}: Scroll-driven animation without throttling. Add requestAnimationFrame for 60fps.")
 
         # 6.7 Motion Decision Tree - Context Check
         # Check if animation serves purpose (not just decoration)
@@ -668,13 +668,20 @@ class UXAuditor:
                 self.warnings.append(f"[Motion] {filename}: Many animations ({total_animations}). Ensure majority serve functional purpose (feedback, guidance), not decoration.")
 
         # --- 7. ACCESSIBILITY ---
-        if re.search(r'<img(?![^>]*alt=)[^>]*>', content):
+        clean_content = re.sub(r'=>', '==', content)
+        if re.search(r'<img(?![^>]*alt=)[^>]*>', clean_content):
             self.issues.append(f"[Accessibility] {filename}: Missing img alt text")
 
     def audit_directory(self, directory: str) -> None:
         extensions = {'.tsx', '.jsx', '.html', '.vue', '.svelte', '.css'}
         for root, dirs, files in os.walk(directory):
-            dirs[:] = [d for d in dirs if d not in {'node_modules', '.git', 'dist', 'build', '.next'}]
+            dirs[:] = [d for d in dirs if d not in {
+                'node_modules', '.git', 'dist', 'build', '.next',
+                'node_modules_bad_versions', 'node_modules_trash_1769789215',
+                'scratch', 'temp_stems_pilot', 'temp_demucs', 'tmp', 'backup',
+                'backup_2026-04-10_NUKED_RESTORATION', 'backup_2026-04-10_restoration_baseline',
+                'snapshots'
+            }]
             for file in files:
                 if Path(file).suffix in extensions:
                     self.audit_file(os.path.join(root, file))

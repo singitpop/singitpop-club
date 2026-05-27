@@ -233,7 +233,7 @@ export default function AdminVotingPage() {
                                                 target.src = track.fallbackArtwork;
                                             }
                                         }}
-                                        alt=""
+                                        alt={track.title}
                                         style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }}
                                     />
                                     <div style={{ flex: 1 }}>
@@ -268,6 +268,7 @@ export default function AdminVotingPage() {
                                                     // Basic fallback
                                                     target.style.display = 'none';
                                                 }}
+                                                alt={track.title}
                                                 style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }}
                                             />
                                             <div style={{ flex: 1 }}>

@@ -11,7 +11,7 @@ const client = new S3Client({
 });
 
 async function test() {
-    const key = 'albums/Night Drive - 80s Beats & Ballads/Love lights up/love lights up.mp3';
+    const key = 'albums/Boots and Beats Country Line Dance Anthems/jukebox jumping/Jukebox Jumping.mp3';
     console.log(`Testing key: "${key}"`);
     try {
         const res = await client.send(new GetObjectCommand({ Bucket: 'singitpop-music', Key: key }));

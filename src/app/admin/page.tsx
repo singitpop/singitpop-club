@@ -19,7 +19,7 @@ export default function AdminPage() {
         return (
             <div className={styles.container}>
                 <div className={styles.card}>
-                    <h1>Restricted Access</h1>
+                    <h2>Restricted Access</h2>
                     <p>You need Label (Admin) permissions to view this page.</p>
                     <Link href="/" className={styles.btn}>Return Home</Link>
                 </div>
