@@ -18,12 +18,7 @@ export default function SmartCTA() {
     // Router and Clerk are already defined above
 
     // Helper to check tier levels
-    const isInsider = user?.tier === 'INSIDER' || user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'ADMIN' || user?.tier === 'LIFETIME';
-    const isVIP = user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'ADMIN' || user?.tier === 'LIFETIME';
-
-    // Exact tier checks for button display
-    const isExactlyInsider = user?.tier === 'INSIDER';
-    const isExactlyVIP = user?.tier === 'VIP' || user?.tier === 'LABEL' || user?.tier === 'ADMIN';
+    const isPremium = user?.tier === 'PREMIUM' || user?.tier === 'LABEL' || user?.tier === 'ADMIN';
 
     const handleCheckout = async (priceId: string, tierName: string) => {
         setLoadingTier(tierName);
@@ -40,7 +35,7 @@ export default function SmartCTA() {
             } else {
                 if (res.status === 401) {
                     // Not logged in -> Store intent and redirect to Sign Up
-                    localStorage.setItem('intended_tier', tierName); // 'INSIDER' or 'VIP'
+                    localStorage.setItem('intended_tier', tierName); // 'PREMIUM' or 'Lifetime Premium'
                     openSignUp();
                 } else {
                     console.error("Checkout failed");
@@ -86,38 +81,65 @@ export default function SmartCTA() {
                     </button>
                 </div>
 
-                {/* Tier 2: Premium Club */}
-                <div className={styles.card}>
-                    <div className={styles.cardHeader}>
-                        <img src="/images/icon-tier-premium-neon.png" alt="" className={styles.icon} />
-                        <h3>Premium Club</h3>
-                        <span className={styles.price}>£3.99<small>/mo</small></span>
+                {/* Tier 2: Premium Club OR Artists Catalog Upgrade */}
+                {user?.rykerTier === 'PREMIUM' && !isPremium ? (
+                    <div className={`${styles.card} ${styles.featured}`}>
+                        <div className={styles.cardHeader}>
+                            <img src="/images/icon-tier-premium-neon.png" alt="" className={styles.icon} />
+                            <h3>Artists Catalog</h3>
+                            <span className={styles.price}>+£1.00<small>/mo</small></span>
+                        </div>
+                        <ul className={styles.features}>
+                            <li>✅ <strong>Ryker Member Discount perk!</strong></li>
+                            <li>✅ Complete SingIt Pop Artists Catalog 🔓</li>
+                            <li>✅ Create 10 Mixtapes / Month 🎧</li>
+                            <li>✅ Lossless WAV & MP3 Downloads 💎</li>
+                            <li>✅ Exclusive Radio Stations 📻</li>
+                            <li>✅ 20% Discount in Shop 🏷️</li>
+                        </ul>
+                        <button
+                            className={styles.glowBtn}
+                            onClick={() => handleCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_UPGRADE || 'price_1TbfXMGBBlYIBJloUpgrade', 'PREMIUM')}
+                            disabled={loadingTier === 'PREMIUM'}
+                        >
+                            {loadingTier === 'PREMIUM' ? (
+                                <Loader2 className="animate-spin" size={20} />
+                            ) : (
+                                'Upgrade Now'
+                            )}
+                        </button>
                     </div>
-                    <ul className={styles.features}>
-                        <li>✅ <strong>Everything in Fan</strong></li>
-                        <li>✅ Full Current Release Catalog 🔓</li>
-                        <li>✅ Create 10 Mixtapes / Month 🎧</li>
-                        <li>✅ Lossless WAV & MP3 Downloads 💎</li>
-                        <li>✅ Exclusive Radio Stations 📻</li>
-                        <li>✅ 20% Discount in Shop 🏷️</li>
-                    </ul>
-                    <button
-                        className={styles.glowBtn}
-                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_INSIDER || process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER || '', 'INSIDER')}
-                        disabled={loadingTier === 'INSIDER' || isInsider}
-                        style={isInsider ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
-                    >
-                        {loadingTier === 'INSIDER' ? (
-                            <Loader2 className="animate-spin" size={20} />
-                        ) : user?.tier === 'LIFETIME' ? (
-                            'Included in Lifetime'
-                        ) : (user?.tier === 'INSIDER' || user?.tier === 'VIP') ? (
-                            'Current Plan'
-                        ) : (
-                            'Go Premium'
-                        )}
-                    </button>
-                </div>
+                ) : (
+                    <div className={styles.card}>
+                        <div className={styles.cardHeader}>
+                            <img src="/images/icon-tier-premium-neon.png" alt="" className={styles.icon} />
+                            <h3>Premium Club</h3>
+                            <span className={styles.price}>£3.99<small>/mo</small></span>
+                        </div>
+                        <ul className={styles.features}>
+                            <li>✅ <strong>Everything in Fan</strong></li>
+                            <li>✅ Full Current Release Catalog 🔓</li>
+                            <li>✅ Create 10 Mixtapes / Month 🎧</li>
+                            <li>✅ Lossless WAV & MP3 Downloads 💎</li>
+                            <li>✅ Exclusive Radio Stations 📻</li>
+                            <li>✅ 20% Discount in Shop 🏷️</li>
+                        </ul>
+                        <button
+                            className={styles.glowBtn}
+                            onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_INSIDER || process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER || '', 'PREMIUM')}
+                            disabled={loadingTier === 'PREMIUM' || isPremium}
+                            style={isPremium ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
+                        >
+                            {loadingTier === 'PREMIUM' ? (
+                                <Loader2 className="animate-spin" size={20} />
+                            ) : user?.tier === 'PREMIUM' ? (
+                                'Current Plan'
+                            ) : (
+                                'Go Premium'
+                            )}
+                        </button>
+                    </div>
+                )}
 
                 {/* Tier 3: Lifetime Premium */}
                 <div className={`${styles.card} ${styles.featured}`}>
@@ -139,14 +161,11 @@ export default function SmartCTA() {
                     </ul>
                     <button
                         className={styles.glowBtn}
-                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_LIFETIME || process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME || '', 'Lifetime VIP')}
-                        disabled={loadingTier === 'Lifetime VIP' || user?.tier === 'LIFETIME'}
-                        style={user?.tier === 'LIFETIME' ? { background: '#333', cursor: 'default', boxShadow: 'none' } : {}}
+                        onClick={() => handleCheckout(process.env.NEXT_PUBLIC_PRICE_LIFETIME || process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME || '', 'Lifetime Premium')}
+                        disabled={loadingTier === 'Lifetime Premium'}
                     >
-                        {loadingTier === 'Lifetime VIP' ? (
+                        {loadingTier === 'Lifetime Premium' ? (
                             <Loader2 className="animate-spin" size={20} />
-                        ) : user?.tier === 'LIFETIME' ? (
-                            'Current Plan'
                         ) : (
                             'Get Lifetime Access'
                         )}

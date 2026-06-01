@@ -68,8 +68,12 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ url: session.url });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("[CHECKOUT_ERROR]", error);
-        return new NextResponse("Internal Error", { status: 500 });
+
+        // If customer doesn't exist anymore, we could delete the metadata in Clerk.
+        // For now, we return the specific Stripe error message so the user knows.
+        const errorMessage = error instanceof Error ? error.message : "Internal Error";
+        return new NextResponse(errorMessage, { status: 500 });
     }
 }

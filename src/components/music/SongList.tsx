@@ -395,7 +395,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                         if (isPreRelease && !isLatestSingle) {
                             if (!rules.canAccessExclusiveRadio && !isSponsor) { // VIP/Label logic tied to radio access for pre-releases
                                 isLocked = true;
-                                lockMessage = "VIP Exclusive! Upgrade to listen before release.";
+                                lockMessage = "Premium Exclusive! Upgrade to listen before release.";
                             }
                         } else {
                             if (!isFullAccess && !isOwned && !isSponsor) {
@@ -543,7 +543,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     {isPro && track.highResUrl && (
                                         <button
                                             className={styles.actionBtn}
-                                            title="Download WAV (VIP)"
+                                            title="Download WAV (Premium)"
                                             onClick={async (e) => {
                                                 e.stopPropagation();
                                                 try {
@@ -653,7 +653,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                         <p style={{ fontSize: '0.8rem', opacity: 0.8 }}>
                                             {claimsLeft !== null
                                                 ? `Remaining Claims: ${claimsLeft} / ${(isPro || isLabel ? 10 : 3)}`
-                                                : (isPro || isLabel ? "VIP Limit: 10 Mixes/Month" : "Insider Limit: 3 Mixes/Month")
+                                                : (isPro || isLabel ? "Premium Limit: 10 Mixes/Month" : "Fan Limit: 3 Mixes/Month")
                                             }
                                         </p>
                                     </>
@@ -705,7 +705,7 @@ export default function SongList({ tracks, albums, filterMode = 'all', selectedT
                                     <h3 className={styles.modalTitle}>Upgrade for Full Access 🎧</h3>
                                     <p className={styles.modalText}>
                                         You've hit the preview limit on this premium track.<br />
-                                        Upgrade to <strong>Insider</strong> or <strong>VIP</strong> to unlock full streaming!
+                                        Upgrade to <strong>Fan</strong> or <strong>Premium</strong> to unlock full streaming!
                                     </p>
                                     <div className={styles.modalActions}>
                                         <a href="/club/account" className={`${styles.modalBtn} ${styles.modalBtnPrimary}`}>

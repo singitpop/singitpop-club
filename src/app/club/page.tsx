@@ -32,7 +32,6 @@ export default function ClubPage() {
 
             let priceId = '';
             if (intendedTier === 'INSIDER') priceId = process.env.NEXT_PUBLIC_PRICE_INSIDER || '';
-            if (intendedTier === 'VIP') priceId = process.env.NEXT_PUBLIC_PRICE_VIP || '';
 
             if (priceId) {
                 setIsRedirecting(true);
@@ -67,7 +66,7 @@ export default function ClubPage() {
     }
 
     const tierName = appUser?.tier || 'MEMBER';
-    const isVIP = tierName === 'VIP' || tierName === 'LABEL' || tierName === 'ADMIN' || tierName === 'LIFETIME';
+    const isVIP = tierName === 'PREMIUM' || tierName === 'LABEL' || tierName === 'ADMIN';
 
     return (
         <div className="min-h-screen bg-black text-white p-6 pb-24">
@@ -88,7 +87,7 @@ export default function ClubPage() {
                     <p className="text-white/60">
                         {isVIP
                             ? "Your exclusive access to unreleased albums."
-                            : "Upgrade to VIP for exclusive access."}
+                            : "Upgrade to Premium for exclusive access."}
                     </p>
                 </motion.div>
 
@@ -155,12 +154,10 @@ export default function ClubPage() {
 
                         <div className="space-y-6">
                             {/* Render badges for each tier group */}
-                            {['INSIDER', 'VIP', 'LIFETIME'].map((displayTier) => {
+                            {['PREMIUM'].map((displayTier) => {
                                 // Filter badges for this tier
-                                const tierBadges = BADGES.filter(b => b.tier === displayTier);
-                                const isTierUnlocked = (tierName === 'LIFETIME') ||
-                                    (tierName === 'VIP' && displayTier !== 'LIFETIME') ||
-                                    (tierName === 'INSIDER' && displayTier === 'INSIDER');
+                                const tierBadges = BADGES.filter(b => b.tier === 'INSIDER' || b.tier === 'LIFETIME' || b.tier === 'PREMIUM');
+                                const isTierUnlocked = (tierName === 'PREMIUM');
 
                                 return (
                                     <div key={displayTier} className={`relative p-4 rounded-2xl border ${isTierUnlocked ? 'bg-white/5 border-white/10' : 'bg-transparent border-white/5'}`}>

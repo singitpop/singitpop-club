@@ -26,17 +26,6 @@ const tiers = [
             "Everything in Fan",
             "Full Current Release Catalog 🔓",
             "Create 10 Mixtapes / Month 🎧",
-            "Standard Quality Streaming 📻",
-            "10% Discount in Shop 🏷️"
-        ],
-        highlight: false,
-        action: "Upgrade"
-    },
-    {
-        name: "VIP Membership",
-        price: "£4.99/mo",
-        features: [
-            "Everything in Premium Club",
             "Lossless WAV & MP3 Downloads 💎",
             "Exclusive Artbooks & Lyric Pages 📚",
             "Ringtones & Digital Brochures 🔔",
@@ -51,7 +40,7 @@ const tiers = [
         price: "£79",
         features: [
             "One-time payment 💸",
-            "Forever VIP Access ♾️",
+            "Forever Premium Access ♾️",
             "Special 'Lifetime' Badge 🏅",
             "All Future Perks Included 🚀",
             "Maximum Priority Support ⚡"
@@ -106,10 +95,6 @@ export default function MembershipPage() {
             const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_INSIDER || process.env.NEXT_PUBLIC_PRICE_INSIDER || '';
             handleCheckout(priceId, tierName);
         }
-        if (tierName === "VIP Membership") {
-            const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_VIP || process.env.NEXT_PUBLIC_PRICE_VIP || '';
-            handleCheckout(priceId, tierName);
-        }
         if (tierName === "Lifetime Premium") {
             const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME || '';
             handleCheckout(priceId, tierName);
@@ -131,9 +116,7 @@ export default function MembershipPage() {
                 {tiers.map((tier) => {
                     // Simple logic to show "Current" state
                     const isCurrent = (user?.tier === 'FAN' && tier.name === 'The Fan') ||
-                        (user?.tier === 'INSIDER' && tier.name === 'Premium Club') ||
-                        (user?.tier === 'VIP' && tier.name === 'VIP Membership') ||
-                        (user?.tier === 'LIFETIME' && tier.name === 'Lifetime Premium');
+                        (user?.tier === 'PREMIUM' && (tier.name === 'Premium Club' || tier.name === 'Lifetime Premium'));
 
                     const isLoading = loadingTier === tier.name;
 

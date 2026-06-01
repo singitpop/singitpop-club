@@ -36,8 +36,11 @@ function CheckoutContent() {
                 mode: "subscription"
             })
         })
-            .then(res => {
-                if (!res.ok) throw new Error("Failed to initialize checkout.");
+            .then(async res => {
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(errorText || "Failed to initialize checkout.");
+                }
                 return res.json();
             })
             .then(data => {
