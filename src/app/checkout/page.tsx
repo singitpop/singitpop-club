@@ -39,7 +39,7 @@ function CheckoutContent() {
             .then(async res => {
                 if (!res.ok) {
                     const errorText = await res.text();
-                    throw new Error(errorText || "Failed to initialize checkout.");
+                    throw new Error(`Failed to initialize checkout (Status: ${res.status} ${res.statusText}). Details: ${errorText}`);
                 }
                 return res.json();
             })
