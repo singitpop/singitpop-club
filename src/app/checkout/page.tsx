@@ -12,6 +12,7 @@ function CheckoutContent() {
     const [error, setError] = useState<string | null>(null);
 
     const priceId = searchParams.get("priceId");
+    const returnUrl = searchParams.get("returnUrl");
 
     useEffect(() => {
         if (!isLoaded) return;
@@ -33,7 +34,8 @@ function CheckoutContent() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 priceId,
-                mode: "subscription"
+                mode: "subscription",
+                returnUrl
             })
         })
             .then(async res => {

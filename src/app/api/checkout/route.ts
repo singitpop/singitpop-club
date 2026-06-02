@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const { priceId: inputPriceId, mode = 'subscription', trackId, albumId } = await req.json();
+        const { priceId: inputPriceId, mode = 'subscription', trackId, albumId, returnUrl } = await req.json();
 
         let priceId = inputPriceId;
 
@@ -45,6 +45,10 @@ export async function POST(req: NextRequest) {
             stripeCustomerId = customer.id;
         }
 
+        // Determine base URLs
+        const successBaseUrl = returnUrl || process.env.NEXT_PUBLIC_APP_URL || "https://club.singitpop.com";
+        const cancelBaseUrl = returnUrl || process.env.NEXT_PUBLIC_APP_URL || "https://club.singitpop.com";
+
         // 3. Create Checkout Session
         const session = await stripe.checkout.sessions.create({
             customer: stripeCustomerId,
@@ -61,8 +65,8 @@ export async function POST(req: NextRequest) {
                 trackId: trackId || undefined, // Add trackId if present
                 albumId: albumId || undefined  // Add albumId if present
             },
-            success_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://club.singitpop.com"}/club?success=true`,
-            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://club.singitpop.com"}/music?canceled=true`, // Redirect to music on cancel for track buys
+            success_url: returnUrl ? `${successBaseUrl}?success=true` : `${successBaseUrl}/club?success=true`,
+            cancel_url: returnUrl ? `${cancelBaseUrl}?canceled=true` : `${cancelBaseUrl}/music?canceled=true`,
             billing_address_collection: 'auto',
             allow_promotion_codes: true,
         });
