@@ -5,7 +5,7 @@ const isProtectedRoute = createRouteMatcher(['/club(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
     // 1. Capture Referral Code
-    const { searchParams } = new URL(req.url);
+    const { searchParams, pathname } = new URL(req.url);
     const refCode = searchParams.get('ref');
 
     if (refCode) {
@@ -16,6 +16,15 @@ export default clerkMiddleware(async (auth, req) => {
             sameSite: 'lax'
         });
         return res;
+    }
+
+    // 2. Intercept already-signed-in users going to sign-in with a redirect_url
+    if (pathname.startsWith('/sign-in') || pathname.startsWith('/sign-up')) {
+        const { userId } = await auth();
+        const redirectUrl = searchParams.get('redirect_url');
+        if (userId && redirectUrl) {
+            return NextResponse.redirect(redirectUrl);
+        }
     }
 
     if (isProtectedRoute(req)) await auth.protect();
