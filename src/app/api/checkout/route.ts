@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, currentUser } from '@clerk/nextjs/server';
-import { stripe } from '@/lib/stripe';
+import { stripe } from '../../../lib/stripe';
 import Stripe from 'stripe'; // Fix: Import Stripe type
-import { normalizeEmail } from '@/lib/email-utils';
+import { normalizeEmail } from '../../../lib/email-utils';
 
 export async function POST(req: NextRequest) {
     try {
