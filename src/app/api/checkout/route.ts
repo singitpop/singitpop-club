@@ -31,7 +31,8 @@ export async function POST(req: NextRequest) {
 
         if (!stripeCustomerId) {
             // 2. Create a new Customer in Stripe if checks fail
-            const userEmail = user.emailAddresses[0].emailAddress;
+            const userEmail = user.emailAddresses?.[0]?.emailAddress;
+            if (!userEmail) { return new NextResponse("User email missing from account", { status: 400 }); }
             const normalizedEmail = normalizeEmail(userEmail);
 
             const customer = await stripe.customers.create({
@@ -60,8 +61,8 @@ export async function POST(req: NextRequest) {
                 trackId: trackId || undefined, // Add trackId if present
                 albumId: albumId || undefined  // Add albumId if present
             },
-            success_url: `${process.env.NEXT_PUBLIC_APP_URL}/club?success=true`,
-            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/music?canceled=true`, // Redirect to music on cancel for track buys
+            success_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://club.singitpop.com"}/club?success=true`,
+            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://club.singitpop.com"}/music?canceled=true`, // Redirect to music on cancel for track buys
             billing_address_collection: 'auto',
             allow_promotion_codes: true,
         });
