@@ -1,0 +1,102 @@
+.page {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.tier {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.popular {
+    border-color: var(--primary);
+    background: linear-gradient(180deg, var(--surface), rgba(139, 92, 246, 0.1));
+    transform: scale(1.05);
+}
+
+.icon {
+    width: 48px;
+    height: 48px;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 1rem 0;
+}
+
+.desc {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    min-height: 40px;
+}
+
+.orderForm {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+}
+
+.orderForm h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.formGroup {
+    margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+    width: 100%;
+    background: var(--background);
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    color: white;
+    font-family: inherit;
+}
+
+.aiNote {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}

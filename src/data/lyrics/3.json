@@ -1,0 +1,283 @@
+{
+  "trackId": 3,
+  "lastModified": "2026-01-29T21:16:30.521Z",
+  "lyrics": [
+    {
+      "text": "You walk in and the room gets quiet",
+      "timestamp": 19.090091
+    },
+    {
+      "text": "Like the world is holding back its breath",
+      "timestamp": 23.510895
+    },
+    {
+      "text": "Your smile hits me in a slow wave",
+      "timestamp": 27.760006
+    },
+    {
+      "text": "Pulling every heartbeat from my chest",
+      "timestamp": 31.843393
+    },
+    {
+      "text": "I never knew that love could feel so gentle",
+      "timestamp": 36.37984
+    },
+    {
+      "text": "Like something folded carefully in time",
+      "timestamp": 40.908317
+    },
+    {
+      "text": "You take my hand and suddenly it’s simple",
+      "timestamp": 45.23181
+    },
+    {
+      "text": "You’re the reason all my stars align",
+      "timestamp": 48.819198
+    },
+    {
+      "text": "You are my Valentine, my sweetest sign",
+      "timestamp": 52.659574
+    },
+    {
+      "text": "The one my heart keeps reaching for every time",
+      "timestamp": 57.255531
+    },
+    {
+      "text": "Hold me close, don’t let the moment fade",
+      "timestamp": 61.424843
+    },
+    {
+      "text": "You turn my whole world into soft champagne",
+      "timestamp": 66.369592
+    },
+    {
+      "text": "You are my Valentine, my favourite line",
+      "timestamp": 70.332786
+    },
+    {
+      "text": "The song I wanna sing for the rest of my life",
+      "timestamp": 74.993099
+    },
+    {
+      "text": "Call me yours and I’ll call you mine",
+      "timestamp": 80.205477
+    },
+    {
+      "text": "You are my Valentine",
+      "timestamp": 86.337256
+    },
+    {
+      "text": "You speak and all my edges soften",
+      "timestamp": 106.666013
+    },
+    {
+      "text": "Like you’re pouring honey on the night",
+      "timestamp": 110.968772
+    },
+    {
+      "text": "You look at me and something opens",
+      "timestamp": 115.253563
+    },
+    {
+      "text": "A place I didn’t know I kept inside",
+      "timestamp": 118.906031
+    },
+    {
+      "text": "Your touch is warm like velvet on my shoulder",
+      "timestamp": 123.871067
+    },
+    {
+      "text": "Your voice is quiet but it pulls me in",
+      "timestamp": 128.155877
+    },
+    {
+      "text": "And every time your heartbeat drifts closer",
+      "timestamp": 132.460507
+    },
+    {
+      "text": "I fall in love all over again",
+      "timestamp": 136.876419
+    },
+    {
+      "text": "You are my Valentine, my sweetest sign",
+      "timestamp": 140.077892
+    },
+    {
+      "text": "The one my heart keeps reaching for every time",
+      "timestamp": 144.58013
+    },
+    {
+      "text": "Hold me close, don’t let the moment fade",
+      "timestamp": 148.833208
+    },
+    {
+      "text": "You turn my whole world into soft champagne",
+      "timestamp": 153.559172
+    },
+    {
+      "text": "You are my Valentine, my favourite line",
+      "timestamp": 157.566893
+    },
+    {
+      "text": "The song I wanna sing for the rest of my life",
+      "timestamp": 162.022586
+    },
+    {
+      "text": "Call me yours and I’ll call you mine",
+      "timestamp": 167.561129
+    },
+    {
+      "text": "You are my Valentine",
+      "timestamp": 173.681521
+    },
+    {
+      "text": "If love is something that we choose",
+      "timestamp": 193.593122
+    },
+    {
+      "text": "Then every day I’m choosing you",
+      "timestamp": 197.943149
+    },
+    {
+      "text": "In every sunrise, every night",
+      "timestamp": 202.159254
+    },
+    {
+      "text": "You’re still my heart’s first light",
+      "timestamp": 205.522634
+    },
+    {
+      "text": "You are my",
+      "timestamp": 217.511446
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene_1769720832765_0",
+      "startTime": 19.090091,
+      "endTime": 36.37984,
+      "lyrics": [
+        "You walk in and the room gets quiet",
+        "Like the world is holding back its breath",
+        "Your smile hits me in a slow wave",
+        "Pulling every heartbeat from my chest"
+      ],
+      "prompt": "Cinematic wide shot, epic scale of room quiet world holding breath, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769720862971_Image_fx__1_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T210743Z&X-Amz-Expires=604800&X-Amz-Signature=873ee36f259d0bb793196c3387a0646b719c3e62dc7e84e2bc952b5f6ae7fcf2&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769720862971_Image_fx__1_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_4",
+      "startTime": 36.37984,
+      "endTime": 52.659574,
+      "lyrics": [
+        "I never knew that love could feel so gentle",
+        "Like something folded carefully in time",
+        "You take my hand and suddenly it’s simple",
+        "You’re the reason all my stars align"
+      ],
+      "prompt": "Intimate close-up, shallow depth of field, bokeh of never knew love feel gentle, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769720892309_Image_fx__6_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T210812Z&X-Amz-Expires=604800&X-Amz-Signature=602445a48bcbad810692e4705631d4f91b2ff836f38d24dfda940af7c46d0ea4&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769720892309_Image_fx__6_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_8",
+      "startTime": 52.659574,
+      "endTime": 70.332786,
+      "lyrics": [
+        "You are my Valentine, my sweetest sign",
+        "The one my heart keeps reaching for every time",
+        "Hold me close, don’t let the moment fade",
+        "You turn my whole world into soft champagne"
+      ],
+      "prompt": "Low angle dramatic shot, imposing of valentine sweetest sign one heart, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769721275100_Image_fx__34_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T211435Z&X-Amz-Expires=604800&X-Amz-Signature=fe2f1807841a164afe747fe1a7fe06236efd157daac7f270b718601c9129e86b&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769721275100_Image_fx__34_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_12",
+      "startTime": 70.332786,
+      "endTime": 106.666013,
+      "lyrics": [
+        "You are my Valentine, my favourite line",
+        "The song I wanna sing for the rest of my life",
+        "Call me yours and I’ll call you mine",
+        "You are my Valentine"
+      ],
+      "prompt": "Aerial drone view, high altitude of valentine favourite line song wanna, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769721336551_Image_fx__25_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T211537Z&X-Amz-Expires=604800&X-Amz-Signature=d568a1e984b3eadee65acff1e31a29c695015202a5cffef8757db8730241a528&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769721336551_Image_fx__25_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_16",
+      "startTime": 106.666013,
+      "endTime": 123.871067,
+      "lyrics": [
+        "You speak and all my edges soften",
+        "Like you’re pouring honey on the night",
+        "You look at me and something opens",
+        "A place I didn’t know I kept inside"
+      ],
+      "prompt": "Medium shot, dynamic composition of speak edges soften you’re pouring, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769720962667_Image_fx__16_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T210923Z&X-Amz-Expires=604800&X-Amz-Signature=d0099eb7e7ce74882697f8942d0ec583625d900547671dcecabdf7456f0e5640&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769720962667_Image_fx__16_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_20",
+      "startTime": 123.871067,
+      "endTime": 140.077892,
+      "lyrics": [
+        "Your touch is warm like velvet on my shoulder",
+        "Your voice is quiet but it pulls me in",
+        "And every time your heartbeat drifts closer",
+        "I fall in love all over again"
+      ],
+      "prompt": "Dutch angle, chaotic energy of touch warm velvet shoulder voice, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769720979033_Image_fx__17_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T210939Z&X-Amz-Expires=604800&X-Amz-Signature=a07f74daecbddceebfd04c24d9589795e552aad16482ae23d1f16e6cdefb80e0&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769720979033_Image_fx__17_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_24",
+      "startTime": 140.077892,
+      "endTime": 157.566893,
+      "lyrics": [
+        "You are my Valentine, my sweetest sign",
+        "The one my heart keeps reaching for every time",
+        "Hold me close, don’t let the moment fade",
+        "You turn my whole world into soft champagne"
+      ],
+      "prompt": "Cinematic wide shot, epic scale of valentine sweetest sign one heart, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769721300040_Image_fx__35_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T211500Z&X-Amz-Expires=604800&X-Amz-Signature=76ecfbed502a23d4ffd9307df5e746fbbc526a7647cf2c1d44a62a4dc750f1d8&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769721300040_Image_fx__35_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_28",
+      "startTime": 157.566893,
+      "endTime": 193.593122,
+      "lyrics": [
+        "You are my Valentine, my favourite line",
+        "The song I wanna sing for the rest of my life",
+        "Call me yours and I’ll call you mine",
+        "You are my Valentine"
+      ],
+      "prompt": "Intimate close-up, shallow depth of field, bokeh of valentine favourite line song wanna, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769721320476_Image_fx__24_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T211521Z&X-Amz-Expires=604800&X-Amz-Signature=f80ddabc40f72d076251c53aeeac15172617aee160d9b2429e6475a9551910c5&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769721320476_Image_fx__24_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_32",
+      "startTime": 193.593122,
+      "endTime": 217.511446,
+      "lyrics": [
+        "If love is something that we choose",
+        "Then every day I’m choosing you",
+        "In every sunrise, every night",
+        "You’re still my heart’s first light"
+      ],
+      "prompt": "Low angle dramatic shot, imposing of love something choose then every, cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769721361123_Image_fx__27_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T211602Z&X-Amz-Expires=604800&X-Amz-Signature=b9e64983fa3f8b0c73593db346ad5e0400b3d000017c2e205740f0064d8874c1&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769721361123_Image_fx__27_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    },
+    {
+      "id": "scene_1769720832765_36",
+      "startTime": 217.511446,
+      "endTime": 227.511446,
+      "lyrics": [
+        "You are my"
+      ],
+      "prompt": "Aerial drone view, high altitude of , cyberpunk city, neon lights, rain, reflections, futuristic, cinematic 4k, trending on artstation, 8k resolution, Unreal Engine 5 render, photorealistic, volumetric lighting, highly detailed, masterpiece, raytracing, sharp focus, cinematic color grading.",
+      "image": "https://singitpop-music.s3.eu-north-1.amazonaws.com/uploads/director/1769721376485_Image_fx__29_.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIARROH2RBJE2IDJPAZ%2F20260129%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260129T211617Z&X-Amz-Expires=604800&X-Amz-Signature=12123af5e9e65d1d2088c3bfec1dbf049aed176733bbc8d17f479091294ff901&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%221769721376485_Image_fx__29_.png%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+    }
+  ]
+}

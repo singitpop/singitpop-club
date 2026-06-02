@@ -1,0 +1,98 @@
+{
+  "title": "Ebb And Flow",
+  "artist": "SingIt Pop",
+  "album": "Waves of Tranquility Deep House Reflections",
+  "id": 14,
+  "lyrics": [
+    {
+      "id": 1,
+      "text": "Let it go, let it flow…\nLet it go, let it go… \nLet it flow, let it flow…",
+      "startTime": 0,
+      "endTime": 15
+    },
+    {
+      "id": 2,
+      "text": "Sunlight fades, colors start to blend,\nAs the day slips away, I find peace again.\nFootprints in the sand, washed by the tide,\nEvery wave a whisper, letting worries subside..",
+      "startTime": 15,
+      "endTime": 30
+    },
+    {
+      "id": 3,
+      "text": "I’m here with the ocean, just breathing in deep,\nIn the calm of the night, my soul finds release.",
+      "startTime": 30,
+      "endTime": 45
+    },
+    {
+      "id": 4,
+      "text": "Let it ebb, let it flow, like the waves on the shore,\nFeel the rhythm of life, I’m not fighting it anymore.\nIn this quiet place, under skies so wide,\nI find my peace, in the ocean’s tide.",
+      "startTime": 45,
+      "endTime": 60
+    },
+    {
+      "id": 5,
+      "text": "Let it go, let it flow…\nLet it go, let it flow…",
+      "startTime": 60,
+      "endTime": 75
+    },
+    {
+      "id": 6,
+      "text": "Starlight above, casting shadows below,\nThe world slows down in the moon’s gentle glow.\nEach breath feels lighter, like a gentle sigh,\nAs I drift with the waves, beneath the night sky.",
+      "startTime": 75,
+      "endTime": 90
+    },
+    {
+      "id": 7,
+      "text": "Gone are the worries, carried out to sea,\nIn the flow of the tide, I just let it be.",
+      "startTime": 90,
+      "endTime": 105
+    },
+    {
+      "id": 8,
+      "text": "Let it ebb, let it flow, like the waves on the shore,\nFeel the rhythm of life, I’m not fighting it anymore.\nIn this quiet place, under skies so wide,\nI find my peace, in the ocean’s tide.",
+      "startTime": 105,
+      "endTime": 120
+    },
+    {
+      "id": 9,
+      "text": "Let it go, let it flow…\nLet it go, let it flow…",
+      "startTime": 120,
+      "endTime": 135
+    },
+    {
+      "id": 10,
+      "text": "I surrender to the night, to the pull of the sea,\nIn the arms of the waves, I feel truly free.\nEvery rise, every fall, is a part of me,\nIn this dance with the ocean, I’m where I should be.",
+      "startTime": 135,
+      "endTime": 150
+    },
+    {
+      "id": 11,
+      "text": "Let it ebb, let it flow, like the waves on the shore,\nFeel the rhythm of life, I’m not fighting it anymore.\nIn this quiet place, under skies so wide,\nI find my peace, in the ocean’s tide.",
+      "startTime": 150,
+      "endTime": 165
+    },
+    {
+      "id": 12,
+      "text": "With the ocean’s embrace, I let my heart go,\nIn the ebb and flow, I’ve found my soul.",
+      "startTime": 165,
+      "endTime": 180
+    },
+    {
+      "id": 13,
+      "text": "Let it go, let it flow…\nLet it go, let it flow…",
+      "startTime": 180,
+      "endTime": 195
+    },
+    {
+      "id": 14,
+      "text": "Let it ebb, let it flow, like the waves on the shore,\nFeel the rhythm of life, I’m not fighting it anymore.\nIn this quiet place, under skies so wide,\nI find my peace, in the ocean’s tide.",
+      "startTime": 195,
+      "endTime": 210
+    },
+    {
+      "id": 15,
+      "text": "With the ocean’s embrace, I let my heart go,\nIn the ebb and flow, I’ve found my soul.",
+      "startTime": 210,
+      "endTime": 225
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": [
+    "node_modules",
+    "node_modules_bad_versions",
+    "node_modules_trash_1769789215",
+    "backup",
+    "backup_2026-04-10_NUKED_RESTORATION",
+    "backup_2026-04-10_restoration_baseline",
+    "snapshots",
+    "scratch",
+    "scripts",
+    "temp_stems_pilot",
+    "temp_demucs",
+    "tmp",
+    ".next",
+    "src/app/api/admin/licensing/issue/route.ts",
+    "src/app/api/licensing/checkout/route.ts",
+    "src/app/api/licensing/webhook/route.ts",
+    "src/app/api/shop/sponsorship/checkout/route.ts",
+    "src/app/api/stripe/checkout/route.ts",
+    "src/app/fan-albums/page.tsx",
+    "src/components/director/DirectorWizard.tsx",
+    "src/components/support/ChatWidget.tsx",
+    "src/components/tour/TourMap.tsx",
+    "src/lib/seo-utils.ts"
+  ]
+}
