@@ -110,8 +110,7 @@ export default function AdminUsersPage() {
         const tier = user.publicMetadata?.tier || 'FAN';
         const downloads = user.publicMetadata?.downloadsThisMonth || 0;
 
-        if (tier === 'LABEL') return <span title="Unlimited">∞</span>;
-        if (tier === 'VIP') return <span>{downloads} / 10</span>;
+        if (tier === 'LABEL' || tier === 'LIFETIME') return <span title="Unlimited">∞</span>;
         if (tier === 'INSIDER') return <span>{downloads} / 3</span>;
 
         return <span style={{ opacity: 0.5 }}>-</span>;
@@ -163,7 +162,7 @@ export default function AdminUsersPage() {
                                 <th>User</th>
                                 <th>Email</th>
                                 <th>Current Tier</th>
-                                <th>Ryker VIP</th>
+                                <th>Ryker Tier</th>
                                 <th>Usage</th>
                                 <th>Actions</th>
                             </tr>
@@ -185,15 +184,15 @@ export default function AdminUsersPage() {
                                         <span className={`${styles.badge}`} style={{
                                             background: user.publicMetadata?.rykerBanned 
                                                 ? '#ef4444' 
-                                                : user.publicMetadata?.rykerTier === 'VIP' 
+                                                : user.publicMetadata?.rykerTier === 'PREMIUM' 
                                                     ? '#e2b35a' 
                                                     : 'transparent',
                                             color: user.publicMetadata?.rykerBanned 
                                                 ? 'white' 
-                                                : user.publicMetadata?.rykerTier === 'VIP' 
+                                                : user.publicMetadata?.rykerTier === 'PREMIUM' 
                                                     ? 'black' 
                                                      : 'rgba(255,255,255,0.4)',
-                                            border: user.publicMetadata?.rykerTier === 'VIP' || user.publicMetadata?.rykerBanned ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                                            border: user.publicMetadata?.rykerTier === 'PREMIUM' || user.publicMetadata?.rykerBanned ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                             fontSize: '0.7rem',
                                             fontWeight: 'bold',
                                             padding: '0.2rem 0.5rem',
@@ -201,8 +200,8 @@ export default function AdminUsersPage() {
                                         }}>
                                             {user.publicMetadata?.rykerBanned 
                                                 ? 'BANNED' 
-                                                : user.publicMetadata?.rykerTier === 'VIP' 
-                                                    ? 'VIP' 
+                                                : user.publicMetadata?.rykerTier === 'PREMIUM' 
+                                                    ? 'PREMIUM' 
                                                     : 'FREE'}
                                         </span>
                                     </td>
@@ -213,13 +212,14 @@ export default function AdminUsersPage() {
                                         <div className={styles.actions}>
                                             <select
                                                 className={styles.tierSelect}
-                                                value={user.publicMetadata?.tier || 'FAN'}
+                                                value={['FAN', 'PREMIUM', 'LABEL', 'VIP', 'INSIDER'].includes(user.publicMetadata?.tier as string) ? user.publicMetadata?.tier : 'FAN'}
                                                 onChange={(e) => updateUserTier(user.id, e.target.value)}
                                             >
-                                                <option value="FAN">Fan</option>
-                                                <option value="INSIDER">Insider</option>
-                                                <option value="VIP">VIP</option>
+                                                <option value="FAN">Fan (Free)</option>
+                                                <option value="PREMIUM">Premium Club</option>
                                                 <option value="LABEL">Label (Admin)</option>
+                                                <option value="VIP" disabled hidden>Legacy VIP</option>
+                                                <option value="INSIDER" disabled hidden>Legacy Insider</option>
                                             </select>
 
                                             <button
@@ -251,11 +251,12 @@ export default function AdminUsersPage() {
                                                 <span style={{ fontSize: '0.65rem', color: '#888', fontWeight: 'bold' }}>RYKER:</span>
                                                 <select
                                                     className={styles.tierSelect}
-                                                    value={user.publicMetadata?.rykerTier || 'FREE'}
+                                                    value={['FREE', 'PREMIUM', 'VIP'].includes(user.publicMetadata?.rykerTier as string) ? user.publicMetadata?.rykerTier : 'FREE'}
                                                     onChange={(e) => updateRykerUserTier(user.id, e.target.value)}
                                                 >
                                                      <option value="FREE">Free</option>
-                                                     <option value="VIP">VIP</option>
+                                                     <option value="PREMIUM">Premium</option>
+                                                     <option value="VIP" disabled hidden>Legacy VIP</option>
                                                 </select>
                                                 <button
                                                     onClick={() => toggleRykerBan(user.id)}

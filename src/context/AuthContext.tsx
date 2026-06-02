@@ -3,10 +3,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useUser } from '@clerk/nextjs';
 
-type UserTier = 'GUEST' | 'FAN' | 'INSIDER' | 'VIP' | 'LABEL' | 'ADMIN' | 'LIFETIME';
+type UserTier = 'GUEST' | 'FAN' | 'PREMIUM' | 'LABEL' | 'ADMIN';
 
 interface User {
     tier: UserTier;
+    rykerTier?: string;
     name: string;
     purchasedTracks: string[]; // Array of Track IDs (e.g. 'track_01')
 }
@@ -33,11 +34,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (isLoaded && clerkUser) {
             const metadata = clerkUser.publicMetadata;
-            // Check for 'tier' or 'role' in metadata
-            const tier = (metadata.tier as UserTier) || (metadata.role === 'admin' ? 'ADMIN' : 'FAN');
+            const rawTier = metadata.tier as string;
+            let tier: UserTier = 'FAN';
+            
+            if (rawTier === 'VIP' || rawTier === 'INSIDER' || rawTier === 'PREMIUM') {
+                tier = 'PREMIUM';
+            } else if (rawTier === 'LABEL' || rawTier === 'ADMIN' || metadata.role === 'admin') {
+                tier = 'LABEL';
+            }
 
             setUser({
                 tier: tier,
+                rykerTier: (metadata.rykerTier as string) || 'FREE',
                 name: clerkUser.fullName || clerkUser.firstName || 'Member',
                 purchasedTracks: (metadata.purchasedTracks as string[]) || []
             });
@@ -60,9 +68,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const login = (tier: UserTier) => {
         // Manual login override (mostly for local dev testing)
         let name = 'Music Fan';
-        if (tier === 'INSIDER') name = 'The Insider';
-        if (tier === 'VIP') name = 'Pro Member';
-        if (tier === 'LIFETIME') name = 'Lifetime VIP';
+        if (tier === 'PREMIUM') name = 'Premium Member';
         if (tier === 'LABEL') name = 'SingIt Pop (Label)';
         if (tier === 'ADMIN') name = 'SingIt Pop (Admin)';
 
@@ -77,12 +83,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const isLabel = user?.tier === 'LABEL' || user?.tier === 'ADMIN';
-    const isPro = user?.tier === 'VIP' || user?.tier === 'LIFETIME' || isLabel; // VIP/Lifetime/Admin Get High Res
-    const isInsider = user?.tier === 'INSIDER' || isPro; // Insider Gets MP3 (VIP/Admin gets this too)
+    const isPro = user?.tier === 'PREMIUM' || isLabel; // Premium/Admin Get High Res
+    const isInsider = isPro; // Same as Premium now
 
     const hasTrackAccess = (trackId: string) => {
         if (!user) return false;
-        if (isPro || isInsider || isLabel) return true; // VIPs/Insiders get everything
+        if (isPro || isInsider || isLabel) return true; // Premium/Insiders get everything
         return user.purchasedTracks?.includes(trackId) || false;
     };
 
