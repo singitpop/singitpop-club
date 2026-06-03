@@ -123,9 +123,7 @@ export default function RootLayout({
                             <SkipLink />
                             <Header />
                             <main id="main-content" style={{ minHeight: '100vh', paddingTop: 'var(--header-height)' }}>
-                                <PageTransition>
-                                    {children}
-                                </PageTransition>
+                                {children}
                                 <MobileNav />
                             </main>
                             <Footer />
