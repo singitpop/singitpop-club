@@ -28,23 +28,6 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ r
                         <SignIn
                             signUpUrl="/sign-up"
                             fallbackRedirectUrl={params?.redirect_url || "/club"}
-                            appearance={{
-                                elements: {
-                                    rootBox: "w-full",
-                                    card: "bg-transparent shadow-none w-full",
-                                    headerTitle: "text-white text-2xl font-bold font-[family-name:var(--font-main)]",
-                                    headerSubtitle: "text-white/50",
-                                    socialButtonsBlockButton: "bg-white/5 border-white/10 text-white hover:bg-white/10",
-                                    socialButtonsBlockButtonText: "text-white",
-                                    dividerLine: "bg-white/10",
-                                    dividerText: "text-white/30",
-                                    formFieldLabel: "text-white/70",
-                                    formFieldInput: "bg-white/5 border-white/10 text-white focus:border-purple-500",
-                                    footerActionTranslate: "hidden", // We can hide standard footer text if we want custom
-                                    footerActionLink: "text-purple-400 hover:text-purple-300",
-                                    formButtonPrimary: "bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-500/20"
-                                }
-                            }}
                         />
                     </div>
                 </div>
