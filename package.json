@@ -35,7 +35,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.3",
-    "framer-motion": "^12.24.12",
+    "framer-motion": "^11.11.17",
     "google-auth-library": "^10.5.0",
     "jsonwebtoken": "^9.0.3",
     "leaflet": "^1.9.4",
