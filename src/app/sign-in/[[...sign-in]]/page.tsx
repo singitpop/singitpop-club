@@ -5,17 +5,6 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 export default async function Page({ searchParams }: { searchParams: { redirect_url?: string } }) {
-    const { userId } = await auth();
-
-    // If the user is already signed in, bounce them immediately to the redirect_url or /club
-    if (userId) {
-        if (searchParams?.redirect_url) {
-            redirect(searchParams.redirect_url);
-        } else {
-            redirect('/club');
-        }
-    }
-
     return (
         <div className="flex flex-col justify-center items-center min-h-screen w-full relative overflow-hidden bg-black">
             {/* Ambient Background */}

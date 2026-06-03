@@ -18,15 +18,6 @@ export default clerkMiddleware(async (auth, req) => {
         return res;
     }
 
-    // 2. Intercept already-signed-in users going to sign-in with a redirect_url
-    if (pathname.startsWith('/sign-in') || pathname.startsWith('/sign-up')) {
-        const { userId } = await auth();
-        const redirectUrl = searchParams.get('redirect_url');
-        if (userId && redirectUrl) {
-            return NextResponse.redirect(redirectUrl);
-        }
-    }
-
     if (isProtectedRoute(req)) await auth.protect();
 });
 
