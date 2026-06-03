@@ -37,6 +37,7 @@
     "dotenv": "^17.2.3",
     "framer-motion": "^12.24.12",
     "google-auth-library": "^10.5.0",
+    "jsonwebtoken": "^9.0.3",
     "leaflet": "^1.9.4",
     "leaflet-polylinedecorator": "^1.6.0",
     "lucide-react": "^0.562.0",
@@ -58,6 +59,7 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
