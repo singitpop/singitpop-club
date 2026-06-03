@@ -4,7 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-export default async function Page({ searchParams }: { searchParams: { redirect_url?: string } }) {
+export default async function Page({ searchParams }: { searchParams: Promise<{ redirect_url?: string }> }) {
+    const params = await searchParams;
     return (
         <div className="flex flex-col justify-center items-center min-h-screen w-full relative overflow-hidden bg-black">
             {/* Ambient Background */}
@@ -26,7 +27,7 @@ export default async function Page({ searchParams }: { searchParams: { redirect_
                     <div className="bg-black/40 backdrop-blur-xl p-8 rounded-xl flex justify-center">
                         <SignIn
                             signUpUrl="/sign-up"
-                            fallbackRedirectUrl={searchParams?.redirect_url || "/club"}
+                            fallbackRedirectUrl={params?.redirect_url || "/club"}
                             appearance={{
                                 elements: {
                                     rootBox: "w-full",
