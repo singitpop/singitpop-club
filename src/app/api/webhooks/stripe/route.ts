@@ -19,23 +19,40 @@ const clerkClient = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
+const STRIPE_WEBHOOK_SECRET_TEST = process.env.STRIPE_WEBHOOK_SECRET_TEST;
 
 export async function POST(req: Request) {
     if (!STRIPE_WEBHOOK_SECRET) {
-        console.error("❌ Mising STRIPE_WEBHOOK_SECRET");
+        console.error("❌ Missing STRIPE_WEBHOOK_SECRET");
         return new NextResponse("Webhook Secret Missing", { status: 500 });
     }
 
     const body = await req.text();
     const sig = (await headers()).get("stripe-signature") || "";
 
-    let event: Stripe.Event;
+    let event: Stripe.Event | null = null;
+    let verificationError: any = null;
 
+    // Try primary secret first
     try {
         event = stripe.webhooks.constructEvent(body, sig, STRIPE_WEBHOOK_SECRET);
     } catch (err: any) {
-        console.error(`❌ Webhook signature verification failed: ${err.message}`);
-        return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+        verificationError = err;
+    }
+
+    // Try fallback test secret if primary failed
+    if (!event && STRIPE_WEBHOOK_SECRET_TEST) {
+        try {
+            event = stripe.webhooks.constructEvent(body, sig, STRIPE_WEBHOOK_SECRET_TEST);
+            console.log("ℹ️ Verified webhook event using STRIPE_WEBHOOK_SECRET_TEST");
+        } catch (err: any) {
+            verificationError = err;
+        }
+    }
+
+    if (!event) {
+        console.error(`❌ Webhook signature verification failed: ${verificationError?.message}`);
+        return new NextResponse(`Webhook Error: ${verificationError?.message}`, { status: 400 });
     }
 
     // Handle the event
