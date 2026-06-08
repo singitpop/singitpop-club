@@ -51,7 +51,12 @@ const EXPLICIT_COUNTRY_ALBUM_IDS = [
     'the-long-way-home-2025',
     'live-at-autumn-lights-2025',
     'live-step-into-the-light-2025',
-    'desert-winds-and-open-roads-2026'
+    'desert-winds-and-open-roads-2026',
+    'boots-in-the-autumn-dust-2026',
+    'running-out-of-road-2026',
+    'september-turns-gold-2026',
+    'when-the-lights-go-gold-2026',
+    'our-love-our-forever-2027'
 ];
 
 export default function CommunityHubPage() {

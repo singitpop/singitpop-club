@@ -51,7 +51,8 @@ const EXPLICIT_COUNTRY_ALBUM_IDS = [
     'desert-winds-and-open-roads-2026',
     'boots-in-the-autumn-dust-2026',
     'september-turns-gold-2026',
-    'when-the-lights-go-gold-2026'
+    'when-the-lights-go-gold-2026',
+    'our-love-our-forever-2027'
 ];
 
 const getStationTracks = (stationGenre: string, isVip: boolean) => {
