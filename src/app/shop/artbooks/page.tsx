@@ -139,7 +139,7 @@ export default function DigitalBookstorePage() {
                                 <BookOpen className="text-pink-500" />
                                 Digital Bookstore
                             </h1>
-                            <p className="text-[10px] text-white/40 uppercase font-bold tracking-[0.2em]">The SingIt Pop Library</p>
+                            <p className="text-[10px] text-white/40 uppercase font-bold tracking-[0.2em]">The SingitPop Records Library</p>
                         </div>
                     </div>
 
@@ -263,7 +263,7 @@ export default function DigitalBookstorePage() {
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center">🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>
                         <div className="text-xs font-bold text-white/40 uppercase tracking-widest">
-                            SingIt Pop Digital Studio <br />
+                            SingitPop Records Digital Studio <br />
                             Made in Scotland ⚡️
                         </div>
                     </div>
@@ -351,7 +351,7 @@ export default function DigitalBookstorePage() {
                                             <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white">High-Resolution Art</h4>
                                         </div>
                                         <p className="text-zinc-400 font-bold leading-relaxed">
-                                            This artbook includes the master high-resolution cover artwork, full-bleed interior spreads, and alternative concept art from the SingIt Pop creative studio.
+                                            This artbook includes the master high-resolution cover artwork, full-bleed interior spreads, and alternative concept art from the SingitPop Records creative studio.
                                         </p>
                                     </section>
 

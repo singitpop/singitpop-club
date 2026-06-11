@@ -1,7 +1,7 @@
 import styles from '../privacy/page.module.css';
 
 export const metadata = {
-    title: 'Complaints Procedure | SingIt Pop',
+    title: 'Complaints Procedure | SingitPop Records',
     description: 'How to make a complaint and our dispute resolution process'
 };
 
@@ -14,7 +14,7 @@ export default function ComplaintsPage() {
             <section>
                 <h2>1. Our Commitment</h2>
                 <p>
-                    At SingIt Pop, we strive to provide excellent service. However, if something goes wrong, we want to hear from you and make it right. This procedure explains how to make a complaint and what happens next.
+                    At SingitPop Records, we strive to provide excellent service. However, if something goes wrong, we want to hear from you and make it right. This procedure explains how to make a complaint and what happens next.
                 </p>
             </section>
 
@@ -53,7 +53,7 @@ export default function ComplaintsPage() {
                 <h3>3.2 Alternative Contact Methods</h3>
                 <p>
                     <strong>Contact Form:</strong> <a href="/contact">Contact Us</a> (select "Complaint" as the reason)<br />
-                    <strong>Written Post:</strong> SingIt Pop Complaints Department, [Address]
+                    <strong>Written Post:</strong> SingitPop Records Complaints Department, [Address]
                 </p>
             </section>
 

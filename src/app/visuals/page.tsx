@@ -11,9 +11,9 @@ export default function VisualizerPage() {
     const [trackIndex, setTrackIndex] = useState(0);
 
     const tracks = [
-        { title: "Ethereal", artist: "SingIt Pop" },
-        { title: "Digital Sunset", artist: "SingIt Pop" },
-        { title: "Neon Pulse", artist: "SingIt Pop" }
+        { title: "Ethereal", artist: "SingitPop Records" },
+        { title: "Digital Sunset", artist: "SingitPop Records" },
+        { title: "Neon Pulse", artist: "SingitPop Records" }
     ];
 
     // Canvas Animation Loop

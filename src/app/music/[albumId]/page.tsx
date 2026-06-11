@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (!album) {
         return {
-            title: 'Album Not Found | SingIt Pop',
+            title: 'Album Not Found | SingitPop Records',
         };
     }
 

@@ -12,7 +12,7 @@ const initialTracks = [
     {
         id: 101,
         title: "Neon Highway (Demo)",
-        artist: "SingIt Pop",
+        artist: "SingitPop Records",
         votes: 1240,
         percentage: 45,
         artwork: "linear-gradient(135deg, #FF0080, #7928CA)",
@@ -22,7 +22,7 @@ const initialTracks = [
     {
         id: 102,
         title: "Midnight Echoes",
-        artist: "SingIt Pop",
+        artist: "SingitPop Records",
         votes: 890,
         percentage: 32,
         artwork: "linear-gradient(135deg, #007CF0, #00DFD8)",
@@ -32,7 +32,7 @@ const initialTracks = [
     {
         id: 103,
         title: "Starlight (Unplugged)",
-        artist: "SingIt Pop",
+        artist: "SingitPop Records",
         votes: 620,
         percentage: 23,
         artwork: "linear-gradient(135deg, #FF4D4D, #F9CB28)",

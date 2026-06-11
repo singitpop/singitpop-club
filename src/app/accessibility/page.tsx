@@ -1,8 +1,8 @@
 import styles from '../privacy/page.module.css';
 
 export const metadata = {
-    title: 'Accessibility Statement | SingIt Pop',
-    description: 'Accessibility commitment and WCAG compliance information for SingIt Pop'
+    title: 'Accessibility Statement | SingitPop Records',
+    description: 'Accessibility commitment and WCAG compliance information for SingitPop Records'
 };
 
 export default function AccessibilityPage() {
@@ -14,7 +14,7 @@ export default function AccessibilityPage() {
             <section>
                 <h2>1. Our Commitment</h2>
                 <p>
-                    SingIt Pop is committed to ensuring digital accessibility for all users, including those with disabilities. We strive to provide an inclusive experience that works for everyone, regardless of ability or technology used.
+                    SingitPop Records is committed to ensuring digital accessibility for all users, including those with disabilities. We strive to provide an inclusive experience that works for everyone, regardless of ability or technology used.
                 </p>
                 <p>
                     We are continually improving the user experience and applying relevant accessibility standards to ensure our website is accessible to the widest possible audience.
@@ -107,7 +107,7 @@ export default function AccessibilityPage() {
 
             <section>
                 <h2>9. Technical Specifications</h2>
-                <p>Accessibility of SingIt Pop relies on the following technologies:</p>
+                <p>Accessibility of SingitPop Records relies on the following technologies:</p>
                 <ul>
                     <li>HTML5</li>
                     <li>CSS3</li>

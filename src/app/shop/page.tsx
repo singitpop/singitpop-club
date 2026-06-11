@@ -339,7 +339,7 @@ function ShopContent() {
                             The Digital <span className="text-pink-500">Bookstore</span>
                         </h2>
                         <p className="text-white/60 max-w-xl mx-auto font-bold text-lg">
-                            Access the complete SingIt Pop discography. Get high-resolution Digital Artbooks for every album, with full lyrics.
+                            Access the complete SingitPop Records discography. Get high-resolution Digital Artbooks for every album, with full lyrics.
                         </p>
                         <Link 
                             href="/shop/artbooks"

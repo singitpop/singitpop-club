@@ -8,7 +8,7 @@ export default function Footer() {
             <div className={`container ${styles.container}`}>
                 <div className={styles.top}>
                     <div className={styles.brand}>
-                        <h3>SingItPop</h3>
+                        <h3>SingitPop Records</h3>
                         <p>Keep Singing It POP</p>
                     </div>
 
@@ -64,7 +64,7 @@ export default function Footer() {
                 </div>
 
                 <div className={styles.bottom}>
-                    <p>&copy; {new Date().getFullYear()} SingIt Pop. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} SingitPop Records. All rights reserved.</p>
                 </div>
             </div>
         </footer>

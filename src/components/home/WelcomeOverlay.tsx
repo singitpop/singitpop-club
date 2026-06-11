@@ -81,7 +81,7 @@ export default function WelcomeOverlay({ onDismiss }: WelcomeOverlayProps) {
             >
                 <div className={styles.logo}>
                     <div className={styles.logoLine} />
-                    <span>SingIt Pop</span>
+                    <span>SingitPop Records</span>
                     <div className={styles.logoLine} />
                 </div>
 

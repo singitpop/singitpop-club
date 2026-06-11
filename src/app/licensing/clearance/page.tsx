@@ -40,7 +40,7 @@ export default function ContentIdClearancePage() {
                     <div className={styles.successBox}>
                         <h2>Video Submitted!</h2>
                         <p>Your YouTube URL has been submitted to our licensing team.</p>
-                        <p>Claims are usually released within 24-48 hours. Thank you for licensing with SingIt Pop!</p>
+                        <p>Claims are usually released within 24-48 hours. Thank you for licensing with SingitPop Records!</p>
                         <a href="/licensing" className={styles.primaryButton} style={{marginTop: '20px', display: 'inline-block'}}>Back to Licensing</a>
                     </div>
                 </div>
@@ -75,7 +75,7 @@ export default function ContentIdClearancePage() {
 
                         <div className={styles.inputGroup}>
                             <label>Track Used</label>
-                            <input type="text" required placeholder="Title of the SingIt Pop track" value={trackTitle} onChange={e => setTrackTitle(e.target.value)} />
+                            <input type="text" required placeholder="Title of the SingitPop Records track" value={trackTitle} onChange={e => setTrackTitle(e.target.value)} />
                         </div>
 
                         <button type="submit" className={styles.submitBtn} disabled={loading}>

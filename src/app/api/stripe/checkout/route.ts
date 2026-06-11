@@ -19,7 +19,7 @@ export async function POST(request: Request) {
                         currency: 'gbp',
                         product_data: {
                             name: `Tip for "${trackTitle || 'Artist'}"`,
-                            description: 'Direct support for SingIt Pop music production',
+                            description: 'Direct support for SingitPop Records music production',
                         },
                         unit_amount: (amount || 5) * 100, // Amount in pence
                     },

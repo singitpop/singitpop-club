@@ -138,13 +138,13 @@ export async function POST(req: Request) {
 
                 try {
                     await resend.emails.send({
-                        from: 'SingIt Pop <orders@singitpop.com>',
+                        from: 'SingitPop Records <orders@singitpop.com>',
                         to: [ownerEmail],
                         subject: `🎉 New ${grantedTier} Member: ${memberName}`,
                         html: `
                             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px;">
                                 <h1 style="color: #10b981; margin-bottom: 4px;">New Member Joined! 🎉</h1>
-                                <p style="color: #6b7280; margin-top: 0;">SingIt Pop Membership Notification</p>
+                                <p style="color: #6b7280; margin-top: 0;">SingitPop Records Membership Notification</p>
                                 <div style="background: #1a1a1a; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #10b981;">
                                     <table style="width: 100%; border-collapse: collapse;">
                                         <tr>
@@ -200,14 +200,14 @@ export async function POST(req: Request) {
 
                 // Send Delivery Email
                 await resend.emails.send({
-                    from: 'SingIt Pop <orders@singitpop.com>',
+                    from: 'SingitPop Records <orders@singitpop.com>',
                     to: [customerEmail],
                     subject: `Your Digital Creator Pack Download (Volume ${volume})`,
                     html: `
                         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 40px; border-radius: 20px; border: 1px solid #22d3ee;">
                             <h1 style="color: #22d3ee; margin-bottom: 20px;">Your Sound Pack is Ready! 🎬</h1>
                             <p style="font-size: 16px; line-height: 1.6; color: #d1d5db;">
-                                Thanks for grabbing <strong>SingIt Pop: Digital Creator Pack Vol ${volume}</strong>. 
+                                Thanks for grabbing <strong>SingitPop Records: Digital Creator Pack Vol ${volume}</strong>. 
                                 Your professional 192Khz WAV assets are ready for download.
                             </p>
                             
@@ -225,7 +225,7 @@ export async function POST(req: Request) {
                                 * This link is valid for 24 hours. If you need help, just reply to this email.
                             </p>
                             <p style="color: #22adbe; font-size: 14px; margin-top: 20px; font-weight: bold;">
-                                Keep Creating,<br/>SingIt Pop
+                                Keep Creating,<br/>SingitPop Records
                             </p>
                         </div>
                     `
@@ -255,14 +255,14 @@ export async function POST(req: Request) {
                 if (id) {
                     const mixtapeUrl = `${process.env.NEXT_PUBLIC_APP_URL}/mixtape/${id}`;
                     await resend.emails.send({
-                        from: 'SingIt Pop <orders@singitpop.com>',
+                        from: 'SingitPop Records <orders@singitpop.com>',
                         to: [customerEmail],
                         subject: `Your Digital Mixtape Gift for ${to} is Ready! 🎁`,
                         html: `
                             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #050505; color: #fff; padding: 40px; border-radius: 20px; border: 1px solid #f43f5e;">
                                 <h1 style="color: #f43f5e; margin-bottom: 20px; font-style: italic;">A Special Gift has Arrived! 🎁</h1>
                                 <p style="font-size: 16px; line-height: 1.6;">
-                                    Thanks for creating a <strong>SingIt Pop Digital Mixtape</strong> for ${to}. 
+                                    Thanks for creating a <strong>SingitPop Records Digital Mixtape</strong> for ${to}. 
                                     Your personalized curation and dedication have been securely packaged.
                                 </p>
                                 
@@ -275,7 +275,7 @@ export async function POST(req: Request) {
                                     Share this link with ${to}. It will remain active forever as a digital keepsake of your dedication.
                                 </p>
                                 <p style="color: #f43f5e; font-size: 14px; margin-top: 30px; font-weight: bold; font-style: italic;">
-                                    Keep Spreading the Love,<br/>SingIt Pop
+                                    Keep Spreading the Love,<br/>SingitPop Records
                                 </p>
                             </div>
                         `
@@ -297,7 +297,7 @@ export async function POST(req: Request) {
                 if (token) {
                     const artbookUrl = `${process.env.NEXT_PUBLIC_APP_URL}/artbook/${token}`;
                     await resend.emails.send({
-                        from: 'SingIt Pop <orders@singitpop.com>',
+                        from: 'SingitPop Records <orders@singitpop.com>',
                         to: [customerEmail],
                         subject: `Your Digital Artbook Access: ${albumId} 📖`,
                         html: `
@@ -351,7 +351,7 @@ export async function POST(req: Request) {
             // Send Email
             try {
                 const { data, error } = await resend.emails.send({
-                    from: 'SingIt Pop <orders@singitpop.com>', // Ensure you have this domain verified in Resend
+                    from: 'SingitPop Records <orders@singitpop.com>', // Ensure you have this domain verified in Resend
                     to: [customerEmail],
                     subject: `Your Ringtone Download: ${title}`,
                     html: `
@@ -373,7 +373,7 @@ export async function POST(req: Request) {
 
                             <p style="font-size: 14px; color: #666;">Links are valid for 24 hours.</p>
                             
-                            <p>Enjoy!<br/>The SingIt Pop Team</p>
+                            <p>Enjoy!<br/>The SingitPop Records Team</p>
                         </div>
                     `
                 });

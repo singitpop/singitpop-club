@@ -355,7 +355,7 @@ function MusicContent() {
             />
 
             <div className={styles.header}>
-                <h1>SingIt Pop Music</h1>
+                <h1>SingitPop Records Music</h1>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
                     <p>Create your own custom Mixtapes (Club Members), explore the discography, and unlock exclusive content.</p>
                     {(isInsider || isPro || isLabel) && (

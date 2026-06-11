@@ -69,8 +69,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Manual login override (mostly for local dev testing)
         let name = 'Music Fan';
         if (tier === 'PREMIUM') name = 'Premium Member';
-        if (tier === 'LABEL') name = 'SingIt Pop (Label)';
-        if (tier === 'ADMIN') name = 'SingIt Pop (Admin)';
+        if (tier === 'LABEL') name = 'SingitPop Records (Label)';
+        if (tier === 'ADMIN') name = 'SingitPop Records (Admin)';
 
         const newUser: User = { tier, name, purchasedTracks: [] };
         setUser(newUser);

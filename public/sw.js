@@ -61,7 +61,7 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('push', function (event) {
     const data = event.data ? event.data.json() : {};
     const options = {
-        body: data.body || 'New update from SingIt Pop!',
+        body: data.body || 'New update from SingitPop Records!',
         icon: '/icons/icon-192x192.png',
         badge: '/icons/icon-192x192.png',
         data: {
@@ -70,7 +70,7 @@ self.addEventListener('push', function (event) {
     };
 
     event.waitUntil(
-        self.registration.showNotification(data.title || 'SingIt Pop', options)
+        self.registration.showNotification(data.title || 'SingitPop Records', options)
     );
 });
 

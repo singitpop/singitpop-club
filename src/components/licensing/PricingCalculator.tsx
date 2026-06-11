@@ -287,7 +287,7 @@ export default function PricingCalculator({ track, onClose }: PricingCalculatorP
 
                             <div className={styles.disclaimer}>
                                 <p><strong>Please note:</strong> This estimate is based on your selected usage, duration, territory, and campaign scope. Final pricing may change if your project includes wider distribution, exclusivity, or broadcast requirements.</p>
-                                <p><strong>Rights Statement:</strong> All tracks remain owned by SingIt Pop. Pricing reflects permission to use the music within approved terms only. Ownership is never transferred.</p>
+                                <p><strong>Rights Statement:</strong> All tracks remain owned by SingitPop Records. Pricing reflects permission to use the music within approved terms only. Ownership is never transferred.</p>
                             </div>
                         </div>
                     </div>

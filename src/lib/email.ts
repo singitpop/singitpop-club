@@ -15,14 +15,14 @@ export async function sendMixtapeEmail(
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'SingIt Pop <music@singitpop.com>', // Default testing domain. User must verify domain to use custom.
+            from: 'SingitPop Records <music@singitpop.com>', // Default testing domain. User must verify domain to use custom.
             to: [toEmail],
-            subject: 'Your SingIt Pop Mixtape is Ready! 📼',
+            subject: 'Your SingitPop Records Mixtape is Ready! 📼',
             html: `
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
                     <h1 style="color: #FF0080; border-bottom: 2px solid #eee; padding-bottom: 10px;">Your Mixtape Has Dropped! 🎶</h1>
                     <p>Hi there,</p>
-                    <p>Thank you for your purchase from SingIt Pop! Your custom mixtape tracks are ready for download below.</p>
+                    <p>Thank you for your purchase from SingitPop Records! Your custom mixtape tracks are ready for download below.</p>
                     
                     <div style="background: #fdfdfd; border: 1px solid #eee; border-radius: 8px; padding: 20px; margin: 20px 0;">
                         <ul style="list-style: none; padding: 0; margin: 0;">
@@ -41,7 +41,7 @@ export async function sendMixtapeEmail(
                         Need help? Reply to this email or contact support.
                     </p>
                     <p style="margin-top: 30px; font-size: 12px; color: #999;">
-                        © ${new Date().getFullYear()} SingIt Pop. All rights reserved.
+                        © ${new Date().getFullYear()} SingitPop Records. All rights reserved.
                     </p>
                 </div>
             `,

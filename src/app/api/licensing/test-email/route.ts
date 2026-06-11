@@ -53,14 +53,14 @@ export async function GET(req: Request) {
 
         // Draw Legal Framework
         const legalText = `
-By this agreement, SingIt Pop grants to the Licensee (${meta.buyerName}) the non-exclusive 
+By this agreement, SingitPop Records grants to the Licensee (${meta.buyerName}) the non-exclusive 
 synchronization rights to use the master recording "${meta.trackTitle}" strictly within 
 the parameters defined above. 
 
 PRO Registration: The composition is registered with ASCAP. 
 IPI Number: 1294507240.
 
-All copyright and ownership remain strictly with SingIt Pop. The Licensee may not 
+All copyright and ownership remain strictly with SingitPop Records. The Licensee may not 
 resell, remix, or redistribute this audio outside of the defined synchronized production.
 If the Licensee receives a YouTube copyright claim from our official distributor, they 
 must dispute the claim and manually attach this PDF Certificate for auto-clearance.
@@ -74,16 +74,16 @@ must dispute the claim and manually attach this PDF Certificate for auto-clearan
 
         // 2. SEND EMAIL
         await resend.emails.send({
-            from: 'SingIt Pop <orders@singitpop.com>',
+            from: 'SingitPop Records <orders@singitpop.com>',
             to: [meta.buyerEmail],
-            subject: `Your SingIt Pop License: ${meta.trackTitle} (TEST)`,
+            subject: `Your SingitPop Records License: ${meta.trackTitle} (TEST)`,
             html: `
                 <h2>License Approved (TEST)</h2>
                 <p>Hi ${meta.buyerName},</p>
-                <p>Thank you for licensing <strong>${meta.trackTitle}</strong> from SingIt Pop!</p>
+                <p>Thank you for licensing <strong>${meta.trackTitle}</strong> from SingitPop Records!</p>
                 <p>Attached to this email is your official <strong>PDF License Certificate</strong>. Please keep this document safe to clear any copyright or Content ID requests.</p>
                 <br/>
-                <p>Thanks,<br/>The SingIt Pop Team</p>
+                <p>Thanks,<br/>The SingitPop Records Team</p>
             `,
             attachments: [
                 {

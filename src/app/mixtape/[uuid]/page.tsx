@@ -164,7 +164,7 @@ export default function MixtapePlaybackPage({ params }: { params: { uuid: string
 
                         <div className="pt-12 space-y-6">
                             <div className="flex items-center gap-4 text-white/40 font-black uppercase text-[10px] tracking-[0.2em]">
-                                 <Heart size={14} className="fill-current" /> Made with Love in SingIt Pop
+                                 <Heart size={14} className="fill-current" /> Made with Love in SingitPop Records
                             </div>
                         </div>
                     </div>

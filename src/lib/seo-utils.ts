@@ -8,11 +8,11 @@ export function generateAlbumMetadata(album: Album): Metadata {
     
     // Fallback description if none provided
     const description = album.description || 
-        `Experience ${album.title} by SING - SingIt Pop. Discover exclusive country-pop tracks, digital artbooks, and the future of virtual music.`;
+        `Experience ${album.title} by SING - SingitPop Records. Discover exclusive country-pop tracks, digital artbooks, and the future of virtual music.`;
     
     const anyAlbum = album as any;
     const keywords = [
-        'SingIt Pop', 'SING', album.title, 
+        'SingitPop Records', 'SING', album.title, 
         ...(album.genre || []), 
         ...(anyAlbum.mood ? anyAlbum.mood.split(',').map((m: any) => m.trim()) : []),
         'Country Music', 'Digital Artbook'
@@ -23,10 +23,10 @@ export function generateAlbumMetadata(album: Album): Metadata {
         description: description,
         keywords: keywords,
         openGraph: {
-            title: `${album.title} | SingIt Pop Official`,
+            title: `${album.title} | SingitPop Records Official`,
             description: description,
             url: `${baseUrl}/music/${album.id}`,
-            siteName: 'SingIt Pop',
+            siteName: 'SingitPop Records',
             images: [
                 {
                     url: coverUrl,
@@ -40,7 +40,7 @@ export function generateAlbumMetadata(album: Album): Metadata {
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${album.title} | SingIt Pop Official`,
+            title: `${album.title} | SingitPop Records Official`,
             description: description,
             images: [coverUrl],
         },
@@ -68,7 +68,7 @@ export function generateAlbumJsonLd(album: Album) {
         "byArtist": {
             "@type": "MusicGroup",
             "name": "SING",
-            "alternateName": "SingIt Pop",
+            "alternateName": "SingitPop Records",
             "url": baseUrl
         },
         "track": album.tracks?.map((track, index) => ({

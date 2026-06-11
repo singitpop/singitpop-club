@@ -1,7 +1,7 @@
 {
-    "name": "SingIt Pop",
-    "short_name": "SingIt Pop",
-    "description": "The official SingIt Pop fan club app.",
+    "name": "SingitPop Records",
+    "short_name": "SingitPop Records",
+    "description": "The official SingitPop Records fan club app.",
     "start_url": "/club",
     "display": "standalone",
     "background_color": "#000000",

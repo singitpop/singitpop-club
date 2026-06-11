@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
         const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
         await resend.emails.send({
-            from: 'SingIt Pop <orders@singitpop.com>',
+            from: 'SingitPop Records <orders@singitpop.com>',
             to: [ownerEmail],
             replyTo: email,
             subject: `🚨 YOUTUBE CLEARANCE: ${trackTitle}`,

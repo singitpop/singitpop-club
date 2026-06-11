@@ -66,7 +66,7 @@ export function useListeningHistory() {
                 newHistory.push({
                     id: track.id,
                     title: track.title,
-                    artist: track.artist || 'SingIt Pop',
+                    artist: track.artist || 'SingitPop Records',
                     albumArt: track.coverArt || track.albumArt, // Handle both props
                     lastPlayed: now,
                     playCount: 1

@@ -55,7 +55,7 @@ export default function SongOracle({ compact = false, onPlay }: SongOracleProps)
             logPlay({
                 id: randomTrack.id,
                 title: randomTrack.title,
-                artist: 'SingIt Pop',
+                artist: 'SingitPop Records',
                 albumArt: randomTrack.albumCover
             });
         }, 1500);

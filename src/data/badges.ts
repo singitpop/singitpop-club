@@ -18,7 +18,7 @@ export const BADGES: BadgeDef[] = [
         name: 'The Fan',
         description: 'Welcome to the club.',
         image: '/badges/badge_fan_1771266597233.png',
-        requirement: 'Join SingItPop',
+        requirement: 'Join SingitPop Records',
         type: 'IDENTITY'
     },
 

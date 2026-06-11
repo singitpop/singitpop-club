@@ -1,8 +1,8 @@
 import styles from './page.module.css';
 
 export const metadata = {
-    title: 'Privacy Policy | SingIt Pop',
-    description: 'Privacy Policy and GDPR compliance information for SingIt Pop'
+    title: 'Privacy Policy | SingitPop Records',
+    description: 'Privacy Policy and GDPR compliance information for SingitPop Records'
 };
 
 export default function PrivacyPage() {
@@ -14,7 +14,7 @@ export default function PrivacyPage() {
             <section>
                 <h2>1. Introduction</h2>
                 <p>
-                    SingIt Pop ("we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <strong>singitpop.club</strong> and use our services.
+                    SingitPop Records ("we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <strong>singitpop.club</strong> and use our services.
                 </p>
                 <p>
                     We are registered in the United Kingdom and comply with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
 
             <section>
                 <h2>2. Data Controller</h2>
-                <p><strong>SingIt Pop</strong><br />
+                <p><strong>SingitPop Records</strong><br />
                     Email: <a href="mailto:privacy@singitpop.com">privacy@singitpop.com</a></p>
             </section>
 

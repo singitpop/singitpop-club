@@ -7,7 +7,7 @@ import { Copy, FileOutput, ArrowLeft, Send } from 'lucide-react';
 import Link from 'next/link';
 
 export default function NewsletterBuilder() {
-    const [subject, setSubject] = useState("New Release from SingIt Pop!");
+    const [subject, setSubject] = useState("New Release from SingitPop Records!");
     const [headerText, setHeaderText] = useState("We have some exciting news for you.");
     const [featuredType, setFeaturedType] = useState("single");
     const [ctaLink, setCtaLink] = useState("https://singitpop.com/music");
@@ -76,7 +76,7 @@ export default function NewsletterBuilder() {
 <body>
   <div class="container">
     <div class="header">
-        <div style="font-size: 24px; font-weight: bold; margin: 0;">SingIt Pop</div>
+        <div style="font-size: 24px; font-weight: bold; margin: 0;">SingitPop Records</div>
     </div>
     <div class="content">
         <h2>${subject}</h2>
@@ -88,10 +88,10 @@ export default function NewsletterBuilder() {
             <a href="${ctaLink}" class="btn">${btnText}</a>
         </div>
 
-        <p>Thanks for being a fan!<br><strong>The SingIt Pop Team</strong></p>
+        <p>Thanks for being a fan!<br><strong>The SingitPop Records Team</strong></p>
     </div>
     <div class="footer">
-        &copy; ${new Date().getFullYear()} SingIt Pop. All rights reserved.
+        &copy; ${new Date().getFullYear()} SingitPop Records. All rights reserved.
     </div>
   </div>
 </body>

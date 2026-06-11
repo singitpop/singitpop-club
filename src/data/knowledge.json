@@ -1,8 +1,8 @@
 {
   "faq": [
     {
-      "q": "Who is Gary / SingIt Pop?",
-      "a": "Gary is the artist behind SingIt Pop. He's a prolific creator who uses music as therapy and expression. Despite being deaf in one ear and his other ear fading, he continues to 'Keep Singing It POP', blending pop, country, and EDM."
+      "q": "Who is Gary / SingitPop Records?",
+      "a": "Gary is the artist behind SingitPop Records. He's a prolific creator who uses music as therapy and expression. Despite being deaf in one ear and his other ear fading, he continues to 'Keep Singing It POP', blending pop, country, and EDM."
     },
     {
       "q": "How do I become a VIP?",
@@ -74,7 +74,7 @@
     },
     {
       "q": "What is the Free Welcome Gift?",
-      "a": "New fans who join the club for free get an instant high-resolution track download as a 'Thank You'. It's our way of welcoming you to the SingIt Pop family!"
+      "a": "New fans who join the club for free get an instant high-resolution track download as a 'Thank You'. It's our way of welcoming you to the SingitPop Records family!"
     }
   ],
   "pages": [
@@ -86,7 +86,7 @@
     {
       "name": "About",
       "url": "/about",
-      "desc": "The story of Gary, his journey with hearing loss, and the mission of SingIt Pop."
+      "desc": "The story of Gary, his journey with hearing loss, and the mission of SingitPop Records."
     },
     {
       "name": "Shop",
