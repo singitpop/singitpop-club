@@ -42,7 +42,7 @@ export default function Header() {
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
         <div className={`container ${styles.container}`}>
           <Link href="/" className={styles.logo}>
-            SingIt<span className={styles.pop}>Pop</span>
+            Singit<span className={styles.pop}>Pop</span> Records
           </Link>
 
           {/* Desktop Nav */}
