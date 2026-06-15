@@ -27,6 +27,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  transpilePackages: ['recharts', 'd3-array', 'd3-scale', 'victory-vendor', 'es-toolkit'],
 
   images: {
     remotePatterns: [
