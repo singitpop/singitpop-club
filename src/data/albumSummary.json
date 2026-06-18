@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-08T15:12:46.269Z",
-  "totalAlbums": 64,
-  "totalTracks": 784,
+  "generated": "2026-06-18T14:43:54.180Z",
+  "totalAlbums": 66,
+  "totalTracks": 808,
   "genres": [
     "Christmas",
     "Country",
@@ -25,6 +25,17 @@
   ],
   "albums": [
     {
+      "id": "backroads-in-bloom-2027",
+      "title": "Backroads In Bloom",
+      "year": 2027,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Backroads in Bloom",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/backroads-in-bloom/"
+    },
+    {
       "id": "our-love-our-forever-2027",
       "title": "Our Love Our Forever",
       "year": 2027,
@@ -34,6 +45,17 @@
       ],
       "folderPath": "Our Love Our Forever",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/"
+    },
+    {
+      "id": "christmas-all-year-long-2026",
+      "title": "Christmas All Year Long",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Christmas All Year Long",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/christmas-all-year-long/"
     },
     {
       "id": "when-the-lights-go-gold-2026",
