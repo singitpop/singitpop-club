@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken";
 const SECRET_KEY = process.env.CLERK_SECRET_KEY || "fallback_secret_key";
 const ALLOWED_ORIGINS = [
     "http://localhost:3001",
-    "https://rykerboonemusic.website",
-    "https://www.rykerboonemusic.website"
+    "https://rykerboone.com",
+    "https://www.rykerboone.com"
 ];
 
 export async function GET(req: Request) {
