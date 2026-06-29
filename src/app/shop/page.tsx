@@ -116,89 +116,14 @@ function ShopContent() {
                     <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
                         Shop
                     </h1>
-                    <p className="text-xl text-white/60 max-w-2xl mx-auto">
-                        Official merchandise, <strong className="text-yellow-400">Ringtones</strong>, <strong className="text-pink-400">Digital Artbooks</strong>, and <strong className="text-cyan-400">Vocal-Free</strong> creator assets.
+                     <p className="text-xl text-white/60 max-w-2xl mx-auto">
+                        Official merchandise, <strong className="text-pink-400">Digital Artbooks</strong>, and <strong className="text-cyan-400">Vocal-Free</strong> creator assets.
                     </p>
                 </motion.div>
             </div>
 
-            {/* Mixtape Success Message */}
-            <AnimatePresence>
-                {isMixtapeSuccess && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: -20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                        className="max-w-4xl mx-auto mb-16 bg-gradient-to-r from-rose-500/20 to-pink-500/20 border border-rose-500/50 rounded-3xl p-8 text-center relative overflow-hidden"
-                    >
-                        <div className="absolute top-0 left-0 p-32 bg-rose-500/10 blur-[80px] rounded-full pointer-events-none" />
-                        <div className="relative z-10 flex flex-col items-center gap-4">
-                            <div className="w-16 h-16 bg-rose-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-rose-500/20">
-                                <CheckCircle size={32} />
-                            </div>
-                            <h2 className="text-3xl font-black uppercase tracking-tight italic">GIFT SENT! 🎁</h2>
-                            <p className="text-white/70 max-w-md mx-auto">
-                                Your **Digital Mixtape** has been delivered to your email. You can now share the unique gift link with your recipient!
-                            </p>
-                            <Link 
-                                href="/shop" 
-                                className="mt-4 px-8 py-3 bg-white text-black font-black uppercase tracking-tighter italic rounded-xl hover:bg-rose-100 transition-all text-sm"
-                            >
-                                Continue Shopping
-                            </Link>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* VIP Discount Banner */}
-            {(user as any)?.publicMetadata?.tier === 'VIP' || (user as any)?.publicMetadata?.tier === 'LABEL' || (user as any)?.publicMetadata?.tier === 'ADMIN' ? (
-                <div className="max-w-4xl mx-auto mb-16">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border border-yellow-500/50 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left"
-                    >
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-yellow-500/20 rounded-xl text-yellow-500">
-                                <Sparkles size={24} />
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold text-yellow-500">VIP Exclusive Benefit</h3>
-                                <p className="text-white/80">You get <span className="text-white font-bold">20% OFF</span> all Merch & Apparel!</p>
-                            </div>
-                        </div>
-                        <div className="bg-black/50 px-6 py-3 rounded-xl border border-white/10 flex flex-col items-center">
-                            <span className="text-xs text-white/40 uppercase tracking-widest mb-1">Use Code at Checkout</span>
-                            <span className="text-2xl font-mono font-bold text-yellow-400 tracking-wider">VIP20</span>
-                        </div>
-                    </motion.div>
-                </div>
-            ) : null}
-
             {/* Navigation Cards */}
-            <div className="max-w-6xl mx-auto mb-24 grid md:grid-cols-2 gap-6">
-                {/* Ringtones Card */}
-                <Link href="/shop/ringtones" className="group">
-                    <motion.div
-                        className="bg-gradient-to-br from-purple-900/40 to-black border border-white/10 rounded-3xl p-8 h-full hover:border-purple-500/50 transition-all relative overflow-hidden"
-                        whileHover={{ scale: 1.02 }}
-                    >
-                        <div className="absolute top-0 right-0 p-32 bg-purple-500/20 blur-[100px] rounded-full pointer-events-none" />
-                        <div className="relative z-10">
-                            <div className="w-12 h-12 bg-purple-500/20 rounded-2xl flex items-center justify-center mb-6 text-purple-400 group-hover:text-purple-300 transition-colors">
-                                <Smartphone size={24} />
-                            </div>
-                            <h2 className="text-3xl font-bold mb-2">Ringtones</h2>
-                            <p className="text-white/60 mb-6">Exclusive snippets sent individually to your phone.</p>
-
-                            <div className="flex items-center text-purple-400 font-bold group-hover:translate-x-2 transition-transform">
-                                Browse Collection <ArrowRight size={16} className="ml-2" />
-                            </div>
-                        </div>
-                    </motion.div>
-                </Link>
-
+            <div className="max-w-6xl mx-auto mb-24 grid gap-6">
                 {/* Custom Songs Card */}
                 <Link href="/shop/custom-songs" className="group">
                     <motion.div
@@ -206,37 +131,16 @@ function ShopContent() {
                         whileHover={{ scale: 1.02 }}
                     >
                         <div className="absolute top-0 right-0 p-32 bg-pink-500/20 blur-[100px] rounded-full pointer-events-none" />
-                        <div className="relative z-10">
-                            <div className="w-12 h-12 bg-pink-500/20 rounded-2xl flex items-center justify-center mb-6 text-pink-400 group-hover:text-pink-300 transition-colors">
-                                <Heart size={24} />
-                            </div>
-                            <h2 className="text-3xl font-bold mb-2">Custom Songs</h2>
-                            <p className="text-white/60 mb-6">Commission a unique track for special occasions.</p>
-
-                            <div className="flex items-center text-pink-400 font-bold group-hover:translate-x-2 transition-transform">
-                                Start Creating <ArrowRight size={16} className="ml-2" />
-                            </div>
-                        </div>
-                    </motion.div>
-                </Link>
-
-                {/* Digital Mixtape Card */}
-                <Link href="/shop/mixtape/builder" className="group md:col-span-2">
-                    <motion.div
-                        className="bg-gradient-to-br from-rose-900/40 to-black border border-white/10 rounded-3xl p-8 h-full hover:border-rose-500/50 transition-all relative overflow-hidden"
-                        whileHover={{ scale: 1.01 }}
-                    >
-                        <div className="absolute top-0 right-0 p-64 bg-rose-500/10 blur-[120px] rounded-full pointer-events-none" />
                         <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                            <div className="w-24 h-24 bg-rose-500/20 rounded-[2rem] flex items-center justify-center text-rose-400 group-hover:text-rose-300 transition-colors shrink-0">
-                                <Gift size={48} />
+                            <div className="w-24 h-24 bg-pink-500/20 rounded-[2rem] flex items-center justify-center text-pink-400 group-hover:text-pink-300 transition-colors shrink-0">
+                                <Heart size={48} />
                             </div>
                             <div className="flex-1 text-center md:text-left">
-                                <h2 className="text-4xl font-black italic tracking-tighter mb-2 uppercase">DIGITAL MIXTAPE GIFTING</h2>
-                                <p className="text-white/60 mb-6 text-lg">Pick 5 tracks, write a dedication, and give a gift of music that lasts forever. <strong className="text-white">£10.00</strong></p>
+                                <h2 className="text-4xl font-black italic tracking-tighter mb-2 uppercase">Custom Songs</h2>
+                                <p className="text-white/60 mb-6 text-lg">Commission a unique personal track for weddings, anniversaries, or special milestones.</p>
 
-                                <div className="flex items-center justify-center md:justify-start text-rose-400 font-black uppercase tracking-widest text-sm group-hover:translate-x-2 transition-transform">
-                                    Build Your Gift <ArrowRight size={18} className="ml-2" />
+                                <div className="flex items-center justify-center md:justify-start text-pink-400 font-bold group-hover:translate-x-2 transition-transform">
+                                    Start Creating <ArrowRight size={16} className="ml-2" />
                                 </div>
                             </div>
                         </div>

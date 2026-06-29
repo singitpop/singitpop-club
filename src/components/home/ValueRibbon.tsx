@@ -10,15 +10,15 @@ const FEATURES = [
     {
         icon: <Music size={20} />,
         title: "Music Library",
-        desc: "Stream the full vault",
+        desc: "Explore the full catalog",
         href: "/music",
         color: "#fa00ff"
     },
     {
-        icon: <Smartphone size={20} />,
-        title: "Ringtones",
-        desc: "Custom hooks for mobile",
-        href: "/shop/ringtones",
+        icon: <Briefcase size={20} />,
+        title: "Projects",
+        desc: "Custom production",
+        href: "/projects",
         color: "#00f0ff"
     },
     {
@@ -29,17 +29,10 @@ const FEATURES = [
         color: "#fffa00"
     },
     {
-        icon: <Trophy size={20} />,
-        title: "FanZone",
-        desc: "Challenges & Rewards",
-        href: "/fan-albums",
-        color: "#00ff8c"
-    },
-    {
         icon: <Gift size={20} />,
-        title: "The Gift",
-        desc: "Join for free track",
-        href: "/membership",
+        title: "Shop",
+        desc: "Merch & digital books",
+        href: "/shop",
         color: "#ff4d4d",
         highlight: true
     }

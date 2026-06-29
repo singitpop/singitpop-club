@@ -16,8 +16,6 @@ export default function Footer() {
                         <h4>Explore</h4>
                         <Link href="/about">About</Link>
                         <Link href="/music">Music</Link>
-                        <Link href="/radio/live">Live Radio 📻</Link>
-                        <Link href="/fan-albums">FanZone</Link>
                         <Link href="/licensing">Licensing</Link>
                         <Link href="/projects">Projects</Link>
                         <Link href="/shop">Shop</Link>

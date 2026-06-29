@@ -9,7 +9,6 @@ import styles from './Hero.module.css';
 import { LATEST_RELEASES } from '@/config/latestReleases';
 import { albums } from '@/data/albumData';
 
-import WelcomeOverlay from './WelcomeOverlay';
 import ValueRibbon from './ValueRibbon';
 
 export default function Hero() {
@@ -20,7 +19,7 @@ export default function Hero() {
         VIDEO_URL: ''
     });
     const [bgImage, setBgImage] = useState<string | null>(null); // Start null
-    const [showWelcome, setShowWelcome] = useState(true);
+    const [showWelcome, setShowWelcome] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -87,12 +86,7 @@ export default function Hero() {
                 )}
             </div>
 
-            {/* NEW: Integrated Welcome Overlay */}
-            <AnimatePresence>
-                {showWelcome && !showVideo && !isLoading && (
-                    <WelcomeOverlay onDismiss={() => setShowWelcome(false)} />
-                )}
-            </AnimatePresence>
+
 
             {!isLoading && (
                 <div className={styles.centerStage}>

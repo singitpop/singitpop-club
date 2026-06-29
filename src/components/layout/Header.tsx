@@ -15,7 +15,6 @@ const navItems = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Music', href: '/music' },
-  { name: 'FanZone', href: '/fan-albums' },
   { name: 'Projects', href: '/projects' },
   { name: 'Licensing', href: '/licensing' },
   { name: 'Shop', href: '/shop' },
@@ -73,23 +72,12 @@ export default function Header() {
               <Search size={22} />
             </button>
 
-            <SignedOut>
-              <Link href="/sign-in" className="glow-button" style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
-                Join the Club
-              </Link>
-            </SignedOut>
             <SignedIn>
               {isLabel && (
                 <Link href="/admin" className={`${styles.navLink} ${styles.desktopOnly}`} style={{ marginRight: '1rem', fontWeight: 'bold', color: '#ff00d4' }}>
                   Admin
                 </Link>
               )}
-              <Link href="/club" className={`glow-button ${styles.desktopOnly}`} style={{ border: 'none', fontSize: '0.9rem', cursor: 'pointer' }}>
-                My Dashboard
-              </Link>
-              <div className={`${styles.desktopOnly} ml-3`}>
-                <UserBadge tier={user?.tier || 'FAN'} />
-              </div>
               <div style={{ marginLeft: '1rem' }}>
                 <UserButton afterSignOutUrl="/" />
               </div>
@@ -122,14 +110,7 @@ export default function Header() {
                 Admin Console
               </Link>
             )}
-            <Link
-              href="/club"
-              className={styles.mobileLink}
-              onClick={() => setIsOpen(false)}
-              style={{ color: 'var(--primary)', fontWeight: 'bold' }}
-            >
-              My Dashboard
-            </Link>
+
             {navItems.map((item) => (
               <Link
                 key={item.href}

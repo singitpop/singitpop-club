@@ -2,10 +2,9 @@
 
 import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams, useParams } from 'next/navigation';
-import { TrendingUp, Star, Clock, Grid, Crown } from 'lucide-react';
+import { TrendingUp, Star, Clock, Grid } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import SongList from '@/components/music/SongList';
-import SongOracle from '@/components/fans/SongOracle';
 import AlbumOverlay from '@/components/music/AlbumOverlay';
 import Charts from '@/components/music/Charts';
 import styles from './page.module.css';
@@ -346,109 +345,12 @@ function MusicContent() {
                 onSelectAlbum={handleSelectAlbum}
                 title={isLabel ? "Full Discography (Admin View)" : "Explore Discography"}
             />
-            <AlbumOverlay
-                isOpen={isVipOverlayOpen}
-                onClose={() => setIsVipOverlayOpen(false)}
-                albums={vipAlbums}
-                onSelectAlbum={handleSelectAlbum}
-                title="VIP Vault 👑"
-            />
 
             <div className={styles.header}>
                 <h1>SingitPop Records Music</h1>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
-                    <p>Create your own custom Mixtapes (Club Members), explore the discography, and unlock exclusive content.</p>
-                    {(isInsider || isPro || isLabel) && (
-                        <p style={{ fontSize: '0.9rem', color: 'var(--accent)', background: 'rgba(255,0,128,0.1)', padding: '0.5rem 1rem', borderRadius: '20px', border: '1px solid rgba(255,0,128,0.2)' }}>
-                            <strong>💡 Tip:</strong> Tap the checkbox next to any track to start building your mix!
-                        </p>
-                    )}
+                    <p>Explore the complete SingitPop Records discography.</p>
                 </div>
-
-                <div className="max-w-2xl mx-auto w-full mt-8">
-                    <SongOracle
-                        compact
-                        onPlay={(track) => {
-                            // Ensure the track is in the visible list
-                            if (track.albumId) {
-                                setSelectedAlbumId(track.albumId);
-                                setFilterMode('album');
-                            } else {
-                                setFilterMode('all');
-                            }
-
-                            // Set auto-play target
-                            const uid = track.albumId ? `${track.albumId}-${track.id}` : String(track.id);
-                            setAutoPlayTrackId(uid);
-
-                            // Auto-clear after a delay so subsequent clicks on same track work
-                            setTimeout(() => setAutoPlayTrackId(null), 1000);
-                        }}
-                    />
-                </div>
-
-                {/* Top Mixtape CTA - Only for Free Users (Insiders use Floating Box) */}
-                {selectedTracks.length > 0 && (
-                    <div style={{
-                        marginTop: '1rem',
-                        padding: '1rem',
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        borderRadius: '12px',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        backdropFilter: 'blur(10px)'
-                    }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <span style={{ fontSize: '1.2rem' }}>📼</span>
-                            <div>
-                                <strong>Your Custom Mixtape</strong>
-                                <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
-                                    {selectedTracks.length} / {MAX_MIXTAPE_TRACKS} tracks selected (£{mixtapePrice})
-                                </div>
-                            </div>
-                        </div>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button
-                                className="primary-button"
-                                style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
-                                onClick={() => window.location.href = `/music/checkout?type=download&tracks=${selectedTracks.join(',')}`}
-                            >
-                                Purchase Mixtape (£{mixtapePrice})
-                            </button>
-
-                            {(isPro || isInsider || isLabel) && (
-                                <button
-                                    className="secondary-button"
-                                    style={{ fontSize: '0.9rem', padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.2)', color: 'white' }}
-                                    onClick={() => {
-                                        const title = prompt("Name your Playlist for the Community:");
-                                        if (!title) return;
-
-                                        fetch('/api/community/playlist', {
-                                            method: 'POST',
-                                            headers: { 'Content-Type': 'application/json' },
-                                            body: JSON.stringify({
-                                                title: title,
-                                                tracks: selectedTracks
-                                            })
-                                        }).then(res => res.json()).then(data => {
-                                            if (data.success) {
-                                                alert("Playlist shared to Community Hub!");
-                                                router.push('/fan-albums');
-                                            } else {
-                                                alert("Failed to share: " + (data.error || "Unknown error"));
-                                            }
-                                        }).catch(err => alert("Error sharing mix"));
-                                    }}
-                                >
-                                    Share to Community 🌍
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                )}
 
                 <div className={styles.controls}>
                     <div className={styles.filterBar}>
@@ -465,22 +367,6 @@ function MusicContent() {
                     </div>
 
                     <div style={{ display: 'flex', gap: '1rem' }}>
-                        <button
-                            className={styles.browseBtn}
-                            onClick={() => {
-                                // Check VIP Access
-                                if (!isPro && !isLabel) {
-                                    alert("VIP Early Access Required! Upgrade your membership to access the VIP Vault.");
-                                    return;
-                                }
-                                setIsVipOverlayOpen(true);
-                            }}
-                            style={{ background: 'linear-gradient(45deg, #FFD700, #FFA500)', border: 'none', color: '#000', fontWeight: 'bold' }}
-                        >
-                            <Crown size={18} />
-                            VIP Access
-                        </button>
-
                         <button className={styles.browseBtn} onClick={() => setIsOverlayOpen(true)}>
                             <Grid size={18} />
                             Browse Discography
@@ -500,30 +386,15 @@ function MusicContent() {
                                 </span>
                             )}
                         </div>
-
-
-
-                        {(filterMode === 'album' || filterMode === 'latest') && !isInsider && !isPro && !isLabel && (
-                            <button
-                                className="primary-button"
-                                style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }}
-                                onClick={() => {
-                                    const allTrackIds = tracks.map(t => t.albumId ? `${t.albumId}-${t.id}` : String(t.id));
-                                    window.location.href = `/music/checkout?type=download&tracks=${allTrackIds.join(',')}`;
-                                }}
-                            >
-                                Purchase Full Album (£{siteContent.musicPage.prices.album.toFixed(2)})
-                            </button>
-                        )}
                     </div>
                     <SongList
                         tracks={tracks}
                         albums={albums}
                         filterMode={filterMode}
-                        selectedTracks={selectedTracks}
-                        onToggleSelection={handleToggleSelection}
+                        selectedTracks={[]}
+                        onToggleSelection={() => {}}
                         latestSingleUid={latestSingleUid}
-                        autoPlayTrackId={autoPlayTrackId}
+                        autoPlayTrackId={null}
                     />
                 </div>
 
