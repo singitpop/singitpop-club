@@ -146,17 +146,6 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/live-nashville-in-june/"
     },
     {
-      "id": "boots-in-the-autumn-dust-2026",
-      "title": "Boots in the Autumn Dust",
-      "year": 2026,
-      "trackCount": 12,
-      "genres": [
-        "Country"
-      ],
-      "folderPath": "Boots in the Autumn Dust",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/boots-in-the-autumn-dust/"
-    },
-    {
       "id": "before-the-light-2026",
       "title": "Before The Light",
       "year": 2026,

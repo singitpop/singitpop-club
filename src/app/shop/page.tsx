@@ -117,7 +117,7 @@ function ShopContent() {
                         Shop
                     </h1>
                      <p className="text-xl text-white/60 max-w-2xl mx-auto">
-                        Official merchandise, <strong className="text-pink-400">Digital Artbooks</strong>, and <strong className="text-cyan-400">Vocal-Free</strong> creator assets.
+                        Official merchandise and <strong className="text-cyan-400">Vocal-Free</strong> creator assets.
                     </p>
                 </motion.div>
             </div>
@@ -233,29 +233,6 @@ function ShopContent() {
                     </div>
                 </div>
             </div>
-
-            {/* Digital Bookstore CTA */}
-            <section className="max-w-6xl mx-auto mb-32 px-6">
-                <div className="relative group overflow-hidden rounded-[3rem] bg-gradient-to-br from-pink-900/40 to-purple-900/40 border border-pink-500/20 p-12 text-center">
-                    <div className="absolute inset-0 bg-[url('/bg-pattern.png')] opacity-10 pointer-events-none" />
-                    <div className="relative z-10 space-y-8">
-                        <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter leading-none">
-                            The Digital <span className="text-pink-500">Bookstore</span>
-                        </h2>
-                        <p className="text-white/60 max-w-xl mx-auto font-bold text-lg">
-                            Access the complete SingitPop Records discography. Get high-resolution Digital Artbooks for every album, with full lyrics.
-                        </p>
-                        <Link 
-                            href="/shop/artbooks"
-                            className="inline-flex items-center gap-4 bg-pink-600 hover:bg-pink-500 text-white px-10 py-6 rounded-2xl font-black uppercase text-xl italic transition-all active:scale-95 shadow-[0_0_50px_rgba(236,72,153,0.3)] border-4 border-white/20"
-                        >
-                            <BookOpen size={32} />
-                            Browse Full Library • £5 Each
-                            <ArrowRight size={24} />
-                        </Link>
-                    </div>
-                </div>
-            </section>
 
             {/* Adopt a Song / Sponsorship CTA */}
             <section className="max-w-6xl mx-auto mb-24 px-6">

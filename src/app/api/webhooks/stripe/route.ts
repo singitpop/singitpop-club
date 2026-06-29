@@ -5,7 +5,6 @@ import { Resend } from "resend";
 import { getSignedFileUrl } from "@/lib/s3";
 import { createClerkClient } from '@clerk/nextjs/server';
 import { saveMixtape } from "@/lib/mixtape-s3";
-import { createArtbookAccess } from "@/lib/artbook-s3";
 
 // Init Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
@@ -287,48 +286,7 @@ export async function POST(req: Request) {
             }
         }
 
-        // 4. Handle Digital Artbooks
-        if (session.metadata?.type === "artbook") {
-            const albumId = session.metadata.albumId;
-            console.log(`📖 Artbook Order: ${albumId}`);
 
-            try {
-                const token = await createArtbookAccess(albumId, customerEmail);
-                if (token) {
-                    const artbookUrl = `${process.env.NEXT_PUBLIC_APP_URL}/artbook/${token}`;
-                    await resend.emails.send({
-                        from: 'SingitPop Records <orders@singitpop.com>',
-                        to: [customerEmail],
-                        subject: `Your Digital Artbook Access: ${albumId} 📖`,
-                        html: `
-                            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #050505; color: #fff; padding: 40px; border-radius: 20px; border: 1px solid #10b981;">
-                                <h1 style="color: #10b981; margin-bottom: 20px;">Your Digital Artbook is Ready! 📖</h1>
-                                <p style="font-size: 16px; line-height: 1.6;">
-                                    Thanks for purchasing the <strong>Digital Artbook & Lyric Companion</strong> for ${albumId}. 
-                                    You can now access your high-resolution lyrics and exclusive visual companion.
-                                </p>
-                                
-                                <div style="background: rgba(16, 185, 129, 0.1); padding: 30px; border-radius: 15px; margin: 30px 0; border: 1px solid rgba(16, 185, 129, 0.2); text-align: center;">
-                                    <div style="margin-bottom: 15px;">
-                                        <a href="${artbookUrl}" style="background: #10b981; color: #fff; padding: 15px 30px; text-decoration: none; border-radius: 12px; display: inline-block; font-weight: bold; font-size: 18px; width: 100%; max-width: 280px;">📖 Open Digital Artbook</a>
-                                    </div>
-                                    <div>
-                                        <a href="${artbookUrl}/download" style="background: transparent; color: #10b981; border: 2px solid #10b981; padding: 15px 30px; text-decoration: none; border-radius: 12px; display: inline-block; font-weight: bold; font-size: 16px; width: 100%; max-width: 280px;">⬇️ Download Digital Extras (.zip)</a>
-                                    </div>
-                                </div>
-
-                                <p style="font-size: 14px; color: #9ca3af;">
-                                    These links are securely tied to your purchase. The Digital Extras vault contains your high-resolution 4K Desktop & Mobile wallpapers, and exclusive Thematic Lore.
-                                </p>
-                            </div>
-                        `
-                    });
-                    console.log(`✅ Artbook token delivered: ${token}`);
-                }
-            } catch (err) {
-                console.error("❌ Failed to fulfill Artbook:", err);
-            }
-        }
 
         for (const item of lineItems.data) {
             const product = item.price?.product as Stripe.Product;

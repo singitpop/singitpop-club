@@ -26,31 +26,11 @@
     },
     {
       "q": "What merch do you sell?",
-      "a": "We have the Midnight Hoodie, Signature Heavy Tee, Studio Cuffed Beanie, Vinyl Carrier Tote, Studio Dad Hat, and Midnight Coffee Mugs. We also offer <strong className='text-yellow-400'>Ringtones</strong>, <strong className='text-pink-400'>Digital Artbooks</strong>, <strong className='text-rose-400'>Mixtapes</strong>, and <strong className='text-cyan-400'>Creator Packs</strong> in the <a href='/shop' class='text-pink-400 underline'>Shop</a>."
-    },
-    {
-      "q": "How do I gift a Digital Mixtape?",
-      "a": "For only £10, you can pick 5 tracks from any album and write a personalized dedication. Perfect for birthdays or special moments. Your friend will receive a unique, cinematic playback link. Build one in the <a href='/shop/mixtape/builder' class='text-rose-400 underline'>Mixtape Builder</a>."
-    },
-    {
-      "q": "What are Digital Artbooks?",
-      "a": "For only £5, you can own a high-resolution Digital Artbook for any album in our discography. Each book includes full lyrics, production notes, and exclusive studio photography. Get them in the <a href='/shop#digital-artbooks' class='text-pink-400 underline'>Digital Bookstore</a>."
+      "a": "We have the Midnight Hoodie, Signature Heavy Tee, Studio Cuffed Beanie, Vinyl Carrier Tote, Studio Dad Hat, and Midnight Coffee Mugs. We also offer <strong className='text-cyan-400'>Creator Packs</strong> in the <a href='/shop' class='text-pink-400 underline'>Shop</a>."
     },
     {
       "q": "What is the Studio V13 Creator Pack?",
       "a": "Our flagship product for creators and editors. For £20, you get a professional suite of surgically harvested, 100% vocal-free stems, melodic intros, and cinematic stingers from our master studio projects. Available in the <a href='/shop' class='text-cyan-400 underline'>Shop</a>."
-    },
-    {
-      "q": "How do I download music?",
-      "a": "If you are an Insider or VIP, go to any Album page. You will see 'MP3' or 'WAV' download icons next to the tracks."
-    },
-    {
-      "q": "What is the FanZone?",
-      "a": "The FanZone is where you can create your own Mixes (Playlists) and enter community contests. Insiders can publish their own mixes directly to the site!"
-    },
-    {
-      "q": "What are the Radio Stations?",
-      "a": "We have several stations including Main, Deep Cuts, Demos, and Live. VIPs get access to all stations for the ultimate 'Inside the Studio' experience."
     },
     {
       "q": "What are the Sponsorship Tiers?",
@@ -61,20 +41,8 @@
       "a": "Once you purchase a license, it is registered in our master database. You can request your official PDF certificate which includes your unique License Number and the current issue date for legal proof of use."
     },
     {
-      "q": "Do you have Ringtones?",
-      "a": "Yes! We have a dedicated <a href='/shop/ringtones' class='text-pink-400 underline'>Ringtones Page</a> featuring exclusive snippets of the latest drops and vault tracks."
-    },
-    {
       "q": "Where is the audience from?",
-      "a": "Our global analytics now tracks visitor geography in real-time. We have fans from all over the world, with deep data on country-level engagement (Visits by Country) visible in our admin dashboard."
-    },
-    {
-      "q": "How can I support Gary directly?",
-      "a": "You can use the new <strong>Tip the Artist</strong> feature! Just click the 'Heart' icon next to any track in the music library to send a small tip (£1, £5, £10, or £25). 100% of tips go directly toward studio time and future song production."
-    },
-    {
-      "q": "What is the Free Welcome Gift?",
-      "a": "New fans who join the club for free get an instant high-resolution track download as a 'Thank You'. It's our way of welcoming you to the SingitPop Records family!"
+      "a": "Our global analytics now tracks visitor geography in real-time. We have fans from all over the world, with data on country-level engagement visible in our admin dashboard."
     }
   ],
   "pages": [
@@ -91,7 +59,7 @@
     {
       "name": "Shop",
       "url": "/shop",
-      "desc": "Merch, Ringtones, Digital Artbooks, Creator Packs, and Custom Song commissions."
+      "desc": "Merch, Creator Packs, and Custom Song commissions."
     },
     {
       "name": "Licensing",
@@ -102,16 +70,6 @@
       "name": "Music",
       "url": "/music",
       "desc": "Our full discography including 600+ tracks across multiple genres."
-    },
-    {
-      "name": "Membership",
-      "url": "/membership",
-      "desc": "Join the inner circle as an Insider or VIP."
-    },
-    {
-      "name": "FanZone",
-      "url": "/fan-albums",
-      "desc": "Community mixes, leaderboards, and news."
     }
   ],
   "guides": [
@@ -158,41 +116,6 @@
         "Look for the 'Become Executive Producer' link on your favorite track.",
         "Complete the £50 sponsorship payment via Stripe.",
         "Your name instantly appears as a gold 'Executive Producer' badge on that song permanently!"
-      ]
-    },
-    {
-      "feature": "Creating a Mix",
-      "tier": "Insider, VIP",
-      "devices": ["PC", "Mobile"],
-      "steps": [
-        "Go to the FanZone.",
-        "Click 'Create Mix' or 'New Playlist'.",
-        "Select tracks from the discography.",
-        "Name your mix and click Publish to show it on the site!"
-      ]
-    },
-    {
-      "feature": "Digital Mixtape Gifting",
-      "tier": "All",
-      "devices": ["PC", "Mobile"],
-      "steps": [
-        "Go to Shop > Digital Mixtape.",
-        "Select exactly 5 tracks from any combination of albums.",
-        "Write your personalized 'To', 'From', and Dedication message.",
-        "Select a Visual Theme (Pink, Purple, Gold, or Cyan).",
-        "Complete checkout for £10.",
-        "Share the unique gift link with your recipient!"
-      ]
-    },
-    {
-      "feature": "Tip the Artist",
-      "tier": "All",
-      "devices": ["PC", "Mobile"],
-      "steps": [
-        "Go to the Music or Licensing page.",
-        "Find a track you love and click the pink 'Heart' icon.",
-        "Select a tip amount (Coffee, Beer, Pizza, or Studio Time).",
-        "Complete the quick checkout to support Gary's production directly!"
       ]
     }
   ]
