@@ -47,7 +47,12 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
     const targetAlbums = [
         "Christmas All Year Long",
         "Backroads In Bloom",
-        "The Way You Loved Me"
+        "The Way You Loved Me",
+        "Quiet Turning",
+        "September Afterglow",
+        "September Turns Gold",
+        "When the Lights Go Gold",
+        "Our Love Our Forever"
     ];
     const targetAlbumsLower = targetAlbums.map(a => a.toLowerCase().trim());
 
@@ -112,6 +117,22 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
                 const day = String(date.getDate()).padStart(2, '0');
                 fullDateStr = `${year}-${month}-${day}`;
             }
+        }
+
+        const dateOverrides = {
+            "quiet turning": "2026-06-10",
+            "september afterglow": "2026-06-12",
+            "september turns gold": "2026-06-14",
+            "when the lights go gold": "2026-06-16",
+            "christmas all year long": "2026-06-18",
+            "the way you loved me": "2026-06-20",
+            "our love our forever": "2026-06-22",
+            "backroads in bloom": "2026-06-24"
+        };
+        const lowerAlbumName = albumName.toLowerCase().trim();
+        if (dateOverrides[lowerAlbumName]) {
+            fullDateStr = dateOverrides[lowerAlbumName];
+            year = parseInt(fullDateStr.split('-')[0]);
         }
 
         // Store track info by album name

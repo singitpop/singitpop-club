@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-29T14:05:35.393Z",
+  "generated": "2026-06-30T11:27:07.184Z",
   "totalAlbums": 66,
   "totalTracks": 809,
   "genres": [
@@ -18,16 +18,37 @@
     "Trance"
   ],
   "years": [
-    2027,
     2026,
     2025,
     2024
   ],
   "albums": [
     {
-      "id": "backroads-in-bloom-2027",
+      "id": "skin-and-silence-2026",
+      "title": "Skin And Silence",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "R&B"
+      ],
+      "folderPath": "Skin And Silence",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/skin-and-silence/"
+    },
+    {
+      "id": "last-ones-standing-2026",
+      "title": "Last Ones Standing",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Last Ones Standing",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/last-ones-standing/"
+    },
+    {
+      "id": "backroads-in-bloom-2026",
       "title": "Backroads In Bloom",
-      "year": 2027,
+      "year": 2026,
       "trackCount": 12,
       "genres": [
         "Country"
@@ -36,9 +57,9 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/backroads-in-bloom/"
     },
     {
-      "id": "our-love-our-forever-2027",
+      "id": "our-love-our-forever-2026",
       "title": "Our Love Our Forever",
-      "year": 2027,
+      "year": 2026,
       "trackCount": 17,
       "genres": [
         "Country"
@@ -47,15 +68,26 @@
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/our-love-our-forever/"
     },
     {
-      "id": "the-way-you-loved-me-2027",
+      "id": "the-way-you-loved-me-2026",
       "title": "The Way You Loved Me",
-      "year": 2027,
+      "year": 2026,
       "trackCount": 13,
       "genres": [
         "Country"
       ],
       "folderPath": "The Way You Love Me",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/the-way-you-love-me/"
+    },
+    {
+      "id": "solstice-2026",
+      "title": "Solstice",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Trance"
+      ],
+      "folderPath": "Solstice",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/"
     },
     {
       "id": "christmas-all-year-long-2026",
@@ -111,39 +143,6 @@
       ],
       "folderPath": "Quiet Turning",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/quiet-turning/"
-    },
-    {
-      "id": "skin-and-silence-2026",
-      "title": "Skin And Silence",
-      "year": 2026,
-      "trackCount": 12,
-      "genres": [
-        "R&B"
-      ],
-      "folderPath": "Skin And Silence",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/skin-and-silence/"
-    },
-    {
-      "id": "last-ones-standing-2026",
-      "title": "Last Ones Standing",
-      "year": 2026,
-      "trackCount": 12,
-      "genres": [
-        "Country"
-      ],
-      "folderPath": "Last Ones Standing",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/last-ones-standing/"
-    },
-    {
-      "id": "solstice-2026",
-      "title": "Solstice",
-      "year": 2026,
-      "trackCount": 12,
-      "genres": [
-        "Trance"
-      ],
-      "folderPath": "Solstice",
-      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/solstice/"
     },
     {
       "id": "live-nashville-in-june-2026",

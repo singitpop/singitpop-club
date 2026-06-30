@@ -2,7 +2,7 @@
  * Album Data
  * Auto-generated from Excel spreadsheet OR Admin Uploads
  * Source of Truth: src/data/albums.json
- * Generated: 2026-06-29T14:05:35.392Z
+ * Generated: 2026-06-30T11:27:07.179Z
  */
 
 import albumsData from './albums.json';
