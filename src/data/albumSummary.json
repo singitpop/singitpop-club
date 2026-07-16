@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-30T11:27:07.184Z",
-  "totalAlbums": 66,
-  "totalTracks": 809,
+  "generated": "2026-07-16T12:32:07.111Z",
+  "totalAlbums": 68,
+  "totalTracks": 833,
   "genres": [
     "Christmas",
     "Country",
@@ -18,11 +18,23 @@
     "Trance"
   ],
   "years": [
+    2027,
     2026,
     2025,
     2024
   ],
   "albums": [
+    {
+      "id": "wide-open-roads-2027",
+      "title": "Wide Open Roads",
+      "year": 2027,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Wide Open Roads",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/wide-open-roads/"
+    },
     {
       "id": "skin-and-silence-2026",
       "title": "Skin And Silence",
@@ -33,6 +45,17 @@
       ],
       "folderPath": "Skin And Silence",
       "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/skin-and-silence/"
+    },
+    {
+      "id": "golden-hour-state-of-mind-2026",
+      "title": "Golden Hour State of Mind",
+      "year": 2026,
+      "trackCount": 12,
+      "genres": [
+        "Country"
+      ],
+      "folderPath": "Golden Hour State Of Mind",
+      "s3Url": "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/golden-hour-state-of-mind/"
     },
     {
       "id": "last-ones-standing-2026",

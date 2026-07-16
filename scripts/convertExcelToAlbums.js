@@ -52,7 +52,9 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
         "September Afterglow",
         "September Turns Gold",
         "When the Lights Go Gold",
-        "Our Love Our Forever"
+        "Our Love Our Forever",
+        "Golden Hour State Of Mind",
+        "Wide Open Roads"
     ];
     const targetAlbumsLower = targetAlbums.map(a => a.toLowerCase().trim());
 
@@ -127,7 +129,9 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
             "christmas all year long": "2026-06-18",
             "the way you loved me": "2026-06-20",
             "our love our forever": "2026-06-22",
-            "backroads in bloom": "2026-06-24"
+            "backroads in bloom": "2026-06-24",
+            "golden hour state of mind": "2026-07-27",
+            "wide open roads": "2027-04-23"
         };
         const lowerAlbumName = albumName.toLowerCase().trim();
         if (dateOverrides[lowerAlbumName]) {
@@ -163,7 +167,9 @@ const S3_BUCKET_URL = 'https://singitpop-music.s3.eu-north-1.amazonaws.com';
         "Night Drive: 80s Beats & Ballads": "Night Drive - 80s Beats & Ballads", // Different separator
         "Popstar Winter Wonderland": "Pop Star Winter Wonderland", // Spacing difference
         "Summer Fever": "Summer fever", // Case difference (though search is case-insensitive, explicit mapping is safe)
-        "The Way You Loved Me": "The Way You Love Me"
+        "The Way You Loved Me": "The Way You Love Me",
+        "Golden Hour State of Mind": "Golden Hour State Of Mind",
+        "Golden Hour State Of Mind": "Golden Hour State Of Mind"
     };
 
     // Helper to format duration

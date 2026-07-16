@@ -62,7 +62,9 @@ async function scanAndUpload(dir) {
         "september afterglow",
         "september turns gold",
         "when the lights go gold",
-        "our love our forever"
+        "our love our forever",
+        "golden hour state of mind",
+        "wide open roads"
     ];
 
     for (const item of items) {
