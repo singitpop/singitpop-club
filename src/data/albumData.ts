@@ -80,18 +80,19 @@ export function getAllYears(): number[] {
     return Array.from(years).sort((a, b) => b - a);
 }
 
-// Latest Release Helpers
 export function getLatestStudioAlbum(): Album | undefined {
-    // Filter for type 'studio', fallback to 'standard' if none found
-    // Sort by year descending, then by releaseDate if available
-    const studioAlbums = albums.filter(a => a.type === 'studio');
-    return studioAlbums.length > 0 ? studioAlbums[0] : albums[0];
+    const now = new Date();
+    // Filter out future albums
+    const releasedAlbums = albums.filter(a => new Date(a.releaseDate) <= now);
+    const studioAlbums = releasedAlbums.filter(a => a.type === 'studio');
+    return studioAlbums.length > 0 ? studioAlbums[0] : (releasedAlbums.length > 0 ? releasedAlbums[0] : albums[0]);
 }
 
 export function getLatestSingle(): Track | undefined {
-    // Find the latest album that contains a single
-    // Then find the specific track marked as single
-    for (const album of albums) {
+    const now = new Date();
+    // Find the latest released album that contains a single
+    const releasedAlbums = albums.filter(a => new Date(a.releaseDate) <= now);
+    for (const album of releasedAlbums) {
         const singleTrack = album.tracks.find(t => t.isSingle);
         if (singleTrack) {
             return singleTrack;
