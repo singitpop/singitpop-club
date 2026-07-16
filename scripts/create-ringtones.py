@@ -124,9 +124,7 @@ def main():
     
     target_albums = [
         "christmas all year long",
-        "backroads in bloom",
-        "golden hour state of mind",
-        "wide open roads"
+        "backroads in bloom"
     ]
     
     for album in albums:
