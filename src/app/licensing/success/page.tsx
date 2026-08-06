@@ -20,7 +20,7 @@ export default function LicensingSuccessPage() {
                     </p>
                     <p className={styles.detailItem}>
                         <span>Issued By</span>
-                        <span>SingitPop Records</span>
+                        <span>Singitpop Records</span>
                     </p>
                 </div>
                 <div className={styles.actions}>

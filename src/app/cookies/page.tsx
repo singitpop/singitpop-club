@@ -1,8 +1,8 @@
 import styles from '../privacy/page.module.css';
 
 export const metadata = {
-    title: 'Cookie Policy | SingitPop Records',
-    description: 'Information about cookies and tracking technologies used on SingitPop Records'
+    title: 'Cookie Policy | Singitpop Records',
+    description: 'Information about cookies and tracking technologies used on Singitpop Records'
 };
 
 export default function CookiesPage() {

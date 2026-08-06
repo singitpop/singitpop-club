@@ -1,5 +1,5 @@
 /**
- * AUTHORITATIVE ACCESS RULES for SingitPop Records
+ * AUTHORITATIVE ACCESS RULES for Singitpop Records
  * Tiers: GUEST, FAN, INSIDER, VIP, LABEL, ADMIN, LIFETIME
  */
 

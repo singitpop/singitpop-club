@@ -62,13 +62,13 @@ export async function POST(req: Request) {
 
         try {
             await resend.emails.send({
-                from: 'SingitPop Records <orders@singitpop.com>',
+                from: 'Singitpop Records <orders@singitpop.com>',
                 to: [ownerEmail],
                 subject: `🎤 New User Registered: ${fullName}`,
                 html: `
                     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px;">
                         <h1 style="color: #FF0080; margin-bottom: 4px;">New User Signed Up! 🎤</h1>
-                        <p style="color: #6b7280; margin-top: 0;">SingitPop Records User Registration</p>
+                        <p style="color: #6b7280; margin-top: 0;">Singitpop Records User Registration</p>
                         <div style="background: #1a1a1a; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #FF0080;">
                             <table style="width: 100%; border-collapse: collapse;">
                                 <tr>

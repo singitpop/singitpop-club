@@ -5,7 +5,7 @@ export const LATEST_RELEASES = {
     // The details of the latest single
     SINGLE: {
         TITLE: "April Comes Soft",
-        ARTIST: "SingitPop Records",
+        ARTIST: "Singitpop Records",
         AUDIO_URL: "https://singitpop-music.s3.eu-north-1.amazonaws.com/albums/April%20Comes%20Soft/April%20Comes%20Soft/April%20Comes%20Soft.mp3",
         DURATION: 225,
         BADGE: "Latest Single 🌸",

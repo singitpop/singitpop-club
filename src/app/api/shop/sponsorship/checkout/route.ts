@@ -32,7 +32,7 @@ export async function POST(req: Request) {
                         currency: "gbp",
                         product_data: {
                             name: `${tierLabel} Sponsor: ${trackTitle}`,
-                            description: `Become an official ${tierLabel} Sponsor for '${trackTitle}' on SingitPop Records.`,
+                            description: `Become an official ${tierLabel} Sponsor for '${trackTitle}' on Singitpop Records.`,
                         },
                         unit_amount: unitAmount,
                     },

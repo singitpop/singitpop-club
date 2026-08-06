@@ -1,8 +1,8 @@
 import styles from '../privacy/page.module.css';
 
 export const metadata = {
-    title: 'Terms and Conditions | SingitPop Records',
-    description: 'Terms of Service and usage rules for SingitPop Records'
+    title: 'Terms and Conditions | Singitpop Records',
+    description: 'Terms of Service and usage rules for Singitpop Records'
 };
 
 export default function TermsPage() {
@@ -17,7 +17,7 @@ export default function TermsPage() {
                     By accessing or using <strong>singitpop.club</strong> ("the Website"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree, please do not use our services.
                 </p>
                 <p>
-                    These Terms constitute a legally binding agreement between you and SingitPop Records ("we", "us", or "our"), a business registered in the United Kingdom.
+                    These Terms constitute a legally binding agreement between you and Singitpop Records ("we", "us", or "our"), a business registered in the United Kingdom.
                 </p>
             </section>
 
@@ -85,7 +85,7 @@ export default function TermsPage() {
 
                 <h3>4.1 Our Content</h3>
                 <p>
-                    All music, artwork, text, graphics, logos, and other content on the Website are owned by SingitPop Records or licensed to us. They are protected by UK and international copyright laws.
+                    All music, artwork, text, graphics, logos, and other content on the Website are owned by Singitpop Records or licensed to us. They are protected by UK and international copyright laws.
                 </p>
 
                 <h3>4.2 License to Use</h3>
@@ -141,7 +141,7 @@ export default function TermsPage() {
 
                 <h3>6.2 Limitation of Liability</h3>
                 <p>
-                    To the fullest extent permitted by law, SingitPop Records shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Website, including but not limited to loss of data, profits, or business opportunities.
+                    To the fullest extent permitted by law, Singitpop Records shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Website, including but not limited to loss of data, profits, or business opportunities.
                 </p>
                 <p>
                     Our total liability shall not exceed the amount you paid us in the 12 months preceding the claim.

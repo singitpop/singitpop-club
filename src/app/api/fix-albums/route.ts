@@ -24,7 +24,7 @@ const excelDateToJS = (serial: number) => {
 
 export async function GET() {
     try {
-        const EXCEL_PATH = '/Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE/SingitPop Records Music Tracker 26-10-25.xlsx';
+        const EXCEL_PATH = '/Users/garybirrell/Desktop/Singitpop/READY FOR WEBSITE/Singitpop Records Music Tracker 26-10-25.xlsx';
         const fileBuffer = fs.readFileSync(EXCEL_PATH);
         const workbook = XLSX.read(fileBuffer, { type: 'buffer' });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];

@@ -82,7 +82,7 @@ export async function POST(req: Request) {
 
             const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
             await resend.emails.send({
-                from: 'SingitPop Records <orders@singitpop.com>',
+                from: 'Singitpop Records <orders@singitpop.com>',
                 to: [buyerEmail],
                 bcc: [ownerEmail],
                 subject: `Welcome, ${tierLabel} Sponsor of '${trackTitle}'!`,
@@ -91,7 +91,7 @@ export async function POST(req: Request) {
                         <h1 style="color: ${badgeColor};">You are now a ${tierLabel} Sponsor!</h1>
                         <p>Hi ${buyerName},</p>
                         <p>Thank you for sponsoring <strong>${trackTitle}</strong>. Your name is now permanently displayed on the track page with an official ${tierLabel} badge.</p>
-                        <p>This contribution directly supports the creation of new music and keeps the beat alive at SingitPop Records.</p>
+                        <p>This contribution directly supports the creation of new music and keeps the beat alive at Singitpop Records.</p>
                         <hr style="border-color: #333; margin: 20px 0;" />
                         <p>Head over to the <a href="${process.env.NEXT_PUBLIC_APP_URL}/music" style="color: ${badgeColor};">Music Library</a> to see your new badge!</p>
                         <p>Keep Singing It POP,<br/>Gary & The Team</p>
@@ -122,7 +122,7 @@ export async function POST(req: Request) {
             const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
 
             await resend.emails.send({
-                from: 'SingitPop Records <orders@singitpop.com>',
+                from: 'Singitpop Records <orders@singitpop.com>',
                 to: [buyerEmail],
                 bcc: [ownerEmail],
                 subject: `Your Digital Artbook is ready: ${albumTitle}`,
@@ -141,7 +141,7 @@ export async function POST(req: Request) {
                         
                         <p style="color: #888; font-size: 13px;">*This is your personal access link. Do not share it.</p>
                         <hr style="border-color: #333; margin: 20px 0;" />
-                        <p>Keep Dreaming,<br/>Gary & The SingitPop Records Team</p>
+                        <p>Keep Dreaming,<br/>Gary & The Singitpop Records Team</p>
                     </div>
                 `
             });
@@ -166,15 +166,15 @@ export async function POST(req: Request) {
             // 2. Send Download Email
             const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
             await resend.emails.send({
-                from: 'SingitPop Records <orders@singitpop.com>',
+                from: 'Singitpop Records <orders@singitpop.com>',
                 to: [buyerEmail],
                 bcc: [ownerEmail],
-                subject: "Your SingitPop Records Digital Creator Pack is ready!",
+                subject: "Your Singitpop Records Digital Creator Pack is ready!",
                 html: `
                     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px; border: 1px solid #00D1FF;">
                         <h1 style="color: #00D1FF;">Download Successful ✓</h1>
                         <p>Hi ${buyerName},</p>
-                        <p>Your <strong>SingitPop Records Digital Creator Pack (v1)</strong> is ready for download!</p>
+                        <p>Your <strong>Singitpop Records Digital Creator Pack (v1)</strong> is ready for download!</p>
                         <p>Click the button below to get your 15+ high-quality audio assets (Transitions, Atmos Loops, and Stingers).</p>
                         
                         <div style="text-align: center; margin: 40px 0;">
@@ -185,7 +185,7 @@ export async function POST(req: Request) {
                         
                         <p style="color: #888; font-size: 13px;">*This link is secure and will expire in 24 hours.</p>
                         <hr style="border-color: #333; margin: 20px 0;" />
-                        <p>Thanks for supporting the music,<br/>Gary & The SingitPop Records Team</p>
+                        <p>Thanks for supporting the music,<br/>Gary & The Singitpop Records Team</p>
                     </div>
                 `
             });
@@ -230,19 +230,19 @@ export async function POST(req: Request) {
             // 3. SEND EMAIL WITH PDF VIA RESEND
             const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
             await resend.emails.send({
-                from: 'SingitPop Records <orders@singitpop.com>',
+                from: 'Singitpop Records <orders@singitpop.com>',
                 to: [meta.buyerEmail],
                 bcc: [ownerEmail],
-                subject: `Your SingitPop Records License: ${meta.trackTitle}`,
+                subject: `Your Singitpop Records License: ${meta.trackTitle}`,
                 html: `
                     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 30px; border-radius: 12px;">
                         <h1 style="color: #FF0080;">License Confirmed ✓</h1>
                         <p>Hi ${meta.buyerName},</p>
-                        <p>Thank you for licensing <strong>${meta.trackTitle}</strong> from SingitPop Records!</p>
+                        <p>Thank you for licensing <strong>${meta.trackTitle}</strong> from Singitpop Records!</p>
                         <p>Your official <strong>PDF License Certificate</strong> is attached. Keep it safe to clear any YouTube Content ID claims.</p>
                         <hr style="border-color: #333; margin: 20px 0;" />
                         <p style="color: #888; font-size: 13px;">PRO Registration: ASCAP — IPI: 1294507240</p>
-                        <p>Thanks,<br/>The SingitPop Records Team</p>
+                        <p>Thanks,<br/>The Singitpop Records Team</p>
                     </div>
                 `,
                 attachments: [

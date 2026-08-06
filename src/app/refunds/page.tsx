@@ -1,8 +1,8 @@
 import styles from '../privacy/page.module.css';
 
 export const metadata = {
-    title: 'Refund & Cancellation Policy | SingitPop Records',
-    description: 'Refund and cancellation policy for SingitPop Records subscriptions and digital downloads'
+    title: 'Refund & Cancellation Policy | Singitpop Records',
+    description: 'Refund and cancellation policy for Singitpop Records subscriptions and digital downloads'
 };
 
 export default function RefundPolicyPage() {
@@ -14,7 +14,7 @@ export default function RefundPolicyPage() {
             <section>
                 <h2>1. Overview</h2>
                 <p>
-                    This Refund & Cancellation Policy explains your rights when purchasing digital content, subscriptions, and services from SingitPop Records. We comply with the Consumer Rights Act 2015, Consumer Contracts Regulations 2013, and the Digital Markets, Competition and Consumers Act 2024.
+                    This Refund & Cancellation Policy explains your rights when purchasing digital content, subscriptions, and services from Singitpop Records. We comply with the Consumer Rights Act 2015, Consumer Contracts Regulations 2013, and the Digital Markets, Competition and Consumers Act 2024.
                 </p>
             </section>
 

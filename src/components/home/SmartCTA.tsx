@@ -54,7 +54,7 @@ export default function SmartCTA() {
         <section id="access" className={styles.section}>
             <div className={styles.header}>
                 <h2 className={styles.title}>Choose Your Access 🔑</h2>
-                <p className={styles.subtitle}>Unlock the full SingitPop Records experience.</p>
+                <p className={styles.subtitle}>Unlock the full Singitpop Records experience.</p>
             </div>
 
             <div className={styles.grid}>
@@ -91,7 +91,7 @@ export default function SmartCTA() {
                         </div>
                         <ul className={styles.features}>
                             <li>✅ <strong>Ryker Member Discount perk!</strong></li>
-                            <li>✅ Complete SingitPop Records Artists Catalog 🔓</li>
+                            <li>✅ Complete Singitpop Records Artists Catalog 🔓</li>
                             <li>✅ Create 10 Mixtapes / Month 🎧</li>
                             <li>✅ Lossless WAV & MP3 Downloads 💎</li>
                             <li>✅ Exclusive Radio Stations 📻</li>

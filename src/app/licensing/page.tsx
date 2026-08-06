@@ -51,7 +51,7 @@ export default async function LicensingPage() {
                         and find the perfect sound for your YouTube videos, commercials, films, and games.
                     </p>
                     <div className={styles.ownershipAlert}>
-                        <strong>✓ 100% Retained Rights:</strong> All tracks remain exclusively owned by SingitPop Records. Licenses grant strictly defined usage permission only.
+                        <strong>✓ 100% Retained Rights:</strong> All tracks remain exclusively owned by Singitpop Records. Licenses grant strictly defined usage permission only.
                     </div>
                     <div className={styles.heroActions}>
                         <a href="#library" className={styles.primaryButton}>Explore Catalog</a>

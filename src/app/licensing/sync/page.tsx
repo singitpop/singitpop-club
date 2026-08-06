@@ -19,7 +19,7 @@ function getTableData(filename: string) {
 }
 
 export const metadata = {
-    title: 'Sync for Brands | Singitpop Licensing',
+    title: 'Sync for Brands | Singitpop Records Licensing',
     description: 'High-fidelity commercial music licensing for brands, advertisers, and creative agencies. Discover ready-to-sync sonic identities.',
 };
 
@@ -103,7 +103,7 @@ export default async function PublicSyncLandingPage() {
             </section>
 
             <footer className={styles.footer}>
-                <p>&copy; 2026 Singitpop Licensing. All Rights Reserved.</p>
+                <p>&copy; 2026 Singitpop Records Licensing. All Rights Reserved.</p>
             </footer>
         </div>
     );

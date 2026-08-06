@@ -54,7 +54,7 @@ export default function SponsorshipModal({ track, onClose }: SponsorshipModalPro
                         <ul className={styles.features}>
                             <li>Your name permanently listed on the track page</li>
                             <li>Official 'Gold Sponsor' Badge</li>
-                            <li>Helps support future SingitPop Records music releases</li>
+                            <li>Helps support future Singitpop Records music releases</li>
                         </ul>
                         <button 
                             className={styles.selectBtn} 

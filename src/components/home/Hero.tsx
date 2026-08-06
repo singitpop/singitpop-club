@@ -114,7 +114,7 @@ export default function Hero() {
                     animate={{ opacity: heroData.HERO_TITLE ? 1 : 0, x: heroData.HERO_TITLE ? 0 : -30 }}
                     transition={{ delay: 1, duration: 0.8 }}
                 >
-                    <span className={styles.artistName}>SingitPop Records</span>
+                    <span className={styles.artistName}>Singitpop Records</span>
                     {heroData.HERO_TITLE && <h1 className={styles.songTitle}>{heroData.HERO_TITLE}</h1>}
                 </motion.div>
             )}

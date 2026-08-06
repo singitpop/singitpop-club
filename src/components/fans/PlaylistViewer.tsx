@@ -285,7 +285,7 @@ export default function PlaylistViewer({ playlist, onClose, onPlayTrack, current
                                     <div className={styles.trackTitle} style={{ color: isTrackPlaying ? 'var(--primary)' : 'white' }}>
                                         {track.title}
                                     </div>
-                                    <span className={styles.trackArtist}>{track.artist || "SingitPop Records"} • {track.albumTitle}</span>
+                                    <span className={styles.trackArtist}>{track.artist || "Singitpop Records"} • {track.albumTitle}</span>
                                 </div>
 
                                 <div className={styles.trackDuration}>{track.duration || "3:00"}</div>

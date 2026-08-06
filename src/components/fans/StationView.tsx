@@ -182,7 +182,7 @@ export default function StationView({ currentTrackId, isPlaying, onPlayTrack, cu
 
     // Display Logic
     const displayTrack = currentTrack || {
-        title: "SingitPop Records Radio",
+        title: "Singitpop Records Radio",
         artist: "Select a Station",
         coverArt: activeStation.img // Default to station image
     };

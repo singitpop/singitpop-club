@@ -112,7 +112,7 @@ export default function TipModal({ trackTitle, onClose }: TipModalProps) {
                 </button>
                 
                 <p className="text-center text-[10px] text-white/40 mt-6 uppercase tracking-widest">
-                    %100 goes to SingitPop Records production
+                    %100 goes to Singitpop Records production
                 </p>
             </motion.div>
         </div>

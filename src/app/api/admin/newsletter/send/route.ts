@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 
         const results = await Promise.allSettled(recipients.map(email =>
             resend.emails.send({
-                from: 'SingitPop Records <newsletter@singitpop.com>', // Update with your verified domain
+                from: 'Singitpop Records <newsletter@singitpop.com>', // Update with your verified domain
                 to: email,
                 subject: subject,
                 html: html,

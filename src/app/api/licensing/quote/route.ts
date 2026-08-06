@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         // 2. Dispatch Email Notification via Resend
         const ownerEmail = process.env.OWNER_EMAIL || 'gazzab7@gmail.com';
         await resend.emails.send({
-            from: 'SingitPop Records <orders@singitpop.com>',
+            from: 'Singitpop Records <orders@singitpop.com>',
             to: [ownerEmail],
             replyTo: email, 
             subject: `New Licensing Quote Request: ${track.title} from ${company}`,

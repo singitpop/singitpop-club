@@ -37,7 +37,7 @@ export default function Roadmap() {
                         Future Plans
                     </h2>
                     <p className="text-white/60">
-                        Here is what we are building next for the SingitPop Records community.
+                        Here is what we are building next for the Singitpop Records community.
                     </p>
                 </div>
 

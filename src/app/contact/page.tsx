@@ -307,7 +307,7 @@ export default function ContactPage() {
                                 </div>
                                 <span className="font-medium group-hover:text-pink-400 transition-colors">@singitpop</span>
                             </a>
-                            <a href="https://www.youtube.com/@SingItPop" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all group">
+                            <a href="https://www.youtube.com/@Singitpop" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all group">
                                 <div className="p-2 rounded-lg bg-gradient-to-br from-red-500 to-red-600">
                                     <Youtube size={20} className="text-white" />
                                 </div>

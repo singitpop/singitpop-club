@@ -1,8 +1,8 @@
 import styles from '../privacy/page.module.css';
 
 export const metadata = {
-    title: 'Company Information | SingitPop Records',
-    description: 'Legal company information and contact details for SingitPop Records'
+    title: 'Company Information | Singitpop Records',
+    description: 'Legal company information and contact details for Singitpop Records'
 };
 
 export default function CompanyInfoPage() {
@@ -13,8 +13,8 @@ export default function CompanyInfoPage() {
 
             <section>
                 <h2>1. Trading Name</h2>
-                <p><strong>SingitPop Records</strong></p>
-                <p>Operating as: SingitPop Records Club</p>
+                <p><strong>Singitpop Records</strong></p>
+                <p>Operating as: Singitpop Records</p>
             </section>
 
             <section>
@@ -49,7 +49,7 @@ export default function CompanyInfoPage() {
 
             <section>
                 <h2>5. Business Activities</h2>
-                <p>SingitPop Records operates in the following areas:</p>
+                <p>Singitpop Records operates in the following areas:</p>
                 <ul>
                     <li><strong>Music Streaming:</strong> Online music streaming service</li>
                     <li><strong>Digital Downloads:</strong> Sale of music tracks, albums, and ringtones</li>
@@ -65,7 +65,7 @@ export default function CompanyInfoPage() {
 
                 <h3>6.1 Data Protection</h3>
                 <p>
-                    <strong>Data Controller:</strong> SingitPop Records<br />
+                    <strong>Data Controller:</strong> Singitpop Records<br />
                     <strong>ICO Registration:</strong> [Registration number if applicable]<br />
                     <strong>Data Protection Officer:</strong> <a href="mailto:privacy@singitpop.com">privacy@singitpop.com</a>
                 </p>
@@ -116,7 +116,7 @@ export default function CompanyInfoPage() {
             <section>
                 <h2>10. Environmental & Social Responsibility</h2>
                 <p>
-                    SingitPop Records is committed to sustainable and ethical business practices:
+                    Singitpop Records is committed to sustainable and ethical business practices:
                 </p>
                 <ul>
                     <li>Digital-first approach to reduce physical waste</li>

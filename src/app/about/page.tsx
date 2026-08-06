@@ -5,12 +5,12 @@ export default function AboutPage() {
         <div className={`container ${styles.page}`}>
             <div className={styles.hero}>
                 <div className={styles.imageWrapper}>
-                    <img src="/images/gary-neon.png" alt="SingitPop Records" className={styles.portrait} />
+                    <img src="/images/gary-neon.png" alt="Singitpop Records" className={styles.portrait} />
                 </div>
                 <div className={`glass-panel ${styles.bio}`}>
                     <h1>The Beat vs. The Silence</h1>
                     <p className={styles.lead}>
-                        SingitPop Records isn’t just a stage name—it’s a promise, a memory, and a race against time.
+                        Singitpop Records isn’t just a stage name—it’s a promise, a memory, and a race against time.
                     </p>
 
                     <h3>The Origin</h3>

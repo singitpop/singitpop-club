@@ -24,7 +24,7 @@ export async function generateBrandedLicensePdf(meta: LicenseMetadata): Promise<
     const timesBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
     const courierFont = await pdfDoc.embedFont(StandardFonts.Courier);
 
-    // 3. Colors (SingitPop Records Branding)
+    // 3. Colors (Singitpop Records Branding)
     const magenta = rgb(1, 0, 0.5); // #FF0080
     const cyan = rgb(0, 0.82, 1);    // #00D1FF
     const darkGray = rgb(0.1, 0.1, 0.1);
@@ -86,7 +86,7 @@ export async function generateBrandedLicensePdf(meta: LicenseMetadata): Promise<
 
     y = drawDetail('License #', certNo, y);
     y = drawDetail('Licensee', meta.buyerName, y);
-    y = drawDetail('Licensor', 'SingitPop Records', y);
+    y = drawDetail('Licensor', 'Singitpop Records', y);
     y = drawDetail('Audio Work', meta.trackTitle, y);
     y = drawDetail('License Type', meta.licenseType, y);
     y = drawDetail('Approved Usage', meta.usage, y);
@@ -114,14 +114,14 @@ export async function generateBrandedLicensePdf(meta: LicenseMetadata): Promise<
         borderWidth: 1,
     });
 
-    const legalText = `By this agreement, SingitPop Records grants to the Licensee (${meta.buyerName}) a non-exclusive 
+    const legalText = `By this agreement, Singitpop Records grants to the Licensee (${meta.buyerName}) a non-exclusive 
 synchronization license to use the master recording "${meta.trackTitle}" strictly within 
 the parameters defined above. 
 
-CREATIVE OWNERSHIP: All copyright and master ownership remain strictly with SingitPop Records.
+CREATIVE OWNERSHIP: All copyright and master ownership remain strictly with Singitpop Records.
 The Licensee may not resell, remix, or redistribute this audio as a standalone work.
 
-CREDIT: Where possible, credit should be given as: "Music by SingitPop Records".
+CREDIT: Where possible, credit should be given as: "Music by Singitpop Records".
 
 PRO REGISTRATION & CONTENT ID: 
 The composition is registered with ASCAP (IPI: 1294507240). If the Licensee receives a 
@@ -141,7 +141,7 @@ will manually clear the video upon verification of this license.`;
     page.drawText('GARY BIRRELL', { x: 50, y: 120, size: 10, font: timesBoldFont, color: magenta });
     page.drawText('Authorized Signature', { x: 50, y: 110, size: 8, font: timesRomanFont, color: rgb(0.6, 0.6, 0.6) });
     
-    page.drawText(`© ${new Date().getFullYear()} SingitPop Records. All Rights Reserved.`, {
+    page.drawText(`© ${new Date().getFullYear()} Singitpop Records. All Rights Reserved.`, {
         x: width - 200,
         y: 50,
         size: 8,

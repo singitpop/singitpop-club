@@ -17,14 +17,14 @@ import NotificationManager from '@/components/ui/NotificationManager';
 export const metadata: Metadata = {
     metadataBase: new URL('https://singitpop.com'),
     title: {
-        default: 'SING | SingitPop Records Official Music Artist Site',
-        template: '%s | SING - SingitPop Records'
+        default: 'SING | Singitpop Records Official Music Artist Site',
+        template: '%s | SING - Singitpop Records'
     },
-    description: 'SING - The official home of SingitPop Records. Experience the future of pop music. Join the club for exclusive tracks, mix-tapes, and premium licensing. Step into the world of the digital music artist SING.',
-    keywords: ['SING', 'SingitPop Records', 'Music Artist', 'Pop Music', 'AI Music', 'Gary Birrell', 'Fan Club', 'Licensing', 'Sync Music', 'Virtual Artist', 'Ringtones'],
+    description: 'SING - The official home of Singitpop Records. Experience the future of pop music. Join the club for exclusive tracks, mix-tapes, and premium licensing. Step into the world of the digital music artist SING.',
+    keywords: ['SING', 'Singitpop Records', 'Music Artist', 'Pop Music', 'AI Music', 'Gary Birrell', 'Fan Club', 'Licensing', 'Sync Music', 'Virtual Artist', 'Ringtones'],
     authors: [{ name: 'Gary Birrell' }],
     creator: 'Gary Birrell',
-    publisher: 'SingitPop Records',
+    publisher: 'Singitpop Records',
     formatDetection: {
         email: false,
         address: false,
@@ -36,10 +36,10 @@ export const metadata: Metadata = {
         apple: '/apple-icon.png',
     },
     openGraph: {
-        title: 'SingitPop Records | The Future of Pop Music',
+        title: 'Singitpop Records | The Future of Pop Music',
         description: 'Experience the next generation of AI-infused pop music. Join the club for exclusive tracks and virtual merch.',
         url: 'https://singitpop.com',
-        siteName: 'SingitPop Records',
+        siteName: 'Singitpop Records',
         locale: 'en_GB',
         type: 'website',
         images: [
@@ -47,13 +47,13 @@ export const metadata: Metadata = {
                 url: '/og-image.jpg', // Ensure this image exists in public/
                 width: 1200,
                 height: 630,
-                alt: 'SingitPop Records Official',
+                alt: 'Singitpop Records Official',
             },
         ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'SingitPop Records | The Future of Pop Music',
+        title: 'Singitpop Records | The Future of Pop Music',
         description: 'Experience the next generation of AI-infused pop music.',
         creator: '@singitpop', // Replace with actual handle if different
         images: ['/og-image.jpg'],
@@ -87,14 +87,14 @@ export default function RootLayout({
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "MusicGroup",
-        "name": "SingitPop Records",
+        "name": "Singitpop Records",
         "alternateName": "SING",
-        "description": "Premium country music and art from SingitPop Records.",
+        "description": "Premium country music and art from Singitpop Records.",
         "url": "https://singitpop.com",
         "genre": ["Country", "Pop"],
         "locationCreated": {
             "@type": "Place",
-            "name": "SingitPop Records"
+            "name": "Singitpop Records"
         },
         "knowsAbout": ["Country Music", "Digital Artbooks", "Radio Broadcasting"],
         "hasPart": [

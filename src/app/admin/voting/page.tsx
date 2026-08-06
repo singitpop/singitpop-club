@@ -108,7 +108,7 @@ export default function AdminVotingPage() {
                 tracks: selectedTracks.map(t => ({
                     id: t.id,
                     title: t.title,
-                    artist: "SingitPop Records", // or dynamic
+                    artist: "Singitpop Records", // or dynamic
                     artwork: t.artwork,
                     color: "#FF0080", // Default accent, could be dynamic
                     audioUrl: t.audioUrl

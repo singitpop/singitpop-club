@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
         try {
             await resend.emails.send({
-                from: 'SingitPop Records Contact <onboarding@resend.dev>', // Update with verified domain in Prod
+                from: 'Singitpop Records Contact <onboarding@resend.dev>', // Update with verified domain in Prod
                 to: emailTo,
                 subject: `${categoryLabel} ${subject || `New Contact from ${name}`}`,
                 html: `
